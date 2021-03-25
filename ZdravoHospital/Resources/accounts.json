@@ -1,0 +1,22 @@
+{
+  "matke": {
+    "Username": "matke",
+    "Password": "matke",
+    "Role": 3
+  },
+  "mili": {
+    "Username": "mili",
+    "Password": "mili",
+    "Role": 2
+  },
+  "suki": {
+    "Username": "suki",
+    "Password": "suki",
+    "Role": 0
+  },
+  "aleksic": {
+    "Username": "aleksic",
+    "Password": "aleksic",
+    "Role": 1
+  }
+}
