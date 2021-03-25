@@ -1,3 +1,8 @@
+// File:    Person.cs
+// Author:  Nikola
+// Created: Monday, March 22, 2021 8:32:15 AM
+// Purpose: Definition of Class Person
+
 using System;
 
 namespace Model
@@ -10,8 +15,9 @@ namespace Model
       public DateTime dateOfBirth;
       public string phoneNumber;
       public string username;
-      
-      public Adress adress;
+      public string parentsName;
+      public MaritalStatus maritalStatus;
+      public Gender gender;
    
    }
 }
