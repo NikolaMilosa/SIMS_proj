@@ -9,7 +9,9 @@ namespace Model
 {
    public class Person
    {
-      public string PName { get; set; }
+        private string name;
+
+        public string PName { get; set; }
       public string Surname { get; set; }
       public string Email { get; set; }
       public DateTime DateOfBirth { get; set; }
@@ -39,6 +41,19 @@ namespace Model
         public Person()
         {
 
+        }
+
+        public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
+        {
+            this.name = name;
+            Surname = surname;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+            PhoneNumber = phoneNumber;
+            Username = username;
+            ParentsName = parentsName;
+            MaritalStatus = maritalStatus;
+            Gender = gender;
         }
     }
 }
