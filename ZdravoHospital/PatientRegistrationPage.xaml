@@ -170,7 +170,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="11" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Username</TextBlock>
+                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Username *</TextBlock>
                     <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
                              Text="{Binding Path=Username, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
                         <TextBox.Resources>
@@ -182,7 +182,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="12" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Password</TextBlock>
+                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Password *</TextBlock>
                     <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
                              Text="{Binding Path=Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
                         <TextBox.Resources>
