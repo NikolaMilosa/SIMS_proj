@@ -38,7 +38,7 @@ namespace ZdravoHospital
                     switch (res.Accounts[usernameTextBox.Text].Role)
                     {
                         case RoleType.MANAGER:
-                            var window = new ManagerWindow();
+                            var window = new ManagerWindow(res);
                             window.Show();
                             this.Close();
                             break;

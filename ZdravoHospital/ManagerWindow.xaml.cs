@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Model;
 
 namespace ZdravoHospital
 {
@@ -17,14 +19,18 @@ namespace ZdravoHospital
     /// </summary>
     public partial class ManagerWindow : Window
     {
-        public ManagerWindow()
+        Resources res;
+
+        public ManagerWindow(Resources r)
         {
             InitializeComponent();
+            this.res = r;
         }
 
         private void roomButton_Click(object sender, RoutedEventArgs e)
         {
-            SubMenu.Content = new SubMenuRooms();
+            SubMenu.Content = new SubMenuRooms(this.res,managerMainTable);
         }
+
     }
 }
