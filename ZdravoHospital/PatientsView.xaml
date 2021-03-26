@@ -9,7 +9,7 @@
         Background="Beige">
     <Grid>
         <DockPanel>
-        <DataGrid DockPanel.Dock="Top" BorderThickness="2" ItemsSource="{Binding Path=PatientsForTable}" AutoGenerateColumns="False">
+        <DataGrid x:Name="patientsDataGrid" DockPanel.Dock="Top" BorderThickness="2" ItemsSource="{Binding Path=PatientsForTable}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding PName}"/>
@@ -42,7 +42,7 @@
         </DataGrid>
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center">
             <Button x:Name="btnEditPatient" Margin="10" Width="40" Height="20">Edit</Button>
-            <Button x:Name="btnDeletePatient" Margin="10" Width="40" Height="20">Delete</Button>
+            <Button x:Name="btnDeletePatient" Margin="10" Width="40" Height="20" Click="btnDeletePatient_Click">Delete</Button>
         </WrapPanel>
     </DockPanel>
     </Grid>

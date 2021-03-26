@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Model;
 using Newtonsoft.Json;
 
+
 namespace ZdravoHospital
 {
     /// <summary>
@@ -38,6 +39,32 @@ namespace ZdravoHospital
             this.DataContext = this;
             Patients = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
             PatientsForTable = dictionaryToList(Patients);
+        }
+
+        private void btnDeletePatient_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPatient = ((Patient)patientsDataGrid.SelectedItem);
+
+            if(selectedPatient == null)
+            {
+                MessageBox.Show("Nothing is selected. Please select a patient.");
+            }
+            else
+            {
+                ///////     DELETE FROM TABLE AND LIST OF PATIENTS      //////
+                PatientsForTable.Remove(selectedPatient);
+                Patients.Remove(selectedPatient.Username);
+                string patientsJson = JsonConvert.SerializeObject(Patients);
+                File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+
+                ///////     DELETE FROM ACCOUNTS    ////////
+                Dictionary<string, Credentials> accounts = new Dictionary<string, Credentials>();
+                accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
+                accounts.Remove(selectedPatient.Username);
+                string accountsJson = JsonConvert.SerializeObject(accounts);
+                File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
+            }
+            
         }
     }
 }

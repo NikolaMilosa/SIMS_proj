@@ -173,7 +173,7 @@ namespace ZdravoHospital
             }
         }
 
-        public string HealthCardNumber { 
+        public string HealthCardNumber {
             get => _healthCardNumber;
             set
             {
@@ -183,7 +183,7 @@ namespace ZdravoHospital
         }
         public string ParentsName
         {
-            get => _parentsName; 
+            get => _parentsName;
             set
             {
                 _parentsName = value;
@@ -192,7 +192,7 @@ namespace ZdravoHospital
         }
         public MaritalStatus PMaritalStatus
         {
-            get => _maritalStatus; 
+            get => _maritalStatus;
             set
             {
                 _maritalStatus = value;
@@ -201,7 +201,7 @@ namespace ZdravoHospital
         }
         public Gender PGender
         {
-            get => gender; 
+            get => gender;
             set
             {
                 gender = value;
@@ -223,39 +223,45 @@ namespace ZdravoHospital
         private void btnFinish_Click(object sender, RoutedEventArgs e)
         {
             Patient patient = new Patient(HealthCardNumber, PName, Surname, Email, DateOfBirth, Telephone, Username, ParentsName, (MaritalStatus)cbMaritalStatus.SelectedIndex, (Gender)cbGender.SelectedIndex, PersonID);
-            //MessageBox.Show(patient.Username + "  " + patient.MaritalStatus);
-            patient.Address = new Adress(StreetName, StreetNum, 
+
+            patient.Address = new Adress(StreetName, StreetNum,
                 new Model.City(PostalCode, this.City, new Model.Country(this.Country)));
-            //MessageBox.Show(patient.Address.City.Country.name);
-            //MessageBox.Show(patient.DateOfBirth.ToString());
 
-            ////////////////////////ADDING A NEW ACCOUNT//////////////////////////////////
-            Credentials = new Credentials(Username, Password, RoleType.PATIENT);
-            Dictionary<string, Credentials> accounts = new Dictionary<string, Credentials>();
-            accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
-            accounts.Add(Username, this.Credentials);
-            string accountsJson = JsonConvert.SerializeObject(accounts);
-            File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
-
-            ////////////////////////ADDING A NEW PATIENT////////////////////////////////////
-            Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
-
-            if (File.Exists(@"..\..\..\Resources\patients.json"))
+            if (patient.Username.Equals("") || Password.Equals(""))
             {
-                patientsForSerialization = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
-                patientsForSerialization.Add(Username, patient);
-                string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
-                File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                MessageBox.Show("Username and password are required fields.");
             }
             else
             {
-                patientsForSerialization.Add(Username, patient);
-                string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
-                File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
-            }
+                ////////////////////////ADDING A NEW ACCOUNT//////////////////////////////////
+                Credentials = new Credentials(Username, Password, RoleType.PATIENT);
+                Dictionary<string, Credentials> accounts = new Dictionary<string, Credentials>();
+                accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
+                accounts.Add(Username, this.Credentials);
+                string accountsJson = JsonConvert.SerializeObject(accounts);
+                File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
 
-            MessageBox.Show("Added successfully");
-            NavigationService.Navigate(new SecretaryHomePage());
+                ////////////////////////ADDING A NEW PATIENT////////////////////////////////////
+                Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
+
+                if (File.Exists(@"..\..\..\Resources\patients.json"))
+                {
+                    patientsForSerialization = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
+                    patientsForSerialization.Add(Username, patient);
+                    string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
+                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                }
+                else
+                {
+                    patientsForSerialization.Add(Username, patient);
+                    string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
+                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                }
+
+                MessageBox.Show("Added successfully");
+                NavigationService.Navigate(new SecretaryHomePage());
+            }
+            
         }
     }
 }
