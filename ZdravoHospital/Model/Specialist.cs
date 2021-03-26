@@ -1,12 +1,17 @@
 using System;
+using System.Collections.Generic;
 
 namespace Model
 {
-   public class Specialist : Doctor
+    public class Specialist : Doctor
    {
       public System.Collections.Generic.List<Operation> operation;
-      
-      public System.Collections.Generic.List<Operation> Operation
+
+        public Specialist(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender) : base(name, surname, email, dateOfBirth, phoneNumber, username, parentsName, maritalStatus, gender)
+        {
+        }
+
+        public System.Collections.Generic.List<Operation> Operation
       {
          get
          {
@@ -67,8 +72,10 @@ namespace Model
          }
       }
       public System.Collections.Generic.List<SpecialistType> specialistType;
-      
-      public System.Collections.Generic.List<SpecialistType> SpecialistType
+
+       
+
+        public System.Collections.Generic.List<SpecialistType> SpecialistType
       {
          get
          {

@@ -22,6 +22,9 @@ namespace Model
             PersonID = personID;
         }
 
+        public Patient(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender) : base(name, surname, email, dateOfBirth, phoneNumber, username, parentsName, maritalStatus, gender)
+        {
+        }
 
         public System.Collections.Generic.List<Appointment> appointment;
       

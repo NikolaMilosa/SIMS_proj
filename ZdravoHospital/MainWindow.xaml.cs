@@ -47,6 +47,12 @@ namespace ZdravoHospital
                             secretaryWindow.Show();
                             this.Visibility = Visibility.Hidden;
                             break;
+                        case RoleType.PATIENT:
+                            var patientWindow = new PatientWindow();
+                            patientWindow.Show();
+                            // this.Visibility = Visibility.Hidden;
+                            Close();
+                        break;
                     }
                 }
                 else
