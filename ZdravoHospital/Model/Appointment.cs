@@ -8,9 +8,17 @@ namespace Model
       public double duration;
       
       public Patient patient;
-      
-      
-      public Patient Patient
+
+        public Appointment(DateTime startTime, double duration, Patient patient, Doctor doctor, AppointmentRoom appointmentRoom)
+        {
+            this.startTime = startTime;
+            this.duration = duration;
+            this.patient = patient;
+            this.doctor = doctor;
+            this.appointmentRoom = appointmentRoom;
+        }
+
+        public Patient Patient
       {
          get
          {

@@ -1,12 +1,20 @@
 using System;
+using System.Collections.Generic;
 
 namespace Model
 {
    public class Doctor : Person
    {
       public System.Collections.Generic.List<Appointment> appointment;
-      
-      public System.Collections.Generic.List<Appointment> Appointment
+
+        
+
+        public Doctor(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender) : base(name, surname, email, dateOfBirth, phoneNumber, username, parentsName, maritalStatus, gender)
+        {
+
+        }
+
+        public System.Collections.Generic.List<Appointment> Appointment
       {
          get
          {
