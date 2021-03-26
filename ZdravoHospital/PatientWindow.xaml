@@ -23,7 +23,7 @@
                 </MenuItem>
             </Menu>
 
-            <DataGrid ItemsSource="{Binding Source=AppointmentList}" Width="800" Name="Appoinments">
+            <DataGrid ItemsSource="{Binding Source=AppointmentList}" Width="800" Name="Appoinments" SelectionChanged="Appoinments_SelectionChanged">
                 
             </DataGrid>
         </DockPanel>
