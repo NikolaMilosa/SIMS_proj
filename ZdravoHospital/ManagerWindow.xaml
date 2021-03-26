@@ -5,6 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital"
         mc:Ignorable="d"
-        Title="ZdravoHospital" Height="450" Width="800">
-    <Grid/>
+        Title="ZdravoHospital" Height="450" Width="800"
+        ResizeMode="NoResize">
+    <Grid Background="#0AD488">
+        <Grid x:Name="MenuGrid" HorizontalAlignment="Left" Height="412" VerticalAlignment="Center" Width="162" Background="#05AC72">
+            <Button x:Name="roomButton" Content="Sale" HorizontalAlignment="Center" VerticalAlignment="Top" Height="56" Width="159" Foreground="#746D69" Background="#05AC72" FontSize="16" Click="roomButton_Click"/>
+            <Button x:Name="staffButton" Content="Osoblje" HorizontalAlignment="Center" Margin="0,56,0,0" VerticalAlignment="Top" Foreground="#746D69" RenderTransformOrigin="-1.296,-0.982" Height="56" Width="159" Background="#05AC72" BorderThickness="1,0,1,1" FontSize="16"/>
+            <Button x:Name="inventoryButton" Content="Inventar" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Foreground="#746D69" Height="56" Width="159" Background="#05AC72" BorderThickness="1,0,1,1" FontSize="16"/>
+        </Grid>
+        <Grid x:Name="SubMenuGrid" HorizontalAlignment="Left" Height="412" Margin="162,0,0,0" VerticalAlignment="Center" Width="101">
+            <Frame x:Name="SubMenu"/>
+        </Grid>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Height="385" Margin="268,0,0,0" VerticalAlignment="Center" Width="500"/>
+    </Grid>
 </Window>

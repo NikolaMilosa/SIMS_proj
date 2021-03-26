@@ -40,7 +40,7 @@ namespace ZdravoHospital
                         case RoleType.MANAGER:
                             var window = new ManagerWindow();
                             window.Show();
-                            this.Visibility = Visibility.Hidden;
+                            this.Close();
                             break;
                     }
                 }

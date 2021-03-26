@@ -8,23 +8,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ZdravoHospital
 {
     /// <summary>
-    /// Interaction logic for ManagerWindow.xaml
+    /// Interaction logic for SubMenuRooms.xaml
     /// </summary>
-    public partial class ManagerWindow : Window
+    public partial class SubMenuRooms : Page
     {
-        public ManagerWindow()
+        public SubMenuRooms()
         {
             InitializeComponent();
-        }
-
-        private void roomButton_Click(object sender, RoutedEventArgs e)
-        {
-            SubMenu.Content = new SubMenuRooms();
         }
     }
 }
