@@ -27,5 +27,11 @@ namespace ZdravoHospital
         {
             NavigationService.Navigate(new PatientRegistrationPage());
         }
+
+        private void btnSeePatients_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new PatientsView();
+            window.Show();
+        }
     }
 }

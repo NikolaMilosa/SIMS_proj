@@ -7,7 +7,7 @@ namespace Model
       public bool IsGuest { get; set; }
       public string HealthCardNumber { get; set; }
 
-        public Patient(string healthCardNum, string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
+        public Patient(string healthCardNum, string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID)
         {
             PName = name;
             Surname = surname;
@@ -19,6 +19,7 @@ namespace Model
             MaritalStatus = maritalStatus;
             Gender = gender;
             HealthCardNumber = healthCardNum;
+            PersonID = personID;
         }
 
 

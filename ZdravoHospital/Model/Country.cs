@@ -4,9 +4,9 @@ namespace Model
 {
    public class Country
    {
-      public string name;
+        private string name;
 
-      public Country(string name)
+        public Country(string name)
       {
             this.name = name;
       }
@@ -31,9 +31,10 @@ namespace Model
             }
          }
       }
-      
-      
-      public void AddCity(City newCity)
+
+        public string PName { get => name; set => name = value; }
+
+        public void AddCity(City newCity)
       {
          if (newCity == null)
             return;

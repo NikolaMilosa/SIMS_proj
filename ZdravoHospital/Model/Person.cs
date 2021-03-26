@@ -20,7 +20,9 @@ namespace Model
       public Gender Gender { get; set; }
       public Adress Address { get; set; }
 
-        public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
+      public string PersonID { get; set; }
+
+        public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID)
         {
             PName = name;
             Surname = surname;
@@ -31,6 +33,7 @@ namespace Model
             ParentsName = parentsName;
             MaritalStatus = maritalStatus;
             Gender = gender;
+            PersonID = personID;
         }
 
         public Person()

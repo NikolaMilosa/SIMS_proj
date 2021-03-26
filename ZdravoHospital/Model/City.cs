@@ -4,9 +4,9 @@ namespace Model
 {
    public class City
    {
-      public int postalCode;
-      public string name;
-      public Country country;
+        private int postalCode;
+        private string name;
+        public Country country;
 
       public City(int postalCode, string name, Country country)
       {
@@ -104,6 +104,8 @@ namespace Model
             }
          }
       }
-   
-   }
+
+        public int PostalCode { get => postalCode; set => postalCode = value; }
+        public string PName { get => name; set => name = value; }
+    }
 }

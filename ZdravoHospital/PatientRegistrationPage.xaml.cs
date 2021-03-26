@@ -222,7 +222,7 @@ namespace ZdravoHospital
 
         private void btnFinish_Click(object sender, RoutedEventArgs e)
         {
-            Patient patient = new Patient(HealthCardNumber, PName, Surname, Email, DateOfBirth, Telephone, Username, ParentsName, (MaritalStatus)cbMaritalStatus.SelectedIndex, (Gender)cbGender.SelectedIndex);
+            Patient patient = new Patient(HealthCardNumber, PName, Surname, Email, DateOfBirth, Telephone, Username, ParentsName, (MaritalStatus)cbMaritalStatus.SelectedIndex, (Gender)cbGender.SelectedIndex, PersonID);
             //MessageBox.Show(patient.Username + "  " + patient.MaritalStatus);
             patient.Address = new Adress(StreetName, StreetNum, 
                 new Model.City(PostalCode, this.City, new Model.Country(this.Country)));
@@ -245,7 +245,7 @@ namespace ZdravoHospital
                 patientsForSerialization = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
                 patientsForSerialization.Add(Username, patient);
                 string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
-                File.WriteAllText(@"..\..\..\Resources\accounts.json", patientsJson);
+                File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
             }
             else
             {

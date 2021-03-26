@@ -4,10 +4,10 @@ namespace Model
 {
    public class Adress
    {
-      public string streetName;
-      public string number;
-      
-      public City city;
+        private string streetName;
+        private string number;
+
+        public City city;
 
       public Adress(string streetName, string number, City city)
       {
@@ -40,6 +40,8 @@ namespace Model
             }
          }
       }
-   
-   }
+
+        public string StreetName { get => streetName; set => streetName = value; }
+        public string StreetNum { get => number; set => number = value; }
+    }
 }
