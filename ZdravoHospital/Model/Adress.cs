@@ -8,9 +8,15 @@ namespace Model
       public string number;
       
       public City city;
-      
-      
-      public City City
+
+      public Adress(string streetName, string number, City city)
+      {
+          this.streetName = streetName;
+          this.number = number;
+          this.city = city;
+      }
+
+        public City City
       {
          get
          {

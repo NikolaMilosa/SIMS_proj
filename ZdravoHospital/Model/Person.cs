@@ -9,15 +9,33 @@ namespace Model
 {
    public class Person
    {
-      public string name;
-      public string surname;
-      public string email;
-      public DateTime dateOfBirth;
-      public string phoneNumber;
-      public string username;
-      public string parentsName;
-      public MaritalStatus maritalStatus;
-      public Gender gender;
-   
-   }
+      public string PName { get; set; }
+      public string Surname { get; set; }
+      public string Email { get; set; }
+      public DateTime DateOfBirth { get; set; }
+      public string PhoneNumber { get; set; }
+      public string Username { get; set; }
+      public string ParentsName { get; set; }
+      public MaritalStatus MaritalStatus { get; set; }
+      public Gender Gender { get; set; }
+      public Adress Address { get; set; }
+
+        public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
+        {
+            PName = name;
+            Surname = surname;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+            PhoneNumber = phoneNumber;
+            Username = username;
+            ParentsName = parentsName;
+            MaritalStatus = maritalStatus;
+            Gender = gender;
+        }
+
+        public Person()
+        {
+
+        }
+    }
 }

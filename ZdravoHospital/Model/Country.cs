@@ -5,8 +5,13 @@ namespace Model
    public class Country
    {
       public string name;
-      
-      public System.Collections.Generic.List<City> city;
+
+      public Country(string name)
+      {
+            this.name = name;
+      }
+
+        public System.Collections.Generic.List<City> city;
       
       public System.Collections.Generic.List<City> City
       {

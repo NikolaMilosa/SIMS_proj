@@ -4,10 +4,25 @@ namespace Model
 {
    public class Patient : Person
    {
-      public bool isGuest;
-      public string healthCardNumber;
-      
-      public System.Collections.Generic.List<Appointment> appointment;
+      public bool IsGuest { get; set; }
+      public string HealthCardNumber { get; set; }
+
+        public Patient(string healthCardNum, string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
+        {
+            PName = name;
+            Surname = surname;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+            PhoneNumber = phoneNumber;
+            Username = username;
+            ParentsName = parentsName;
+            MaritalStatus = maritalStatus;
+            Gender = gender;
+            HealthCardNumber = healthCardNum;
+        }
+
+
+        public System.Collections.Generic.List<Appointment> appointment;
       
       public System.Collections.Generic.List<Appointment> Appointment
       {
@@ -70,8 +85,9 @@ namespace Model
          }
       }
       public System.Collections.Generic.List<Operation> operation;
-      
-      public System.Collections.Generic.List<Operation> Operation
+
+
+        public System.Collections.Generic.List<Operation> Operation
       {
          get
          {

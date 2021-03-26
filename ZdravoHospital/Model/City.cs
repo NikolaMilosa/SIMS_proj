@@ -6,8 +6,16 @@ namespace Model
    {
       public int postalCode;
       public string name;
-      
-      public System.Collections.Generic.List<Adress> adress;
+      public Country country;
+
+      public City(int postalCode, string name, Country country)
+      {
+            this.postalCode = postalCode;
+            this.name = name;
+            this.country = country;
+      }
+
+        public System.Collections.Generic.List<Adress> adress;
       
       public System.Collections.Generic.List<Adress> Adress
       {
@@ -69,7 +77,7 @@ namespace Model
             tmpAdress.Clear();
          }
       }
-      public Country country;
+      
       
       
       public Country Country
