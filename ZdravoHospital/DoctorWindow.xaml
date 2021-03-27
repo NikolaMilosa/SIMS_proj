@@ -1,0 +1,93 @@
+﻿<Window x:Class="ZdravoHospital.DoctorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital"
+        mc:Ignorable="d"
+        Title="DoctorWindow" Height="900" Width="1600"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+    <DockPanel>
+        <StackPanel Name="TopPanel" 
+                    DockPanel.Dock="Top" 
+                    Orientation="Horizontal" 
+                    FlowDirection="RightToLeft" 
+                    Background="DarkGray" 
+                    Height="60">
+            <Button Name="ProfileButton" 
+                    Width="50" 
+                    Margin="20, 10, 10, 10"/>
+        </StackPanel>
+        
+        <TabControl TabStripPlacement="Left">
+            <TabItem Name="PatientsTab"
+                     Padding="0, 5, 0, 5"
+                     FontSize="18">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="" 
+                                   Width="50" 
+                                   Height="50" 
+                                   Stretch="Fill"/>
+                            <TextBlock Text="Patients"
+                                       FontWeight="Bold"
+                                       Padding="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TabItem.Content>
+                    <TextBlock TextWrapping="WrapWithOverflow">
+                        Search patients tab
+                    </TextBlock>
+                </TabItem.Content>
+            </TabItem>
+
+            <TabItem Name="ScheduleTab" 
+                     Padding="0, 5, 0, 5"
+                     FontSize="18">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="" Width="50" 
+                                   Height="50" 
+                                   Stretch="Fill"/>
+                            <TextBlock Text="Schedule" 
+                                       FontWeight="Bold"
+                                       Padding="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TabItem.Content>
+                    <Frame Source="SchedulePage.xaml"
+                           NavigationUIVisibility="Hidden">
+                    </Frame>
+                </TabItem.Content>
+            </TabItem>
+
+            <TabItem Name="DrugsApprovalTab"
+                     Padding="0, 5, 0, 5"
+                     FontSize="18">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="" 
+                                   Width="50" 
+                                   Height="50" 
+                                   Stretch="Fill" />
+                            <TextBlock Text="Drugs approval" 
+                                       FontWeight="Bold"
+                                       Padding="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TabItem.Content>
+                    <TextBlock TextWrapping="WrapWithOverflow">
+                        Drugs approval tab
+                    </TextBlock>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

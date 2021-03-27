@@ -53,6 +53,11 @@ namespace ZdravoHospital
                             // this.Visibility = Visibility.Hidden;
                             Close();
                         break;
+                        case RoleType.DOCTOR:
+                            var doctorWindow = new DoctorWindow();
+                            doctorWindow.Show();
+                            this.Visibility = Visibility.Hidden;
+                            break;
                     }
                 }
                 else

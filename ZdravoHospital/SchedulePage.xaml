@@ -1,0 +1,50 @@
+﻿<Page x:Class="ZdravoHospital.SchedulePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SchedulePage">
+
+    <DockPanel Background="White">
+        <DockPanel DockPanel.Dock="Top">
+            <StackPanel DockPanel.Dock="Left"
+                    Orientation="Horizontal"
+                    FlowDirection="LeftToRight"
+                    Height="80">
+                <Button Name="EditButton"
+                    Content="Edit"
+                    Margin="20, 20, 0, 20"
+                    Padding="10"/>
+                <Button Name="DeleteButton"
+                    Content="Delete"
+                    Margin="20"
+                    Padding="10"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    FlowDirection="RightToLeft"
+                    Height="80">
+                <Button Name="NewOperationButton"
+                    Content="New operation"
+                    Margin="20, 20, 0, 20"
+                    Padding="10" 
+                    Click="NewOperationButton_Click"/>
+                <Button Name="NewAppointmentButton"
+                    Content="New appointment"
+                    Margin="20"
+                    Padding="10" 
+                    Click="NewAppointmentButton_Click"/>
+            </StackPanel>
+        </DockPanel>
+        <DataGrid DockPanel.Dock="Bottom">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date and time"/>
+                <DataGridTextColumn Header="Duration"/>
+                <DataGridTextColumn Header="Patient"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Page>
