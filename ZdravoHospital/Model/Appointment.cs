@@ -57,6 +57,20 @@ namespace Model
             }
         }
         public AppointmentRoom appointmentRoom;
+        private DateTime dateTime;
+        private int v;
+        private Patient p;
+        private Doctor d;
+        private AppointmentRoom ap;
+
+        public Appointment(DateTime dateTime, int v, Patient p, Doctor d, AppointmentRoom ap)
+        {
+            this.DateTime = dateTime;
+            this.V = v;
+            this.P = p;
+            this.D = d;
+            this.Ap = ap;
+        }
 
         public AppointmentRoom AppointmentRoom
         {
@@ -83,5 +97,12 @@ namespace Model
             }
         }
 
+        public DateTime DateTime { get => dateTime; set => dateTime = value; }
+        public int V { get => V1; set => V1 = value; }
+        public int V1 { get => v; set => v = value; }
+        public Patient P { get => P1; set => P1 = value; }
+        public Patient P1 { get => p; set => p = value; }
+        public Doctor D { get => d; set => d = value; }
+        public AppointmentRoom Ap { get => ap; set => ap = value; }
     }
 }

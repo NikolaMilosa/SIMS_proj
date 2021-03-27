@@ -45,7 +45,8 @@ namespace ZdravoHospital
                         case RoleType.SECRETARY:
                             var secretaryWindow = new SecretaryWindow();
                             secretaryWindow.Show();
-                            this.Visibility = Visibility.Hidden;
+                            //this.Visibility = Visibility.Hidden;
+                            Close();
                             break;
                         case RoleType.PATIENT:
                             var patientWindow = new PatientWindow();

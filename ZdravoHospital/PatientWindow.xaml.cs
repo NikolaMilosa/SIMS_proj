@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
 using Model;
+using System.Collections.ObjectModel;
 
 namespace ZdravoHospital
 {
@@ -22,27 +23,26 @@ namespace ZdravoHospital
     public partial class PatientWindow : Window
     {
 
-        public List<Appointment> AppointmentList { get; set; }
+        public ObservableCollection<Appointment> AppointmentList { get; set; }
+
         public PatientWindow()
         {
             InitializeComponent();
             //public Appointment(DateTime startTime, double duration, Patient patient, Doctor doctor, AppointmentRoom appointmentRoom)
             Patient p = new Patient("22", "nikola", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
             Doctor d = new Doctor("ime", "nikola", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
-            AppointmentRoom ap = new AppointmentRoom();
-            //Appointment appointment = new Appointment(new DateTime(), 30, p,d,ap);
-            //AppointmentList.Add(appointment);
+            AppointmentRoom ap = new AppointmentRoom(RoomType.APPOINTMENT_ROOM,22,"testSoba",true);
 
+            Appointment appointment = new Appointment(new DateTime(30), 30, p,d,ap);
+            AppointmentList = new ObservableCollection<Appointment>();
+            AppointmentList.Add(appointment);
+            DataContext = this;
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void addAppointment_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Appoinments_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            AddAppointmentDialog dialog = new AddAppointmentDialog();
+            dialog.Show();
         }
     }
 }
