@@ -51,18 +51,30 @@ namespace ZdravoHospital
             }
             else
             {
-                ///////     DELETE FROM TABLE AND LIST OF PATIENTS      //////
-                PatientsForTable.Remove(selectedPatient);
-                Patients.Remove(selectedPatient.Username);
-                string patientsJson = JsonConvert.SerializeObject(Patients);
-                File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                if (selectedPatient.IsGuest)
+                {
+                    PatientsForTable.Remove(selectedPatient);
+                    Patients.Remove("guest_" + selectedPatient.HealthCardNumber);
+                    string patientsJson = JsonConvert.SerializeObject(Patients);
+                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                    return;
+                }
+                else
+                {
+                    ///////     DELETE FROM TABLE AND LIST OF PATIENTS      //////
+                    PatientsForTable.Remove(selectedPatient);
+                    Patients.Remove(selectedPatient.Username);
+                    string patientsJson = JsonConvert.SerializeObject(Patients);
+                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
 
-                ///////     DELETE FROM ACCOUNTS    ////////
-                Dictionary<string, Credentials> accounts = new Dictionary<string, Credentials>();
-                accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
-                accounts.Remove(selectedPatient.Username);
-                string accountsJson = JsonConvert.SerializeObject(accounts);
-                File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
+                    ///////     DELETE FROM ACCOUNTS    ////////
+                    Dictionary<string, Credentials> accounts = new Dictionary<string, Credentials>();
+                    accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
+                    accounts.Remove(selectedPatient.Username);
+                    string accountsJson = JsonConvert.SerializeObject(accounts);
+                    File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
+                }
+                
             }
             
         }

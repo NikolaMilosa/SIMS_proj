@@ -26,8 +26,18 @@ namespace Model
         {
         }
 
-        Patient()
+        public Patient()
         {
+        }
+
+        // Guest patient constructor
+        public Patient(string name, string surname, string personId, string healthCardNum)
+        {
+            this.PName = name;
+            this.Surname = surname;
+            this.PersonID = personId;
+            this.HealthCardNumber = healthCardNum;
+            this.IsGuest = true;
         }
 
         public System.Collections.Generic.List<Appointment> appointment;
