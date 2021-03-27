@@ -71,56 +71,20 @@ namespace Model
             tmpOperation.Clear();
          }
       }
-      public System.Collections.Generic.List<SpecialistType> specialistType;
 
-       
+        public SpecialistType specialistType;
 
-        public System.Collections.Generic.List<SpecialistType> SpecialistType
-      {
-         get
-         {
-            if (specialistType == null)
-               specialistType = new System.Collections.Generic.List<SpecialistType>();
-            return specialistType;
-         }
-         set
-         {
-            RemoveAllSpecialistType();
-            if (value != null)
+        public SpecialistType SpecialistType
+        {
+            get
             {
-               foreach (SpecialistType oSpecialistType in value)
-                  AddSpecialistType(oSpecialistType);
+                return specialistType;
             }
-         }
-      }
-      
-      
-      public void AddSpecialistType(SpecialistType newSpecialistType)
-      {
-         if (newSpecialistType == null)
-            return;
-         if (this.specialistType == null)
-            this.specialistType = new System.Collections.Generic.List<SpecialistType>();
-         if (!this.specialistType.Contains(newSpecialistType))
-            this.specialistType.Add(newSpecialistType);
-      }
-      
-      
-      public void RemoveSpecialistType(SpecialistType oldSpecialistType)
-      {
-         if (oldSpecialistType == null)
-            return;
-         if (this.specialistType != null)
-            if (this.specialistType.Contains(oldSpecialistType))
-               this.specialistType.Remove(oldSpecialistType);
-      }
-      
-      
-      public void RemoveAllSpecialistType()
-      {
-         if (specialistType != null)
-            specialistType.Clear();
-      }
-   
-   }
+            set
+            {
+                this.specialistType = value;
+            }
+        }
+
+    }
 }
