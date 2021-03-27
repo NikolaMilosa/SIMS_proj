@@ -1,0 +1,42 @@
+﻿<Window x:Class="ZdravoHospital.RoomAddOrEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital"
+        mc:Ignorable="d"
+        Title="AddOrEditRoom" Height="380" Width="400">
+    <Grid Background="#0AD488">
+        <Label x:Name="idLab" Content="Room number:" HorizontalAlignment="Left" Margin="10,52,0,0" Height="30" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="roomIdTextBox" IsEnabled="False" VerticalContentAlignment="Center" Height="30" FontSize="14px" Margin="140,52,200,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" LostFocus="checkOkButtonText" KeyDown="keyPress" TextChanged="changedText"/>
+        <Label x:Name="nameLab" Content="Room name:" HorizontalAlignment="Left" Margin="10,101,0,0" Height="30" FontSize="14px" VerticalAlignment="Top"/>
+        <TextBox x:Name="roomNameTextBox" Height="30" FontSize="14px" VerticalContentAlignment="Center" Margin="140,101,50,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" LostFocus="checkOkButtonText"/>
+        <Label x:Name="typeLab" Content="Room type:" HorizontalAlignment="Left" Height="30px" FontSize="14px" Margin="10,147,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="roomTypeComboBox" FontSize="14px" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30px" Margin="140,147,0,0" VerticalAlignment="Top" Width="210"/>
+        <Label x:Name="avaliableLab" Content="Avaliability:" Height="30px" FontSize="14px" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="yesRadioButton" GroupName="Avaliability" Content="Yes" Height="14.96" FontSize="12px" HorizontalAlignment="Left" Margin="143,195,0,0" VerticalAlignment="Top" Width="39" RenderTransformOrigin="0.5,0.5" Click="checkOkButtonRadio">
+            <RadioButton.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.167" ScaleY="1.167"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </RadioButton.RenderTransform>
+        </RadioButton>
+        <RadioButton x:Name="noRadioButton" Content="No" GroupName="Avaliability" Height="15" FontSize="12px" HorizontalAlignment="Left" Margin="228,195,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="checkOkButtonRadio">
+            <RadioButton.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.167" ScaleY="1.167"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </RadioButton.RenderTransform>
+        </RadioButton>
+        <Button x:Name="okButton" IsEnabled="False" Content="Ok" HorizontalAlignment="Left" Margin="140,294,0,0" VerticalAlignment="Top" Height="37" Width="105" Click="okButton_Click"/>
+        <Button x:Name="cancleButton" Content="Cancel" HorizontalAlignment="Left" Margin="264,294,0,0" VerticalAlignment="Top" Height="37" Width="98" Background="#FF05AC72"/>
+        <Label x:Name="warningLabel" Content="" Visibility="Hidden" Height="30px" FontSize="14px" HorizontalAlignment="Left" Margin="218,52,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

@@ -38,9 +38,9 @@ namespace ZdravoHospital
                     switch (res.Accounts[usernameTextBox.Text].Role)
                     {
                         case RoleType.MANAGER:
-                            var window = new ManagerWindow();
+                            var window = new ManagerWindow(res);
                             window.Show();
-                            this.Visibility = Visibility.Hidden;
+                            this.Close();
                             break;
                         case RoleType.SECRETARY:
                             var secretaryWindow = new SecretaryWindow();

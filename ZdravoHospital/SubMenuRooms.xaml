@@ -1,0 +1,16 @@
+﻿<Page x:Class="ZdravoHospital.SubMenuRooms"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital"
+      mc:Ignorable="d" 
+      d:DesignHeight="412" d:DesignWidth="101"
+      Title="SubMenuRooms">
+
+    <Grid Background="#05AC72">
+        <Button x:Name="showButton" Content="Show rooms" HorizontalAlignment="Center" VerticalAlignment="Top" Height="28" Width="101" Foreground="#746D69" Background="#05AC72" FontSize="14" BorderThickness="0,1,1,1" Click="showButton_Click"/>
+        <Button x:Name="addRoomButton" Content="Add room" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Height="28" Width="101" Foreground="#746D69" Background="#05AC72" BorderThickness="0,0,1,1" FontSize="14" Click="addRoomButton_Click"/>
+
+    </Grid>
+</Page>
