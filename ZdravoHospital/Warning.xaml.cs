@@ -41,7 +41,7 @@ namespace ZdravoHospital
                 else if (managerWindow.Res.OperatingRooms.ContainsKey(key))
                     managerWindow.Res.OperatingRooms.Remove(key);
                 else
-                    managerWindow.Res.OperatingRooms.Remove(key);
+                    managerWindow.Res.StorageAndBedRooms.Remove(key);
 
                 managerWindow.drawRooms();
                 this.Close();

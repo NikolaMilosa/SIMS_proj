@@ -139,6 +139,8 @@ namespace ZdravoHospital
                             managerWindow.Res.StorageAndBedRooms[key] = new Room(RoomType.STORAGE_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
                             break;
                     }
+                    managerWindow.drawRooms();
+                    this.Close();
                 }
             }
             else
@@ -158,9 +160,9 @@ namespace ZdravoHospital
                         managerWindow.Res.StorageAndBedRooms[key].Avaliabe = (yesRadioButton.IsChecked == true) ? true : false;
                         break;
                 }
+                managerWindow.drawRooms();
+                this.Close();
             }
-            managerWindow.drawRooms();
-            this.Close();
         }
 
         private void checkOkButtonText(object sender, RoutedEventArgs e)
