@@ -78,5 +78,21 @@ namespace ZdravoHospital
             }
             
         }
+
+        private void btnEditPatient_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPatient = ((Patient)patientsDataGrid.SelectedItem);
+
+            if (selectedPatient == null)
+            {
+                MessageBox.Show("Nothing is selected. Please select a patient.");
+            }
+            else
+            {
+                var editWindow = new EditPatient(selectedPatient);
+                editWindow.Show();
+            }
+                
+        }
     }
 }
