@@ -29,7 +29,7 @@ namespace ZdravoHospital
             //public Appointment(DateTime startTime, double duration, Patient patient, Doctor doctor, AppointmentRoom appointmentRoom)
             Patient p = new Patient("22", "nikola", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
             Doctor d = new Doctor("ime", "nikola", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
-            AppointmentRoom ap = new AppointmentRoom();
+            //AppointmentRoom ap = new AppointmentRoom();
             //Appointment appointment = new Appointment(new DateTime(), 30, p,d,ap);
             //AppointmentList.Add(appointment);
 
