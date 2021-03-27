@@ -26,6 +26,10 @@ namespace Model
         {
         }
 
+        Patient()
+        {
+        }
+
         public System.Collections.Generic.List<Appointment> appointment;
       
       public System.Collections.Generic.List<Appointment> Appointment
