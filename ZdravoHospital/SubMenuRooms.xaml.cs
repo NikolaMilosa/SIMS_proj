@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Controls;
 using Model;
 
 namespace ZdravoHospital
@@ -56,6 +55,15 @@ namespace ZdravoHospital
                 managerMainTable.Items.Add(ap);
             foreach (OperatingRoom op in res.OperatingRooms.Values)
                 managerMainTable.Items.Add(op);
+            foreach (Room r in res.StorageAndBedRooms.Values)
+                managerMainTable.Items.Add(r);
+        }
+
+        private void addRoomButton_Click(object sender, RoutedEventArgs e)
+        {
+            RoomAddOrEditDialog addDialog = new RoomAddOrEditDialog(this.res,true);
+            addDialog.roomIdTextBox.IsEnabled = true;
+            addDialog.Show();
         }
     }
 }

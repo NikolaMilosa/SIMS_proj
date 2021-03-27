@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -12,7 +12,8 @@ namespace Model
         public Dictionary<string, Patient> Patients { get; set; }
         public Dictionary<string, Doctor> Doctors { get; set; }
         public Dictionary<int, AppointmentRoom> AppointmentRooms { get; set; }      //appointmentRooms.json
-        public Dictionary<int, OperatingRoom> OperatingRooms { get; set; }         //operatingRooms.json
+        public Dictionary<int, OperatingRoom> OperatingRooms { get; set; }          //operatingRooms.json
+        public Dictionary<int, Room> StorageAndBedRooms { get; set; }               //storageAndBedRooms.json
         public List<Appointment> Appointments { get; set; }
         public List<Operation> Operations { get; set; }
 
@@ -25,6 +26,14 @@ namespace Model
 
             OperatingRooms = JsonConvert.DeserializeObject<Dictionary<int, OperatingRoom>>(File.ReadAllText(@"..\..\..\Resources\operatingRooms.json"));
 
+            StorageAndBedRooms = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(@"..\..\..\Resources\storageAndBedRooms.json"));
+        }
+
+        public void serialize()
+        {
+            File.WriteAllText(@"..\..\..\Resources\appointmentRooms.json", JsonConvert.SerializeObject(AppointmentRooms));
+            File.WriteAllText(@"..\..\..\Resources\operatingRooms.json", JsonConvert.SerializeObject(OperatingRooms));
+            File.WriteAllText(@"..\..\..\Resources\storageAndBedRooms.json", JsonConvert.SerializeObject(StorageAndBedRooms));
         }
     }
 }

@@ -32,5 +32,9 @@ namespace ZdravoHospital
             SubMenu.Content = new SubMenuRooms(this.res,managerMainTable);
         }
 
+        private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            res.serialize();
+        }
     }
 }
