@@ -9,7 +9,7 @@
         Background="Beige">
     <Grid>
         <DockPanel>
-        <DataGrid x:Name="patientsDataGrid" DockPanel.Dock="Top" BorderThickness="2" ItemsSource="{Binding Path=PatientsForTable}" AutoGenerateColumns="False">
+        <DataGrid x:Name="patientsDataGrid" DockPanel.Dock="Top" BorderThickness="2" ItemsSource="{Binding Path=PatientsForTable}" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding PName}"/>

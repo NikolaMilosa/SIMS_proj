@@ -33,5 +33,10 @@ namespace ZdravoHospital
             var window = new PatientsView();
             window.Show();
         }
+
+        private void btnAddGuest_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new GuestAccountPage());
+        }
     }
 }

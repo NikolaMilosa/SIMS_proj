@@ -21,7 +21,7 @@ namespace ZdravoHospital
     /// <summary>
     /// Interaction logic for PatientRegistrationPage.xaml
     /// </summary>
-    public partial class PatientRegistrationPage : Page
+    public partial class PatientRegistrationPage : Page, INotifyPropertyChanged
     {
         private string _name;
         private string _surname;
@@ -217,7 +217,17 @@ namespace ZdravoHospital
             this.DataContext = this;
         }
 
-
+        public bool isUsernameUnique(Dictionary<string, Credentials> credentials, string username)
+        {
+            foreach (KeyValuePair<string, Credentials> item in credentials)
+            {
+                if (item.Key.Equals(username))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
         private void btnFinish_Click(object sender, RoutedEventArgs e)
@@ -237,29 +247,37 @@ namespace ZdravoHospital
                 Credentials = new Credentials(Username, Password, RoleType.PATIENT);
                 Dictionary<string, Credentials> accounts = new Dictionary<string, Credentials>();
                 accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
-                accounts.Add(Username, this.Credentials);
-                string accountsJson = JsonConvert.SerializeObject(accounts);
-                File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
-
-                ////////////////////////ADDING A NEW PATIENT////////////////////////////////////
-                Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
-
-                if (File.Exists(@"..\..\..\Resources\patients.json"))
+                if (!isUsernameUnique(accounts, Username))
                 {
-                    patientsForSerialization = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
-                    patientsForSerialization.Add(Username, patient);
-                    string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
-                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                    MessageBox.Show("Usrename already exists in the system.");
                 }
                 else
                 {
-                    patientsForSerialization.Add(Username, patient);
-                    string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
-                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
-                }
+                    accounts.Add(Username, this.Credentials);
+                    string accountsJson = JsonConvert.SerializeObject(accounts);
+                    File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
 
-                MessageBox.Show("Added successfully");
-                NavigationService.Navigate(new SecretaryHomePage());
+                    ////////////////////////ADDING A NEW PATIENT////////////////////////////////////
+                    Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
+
+                    if (File.Exists(@"..\..\..\Resources\patients.json"))
+                    {
+                        patientsForSerialization = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
+                        patientsForSerialization.Add(Username, patient);
+                        string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
+                        File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                    }
+                    else
+                    {
+                        patientsForSerialization.Add(Username, patient);
+                        string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
+                        File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                    }
+
+                    MessageBox.Show("Added successfully");
+                    NavigationService.Navigate(new SecretaryHomePage());
+                }
+                
             }
             
         }
