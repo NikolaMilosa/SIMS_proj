@@ -16,7 +16,7 @@
         <Grid x:Name="SubMenuGrid" HorizontalAlignment="Left" Height="412" Margin="162,0,0,0" VerticalAlignment="Center" Width="101">
             <Frame x:Name="SubMenu" NavigationUIVisibility="Hidden"/>
         </Grid>
-        <DataGrid x:Name="managerMainTable" SelectionMode="Single" IsReadOnly="True" HorizontalAlignment="Left" Height="385" Margin="268,0,0,0" VerticalAlignment="Center" Width="500" KeyDown="keyPressed"/>
+        <DataGrid x:Name="managerMainTable" FontSize="14px" SelectionMode="Single" IsReadOnly="True" HorizontalAlignment="Left" Height="385" Margin="268,0,0,0" VerticalAlignment="Center" Width="500" PreviewKeyDown="keyPressed"/>
 
 
     </Grid>

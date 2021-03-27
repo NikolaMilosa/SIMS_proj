@@ -22,7 +22,7 @@ namespace ZdravoHospital
     {
         public enum ActiveTable { ROOMS, STAFF, EQUIPMENT, NOTHING }
         public Resources Res { get; set; }
-        ActiveTable active;
+        public ActiveTable Active { get; set; }
 
         public ManagerWindow(Resources r)
         {
@@ -30,7 +30,7 @@ namespace ZdravoHospital
             managerMainTable.CanUserResizeColumns = false;
             managerMainTable.CanUserResizeRows = false;
             this.Res = r;
-            this.active = ActiveTable.NOTHING;
+            this.Active = ActiveTable.NOTHING;
         }
 
         private void roomButton_Click(object sender, RoutedEventArgs e)
@@ -45,46 +45,56 @@ namespace ZdravoHospital
 
         private void keyPressed(object sender, KeyEventArgs e)
         { 
-            if (e.Key == System.Windows.Input.Key.E)
+            if (e.Key == Key.Return)
             {
                 e.Handled = true;
                 RoomAddOrEditDialog editDialog = new RoomAddOrEditDialog(this,false);
             }
             else if (e.Key == Key.Right)
                 e.Handled = true;
+            else if (e.Key == Key.Left)
+            {
+                e.Handled = true;
+                SubMenu.Focus();
+            }
+            else if (e.Key == Key.Delete)
+            {
+                e.Handled = true;
+                Warning warnDialog = new Warning(this);
+                warnDialog.Show();
+            }
         }
 
         public void showRooms()
         {
-            if(active != ActiveTable.ROOMS) 
+            if(Active != ActiveTable.ROOMS) 
             {
-                active = ActiveTable.ROOMS;
+                Active = ActiveTable.ROOMS;
                 managerMainTable.Columns.Clear();
                 DataGridTextColumn dgbs = new DataGridTextColumn();
                 dgbs.Header = "Id";
-                dgbs.Width = new DataGridLength(1, DataGridLengthUnitType.SizeToCells);
                 dgbs.Binding = new Binding("Id");
-                managerMainTable.Columns.Add(dgbs);
-
+                
                 DataGridTextColumn dgts = new DataGridTextColumn();
                 dgts.Header = "Type";
-                dgts.Width = new DataGridLength(1, DataGridLengthUnitType.SizeToCells);
                 dgts.Binding = new Binding("RoomTypeText");
-                managerMainTable.Columns.Add(dgts);
-
+                
                 DataGridTextColumn dgis = new DataGridTextColumn();
                 dgis.Header = "Name";
-                dgis.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
                 dgis.Binding = new Binding("Name");
-                managerMainTable.Columns.Add(dgis);
 
                 DataGridTextColumn dgds = new DataGridTextColumn();
                 dgds.Header = "Avaliability";
-                dgds.Width = new DataGridLength(1, DataGridLengthUnitType.SizeToHeader);
                 dgds.Binding = new Binding("AvaliableText");
+
+                managerMainTable.Columns.Add(dgbs);
+                managerMainTable.Columns.Add(dgts);
                 managerMainTable.Columns.Add(dgds);
+                managerMainTable.Columns.Add(dgis);
 
                 drawRooms();
+
+                dgis.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
             
         }
