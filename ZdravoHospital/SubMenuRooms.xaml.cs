@@ -20,48 +20,21 @@ namespace ZdravoHospital
     public partial class SubMenuRooms : Page
     {
 
-        Resources res;
-        DataGrid managerMainTable;
-        public SubMenuRooms(Resources r, DataGrid mmt)
+        ManagerWindow managerWindow;
+        public SubMenuRooms(ManagerWindow mw)
         {
             InitializeComponent();
-            this.res = r;
-            this.managerMainTable = mmt;
+            this.managerWindow = mw;
         }
 
         private void showButton_Click(object sender, RoutedEventArgs e)
         {
-            DataGridTextColumn dgbs = new DataGridTextColumn();
-            dgbs.Header = "Broj sobe";
-            dgbs.Binding = new Binding("Id");
-            managerMainTable.Columns.Add(dgbs);
-
-            DataGridTextColumn dgts = new DataGridTextColumn();
-            dgts.Header = "Tip sobe";
-            dgts.Binding = new Binding("RoomTypeText");
-            managerMainTable.Columns.Add(dgts);
-
-            DataGridTextColumn dgis = new DataGridTextColumn();
-            dgis.Header = "Ime sobe";
-            dgis.Binding = new Binding("Name");
-            managerMainTable.Columns.Add(dgis);
-
-            DataGridTextColumn dgds = new DataGridTextColumn();
-            dgds.Header = "Dostupnost";
-            dgds.Binding = new Binding("AvaliableText");
-            managerMainTable.Columns.Add(dgds);
-
-            foreach (AppointmentRoom ap in res.AppointmentRooms.Values)
-                managerMainTable.Items.Add(ap);
-            foreach (OperatingRoom op in res.OperatingRooms.Values)
-                managerMainTable.Items.Add(op);
-            foreach (Room r in res.StorageAndBedRooms.Values)
-                managerMainTable.Items.Add(r);
+            managerWindow.showRooms();
         }
 
         private void addRoomButton_Click(object sender, RoutedEventArgs e)
         {
-            RoomAddOrEditDialog addDialog = new RoomAddOrEditDialog(this.res,true);
+            RoomAddOrEditDialog addDialog = new RoomAddOrEditDialog(managerWindow, true);
             addDialog.roomIdTextBox.IsEnabled = true;
             addDialog.Show();
         }

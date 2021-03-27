@@ -21,19 +21,23 @@ namespace Model
         public Resources()
         {
             Accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
-
+            
             AppointmentRooms = JsonConvert.DeserializeObject<Dictionary<int, AppointmentRoom>>(File.ReadAllText(@"..\..\..\Resources\appointmentRooms.json"));
 
             OperatingRooms = JsonConvert.DeserializeObject<Dictionary<int, OperatingRoom>>(File.ReadAllText(@"..\..\..\Resources\operatingRooms.json"));
 
             StorageAndBedRooms = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(@"..\..\..\Resources\storageAndBedRooms.json"));
+            
+
         }
 
         public void serialize()
         {
+            
             File.WriteAllText(@"..\..\..\Resources\appointmentRooms.json", JsonConvert.SerializeObject(AppointmentRooms));
             File.WriteAllText(@"..\..\..\Resources\operatingRooms.json", JsonConvert.SerializeObject(OperatingRooms));
             File.WriteAllText(@"..\..\..\Resources\storageAndBedRooms.json", JsonConvert.SerializeObject(StorageAndBedRooms));
+            
         }
     }
 }

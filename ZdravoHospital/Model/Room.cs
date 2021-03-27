@@ -12,7 +12,7 @@ namespace Model
 
         public string AvaliableText 
         { 
-            get { return Avaliabe ? "Da" : "Ne"; }
+            get { return Avaliabe ? "Yes" : "No"; }
         }
 
         public string RoomTypeText
@@ -22,13 +22,13 @@ namespace Model
                 switch (RoomType)
                 {
                     case RoomType.APPOINTMENT_ROOM:
-                        return "ordinacija";
+                        return "Appointment";
                     case RoomType.OPERATING_ROOM:
-                        return "operaciona sala";
+                        return "Operation";
                     case RoomType.BREAK_ROOM:
-                        return "spavaca soba";
+                        return "Bedroom";
                     default:
-                        return "skladište";
+                        return "Storage";
                 }
             }
         }
