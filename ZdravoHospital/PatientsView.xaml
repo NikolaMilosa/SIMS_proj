@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital"
+        xmlns:cvt="clr-namespace:ZdravoHospital"
         mc:Ignorable="d"
         Title="PatientsView" Height="450" Width="1200"
         Background="Beige">
@@ -19,12 +20,12 @@
                     <DataGridTemplateColumn Header="Date of birth">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding DateOfBirth}" />
+                                <TextBlock Text="{Binding DateOfBirth, Converter={cvt:DateTimeFormatter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <DatePicker SelectedDate="{Binding DateOfBirth}" />
+                                <DatePicker SelectedDate="{Binding DateOfBirth, Converter={cvt:DateTimeFormatter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
