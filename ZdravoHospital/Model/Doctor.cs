@@ -7,11 +7,11 @@ namespace Model
    {
       public System.Collections.Generic.List<Appointment> appointment;
 
-        
+        public string Fullname { get; set; }
 
         public Doctor(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender) : base(name, surname, email, dateOfBirth, phoneNumber, username, parentsName, maritalStatus, gender)
         {
-
+            this.Fullname = name + " " + surname;
         }
 
         public System.Collections.Generic.List<Appointment> Appointment

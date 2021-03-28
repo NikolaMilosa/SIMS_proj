@@ -7,26 +7,34 @@
         mc:Ignorable="d"
         Title="PatientWindow" Height="450" Width="800">
     <Grid >
-        <Grid.RenderTransform>
-            <TransformGroup>
-                <ScaleTransform ScaleY="1"/>
-                <SkewTransform/>
-                <RotateTransform/>
-                <TranslateTransform/>
-            </TransformGroup>
-        </Grid.RenderTransform>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-        <DockPanel>
-            <Menu DockPanel.Dock="Top" Height="21" Background="#FF817C7C">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Add appointment" />
-                </MenuItem>
-            </Menu>
-
-            <DataGrid ItemsSource="{Binding Source=AppointmentList}" Width="800" Name="Appoinments" SelectionChanged="Appoinments_SelectionChanged">
-                
-            </DataGrid>
-        </DockPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+            <Button x:Name="addAppointment" Content="Add appointment" Grid.Column="1" Grid.Row="0" Margin="0,10,20,5" FontSize="18" Click="addAppointment_Click"/>
+            <Button x:Name="cancelAppointment" Content="Cancel appointment" Grid.Column="1" Grid.Row="0" Margin="0,10,20,5" FontSize="18" Click="cancelAppointment_Click"/>
+        </StackPanel>
+        <DataGrid Name="myDataGrid" Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" ItemsSource="{Binding AppointmentList}" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Starting Date" Binding="{Binding Path=DateTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Starting Time" Binding="{Binding Path=DateTime, StringFormat=t}"/>
+                <DataGridTextColumn Header="Doctor Name" Binding="{Binding Path=D.PName}"/>
+                <DataGridTextColumn Header="Doctor Surname" Binding="{Binding Path=D.Surname}"/>
+                <DataGridTextColumn Header="Duration" Binding="{Binding Path=Duration}"/>
+                <DataGridTextColumn Header="Room ID Number" Binding="{Binding Path=Ap.Id}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding HelloString}" FontSize="24"/>
+        
     </Grid>
 
 </Window>
