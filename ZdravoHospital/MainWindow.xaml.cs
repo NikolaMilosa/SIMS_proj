@@ -49,7 +49,7 @@ namespace ZdravoHospital
                             Close();
                             break;
                         case RoleType.PATIENT:
-                            var patientWindow = new PatientWindow();
+                            var patientWindow = new PatientWindow(usernameTextBox.Text,res);
                             patientWindow.Show();
                             // this.Visibility = Visibility.Hidden;
                             Close();

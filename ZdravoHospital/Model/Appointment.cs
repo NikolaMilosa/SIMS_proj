@@ -72,6 +72,10 @@ namespace Model
             this.Ap = ap;
         }
 
+        public Appointment()
+        {
+        }
+
         public AppointmentRoom AppointmentRoom
         {
             get

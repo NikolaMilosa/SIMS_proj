@@ -24,14 +24,18 @@
 
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
             <TextBlock Text="Select Doctor:" Margin="0,0,40,0"/>
-            <ComboBox VerticalAlignment="Top" Width="120" ItemsSource="{Binding DoctorList}" DisplayMemberPath="Fullname">
+            <ComboBox Name="selectDoctor" VerticalAlignment="Top" Width="120" ItemsSource="{Binding DoctorList}" DisplayMemberPath="Fullname" 
+                      SelectedValue="{Binding Path=Appointment.D,Mode=OneWayToSource,UpdateSourceTrigger=LostFocus}"
+                      >
                
             </ComboBox>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-            <TextBlock Text="Select Date:" Margin="0,0,40,0"/>
-            <DatePicker Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2"  VerticalAlignment="Top" Background="White">
+            <TextBlock Text="Select Date:" Margin="0,0,50,0"/>
+            <DatePicker Name="selectDate" Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2"  VerticalAlignment="Top" Background="White" Width="120"
+                        SelectedDate="{Binding Path=Appointment.DateTime, Mode=OneWayToSource, UpdateSourceTrigger=LostFocus}"
+                        >
                 <DatePicker.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -41,8 +45,10 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
-            <TextBlock Text="Insert Time" Margin="0,0,40,0"/>
-            <TextBox VerticalAlignment="Top" Width="120"></TextBox>
+            <TextBlock Text="Select Time:" Margin="0,0,50,0"/>
+            <ComboBox Name="selectTime" VerticalAlignment="Top" Width="120" ItemsSource="{Binding PeriodList}" >
+
+            </ComboBox>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
@@ -51,7 +57,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="5">
-            <Button Name="addBtn" Content="add Appointment" Margin="20,20"></Button>
+            <Button Name="addBtn" Content="Add Appointment" Margin="20,20" Click="addBtn_Click"></Button>
         </StackPanel>
 
     </Grid>
