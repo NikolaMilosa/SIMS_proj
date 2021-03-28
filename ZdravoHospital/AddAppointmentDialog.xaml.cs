@@ -57,9 +57,13 @@ namespace ZdravoHospital
             }
             else {
                 Appointment.P = PatientWindow.Patient;
+                Appointment.Patient= PatientWindow.Patient;
                 Appointment.DateTime = Appointment.DateTime.Date + (TimeSpan)selectTime.SelectedItem;
+         
                 Appointment.Duration = 30;
                 Appointment.Ap = getFreeAppointmentRoom();
+                Appointment.AppointmentRoom= getFreeAppointmentRoom();
+                Appointment.Doctor = (Doctor)selectDoctor.SelectedItem;
                 PatientWindow.AppointmentList.Add(Appointment);
                 PatientWindow.Patient.Appointment.Add(Appointment);
                 //

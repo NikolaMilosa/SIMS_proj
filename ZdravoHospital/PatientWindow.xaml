@@ -26,7 +26,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Starting Date" Binding="{Binding Path=DateTime, StringFormat=d}"/>
                 <DataGridTextColumn Header="Starting Time" Binding="{Binding Path=DateTime, StringFormat=t}"/>
-                <DataGridTextColumn Header="Doctor Name" Binding="{Binding Path=D.Name}"/>
+                <DataGridTextColumn Header="Doctor Name" Binding="{Binding Path=D.PName}"/>
                 <DataGridTextColumn Header="Doctor Surname" Binding="{Binding Path=D.Surname}"/>
                 <DataGridTextColumn Header="Duration" Binding="{Binding Path=Duration}"/>
                 <DataGridTextColumn Header="Room ID Number" Binding="{Binding Path=Ap.Id}"/>

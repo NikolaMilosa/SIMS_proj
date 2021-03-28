@@ -66,7 +66,7 @@ namespace ZdravoHospital
         private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
-            Resources.serialize();
+            Resources.Serialize();
         }
 
         private void addAppointment_Click(object sender, RoutedEventArgs e)
@@ -86,8 +86,23 @@ namespace ZdravoHospital
 
                 //Resources.Patients[Patient.Username].Appointment = Patient.Appointment; //pacijentu ukloni pregled
                 //   Resources.Appointments.Remove(appointment);//pregledima ukloni pregled
+                /*
                 Resources.AppointmentRooms[appointment.Ap.Id].Appointment.Remove(appointment);//iz liste pregleda u appointment room-u ukloni pregled
                 Resources.Doctors[appointment.D.Username].Appointment.Remove(appointment);//doktoru iz liste pregleda ukloni pregled
+                */
+                foreach (Appointment a in Model.Resources.Doctors[appointment.Doctor.Username].Appointment)
+                    if (appointment.StartTime == a.StartTime && appointment.AppointmentRoom.Id == a.AppointmentRoom.Id)
+                    {
+                        Resources.Doctors[appointment.Doctor.Username].Appointment.Remove(a);
+                        break;
+                    }
+
+                foreach (Appointment a in Model.Resources.AppointmentRooms[appointment.AppointmentRoom.Id].Appointment)
+                    if (appointment.AppointmentRoom.Id == a.AppointmentRoom.Id)
+                    {
+                        Model.Resources.AppointmentRooms[appointment.AppointmentRoom.Id].Appointment.Remove(a);
+                        break;
+                    }
             }
             else {
                 MessageBox.Show("Please select  appointment you wish to cancel.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
