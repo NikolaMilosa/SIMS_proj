@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Linq;
 using System.Collections.ObjectModel;
 
 namespace ZdravoHospital
@@ -33,12 +34,19 @@ namespace ZdravoHospital
             PatientWindow = patientWindow;
             Appointment = new Appointment();
             Resources = patientWindow.Resources;
-            //DoctorList = new ObservableCollection<Doctor>((IEnumerable<Doctor>)PatientWindow.Resources.Doctors);
-            DoctorList = new ObservableCollection<Doctor>();
+
+
+            var values = Model.Resources.Doctors.Values.ToList();
+            DoctorList = new ObservableCollection<Doctor>(values);
+            //DoctorList = new ObservableCollection<Doctor>();
             generateTimeSpan();
-            Doctor d = new Doctor("Doca", "Aleksijevic", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
-            DoctorList.Add(d);
+            //Doctor d = new Doctor("Doca", "Aleksijevic", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
+           // DoctorList.Add(d);
             DataContext = this;
+        }
+
+        public void dictionaryToList() { 
+
         }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
@@ -54,13 +62,14 @@ namespace ZdravoHospital
                 Appointment.Ap = getFreeAppointmentRoom();
                 PatientWindow.AppointmentList.Add(Appointment);
                 PatientWindow.Patient.Appointment.Add(Appointment);
+                //
+               //  Resources.Patients[PatientWindow.Patient.Username].Appointment.Add(Appointment);
+                
+               // Resources.Appointments.Add(Appointment);
+               // Resources.AppointmentRooms[Appointment.Ap.Id].Appointment.Add(Appointment);
+                //Resources.Doctors[Appointment.D.Username].Appointment.Add(Appointment);
                 MessageBox.Show("Succesfully added Appointment!");
                 Close();
-              //  Resources.Patients[PatientWindow.Patient.Username].Appointment = PatientWindow.Patient.Appointment;
-                /*
-                Resources.Appointments.Add(Appointment);
-                Resources.AppointmentRooms[Appointment.Ap.Id].Appointment.Add(Appointment);
-                Resources.Doctors[Appointment.D.Username].Appointment.Add(Appointment);*/
             }
         }
 
