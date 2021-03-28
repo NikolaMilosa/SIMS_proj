@@ -29,7 +29,7 @@
                                 <TextBlock>
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} {1}">
-                                            <Binding Path="Name"/>
+                                            <Binding Path="PName"/>
                                             <Binding Path="Surname"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
@@ -53,7 +53,7 @@
                                 <TextBlock>
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} {1} ({2})">
-                                            <Binding Path="Name"/>
+                                            <Binding Path="PName"/>
                                             <Binding Path="Surname"/>
                                             <Binding Path="SpecialistType"/>
                                         </MultiBinding>
@@ -71,11 +71,13 @@
                 <Button Name="DeleteButton"
                     Content="Delete"
                     Margin="20, 20, 0, 20"
-                    Padding="10"/>
+                    Padding="10"
+                        Click="DeleteButton_Click"/>
                 <Button Name="EditButton"
                     Content="Edit"
                     Margin="20, 20, 0, 20"
-                    Padding="10"/>
+                    Padding="10"
+                        Click="EditButton_Click"/>
                 <Button Name="NewOperationButton"
                     Content="New operation"
                     Margin="20, 20, 0, 20"
@@ -91,9 +93,18 @@
         <DataGrid Name="PeriodDataGrid"
                   DockPanel.Dock="Bottom">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date and time"/>
-                <DataGridTextColumn Header="Duration"/>
-                <DataGridTextColumn Header="Patient"/>
+                <DataGridTextColumn Header="Date and time"
+                                    Binding="{Binding StartTime}"/>
+                <DataGridTextColumn Header="Duration"
+                                    Binding="{Binding Duration}"/>
+                <DataGridTextColumn Header="Patient name"
+                                    Binding="{Binding Patient.PName}"/>
+                <DataGridTextColumn Header="Patient surname"
+                                    Binding="{Binding Patient.Surname}"/>
+                <DataGridTextColumn Header="Patient health card number"
+                                    Binding="{Binding Patient.HealthCardNumber}"/>
+                <DataGridTextColumn Header="Appointment/operation"
+                                    Binding="{Binding PeriodType}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

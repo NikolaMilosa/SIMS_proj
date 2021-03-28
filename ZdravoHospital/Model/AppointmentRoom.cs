@@ -6,7 +6,7 @@ namespace Model
     public class AppointmentRoom : Room
     {
 
-        public System.Collections.Generic.List<Appointment> appointment;
+        private System.Collections.Generic.List<Appointment> appointment;
 
         public System.Collections.Generic.List<Appointment> Appointment
         {

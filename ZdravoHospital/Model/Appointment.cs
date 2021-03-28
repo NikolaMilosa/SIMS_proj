@@ -4,58 +4,70 @@ namespace Model
 {
     public class Appointment : Period
     {
-        public Patient patient;
-
-        public Patient Patient
+        public Appointment() : base()
         {
-            get
-            {
-                return patient;
-            }
-            set
-            {
-                if (this.patient == null || !this.patient.Equals(value))
-                {
-                    if (this.patient != null)
-                    {
-                        Patient oldPatient = this.patient;
-                        this.patient = null;
-                        oldPatient.RemoveAppointment(this);
-                    }
-                    if (value != null)
-                    {
-                        this.patient = value;
-                        this.patient.AddAppointment(this);
-                    }
-                }
-            }
+            PeriodType = PeriodType.APPOINTMENT;
         }
-        public Doctor doctor;
 
-        public Doctor Doctor
-        {
-            get
-            {
-                return doctor;
-            }
-            set
-            {
-                if (this.doctor == null || !this.doctor.Equals(value))
-                {
-                    if (this.doctor != null)
-                    {
-                        Doctor oldDoctor = this.doctor;
-                        this.doctor = null;
-                        oldDoctor.RemoveAppointment(this);
-                    }
-                    if (value != null)
-                    {
-                        this.doctor = value;
-                        this.doctor.AddAppointment(this);
-                    }
-                }
-            }
-        }
+
+        //public Patient patient;
+
+        //public Patient Patient
+        //{
+        //    get
+        //    {
+        //        return patient;
+        //    }
+        //    set
+        //    {
+        //        if (this.patient == null || !this.patient.Equals(value))
+        //        {
+        //            if (this.patient != null)
+        //            {
+        //                Patient oldPatient = this.patient;
+        //                this.patient = null;
+        //                oldPatient.RemoveAppointment(this);
+        //            }
+        //            if (value != null)
+        //            {
+        //                this.patient = value;
+        //                this.patient.AddAppointment(this);
+        //            }
+        //        }
+        //    }
+        //}
+
+        public string PatientUsername { get; set; }
+
+        //public Doctor doctor;
+
+        //public Doctor Doctor
+        //{
+        //    get
+        //    {
+        //        return doctor;
+        //    }
+        //    set
+        //    {
+        //        if (this.doctor == null || !this.doctor.Equals(value))
+        //        {
+        //            if (this.doctor != null)
+        //            {
+        //                Doctor oldDoctor = this.doctor;
+        //                this.doctor = null;
+        //                oldDoctor.RemoveAppointment(this);
+        //            }
+        //            if (value != null)
+        //            {
+        //                this.doctor = value;
+        //                this.doctor.AddAppointment(this);
+        //            }
+        //        }
+        //    }
+        //}
+
+        public string DoctorUsername { get; set; }
+
         public AppointmentRoom appointmentRoom;
         private DateTime dateTime;
         private int v;

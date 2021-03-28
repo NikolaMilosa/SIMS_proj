@@ -4,58 +4,66 @@ namespace Model
 {
     public class Operation : Period
     {
-        public Specialist specialist;
-
-        public Specialist Specialist
+        public Operation() : base()
         {
-            get
-            {
-                return specialist;
-            }
-            set
-            {
-                if (this.specialist == null || !this.specialist.Equals(value))
-                {
-                    if (this.specialist != null)
-                    {
-                        Specialist oldSpecialist = this.specialist;
-                        this.specialist = null;
-                        oldSpecialist.RemoveOperation(this);
-                    }
-                    if (value != null)
-                    {
-                        this.specialist = value;
-                        this.specialist.AddOperation(this);
-                    }
-                }
-            }
+            PeriodType = PeriodType.OPERATION;
         }
-        public Patient patient;
 
-        public Patient Patient
-        {
-            get
-            {
-                return patient;
-            }
-            set
-            {
-                if (this.patient == null || !this.patient.Equals(value))
-                {
-                    if (this.patient != null)
-                    {
-                        Patient oldPatient = this.patient;
-                        this.patient = null;
-                        oldPatient.RemoveOperation(this);
-                    }
-                    if (value != null)
-                    {
-                        this.patient = value;
-                        this.patient.AddOperation(this);
-                    }
-                }
-            }
-        }
+        //public Specialist specialist;
+
+        //public Specialist Specialist
+        //{
+        //    get
+        //    {
+        //        return specialist;
+        //    }
+        //    set
+        //    {
+        //        if (this.specialist == null || !this.specialist.Equals(value))
+        //        {
+        //            if (this.specialist != null)
+        //            {
+        //                Specialist oldSpecialist = this.specialist;
+        //                this.specialist = null;
+        //                oldSpecialist.RemoveOperation(this);
+        //            }
+        //            if (value != null)
+        //            {
+        //                this.specialist = value;
+        //                this.specialist.AddOperation(this);
+        //            }
+        //        }
+        //    }
+        //}
+        public string SpecialistUsername { get; set; }
+
+        //public Patient patient;
+
+        //public Patient Patient
+        //{
+        //    get
+        //    {
+        //        return patient;
+        //    }
+        //    set
+        //    {
+        //        if (this.patient == null || !this.patient.Equals(value))
+        //        {
+        //            if (this.patient != null)
+        //            {
+        //                Patient oldPatient = this.patient;
+        //                this.patient = null;
+        //                oldPatient.RemoveOperation(this);
+        //            }
+        //            if (value != null)
+        //            {
+        //                this.patient = value;
+        //                this.patient.AddOperation(this);
+        //            }
+        //        }
+        //    }
+        //}
+        public string PatientUsername { get; set; }
         public OperatingRoom operatingRoom;
 
         public OperatingRoom OperatingRoom
