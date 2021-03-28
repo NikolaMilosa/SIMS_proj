@@ -77,7 +77,16 @@ namespace ZdravoHospital
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((PeriodDataGrid.SelectedItem as Period).PeriodType == PeriodType.APPOINTMENT)
+            {
+                Appointment appointment = PeriodDataGrid.SelectedItem as Appointment;
+                NavigationService.Navigate(new AppointmentPage(appointment));
+            }
+            else
+            {
+                Operation operation = PeriodDataGrid.SelectedItem as Operation;
+                NavigationService.Navigate(new OperationPage(operation));
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
