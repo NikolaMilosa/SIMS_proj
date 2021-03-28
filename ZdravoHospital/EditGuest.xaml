@@ -30,7 +30,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBlock x:Name="ime" Margin="8,0,0,0" FontWeight="Bold" >First name</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                     Text="{Binding Path=PName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                     Text="{Binding Path=PName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -42,7 +42,7 @@
         <StackPanel Grid.Row="2" Grid.Column="1">
             <TextBlock x:Name="parentsName" Margin="8,0,0,0" FontWeight="Bold">Last name</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                     Text="{Binding Path=Surname, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                     Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -54,7 +54,7 @@
         <StackPanel Grid.Row="3" Grid.Column="1">
             <TextBlock Margin="8,0,0,0" FontWeight="Bold">Person ID</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                             Text="{Binding Path=PersonID, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                             Text="{Binding Path=PersonID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -66,7 +66,7 @@
         <StackPanel Grid.Row="4" Grid.Column="1">
             <TextBlock Margin="8,0,0,0" FontWeight="Bold">Health card number *</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                             Text="{Binding Path=HealthCardNumber, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                             Text="{Binding Path=HealthCardNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>

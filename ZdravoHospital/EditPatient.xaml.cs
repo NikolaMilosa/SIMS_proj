@@ -256,6 +256,10 @@ namespace ZdravoHospital
                 {
                     City = SelectedPatient.Address.City.PName;
                     PostalCode = SelectedPatient.Address.City.PostalCode;
+                    if(SelectedPatient.Address.City.Country != null)
+                    {
+                        Country = SelectedPatient.Address.City.Country.PName;
+                    }
                 }
             }
             if(SelectedPatient.DateOfBirth != null)
@@ -331,6 +335,7 @@ namespace ZdravoHospital
                     string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
                     File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
                     ParentPage.patientsDataGrid.ItemsSource = ParentPage.dictionaryToList(patientsForSerialization);
+                    ParentPage.PatientsForTable = ParentPage.dictionaryToList(patientsForSerialization);
                     MessageBox.Show("Successfuly changed.");
                     this.Close();
                 }

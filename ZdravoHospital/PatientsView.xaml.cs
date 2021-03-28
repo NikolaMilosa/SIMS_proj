@@ -45,6 +45,9 @@ namespace ZdravoHospital
 
         private void btnDeletePatient_Click(object sender, RoutedEventArgs e)
         {
+            
+            this.patientsDataGrid.ItemsSource = PatientsForTable;
+
             var selectedPatient = ((Patient)patientsDataGrid.SelectedItem);
 
             if (selectedPatient == null)
@@ -76,9 +79,9 @@ namespace ZdravoHospital
                     string accountsJson = JsonConvert.SerializeObject(accounts);
                     File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
                 }
-
+                
             }
-
+            //PatientsForTable = dictionaryToList(JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json")));
         }
 
         private void btnEditPatient_Click(object sender, RoutedEventArgs e)
