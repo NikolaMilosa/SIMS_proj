@@ -9,12 +9,12 @@ namespace Model
 {
    public class Person
    {
-<<<<<<< HEAD
+
         public string Name { get; set; }
-=======
+
         
 
->>>>>>> feature-PatientAppointmentCRUD
+
         public string PName { get; set; }
       public string Surname { get; set; }
       public string Email { get; set; }
@@ -30,6 +30,7 @@ namespace Model
 
         public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID)
         {
+            Name = name;
             PName = name;
             Surname = surname;
             Email = email;
@@ -49,11 +50,11 @@ namespace Model
 
         public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
         {
-<<<<<<< HEAD
+
             Name = name;
-=======
+
             PName = name;
->>>>>>> feature-PatientAppointmentCRUD
+
             Surname = surname;
             Email = email;
             DateOfBirth = dateOfBirth;

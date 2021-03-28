@@ -46,13 +46,13 @@ namespace ZdravoHospital
            
             Patient = new Patient("22", "nikola", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
             Doctor d = new Doctor("ime", "nikola", "sad@gmail.com", new DateTime(), "2", "kolja", "dsada", MaritalStatus.MARRIED, Gender.MALE);
-<<<<<<< HEAD
+
             //AppointmentRoom ap = new AppointmentRoom();
             //Appointment appointment = new Appointment(new DateTime(), 30, p,d,ap);
             //AppointmentList.Add(appointment);
-=======
+
             AppointmentRoom ap = new AppointmentRoom(RoomType.APPOINTMENT_ROOM,22,"testSoba",true);
->>>>>>> feature-PatientAppointmentCRUD
+
 
             Appointment appointment = new Appointment(new DateTime(30), 30, Patient,d,ap);
             //AppointmentList = new ObservableCollection<Appointment>();
@@ -68,7 +68,7 @@ namespace ZdravoHospital
         private void addAppointment_Click(object sender, RoutedEventArgs e)
         {
             AddAppointmentDialog dialog = new AddAppointmentDialog(this);
-            MessageBox.Show(Patient.Appointment.Count.ToString());
+           // MessageBox.Show(Patient.Appointment.Count.ToString());
             dialog.Show();
         }
 
