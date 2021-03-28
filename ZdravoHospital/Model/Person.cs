@@ -9,8 +9,7 @@ namespace Model
 {
    public class Person
    {
-        private string name;
-
+        public string Name { get; set; }
         public string PName { get; set; }
       public string Surname { get; set; }
       public string Email { get; set; }
@@ -45,7 +44,7 @@ namespace Model
 
         public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
         {
-            this.name = name;
+            Name = name;
             Surname = surname;
             Email = email;
             DateOfBirth = dateOfBirth;

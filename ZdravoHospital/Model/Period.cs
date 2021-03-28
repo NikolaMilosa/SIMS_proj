@@ -6,5 +6,6 @@ namespace Model
     {
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
+        public PeriodType PeriodType { get; set; }
     }
 }

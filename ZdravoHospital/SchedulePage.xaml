@@ -14,19 +14,68 @@
                     Orientation="Horizontal"
                     FlowDirection="LeftToRight"
                     Height="80">
-                <Button Name="EditButton"
-                    Content="Edit"
-                    Margin="20, 20, 0, 20"
-                    Padding="10"/>
-                <Button Name="DeleteButton"
-                    Content="Delete"
-                    Margin="20"
-                    Padding="10"/>
+                <Label Content="Choose doctor:"
+                       Margin="40, 20, 0, 20"
+                       Padding="10"/>
+                <ComboBox Name="DoctorsComboBox"
+                          ItemsSource="{Binding Path=Doctors}"
+                          Margin="5, 20, 20, 20"
+                          Padding="10"
+                          Width="200"
+                          SelectionChanged="DoctorsComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Surname"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Label Content="Choose specialist:"
+                       Margin="40, 20, 0, 20"
+                       Padding="10"/>
+                <ComboBox Name="SpecialistsComboBox"
+                          ItemsSource="{Binding Path=Specialists}"
+                          Margin="5, 20, 20, 20"
+                          Padding="10"
+                          Width="200"
+                          SelectionChanged="SpecialistsComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} ({2})">
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Surname"/>
+                                            <Binding Path="SpecialistType"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right"
                     Orientation="Horizontal"
                     FlowDirection="RightToLeft"
                     Height="80">
+                <Button Name="DeleteButton"
+                    Content="Delete"
+                    Margin="20, 20, 0, 20"
+                    Padding="10"/>
+                <Button Name="EditButton"
+                    Content="Edit"
+                    Margin="20, 20, 0, 20"
+                    Padding="10"/>
                 <Button Name="NewOperationButton"
                     Content="New operation"
                     Margin="20, 20, 0, 20"
@@ -39,7 +88,8 @@
                     Click="NewAppointmentButton_Click"/>
             </StackPanel>
         </DockPanel>
-        <DataGrid DockPanel.Dock="Bottom">
+        <DataGrid Name="PeriodDataGrid"
+                  DockPanel.Dock="Bottom">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date and time"/>
                 <DataGridTextColumn Header="Duration"/>

@@ -4,11 +4,15 @@ using System.Collections.Generic;
 namespace Model
 {
     public class Specialist : Doctor
-   {
-      public System.Collections.Generic.List<Operation> operation;
+    {
 
-        public Specialist(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender) : base(name, surname, email, dateOfBirth, phoneNumber, username, parentsName, maritalStatus, gender)
+        public string SpecialistType { get; set; }
+
+        public System.Collections.Generic.List<Operation> operation;
+
+        public Specialist(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string specialistType) : base(name, surname, email, dateOfBirth, phoneNumber, username, parentsName, maritalStatus, gender)
         {
+            SpecialistType = specialistType;
         }
 
         public System.Collections.Generic.List<Operation> Operation
@@ -71,20 +75,5 @@ namespace Model
             tmpOperation.Clear();
          }
       }
-
-        public SpecialistType specialistType;
-
-        public SpecialistType SpecialistType
-        {
-            get
-            {
-                return specialistType;
-            }
-            set
-            {
-                this.specialistType = value;
-            }
-        }
-
     }
 }

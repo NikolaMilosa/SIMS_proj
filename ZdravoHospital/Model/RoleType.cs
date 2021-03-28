@@ -7,6 +7,7 @@ namespace Model
       SECRETARY,
       PATIENT,
       MANAGER,
-      DOCTOR
+      DOCTOR,
+      SPECIALIST
    }
 }

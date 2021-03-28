@@ -23,6 +23,8 @@ namespace ZdravoHospital
     public partial class MainWindow : Window
     {
         Resources res;
+        public static RoleType ActiveRole { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,7 +37,9 @@ namespace ZdravoHospital
             {
                 if (res.Accounts[usernameTextBox.Text].Password == passwordTextBox.Password)
                 {
-                    switch (res.Accounts[usernameTextBox.Text].Role)
+                    ActiveRole = res.Accounts[usernameTextBox.Text].Role;
+
+                    switch (ActiveRole)
                     {
                         case RoleType.MANAGER:
                             var window = new ManagerWindow(res);
@@ -56,6 +60,11 @@ namespace ZdravoHospital
                         case RoleType.DOCTOR:
                             var doctorWindow = new DoctorWindow();
                             doctorWindow.Show();
+                            this.Visibility = Visibility.Hidden;
+                            break;
+                        case RoleType.SPECIALIST:
+                            var specialistWindow = new DoctorWindow();
+                            specialistWindow.Show();
                             this.Visibility = Visibility.Hidden;
                             break;
                     }
