@@ -60,7 +60,7 @@ namespace ZdravoHospital
                     key = ((Room)managerWindow.managerMainTable.SelectedItem).Id;
                     if (((Room)managerWindow.managerMainTable.SelectedItem).RoomType == RoomType.APPOINTMENT_ROOM)
                     {
-                        AppointmentRoom room = managerWindow.Res.AppointmentRooms[key];
+                        AppointmentRoom room = Model.Resources.AppointmentRooms[key];
                         roomIdTextBox.Text = room.Id.ToString();
                         roomNameTextBox.Text = room.Name;
                         roomTypeComboBox.SelectedItem = roomTypes[RoomType.APPOINTMENT_ROOM];
@@ -71,7 +71,7 @@ namespace ZdravoHospital
                     }
                     else if (((Room)managerWindow.managerMainTable.SelectedItem).RoomType == RoomType.OPERATING_ROOM)
                     {
-                        OperatingRoom room = managerWindow.Res.OperatingRooms[key];
+                        OperatingRoom room = Model.Resources.OperatingRooms[key];
                         roomIdTextBox.Text = room.Id.ToString();
                         roomNameTextBox.Text = room.Name;
                         roomTypeComboBox.SelectedItem = roomTypes[RoomType.OPERATING_ROOM];
@@ -82,7 +82,7 @@ namespace ZdravoHospital
                     }
                     else
                     {
-                        Room room = managerWindow.Res.StorageAndBedRooms[key];
+                        Room room = Model.Resources.StorageAndBedRooms[key];
                         roomIdTextBox.Text = room.Id.ToString();
                         roomNameTextBox.Text = room.Name;
                         roomTypeComboBox.SelectedItem = roomTypes[room.RoomType];
@@ -115,7 +115,7 @@ namespace ZdravoHospital
             int key = Int32.Parse(roomIdTextBox.Text);
             if (this.isAdder)
             {
-                if (managerWindow.Res.AppointmentRooms.ContainsKey(key) || managerWindow.Res.OperatingRooms.ContainsKey(key) || managerWindow.Res.StorageAndBedRooms.ContainsKey(key))
+                if (Model.Resources.AppointmentRooms.ContainsKey(key) || Model.Resources.OperatingRooms.ContainsKey(key) || Model.Resources.StorageAndBedRooms.ContainsKey(key))
                 {
                     roomIdTextBox.Foreground = new SolidColorBrush(Colors.Red);
                     warningLabel.Visibility = Visibility.Visible;
@@ -127,16 +127,16 @@ namespace ZdravoHospital
                     switch (invertRoomTypes[(string)roomTypeComboBox.SelectedItem])
                     {
                         case RoomType.APPOINTMENT_ROOM:
-                            managerWindow.Res.AppointmentRooms[key] = new AppointmentRoom(RoomType.APPOINTMENT_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
+                            Model.Resources.AppointmentRooms[key] = new AppointmentRoom(RoomType.APPOINTMENT_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
                             break;
                         case RoomType.OPERATING_ROOM:
-                            managerWindow.Res.OperatingRooms[key] = new OperatingRoom(RoomType.OPERATING_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
+                            Model.Resources.OperatingRooms[key] = new OperatingRoom(RoomType.OPERATING_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
                             break;
                         case RoomType.BREAK_ROOM:
-                            managerWindow.Res.StorageAndBedRooms[key] = new Room(RoomType.BREAK_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
+                            Model.Resources.StorageAndBedRooms[key] = new Room(RoomType.BREAK_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
                             break;
                         default:
-                            managerWindow.Res.StorageAndBedRooms[key] = new Room(RoomType.STORAGE_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
+                            Model.Resources.StorageAndBedRooms[key] = new Room(RoomType.STORAGE_ROOM, key, roomNameTextBox.Text, (yesRadioButton.IsChecked == true) ? true : false);
                             break;
                     }
                     managerWindow.drawRooms();
@@ -148,16 +148,16 @@ namespace ZdravoHospital
                 switch (invertRoomTypes[(string)roomTypeComboBox.SelectedItem])
                 {
                     case RoomType.APPOINTMENT_ROOM:
-                        managerWindow.Res.AppointmentRooms[key].Name = roomNameTextBox.Text;
-                        managerWindow.Res.AppointmentRooms[key].Avaliabe = (yesRadioButton.IsChecked == true) ? true : false;
+                        Model.Resources.AppointmentRooms[key].Name = roomNameTextBox.Text;
+                        Model.Resources.AppointmentRooms[key].Avaliabe = (yesRadioButton.IsChecked == true) ? true : false;
                         break;
                     case RoomType.OPERATING_ROOM:
-                        managerWindow.Res.OperatingRooms[key].Name = roomNameTextBox.Text;
-                        managerWindow.Res.OperatingRooms[key].Avaliabe = (yesRadioButton.IsChecked == true) ? true : false;
+                        Model.Resources.OperatingRooms[key].Name = roomNameTextBox.Text;
+                        Model.Resources.OperatingRooms[key].Avaliabe = (yesRadioButton.IsChecked == true) ? true : false;
                         break;
                     default:
-                        managerWindow.Res.StorageAndBedRooms[key].Name = roomNameTextBox.Text;
-                        managerWindow.Res.StorageAndBedRooms[key].Avaliabe = (yesRadioButton.IsChecked == true) ? true : false;
+                        Model.Resources.StorageAndBedRooms[key].Name = roomNameTextBox.Text;
+                        Model.Resources.StorageAndBedRooms[key].Avaliabe = (yesRadioButton.IsChecked == true) ? true : false;
                         break;
                 }
                 managerWindow.drawRooms();

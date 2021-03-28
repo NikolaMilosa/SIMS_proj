@@ -36,12 +36,12 @@ namespace ZdravoHospital
             if (managerWindow.managerMainTable.SelectedItem != null)
             {
                 key = ((Room)managerWindow.managerMainTable.SelectedItem).Id;
-                if (managerWindow.Res.AppointmentRooms.ContainsKey(key))
-                    managerWindow.Res.AppointmentRooms.Remove(key);
-                else if (managerWindow.Res.OperatingRooms.ContainsKey(key))
-                    managerWindow.Res.OperatingRooms.Remove(key);
+                if (Model.Resources.AppointmentRooms.ContainsKey(key))
+                    Model.Resources.AppointmentRooms.Remove(key);
+                else if (Model.Resources.OperatingRooms.ContainsKey(key))
+                    Model.Resources.OperatingRooms.Remove(key);
                 else
-                    managerWindow.Res.StorageAndBedRooms.Remove(key);
+                    Model.Resources.StorageAndBedRooms.Remove(key);
 
                 managerWindow.drawRooms();
                 this.Close();

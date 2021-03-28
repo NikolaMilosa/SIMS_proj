@@ -4,7 +4,13 @@ namespace Model
 {
     public class Appointment : Period
     {
-        public Patient patient;
+        public Appointment() : base()
+        {
+            PeriodType = PeriodType.APPOINTMENT;
+        }
+
+
+        private Patient patient;
 
         public Patient Patient
         {
@@ -30,6 +36,7 @@ namespace Model
                 }
             }
         }
+
         public Doctor doctor;
 
         public Doctor Doctor
@@ -56,7 +63,9 @@ namespace Model
                 }
             }
         }
-        public AppointmentRoom appointmentRoom;
+
+
+        private AppointmentRoom appointmentRoom;
         private DateTime dateTime;
         private int v;
         private Patient p;
@@ -70,10 +79,6 @@ namespace Model
             this.P = p;
             this.D = d;
             this.Ap = ap;
-        }
-
-        public Appointment()
-        {
         }
 
         public AppointmentRoom AppointmentRoom

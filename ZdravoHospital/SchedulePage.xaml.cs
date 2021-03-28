@@ -31,6 +31,8 @@ namespace ZdravoHospital
             if (MainWindow.ActiveRole != RoleType.SPECIALIST)
                 NewOperationButton.Visibility = Visibility.Collapsed;
 
+            PeriodDataGrid.AutoGenerateColumns = false;
+
             this.DataContext = this;
             Doctors = new ObservableCollection<Doctor>(Model.Resources.Doctors.Values);
             Specialists = new ObservableCollection<Specialist>(Model.Resources.Specialists.Values);
@@ -51,6 +53,11 @@ namespace ZdravoHospital
             SpecialistsComboBox.SelectionChanged -= SpecialistsComboBox_SelectionChanged;
             SpecialistsComboBox.SelectedItem = null;
             SpecialistsComboBox.SelectionChanged += SpecialistsComboBox_SelectionChanged;
+
+            PeriodDataGrid.Items.Clear();
+
+            foreach (Appointment appointment in (DoctorsComboBox.SelectedItem as Doctor).Appointment)
+                PeriodDataGrid.Items.Add(appointment as Period);
         }
 
         private void SpecialistsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,6 +65,70 @@ namespace ZdravoHospital
             DoctorsComboBox.SelectionChanged -= DoctorsComboBox_SelectionChanged;
             DoctorsComboBox.SelectedItem = null;
             DoctorsComboBox.SelectionChanged += DoctorsComboBox_SelectionChanged;
+
+            PeriodDataGrid.Items.Clear();
+
+            foreach (Appointment appointment in (SpecialistsComboBox.SelectedItem as Specialist).Appointment)
+                PeriodDataGrid.Items.Add(appointment as Period);
+
+            foreach (Operation operation in (SpecialistsComboBox.SelectedItem as Specialist).Operation)
+                PeriodDataGrid.Items.Add(operation as Period);
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if ((PeriodDataGrid.SelectedItem as Period).PeriodType == PeriodType.APPOINTMENT)
+            {
+                Appointment appointment = PeriodDataGrid.SelectedItem as Appointment;
+
+                if (DoctorsComboBox.SelectedItem as Doctor != null)
+                    (DoctorsComboBox.SelectedItem as Doctor).Appointment.Remove(appointment);
+                else
+                    (SpecialistsComboBox.SelectedItem as Doctor).Appointment.Remove(appointment);
+
+                foreach (Appointment a in Model.Resources.Patients[appointment.Patient.Username].Appointment)
+                    if (appointment.StartTime == a.StartTime && appointment.AppointmentRoom.Id == a.AppointmentRoom.Id)
+                    {
+                        Model.Resources.Patients[appointment.Patient.Username].Appointment.Remove(a);
+                        break;
+                    }
+
+                foreach (Appointment a in Model.Resources.AppointmentRooms[appointment.AppointmentRoom.Id].Appointment)
+                    if (appointment.AppointmentRoom.Id == a.AppointmentRoom.Id)
+                    {
+                        Model.Resources.AppointmentRooms[appointment.AppointmentRoom.Id].Appointment.Remove(a);
+                        break;
+                    }
+            }
+            else
+            {
+                Operation operation = PeriodDataGrid.SelectedItem as Operation;
+
+                (SpecialistsComboBox.SelectedItem as Specialist).Operation.Remove(operation);
+
+                foreach (Operation o in Model.Resources.Patients[operation.Patient.Username].Operation)
+                    if (operation.StartTime == o.StartTime && operation.OperatingRoom.Id == o.OperatingRoom.Id)
+                    {
+                        Model.Resources.Patients[operation.Patient.Username].Operation.Remove(o);
+                        break;
+                    }
+
+                foreach (Operation o in Model.Resources.OperatingRooms[operation.OperatingRoom.Id].Operation)
+                    if (operation.OperatingRoom.Id == o.OperatingRoom.Id)
+                    {
+                        Model.Resources.OperatingRooms[operation.OperatingRoom.Id].Operation.Remove(o);
+                        break;
+                    }
+            }
+
+            PeriodDataGrid.Items.Remove(PeriodDataGrid.SelectedItem);
+
+            Model.Resources.Serialize();
         }
     }
 }

@@ -9,12 +9,6 @@ namespace Model
 {
    public class Person
    {
-
-        public string Name { get; set; }
-
-        
-
-
         public string PName { get; set; }
       public string Surname { get; set; }
       public string Email { get; set; }
@@ -30,7 +24,6 @@ namespace Model
 
         public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID)
         {
-            Name = name;
             PName = name;
             Surname = surname;
             Email = email;
@@ -50,11 +43,7 @@ namespace Model
 
         public Person(string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender)
         {
-
-            Name = name;
-
             PName = name;
-
             Surname = surname;
             Email = email;
             DateOfBirth = dateOfBirth;

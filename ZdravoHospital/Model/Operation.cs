@@ -4,7 +4,12 @@ namespace Model
 {
     public class Operation : Period
     {
-        public Specialist specialist;
+        public Operation() : base()
+        {
+            PeriodType = PeriodType.OPERATION;
+        }
+
+        private Specialist specialist;
 
         public Specialist Specialist
         {
@@ -30,7 +35,8 @@ namespace Model
                 }
             }
         }
-        public Patient patient;
+
+        private Patient patient;
 
         public Patient Patient
         {
@@ -56,7 +62,7 @@ namespace Model
                 }
             }
         }
-        public OperatingRoom operatingRoom;
+        private OperatingRoom operatingRoom;
 
         public OperatingRoom OperatingRoom
         {
