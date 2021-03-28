@@ -96,6 +96,8 @@ namespace ZdravoHospital
         private void btnFinish_Click(object sender, RoutedEventArgs e)
         {
             Patient guestPatient = new Patient(PName, Surname, PersonID, HealthCardNumber);
+            guestPatient.Gender = (Gender)(-1);
+            guestPatient.MaritalStatus = (MaritalStatus)(-1);
             Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
             
             string guestID = "guest_" + HealthCardNumber;

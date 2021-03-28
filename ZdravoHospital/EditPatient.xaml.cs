@@ -43,6 +43,8 @@ namespace ZdravoHospital
         private Credentials _credentials;
 
         private Patient _selectedPatient;
+        private string _oldPassword;
+        private PatientsView _parentPage;
 
         public static ObservableCollection<Patient> Patients { get; set; }
 
@@ -236,6 +238,7 @@ namespace ZdravoHospital
                     if (item.Key.Equals(Username))
                     {
                         Password = item.Value.Password;
+                        OldPassword = item.Value.Password;
                         break;
                     }
                 }
@@ -246,13 +249,18 @@ namespace ZdravoHospital
             }
             Telephone = SelectedPatient.PhoneNumber;
             Email = SelectedPatient.Email;
-            StreetName = SelectedPatient.Address.StreetName;
-            StreetNum = SelectedPatient.Address.StreetNum;
-            DateOfBirth = SelectedPatient.DateOfBirth;
+            if(SelectedPatient.Address != null){
+                StreetName = SelectedPatient.Address.StreetName;
+                StreetNum = SelectedPatient.Address.StreetNum;
+                if(SelectedPatient.Address.City != null)
+                {
+                    City = SelectedPatient.Address.City.PName;
+                    PostalCode = SelectedPatient.Address.City.PostalCode;
+                }
+            }
+            if(SelectedPatient.DateOfBirth != null)
+                DateOfBirth = SelectedPatient.DateOfBirth;
             PersonID = SelectedPatient.PersonID;
-            Country = SelectedPatient.Address.City.Country.PName;
-            City = SelectedPatient.Address.City.PName;
-            PostalCode = SelectedPatient.Address.City.PostalCode;
             HealthCardNumber = SelectedPatient.HealthCardNumber;
             ParentsName = SelectedPatient.ParentsName;
             PMaritalStatus = SelectedPatient.MaritalStatus;
@@ -262,17 +270,71 @@ namespace ZdravoHospital
     }
 
         public Credentials Credentials { get => _credentials; set => _credentials = value; }
-        public EditPatient(Patient selectedPatient)
+        public string OldPassword { get => _oldPassword; set => _oldPassword = value; }
+        public PatientsView ParentPage { get => _parentPage; set => _parentPage = value; }
+
+        public EditPatient(Patient selectedPatient, PatientsView patientsView)
         {
             InitializeComponent();
             SelectedPatient = selectedPatient;
             initializeBindingFields();
+            ParentPage = patientsView;
             this.DataContext = this;
         }
 
         private void btnFinish_Click(object sender, RoutedEventArgs e)
         {
-            // TODO
+            Patient patient = new Patient(HealthCardNumber, PName, Surname, Email, DateOfBirth, Telephone, Username, ParentsName, (MaritalStatus)cbMaritalStatus.SelectedIndex, (Gender)cbGender.SelectedIndex, PersonID);
+
+            patient.Address = new Adress(StreetName, StreetNum,
+                new Model.City(PostalCode, this.City, new Model.Country(this.Country)));
+
+            if (Password.Equals(""))
+            {
+                MessageBox.Show("Password is a required field.");
+            }
+            else
+            {
+                ////////////////////////EDITING THE ACCOUNT CREDENTIALS//////////////////////////////////
+                if (!OldPassword.Equals(Password))
+                {
+                    Credentials = new Credentials(Username, Password, RoleType.PATIENT);
+                    Dictionary<string, Credentials> accounts = new Dictionary<string, Credentials>();
+                    accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
+                    foreach (KeyValuePair<string, Credentials> item in accounts)
+                    {
+                        if (item.Key.Equals(Username))
+                        {
+                            item.Value.Password = Password;
+                            break;
+                        }
+                    }
+                    string accountsJson = JsonConvert.SerializeObject(accounts);
+                    File.WriteAllText(@"..\..\..\Resources\accounts.json", accountsJson);
+                }
+               
+
+                ////////////////////////EDITING THE PATIENT INFO////////////////////////////////////
+                Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
+
+                if (File.Exists(@"..\..\..\Resources\patients.json"))
+                {
+                    patientsForSerialization = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
+                    foreach (KeyValuePair<string, Patient> item in patientsForSerialization)
+                    {
+                        if (item.Key.Equals(Username))
+                        {
+                            patientsForSerialization[item.Key] = patient;
+                            break;
+                        }
+                    }
+                    string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
+                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
+                    ParentPage.patientsDataGrid.ItemsSource = ParentPage.dictionaryToList(patientsForSerialization);
+                    MessageBox.Show("Successfuly changed.");
+                    this.Close();
+                }
+            }
         }
     }
 }
