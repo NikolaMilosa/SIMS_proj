@@ -46,11 +46,11 @@ namespace ZdravoHospital
             Appointment appointment = new Appointment();
 
             if (DoctorsComboBox.SelectedItem != null)
-                appointment.DoctorUsername = (DoctorsComboBox.SelectedItem as Doctor).Username;
+                appointment.Doctor = DoctorsComboBox.SelectedItem as Doctor;
             else
-                appointment.DoctorUsername = (SpecialistsComboBox.SelectedItem as Doctor).Username;
+                appointment.Doctor = SpecialistsComboBox.SelectedItem as Doctor;
 
-            appointment.PatientUsername = (PatientsComboBox.SelectedItem as Patient).Username;
+            appointment.Patient = PatientsComboBox.SelectedItem as Patient;
             string[] parts = StartTimeTextBox.Text.Split(":");
             string hours = parts[0];
             string minutes = parts[1];
@@ -58,14 +58,6 @@ namespace ZdravoHospital
                 AppointmentDatePicker.SelectedDate.Value.Day, Int32.Parse(hours), Int32.Parse(minutes), 0, DateTimeKind.Utc);
             appointment.Duration = Int32.Parse(DurationTextBox.Text);
             appointment.AppointmentRoom = AppointmentRoomComboBox.SelectedItem as AppointmentRoom;
-
-
-            if (DoctorsComboBox.SelectedItem != null)
-                Model.Resources.Doctors[(DoctorsComboBox.SelectedItem as Doctor).Username].Appointment.Add(appointment);
-            else
-                Model.Resources.Doctors[(SpecialistsComboBox.SelectedItem as Doctor).Username].Appointment.Add(appointment);
-
-            Model.Resources.Patients[(PatientsComboBox.SelectedItem as Patient).Username].Appointment.Add(appointment);
 
             Model.Resources.Serialize();
 

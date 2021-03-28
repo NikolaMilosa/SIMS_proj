@@ -41,8 +41,8 @@ namespace Model
         }
 
         private System.Collections.Generic.List<Appointment> appointment;
-      
-      public System.Collections.Generic.List<Appointment> Appointment
+
+        public System.Collections.Generic.List<Appointment> Appointment
         {
             get
             {
@@ -50,71 +50,58 @@ namespace Model
                     appointment = new System.Collections.Generic.List<Appointment>();
                 return appointment;
             }
-
             set
             {
-                appointment = value;
+                RemoveAllAppointment();
+                if (value != null)
+                {
+                    foreach (Appointment oAppointment in value)
+                        AddAppointment(oAppointment);
+                }
             }
         }
-        //{
-        //   get
-        //   {
-        //      if (appointment == null)
-        //         appointment = new System.Collections.Generic.List<Appointment>();
-        //      return appointment;
-        //   }
-        //   set
-        //   {
-        //      RemoveAllAppointment();
-        //      if (value != null)
-        //      {
-        //         foreach (Appointment oAppointment in value)
-        //            AddAppointment(oAppointment);
-        //      }
-        //   }
-        //}
 
 
-        //public void AddAppointment(Appointment newAppointment)
-        //{
-        //   if (newAppointment == null)
-        //      return;
-        //   if (this.appointment == null)
-        //      this.appointment = new System.Collections.Generic.List<Appointment>();
-        //   if (!this.appointment.Contains(newAppointment))
-        //   {
-        //      this.appointment.Add(newAppointment);
-        //      newAppointment.Patient = this;
-        //   }
-        //}
+        public void AddAppointment(Appointment newAppointment)
+        {
+            if (newAppointment == null)
+                return;
+            if (this.appointment == null)
+                this.appointment = new System.Collections.Generic.List<Appointment>();
+            if (!this.appointment.Contains(newAppointment))
+            {
+                this.appointment.Add(newAppointment);
+                newAppointment.Patient = this;
+            }
+        }
 
 
-        //public void RemoveAppointment(Appointment oldAppointment)
-        //{
-        //   if (oldAppointment == null)
-        //      return;
-        //   if (this.appointment != null)
-        //      if (this.appointment.Contains(oldAppointment))
-        //      {
-        //         this.appointment.Remove(oldAppointment);
-        //         oldAppointment.Patient = null;
-        //      }
-        //}
+        public void RemoveAppointment(Appointment oldAppointment)
+        {
+            if (oldAppointment == null)
+                return;
+            if (this.appointment != null)
+                if (this.appointment.Contains(oldAppointment))
+                {
+                    this.appointment.Remove(oldAppointment);
+                    oldAppointment.Patient = null;
+                }
+        }
 
 
-        //public void RemoveAllAppointment()
-        //{
-        //   if (appointment != null)
-        //   {
-        //      System.Collections.ArrayList tmpAppointment = new System.Collections.ArrayList();
-        //      foreach (Appointment oldAppointment in appointment)
-        //         tmpAppointment.Add(oldAppointment);
-        //      appointment.Clear();
-        //      foreach (Appointment oldAppointment in tmpAppointment)
-        //         oldAppointment.Patient = null;
-        //      tmpAppointment.Clear();
-        //   }
-        //}
+        public void RemoveAllAppointment()
+        {
+            if (appointment != null)
+            {
+                System.Collections.ArrayList tmpAppointment = new System.Collections.ArrayList();
+                foreach (Appointment oldAppointment in appointment)
+                    tmpAppointment.Add(oldAppointment);
+                appointment.Clear();
+                foreach (Appointment oldAppointment in tmpAppointment)
+                    oldAppointment.Patient = null;
+                tmpAppointment.Clear();
+            }
+        }
         private System.Collections.Generic.List<Operation> operation;
 
 
@@ -131,48 +118,48 @@ namespace Model
             operation = value;
          }
       }
-      
-      
-      //public void AddOperation(Operation newOperation)
-      //{
-      //   if (newOperation == null)
-      //      return;
-      //   if (this.operation == null)
-      //      this.operation = new System.Collections.Generic.List<Operation>();
-      //   if (!this.operation.Contains(newOperation))
-      //   {
-      //      this.operation.Add(newOperation);
-      //      newOperation.Patient = this;
-      //   }
-      //}
-      
-      
-      //public void RemoveOperation(Operation oldOperation)
-      //{
-      //   if (oldOperation == null)
-      //      return;
-      //   if (this.operation != null)
-      //      if (this.operation.Contains(oldOperation))
-      //      {
-      //         this.operation.Remove(oldOperation);
-      //         oldOperation.Patient = null;
-      //      }
-      //}
-      
-      
-      //public void RemoveAllOperation()
-      //{
-      //   if (operation != null)
-      //   {
-      //      System.Collections.ArrayList tmpOperation = new System.Collections.ArrayList();
-      //      foreach (Operation oldOperation in operation)
-      //         tmpOperation.Add(oldOperation);
-      //      operation.Clear();
-      //      foreach (Operation oldOperation in tmpOperation)
-      //         oldOperation.Patient = null;
-      //      tmpOperation.Clear();
-      //   }
-      //}
-   
-   }
+
+
+        public void AddOperation(Operation newOperation)
+        {
+            if (newOperation == null)
+                return;
+            if (this.operation == null)
+                this.operation = new System.Collections.Generic.List<Operation>();
+            if (!this.operation.Contains(newOperation))
+            {
+                this.operation.Add(newOperation);
+                newOperation.Patient = this;
+            }
+        }
+
+
+        public void RemoveOperation(Operation oldOperation)
+        {
+            if (oldOperation == null)
+                return;
+            if (this.operation != null)
+                if (this.operation.Contains(oldOperation))
+                {
+                    this.operation.Remove(oldOperation);
+                    oldOperation.Patient = null;
+                }
+        }
+
+
+        public void RemoveAllOperation()
+        {
+            if (operation != null)
+            {
+                System.Collections.ArrayList tmpOperation = new System.Collections.ArrayList();
+                foreach (Operation oldOperation in operation)
+                    tmpOperation.Add(oldOperation);
+                operation.Clear();
+                foreach (Operation oldOperation in tmpOperation)
+                    oldOperation.Patient = null;
+                tmpOperation.Clear();
+            }
+        }
+
+    }
 }

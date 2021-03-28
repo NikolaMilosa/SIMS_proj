@@ -91,10 +91,10 @@ namespace ZdravoHospital
                 else
                     (SpecialistsComboBox.SelectedItem as Doctor).Appointment.Remove(appointment);
 
-                foreach (Appointment a in Model.Resources.Patients[appointment.PatientUsername].Appointment)
+                foreach (Appointment a in Model.Resources.Patients[appointment.Patient.Username].Appointment)
                     if (appointment.StartTime == a.StartTime && appointment.AppointmentRoom.Id == a.AppointmentRoom.Id)
                     {
-                        Model.Resources.Patients[appointment.PatientUsername].Appointment.Remove(a);
+                        Model.Resources.Patients[appointment.Patient.Username].Appointment.Remove(a);
                         break;
                     }
 
@@ -111,10 +111,10 @@ namespace ZdravoHospital
 
                 (SpecialistsComboBox.SelectedItem as Specialist).Operation.Remove(operation);
 
-                foreach (Operation o in Model.Resources.Patients[operation.PatientUsername].Operation)
+                foreach (Operation o in Model.Resources.Patients[operation.Patient.Username].Operation)
                     if (operation.StartTime == o.StartTime && operation.OperatingRoom.Id == o.OperatingRoom.Id)
                     {
-                        Model.Resources.Patients[operation.PatientUsername].Operation.Remove(o);
+                        Model.Resources.Patients[operation.Patient.Username].Operation.Remove(o);
                         break;
                     }
 

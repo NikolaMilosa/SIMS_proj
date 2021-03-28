@@ -40,8 +40,8 @@ namespace ZdravoHospital
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             Operation operation = new Operation();
-            operation.SpecialistUsername = MainWindow.LoggedPersonUsername;
-            operation.PatientUsername = (PatientsComboBox.SelectedItem as Patient).Username;
+            operation.Specialist = Model.Resources.Specialists[MainWindow.LoggedPersonUsername];
+            operation.Patient = PatientsComboBox.SelectedItem as Patient;
             string[] parts = StartTimeTextBox.Text.Split(":");
             string hours = parts[0];
             string minutes = parts[1];
@@ -49,10 +49,6 @@ namespace ZdravoHospital
                 OperationDatePicker.SelectedDate.Value.Day, Int32.Parse(hours), Int32.Parse(minutes), 0, DateTimeKind.Utc);
             operation.Duration = Int32.Parse(DurationTextBox.Text);
             operation.OperatingRoom = OperatingRoomComboBox.SelectedItem as OperatingRoom;
-            
-            Model.Resources.Specialists[MainWindow.LoggedPersonUsername].Operation.Add(operation);
-
-            Model.Resources.Patients[(PatientsComboBox.SelectedItem as Patient).Username].Operation.Add(operation);
 
             Model.Resources.Serialize();
 
