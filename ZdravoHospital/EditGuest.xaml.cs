@@ -12,20 +12,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ZdravoHospital
 {
     /// <summary>
-    /// Interaction logic for GuestAccountPage.xaml
+    /// Interaction logic for EditGuest.xaml
     /// </summary>
-    public partial class GuestAccountPage : Page, INotifyPropertyChanged
+    public partial class EditGuest : Window, INotifyPropertyChanged
     {
         private string _name;
         private string _surname;
         private string _personID;
         private string _healthCardNumber;
+        private Patient _selectedPatient;
+        private PatientsView _parentPage;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -55,7 +56,6 @@ namespace ZdravoHospital
                 OnPropertyChanged("Surname");
             }
         }
-
         public string PersonID
         {
             get => _personID;
@@ -65,7 +65,6 @@ namespace ZdravoHospital
                 OnPropertyChanged("PersonID");
             }
         }
-
         public string HealthCardNumber
         {
             get => _healthCardNumber;
@@ -75,61 +74,61 @@ namespace ZdravoHospital
                 OnPropertyChanged("HealthCardNumber");
             }
         }
-        public GuestAccountPage()
+        public Patient SelectedPatient
+        {
+            get { return _selectedPatient; }
+            set
+            {
+                _selectedPatient = value;
+                OnPropertyChanged("SelectedPatient");
+            }
+        }
+        public PatientsView ParentPage { get => _parentPage; set => _parentPage = value; }
+
+        public void initializeBindingFields()
+        {
+            PName = SelectedPatient.PName;
+            Surname = SelectedPatient.Surname;
+            PersonID = SelectedPatient.PersonID;
+            HealthCardNumber = SelectedPatient.HealthCardNumber;
+        }
+        public EditGuest(Patient selectedPatient, PatientsView parentPage)
         {
             InitializeComponent();
+            SelectedPatient = selectedPatient;
+            initializeBindingFields();
+            ParentPage = parentPage;
             this.DataContext = this;
-        }
-
-        public bool isHealthCardUnique(Dictionary<string, Patient> patients, string healthCardNum)
-        {
-            foreach (KeyValuePair<string, Patient> item in patients)
-            {
-                if (item.Value.HealthCardNumber.Equals(healthCardNum))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         private void btnFinish_Click(object sender, RoutedEventArgs e)
         {
-            Patient guestPatient = new Patient(PName, Surname, PersonID, HealthCardNumber);
-            guestPatient.Gender = (Gender)(-1);
-            guestPatient.MaritalStatus = (MaritalStatus)(-1);
+            Patient patient = new Patient(PName, Surname, PersonID, HealthCardNumber);
+            patient.MaritalStatus = (MaritalStatus)(-1);
+            patient.Gender = (Gender)(-1);
+            string username = "guest_" + HealthCardNumber;
+
+            ////////////////////////EDITING THE PATIENT INFO////////////////////////////////////
             Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
-            
-            string guestID = "guest_" + HealthCardNumber;
-            
 
             if (File.Exists(@"..\..\..\Resources\patients.json"))
             {
                 patientsForSerialization = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
-                if (HealthCardNumber.Equals("") || !isHealthCardUnique(patientsForSerialization, HealthCardNumber))
+                foreach (KeyValuePair<string, Patient> item in patientsForSerialization)
                 {
-                    MessageBox.Show("Health card number must be unique.");
+                    if (item.Key.Equals(username))
+                    {
+                        patientsForSerialization[item.Key] = patient;
+                        break;
+                    }
                 }
-                else
-                {
-                    patientsForSerialization.Add(guestID, guestPatient);
-                    string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
-                    File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
-                    MessageBox.Show("Added successfully");
-                    NavigationService.Navigate(new SecretaryHomePage());
-                }
-                
-            }
-            else
-            {
-                patientsForSerialization.Add(guestID, guestPatient);
                 string patientsJson = JsonConvert.SerializeObject(patientsForSerialization);
                 File.WriteAllText(@"..\..\..\Resources\patients.json", patientsJson);
-                MessageBox.Show("Added successfully");
-                NavigationService.Navigate(new SecretaryHomePage());
+                ParentPage.patientsDataGrid.ItemsSource = ParentPage.dictionaryToList(patientsForSerialization);
+                ParentPage.PatientsForTable = ParentPage.dictionaryToList(patientsForSerialization);
+                MessageBox.Show("Successfuly changed.");
+                this.Close();
             }
-
-            
         }
     }
 }

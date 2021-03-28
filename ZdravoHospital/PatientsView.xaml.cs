@@ -23,11 +23,13 @@ namespace ZdravoHospital
     public partial class PatientsView : Window
     {
         public Dictionary<String, Patient> Patients { get; set; }
-        public ObservableCollection<Patient> PatientsForTable { get; set; }
-        public ObservableCollection<Patient>  dictionaryToList(Dictionary<String, Patient> Patients)
+        private ObservableCollection<Patient> _patientsForTable;
+
+        public ObservableCollection<Patient> PatientsForTable { get => _patientsForTable; set => _patientsForTable = value; }
+        public ObservableCollection<Patient> dictionaryToList(Dictionary<String, Patient> Patients)
         {
             ObservableCollection<Patient> ret = new ObservableCollection<Patient>();
-            foreach(KeyValuePair<string, Patient> pair in Patients)
+            foreach (KeyValuePair<string, Patient> pair in Patients)
             {
                 ret.Add(pair.Value);
             }
@@ -43,9 +45,12 @@ namespace ZdravoHospital
 
         private void btnDeletePatient_Click(object sender, RoutedEventArgs e)
         {
+            
+            this.patientsDataGrid.ItemsSource = PatientsForTable;
+
             var selectedPatient = ((Patient)patientsDataGrid.SelectedItem);
 
-            if(selectedPatient == null)
+            if (selectedPatient == null)
             {
                 MessageBox.Show("Nothing is selected. Please select a patient.");
             }
@@ -76,7 +81,31 @@ namespace ZdravoHospital
                 }
                 
             }
-            
+            //PatientsForTable = dictionaryToList(JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json")));
+        }
+
+        private void btnEditPatient_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPatient = ((Patient)patientsDataGrid.SelectedItem);
+
+            if (selectedPatient == null)
+            {
+                MessageBox.Show("Nothing is selected. Please select a patient.");
+            }
+            else
+            {
+                if (!selectedPatient.IsGuest)
+                {
+                    var editWindow = new EditPatient(selectedPatient, this);
+                    editWindow.Show();
+                }
+                else
+                {
+                    var editWindow = new EditGuest(selectedPatient, this);
+                    editWindow.Show();
+                }
+            }
+
         }
     }
 }

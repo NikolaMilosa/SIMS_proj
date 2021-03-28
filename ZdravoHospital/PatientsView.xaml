@@ -41,7 +41,7 @@
                 </DataGrid.Columns>
         </DataGrid>
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center">
-            <Button x:Name="btnEditPatient" Margin="10" Width="40" Height="20">Edit</Button>
+            <Button x:Name="btnEditPatient" Margin="10" Width="40" Height="20" Click="btnEditPatient_Click">Edit</Button>
             <Button x:Name="btnDeletePatient" Margin="10" Width="40" Height="20" Click="btnDeletePatient_Click">Delete</Button>
         </WrapPanel>
     </DockPanel>
