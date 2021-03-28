@@ -78,15 +78,20 @@ namespace ZdravoHospital
 
         private void cancelAppointment_Click(object sender, RoutedEventArgs e)
         {
-            Appointment appointment= (Appointment)myDataGrid.SelectedItem;
-            Patient.Appointment.Remove(appointment);
-            AppointmentList.Remove(appointment);
-            
-            //Resources.Patients[Patient.Username].Appointment = Patient.Appointment; //pacijentu ukloni pregled
-         //   Resources.Appointments.Remove(appointment);//pregledima ukloni pregled
-            //Resources.AppointmentRooms[appointment.Ap.Id].Appointment.Remove(appointment);//iz liste pregleda u appointment room-u ukloni pregled
-            //Resources.Doctors[appointment.D.Username].Appointment.Remove(appointment);//doktoru iz liste pregleda ukloni pregled
-            
+            if (myDataGrid.SelectedItem != null)
+            {
+                Appointment appointment = (Appointment)myDataGrid.SelectedItem;
+                Patient.Appointment.Remove(appointment);
+                AppointmentList.Remove(appointment);
+
+                //Resources.Patients[Patient.Username].Appointment = Patient.Appointment; //pacijentu ukloni pregled
+                //   Resources.Appointments.Remove(appointment);//pregledima ukloni pregled
+                Resources.AppointmentRooms[appointment.Ap.Id].Appointment.Remove(appointment);//iz liste pregleda u appointment room-u ukloni pregled
+                Resources.Doctors[appointment.D.Username].Appointment.Remove(appointment);//doktoru iz liste pregleda ukloni pregled
+            }
+            else {
+                MessageBox.Show("Please select  appointment you wish to cancel.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
         }
     }

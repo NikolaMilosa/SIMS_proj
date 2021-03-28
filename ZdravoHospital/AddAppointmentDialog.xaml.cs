@@ -66,8 +66,8 @@ namespace ZdravoHospital
                //  Resources.Patients[PatientWindow.Patient.Username].Appointment.Add(Appointment);
                 
                // Resources.Appointments.Add(Appointment);
-               // Resources.AppointmentRooms[Appointment.Ap.Id].Appointment.Add(Appointment);
-                //Resources.Doctors[Appointment.D.Username].Appointment.Add(Appointment);
+                Resources.AppointmentRooms[Appointment.Ap.Id].Appointment.Add(Appointment);
+                Resources.Doctors[Appointment.D.Username].Appointment.Add(Appointment);
                 MessageBox.Show("Succesfully added Appointment!");
                 Close();
             }
