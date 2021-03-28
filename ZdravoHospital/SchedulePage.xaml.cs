@@ -31,6 +31,8 @@ namespace ZdravoHospital
             if (MainWindow.ActiveRole != RoleType.SPECIALIST)
                 NewOperationButton.Visibility = Visibility.Collapsed;
 
+            PeriodDataGrid.AutoGenerateColumns = false;
+
             this.DataContext = this;
             Doctors = new ObservableCollection<Doctor>(Model.Resources.Doctors.Values);
             Specialists = new ObservableCollection<Specialist>(Model.Resources.Specialists.Values);
@@ -51,6 +53,11 @@ namespace ZdravoHospital
             SpecialistsComboBox.SelectionChanged -= SpecialistsComboBox_SelectionChanged;
             SpecialistsComboBox.SelectedItem = null;
             SpecialistsComboBox.SelectionChanged += SpecialistsComboBox_SelectionChanged;
+
+            PeriodDataGrid.Items.Clear();
+
+            foreach (Appointment appointment in (DoctorsComboBox.SelectedItem as Doctor).Appointment)
+                PeriodDataGrid.Items.Add(appointment as Period);
         }
 
         private void SpecialistsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,6 +65,24 @@ namespace ZdravoHospital
             DoctorsComboBox.SelectionChanged -= DoctorsComboBox_SelectionChanged;
             DoctorsComboBox.SelectedItem = null;
             DoctorsComboBox.SelectionChanged += DoctorsComboBox_SelectionChanged;
+
+            PeriodDataGrid.Items.Clear();
+
+            foreach (Appointment appointment in (SpecialistsComboBox.SelectedItem as Specialist).Appointment)
+                PeriodDataGrid.Items.Add(appointment as Period);
+
+            foreach (Operation operation in (SpecialistsComboBox.SelectedItem as Specialist).Operation)
+                PeriodDataGrid.Items.Add(operation as Period);
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -35,9 +35,9 @@ namespace ZdravoHospital
         {
             try
             {
-                if (res.Accounts[usernameTextBox.Text].Password == passwordTextBox.Password)
+                if (Model.Resources.Accounts[usernameTextBox.Text].Password == passwordTextBox.Password)
                 {
-                    ActiveRole = res.Accounts[usernameTextBox.Text].Role;
+                    ActiveRole = Model.Resources.Accounts[usernameTextBox.Text].Role;
 
                     switch (ActiveRole)
                     {

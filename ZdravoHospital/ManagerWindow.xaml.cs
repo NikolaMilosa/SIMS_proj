@@ -40,7 +40,7 @@ namespace ZdravoHospital
 
         private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Res.serialize();
+            Model.Resources.Serialize();
         }
 
         private void keyPressed(object sender, KeyEventArgs e)
@@ -101,11 +101,11 @@ namespace ZdravoHospital
         public void drawRooms()
         {
             managerMainTable.Items.Clear();
-            foreach (AppointmentRoom ap in Res.AppointmentRooms.Values)
+            foreach (AppointmentRoom ap in Model.Resources.AppointmentRooms.Values)
                 managerMainTable.Items.Add(ap);
-            foreach (OperatingRoom op in Res.OperatingRooms.Values)
+            foreach (OperatingRoom op in Model.Resources.OperatingRooms.Values)
                 managerMainTable.Items.Add(op);
-            foreach (Room r in Res.StorageAndBedRooms.Values)
+            foreach (Room r in Model.Resources.StorageAndBedRooms.Values)
                 managerMainTable.Items.Add(r);
         }
     }

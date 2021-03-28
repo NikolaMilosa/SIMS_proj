@@ -11,14 +11,6 @@
 
     <StackPanel HorizontalAlignment="Center">
         <StackPanel Orientation="Horizontal">
-            <Label Content="Doctor:" 
-                   FontSize="25"
-                   Margin="10"/>
-            <ComboBox Width="350"
-                     Height="40"/>
-        </StackPanel>
-        
-        <StackPanel Orientation="Horizontal">
             <Label Content="Patient:" 
                    FontSize="25"
                    Margin="10"/>
