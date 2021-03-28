@@ -97,8 +97,14 @@
                                     Binding="{Binding StartTime}"/>
                 <DataGridTextColumn Header="Duration"
                                     Binding="{Binding Duration}"/>
-                <DataGridTextColumn Header="Patient"
+                <DataGridTextColumn Header="Patient name"
                                     Binding="{Binding Patient.PName}"/>
+                <DataGridTextColumn Header="Patient surname"
+                                    Binding="{Binding Patient.Surname}"/>
+                <DataGridTextColumn Header="Patient Health card number"
+                                    Binding="{Binding Patient.HealthCardNumber}"/>
+                <DataGridTextColumn Header="Appointment/operation"
+                                    Binding="{Binding PeriodType}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
