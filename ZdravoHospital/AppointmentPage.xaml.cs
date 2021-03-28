@@ -46,11 +46,11 @@ namespace ZdravoHospital
             Appointment appointment = new Appointment();
 
             if (DoctorsComboBox.SelectedItem != null)
-                appointment.Doctor = DoctorsComboBox.SelectedItem as Doctor;
+                appointment.DoctorUsername = (DoctorsComboBox.SelectedItem as Doctor).Username;
             else
-                appointment.Doctor = SpecialistsComboBox.SelectedItem as Doctor;
+                appointment.DoctorUsername = (SpecialistsComboBox.SelectedItem as Doctor).Username;
 
-            appointment.Patient = PatientsComboBox.SelectedItem as Patient;
+            appointment.PatientUsername = (PatientsComboBox.SelectedItem as Patient).Username;
             string[] parts = StartTimeTextBox.Text.Split(":");
             string hours = parts[0];
             string minutes = parts[1];
@@ -61,14 +61,17 @@ namespace ZdravoHospital
 
 
             if (DoctorsComboBox.SelectedItem != null)
-                (DoctorsComboBox.SelectedItem as Doctor).AddAppointment(appointment);
+                Model.Resources.Doctors[(DoctorsComboBox.SelectedItem as Doctor).Username].Appointment.Add(appointment);
             else
-                (SpecialistsComboBox.SelectedItem as Specialist).AddAppointment(appointment);
+                Model.Resources.Doctors[(SpecialistsComboBox.SelectedItem as Doctor).Username].Appointment.Add(appointment);
 
-            Model.Resources.Serialize(); // fix
+            Model.Resources.Patients[(PatientsComboBox.SelectedItem as Patient).Username].Appointment.Add(appointment);
+
+            Model.Resources.Serialize();
 
             NavigationService.GoBack();
         }
+
         private void DoctorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SpecialistsComboBox.SelectionChanged -= SpecialistsComboBox_SelectionChanged;

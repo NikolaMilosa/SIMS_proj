@@ -24,6 +24,8 @@ namespace ZdravoHospital
     {
         Resources res;
         public static RoleType ActiveRole { get; set; }
+        public static string LoggedPersonUsername { get; set; }
+
 
         public MainWindow()
         {
@@ -37,6 +39,7 @@ namespace ZdravoHospital
             {
                 if (Model.Resources.Accounts[usernameTextBox.Text].Password == passwordTextBox.Password)
                 {
+                    LoggedPersonUsername = usernameTextBox.Text;
                     ActiveRole = Model.Resources.Accounts[usernameTextBox.Text].Role;
 
                     switch (ActiveRole)

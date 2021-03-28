@@ -14,8 +14,26 @@
             <Label Content="Patient:" 
                    FontSize="25"
                    Margin="10"/>
-            <ComboBox Width="350"
-                     Height="40"/>
+            <ComboBox Name="PatientsComboBox"
+                      ItemsSource="{Binding Path=Patients}"
+                      Width="350"
+                      Height="40">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1} ({2})">
+                                        <Binding Path="PName"/>
+                                        <Binding Path="Surname"/>
+                                        <Binding Path="HealthCardNumber"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
@@ -23,7 +41,8 @@
                    FontSize="25"
                    Margin="10"/>
             <Viewbox Width="200">
-                <DatePicker FontSize="15"
+                <DatePicker Name="OperationDatePicker"
+                            FontSize="15"
                             Margin="5"/>
             </Viewbox>
         </StackPanel>
@@ -51,11 +70,14 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-            <Label Content="Operation room:" 
+            <Label Content="Operating room:"
                    FontSize="25"
                    Margin="10"/>
-            <ComboBox Width="120"
-                     Height="40"/>
+            <ComboBox Name="OperatingRoomComboBox"
+                      ItemsSource="{Binding Path=OperatingRooms}"
+                      DisplayMemberPath="Id"
+                      Width="120"
+                      Height="40"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"

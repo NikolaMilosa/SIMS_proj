@@ -101,7 +101,7 @@
                                     Binding="{Binding Patient.PName}"/>
                 <DataGridTextColumn Header="Patient surname"
                                     Binding="{Binding Patient.Surname}"/>
-                <DataGridTextColumn Header="Patient Health card number"
+                <DataGridTextColumn Header="Patient health card number"
                                     Binding="{Binding Patient.HealthCardNumber}"/>
                 <DataGridTextColumn Header="Appointment/operation"
                                     Binding="{Binding PeriodType}"/>
