@@ -90,10 +90,10 @@ namespace ZdravoHospital
                 Resources.AppointmentRooms[appointment.Ap.Id].Appointment.Remove(appointment);//iz liste pregleda u appointment room-u ukloni pregled
                 Resources.Doctors[appointment.D.Username].Appointment.Remove(appointment);//doktoru iz liste pregleda ukloni pregled
                 */
-                foreach (Appointment a in Model.Resources.Doctors[appointment.Doctor.Username].Appointment)
+                foreach (Appointment a in Model.Resources.Doctors[appointment.D.Username].Appointment)
                     if (appointment.StartTime == a.StartTime && appointment.AppointmentRoom.Id == a.AppointmentRoom.Id)
                     {
-                        Resources.Doctors[appointment.Doctor.Username].Appointment.Remove(a);
+                        Resources.Doctors[appointment.D.Username].Appointment.Remove(a);
                         break;
                     }
 
