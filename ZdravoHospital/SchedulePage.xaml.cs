@@ -84,8 +84,11 @@ namespace ZdravoHospital
             }
             else
             {
-                Operation operation = PeriodDataGrid.SelectedItem as Operation;
-                NavigationService.Navigate(new OperationPage(operation));
+                if (MainWindow.ActiveRole == RoleType.SPECIALIST && (SpecialistsComboBox.SelectedItem as Specialist).Username.Equals(MainWindow.LoggedPersonUsername))
+                {
+                    Operation operation = PeriodDataGrid.SelectedItem as Operation;
+                    NavigationService.Navigate(new OperationPage(operation));
+                }
             }
         }
 

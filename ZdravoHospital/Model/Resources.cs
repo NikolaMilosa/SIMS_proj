@@ -42,9 +42,13 @@ namespace Model
             //Accounts[d.Username] = new Credentials(d.Username, "pantela", RoleType.DOCTOR);
 
             //Patients = new Dictionary<string, Patient>();
-            //Patient p = new Patient("12123434", "Dejan", "Bodiroga", "boga@zdravo.com", DateTime.Now, "063/789789", "bogi", "Sale", MaritalStatus.MARRIED, Gender.MALE, "12345678901");
-            //Patients[p.Username] = p;
-            //Accounts[p.Username] = new Credentials(p.Username, "bogi", RoleType.PATIENT);
+            //Patient p1 = new Patient("12123434", "Dejan", "Bodiroga", "boga@zdravo.com", DateTime.Now, "063/789789", "bogi", "Sale", MaritalStatus.MARRIED, Gender.MALE, "12345678901");
+            //Patients[p1.Username] = p1;
+            //Accounts[p1.Username] = new Credentials(p1.Username, "bogi", RoleType.PATIENT);
+
+            //Patient p2 = new Patient("65656565", "Sale", "Djordjevic", "sale@zdravo.com", DateTime.Now, "063/797979", "sale", "Mile", MaritalStatus.MARRIED, Gender.MALE, "789789654654");
+            //Patients[p2.Username] = p2;
+            //Accounts[p2.Username] = new Credentials(p2.Username, "sale", RoleType.PATIENT);
 
             //Specialists = new Dictionary<string, Specialist>();
             //Specialist s = new Specialist("Nikola", "Zigic", "zigara@zdravo.com", DateTime.Now, "063/456456", "zigara", "Pera", MaritalStatus.MARRIED, Gender.MALE, "Cardio surgent");

@@ -108,6 +108,12 @@ namespace ZdravoHospital
             appointment.Duration = Int32.Parse(DurationTextBox.Text);
             appointment.AppointmentRoom = AppointmentRoomComboBox.SelectedItem as AppointmentRoom;
 
+            // temp
+            appointment.Ap = appointment.AppointmentRoom;
+            appointment.D = appointment.Doctor;
+            appointment.P = appointment.Patient;
+            appointment.DateTime = appointment.StartTime;
+
             Model.Resources.Serialize();
 
             NavigationService.GoBack();

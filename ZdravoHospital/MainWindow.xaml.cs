@@ -64,12 +64,14 @@ namespace ZdravoHospital
                         case RoleType.DOCTOR:
                             var doctorWindow = new DoctorWindow();
                             doctorWindow.Show();
-                            this.Visibility = Visibility.Hidden;
+                            //this.Visibility = Visibility.Hidden;
+                            Close();
                             break;
                         case RoleType.SPECIALIST:
                             var specialistWindow = new DoctorWindow();
                             specialistWindow.Show();
-                            this.Visibility = Visibility.Hidden;
+                            //this.Visibility = Visibility.Hidden;
+                            Close();
                             break;
                     }
                 }
