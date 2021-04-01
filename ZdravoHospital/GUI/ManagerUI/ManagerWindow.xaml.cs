@@ -25,6 +25,34 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             activeManager = Model.Resources.findManager(au);
             WelcomeLabel.Content += activeManager.Name;
+            RoomsButton.Focus();
+        }
+
+        private void RoomsButton_gotFocus(object sender, RoutedEventArgs e)
+        {
+            RoomsMenuArrow.Visibility = Visibility.Visible;
+            StaffMenuArrow.Visibility = Visibility.Hidden;
+            InventoryMenuArrow.Visibility = Visibility.Hidden;
+
+            RoomsMenuGrid.Visibility = Visibility.Visible;
+        }
+
+        private void StaffButton_gotFocus(object sender, RoutedEventArgs e)
+        {
+            RoomsMenuArrow.Visibility = Visibility.Hidden;
+            StaffMenuArrow.Visibility = Visibility.Visible;
+            InventoryMenuArrow.Visibility = Visibility.Hidden;
+
+            RoomsMenuGrid.Visibility = Visibility.Hidden;
+        }
+
+        private void InventoryButton_gotFocus(object sender, RoutedEventArgs e)
+        {
+            RoomsMenuArrow.Visibility = Visibility.Hidden;
+            StaffMenuArrow.Visibility = Visibility.Hidden;
+            InventoryMenuArrow.Visibility = Visibility.Visible;
+
+            RoomsMenuGrid.Visibility = Visibility.Hidden;
         }
     }
 }

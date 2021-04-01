@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\ManagerUI\arrow.png" />
     <None Remove="Images\ManagerUI\inventory.png" />
     <None Remove="Images\ManagerUI\Rooms.png" />
     <None Remove="Images\ManagerUI\staff.png" />
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\ManagerUI\arrow.png" />
     <Resource Include="Images\ManagerUI\inventory.png" />
     <Resource Include="Images\ManagerUI\Rooms.png" />
     <Resource Include="Images\ManagerUI\staff.png" />

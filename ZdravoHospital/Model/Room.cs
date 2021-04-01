@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Model
 {
@@ -10,6 +11,14 @@ namespace Model
         public bool Available { get; set; }
 
         public System.Collections.Generic.List<Inventory> Inventory { get; set; }
+        public Room(RoomType rt, int id, string name, bool a)
+        {
+            this.RoomType = rt;
+            this.Id = id;
+            this.Name = name;
+            this.Available = a;
+            this.Inventory = new List<Inventory>();
+        }
 
     }
 }
