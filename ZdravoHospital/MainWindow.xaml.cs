@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using Model;
 using ZdravoHospital.GUI.Manager;
+using ZdravoHospital.GUI.Secretary;
 
 namespace ZdravoHospital
 {
@@ -47,6 +48,7 @@ namespace ZdravoHospital
                         case RoleType.DOCTOR:
                             break;
                         case RoleType.SECERATRY:
+                            window = new SecretaryWindow();
                             break;
                         case RoleType.PATIENT:
                             break;

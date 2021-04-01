@@ -1,0 +1,31 @@
+{
+  "patient1": {
+    "IsGuest": false,
+    "HealthCardNumber": "101",
+    "BloodType": 7,
+    "MedicineAllergens": null,
+    "IngredientAllergens": null,
+    "Prescription": null,
+    "Name": "Nikolaj",
+    "Surname": "Sataric",
+    "Email": "aca@gmail.com",
+    "DateOfBirth": "2000-12-02T00:00:00",
+    "PhoneNumber": "0645859652",
+    "Username": "patient1",
+    "ParentsName": "Satara",
+    "MaritalStatus": 1,
+    "Gender": 0,
+    "CitizenId": "2145",
+    "Address": {
+      "StreetName": "Ljig Street",
+      "Number": "16",
+      "City": {
+        "PostalCode": 25000,
+        "Name": "Ljig",
+        "Country": {
+          "Name": "Serbia"
+        }
+      }
+    }
+  }
+}

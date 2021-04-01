@@ -8,6 +8,12 @@ namespace Model
         public string Number { get; set; }
 
         public City City { get; set; }
+        public Address(string streetName, string number, City city)
+        {
+            this.StreetName = streetName;
+            this.Number = number;
+            this.City = city;
+        }
 
     }
 }
