@@ -12,6 +12,7 @@ namespace Model
         public static Dictionary<string, Patient> patients;
         public static Dictionary<string, Doctor> doctors;
         public static Dictionary<string, Manager> managers;
+        public static Dictionary<int, Room> rooms;
         public static List<Period> periods;
         public static List<Notification> notifications;
         public static void OpenAccounts()
@@ -26,6 +27,13 @@ namespace Model
             managers.Clear();
             managers = null;
             return sol;
+        }
+
+        public static void OpenRooms()
+        {
+            rooms = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(@"..\..\..\Resources\rooms.json"));
+            if (rooms == null)
+                rooms = new Dictionary<int, Room>();
         }
 
     }

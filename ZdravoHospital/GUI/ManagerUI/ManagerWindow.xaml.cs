@@ -54,5 +54,43 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             RoomsMenuGrid.Visibility = Visibility.Hidden;
         }
+
+        private void ShowRoomsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Model.Resources.rooms == null)
+                Model.Resources.OpenRooms();
+
+            if (MainDataGrid.ItemsSource == null)
+            {
+                DataGridTextColumn roomNumber = new DataGridTextColumn();
+                roomNumber.Header = "Number";
+                roomNumber.Binding = new Binding("Id");
+                MainDataGrid.Columns.Add(roomNumber);
+
+                DataGridTextColumn roomType = new DataGridTextColumn();
+                roomType.Header = "Room type";
+                roomType.Binding = new Binding("RoomType") { Converter = new RoomTypeConverter() };
+                MainDataGrid.Columns.Add(roomType);
+
+                DataGridTextColumn roomName = new DataGridTextColumn();
+                roomName.Header = "Name";
+                roomName.Binding = new Binding("Name");
+                roomName.Width = new DataGridLength(20, DataGridLengthUnitType.Star);
+                MainDataGrid.Columns.Add(roomName);
+
+                DataGridTextColumn roomAvailable = new DataGridTextColumn();
+                roomAvailable.Header = "Availability";
+                roomAvailable.Binding = new Binding("Available") { Converter = new AvailabilityConverter() };
+                MainDataGrid.Columns.Add(roomAvailable);
+
+                MainDataGrid.ItemsSource = Model.Resources.rooms.Values;
+            }
+        }
+
+        private void AddRoomButton_Click(object sender, RoutedEventArgs e)
+        {
+            RoomAddOrEdit dialog = new RoomAddOrEdit();
+            dialog.Show();
+        }
     }
 }
