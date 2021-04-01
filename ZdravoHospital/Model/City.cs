@@ -6,9 +6,11 @@ namespace Model
     {
         public int PostalCode { get; set; }
         public string Name { get; set; }
-
         public Country Country { get; set; }
 
-
+        public City()
+        {
+            Country = new Country();
+        }
     }
 }

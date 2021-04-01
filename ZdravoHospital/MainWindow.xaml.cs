@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Model;
-using ZdravoHospital.GUI.Manager;
+using Newtonsoft.Json;
+using ZdravoHospital.GUI.ManagerUI;
 
 namespace ZdravoHospital
 {
@@ -31,8 +33,8 @@ namespace ZdravoHospital
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            String username = UsernameTextBox.Text;
-            String password = PasswordTextBox.Password;
+            string username = UsernameTextBox.Text;
+            string password = PasswordTextBox.Password;
 
             try
             {
@@ -42,7 +44,7 @@ namespace ZdravoHospital
                     switch (Model.Resources.accounts[username].Role)
                     {
                         case RoleType.MANAGER:
-                            window = new ManagerWindow();
+                            window = new ManagerWindow(username);
                             break;
                         case RoleType.DOCTOR:
                             break;
@@ -53,6 +55,11 @@ namespace ZdravoHospital
                     }
                     window.Show();
                     this.Close();
+                    
+                    //Emptying the dictionary for memory reasons
+
+                    Model.Resources.accounts.Clear();
+                    Model.Resources.accounts = null;
                 } 
                 else
                 {

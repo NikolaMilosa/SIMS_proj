@@ -1,0 +1,41 @@
+﻿<Window x:Class="ZdravoHospital.GUI.ManagerUI.ManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        mc:Ignorable="d"
+        Title="Manager panel" Height="720" Width="1280"
+        ResizeMode="NoResize">
+    <Grid Background="Beige">
+        <Grid x:Name="MenuGrid" Background="#bec4c2" HorizontalAlignment="Left" Height="684" VerticalAlignment="Center" Width="224">
+            <Button x:Name="RoomsButton" FontSize="20" Background="#bec4c2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Height="76" VerticalAlignment="Top" Width="223" Margin="0,219,0,0" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
+                    <Image Source="../../Images/ManagerUI/Rooms.png" Height="50"/>
+                    <Separator Width="15" Visibility="Hidden"></Separator>
+                    <TextBlock Height="30">Rooms</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button x:Name="StaffButton" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="0,296,0,0" VerticalAlignment="Top" Height="76" Width="224" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
+                    <Image Source="../../Images/ManagerUI/Staff.png" Height="50" Visibility="Visible"></Image>
+                    <Separator Width="15" Visibility="Hidden"></Separator>
+                    <TextBlock Height="30" Width="60">Staff</TextBlock>
+                </StackPanel>
+            </Button>
+            <Border BorderThickness="0,1,0,1" BorderBrush="#FF707070" HorizontalAlignment="Center" Height="12" Margin="0,207,0,0" VerticalAlignment="Top" Width="224"/>
+            <Button x:Name="InventoryButton" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Height="76" Margin="0,372,0,0" VerticalAlignment="Top" Width="223" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" Width="174" Margin="40,0,0,0">
+                    <Image Source="../../Images/ManagerUI/Inventory.png" Height="50" Width="50" Visibility="Visible"></Image>
+                    <Separator Width="15" Visibility="Hidden"></Separator>
+                    <TextBlock Height="30" Width="86"><Run Text="Inventory"/></TextBlock>
+                </StackPanel>
+            </Button>
+            <Grid HorizontalAlignment="Center" Height="70" Margin="0,53,0,0" VerticalAlignment="Top" Width="71">
+                <Image Source="../../Images/ManagerUI/testingAccount.png" Visibility="Visible"></Image>
+            </Grid>
+            <Label x:Name="WelcomeLabel" Content="Welcome, " FontSize="22" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="42" Margin="0,146,0,0" VerticalAlignment="Top" Width="204" FontFamily="Harlow Solid Italic"/>
+        </Grid>
+
+    </Grid>
+</Window>

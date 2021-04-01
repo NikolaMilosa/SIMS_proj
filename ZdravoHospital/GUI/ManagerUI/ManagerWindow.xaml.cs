@@ -10,16 +10,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ZdravoHospital.GUI.Manager
+using Model;
+
+namespace ZdravoHospital.GUI.ManagerUI
 {
     /// <summary>
     /// Interaction logic for ManagerWindow.xaml
     /// </summary>
     public partial class ManagerWindow : Window
     {
-        public ManagerWindow()
+        Manager activeManager;
+        public ManagerWindow(string au)
         {
             InitializeComponent();
+            activeManager = Model.Resources.findManager(au);
+            WelcomeLabel.Content += activeManager.Name;
         }
     }
 }

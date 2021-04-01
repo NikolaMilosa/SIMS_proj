@@ -19,5 +19,14 @@ namespace Model
             accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
         }
 
+        public static Manager findManager(string username)
+        {
+            managers = JsonConvert.DeserializeObject<Dictionary<string, Manager>>(File.ReadAllText(@"..\..\..\Resources\managers.json"));
+            Manager sol = managers[username];
+            managers.Clear();
+            managers = null;
+            return sol;
+        }
+
     }
 }
