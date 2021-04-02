@@ -14,5 +14,9 @@ namespace Model
             this.Country = country;
         }
 
+        public City()
+        {
+            this.Country = new Country();
+        }
     }
 }

@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Model;
-using ZdravoHospital.GUI.Manager;
+using ZdravoHospital.GUI.ManagerUI;
 using ZdravoHospital.GUI.Secretary;
 
 namespace ZdravoHospital
@@ -43,7 +43,7 @@ namespace ZdravoHospital
                     switch (Model.Resources.accounts[username].Role)
                     {
                         case RoleType.MANAGER:
-                            window = new ManagerWindow();
+                            window = new ManagerWindow(username);
                             break;
                         case RoleType.DOCTOR:
                             break;
