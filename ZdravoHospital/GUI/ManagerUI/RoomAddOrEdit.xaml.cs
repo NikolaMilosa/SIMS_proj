@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,9 +18,12 @@ namespace ZdravoHospital.GUI.ManagerUI
     /// <summary>
     /// Interaction logic for RoomAddOrEdit.xaml
     /// </summary>
-    public partial class RoomAddOrEdit : Window
+    public partial class RoomAddOrEdit : Window, INotifyPropertyChanged
     {
         List<RoomType> roomTypes = new List<RoomType>() { RoomType.APPOINTMENT_ROOM, RoomType.BREAK_ROOM, RoomType.STORAGE_ROOM, RoomType.OPERATING_ROOM };
+        bool isAdder;
+        Room newRoom;
+
         public RoomAddOrEdit()
         {
             InitializeComponent();
@@ -28,6 +32,37 @@ namespace ZdravoHospital.GUI.ManagerUI
             RoomTypeComboBox.SetBinding(ComboBox.ItemsSourceProperty, binding);
             RoomTypeComboBox.SelectedIndex = 0;
             YesRadioButton.IsChecked = true;
+            isAdder = true;
+        }
+
+        public RoomAddOrEdit(Room r)
+        {
+            InitializeComponent();
+            Binding binding = new Binding() { Converter = new RoomTypeConverter() };
+            binding.Source = roomTypes;
+            RoomTypeComboBox.SetBinding(ComboBox.ItemsSourceProperty, binding);
+
+            IdTextBox.Text = r.Id.ToString();
+            IdTextBox.IsEnabled = false;
+            NameTextBox.Text = r.Name;
+            if (r.Available)
+                YesRadioButton.IsChecked = true;
+            else
+                NoRadioButton.IsChecked = true;
+
+            RoomTypeComboBox.SelectedIndex = roomTypes.IndexOf(r.RoomType);
+            newRoom = r;
+            isAdder = false;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void OnPropertyChanged(string name)
+        {
+            if(PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -36,7 +71,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             RoomType temp;
             switch (selectedValue)
             {
-                case "APPOINTMENT ROOM":
+                case "APPOINTMENT":
                     temp = RoomType.APPOINTMENT_ROOM;
                     break;
                 case "BEDROOM":
@@ -50,11 +85,26 @@ namespace ZdravoHospital.GUI.ManagerUI
                     break;
             }
 
-            Room newRoom = new Room(temp,Int32.Parse(IdTextBox.Text),NameTextBox.Text,(YesRadioButton.IsChecked == true) ? true : false);
-            if (!Model.Resources.rooms.ContainsKey(newRoom.Id))
+            if (isAdder)
             {
-                Model.Resources.rooms[newRoom.Id] = newRoom;
-                ManagerWindow.oRooms.Add(newRoom);
+                newRoom = new Room(temp, Int32.Parse(IdTextBox.Text), NameTextBox.Text, (YesRadioButton.IsChecked == true) ? true : false);
+                if (!Model.Resources.rooms.ContainsKey(newRoom.Id))
+                {
+                    Model.Resources.rooms[newRoom.Id] = newRoom;
+                    ManagerWindow.oRooms.Add(newRoom);
+                    Model.Resources.SerializeRooms();
+                    this.Close();
+                }
+            }
+            else
+            {
+                int index = ManagerWindow.oRooms.IndexOf(newRoom);
+                newRoom.Name = NameTextBox.Text;
+                newRoom.Available = (YesRadioButton.IsChecked == true) ? true : false;
+                newRoom.RoomType = temp;
+                ManagerWindow.oRooms[index].Name = NameTextBox.Text;
+                ManagerWindow.oRooms[index].Available = (YesRadioButton.IsChecked == true) ? true : false;
+                ManagerWindow.oRooms[index].RoomType = temp;
                 Model.Resources.SerializeRooms();
                 this.Close();
             }

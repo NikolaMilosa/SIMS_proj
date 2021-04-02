@@ -20,7 +20,7 @@ namespace Model
             Type ValueType = value.GetType();
             if (ValueType.Name == typeof(List<>).Name)
             {
-                List<string> temp = new List<string>() { "APPOINTMENT ROOM", "BEDROOM", "OPERATING ROOM", "STORAGE" };
+                List<string> temp = new List<string>() { "APPOINTMENT", "BEDROOM", "OPERATING", "STORAGE" };
                 return temp;
             }
             else
@@ -28,11 +28,11 @@ namespace Model
                 switch ((RoomType)value)
                 {
                     case RoomType.APPOINTMENT_ROOM:
-                        return "APPOINTMENT ROOM";
+                        return "APPOINTMENT";
                     case RoomType.BREAK_ROOM:
                         return "BEDROOM";
                     case RoomType.OPERATING_ROOM:
-                        return "OPERATING ROOM";
+                        return "OPERATING";
                     default:
                         return "STORAGE";
                 }
@@ -43,7 +43,7 @@ namespace Model
         {
             switch (value.ToString())
             {
-                case "APPOINTMENT ROOM":
+                case "APPOINTMENT":
                     return RoomType.APPOINTMENT_ROOM;
                 case "BEDROOM":
                     return RoomType.BREAK_ROOM;

@@ -85,23 +85,23 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 DataGridTextColumn roomNumber = new DataGridTextColumn();
                 roomNumber.Header = "Number";
-                roomNumber.Binding = new Binding("Id");
+                roomNumber.Binding = new Binding("Id") { Mode = BindingMode.OneWay };
                 MainDataGrid.Columns.Add(roomNumber);
 
                 DataGridTextColumn roomType = new DataGridTextColumn();
                 roomType.Header = "Room type";
-                roomType.Binding = new Binding("RoomType") { Converter = new RoomTypeConverter() };
+                roomType.Binding = new Binding("RoomType") { Converter = new RoomTypeConverter(), Mode = BindingMode.OneWay };
                 MainDataGrid.Columns.Add(roomType);
 
                 DataGridTextColumn roomName = new DataGridTextColumn();
                 roomName.Header = "Name";
-                roomName.Binding = new Binding("Name");
+                roomName.Binding = new Binding("Name") { Mode = BindingMode.OneWay };
                 roomName.Width = new DataGridLength(20, DataGridLengthUnitType.Star);
                 MainDataGrid.Columns.Add(roomName);
 
                 DataGridTextColumn roomAvailable = new DataGridTextColumn();
                 roomAvailable.Header = "Availability";
-                roomAvailable.Binding = new Binding("Available") { Converter = new AvailabilityConverter() };
+                roomAvailable.Binding = new Binding("Available") { Converter = new AvailabilityConverter(), Mode = BindingMode.OneWay };
                 MainDataGrid.Columns.Add(roomAvailable);
 
                 Binding binding = new Binding();
@@ -117,6 +117,23 @@ namespace ZdravoHospital.GUI.ManagerUI
                 Model.Resources.OpenRooms();
             RoomAddOrEdit dialog = new RoomAddOrEdit();
             dialog.Show();
+        }
+
+        private void MainDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                if(MainDataGrid.SelectedIndex != -1)
+                {
+                    RoomAddOrEdit dialog = new RoomAddOrEdit((Room)MainDataGrid.SelectedItem);
+                    dialog.Show();
+                }
+                e.Handled = true;
+            }
+            if (e.Key == Key.Right)
+            {
+                e.Handled = true;
+            }
         }
     }
 }
