@@ -18,7 +18,7 @@ namespace ZdravoHospital.GUI.ManagerUI
     /// <summary>
     /// Interaction logic for RoomAddOrEdit.xaml
     /// </summary>
-    public partial class RoomAddOrEdit : Window, INotifyPropertyChanged
+    public partial class RoomAddOrEdit : Window
     {
         List<RoomType> roomTypes = new List<RoomType>() { RoomType.APPOINTMENT_ROOM, RoomType.BREAK_ROOM, RoomType.STORAGE_ROOM, RoomType.OPERATING_ROOM };
         bool isAdder;
@@ -53,16 +53,6 @@ namespace ZdravoHospital.GUI.ManagerUI
             RoomTypeComboBox.SelectedIndex = roomTypes.IndexOf(r.RoomType);
             newRoom = r;
             isAdder = false;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public virtual void OnPropertyChanged(string name)
-        {
-            if(PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -102,9 +92,8 @@ namespace ZdravoHospital.GUI.ManagerUI
                 newRoom.Name = NameTextBox.Text;
                 newRoom.Available = (YesRadioButton.IsChecked == true) ? true : false;
                 newRoom.RoomType = temp;
-                ManagerWindow.oRooms[index].Name = NameTextBox.Text;
-                ManagerWindow.oRooms[index].Available = (YesRadioButton.IsChecked == true) ? true : false;
-                ManagerWindow.oRooms[index].RoomType = temp;
+                ManagerWindow.oRooms.Remove(ManagerWindow.oRooms[index]);
+                ManagerWindow.oRooms.Insert(index, newRoom);
                 Model.Resources.SerializeRooms();
                 this.Close();
             }

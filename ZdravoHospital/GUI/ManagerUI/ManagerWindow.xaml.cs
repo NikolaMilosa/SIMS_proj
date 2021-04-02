@@ -30,6 +30,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         Manager activeManager;
         static ActiveTable activeTable = ActiveTable.INITIAL_STATE;
+        Window dialog;
 
         //Observable collections:
         public static ObservableCollection<Room> oRooms;
@@ -115,22 +116,42 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             if (Model.Resources.rooms == null)
                 Model.Resources.OpenRooms();
-            RoomAddOrEdit dialog = new RoomAddOrEdit();
-            dialog.Show();
+            dialog = new RoomAddOrEdit();
+            dialog.ShowDialog();
         }
 
         private void MainDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-                if(MainDataGrid.SelectedIndex != -1)
+                if (MainDataGrid.SelectedIndex != -1)
                 {
-                    RoomAddOrEdit dialog = new RoomAddOrEdit((Room)MainDataGrid.SelectedItem);
-                    dialog.Show();
+                    dialog = new RoomAddOrEdit((Room)MainDataGrid.SelectedItem);
+                    dialog.ShowDialog();
                 }
                 e.Handled = true;
             }
             if (e.Key == Key.Right)
+            {
+                e.Handled = true;
+            }
+            if (e.Key == Key.Delete)
+            {
+                if (MainDataGrid.SelectedIndex != -1)
+                {
+                    dialog = new WarningDialog((Room)MainDataGrid.SelectedItem);
+                    dialog.ShowDialog();
+                }
+                e.Handled = true;
+            }
+            if (e.Key == Key.Left)
+            {
+                e.Handled = true;
+                if (activeTable == ActiveTable.ROOMS_TABLE)
+                    ShowRoomsButton.Focus();
+                //Further code for focus changing
+            }
+            if (e.Key == Key.Tab)
             {
                 e.Handled = true;
             }
