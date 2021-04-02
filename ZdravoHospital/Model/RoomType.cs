@@ -20,7 +20,7 @@ namespace Model
             Type ValueType = value.GetType();
             if (ValueType.Name == typeof(List<>).Name)
             {
-                List<string> temp = new List<string>() { "APPOINTMENT", "BEDROOM", "OPERATING", "STORAGE" };
+                List<string> temp = new List<string>() { "APPOINTMENT", "BEDROOM", "STORAGE", "OPERATING" };
                 return temp;
             }
             else

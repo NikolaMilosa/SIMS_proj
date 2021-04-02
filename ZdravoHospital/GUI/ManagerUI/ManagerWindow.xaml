@@ -12,7 +12,7 @@
     <Grid Background="Beige" Height="720" Width="1280">
         <Grid x:Name="MenuGrid" Background="#bec4c2" HorizontalAlignment="Left" Height="720" VerticalAlignment="Center" Width="224" KeyboardNavigation.TabNavigation="None">
             <Grid x:Name="BasicButtonsGrid" Margin="0,219,0,274" KeyboardNavigation.TabNavigation="None">
-                <Button x:Name="RoomsButton" TabIndex="0" FontSize="20" Background="#bec4c2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Height="76" VerticalAlignment="Top" Width="223" Margin="0,0,0,0" BorderThickness="0,0,0,1" GotFocus="RoomsButton_gotFocus">
+                <Button x:Name="RoomsButton" TabIndex="0" FontSize="20" Background="#bec4c2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Height="76" VerticalAlignment="Top" Width="223" Margin="0,0,0,0" BorderThickness="0,0,0,1" GotFocus="RoomsButton_gotFocus" PreviewKeyDown="MainMenu_PreviewKeyDown">
                     <StackPanel Orientation="Horizontal" Margin="30,0,0,0" KeyboardNavigation.TabNavigation="None">
                         <Image Source="../../Images/ManagerUI/Rooms.png" Height="50"/>
                         <Separator Width="15" Visibility="Hidden"></Separator>
@@ -21,7 +21,7 @@
                         <Image x:Name="RoomsMenuArrow" Source="../../Images/ManagerUI/Arrow.png" Height="29" Width="26" Visibility="Hidden"></Image>
                     </StackPanel>
                 </Button>
-                <Button x:Name="StaffButton" TabIndex="1" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="0,76,0,0" VerticalAlignment="Top" Height="76" Width="224" BorderThickness="0,0,0,1" GotFocus="StaffButton_gotFocus">
+                <Button x:Name="StaffButton" TabIndex="1" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="0,76,0,0" VerticalAlignment="Top" Height="76" Width="224" BorderThickness="0,0,0,1" GotFocus="StaffButton_gotFocus" PreviewKeyDown="MainMenu_PreviewKeyDown">
                     <StackPanel Orientation="Horizontal" Margin="30,0,0,0" KeyboardNavigation.TabNavigation="None">
                         <Image Source="../../Images/ManagerUI/Staff.png" Height="50" Visibility="Visible"></Image>
                         <Separator Width="15" Visibility="Hidden"></Separator>
@@ -30,7 +30,7 @@
                         <Image x:Name="StaffMenuArrow" Source="../../Images/ManagerUI/Arrow.png" Height="29" Width="26" Visibility="Hidden"></Image>
                     </StackPanel>
                 </Button>
-                <Button x:Name="InventoryButton" TabIndex="2" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="0,152,0,0" VerticalAlignment="Top" Height="75" Width="224" BorderThickness="0,0,0,1" GotFocus="InventoryButton_gotFocus">
+                <Button x:Name="InventoryButton" TabIndex="2" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="0,152,0,0" VerticalAlignment="Top" Height="75" Width="224" BorderThickness="0,0,0,1" GotFocus="InventoryButton_gotFocus" PreviewKeyDown="MainMenu_PreviewKeyDown">
                     <StackPanel Orientation="Horizontal" Margin="30,0,0,0" KeyboardNavigation.TabNavigation="None">
                         <Image Source="../../Images/ManagerUI/Inventory.png" Height="50" Width="50"></Image>
                         <Separator Width="15" Visibility="Hidden"></Separator>

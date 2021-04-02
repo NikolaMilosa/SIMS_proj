@@ -33,6 +33,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             RoomTypeComboBox.SelectedIndex = 0;
             YesRadioButton.IsChecked = true;
             isAdder = true;
+            this.Title = "Room adding";
         }
 
         public RoomAddOrEdit(Room r)
@@ -49,10 +50,15 @@ namespace ZdravoHospital.GUI.ManagerUI
                 YesRadioButton.IsChecked = true;
             else
                 NoRadioButton.IsChecked = true;
-
             RoomTypeComboBox.SelectedIndex = roomTypes.IndexOf(r.RoomType);
+            
             newRoom = r;
             isAdder = false;
+
+            WarningLabel.Visibility = Visibility.Hidden;
+            this.Title = "Room editing";
+
+            fieldChecker();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -103,6 +109,60 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void YesRadioButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                YesRadioButton.IsChecked = true;
+        }
+
+        private void NoRadioButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+                NoRadioButton.IsChecked = true;
+        }
+
+        private void fieldChecker()
+        {
+            if (NameTextBox.Text.Equals(String.Empty) || IdTextBox.Text.Equals(String.Empty) || WarningLabel.Visibility == Visibility.Visible)
+                ConfirmButton.IsEnabled = false;
+            else
+                ConfirmButton.IsEnabled = true;
+        }
+
+        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int id = Int32.Parse(IdTextBox.Text);
+            if (Model.Resources.rooms.ContainsKey(id))
+            {
+                WarningLabel.Content = "- Id exists";
+                WarningLabel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                WarningLabel.Visibility = Visibility.Hidden;
+            }
+
+            fieldChecker();
+        }
+
+        private void IdTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            char parsedCharacter = ' ';
+            if (Char.TryParse(e.Key.ToString(), out parsedCharacter))
+                if (!char.IsControl(parsedCharacter) && !char.IsDigit(parsedCharacter))
+                    e.Handled = true;
+        }
+
+        private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            fieldChecker();
+        }
+
+        private void RoomTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            fieldChecker();
         }
     }
 }

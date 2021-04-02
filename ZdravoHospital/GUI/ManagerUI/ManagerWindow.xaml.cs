@@ -156,5 +156,11 @@ namespace ZdravoHospital.GUI.ManagerUI
                 e.Handled = true;
             }
         }
+
+        private void MainMenu_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+                e.Handled = true;
+        }
     }
 }
