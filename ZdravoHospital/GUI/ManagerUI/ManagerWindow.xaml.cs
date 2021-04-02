@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,7 +20,22 @@ namespace ZdravoHospital.GUI.ManagerUI
     /// </summary>
     public partial class ManagerWindow : Window
     {
+        public enum ActiveTable
+        {
+            ROOMS_TABLE,
+            STAFF_TABLE,
+            INVENTORY_TABLE,
+            INITIAL_STATE
+        }
+
         Manager activeManager;
+        static ActiveTable activeTable = ActiveTable.INITIAL_STATE;
+
+        //Observable collections:
+        public static ObservableCollection<Room> oRooms;
+        public static ObservableCollection<Person> oPersons;
+        public static ObservableCollection<Inventory> oInventory;
+        
         public ManagerWindow(string au)
         {
             InitializeComponent();
@@ -58,10 +74,15 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void ShowRoomsButton_Click(object sender, RoutedEventArgs e)
         {
             if (Model.Resources.rooms == null)
-                Model.Resources.OpenRooms();
-
-            if (MainDataGrid.ItemsSource == null)
             {
+                Model.Resources.OpenRooms();
+                oRooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
+            }
+
+            if (activeTable != ActiveTable.ROOMS_TABLE)
+            {
+                activeTable = ActiveTable.ROOMS_TABLE;
+
                 DataGridTextColumn roomNumber = new DataGridTextColumn();
                 roomNumber.Header = "Number";
                 roomNumber.Binding = new Binding("Id");
@@ -83,12 +104,17 @@ namespace ZdravoHospital.GUI.ManagerUI
                 roomAvailable.Binding = new Binding("Available") { Converter = new AvailabilityConverter() };
                 MainDataGrid.Columns.Add(roomAvailable);
 
-                MainDataGrid.ItemsSource = Model.Resources.rooms.Values;
+                Binding binding = new Binding();
+                binding.Source = oRooms;
+                binding.Mode = BindingMode.OneWay;
+                MainDataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding);
             }
         }
 
         private void AddRoomButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Model.Resources.rooms == null)
+                Model.Resources.OpenRooms();
             RoomAddOrEdit dialog = new RoomAddOrEdit();
             dialog.Show();
         }

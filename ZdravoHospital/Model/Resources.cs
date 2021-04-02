@@ -36,5 +36,10 @@ namespace Model
                 rooms = new Dictionary<int, Room>();
         }
 
+        public static void SerializeRooms()
+        {
+            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms));
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -16,16 +17,25 @@ namespace Model
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((RoomType)value)
+            Type ValueType = value.GetType();
+            if (ValueType.Name == typeof(List<>).Name)
             {
-                case RoomType.APPOINTMENT_ROOM:
-                    return "APPOINTMENT ROOM";
-                case RoomType.BREAK_ROOM:
-                    return "BEDROOM";
-                case RoomType.OPERATING_ROOM:
-                    return "OPERATING ROOM";
-                default:
-                    return "STORAGE";
+                List<string> temp = new List<string>() { "APPOINTMENT ROOM", "BEDROOM", "OPERATING ROOM", "STORAGE" };
+                return temp;
+            }
+            else
+            {
+                switch ((RoomType)value)
+                {
+                    case RoomType.APPOINTMENT_ROOM:
+                        return "APPOINTMENT ROOM";
+                    case RoomType.BREAK_ROOM:
+                        return "BEDROOM";
+                    case RoomType.OPERATING_ROOM:
+                        return "OPERATING ROOM";
+                    default:
+                        return "STORAGE";
+                }
             }
         }
 

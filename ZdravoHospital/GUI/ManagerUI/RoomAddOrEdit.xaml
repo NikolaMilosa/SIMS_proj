@@ -17,8 +17,8 @@
         <Label x:Name="AvailableLabel" Content="Availability :" VerticalContentAlignment="Center" KeyboardNavigation.TabNavigation="None" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="60,220,0,0" VerticalAlignment="Top" Width="110"/>
         <RadioButton x:Name="YesRadioButton" GroupName="YesNo" Content="Yes" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="185,220,0,0" VerticalAlignment="Top" Height="32"/>
         <RadioButton x:Name="NoRadioButton" GroupName="YesNo" Content="No" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="32" Margin="273,220,0,0" VerticalAlignment="Top" Width="62"/>
-        <Button x:Name="ConfirmButton" Content="Confirm" Background="#bec4c2" FontSize="18" HorizontalAlignment="Left" Height="45" Margin="185,321,0,0" VerticalAlignment="Top" Width="90"/>
-        <Button x:Name="CancelButton" Content="Cancel" FontSize="18" Background="Beige" HorizontalAlignment="Left" Height="45" Margin="290,321,0,0" VerticalAlignment="Top" Width="90"/>
+        <Button x:Name="ConfirmButton" Content="Confirm" Background="#bec4c2" FontSize="18" HorizontalAlignment="Left" Height="45" Margin="185,321,0,0" VerticalAlignment="Top" Width="90" Click="ConfirmButton_Click"/>
+        <Button x:Name="CancelButton" Content="Cancel" FontSize="18" Background="Beige" HorizontalAlignment="Left" Height="45" Margin="290,321,0,0" VerticalAlignment="Top" Width="90" Click="CancelButton_Click"/>
 
     </Grid>
 </Window>
