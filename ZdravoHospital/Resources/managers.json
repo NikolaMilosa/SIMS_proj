@@ -1,0 +1,23 @@
+{
+  "mili": {
+    "Name": "Nikola",
+    "Surname": "Milosavljevic",
+    "Email": "milosavljevic.ra5.2018@uns.ac.rs",
+    "DateOfBirth": "1999-07-04T00:00:00",
+    "PhoneNumber": "0655026516",
+    "Username": "mili",
+    "ParentsName": "Dragan",
+    "MaritalStatus": 0,
+    "Gender": 0,
+    "CitizenId": "0407999800044",
+    "Address": {
+      "StreetName": "Stevana Mokranjca",
+      "Number": "18",
+      "City": {
+        "PostalCode": 21000,
+        "Name": "Novi Sad",
+        "Country": { "Name": "Serbia" }
+      }
+    }
+  }
+}

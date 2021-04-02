@@ -12,6 +12,7 @@ namespace Model
         public static Dictionary<string, Patient> patients;
         public static Dictionary<string, Doctor> doctors;
         public static Dictionary<string, Manager> managers;
+        public static Dictionary<int, Room> rooms;
         public static List<Period> periods;
         public static List<Notification> notifications;
         public static void OpenAccounts()
@@ -35,7 +36,26 @@ namespace Model
             string json = JsonConvert.SerializeObject(patients);
             File.WriteAllText(@"..\..\..\Resources\patients.json", json);
         }
-        
 
+        public static Manager findManager(string username)
+        {
+            managers = JsonConvert.DeserializeObject<Dictionary<string, Manager>>(File.ReadAllText(@"..\..\..\Resources\managers.json"));
+            Manager sol = managers[username];
+            managers.Clear();
+            managers = null;
+            return sol;
+        }
+
+        public static void OpenRooms()
+        {
+            rooms = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(@"..\..\..\Resources\rooms.json"));
+            if (rooms == null)
+                rooms = new Dictionary<int, Room>();
+        }
+
+        public static void SerializeRooms()
+        {
+            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms));
+        }
     }
 }

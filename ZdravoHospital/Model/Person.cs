@@ -14,8 +14,11 @@ namespace Model
         public MaritalStatus MaritalStatus { get; set; }
         public Gender Gender { get; set; }
         public string CitizenId { get; set; }
-
         public Address Address { get; set; }
 
+        public Person() 
+        {
+            Address = new Address();
+        }
     }
 }

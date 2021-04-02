@@ -1,0 +1,24 @@
+﻿<Window x:Class="ZdravoHospital.GUI.ManagerUI.RoomAddOrEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        mc:Ignorable="d"
+        Title=""
+        SizeToContent="WidthAndHeight">
+    <Grid Height="400" Width="400" Background="Beige">
+        <Label x:Name="IdLabel" Content="ID :" KeyboardNavigation.TabNavigation="None" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="35" Margin="40,70,0,0" VerticalAlignment="Top" Width="90"/>
+        <TextBox x:Name="IdTextBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="35" Margin="165,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" TextChanged="IdTextBox_TextChanged" KeyDown="IdTextBox_KeyDown"/>
+        <Label x:Name="NameLabel" Content="Name :" Width="90" Height="35" KeyboardNavigation.TabNavigation="None" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="40,120,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NameTextBox" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,120,0,0" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="35" TextChanged="NameTextBox_TextChanged"/>
+        <Label x:Name="RoomTypeLabel" Content="Type :" FontSize="18" KeyboardNavigation.TabNavigation="None" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="40,170,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="RoomTypeComboBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,170,0,0" VerticalAlignment="Top" Width="200" Height="30" SelectionChanged="RoomTypeComboBox_SelectionChanged"/>
+        <Label x:Name="AvailableLabel" Content="Availability :" VerticalContentAlignment="Center" KeyboardNavigation.TabNavigation="None" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="40,220,0,0" VerticalAlignment="Top" Width="110"/>
+        <RadioButton x:Name="YesRadioButton" GroupName="YesNo" Content="Yes" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,220,0,0" VerticalAlignment="Top" Height="32" KeyDown="YesRadioButton_KeyDown"/>
+        <RadioButton x:Name="NoRadioButton" GroupName="YesNo" Content="No" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="32" Margin="253,220,0,0" VerticalAlignment="Top" Width="62" KeyDown="NoRadioButton_KeyDown"/>
+        <Button x:Name="ConfirmButton" Content="Confirm" Background="#bec4c2" FontSize="18" HorizontalAlignment="Left" Height="45" Margin="165,321,0,0" VerticalAlignment="Top" Width="90" Click="ConfirmButton_Click"/>
+        <Button x:Name="CancelButton" Content="Cancel" FontSize="18" Background="Beige" HorizontalAlignment="Left" Height="45" Margin="270,321,0,0" VerticalAlignment="Top" Width="90" Click="CancelButton_Click"/>
+        <Label x:Name="WarningLabel" FontSize="18" VerticalContentAlignment="Center" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" Height="35" Margin="265,70,0,0" VerticalAlignment="Top" Width="100"/>
+    </Grid>
+</Window>
