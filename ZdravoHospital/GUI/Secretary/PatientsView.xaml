@@ -1,0 +1,108 @@
+﻿<Page x:Class="ZdravoHospital.GUI.Secretary.PatientsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:cvt="clr-namespace:ZdravoHospital"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="PatientsView"
+      Background="Beige">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="1" Grid.Column="1" Name="PatientsDataGrid" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Path=PatientsForTable}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Citizen ID" Binding="{Binding CitizenId}" MinWidth="70"></DataGridTextColumn>
+                <DataGridTextColumn Header="Health card" Binding="{Binding HealthCardNumber}" MinWidth="70"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="70"></DataGridTextColumn>
+                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="*"></DataGridTextColumn>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="0" Background="Lavender" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Orientation="Vertical" Grid.Column="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Parents name: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding ParentsName}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Date of birth: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding DateOfBirth, Converter={cvt:DateTimeFormatter}}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Username: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Username}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Email: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Email}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Phone: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding PhoneNumber}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Gender: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Gender}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Marital status: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding MaritalStatus}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Blood type: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="DarkRed" Text="{Binding BloodType}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Country: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Address.City.Country.Name}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="City: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Address.City.Name}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Postal code: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Address.City.PostalCode}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Street name: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Address.StreetName}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Street number: " VerticalAlignment="Center" />
+                                    <TextBlock Foreground="MidnightBlue" Text="{Binding Address.Number}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
+            <Button x:Name="EditPatientButton" Margin="20,25,20,25" Width="60" Click="EditPatientButton_Click"> Edit </Button>
+            <Button x:Name="DeletePatientButton" Margin="20,25,20,25" Width="60" Click="DeletePatientButton_Click"> Delete </Button>
+            <Button x:Name="HomePageButton" Margin="20,25,20,25" Width="60" Click="HomePageButton_Click"> Home </Button>
+        </StackPanel>
+    </Grid>
+</Page>

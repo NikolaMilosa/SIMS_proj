@@ -22,20 +22,19 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
         }
-        private void btnAddPatient_Click(object sender, RoutedEventArgs e)
+        private void AddPatientButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new PatientRegistrationPage());
         }
 
-        private void btnSeePatients_Click(object sender, RoutedEventArgs e)
+        private void SeePatientsButton_Click(object sender, RoutedEventArgs e)
         {
-            //var window = new PatientsView();
-            //window.Show();
+            NavigationService.Navigate(new PatientsView());
         }
 
-        private void btnAddGuest_Click(object sender, RoutedEventArgs e)
+        private void AddGuestButton_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new GuestAccountPage());
+            NavigationService.Navigate(new GuestAccountPage());
         }
     }
 }

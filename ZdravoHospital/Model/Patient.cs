@@ -28,5 +28,21 @@ namespace Model
             CitizenId = personID;
             BloodType = bloodType;
         }
+
+        // Guest patient constructor
+        public Patient(string name, string surname, string citizenId, string healthCardNum)
+        {
+            this.Name = name;
+            this.Surname = surname;
+            this.CitizenId = citizenId;
+            this.HealthCardNumber = healthCardNum;
+            this.IsGuest = true;
+        }
+
+        // default constructor for json serialization
+        public Patient()
+        {
+
+        }
     }
 }
