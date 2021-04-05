@@ -133,26 +133,21 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int id = Int32.Parse(IdTextBox.Text);
-            if (Model.Resources.rooms.ContainsKey(id))
+            int id;
+            if(Int32.TryParse(IdTextBox.Text, out id))
             {
-                WarningLabel.Content = "- Id exists";
-                WarningLabel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                WarningLabel.Visibility = Visibility.Hidden;
-            }
-
-            fieldChecker();
-        }
-
-        private void IdTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            char parsedCharacter = ' ';
-            if (Char.TryParse(e.Key.ToString(), out parsedCharacter))
-                if (!char.IsControl(parsedCharacter) && !char.IsDigit(parsedCharacter))
-                    e.Handled = true;
+                if (Model.Resources.rooms.ContainsKey(id))
+                {
+                    WarningLabel.Content = "- Id exists";
+                    WarningLabel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    WarningLabel.Visibility = Visibility.Hidden;
+                }
+                fieldChecker();
+            } 
+                
         }
 
         private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)

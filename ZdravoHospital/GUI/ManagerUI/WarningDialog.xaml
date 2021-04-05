@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="Warning!" 
         SizeToContent="WidthAndHeight">
     <Grid Height="300" Width="350" Background="Beige">
