@@ -24,8 +24,6 @@ namespace ZdravoHospital.GUI.ManagerUI
         bool isAdder;
         Inventory newInventory;
 
-        static readonly Regex reg = new Regex("[0-9]*$");
-
         public InventoryAddOrEdit()
         {
             InitializeComponent();
@@ -40,7 +38,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void fieldChecker()
         {
-            if (NameTextBox.Text.Equals(String.Empty) || SuplierTextBox.Text.Equals(String.Empty) || WarningLabel.Visibility == Visibility.Visible)
+            if (NameTextBox.Text.Equals(String.Empty) || SuplierTextBox.Text.Equals(String.Empty) || NameWarningLabel.Visibility == Visibility.Visible || QuantityWarningLabel.Visibility == Visibility.Visible)
                 ConfirmButton.IsEnabled = false;
             else
                 ConfirmButton.IsEnabled = true;
@@ -81,12 +79,12 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             if (Model.Resources.inventory.ContainsKey(NameTextBox.Text))
             {
-                WarningLabel.Content = "Item exists!";
-                WarningLabel.Visibility = Visibility.Visible;
+                NameWarningLabel.Content = "Item exists!";
+                NameWarningLabel.Visibility = Visibility.Visible;
             }
             else
             {
-                WarningLabel.Visibility = Visibility.Hidden;
+                NameWarningLabel.Visibility = Visibility.Hidden;
             }
 
             fieldChecker();
@@ -97,10 +95,22 @@ namespace ZdravoHospital.GUI.ManagerUI
             fieldChecker();
         }
 
-        private void QuantityTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void QuantityTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!reg.IsMatch(QuantityTextBox.Text))
-                e.Handled = true;
+            int temp;
+            if (Int32.TryParse(QuantityTextBox.Text, out temp))
+            {
+                QuantityWarningLabel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                if (QuantityTextBox.Text.Length != 0)
+                {
+                    QuantityTextBox.Text = QuantityTextBox.Text.Substring(0, QuantityTextBox.Text.Length - 1);
+                    QuantityWarningLabel.Visibility = Visibility.Visible;
+                    QuantityWarningLabel.Content = "- Only digits!";
+                }
+            }
             fieldChecker();
         }
     }

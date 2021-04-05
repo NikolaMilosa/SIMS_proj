@@ -10,7 +10,7 @@
         SizeToContent="WidthAndHeight">
     <Grid Height="400" Width="400" Background="Beige">
         <Label x:Name="IdLabel" Content="ID :" KeyboardNavigation.TabNavigation="None" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="35" Margin="40,70,0,0" VerticalAlignment="Top" Width="90"/>
-        <TextBox x:Name="IdTextBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="35" Margin="165,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" TextChanged="IdTextBox_TextChanged"/>
+        <TextBox x:Name="IdTextBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="35" Margin="165,70,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="77" TextChanged="IdTextBox_TextChanged"/>
         <Label x:Name="NameLabel" Content="Name :" Width="90" Height="35" KeyboardNavigation.TabNavigation="None" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="40,120,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="NameTextBox" TextWrapping="NoWrap" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,120,0,0" FontSize="18" VerticalAlignment="Top" Width="200" Height="35" TextChanged="NameTextBox_TextChanged"/>
         <Label x:Name="RoomTypeLabel" Content="Type :" FontSize="18" KeyboardNavigation.TabNavigation="None" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="40,170,0,0" VerticalAlignment="Top"/>

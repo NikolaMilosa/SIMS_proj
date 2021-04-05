@@ -131,25 +131,6 @@ namespace ZdravoHospital.GUI.ManagerUI
                 ConfirmButton.IsEnabled = true;
         }
 
-        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            int id;
-            if(Int32.TryParse(IdTextBox.Text, out id))
-            {
-                if (Model.Resources.rooms.ContainsKey(id))
-                {
-                    WarningLabel.Content = "- Id exists";
-                    WarningLabel.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    WarningLabel.Visibility = Visibility.Hidden;
-                }
-                fieldChecker();
-            } 
-                
-        }
-
         private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             fieldChecker();
@@ -157,6 +138,33 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void RoomTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            fieldChecker();
+        }
+
+        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int id = Int32.Parse(IdTextBox.Text);
+                if (!Model.Resources.rooms.ContainsKey(id))
+                {
+                    WarningLabel.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    WarningLabel.Content = "- Id exists!";
+                    WarningLabel.Visibility = Visibility.Visible;
+                }
+            }
+            catch
+            {
+                if(IdTextBox.Text.Length != 0)
+                {
+                    IdTextBox.Text = IdTextBox.Text.Substring(0, IdTextBox.Text.Length - 1);
+                    WarningLabel.Content = "- Only digits!";
+                    WarningLabel.Visibility = Visibility.Visible;
+                }
+            }
             fieldChecker();
         }
     }
