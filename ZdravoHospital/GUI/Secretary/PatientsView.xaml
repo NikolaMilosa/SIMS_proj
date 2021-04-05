@@ -21,7 +21,27 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="80"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="1" Grid.Column="1" Name="PatientsDataGrid" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Path=PatientsForTable}">
+        <DataGrid AlternationCount="2" Grid.Row="1" Grid.Column="1" Name="PatientsDataGrid" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Path=PatientsForTable}" BorderThickness="2" Background="Beige" GridLinesVisibility="Vertical">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="#CCC"></Setter>
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="#EEE"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
+                    <Setter Property="Background" Value="#EEE" />
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Height" Value="28" />
+                    <Setter Property="Width" Value="auto"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Citizen ID" Binding="{Binding CitizenId}" MinWidth="70"></DataGridTextColumn>
                 <DataGridTextColumn Header="Health card" Binding="{Binding HealthCardNumber}" MinWidth="70"></DataGridTextColumn>
