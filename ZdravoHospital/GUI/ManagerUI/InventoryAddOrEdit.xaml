@@ -21,6 +21,6 @@
         <Label x:Name="NameWarningLabel" Foreground="Red" Visibility="Hidden" FontSize="18" HorizontalAlignment="Left" Height="35" Margin="165,27,0,0" VerticalAlignment="Top" Width="172"/>
         <Button x:Name="ConfirmButton" IsEnabled="False" Content="Confirm" Background="#bec4c2" FontSize="18" HorizontalAlignment="Left" Height="45" Margin="165,321,0,0" VerticalAlignment="Top" Width="90" Click="ConfirmButton_Click"/>
         <Button x:Name="CancelButton" Content="Cancel" FontSize="18" Background="Beige" HorizontalAlignment="Left" Height="45" Margin="270,321,0,0" VerticalAlignment="Top" Width="90" Click="CancelButton_Click"/>
-        <Label x:Name="QuantityWarningLabel" VerticalContentAlignment="Center" FontSize="18" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" Height="35" Margin="270,170,0,0" VerticalAlignment="Top" Width="107"/>
+        <Label x:Name="QuantityWarningLabel" VerticalContentAlignment="Center" FontSize="18" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" Height="35" Margin="260,170,0,0" VerticalAlignment="Top" Width="107"/>
     </Grid>
 </Window>

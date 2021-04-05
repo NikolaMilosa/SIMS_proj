@@ -1,1 +1,1 @@
-{"test":{"Name":"test","Suplier":"TEST","Quantity":10,"InventoryType":1},"proba":{"Name":"proba","Suplier":"neki dostavljac","Quantity":12,"InventoryType":0},"something":{"Name":"something","Suplier":"KCF","Quantity":12,"InventoryType":0},"somethingNew":{"Name":"somethingNew","Suplier":"KFC","Quantity":424,"InventoryType":1}}
+{"test":{"Name":"test","Suplier":"TEST 123","Quantity":123,"InventoryType":1},"stitch":{"Name":"stitch","Suplier":"Jankovic DOO","Quantity":124,"InventoryType":1},"somethingNew":{"Name":"somethingNew","Suplier":"KFC","Quantity":424,"InventoryType":1}}

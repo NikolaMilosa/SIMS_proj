@@ -36,7 +36,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         public static ObservableCollection<Room> oRooms;
         public static ObservableCollection<Person> oPersons;
         public static ObservableCollection<Inventory> oInventory;
-        
+
         public ManagerWindow(string au)
         {
             InitializeComponent();
@@ -88,7 +88,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 activeTable = ActiveTable.ROOMS_TABLE;
 
-                if(MainDataGrid.Columns.Count != 0)
+                if (MainDataGrid.Columns.Count != 0)
                     MainDataGrid.Columns.Clear();
 
                 oRooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
@@ -147,11 +147,20 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 if (MainDataGrid.SelectedIndex != -1)
                 {
-                    if(activeTable == ActiveTable.ROOMS_TABLE)
+                    if (activeTable == ActiveTable.ROOMS_TABLE)
                     {
                         dialog = new RoomAddOrEdit((Room)MainDataGrid.SelectedItem);
                         dialog.ShowDialog();
-                    }                    
+                    }
+                    else if (activeTable == ActiveTable.INVENTORY_TABLE)
+                    {
+                        dialog = new InventoryAddOrEdit((Inventory)MainDataGrid.SelectedItem);
+                        dialog.ShowDialog();
+                    }
+                    else if (activeTable == ActiveTable.STAFF_TABLE)
+                    {
+                        //Code for staff edit
+                    }
                 }
                 e.Handled = true;
             }
@@ -163,8 +172,16 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 if (MainDataGrid.SelectedIndex != -1)
                 {
-                    dialog = new WarningDialog((Room)MainDataGrid.SelectedItem);
-                    dialog.ShowDialog();
+                    if (activeTable == ActiveTable.ROOMS_TABLE)
+                    {
+                        dialog = new WarningDialog((Room)MainDataGrid.SelectedItem);
+                        dialog.ShowDialog();
+                    }
+                    else if (activeTable == ActiveTable.INVENTORY_TABLE)
+                    {
+                        dialog = new WarningDialog((Inventory)MainDataGrid.SelectedItem);
+                        dialog.ShowDialog();
+                    }
                 }
                 e.Handled = true;
             }

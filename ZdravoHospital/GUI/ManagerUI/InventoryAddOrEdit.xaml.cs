@@ -36,6 +36,30 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.Title = "Inventory adding";
         }
 
+        public InventoryAddOrEdit(Inventory inv)
+        {
+            InitializeComponent();
+            this.newInventory = inv;
+
+            this.Title = "Inventory editing";
+            isAdder = false;
+
+            Binding binding = new Binding() { Converter = new InventoryTypeConverter() };
+            binding.Source = inventoryTypes;
+            TypeComboBox.SetBinding(ComboBox.ItemsSourceProperty, binding);
+
+            TypeComboBox.SelectedIndex = inventoryTypes.IndexOf(newInventory.InventoryType);
+            NameTextBox.Text = newInventory.Name;
+            NameTextBox.IsEnabled = false;
+
+            SuplierTextBox.Text = newInventory.Suplier;
+            QuantityTextBox.Text = newInventory.Quantity.ToString();
+
+            NameWarningLabel.Visibility = Visibility.Hidden;
+
+            fieldChecker();
+        }
+
         private void fieldChecker()
         {
             if (NameTextBox.Text.Equals(String.Empty) || SuplierTextBox.Text.Equals(String.Empty) || NameWarningLabel.Visibility == Visibility.Visible || QuantityWarningLabel.Visibility == Visibility.Visible)
@@ -66,7 +90,14 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
             else
             {
-                //Code for edit
+                int index = ManagerWindow.oInventory.IndexOf(newInventory);
+                newInventory.InventoryType = temp;
+                newInventory.Suplier = SuplierTextBox.Text;
+                newInventory.Quantity = Int32.Parse(QuantityTextBox.Text);
+                ManagerWindow.oInventory.Remove(ManagerWindow.oInventory[index]);
+                ManagerWindow.oInventory.Insert(index, newInventory);
+                Model.Resources.SerializeInventory();
+                this.Close();
             }
         }
 
@@ -100,13 +131,18 @@ namespace ZdravoHospital.GUI.ManagerUI
             int temp;
             if (Int32.TryParse(QuantityTextBox.Text, out temp))
             {
-                QuantityWarningLabel.Visibility = Visibility.Hidden;
+                if(temp >= 0)
+                    QuantityWarningLabel.Visibility = Visibility.Hidden;
+                else
+                {
+                    QuantityWarningLabel.Content = "- Negative!";
+                    QuantityWarningLabel.Visibility = Visibility.Visible;
+                }
             }
             else
             {
                 if (QuantityTextBox.Text.Length != 0)
                 {
-                    QuantityTextBox.Text = QuantityTextBox.Text.Substring(0, QuantityTextBox.Text.Length - 1);
                     QuantityWarningLabel.Visibility = Visibility.Visible;
                     QuantityWarningLabel.Content = "- Only digits!";
                 }
