@@ -243,8 +243,8 @@ namespace ZdravoHospital.GUI.ManagerUI
                 MainDataGrid.Columns.Add(inventoryType);
 
                 DataGridTextColumn inventorySuplier = new DataGridTextColumn();
-                inventorySuplier.Header = "Suplier";
-                inventorySuplier.Binding = new Binding("Suplier") { Mode = BindingMode.OneWay };
+                inventorySuplier.Header = "Supplier";
+                inventorySuplier.Binding = new Binding("Supplier") { Mode = BindingMode.OneWay };
                 inventorySuplier.Width = new DataGridLength(10, DataGridLengthUnitType.Star);
                 MainDataGrid.Columns.Add(inventorySuplier);
 

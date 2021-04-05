@@ -52,7 +52,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             NameTextBox.Text = newInventory.Name;
             NameTextBox.IsEnabled = false;
 
-            SuplierTextBox.Text = newInventory.Suplier;
+            SupplierTextBox.Text = newInventory.Supplier;
             QuantityTextBox.Text = newInventory.Quantity.ToString();
 
             NameWarningLabel.Visibility = Visibility.Hidden;
@@ -62,7 +62,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void fieldChecker()
         {
-            if (NameTextBox.Text.Equals(String.Empty) || SuplierTextBox.Text.Equals(String.Empty) || NameWarningLabel.Visibility == Visibility.Visible || QuantityWarningLabel.Visibility == Visibility.Visible)
+            if (NameTextBox.Text.Equals(String.Empty) || SupplierTextBox.Text.Equals(String.Empty) || NameWarningLabel.Visibility == Visibility.Visible || QuantityWarningLabel.Visibility == Visibility.Visible)
                 ConfirmButton.IsEnabled = false;
             else
                 ConfirmButton.IsEnabled = true;
@@ -79,7 +79,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             if (isAdder)
             {
-                newInventory = new Inventory(NameTextBox.Text, SuplierTextBox.Text, Int32.Parse(QuantityTextBox.Text), temp);
+                newInventory = new Inventory(NameTextBox.Text, SupplierTextBox.Text, Int32.Parse(QuantityTextBox.Text), temp);
                 if (!Model.Resources.inventory.ContainsKey(newInventory.Name))
                 {
                     Model.Resources.inventory[newInventory.Name] = newInventory;
@@ -92,7 +92,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 int index = ManagerWindow.oInventory.IndexOf(newInventory);
                 newInventory.InventoryType = temp;
-                newInventory.Suplier = SuplierTextBox.Text;
+                newInventory.Supplier = SupplierTextBox.Text;
                 newInventory.Quantity = Int32.Parse(QuantityTextBox.Text);
                 ManagerWindow.oInventory.Remove(ManagerWindow.oInventory[index]);
                 ManagerWindow.oInventory.Insert(index, newInventory);
@@ -121,7 +121,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             fieldChecker();
         }
 
-        private void SuplierTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void SupplierTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             fieldChecker();
         }

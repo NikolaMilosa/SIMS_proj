@@ -1,1 +1,1 @@
-{"test":{"Name":"test","Suplier":"TEST 123","Quantity":123,"InventoryType":1},"stitch":{"Name":"stitch","Suplier":"Jankovic DOO","Quantity":124,"InventoryType":1},"somethingNew":{"Name":"somethingNew","Suplier":"KFC","Quantity":424,"InventoryType":1}}
+{"test":{"Name":"test","Supplier":"TEST 123","Quantity":123,"InventoryType":1},"stitch":{"Name":"stitch","Supplier":"Jankovic DOO","Quantity":124,"InventoryType":1},"somethingNew":{"Name":"somethingNew","Supplier":"KFC","Quantity":424,"InventoryType":0}}
