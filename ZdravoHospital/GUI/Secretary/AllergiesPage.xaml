@@ -1,0 +1,41 @@
+﻿<Page x:Class="ZdravoHospital.GUI.Secretary.AllergiesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="AllergiesPage"
+      Background="Beige">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="160"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontFamily="Yu Gothic" FontSize="48" Foreground="MidnightBlue" Margin="10,0,0,0"> Update allergies </TextBlock>
+        <TextBlock Grid.Row="1" FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Medical allergens </TextBlock>
+        <TextBlock Grid.Row="4" FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="11,0,0,2"> Ingredient allergens </TextBlock>
+        <Button x:Name="SubmitAllergiesButton" Grid.Row="6" Margin="10" Width="90" Foreground="BlanchedAlmond" Background="MidnightBlue" FontSize="22" Click="SubmitAllergiesButton_Click"> Submit </Button>
+        <ComboBox Name="MedicalAllergensComboBox" Grid.Row="2" Margin="12,10,10,10" FontFamily="Yu Gothic" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Width="300" HorizontalAlignment="Left">
+            <ComboBoxItem> Panadol </ComboBoxItem>
+            <ComboBoxItem> Analgin </ComboBoxItem>
+            <ComboBoxItem> Amoxicillin </ComboBoxItem>
+        </ComboBox>
+        <ComboBox Name="IngredientAllergensComboBox" Grid.Row="5" Margin="10,10,10,10" FontFamily="Yu Gothic" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Width="300" HorizontalAlignment="Left">
+            <ComboBoxItem>Magnesium Stearate</ComboBoxItem>
+            <ComboBoxItem>Carmoisine</ComboBoxItem>
+            <ComboBoxItem>Gelatin</ComboBoxItem>
+        </ComboBox>
+    </Grid>
+</Page>

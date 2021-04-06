@@ -120,9 +120,10 @@
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
-            <Button x:Name="EditPatientButton" Margin="20,25,20,25" Width="60" Click="EditPatientButton_Click"> Edit </Button>
-            <Button x:Name="DeletePatientButton" Margin="20,25,20,25" Width="60" Click="DeletePatientButton_Click"> Delete </Button>
-            <Button x:Name="HomePageButton" Margin="20,25,20,25" Width="60" Click="HomePageButton_Click"> Home </Button>
+            <Button x:Name="EditPatientButton" Margin="10,25,10,25" Width="60" Click="EditPatientButton_Click"> Edit </Button>
+            <Button x:Name="DeletePatientButton" Margin="10,25,10,25" Width="60" Click="DeletePatientButton_Click"> Delete </Button>
+            <Button x:Name="HomePageButton" Margin="10,25,10,25" Width="60" Click="HomePageButton_Click"> Home </Button>
+            <Button x:Name="AddAllergyInfoButton" Margin="10,25,10,25" Width="60" Click="AddAllergyInfoButton_Click"> Allergies </Button>
         </StackPanel>
     </Grid>
 </Page>

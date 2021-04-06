@@ -99,5 +99,18 @@ namespace ZdravoHospital.GUI.Secretary
         {
             NavigationService.Navigate(new SecretaryHomePage());
         }
+
+        private void AddAllergyInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
+            if (selectedPatient == null)
+            {
+
+            }
+            else
+            {
+                NavigationService.Navigate(new AllergiesPage(selectedPatient));
+            }
+        }
     }
 }
