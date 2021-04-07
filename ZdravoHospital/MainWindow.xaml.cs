@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using Model;
 using ZdravoHospital.GUI.ManagerUI;
+using ZdravoHospital.GUI.PatientUI;
 using ZdravoHospital.GUI.Secretary;
 
 namespace ZdravoHospital
@@ -51,6 +52,7 @@ namespace ZdravoHospital
                             window = new SecretaryWindow();
                             break;
                         case RoleType.PATIENT:
+                            window = new PatientWindow();
                             break;
                     }
                     window.Show();

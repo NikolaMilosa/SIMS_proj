@@ -1,0 +1,55 @@
+﻿<Page x:Class="ZdravoHospital.GUI.PatientUI.AddAppointmentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="568" d:DesignWidth="734"
+      Title="AddAppointmentPage"
+      Background="White"
+      >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Select Doctor:" Margin="0,0,80,0" FontSize="24"/>
+            <ComboBox Name="selectDoctor" VerticalAlignment="Center" Width="200">
+            </ComboBox>
+        </StackPanel>
+        
+        <StackPanel  Orientation="Horizontal" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Select date:   " Margin="0,0,80,0" FontSize="24"/>
+            <DatePicker Name="selectDate"  Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2"  VerticalAlignment="Center" Background="White" Width="200"
+                        
+                        >
+                <DatePicker.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+        </StackPanel>
+        <StackPanel  Orientation="Horizontal" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Select time:  " Margin="0,0,80,0" FontSize="24"/>
+            <ComboBox Name="selectTime" VerticalAlignment="Center" Width="200">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Name="confirmButton" Content="Confirm" Width="150" Height="55"></Button>
+            <Button Name="cancelButton" Content="Cancel" Margin="80,0,0,0" Width="150" Height="55"></Button>
+        </StackPanel>
+    </Grid>
+</Page>
