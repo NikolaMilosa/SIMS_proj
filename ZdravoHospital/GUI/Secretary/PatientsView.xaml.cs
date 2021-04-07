@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -110,6 +111,77 @@ namespace ZdravoHospital.GUI.Secretary
             else
             {
                 NavigationService.Navigate(new AllergiesPage(selectedPatient));
+            }
+        }
+
+        public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+
+                    if (child != null && child is T)
+                        yield return (T)child;
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                        yield return childOfChild;
+                }
+            }
+        }
+
+        private void RemoveMedicalAllergenButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var listBox in FindVisualChildren<ListBox>(this))
+            {
+                if (listBox.Name == "MedicalAllergensListBox")
+                {
+                    Patient patient = (Patient)PatientsDataGrid.SelectedItem;
+                    patient.MedicineAllergens.Remove((Medicine)listBox.SelectedItem);
+                    if (File.Exists(@"..\..\..\Resources\patients.json"))
+                    {
+                        Model.Resources.OpenPatients();
+                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
+                        {
+                            if (item.Key.Equals(patient.Username))
+                            {
+                                Model.Resources.patients[item.Key] = patient;
+                                break;
+                            }
+                        }
+                        Model.Resources.SavePatients();
+                        CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
+
+                    }
+                }
+            }
+        }
+
+        private void RemoveIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var listBox in FindVisualChildren<ListBox>(this))
+            {
+                if (listBox.Name == "IngredientAllergensListBox")
+                {
+                    Patient patient = (Patient)PatientsDataGrid.SelectedItem;
+                    patient.IngredientAllergens.Remove((Ingredient)listBox.SelectedItem);
+                    if (File.Exists(@"..\..\..\Resources\patients.json"))
+                    {
+                        Model.Resources.OpenPatients();
+                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
+                        {
+                            if (item.Key.Equals(patient.Username))
+                            {
+                                Model.Resources.patients[item.Key] = patient;
+                                break;
+                            }
+                        }
+                        Model.Resources.SavePatients();
+                        CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
+
+                    }
+                }
             }
         }
     }

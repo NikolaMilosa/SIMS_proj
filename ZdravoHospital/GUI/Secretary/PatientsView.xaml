@@ -56,6 +56,10 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
                             
                             <StackPanel Orientation="Vertical" Grid.Column="0">
                                 <StackPanel Orientation="Horizontal">
@@ -113,6 +117,18 @@
                                     <TextBlock Text="Street number: " VerticalAlignment="Center" />
                                     <TextBlock Foreground="MidnightBlue" Text="{Binding Address.Number}" VerticalAlignment="Center" />
                                 </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="1">
+                                <Label Foreground="Red" FontWeight="SemiBold"> MEDICINE ALLERGENS </Label>
+                                <ListBox x:Name="MedicalAllergensListBox" ItemsSource="{Binding MedicineAllergens}" BorderBrush="Red" Background="Lavender" Height="100" Width="150"></ListBox>
+                                <Button x:Name="RemoveMedicalAllergenButton" Width="25" Height="25" HorizontalAlignment="Right" Background="MidnightBlue" Foreground="AntiqueWhite" FontSize="15" Margin="2" Click="RemoveMedicalAllergenButton_Click"> - </Button>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="1" Width="Auto">
+                                <Label Foreground="Red" FontWeight="SemiBold">INGREDIENT ALLERGENS</Label>
+                                <ListBox x:Name="IngredientAllergensListBox" ItemsSource="{Binding IngredientAllergens}" BorderBrush="Red" Background="Lavender" Height="100" Width="150"></ListBox>
+                                <Button x:Name="RemoveIngredientAllergenButton" Width="25" Height="25" HorizontalAlignment="Right" Background="MidnightBlue" Foreground="AntiqueWhite" Margin="2" FontSize="15" Click="RemoveIngredientAllergenButton_Click"> - </Button>
                             </StackPanel>
                         </Grid>
                     </Border>

@@ -14,28 +14,58 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="160"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" FontFamily="Yu Gothic" FontSize="48" Foreground="MidnightBlue" Margin="10,0,0,0"> Update allergies </TextBlock>
-        <TextBlock Grid.Row="1" FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Medical allergens </TextBlock>
-        <TextBlock Grid.Row="4" FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="11,0,0,2"> Ingredient allergens </TextBlock>
-        <Button x:Name="SubmitAllergiesButton" Grid.Row="6" Margin="10" Width="90" Foreground="BlanchedAlmond" Background="MidnightBlue" FontSize="22" Click="SubmitAllergiesButton_Click"> Submit </Button>
-        <ComboBox Name="MedicalAllergensComboBox" Grid.Row="2" Margin="12,10,10,10" FontFamily="Yu Gothic" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Width="300" HorizontalAlignment="Left">
-            <ComboBoxItem> Panadol </ComboBoxItem>
-            <ComboBoxItem> Analgin </ComboBoxItem>
-            <ComboBoxItem> Amoxicillin </ComboBoxItem>
-        </ComboBox>
-        <ComboBox Name="IngredientAllergensComboBox" Grid.Row="5" Margin="10,10,10,10" FontFamily="Yu Gothic" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Width="300" HorizontalAlignment="Left">
-            <ComboBoxItem>Magnesium Stearate</ComboBoxItem>
-            <ComboBoxItem>Carmoisine</ComboBoxItem>
-            <ComboBoxItem>Gelatin</ComboBoxItem>
-        </ComboBox>
+        <WrapPanel Grid.Row="1" VerticalAlignment="Bottom">
+            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Medical allergens</TextBlock>
+            <TextBox x:Name="SearchMedicalAllergensTextBox" Width="195" Margin="20,5,5,5" TextChanged="SearchMedicalAllergensTextBox_TextChanged"> </TextBox>
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="4">
+            <Label x:Name="MedicalSuccessLabel" Foreground="#FF30A911" Visibility="Hidden" Margin="10,0,0,0" Width="150" > Added successfully.</Label>
+            <Button x:Name="AddMedicalAllergenButton" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="220,0,10,0" Foreground="AntiqueWhite" Background="MidnightBlue" Click="AddMedicalAllergenButton_Click"> + </Button>
+        </WrapPanel>
+        
+        <ListBox x:Name="MedicalAllergensListBox" Grid.Row="2" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding MedicalAllergens}"></ListBox>
+        <WrapPanel Grid.Row="5" VerticalAlignment="Bottom" >
+            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Ingredient allergens</TextBlock>
+            <TextBox x:Name="SearchIngredientAllergensTextBox" Width="170" Margin="20,5,5,5" TextChanged="SearchIngredientAllergensTextBox_TextChanged" HorizontalAlignment="Stretch"></TextBox>
+        </WrapPanel>
+        <ListBox x:Name="IngredientAllergensListBox" Grid.Row="6" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding IngredientAllergens}"></ListBox>
+        
+
+        <WrapPanel Grid.Row="8">
+            <Label x:Name="IngredientSuccessLabel" Foreground="#FF30A911" Visibility="Hidden" Margin="10,0,0,0" Width="150">Added successfully.</Label>
+            <Button x:Name="AddIngredientAllergenButton" Grid.Row="8" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="220,0,10,0" Foreground="AntiqueWhite" Background="MidnightBlue" Click="AddIngredientAllergenButton_Click">+</Button>
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="9" VerticalAlignment="Bottom">
+            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Custom:</TextBlock>
+            <TextBox x:Name="CustomAllergenTextBox" Width="150" Margin="10,5,5,5" TextChanged="SearchMedicalAllergensTextBox_TextChanged"></TextBox>
+            <WrapPanel VerticalAlignment="Center">
+                <RadioButton GroupName="AllergenType" Name="MedicalRadioButton" Margin="5,0,10,0" VerticalAlignment="Bottom">Medical</RadioButton>
+                <RadioButton GroupName="AllergenType" Name="IngredientRadioButton">Ingredient</RadioButton>
+            </WrapPanel>
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="10" Margin="0,2,0,0">
+            <Label x:Name="CustomSuccessLabel" Foreground="#FF30A911" Visibility="Hidden" Margin="10,0,0,0" Width="150" >Added successfully.</Label>
+            <Button x:Name="AddCustomAllergenButton" Grid.Row="10" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="220,0,10,0" Foreground="AntiqueWhite" Background="MidnightBlue" Click="AddCustomAllergenButton_Click">+</Button>
+        </WrapPanel>
+
+        <Button x:Name="FinishButton" Grid.Row="11" Background="MidnightBlue" Foreground="AntiqueWhite" FontFamily="Yu Gothic" FontSize="22" Width="100" Height="40" Click="FinishButton_Click"> FINISH </Button>
+        
     </Grid>
 </Page>

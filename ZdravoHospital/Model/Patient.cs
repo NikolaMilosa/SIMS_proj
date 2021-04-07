@@ -37,6 +37,7 @@ namespace Model
             this.CitizenId = citizenId;
             this.HealthCardNumber = healthCardNum;
             this.IsGuest = true;
+            this.Username = "guest_" + healthCardNum;
         }
 
         // default constructor for json serialization

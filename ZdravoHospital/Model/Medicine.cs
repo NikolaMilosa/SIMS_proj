@@ -8,5 +8,13 @@ namespace Model
 
         public System.Collections.Generic.List<Ingredient> Ingredient { get; set; }
 
+        public Medicine(string name)
+        {
+            MedicineName = name;
+        }
+        public override string ToString()
+        {
+            return MedicineName;
+        }
     }
 }
