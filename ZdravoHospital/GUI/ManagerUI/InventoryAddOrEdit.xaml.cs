@@ -50,19 +50,20 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             TypeComboBox.SelectedIndex = inventoryTypes.IndexOf(newInventory.InventoryType);
             NameTextBox.Text = newInventory.Name;
-            NameTextBox.IsEnabled = false;
 
             SupplierTextBox.Text = newInventory.Supplier;
             QuantityTextBox.Text = newInventory.Quantity.ToString();
 
-            NameWarningLabel.Visibility = Visibility.Hidden;
+            IdTextBox.Text = newInventory.Id;
+            IdTextBox.IsEnabled = false;
+            IdWarningLabel.Visibility = Visibility.Hidden;
 
             fieldChecker();
         }
 
         private void fieldChecker()
         {
-            if (NameTextBox.Text.Equals(String.Empty) || SupplierTextBox.Text.Equals(String.Empty) || NameWarningLabel.Visibility == Visibility.Visible || QuantityWarningLabel.Visibility == Visibility.Visible)
+            if (NameTextBox.Text.Equals(String.Empty) || SupplierTextBox.Text.Equals(String.Empty) || IdWarningLabel.Visibility == Visibility.Visible || QuantityWarningLabel.Visibility == Visibility.Visible)
                 ConfirmButton.IsEnabled = false;
             else
                 ConfirmButton.IsEnabled = true;
@@ -79,10 +80,10 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             if (isAdder)
             {
-                newInventory = new Inventory(NameTextBox.Text, SupplierTextBox.Text, Int32.Parse(QuantityTextBox.Text), temp);
-                if (!Model.Resources.inventory.ContainsKey(newInventory.Name))
+                newInventory = new Inventory(NameTextBox.Text, SupplierTextBox.Text, Int32.Parse(QuantityTextBox.Text), temp, IdTextBox.Text);
+                if (!Model.Resources.inventory.ContainsKey(newInventory.Id))
                 {
-                    Model.Resources.inventory[newInventory.Name] = newInventory;
+                    Model.Resources.inventory[newInventory.Id] = newInventory;
                     ManagerWindow.oInventory.Add(newInventory);
                     Model.Resources.SerializeInventory();
                     this.Close();
@@ -91,6 +92,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             else
             {
                 int index = ManagerWindow.oInventory.IndexOf(newInventory);
+                newInventory.Name = NameTextBox.Text;
                 newInventory.InventoryType = temp;
                 newInventory.Supplier = SupplierTextBox.Text;
                 newInventory.Quantity = Int32.Parse(QuantityTextBox.Text);
@@ -106,16 +108,16 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.Close();
         }
 
-        private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Model.Resources.inventory.ContainsKey(NameTextBox.Text))
+            if (Model.Resources.inventory.ContainsKey(IdTextBox.Text))
             {
-                NameWarningLabel.Content = "Item exists!";
-                NameWarningLabel.Visibility = Visibility.Visible;
+                IdWarningLabel.Content = "Item exists!";
+                IdWarningLabel.Visibility = Visibility.Visible;
             }
             else
             {
-                NameWarningLabel.Visibility = Visibility.Hidden;
+                IdWarningLabel.Visibility = Visibility.Hidden;
             }
 
             fieldChecker();
@@ -147,6 +149,11 @@ namespace ZdravoHospital.GUI.ManagerUI
                     QuantityWarningLabel.Content = "- Only digits!";
                 }
             }
+            fieldChecker();
+        }
+
+        private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
             fieldChecker();
         }
     }

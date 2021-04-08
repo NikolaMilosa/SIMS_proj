@@ -61,8 +61,8 @@ namespace ZdravoHospital.GUI.ManagerUI
                     this.Close();
                     break;
                 case nameof(Inventory):
-                    string name = ((Inventory)someObject).Name;
-                    Model.Resources.inventory.Remove(name);
+                    string ident = ((Inventory)someObject).Id;
+                    Model.Resources.inventory.Remove(ident);
                     ManagerWindow.oInventory.Remove((Inventory)someObject);
                     Model.Resources.SerializeInventory();
                     this.Close();

@@ -8,10 +8,9 @@ namespace Model
     public static class Resources
     {
         public static Dictionary<string, Credentials> accounts;
-        public static Dictionary<string, Secretary> secretaries;
+        public static Dictionary<string, Employee> employees;
         public static Dictionary<string, Patient> patients;
         public static Dictionary<string, Doctor> doctors;
-        public static Dictionary<string, Manager> managers;
         public static Dictionary<int, Room> rooms;
         public static List<Period> periods;
         public static List<Notification> notifications;
@@ -38,12 +37,12 @@ namespace Model
             File.WriteAllText(@"..\..\..\Resources\patients.json", json);
         }
 
-        public static Manager findManager(string username)
+        public static Employee findManager(string username)
         {
-            managers = JsonConvert.DeserializeObject<Dictionary<string, Manager>>(File.ReadAllText(@"..\..\..\Resources\managers.json"));
-            Manager sol = managers[username];
-            managers.Clear();
-            managers = null;
+            employees = JsonConvert.DeserializeObject<Dictionary<string, Employee>>(File.ReadAllText(@"..\..\..\Resources\employees.json"));
+            Employee sol = employees[username];
+            employees.Clear();
+            employees = null;
             return sol;
         }
 

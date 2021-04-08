@@ -28,7 +28,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             INITIAL_STATE
         }
 
-        Manager activeManager;
+        Employee activeManager;
         static ActiveTable activeTable = ActiveTable.INITIAL_STATE;
         Window dialog;
 
@@ -225,6 +225,12 @@ namespace ZdravoHospital.GUI.ManagerUI
                     MainDataGrid.Columns.Clear();
 
                 oInventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
+
+                DataGridTextColumn inventoryId = new DataGridTextColumn();
+                inventoryId.Header = "Id";
+                inventoryId.Binding = new Binding("Id") { Mode = BindingMode.OneWay };
+                inventoryId.Width = new DataGridLength(10, DataGridLengthUnitType.Star);
+                MainDataGrid.Columns.Add(inventoryId);
 
                 DataGridTextColumn inventoryName = new DataGridTextColumn();
                 inventoryName.Header = "Name";
