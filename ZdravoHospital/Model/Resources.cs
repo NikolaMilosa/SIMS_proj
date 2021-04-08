@@ -8,13 +8,13 @@ namespace Model
     public static class Resources
     {
         public static Dictionary<string, Credentials> accounts;
-        public static Dictionary<string, Secretary> secretaries;
+        public static Dictionary<string, Employee> employees;
         public static Dictionary<string, Patient> patients;
         public static Dictionary<string, Doctor> doctors;
-        public static Dictionary<string, Manager> managers;
         public static Dictionary<int, Room> rooms;
         public static List<Period> periods;
         public static List<Notification> notifications;
+        public static Dictionary<string,Inventory> inventory;
         public static void OpenAccounts()
         {
             accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
@@ -37,12 +37,12 @@ namespace Model
             File.WriteAllText(@"..\..\..\Resources\patients.json", json);
         }
 
-        public static Manager findManager(string username)
+        public static Employee findManager(string username)
         {
-            managers = JsonConvert.DeserializeObject<Dictionary<string, Manager>>(File.ReadAllText(@"..\..\..\Resources\managers.json"));
-            Manager sol = managers[username];
-            managers.Clear();
-            managers = null;
+            employees = JsonConvert.DeserializeObject<Dictionary<string, Employee>>(File.ReadAllText(@"..\..\..\Resources\employees.json"));
+            Employee sol = employees[username];
+            employees.Clear();
+            employees = null;
             return sol;
         }
 
@@ -56,6 +56,33 @@ namespace Model
         public static void SerializeRooms()
         {
             File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms));
+        }
+
+        public static void OpenInventory()
+        {
+            inventory = JsonConvert.DeserializeObject<Dictionary<string,Inventory>>(File.ReadAllText(@"..\..\..\Resources\inventory.json"));
+            if (inventory == null)
+                inventory = new Dictionary<string, Inventory>();
+        }
+
+        public static void SerializeInventory()
+        {
+            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory));
+        }
+
+        internal static void CloseAllManager()
+        {
+            //Closer for all lists
+            if(rooms != null)
+            {
+                rooms.Clear();
+                rooms = null;
+            }
+            if(inventory != null)
+            {
+                inventory.Clear();
+                inventory = null;
+            }
         }
     }
 }

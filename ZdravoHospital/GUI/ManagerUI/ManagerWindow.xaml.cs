@@ -28,7 +28,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             INITIAL_STATE
         }
 
-        Manager activeManager;
+        Employee activeManager;
         static ActiveTable activeTable = ActiveTable.INITIAL_STATE;
         Window dialog;
 
@@ -36,7 +36,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         public static ObservableCollection<Room> oRooms;
         public static ObservableCollection<Person> oPersons;
         public static ObservableCollection<Inventory> oInventory;
-        
+
         public ManagerWindow(string au)
         {
             InitializeComponent();
@@ -52,6 +52,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             InventoryMenuArrow.Visibility = Visibility.Hidden;
 
             RoomsMenuGrid.Visibility = Visibility.Visible;
+            InventoryMenuGrid.Visibility = Visibility.Hidden;
         }
 
         private void StaffButton_gotFocus(object sender, RoutedEventArgs e)
@@ -61,6 +62,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             InventoryMenuArrow.Visibility = Visibility.Hidden;
 
             RoomsMenuGrid.Visibility = Visibility.Hidden;
+            InventoryMenuGrid.Visibility = Visibility.Hidden;
         }
 
         private void InventoryButton_gotFocus(object sender, RoutedEventArgs e)
@@ -70,19 +72,26 @@ namespace ZdravoHospital.GUI.ManagerUI
             InventoryMenuArrow.Visibility = Visibility.Visible;
 
             RoomsMenuGrid.Visibility = Visibility.Hidden;
+            InventoryMenuGrid.Visibility = Visibility.Visible;
         }
 
         private void ShowRoomsButton_Click(object sender, RoutedEventArgs e)
         {
             if (Model.Resources.rooms == null)
             {
+                Model.Resources.CloseAllManager();
+                CloseAllObservables();
                 Model.Resources.OpenRooms();
-                oRooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             }
 
             if (activeTable != ActiveTable.ROOMS_TABLE)
             {
                 activeTable = ActiveTable.ROOMS_TABLE;
+
+                if (MainDataGrid.Columns.Count != 0)
+                    MainDataGrid.Columns.Clear();
+
+                oRooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
 
                 DataGridTextColumn roomNumber = new DataGridTextColumn();
                 roomNumber.Header = "Number";
@@ -122,12 +131,36 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void MainDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Down)
+            {
+                if (MainDataGrid.SelectedIndex + 1 < MainDataGrid.Items.Count)
+                    MainDataGrid.SelectedIndex += 1;
+                e.Handled = true;
+            }
+            if (e.Key == Key.Up)
+            {
+                if (MainDataGrid.SelectedIndex - 1 >= 0)
+                    MainDataGrid.SelectedIndex -= 1;
+                e.Handled = true;
+            }
             if (e.Key == Key.Return)
             {
                 if (MainDataGrid.SelectedIndex != -1)
                 {
-                    dialog = new RoomAddOrEdit((Room)MainDataGrid.SelectedItem);
-                    dialog.ShowDialog();
+                    if (activeTable == ActiveTable.ROOMS_TABLE)
+                    {
+                        dialog = new RoomAddOrEdit((Room)MainDataGrid.SelectedItem);
+                        dialog.ShowDialog();
+                    }
+                    else if (activeTable == ActiveTable.INVENTORY_TABLE)
+                    {
+                        dialog = new InventoryAddOrEdit((Inventory)MainDataGrid.SelectedItem);
+                        dialog.ShowDialog();
+                    }
+                    else if (activeTable == ActiveTable.STAFF_TABLE)
+                    {
+                        //Code for staff edit
+                    }
                 }
                 e.Handled = true;
             }
@@ -139,16 +172,28 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 if (MainDataGrid.SelectedIndex != -1)
                 {
-                    dialog = new WarningDialog((Room)MainDataGrid.SelectedItem);
-                    dialog.ShowDialog();
+                    if (activeTable == ActiveTable.ROOMS_TABLE)
+                    {
+                        dialog = new WarningDialog((Room)MainDataGrid.SelectedItem);
+                        dialog.ShowDialog();
+                    }
+                    else if (activeTable == ActiveTable.INVENTORY_TABLE)
+                    {
+                        dialog = new WarningDialog((Inventory)MainDataGrid.SelectedItem);
+                        dialog.ShowDialog();
+                    }
                 }
                 e.Handled = true;
             }
             if (e.Key == Key.Left)
             {
                 e.Handled = true;
-                if (activeTable == ActiveTable.ROOMS_TABLE)
+                if (RoomsMenuGrid.Visibility == Visibility.Visible)
                     ShowRoomsButton.Focus();
+                else if (InventoryMenuGrid.Visibility == Visibility.Visible)
+                    ShowInventoryButton.Focus();
+                else
+                    StaffButton.Focus();
                 //Further code for focus changing
             }
             if (e.Key == Key.Tab)
@@ -161,6 +206,92 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             if (e.Key == Key.Left)
                 e.Handled = true;
+        }
+
+        private void ShowInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Model.Resources.inventory == null)
+            {
+                Model.Resources.CloseAllManager();
+                CloseAllObservables();
+                Model.Resources.OpenInventory();
+            }
+
+            if (activeTable != ActiveTable.INVENTORY_TABLE)
+            {
+                activeTable = ActiveTable.INVENTORY_TABLE;
+
+                if (MainDataGrid.Columns.Count != 0)
+                    MainDataGrid.Columns.Clear();
+
+                oInventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
+
+                DataGridTextColumn inventoryId = new DataGridTextColumn();
+                inventoryId.Header = "Id";
+                inventoryId.Binding = new Binding("Id") { Mode = BindingMode.OneWay };
+                inventoryId.Width = new DataGridLength(10, DataGridLengthUnitType.Star);
+                MainDataGrid.Columns.Add(inventoryId);
+
+                DataGridTextColumn inventoryName = new DataGridTextColumn();
+                inventoryName.Header = "Name";
+                inventoryName.Binding = new Binding("Name") { Mode = BindingMode.OneWay };
+                inventoryName.Width = new DataGridLength(10, DataGridLengthUnitType.Star);
+                MainDataGrid.Columns.Add(inventoryName);
+
+                DataGridTextColumn inventoryQuantity = new DataGridTextColumn();
+                inventoryQuantity.Header = "Quantity";
+                inventoryQuantity.Binding = new Binding("Quantity") { Mode = BindingMode.OneWay };
+                MainDataGrid.Columns.Add(inventoryQuantity);
+
+                DataGridTextColumn inventoryType = new DataGridTextColumn();
+                inventoryType.Header = "Type";
+                inventoryType.Binding = new Binding("InventoryType") { Converter = new InventoryTypeConverter(), Mode = BindingMode.OneWay };
+                MainDataGrid.Columns.Add(inventoryType);
+
+                DataGridTextColumn inventorySuplier = new DataGridTextColumn();
+                inventorySuplier.Header = "Supplier";
+                inventorySuplier.Binding = new Binding("Supplier") { Mode = BindingMode.OneWay };
+                inventorySuplier.Width = new DataGridLength(10, DataGridLengthUnitType.Star);
+                MainDataGrid.Columns.Add(inventorySuplier);
+
+                Binding binding = new Binding();
+                binding.Source = oInventory;
+                binding.Mode = BindingMode.OneWay;
+                MainDataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding);
+            }
+        }
+
+        private void CloseAllObservables()
+        {
+            if (oRooms != null)
+            {
+                oRooms.Clear();
+                oRooms = null;
+            }
+            if (oPersons != null)
+            {
+                oPersons.Clear();
+                oPersons = null;
+            }
+            if (oInventory != null)
+            {
+                oInventory.Clear();
+                oInventory = null;
+            }
+        }
+
+        private void MainDataGrid_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainDataGrid.SelectedIndex = 0;
+            MainDataGrid.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+        }
+
+        private void RequestInventory_Click(object sender, RoutedEventArgs e)
+        {
+            if (Model.Resources.inventory == null)
+                Model.Resources.OpenInventory();
+            dialog = new InventoryAddOrEdit();
+            dialog.ShowDialog();
         }
     }
 }

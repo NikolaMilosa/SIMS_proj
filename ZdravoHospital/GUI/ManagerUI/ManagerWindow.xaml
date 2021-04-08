@@ -8,6 +8,7 @@
         d:Width="1280" d:Height="720"
         Title="Manager panel"
         ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
     <Grid Background="Beige" Height="720" Width="1280">
         <Grid x:Name="MenuGrid" Background="#bec4c2" HorizontalAlignment="Left" Height="720" VerticalAlignment="Center" Width="224" KeyboardNavigation.TabNavigation="None">
@@ -46,12 +47,17 @@
             </Grid>
             <Label x:Name="WelcomeLabel" Content="Welcome, " KeyboardNavigation.TabNavigation="None" FontSize="22" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="42" Margin="0,146,0,0" VerticalAlignment="Top" Width="204" FontFamily="Harlow Solid Italic"/>
         </Grid>
-        <DataGrid x:Name="MainDataGrid" IsReadOnly="True" CanUserResizeColumns="False" SelectionMode="Single" CanUserResizeRows="False" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" AutoGenerateColumns="False" FontSize="20" HorizontalAlignment="Left" Height="630" Margin="450,35,35,35" VerticalAlignment="Top" Width="795" BorderThickness="1,1,1,1" PreviewKeyDown="MainDataGrid_PreviewKeyDown"/>
+        <DataGrid x:Name="MainDataGrid" SelectionUnit="FullRow" IsReadOnly="True" CanUserResizeColumns="False" SelectionMode="Single" CanUserResizeRows="False" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" AutoGenerateColumns="False" FontSize="20" HorizontalAlignment="Left" Height="630" Margin="450,35,35,35" VerticalAlignment="Top" Width="795" BorderThickness="1,1,1,1" PreviewKeyDown="MainDataGrid_PreviewKeyDown" GotFocus="MainDataGrid_GotFocus"/>
         <Grid x:Name="RoomsMenuGrid" Visibility="Hidden" HorizontalAlignment="Left" Background="#bec4c2" Height="228" Margin="224,218,0,0" VerticalAlignment="Top" Width="148">
             <Button x:Name="ShowRoomsButton" Margin="5,0,0,0" Content="Show rooms" FontSize="15" Background="#bec4c2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="76" Width="142" BorderThickness="0,1,0,0" TabIndex="4" Click="ShowRoomsButton_Click"/>
             <Button x:Name="AddRoomButton" FontSize="15" Background="#bec4c2" Content="Add room" HorizontalAlignment="Left" Margin="5,76,0,0" Height="76" Width="142" VerticalAlignment="Top" BorderThickness="0,1,0,0" TabIndex="5" Click="AddRoomButton_Click"/>
             <Button x:Name="ManageInventoryButton" Content="Manage Inventory" Background="#bec4c2" FontSize="15" Width="142" Height="76" HorizontalAlignment="Left" Margin="5,152,0,0" VerticalAlignment="Top" BorderThickness="0,1,0,1" TabIndex="6"/>
             <Border BorderThickness="1" KeyboardNavigation.TabNavigation="None" BorderBrush="#FF707070" HorizontalAlignment="Left" Height="228" VerticalAlignment="Top" Width="5"/>
+        </Grid>
+        <Grid x:Name="InventoryMenuGrid" Visibility="Hidden" Background="#bec4c2" HorizontalAlignment="Left" Height="152" Margin="224,370,0,0" VerticalAlignment="Top" Width="148">
+            <Border BorderThickness="1" KeyboardNavigation.TabNavigation="None" BorderBrush="#FF707070" HorizontalAlignment="Left" Height="152" VerticalAlignment="Center" Width="5"/>
+            <Button x:Name="ShowInventoryButton" Content="Show inventory" FontSize="15" Background="#bec4c2" HorizontalAlignment="Left" Height="76" Margin="5,0,0,0" VerticalAlignment="Top" Width="143" BorderThickness="0,1,0,0" Click="ShowInventoryButton_Click"/>
+            <Button x:Name="RequestInventory" Background="#bec4c2" Content="Request inventory" FontSize="15" HorizontalAlignment="Left" Height="76" Margin="5,76,0,0" VerticalAlignment="Top" Width="143" BorderThickness="0,1,0,1" Click="RequestInventory_Click"/>
         </Grid>
     </Grid>
 </Window>

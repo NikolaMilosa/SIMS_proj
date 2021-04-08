@@ -61,7 +61,11 @@ namespace ZdravoHospital.GUI.ManagerUI
                     this.Close();
                     break;
                 case nameof(Inventory):
-                    //Code for Inventory deleting
+                    string ident = ((Inventory)someObject).Id;
+                    Model.Resources.inventory.Remove(ident);
+                    ManagerWindow.oInventory.Remove((Inventory)someObject);
+                    Model.Resources.SerializeInventory();
+                    this.Close();
                     break;
                 default:
                     //Code for Staff deleting
