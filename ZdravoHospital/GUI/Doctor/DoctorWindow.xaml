@@ -1,0 +1,177 @@
+﻿<Window x:Class="ZdravoHospital.GUI.Doctor.DoctorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.Doctor"
+        mc:Ignorable="d"
+        Title="DoctorWindow" Height="700" Width="1500"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+    <Window.Resources>
+        <Style x:Key="TabButton" 
+               TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <DockPanel Background="Black">
+        <Grid DockPanel.Dock="Top"
+                    Height="66"
+                    Background="Black"
+              Margin="0, 2, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="ScheduleTabButton"
+                        Click="ScheduleTabButton_Click"
+                        MouseEnter="ScheduleTabButton_MouseEnter"
+                        MouseLeave="ScheduleTabButton_MouseLeave"
+                        Style="{StaticResource TabButton}"
+                        Margin="0, 0, 60, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="ScheduleTabImage"
+                               Source="../../Images/Doctor/schedule_dodger_blue.png"
+                           Height="38"
+                           Width="38"/>
+                        <TextBlock Name="ScheduleTabTextBlock"
+                                   Text="Schedule"
+                                   Foreground="DodgerBlue"
+                                   FontSize="24"
+                                   VerticalAlignment="Center"
+                                   Margin="8, 0, 0, 0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="PatientsTabButton"
+                    Click="PatientsTabButton_Click"
+                        MouseEnter="PatientsTabButton_MouseEnter"
+                        MouseLeave="PatientsTabButton_MouseLeave"
+                        Style="{StaticResource TabButton}"
+                        Margin="0, 0, 60, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="PatientsTabImage"
+                               Source="../../Images/Doctor/patients_dark_gray.png"
+                           Height="38"
+                           Width="38"/>
+                        <TextBlock Name="PatientsTabTextBlock"
+                                   Text="Patients"
+                                   Foreground="DarkGray"
+                                   FontSize="24"
+                                   VerticalAlignment="Center"
+                                   Margin="8, 0, 0, 0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="MedicinesTabButton"
+                    Click="MedicinesTabButton_Click"
+                        MouseEnter="MedicinesTabButton_MouseEnter"
+                        MouseLeave="MedicinesTabButton_MouseLeave"
+                        Style="{StaticResource TabButton}"
+                        Margin="0, 0, 60, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="MedicinesTabImage"
+                               Source="../../Images/Doctor/medicines_dark_gray.png"
+                           Height="38"
+                           Width="38"/>
+                        <TextBlock x:Name="MedicinesTabTextBlock"
+                                   Text="Medicines"
+                                   Foreground="DarkGray"
+                                   FontSize="24"
+                                   VerticalAlignment="Center"
+                                   Margin="8, 0, 0, 0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="NotificationsTabButton"
+                    Click="NotificationsTabButton_Click"
+                        MouseEnter="NotificationsTabButton_MouseEnter"
+                        MouseLeave="NotificationsTabButton_MouseLeave"
+                        Style="{StaticResource TabButton}"
+                        Margin="0, 0, 60, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="NotificationsTabImage"
+                               Source="../../Images/Doctor/notifications_dark_gray.png"
+                           Height="38"
+                           Width="38"/>
+                        <TextBlock x:Name="NotificationsTabTextBlock"
+                                   Text="Notifications"
+                                   Foreground="DarkGray"
+                                   FontSize="24"
+                                   VerticalAlignment="Center"
+                                   Margin="8, 0, 0, 0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        FlowDirection="RightToLeft">
+                <Button x:Name="UserButton"
+                        Background="Transparent"
+                        Style="{StaticResource TabButton}"
+                        Margin="60, 0, 60, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="UserImage"
+                               Source="../../Images/Doctor/user_dodger_blue.png"
+                           Height="38"
+                           Width="38"
+                               Margin="0, 0, 8, 0"/>
+                        <TextBlock x:Name="UserTextBlock"
+                                   Text="Elena Milivojevic"
+                                   Foreground="DodgerBlue"
+                                   FontSize="24"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <TabControl x:Name="TabControl"
+                    TabStripPlacement="Top"
+                    Padding="-1">
+            <TabItem Name="ScheduleTab"
+                     Visibility="Collapsed">
+                <TabItem.Content>
+                    <Frame Source="SchedulePage.xaml"
+                           NavigationUIVisibility="Hidden">
+                    </Frame>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Name="PatientsTab"
+                     Visibility="Collapsed">
+                <TabItem.Content>
+                    <Frame Source="SearchPatientsPage.xaml"
+                           NavigationUIVisibility="Hidden">
+                    </Frame>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Name="MedicinesTab"
+                     Visibility="Collapsed">
+                <TabItem.Content>
+                    <Frame Source="MedicinesPage.xaml"
+                           NavigationUIVisibility="Hidden">
+                    </Frame>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Name="NotificationsTab"
+                     Visibility="Collapsed">
+                <TabItem.Content>
+                    <Frame Source="NotificationsPage.xaml"
+                           NavigationUIVisibility="Hidden">
+                    </Frame>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
