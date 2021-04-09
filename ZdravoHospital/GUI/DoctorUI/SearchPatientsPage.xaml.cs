@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ZdravoHospital.GUI.Doctor
+namespace ZdravoHospital.GUI.DoctorUI
 {
     /// <summary>
-    /// Interaction logic for NotificationsPage.xaml
+    /// Interaction logic for SearchPatientsPage.xaml
     /// </summary>
-    public partial class NotificationsPage : Page
+    public partial class SearchPatientsPage : Page
     {
-        public NotificationsPage()
+        public SearchPatientsPage()
         {
             InitializeComponent();
         }

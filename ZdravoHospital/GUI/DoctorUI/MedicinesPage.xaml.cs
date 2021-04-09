@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ZdravoHospital.GUI.Doctor
+namespace ZdravoHospital.GUI.DoctorUI
 {
     /// <summary>
     /// Interaction logic for MedicinesPage.xaml

@@ -84,5 +84,18 @@ namespace Model
                 inventory = null;
             }
         }
+
+        public static void SerializeDoctors()
+        {
+            File.WriteAllText(@"..\..\..\Resources\doctors.json", JsonConvert.SerializeObject(doctors));
+        }
+
+        public static void DeserializeDoctors()
+        {
+            doctors = JsonConvert.DeserializeObject<Dictionary<string, Doctor>>(File.ReadAllText(@"..\..\..\Resources\doctors.json"));
+
+            if (doctors == null)
+                doctors = new Dictionary<string, Doctor>();
+        }
     }
 }

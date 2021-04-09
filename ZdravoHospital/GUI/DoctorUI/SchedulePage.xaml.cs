@@ -11,51 +11,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Model;
 
-namespace ZdravoHospital.GUI.Doctor
+namespace ZdravoHospital.GUI.DoctorUI
 {
     /// <summary>
     /// Interaction logic for SchedulePage.xaml
     /// </summary>
     public partial class SchedulePage : Page, INotifyPropertyChanged
     {
-        private DateTime[] daysDates;
-        public DateTime[] DaysDates
-        {
-            get
-            { 
-                return daysDates;
-            }
+        public DateTime[] DaysDates { get; set; }
 
-            set
-            {
-                daysDates = value;
-                OnPropertyChanged("DaysDates");
-            }
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
         
-        private string someText;
-        public string SomeText
-        {
-            get
-            { 
-                return someText;
-            }
-
-            set
-            {
-                someText = value;
-                OnPropertyChanged("SomeText");
-            }
-        }
-
         public SchedulePage()
         {
             InitializeComponent();
 
             DataContext = this;
 
-            SomeText = "old text";
+            DoctorsComboBox.ItemsSource = Model.Resources.doctors.Values;
+            DoctorsComboBox.SelectedItem = Model.Resources.doctors[App.currentUser];
 
             int dayOfWeek = (int)DateTime.Now.DayOfWeek;
 
@@ -72,7 +48,6 @@ namespace ZdravoHospital.GUI.Doctor
             DaysDates[6] = DateTime.Now.AddDays(7 - dayOfWeek);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -10,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ZdravoHospital.GUI.Doctor
+namespace ZdravoHospital.GUI.DoctorUI
 {
     /// <summary>
     /// Interaction logic for DoctorWindow.xaml
@@ -20,6 +21,10 @@ namespace ZdravoHospital.GUI.Doctor
         public DoctorWindow()
         {
             InitializeComponent();
+
+            Model.Resources.DeserializeDoctors();
+            Doctor doctor = Model.Resources.doctors[App.currentUser];
+            UserTextBlock.Text = doctor.Name + " " + doctor.Surname;
         }
 
         private void ScheduleTabButton_Click(object sender, RoutedEventArgs e)

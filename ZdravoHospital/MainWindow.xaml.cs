@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Model;
-using ZdravoHospital.GUI.Doctor;
+using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI;
 using ZdravoHospital.GUI.Secretary;
 
@@ -29,6 +29,16 @@ namespace ZdravoHospital
         {
             InitializeComponent();
             Model.Resources.OpenAccounts();
+
+            //Doctor d1 = new Doctor("Marko", "Panelic", "pantela", "Doctor");
+            //Doctor d2 = new Doctor("Nikola", "Zigic", "zigara", "Cardio surgent");
+            //Model.Resources.doctors = new Dictionary<string, Doctor>();
+            //Model.Resources.doctors[d1.Username] = d1;
+            //Model.Resources.doctors[d2.Username] = d2;
+            //Model.Resources.accounts[d1.Username] = new Credentials(d1.Username, "pantela", RoleType.DOCTOR);
+            //Model.Resources.accounts[d2.Username] = new Credentials(d2.Username, "zigara", RoleType.DOCTOR);
+            //Model.Resources.SerializeDoctors();
+            //Model.Resources.SaveAccounts();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -40,7 +50,9 @@ namespace ZdravoHospital
             {
                 if (Model.Resources.accounts[username].Password.Equals(password))
                 {
+                    App.currentUser = username;
                     Window window = null;
+
                     switch (Model.Resources.accounts[username].Role)
                     {
                         case RoleType.MANAGER:
@@ -55,6 +67,7 @@ namespace ZdravoHospital
                         case RoleType.PATIENT:
                             break;
                     }
+
                     window.Show();
                     this.Close();
                 } 

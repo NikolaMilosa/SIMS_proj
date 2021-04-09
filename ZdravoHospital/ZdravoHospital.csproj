@@ -56,4 +56,10 @@
     <Resource Include="Images\ManagerUI\testingAccount.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\doctors.json">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+
 </Project>
