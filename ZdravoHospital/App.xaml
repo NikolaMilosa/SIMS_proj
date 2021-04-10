@@ -4,8 +4,14 @@
              xmlns:local="clr-namespace:ZdravoHospital"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="DodgerButton" TargetType="Button">
-            <Setter Property="Background" Value="DodgerBlue"/>
+        <Brush x:Key="Blue">#0460FF</Brush>
+        <Brush x:Key="BlueHover">#0440FF</Brush>
+        <Brush x:Key="BlackHover">#0b0b0b</Brush>
+        <Brush x:Key="LightGray">#bfbfbf</Brush>
+        
+        <Style x:Key="BlueButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Blue}"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Template">
@@ -22,16 +28,16 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="0.8"/>
+                    <Setter Property="Background" Value="{StaticResource BlueHover}"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Background" Value="{StaticResource Blue}"/>
                 </Trigger>
             </Style.Triggers>
         </Style> 
-        <Style x:Key="BlackDodgerButton" TargetType="Button">
+        <Style x:Key="BlackButton" TargetType="Button">
             <Setter Property="Background" Value="Black"/>
-            <Setter Property="Foreground" Value="DodgerBlue"/>
+            <Setter Property="Foreground" Value="{StaticResource LightGray}"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Template">
@@ -48,10 +54,11 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="0.8"/>
+                    <Setter Property="Background" Value="{StaticResource BlackHover}"/>
+                    <Setter Property="Foreground" Value="White"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="{StaticResource Blue}"/>
                 </Trigger>
             </Style.Triggers>
         </Style> 

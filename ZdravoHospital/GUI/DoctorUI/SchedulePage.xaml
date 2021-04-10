@@ -9,7 +9,7 @@
       Title="SchedulePage">
 
     <Grid>
-        <DockPanel Background="#333333">
+        <DockPanel Background="#222222">
             <DockPanel DockPanel.Dock="Top" Background="Black" Height="70">
                 <Grid DockPanel.Dock="Left">
                     <Grid.ColumnDefinitions>
@@ -467,19 +467,18 @@
             </ScrollViewer>
         </DockPanel>
         <Grid Name="NewPeriodPopUp"
-              Visibility="Hidden"
                    Background="Transparent">
             <DockPanel Background="Black"
                        Opacity="0.8">
             </DockPanel>
-            <StackPanel Background="#333333"
+            <StackPanel Background="#222222"
                         Margin="0, -100, 0, 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Button x:Name="NewAppointmentButton"
                         Content="New appointment"
                         Click="NewAppointmentButton_Click"
-                        Style="{StaticResource BlackDodgerButton}"
+                        Style="{StaticResource BlueButton}"
                         Height="40"
                         Width="250"
                         Margin="50, 50, 50, 0"/>
@@ -488,11 +487,11 @@
                         Click="NewOperationButton_Click"
                         Height="40"
                         Width="250"
-                        Style="{StaticResource BlackDodgerButton}"
+                        Style="{StaticResource BlueButton}"
                         Margin="0, 25, 0, 0"/>
                 <Button x:Name="CancelButton"
                         Content="Cancel"
-                        Style="{StaticResource DodgerButton}"
+                        Style="{StaticResource BlackButton}"
                         Click="CancelButton_Click"
                         Height="40"
                         Width="200"

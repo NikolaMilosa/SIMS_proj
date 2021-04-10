@@ -31,23 +31,23 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (PatientsTab.IsSelected)
             {
-                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_dark_gray.png", UriKind.Relative));
-                PatientsTabTextBlock.Foreground = Brushes.DarkGray;
+                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_light_gray.png", UriKind.Relative));
+                PatientsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (MedicinesTab.IsSelected)
             {
-                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_dark_gray.png", UriKind.Relative));
-                MedicinesTabTextBlock.Foreground = Brushes.DarkGray;
+                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_light_gray.png", UriKind.Relative));
+                MedicinesTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (NotificationsTab.IsSelected)
             {
-                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_dark_gray.png", UriKind.Relative));
-                NotificationsTabTextBlock.Foreground = Brushes.DarkGray;
+                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_light_gray.png", UriKind.Relative));
+                NotificationsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
 
             ScheduleTab.IsSelected = true;
-            ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_dodger_blue.png", UriKind.Relative));
-            ScheduleTabTextBlock.Foreground = Brushes.DodgerBlue;
+            ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_blue.png", UriKind.Relative));
+            ScheduleTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
         }
 
         private void ScheduleTabButton_MouseEnter(object sender, MouseEventArgs e)
@@ -63,13 +63,13 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (ScheduleTab.IsSelected)
             {
-                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_dodger_blue.png", UriKind.Relative));
-                ScheduleTabTextBlock.Foreground = Brushes.DodgerBlue;
+                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_blue.png", UriKind.Relative));
+                ScheduleTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
             }
             else
             {
-                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_dark_gray.png", UriKind.Relative));
-                ScheduleTabTextBlock.Foreground = Brushes.DarkGray;
+                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_light_gray.png", UriKind.Relative));
+                ScheduleTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
         }
 
@@ -77,23 +77,23 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (ScheduleTab.IsSelected)
             {
-                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_dark_gray.png", UriKind.Relative));
-                ScheduleTabTextBlock.Foreground = Brushes.DarkGray;
+                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_light_gray.png", UriKind.Relative));
+                ScheduleTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (MedicinesTab.IsSelected)
             {
-                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_dark_gray.png", UriKind.Relative));
-                MedicinesTabTextBlock.Foreground = Brushes.DarkGray;
+                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_light_gray.png", UriKind.Relative));
+                MedicinesTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (NotificationsTab.IsSelected)
             {
-                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_dark_gray.png", UriKind.Relative));
-                NotificationsTabTextBlock.Foreground = Brushes.DarkGray;
+                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_light_gray.png", UriKind.Relative));
+                NotificationsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
 
             PatientsTab.IsSelected = true;
-            PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_dodger_blue.png", UriKind.Relative));
-            PatientsTabTextBlock.Foreground = Brushes.DodgerBlue;
+            PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_blue.png", UriKind.Relative));
+            PatientsTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
         }
 
         private void PatientsTabButton_MouseEnter(object sender, MouseEventArgs e)
@@ -109,13 +109,13 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (PatientsTab.IsSelected)
             {
-                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_dodger_blue.png", UriKind.Relative));
-                PatientsTabTextBlock.Foreground = Brushes.DodgerBlue;
+                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_blue.png", UriKind.Relative));
+                PatientsTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
             }
             else
             {
-                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_dark_gray.png", UriKind.Relative));
-                PatientsTabTextBlock.Foreground = Brushes.DarkGray;
+                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_light_gray.png", UriKind.Relative));
+                PatientsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
         }
 
@@ -123,23 +123,23 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (ScheduleTab.IsSelected)
             {
-                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_dark_gray.png", UriKind.Relative));
-                ScheduleTabTextBlock.Foreground = Brushes.DarkGray;
+                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_light_gray.png", UriKind.Relative));
+                ScheduleTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (PatientsTab.IsSelected)
             {
-                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_dark_gray.png", UriKind.Relative));
-                PatientsTabTextBlock.Foreground = Brushes.DarkGray;
+                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_light_gray.png", UriKind.Relative));
+                PatientsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (NotificationsTab.IsSelected)
             {
-                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_dark_gray.png", UriKind.Relative));
-                NotificationsTabTextBlock.Foreground = Brushes.DarkGray;
+                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_light_gray.png", UriKind.Relative));
+                NotificationsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
 
             MedicinesTab.IsSelected = true;
-            MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_dodger_blue.png", UriKind.Relative));
-            MedicinesTabTextBlock.Foreground = Brushes.DodgerBlue;
+            MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_blue.png", UriKind.Relative));
+            MedicinesTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
         }
 
         private void MedicinesTabButton_MouseEnter(object sender, MouseEventArgs e)
@@ -155,13 +155,13 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (MedicinesTab.IsSelected)
             {
-                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_dodger_blue.png", UriKind.Relative));
-                MedicinesTabTextBlock.Foreground = Brushes.DodgerBlue;
+                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_blue.png", UriKind.Relative));
+                MedicinesTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
             }
             else
             {
-                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_dark_gray.png", UriKind.Relative));
-                MedicinesTabTextBlock.Foreground = Brushes.DarkGray;
+                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_light_gray.png", UriKind.Relative));
+                MedicinesTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
         }
         
@@ -169,23 +169,23 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (ScheduleTab.IsSelected)
             {
-                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_dark_gray.png", UriKind.Relative));
-                ScheduleTabTextBlock.Foreground = Brushes.DarkGray;
+                ScheduleTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/schedule_light_gray.png", UriKind.Relative));
+                ScheduleTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (PatientsTab.IsSelected)
             {
-                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_dark_gray.png", UriKind.Relative));
-                PatientsTabTextBlock.Foreground = Brushes.DarkGray;
+                PatientsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/patients_light_gray.png", UriKind.Relative));
+                PatientsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
             else if (MedicinesTab.IsSelected)
             {
-                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_dark_gray.png", UriKind.Relative));
-                MedicinesTabTextBlock.Foreground = Brushes.DarkGray;
+                MedicinesTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/medicines_light_gray.png", UriKind.Relative));
+                MedicinesTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
 
             NotificationsTab.IsSelected = true;
-            NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_dodger_blue.png", UriKind.Relative));
-            NotificationsTabTextBlock.Foreground = Brushes.DodgerBlue;
+            NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_blue.png", UriKind.Relative));
+            NotificationsTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
         }
 
         private void NotificationsTabButton_MouseEnter(object sender, MouseEventArgs e)
@@ -201,13 +201,13 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (NotificationsTab.IsSelected)
             {
-                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_dodger_blue.png", UriKind.Relative));
-                NotificationsTabTextBlock.Foreground = Brushes.DodgerBlue;
+                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_blue.png", UriKind.Relative));
+                NotificationsTabTextBlock.Foreground = Application.Current.Resources["Blue"] as Brush;
             }
             else
             {
-                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_dark_gray.png", UriKind.Relative));
-                NotificationsTabTextBlock.Foreground = Brushes.DarkGray;
+                NotificationsTabImage.Source = new BitmapImage(new Uri("../../Images/Doctor/notifications_light_gray.png", UriKind.Relative));
+                NotificationsTabTextBlock.Foreground = Application.Current.Resources["LightGray"] as Brush;
             }
         }
     }

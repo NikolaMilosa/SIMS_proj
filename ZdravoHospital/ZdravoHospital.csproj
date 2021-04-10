@@ -7,20 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Doctor\medicines.png" />
+    <None Remove="Images\Doctor\medicines_blue.png" />
     <None Remove="Images\Doctor\medicines_dark_gray.png" />
     <None Remove="Images\Doctor\medicines_dodger_blue.png" />
+    <None Remove="Images\Doctor\medicines_light_gray.png" />
     <None Remove="Images\Doctor\medicines_white.png" />
+    <None Remove="Images\Doctor\notifications_blue.png" />
     <None Remove="Images\Doctor\notifications_dark_gray.png" />
     <None Remove="Images\Doctor\notifications_dodger_blue.png" />
+    <None Remove="Images\Doctor\notifications_light_gray.png" />
     <None Remove="Images\Doctor\notifications_white.png" />
+    <None Remove="Images\Doctor\patients_blue.png" />
     <None Remove="Images\Doctor\patients_dark_gray.png" />
     <None Remove="Images\Doctor\patients_dodger_blue.png" />
+    <None Remove="Images\Doctor\patients_light_gray.png" />
     <None Remove="Images\Doctor\patients_white.png" />
+    <None Remove="Images\Doctor\schedule_blue.png" />
     <None Remove="Images\Doctor\schedule_dark_gray.png" />
     <None Remove="Images\Doctor\schedule_dodger_blue.png" />
+    <None Remove="Images\Doctor\schedule_light_gray.png" />
     <None Remove="Images\Doctor\schedule_white.png" />
+    <None Remove="Images\Doctor\user_blue.png" />
     <None Remove="Images\Doctor\user_dark_gray.png" />
     <None Remove="Images\Doctor\user_dodger_blue.png" />
+    <None Remove="Images\Doctor\user_light_gray.png" />
     <None Remove="Images\Doctor\user_white.png" />
     <None Remove="Images\ManagerUI\arrow.png" />
     <None Remove="Images\ManagerUI\inventory.png" />
@@ -34,20 +45,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Doctor\medicines_blue.png" />
+    <Resource Include="Images\Doctor\medicines_light_gray.png" />
     <Resource Include="Images\Doctor\medicines_white.png" />
-    <Resource Include="Images\Doctor\notifications_dark_gray.png" />
-    <Resource Include="Images\Doctor\notifications_dodger_blue.png" />
+    <Resource Include="Images\Doctor\notifications_blue.png" />
+    <Resource Include="Images\Doctor\notifications_light_gray.png" />
     <Resource Include="Images\Doctor\notifications_white.png" />
+    <Resource Include="Images\Doctor\patients_blue.png" />
+    <Resource Include="Images\Doctor\patients_light_gray.png" />
     <Resource Include="Images\Doctor\patients_white.png" />
-    <Resource Include="Images\Doctor\schedule_dark_gray.png" />
-    <Resource Include="Images\Doctor\schedule_dodger_blue.png" />
-    <Resource Include="Images\Doctor\medicines_dark_gray.png" />
-    <Resource Include="Images\Doctor\medicines_dodger_blue.png" />
-    <Resource Include="Images\Doctor\patients_dark_gray.png" />
-    <Resource Include="Images\Doctor\patients_dodger_blue.png" />
+    <Resource Include="Images\Doctor\schedule_blue.png" />
+    <Resource Include="Images\Doctor\schedule_light_gray.png" />
     <Resource Include="Images\Doctor\schedule_white.png" />
-    <Resource Include="Images\Doctor\user_dark_gray.png" />
-    <Resource Include="Images\Doctor\user_dodger_blue.png" />
+    <Resource Include="Images\Doctor\user_blue.png" />
+    <Resource Include="Images\Doctor\user_light_gray.png" />
     <Resource Include="Images\Doctor\user_white.png" />
     <Resource Include="Images\ManagerUI\arrow.png" />
     <Resource Include="Images\ManagerUI\inventory.png" />

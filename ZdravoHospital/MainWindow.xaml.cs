@@ -30,7 +30,7 @@ namespace ZdravoHospital
             InitializeComponent();
             Model.Resources.OpenAccounts();
 
-            //Doctor d1 = new Doctor("Marko", "Panelic", "pantela", "Doctor");
+            //Doctor d1 = new Doctor("Marko", "Pantelic", "pantela", "Doctor");
             //Doctor d2 = new Doctor("Nikola", "Zigic", "zigara", "Cardio surgent");
             //Model.Resources.doctors = new Dictionary<string, Doctor>();
             //Model.Resources.doctors[d1.Username] = d1;
