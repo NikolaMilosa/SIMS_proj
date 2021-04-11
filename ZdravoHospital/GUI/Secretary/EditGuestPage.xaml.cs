@@ -26,7 +26,6 @@ namespace ZdravoHospital.GUI.Secretary
         private string _citizenId;
         private string _healthCardNumber;
         private Patient _selectedPatient;
-        private PatientsView _parentPage;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -126,6 +125,10 @@ namespace ZdravoHospital.GUI.Secretary
                 MessageBox.Show("Successfuly changed.");
                 NavigationService.Navigate(new PatientsView());
             }
+        }
+        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

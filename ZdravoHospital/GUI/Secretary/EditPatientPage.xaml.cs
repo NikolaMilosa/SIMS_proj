@@ -345,5 +345,9 @@ namespace ZdravoHospital.GUI.Secretary
                 }
             }
         }
-    }
+        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+}
 }
