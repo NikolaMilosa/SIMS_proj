@@ -286,5 +286,10 @@ namespace ZdravoHospital.GUI.Secretary
         {
             NavigationService.Navigate(new PatientsView());
         }
+
+        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
     }
 }

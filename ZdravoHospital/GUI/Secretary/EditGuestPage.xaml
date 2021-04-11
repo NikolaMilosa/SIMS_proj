@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
@@ -13,7 +14,7 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -25,7 +26,20 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="28" Foreground="#FF000E57" FontFamily="Segoe UI Semibold" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8">Guest account</TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="DarkCyan">
+            <Button x:Name="NavigateBackButton" Height="60" Width="60" VerticalAlignment="Center" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Click="NavigateBackButton_Click" Margin="0,0,75,0">
+                <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
+            </Button>
+            <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,110,0"> Edit guest</TextBlock>
+            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10,10,20,10">
+                <StackPanel Width="150" Background="White">
+                    <Button Content="About"/>
+                    <Button Content="Help"/>
+                    <Separator/>
+                    <Button Content="Logout"/>
+                </StackPanel>
+            </materialDesign:PopupBox>
+        </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBlock x:Name="ime" Margin="8,0,0,0" FontWeight="Bold" >First name</TextBlock>
