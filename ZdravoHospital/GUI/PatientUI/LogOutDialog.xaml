@@ -10,8 +10,8 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True">
-    
-        <Border Background="White" CornerRadius="40">
+
+    <Border Background="#9be5aa" CornerRadius="40">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -24,22 +24,24 @@
                 <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
                     <TextBlock 
                     Text="Log out"
+                    Foreground="White"
                     FontWeight="Bold"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                      Margin="0,0,0,40"
                     >
                     </TextBlock>
-                    <TextBlock 
+                    <TextBlock
+                        Foreground="White"
                     Text="Are you sure you want to log out?"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     >
                     </TextBlock>
                 </StackPanel>
-                <Button BorderBrush="Transparent" Content="Yes" Grid.Column="0" Grid.Row="1" Background="Transparent" Click="Button_Click" >
+            <Button BorderBrush="Transparent" Foreground="White" Content="Yes" Grid.Column="0" Grid.Row="1" Background="Transparent" Click="Button_Click" >
                 </Button>
-                <Button  BorderBrush="Transparent" Content="No" Grid.Column="2" Grid.Row="1" Background="Transparent" Click="Button_Click_1" >
+            <Button  BorderBrush="Transparent" Foreground="White" Content="No" Grid.Column="2" Grid.Row="1" Background="Transparent" Click="Button_Click_1" >
                 </Button>
             </Grid>
         </Border>

@@ -23,15 +23,23 @@ namespace ZdravoHospital.GUI.PatientUI
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+      
+
+
+        private void logOutButton_Click(object sender, RoutedEventArgs e)
         {
             LogOutDialog logOutDialog = new LogOutDialog(this);
             logOutDialog.Show();
         }
 
-        private void addAppointment_Click(object sender, RoutedEventArgs e)
+        private void addAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new AddAppointmentPage());
+        }
+
+        private void appointmentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(new AppointmentPage());
         }
     }
 }
