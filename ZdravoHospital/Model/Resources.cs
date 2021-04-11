@@ -97,5 +97,17 @@ namespace Model
             if (doctors == null)
                 doctors = new Dictionary<string, Doctor>();
         }
+
+        public static void SaveNotifications()
+        {
+            string json = JsonConvert.SerializeObject(notifications);
+            File.WriteAllText(@"..\..\..\Resources\notifications.json", json);
+        }
+
+        public static void OpenNotifications()
+        {
+            if(File.Exists(@"..\..\..\Resources\notifications.json"))
+                notifications = JsonConvert.DeserializeObject<List<Notification>>(File.ReadAllText(@"..\..\..\Resources\notifications.json"));
+        }
     }
 }

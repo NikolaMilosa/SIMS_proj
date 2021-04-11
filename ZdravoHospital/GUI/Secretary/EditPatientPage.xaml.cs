@@ -45,7 +45,6 @@ namespace ZdravoHospital.GUI.Secretary
 
         private Patient _selectedPatient;
         private string _oldPassword;
-        private PatientsView _parentPage;
 
         public static ObservableCollection<Patient> Patients { get; set; }
 
