@@ -5,59 +5,154 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
         mc:Ignorable="d"
-        d:Width="1280" d:Height="720"
         Title="Manager panel"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
     <Grid Background="Beige" Height="720" Width="1280">
-        <Grid x:Name="MenuGrid" Background="#bec4c2" HorizontalAlignment="Left" Height="720" VerticalAlignment="Center" Width="224" KeyboardNavigation.TabNavigation="None">
-            <Grid x:Name="BasicButtonsGrid" Margin="0,219,0,274" KeyboardNavigation.TabNavigation="None">
-                <Button x:Name="RoomsButton" TabIndex="0" FontSize="20" Background="#bec4c2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Height="76" VerticalAlignment="Top" Width="223" Margin="0,0,0,0" BorderThickness="0,0,0,1" GotFocus="RoomsButton_gotFocus" PreviewKeyDown="MainMenu_PreviewKeyDown">
-                    <StackPanel Orientation="Horizontal" Margin="30,0,0,0" KeyboardNavigation.TabNavigation="None">
-                        <Image Source="../../Images/ManagerUI/Rooms.png" Height="50"/>
-                        <Separator Width="15" Visibility="Hidden"></Separator>
-                        <TextBlock Height="30" Width="86">Rooms</TextBlock>
-                        <Separator Width="10" Visibility="Hidden"></Separator>
-                        <Image x:Name="RoomsMenuArrow" Source="../../Images/ManagerUI/Arrow.png" Height="29" Width="26" Visibility="Hidden"></Image>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Main menu-->
+        <Grid Grid.Column="0" Background="#bec4c2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="220"/>
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Account -->
+            <Grid Grid.Row="0" KeyboardNavigation.TabNavigation="None">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Source="../../Images/ManagerUI/testingAccount.png" Width="60" Height="60"/>
+                    <Separator Height="10" Visibility="Hidden"/>
+                    <Label x:Name="WelcomeLabel" FontSize="20" Content="Welcome, " FontFamily="Harlow Solid Italic"/>
+                </StackPanel>
+
+                <Border Grid.Row="1" BorderBrush="#FF707070" BorderThickness="0,1,0,0"/>
+            </Grid>
+
+            <!-- Buttons -->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button x:Name="RoomsButton" Grid.Row="0" Background="#bec4c2" BorderThickness="0,1,0,0" GotFocus="MainMenuGotFocus">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Images/ManagerUI/rooms.png" Width="60" />
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <TextBlock Text="Rooms" Width="100" FontSize="18" VerticalAlignment="Center"/>
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <Image x:Name="RoomsMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="StaffButton" TabIndex="1" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="0,76,0,0" VerticalAlignment="Top" Height="76" Width="224" BorderThickness="0,0,0,1" GotFocus="StaffButton_gotFocus" PreviewKeyDown="MainMenu_PreviewKeyDown">
-                    <StackPanel Orientation="Horizontal" Margin="30,0,0,0" KeyboardNavigation.TabNavigation="None">
-                        <Image Source="../../Images/ManagerUI/Staff.png" Height="50" Visibility="Visible"></Image>
-                        <Separator Width="15" Visibility="Hidden"></Separator>
-                        <TextBlock Height="30" Width="86">Staff</TextBlock>
-                        <Separator Width="10" Visibility="Hidden"></Separator>
-                        <Image x:Name="StaffMenuArrow" Source="../../Images/ManagerUI/Arrow.png" Height="29" Width="26" Visibility="Hidden"></Image>
+
+                <Button x:Name="StaffButton" Grid.Row="1" Background="#bec4c2" BorderThickness="0,1,0,0" GotFocus="MainMenuGotFocus">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Images/ManagerUI/staff.png" Width="60" />
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <TextBlock Text="Staff" Width="100" FontSize="18" VerticalAlignment="Center"/>
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <Image x:Name="StaffMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="InventoryButton" TabIndex="2" FontSize="20" Background="#bec4c2" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="0,152,0,0" VerticalAlignment="Top" Height="75" Width="224" BorderThickness="0,0,0,1" GotFocus="InventoryButton_gotFocus" PreviewKeyDown="MainMenu_PreviewKeyDown">
-                    <StackPanel Orientation="Horizontal" Margin="30,0,0,0" KeyboardNavigation.TabNavigation="None">
-                        <Image Source="../../Images/ManagerUI/Inventory.png" Height="50" Width="50"></Image>
-                        <Separator Width="15" Visibility="Hidden"></Separator>
-                        <TextBlock Height="30" Width="86">Inventory</TextBlock>
-                        <Separator Width="10" Visibility="Hidden"></Separator>
-                        <Image x:Name="InventoryMenuArrow" Source="../../Images/ManagerUI/Arrow.png" Height="29" Width="26" Visibility="Hidden"></Image>
+                
+                <Button x:Name="InventoryButton" Grid.Row="2" Background="#bec4c2" BorderThickness="0,1,0,0" GotFocus="MainMenuGotFocus">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Images/ManagerUI/inventory.png" Width="60" />
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <TextBlock Text="Inventory" Width="100" FontSize="18" VerticalAlignment="Center"/>
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <Image x:Name="InventoryMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="NotificationsButton" Grid.Row="3" Background="#bec4c2" BorderThickness="0,1,0,1" GotFocus="MainMenuGotFocus">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Images/ManagerUI/inventory.png" Width="60" Visibility="Hidden"/>
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <TextBlock Text="Notifications" Width="100" FontSize="18" VerticalAlignment="Center"/>
+                        <Separator Visibility="Hidden" Width="10"/>
+                        <Image x:Name="NotificationsMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
                     </StackPanel>
                 </Button>
             </Grid>
-            <Border x:Name="MainMenuBorder" BorderThickness="0,1,0,1" KeyboardNavigation.TabNavigation="Once" BorderBrush="#FF707070" HorizontalAlignment="Center" Height="12" Margin="0,207,0,0" VerticalAlignment="Top" Width="224"/>
-            <Grid HorizontalAlignment="Center" Height="70" Margin="0,53,0,0" VerticalAlignment="Top" Width="71" KeyboardNavigation.TabNavigation="None">
-                <Image Source="../../Images/ManagerUI/testingAccount.png" Visibility="Visible"></Image>
+        </Grid>
+
+        <!-- Submenus -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="220"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <!-- Submenu for rooms -->
+            <Grid x:Name="SubMenuRooms" Grid.Row="1" Height="320" VerticalAlignment="Top" Visibility="Hidden" PreviewKeyDown="SubMenuButtonHandler">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" x:Name="ShowRoomsButton" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Show rooms" Click="ShowRooms_Click"/>
+                <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Add room" Click="AddRoom_Click"/>
+                <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,1" Content="Manage inventory"/>
+
             </Grid>
-            <Label x:Name="WelcomeLabel" Content="Welcome, " KeyboardNavigation.TabNavigation="None" FontSize="22" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="42" Margin="0,146,0,0" VerticalAlignment="Top" Width="204" FontFamily="Harlow Solid Italic"/>
+            <!-- Submenu for inventory-->
+            <Grid x:Name="SubMenuInventory" Grid.Row="1" Height="480" VerticalAlignment="Top" Visibility="Hidden" PreviewKeyDown="SubMenuButtonHandler">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Click="ShowInventoryButton_Click"/>
+                <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1"/>
+                <Button Grid.Row="4" x:Name="ManageInventoryButton" FontSize="18" Background="#bec4c2" Content="Manage inventory" BorderThickness="1,0,0,1"/>
+            </Grid>
         </Grid>
-        <DataGrid x:Name="MainDataGrid" SelectionUnit="FullRow" IsReadOnly="True" CanUserResizeColumns="False" SelectionMode="Single" CanUserResizeRows="False" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" AutoGenerateColumns="False" FontSize="20" HorizontalAlignment="Left" Height="630" Margin="450,35,35,35" VerticalAlignment="Top" Width="795" BorderThickness="1,1,1,1" PreviewKeyDown="MainDataGrid_PreviewKeyDown" GotFocus="MainDataGrid_GotFocus"/>
-        <Grid x:Name="RoomsMenuGrid" Visibility="Hidden" HorizontalAlignment="Left" Background="#bec4c2" Height="228" Margin="224,218,0,0" VerticalAlignment="Top" Width="148">
-            <Button x:Name="ShowRoomsButton" Margin="5,0,0,0" Content="Show rooms" FontSize="15" Background="#bec4c2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="76" Width="142" BorderThickness="0,1,0,0" TabIndex="4" Click="ShowRoomsButton_Click"/>
-            <Button x:Name="AddRoomButton" FontSize="15" Background="#bec4c2" Content="Add room" HorizontalAlignment="Left" Margin="5,76,0,0" Height="76" Width="142" VerticalAlignment="Top" BorderThickness="0,1,0,0" TabIndex="5" Click="AddRoomButton_Click"/>
-            <Button x:Name="ManageInventoryButton" Content="Manage Inventory" Background="#bec4c2" FontSize="15" Width="142" Height="76" HorizontalAlignment="Left" Margin="5,152,0,0" VerticalAlignment="Top" BorderThickness="0,1,0,1" TabIndex="6"/>
-            <Border BorderThickness="1" KeyboardNavigation.TabNavigation="None" BorderBrush="#FF707070" HorizontalAlignment="Left" Height="228" VerticalAlignment="Top" Width="5"/>
-        </Grid>
-        <Grid x:Name="InventoryMenuGrid" Visibility="Hidden" Background="#bec4c2" HorizontalAlignment="Left" Height="152" Margin="224,370,0,0" VerticalAlignment="Top" Width="148">
-            <Border BorderThickness="1" KeyboardNavigation.TabNavigation="None" BorderBrush="#FF707070" HorizontalAlignment="Left" Height="152" VerticalAlignment="Center" Width="5"/>
-            <Button x:Name="ShowInventoryButton" Content="Show inventory" FontSize="15" Background="#bec4c2" HorizontalAlignment="Left" Height="76" Margin="5,0,0,0" VerticalAlignment="Top" Width="143" BorderThickness="0,1,0,0" Click="ShowInventoryButton_Click"/>
-            <Button x:Name="RequestInventory" Background="#bec4c2" Content="Request inventory" FontSize="15" HorizontalAlignment="Left" Height="76" Margin="5,76,0,0" VerticalAlignment="Top" Width="143" BorderThickness="0,1,0,1" Click="RequestInventory_Click"/>
-        </Grid>
+        
+        <!-- DataGrids -->
+        <DataGrid x:Name="InitialTable" Visibility="Visible"  Grid.Column="2" IsReadOnly="True" Margin="20,20,20,20"/>
+
+        <DataGrid x:Name="RoomsTable" KeyboardNavigation.TabNavigation="Local" HeadersVisibility="Column" Visibility="Hidden" AlternatingRowBackground="LightBlue" RowBackground="LightYellow" Grid.Column="2" FontSize="20" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Rooms}" Margin="20,20,20,20" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=RoomType, Converter={local:RoomTypeConverter}}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Available" Binding="{Binding Path=Available, Converter={local:AvailabilityConverter}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="InventoryTable" KeyboardNavigation.TabNavigation="Local" HeadersVisibility="Column" Visibility="Hidden" Grid.Column="2" Margin="20,20,20,20" AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Inventory}" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=InventoryType, Converter={local:InventoryTypeConverter}}"/>
+                <DataGridTextColumn Header="Supplier" Binding="{Binding Supplier}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="StaffTable" Visibility="Hidden" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20"/>
     </Grid>
 </Window>

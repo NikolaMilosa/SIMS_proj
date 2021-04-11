@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace Model
 {
-    public class Room
+    public class Room : INotifyPropertyChanged
     {
         public RoomType RoomType { get; set; }
         public int Id { get; set; }
@@ -22,22 +23,14 @@ namespace Model
             this.Inventory = new Dictionary<string, int>();
         }
 
-    }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-    public class AvailabilityConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void OnNotifyPropertyChanged(string property)
         {
-            if ((bool)value)
-                return "YES";
-            return "NO";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value.ToString().Equals("YES"))
-                return true;
-            return false;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
     }
 }

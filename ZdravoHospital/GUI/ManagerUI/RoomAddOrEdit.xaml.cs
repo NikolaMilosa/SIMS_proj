@@ -18,154 +18,81 @@ namespace ZdravoHospital.GUI.ManagerUI
     /// <summary>
     /// Interaction logic for RoomAddOrEdit.xaml
     /// </summary>
-    public partial class RoomAddOrEdit : Window
+    public partial class RoomAddOrEdit : Window, INotifyPropertyChanged
     {
-        List<RoomType> roomTypes = new List<RoomType>() { RoomType.APPOINTMENT_ROOM, RoomType.BREAK_ROOM, RoomType.STORAGE_ROOM, RoomType.OPERATING_ROOM };
+        //Fields:
+        private int _id;
+        private string _name;
+        private RoomType _roomType;
+
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        public string RoomName
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("RoomName");
+            }
+        }
+
+        public RoomType RoomType
+        {
+            get { return _roomType; }
+            set
+            {
+                _roomType = value;
+                OnPropertyChanged("RoomType");
+            }
+        }
+
         bool isAdder;
-        Room newRoom;
 
         public RoomAddOrEdit()
         {
             InitializeComponent();
-            Binding binding = new Binding() { Converter = new RoomTypeConverter() };
-            binding.Source = roomTypes;
-            RoomTypeComboBox.SetBinding(ComboBox.ItemsSourceProperty, binding);
-            RoomTypeComboBox.SelectedIndex = 0;
-            YesRadioButton.IsChecked = true;
+            this.DataContext = this;
+
             isAdder = true;
-            this.Title = "Room adding";
+            this.Title = "Room adding dialog";
+            TypeComboBox.SelectedIndex = 0;
+            YesRadioButton.IsChecked = true;
         }
 
         public RoomAddOrEdit(Room r)
         {
             InitializeComponent();
-            Binding binding = new Binding() { Converter = new RoomTypeConverter() };
-            binding.Source = roomTypes;
-            RoomTypeComboBox.SetBinding(ComboBox.ItemsSourceProperty, binding);
+            this.DataContext = this;
 
-            IdTextBox.Text = r.Id.ToString();
-            IdTextBox.IsEnabled = false;
-            NameTextBox.Text = r.Name;
-            if (r.Available)
-                YesRadioButton.IsChecked = true;
-            else
-                NoRadioButton.IsChecked = true;
-            RoomTypeComboBox.SelectedIndex = roomTypes.IndexOf(r.RoomType);
-            
-            newRoom = r;
             isAdder = false;
+            this.Title = "Room editing dialog";
+            Id = r.Id;
+            RoomName = r.Name;
+            RoomType = r.RoomType;
 
-            WarningLabel.Visibility = Visibility.Hidden;
-            this.Title = "Room editing";
-
-            fieldChecker();
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            string selectedValue = RoomTypeComboBox.SelectedItem.ToString();
-            RoomType temp;
-            switch (selectedValue)
-            {
-                case "APPOINTMENT":
-                    temp = RoomType.APPOINTMENT_ROOM;
-                    break;
-                case "BEDROOM":
-                    temp = RoomType.BREAK_ROOM;
-                    break;
-                case "STORAGE":
-                    temp = RoomType.STORAGE_ROOM;
-                    break;
-                default:
-                    temp = RoomType.OPERATING_ROOM;
-                    break;
-            }
-
-            if (isAdder)
-            {
-                newRoom = new Room(temp, Int32.Parse(IdTextBox.Text), NameTextBox.Text, (YesRadioButton.IsChecked == true) ? true : false);
-                if (!Model.Resources.rooms.ContainsKey(newRoom.Id))
-                {
-                    Model.Resources.rooms[newRoom.Id] = newRoom;
-                    ManagerWindow.oRooms.Add(newRoom);
-                    Model.Resources.SerializeRooms();
-                    this.Close();
-                }
-            }
-            else
-            {
-                int index = ManagerWindow.oRooms.IndexOf(newRoom);
-                newRoom.Name = NameTextBox.Text;
-                newRoom.Available = (YesRadioButton.IsChecked == true) ? true : false;
-                newRoom.RoomType = temp;
-                ManagerWindow.oRooms.Remove(ManagerWindow.oRooms[index]);
-                ManagerWindow.oRooms.Insert(index, newRoom);
-                Model.Resources.SerializeRooms();
-                this.Close();
-            }
-        
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void YesRadioButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
+            if (r.Available == true)
                 YesRadioButton.IsChecked = true;
-        }
-
-        private void NoRadioButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Enter)
+            else
                 NoRadioButton.IsChecked = true;
         }
 
-        private void fieldChecker()
-        {
-            if (NameTextBox.Text.Equals(String.Empty) || IdTextBox.Text.Equals(String.Empty) || WarningLabel.Visibility == Visibility.Visible)
-                ConfirmButton.IsEnabled = false;
-            else
-                ConfirmButton.IsEnabled = true;
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        protected virtual void OnPropertyChanged(string name)
         {
-            fieldChecker();
-        }
-
-        private void RoomTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            fieldChecker();
-        }
-
-        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
+            if (PropertyChanged != null)
             {
-                int id = Int32.Parse(IdTextBox.Text);
-                if (!Model.Resources.rooms.ContainsKey(id))
-                {
-                    WarningLabel.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    WarningLabel.Content = "- Id exists!";
-                    WarningLabel.Visibility = Visibility.Visible;
-                }
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
-            catch
-            {
-                if(IdTextBox.Text.Length != 0)
-                {
-                    IdTextBox.Text = IdTextBox.Text.Substring(0, IdTextBox.Text.Length - 1);
-                    WarningLabel.Content = "- Only digits!";
-                    WarningLabel.Visibility = Visibility.Visible;
-                }
-            }
-            fieldChecker();
         }
     }
 }
