@@ -27,9 +27,9 @@ namespace ZdravoHospital.GUI.ManagerUI
         Grid grid;
 
         //Observable collections:
-        public ObservableCollection<Room> Rooms { get; set; }
-        public ObservableCollection<Person> Persons { get; set; }
-        public ObservableCollection<Inventory> Inventory { get; set; }
+        public static ObservableCollection<Room> Rooms { get; set; }
+        public static ObservableCollection<Person> Persons { get; set; }
+        public static ObservableCollection<Inventory> Inventory { get; set; }
 
         public ManagerWindow(string au)
         {

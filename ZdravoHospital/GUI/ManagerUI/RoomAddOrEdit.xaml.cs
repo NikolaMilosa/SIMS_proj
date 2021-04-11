@@ -73,6 +73,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
+            IdTextBox.IsEnabled = false;
+
             isAdder = false;
             this.Title = "Room editing dialog";
             Id = r.Id;
@@ -93,6 +95,35 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isAdder)
+            {
+                Model.Resources.rooms[Id] = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
+                ManagerWindow.Rooms.Add(Model.Resources.rooms[Id]);
+                Model.Resources.SerializeRooms();
+            }
+            else
+            {
+                int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[Id]);
+                ManagerWindow.Rooms.Remove(Model.Resources.rooms[Id]);
+
+                Model.Resources.rooms[Id].Name = RoomName;
+                Model.Resources.rooms[Id].RoomType = RoomType;
+                Model.Resources.rooms[Id].Available = (YesRadioButton.IsChecked == true) ? true : false;
+                Model.Resources.SerializeRooms();
+                
+                ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[Id]);
+            }
+
+            this.Close();
         }
     }
 }
