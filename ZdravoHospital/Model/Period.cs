@@ -10,7 +10,7 @@ namespace Model
         public string PatientUsername { get; set; }
         public string DoctorUsername { get; set; }
         public int RoomId { get; set; }
-        public string Anamnesis { get; set; }
+        public string Details { get; set; }
 
     }
 }
