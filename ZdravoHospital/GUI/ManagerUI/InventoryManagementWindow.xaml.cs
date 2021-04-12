@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
@@ -21,11 +22,35 @@ namespace ZdravoHospital.GUI.ManagerUI
     public partial class InventoryManagementWindow : Window, INotifyPropertyChanged
     {
         //Feilds:
-        private List<Room> _firstRooms;
-        private List<Room> _secondRooms;
+        private ObservableCollection<Room> _firstRooms;
+        private ObservableCollection<Room> _secondRooms;
         private Room _firstRoom;
+        private Room _secondRoom;
 
-        public List<Room> FirstRooms
+        private ObservableCollection<InventoryDTO> _firstRoomInventory;
+        private ObservableCollection<InventoryDTO> _secondRoomInventory;
+
+        public ObservableCollection<InventoryDTO> FirstRoomInventory
+        {
+            get { return _firstRoomInventory; }
+            set
+            {
+                _firstRoomInventory = value;
+                OnPropertyChanged("FirstRoomInventory");
+            }
+        }
+
+        public ObservableCollection<InventoryDTO> SecondRoomInventory
+        {
+            get { return _secondRoomInventory; }
+            set
+            {
+                _secondRoomInventory = value;
+                OnPropertyChanged("SecondRoomInventory");
+            }
+        }
+
+        public ObservableCollection<Room> FirstRooms
         {
             get { return _firstRooms; }
             set
@@ -35,7 +60,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
         }
 
-        public List<Room> SecondRooms
+        public ObservableCollection<Room> SecondRooms
         {
             get { return _secondRooms; }
             set
@@ -51,12 +76,36 @@ namespace ZdravoHospital.GUI.ManagerUI
             set
             {
                 _firstRoom = value;
-                SecondRooms.Clear();
-                SecondRooms.AddRange(FirstRooms);
-                SecondRooms.Remove(FirstRoom);
+
+                SecondRooms = new ObservableCollection<Room>(FirstRooms);
+                SecondRooms.Remove(_firstRoom);
+
+                FirstRoomInventory = new ObservableCollection<InventoryDTO>();
+                foreach (KeyValuePair<string, int> kvp in _firstRoom.Inventory)
+                    FirstRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[kvp.Key].Name, kvp.Value, kvp.Key));
+
+                OnPropertyChanged("FirstRoomInventory");
+
                 OnPropertyChanged("SecondRooms");
             }
         }
+
+        public Room SecondRoom
+        {
+            get { return _secondRoom; }
+            set
+            {
+                _secondRoom = value;
+
+                SecondRoomInventory = new ObservableCollection<InventoryDTO>();
+                if(_secondRoom != null)
+                    foreach (KeyValuePair<string, int> kvp in _secondRoom.Inventory)
+                        SecondRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[kvp.Key].Name, kvp.Value, kvp.Key));
+
+                OnPropertyChanged("SecondRoomInventory");
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -71,9 +120,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         public InventoryManagementWindow()
         {
             InitializeComponent();
-            FirstRooms = new List<Room>(Model.Resources.rooms.Values);
-            MessageBox.Show(FirstRooms.Count.ToString());
-            SecondRooms = new List<Room>();
+            this.DataContext = this;
+            FirstRooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
         }
 
         
