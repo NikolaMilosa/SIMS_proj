@@ -38,6 +38,16 @@
     <None Remove="Images\ManagerUI\Rooms.png" />
     <None Remove="Images\ManagerUI\staff.png" />
     <None Remove="Images\ManagerUI\testingAccount.png" />
+    <None Remove="Images\PatientUI\addIcon.png" />
+    <None Remove="Images\PatientUI\addIconBlack.png" />
+    <None Remove="Images\PatientUI\appointmentIcon.png" />
+    <None Remove="Images\PatientUI\appointmentIconBlack.png" />
+    <None Remove="Images\PatientUI\historyIcon.png" />
+    <None Remove="Images\PatientUI\hospitalIcon.png" />
+    <None Remove="Images\PatientUI\logoutIcon.png" />
+    <None Remove="Images\PatientUI\notificationIcon.png" />
+    <None Remove="Images\PatientUI\profileIcon.png" />
+    <None Remove="Images\PatientUI\therapyIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +76,16 @@
     <Resource Include="Images\ManagerUI\Rooms.png" />
     <Resource Include="Images\ManagerUI\staff.png" />
     <Resource Include="Images\ManagerUI\testingAccount.png" />
+    <Resource Include="Images\PatientUI\addIcon.png" />
+    <Resource Include="Images\PatientUI\addIconBlack.png" />
+    <Resource Include="Images\PatientUI\appointmentIcon.png" />
+    <Resource Include="Images\PatientUI\appointmentIconBlack.png" />
+    <Resource Include="Images\PatientUI\historyIcon.png" />
+    <Resource Include="Images\PatientUI\hospitalIcon.png" />
+    <Resource Include="Images\PatientUI\logoutIcon.png" />
+    <Resource Include="Images\PatientUI\notificationIcon.png" />
+    <Resource Include="Images\PatientUI\profileIcon.png" />
+    <Resource Include="Images\PatientUI\therapyIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
