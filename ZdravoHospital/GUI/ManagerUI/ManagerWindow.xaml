@@ -126,7 +126,7 @@
                 </Grid.RowDefinitions>
 
                 <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Click="ShowInventoryButton_Click"/>
-                <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1"/>
+                <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1" Click="AddInventoryButton_Click"/>
                 <Button Grid.Row="4" x:Name="ManageInventoryButton" FontSize="18" Background="#bec4c2" Content="Manage inventory" BorderThickness="1,0,0,1"/>
             </Grid>
         </Grid>

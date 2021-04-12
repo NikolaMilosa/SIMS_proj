@@ -171,8 +171,13 @@ namespace ZdravoHospital.GUI.ManagerUI
                     if (RoomsTable.Visibility == Visibility.Visible)
                     {
                         dialog = new RoomAddOrEdit((Room)dataGrid.SelectedItem);
-                        dialog.ShowDialog();
+                        
                     }
+                    else if (InventoryTable.Visibility == Visibility.Visible)
+                    {
+                        dialog = new InventoryAddOrEdit((Inventory)dataGrid.SelectedItem);
+                    }
+                    dialog.ShowDialog();
                 }
 
                 e.Handled = true;
@@ -194,5 +199,10 @@ namespace ZdravoHospital.GUI.ManagerUI
             dialog.ShowDialog();
         }
 
+        private void AddInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            dialog = new InventoryAddOrEdit();
+            dialog.ShowDialog();
+        }
     }
 }

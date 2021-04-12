@@ -8,7 +8,7 @@ using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI
 {
-    class IdValidationRule : ValidationRule
+    class RoomIdValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
