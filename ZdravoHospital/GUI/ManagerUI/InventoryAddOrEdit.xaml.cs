@@ -28,6 +28,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private InventoryType _inventoryType;
 
         bool isAdder;
+        Window dialog;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -112,11 +113,216 @@ namespace ZdravoHospital.GUI.ManagerUI
             Supplier = i.Supplier;
             Quantity = i.Quantity;
             InventoryType = i.InventoryType;
+
+            IdTextBox.IsEnabled = false;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (isAdder)
+            {
+                if (Model.Resources.rooms.Count == 0)
+                {
+                    dialog = new WarningDialog(this);
+                    dialog.ShowDialog();
+                    return;
+                }
+
+                Model.Resources.inventory[Id] = new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id);
+                ManagerWindow.Inventory.Add(Model.Resources.inventory[Id]);
+
+                //If adding there cannot be the same instance of Inventory in the system meaning :
+                foreach (Room room in Model.Resources.rooms.Values)
+                {
+                    if (room.RoomType == RoomType.STORAGE_ROOM)
+                    {
+                        room.Inventory[Id] = Quantity;
+                        Model.Resources.SerializeRooms();
+                        Model.Resources.SerializeInventory();
+                        this.Close();
+                        return;
+                    }
+                }
+
+                foreach (Room room in Model.Resources.rooms.Values)
+                {
+                    if (room.RoomType == RoomType.BREAK_ROOM)
+                    {
+                        room.Inventory[Id] = Quantity;
+                        Model.Resources.SerializeRooms();
+                        Model.Resources.SerializeInventory();
+                        this.Close();
+                        return;
+                    }
+                }
+
+                foreach (Room room in Model.Resources.rooms.Values)
+                {
+                    if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
+                    {
+                        room.Inventory[Id] = Quantity;
+                        Model.Resources.SerializeRooms();
+                        Model.Resources.SerializeInventory();
+                        this.Close();
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                int index = ManagerWindow.Inventory.IndexOf(Model.Resources.inventory[Id]);
+
+                Model.Resources.inventory[Id].Name = InventoryName;
+                Model.Resources.inventory[Id].Supplier = Supplier;
+                Model.Resources.inventory[Id].InventoryType = InventoryType;
+
+                //Calculate the difference:
+                int difference = Model.Resources.inventory[Id].Quantity - Quantity;
+
+                if (difference > 0)
+                {
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.STORAGE_ROOM)
+                        {
+                            if (room.Inventory[Id] - difference > 0)
+                            {
+                                room.Inventory[Id] -= difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
+
+                            difference -= room.Inventory[Id];
+                            room.Inventory.Remove(Id);
+                        }
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.BREAK_ROOM)
+                        {
+                            if (room.Inventory[Id] - difference > 0)
+                            {
+                                room.Inventory[Id] -= difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
+
+                            difference -= room.Inventory[Id];
+                            room.Inventory.Remove(Id);
+                        }
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
+                        {
+                            if (room.Inventory[Id] - difference > 0)
+                            {
+                                room.Inventory[Id] -= difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
+
+                            difference -= room.Inventory[Id];
+                            room.Inventory.Remove(Id);
+                        }
+                    }
+                }
+                else if (difference < 0)
+                {
+                    difference += -2 * difference;
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.STORAGE_ROOM)
+                        {
+                            if (room.Inventory.ContainsKey(Id))
+                            {
+                                room.Inventory[Id] += difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
+
+                        }
+
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.BREAK_ROOM)
+                        {
+                            if (room.Inventory.ContainsKey(Id))
+                            {
+                                room.Inventory[Id] += difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
+
+                        }
+
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
+                        {
+                            if (room.Inventory.ContainsKey(Id))
+                            {
+                                room.Inventory[Id] += difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
+
+                        }
+
+                    }
+                }
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

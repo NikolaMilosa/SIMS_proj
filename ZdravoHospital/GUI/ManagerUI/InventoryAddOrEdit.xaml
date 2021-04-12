@@ -47,7 +47,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorField"/>
+                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorFieldId"/>
                         <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
                     </Grid>
                 </ControlTemplate>
@@ -79,9 +79,23 @@
                 <Binding Path="Quantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <local:QuantityValidationRule ValidationStep="ConvertedProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorFieldQuantity"/>
+                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
         </TextBox>
 
         <ComboBox x:Name="TypeComboBox" Grid.Row="5" Grid.Column="1" FontSize="18" Width="230" Text="{Binding Path=InventoryType, Converter={local:InventoryTypeConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -111,6 +125,18 @@
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True"/>
                             </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=IdTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=NameTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=SupplierTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=QuantityTextBox}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

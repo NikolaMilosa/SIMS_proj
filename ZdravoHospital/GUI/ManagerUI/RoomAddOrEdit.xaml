@@ -45,7 +45,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorField"/>
                         <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
                     </Grid>
@@ -96,10 +96,15 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=IdTextBox}" Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=NameTextBox}" Value="False"/>
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True"/>
                             </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=NameTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=IdTextBox}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

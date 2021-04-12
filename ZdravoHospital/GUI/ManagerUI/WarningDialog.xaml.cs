@@ -27,6 +27,11 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             switch (someObject.GetType().Name)
             {
+                case nameof(InventoryAddOrEdit):
+                    WarningTitle.Content = "Warning! No available rooms";
+                    WarningText.Text = "There are no rooms where inventory would be stored...";
+                    ConfirmButton.IsEnabled = false;
+                    break;
                 case nameof(Room):
                     WarningTitle.Content = "Warning! Deleting a room";
                     WarningText.Text = "You are about to delete a room! If you wish to conitnue press \"Confirm\"";
@@ -68,6 +73,14 @@ namespace ZdravoHospital.GUI.ManagerUI
                     Model.Resources.inventory.Remove((string)id);
                     ManagerWindow.Inventory.Remove((Inventory)someObject);
                     Model.Resources.SerializeInventory();
+
+                    foreach(Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.Inventory.ContainsKey(id.ToString()))
+                            room.Inventory.Remove(id.ToString());
+                    }
+                    Model.Resources.SerializeRooms();
+
                     break;
                 default:
                     //Code for staff deleting

@@ -6,21 +6,20 @@ using System.Windows.Controls;
 
 namespace ZdravoHospital.GUI.ManagerUI
 {
-    class EmptyStringValidationRule : ValidationRule
+    class QuantityValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            try
+            if (value is int)
             {
-                if (value.ToString().Equals(String.Empty))
-                    return new ValidationResult(false, "- Can't be empty...");
+                if ((int)value < 1)
+                    return new ValidationResult(false, "- Atleast one...");
                 return new ValidationResult(true, null);
             }
-            catch
+            else
             {
-                return new ValidationResult(false, "- Unknown...");
+                return new ValidationResult(false, "- Only digits...");
             }
-            
         }
     }
 }

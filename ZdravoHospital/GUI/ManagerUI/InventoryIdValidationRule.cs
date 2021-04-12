@@ -14,6 +14,9 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 string id = value.ToString();
 
+                if (id.Equals(String.Empty))
+                    return new ValidationResult(false, "- Can't be empty...");
+
                 if (Model.Resources.inventory.ContainsKey(id))
                     return new ValidationResult(false, "- Id exists...");
 
