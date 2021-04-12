@@ -17,9 +17,11 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class SecretaryWindow : Window
     {
-        public SecretaryWindow()
+        public static string SecretaryUsername;
+        public SecretaryWindow(string username)
         {
             InitializeComponent();
+            SecretaryUsername = username;
             this.SecretaryMainFrame.Content = new SecretaryHomePage();
         }
     }

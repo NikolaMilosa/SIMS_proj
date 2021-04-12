@@ -11,5 +11,19 @@ namespace Model
         public string Title { get; set; }
         public Dictionary<string, bool> UsernameRecievers { get; set; }
 
+        public Notification(string text, DateTime createDate, string usernameSender, string title, Dictionary<string, bool> usernameRecievers)
+        {
+            Text = text;
+            CreateDate = createDate;
+            UsernameSender = usernameSender;
+            Title = title;
+            UsernameRecievers = usernameRecievers;
+        }
+
+        public override string ToString()
+        {
+            return CreateDate.ToShortDateString() + " | " + Title;
+        }
+
     }
 }

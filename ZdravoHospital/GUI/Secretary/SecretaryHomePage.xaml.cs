@@ -22,19 +22,55 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
         }
-        private void AddPatientButton_Click(object sender, RoutedEventArgs e)
+
+        private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PatientRegistrationPage());
+            CloseMenuButton.Visibility = Visibility.Visible;
+            OpenMenuButton.Visibility = Visibility.Collapsed;
         }
 
-        private void SeePatientsButton_Click(object sender, RoutedEventArgs e)
+        private void CloseMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PatientsView());
+            CloseMenuButton.Visibility = Visibility.Collapsed;
+            OpenMenuButton.Visibility = Visibility.Visible;
         }
 
-        private void AddGuestButton_Click(object sender, RoutedEventArgs e)
+        private void AddPatientItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.Navigate(new GuestAccountPage());
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                NavigationService.Navigate(new PatientRegistrationPage());
+            }
+
+        }
+
+        private void SeePatientsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                NavigationService.Navigate(new PatientsView());
+            }
+        }
+
+        private void GuestItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                NavigationService.Navigate(new GuestAccountPage());
+            }
+
+        }
+
+        private void NotificationsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                NavigationService.Navigate(new SecretaryNotificationsPage());
+            }
         }
     }
 }

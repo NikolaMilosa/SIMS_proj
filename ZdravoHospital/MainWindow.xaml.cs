@@ -62,7 +62,7 @@ namespace ZdravoHospital
                             window = new DoctorWindow();
                             break;
                         case RoleType.SECERATRY:
-                            window = new SecretaryWindow();
+                            window = new SecretaryWindow(username);
                             break;
                         case RoleType.PATIENT:
                             break;
