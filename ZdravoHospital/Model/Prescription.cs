@@ -2,10 +2,13 @@ using System;
 
 namespace Model
 {
-    public class Prescription
-    {
-        public string DoctorUsername { get; set; }
-
-        public System.Collections.Generic.List<Therapy> Therapy { get; set; }
-    }
+   public class Prescription
+   {
+      public string doctorUsername;
+      public DateTime startHours;
+      public int timesPerDay;
+      public int pauseInDays;
+      public DateTime endDate;
+   
+   }
 }
