@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,10 +18,18 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class PatientWindow : Window
     {
-        public PatientWindow()
+        public string WelcomeMessage { get; set; }
+
+        public Patient Patient { get; set; }
+
+        public PatientWindow(string username)
         {
             InitializeComponent();
+            DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            WelcomeMessage = "Welcome " + username;
+            Model.Resources.OpenPatients();
+            Patient = Model.Resources.patients[username];
         }
 
       
@@ -34,12 +43,12 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void addAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AddAppointmentPage());
+            myFrame.Navigate(new AddAppointmentPage(Patient.Username));
         }
 
         private void appointmentsButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AppointmentPage());
+            myFrame.Navigate(new AppointmentPage(Patient.Username));
         }
     }
 }

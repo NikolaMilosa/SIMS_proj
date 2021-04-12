@@ -24,15 +24,14 @@ namespace ZdravoHospital.GUI.PatientUI
     public partial class AppointmentPage : Page
     {
         public ObservableCollection<AppointmentView> AppointmentList { get; set; }
-    
 
-        public AppointmentPage()
+        public AppointmentPage(string username)
         {
             InitializeComponent();
-            AppointmentList = new ObservableCollection<AppointmentView>();
-            AppointmentView appointmentView = new AppointmentView();
+            fillList(username);
+            //AppointmentView appointmentView = new AppointmentView();
             
-
+            /*
             appointmentView.DoctorName = "Jozef";
             appointmentView.DoctorSurname = "Jozefic";
 
@@ -53,13 +52,29 @@ namespace ZdravoHospital.GUI.PatientUI
             //
             AppointmentList.Add(appointmentView);
             AppointmentList.Add(appointmentView1);
+            */
             DataContext = this;
+        }
+
+        private void fillList(string username)
+        {
+            Model.Resources.OpenPeriods();
+            AppointmentList = new ObservableCollection<AppointmentView>();
+            foreach (Period period in Model.Resources.periods)
+            {
+                if (period.PatientUsername.Equals(username)) 
+                {
+                    AppointmentList.Add(new AppointmentView(period));
+                }
+            }
         }
 
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
             AppointmentList.Remove(appointmentView);
+            Model.Resources.periods.Remove(appointmentView.Period);
+            Model.Resources.SavePeriods();
         }
 
         private void editButton_Click(object sender, RoutedEventArgs e)

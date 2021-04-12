@@ -109,5 +109,21 @@ namespace Model
             if(File.Exists(@"..\..\..\Resources\notifications.json"))
                 notifications = JsonConvert.DeserializeObject<List<Notification>>(File.ReadAllText(@"..\..\..\Resources\notifications.json"));
         }
+
+        public static void OpenPeriods() 
+        {
+            if (File.Exists(@"..\..\..\Resources\periods.json"))
+                periods = JsonConvert.DeserializeObject<List<Period>>(File.ReadAllText(@"..\..\..\Resources\periods.json"));
+            
+           if(periods==null)
+                periods = new List<Period>();
+
+        }
+
+        public static void SavePeriods() 
+        {
+            string json = JsonConvert.SerializeObject(periods);
+            File.WriteAllText(@"..\..\..\Resources\periods.json", json);
+        }
     }
 }

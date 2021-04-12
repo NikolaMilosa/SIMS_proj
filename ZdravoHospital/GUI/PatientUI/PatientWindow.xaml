@@ -39,7 +39,7 @@
                     <Button Background="Transparent" Height="140">
                         <StackPanel Orientation="Vertical">
                             <Image Source="/Images/PatientUI/profileIcon.png" Width="70" Height="70"></Image>
-                            <TextBlock Text="Welcome Kolja!" FontSize="24"></TextBlock>
+                            <TextBlock Text="{Binding WelcomeMessage}" FontSize="24"></TextBlock>
                         </StackPanel>
                     </Button>
                 </StackPanel>
