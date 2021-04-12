@@ -134,7 +134,7 @@ namespace ZdravoHospital.GUI.ManagerUI
                 //If adding there cannot be the same instance of Inventory in the system meaning :
                 foreach (Room room in Model.Resources.rooms.Values)
                 {
-                    if (room.RoomType == RoomType.STORAGE_ROOM)
+                    if (room.RoomType == RoomType.STORAGE_ROOM && room.Available != false)
                     {
                         room.Inventory[Id] = Quantity;
                         Model.Resources.SerializeRooms();
@@ -146,7 +146,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 foreach (Room room in Model.Resources.rooms.Values)
                 {
-                    if (room.RoomType == RoomType.BREAK_ROOM)
+                    if (room.RoomType == RoomType.BREAK_ROOM && room.Available != false)
                     {
                         room.Inventory[Id] = Quantity;
                         Model.Resources.SerializeRooms();
@@ -158,7 +158,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 foreach (Room room in Model.Resources.rooms.Values)
                 {
-                    if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
+                    if ((room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM) && room.Available != false)
                     {
                         room.Inventory[Id] = Quantity;
                         Model.Resources.SerializeRooms();

@@ -1,1 +1,1 @@
-{"testId":{"Name":"test name","Supplier":"test supplier","Quantity":12,"InventoryType":0,"Id":"testId"}}
+{"testId":{"Name":"test name","Supplier":"test supplier","Quantity":12,"InventoryType":0,"Id":"testId"},"someInventory123":{"Name":"Whatever","Supplier":"whatever","Quantity":123,"InventoryType":1,"Id":"someInventory123"},"otherInv":{"Name":"tester","Supplier":"tester","Quantity":50,"InventoryType":0,"Id":"otherInv"}}
