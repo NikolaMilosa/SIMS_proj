@@ -83,7 +83,7 @@
 
                 <Button x:Name="NotificationsButton" Grid.Row="3" Background="#bec4c2" BorderThickness="0,1,0,1" GotFocus="MainMenuGotFocus">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../Images/ManagerUI/inventory.png" Width="60" Visibility="Hidden"/>
+                        <Image Source="../../Images/ManagerUI/notifications.png" Width="60" Visibility="Visible"/>
                         <Separator Visibility="Hidden" Width="10"/>
                         <TextBlock Text="Notifications" Width="100" FontSize="18" VerticalAlignment="Center"/>
                         <Separator Visibility="Hidden" Width="10"/>
@@ -111,7 +111,7 @@
 
                 <Button Grid.Row="0" x:Name="ShowRoomsButton" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Show rooms" Click="ShowRooms_Click"/>
                 <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Add room" Click="AddRoom_Click"/>
-                <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,1" Content="Manage inventory"/>
+                <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,1" Content="Manage inventory" Click="ManageInventoryButton_Click"/>
 
             </Grid>
             <!-- Submenu for inventory-->
@@ -127,7 +127,6 @@
 
                 <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Click="ShowInventoryButton_Click"/>
                 <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1" Click="AddInventoryButton_Click"/>
-                <Button Grid.Row="4" x:Name="ManageInventoryButton" FontSize="18" Background="#bec4c2" Content="Manage inventory" BorderThickness="1,0,0,1"/>
             </Grid>
         </Grid>
         

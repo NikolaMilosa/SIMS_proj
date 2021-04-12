@@ -204,5 +204,11 @@ namespace ZdravoHospital.GUI.ManagerUI
             dialog = new InventoryAddOrEdit();
             dialog.ShowDialog();
         }
+
+        private void ManageInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            dialog = new InventoryManagementWindow();
+            dialog.ShowDialog();
+        }
     }
 }
