@@ -507,7 +507,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>9DA274D8-A85F-4B8C-83D1-CC6A09810AAC</a:CustomPictureID>
+<a:CustomPictureID>6E951A50-9514-4212-996C-9E3BC95B0BA3</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -529,7 +529,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>9DA274D8-A85F-4B8C-83D1-CC6A09810AAC</a:CustomPictureID>
+<a:CustomPictureID>6E951A50-9514-4212-996C-9E3BC95B0BA3</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -549,7 +549,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>ZdravoHospital</a:Code>
 <a:CreationDate>1618209314</a:CreationDate>
 <a:Creator>Nikola</a:Creator>
-<a:ModificationDate>1618209314</a:ModificationDate>
+<a:ModificationDate>1617882326</a:ModificationDate>
 <a:Modifier>Nikola</a:Modifier>
 <a:Location>file:///%[PRJ_ROOT_DIR]%/Class/ZdravoHospital.oom</a:Location>
 <a:Extension>oom</a:Extension>
