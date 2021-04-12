@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
         mc:Ignorable="d"
         Title="Warning"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
     <Grid Height="250" Width="300" Background="Beige">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -32,8 +33,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" Grid.Column="0" Content="Confirm" Background="#bec4c2" Height="52" Width="90"/>
-            <Button x:Name="CancelButton" Grid.Column="1" Content="Cancel" Background="Beige" Height="52" Width="90"/>
+            <Button x:Name="ConfirmButton" Grid.Column="0" Content="Confirm" Background="#bec4c2" Height="52" Width="90" Click="ConfirmButton_Click"/>
+            <Button x:Name="CancelButton" Grid.Column="1" Content="Cancel" Background="Beige" Height="52" Width="90" Click="CancelButton_Click"/>
         </Grid>
     </Grid>
 </Window>

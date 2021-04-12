@@ -177,6 +177,15 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 e.Handled = true;
             }
+            else if (e.Key == Key.Delete)
+            {
+                if (dataGrid.SelectedIndex != -1)
+                {
+                    dialog = new WarningDialog(dataGrid.SelectedItem);
+                    dialog.ShowDialog();
+                }
+                    
+            }
         }
 
         private void AddRoom_Click(object sender, RoutedEventArgs e)

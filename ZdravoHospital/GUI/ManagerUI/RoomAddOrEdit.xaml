@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
         mc:Ignorable="d"
         Title="" 
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
     <Grid Height="500" Width="450" Background="Beige">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -33,7 +34,7 @@
             <TextBox.Text>
                 <Binding Path="Id" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:IdValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True"/>
+                        <local:IdValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -57,7 +58,7 @@
             <TextBox.Text>
                 <Binding Path="RoomName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True"/>
+                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -76,8 +77,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <RadioButton x:Name="YesRadioButton" Grid.Column="0" Height="20" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" GroupName="YesNo" Content="Yes" Margin="10,0,0,0"/>
-            <RadioButton x:Name="NoRadioButton" Grid.Column="1" FontSize="18" Height="20" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="YesNo" Content="No" Margin="10,0,0,0"/>
+            <RadioButton x:Name="YesRadioButton" Grid.Column="0" Height="20" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" GroupName="YesNo" Content="Yes" Margin="10,0,0,0" PreviewKeyDown="YesRadioButton_PreviewKeyDown"/>
+            <RadioButton x:Name="NoRadioButton" Grid.Column="1" FontSize="18" Height="20" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="YesNo" Content="No" Margin="10,0,0,0" PreviewKeyDown="NoRadioButton_PreviewKeyDown"/>
         </Grid>
         
         <!-- Buttons -->

@@ -119,11 +119,29 @@ namespace ZdravoHospital.GUI.ManagerUI
                 Model.Resources.rooms[Id].RoomType = RoomType;
                 Model.Resources.rooms[Id].Available = (YesRadioButton.IsChecked == true) ? true : false;
                 Model.Resources.SerializeRooms();
-                
+
                 ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[Id]);
             }
 
             this.Close();
+        }
+
+        private void YesRadioButton_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                YesRadioButton.IsChecked = true;
+                e.Handled = true;
+            }                
+        }
+
+        private void NoRadioButton_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                NoRadioButton.IsChecked = true;
+                e.Handled = true;
+            }
         }
     }
 }
