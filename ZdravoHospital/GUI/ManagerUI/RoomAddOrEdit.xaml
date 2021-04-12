@@ -46,7 +46,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorField"/>
-                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35"/>
+                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
                     </Grid>
                 </ControlTemplate>
             </Validation.ErrorTemplate>
