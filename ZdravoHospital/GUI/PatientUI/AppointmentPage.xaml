@@ -30,8 +30,8 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Path=StartTime, StringFormat=d}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Time" Width="*" Binding="{Binding Path=StartTime, StringFormat=t}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Doctor's&#x0a; name" Width="120" Binding="{Binding Path=Doctor.Name}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Doctor's&#x0a;surname" Width="120" Binding="{Binding Path=Doctor.Surname}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Doctor's&#x0a; name" Width="120" Binding="{Binding Path=DoctorName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Doctor's&#x0a;surname" Width="120" Binding="{Binding Path=DoctorSurname}"></DataGridTextColumn>
                     <DataGridTextColumn Header=" Room&#x0a;number" Width="*" Binding="{Binding Path=RoomId}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Type" Width="100" Binding="{Binding Path=PeriodType}"></DataGridTextColumn>
                     

@@ -31,22 +31,21 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             AppointmentList = new ObservableCollection<AppointmentView>();
             AppointmentView appointmentView = new AppointmentView();
-            Doctor doctor = new Doctor();
-            doctor.Name = "Stefan";
-            doctor.Surname = "Stefanovic";
+            
 
-            appointmentView.Doctor = doctor;
+            appointmentView.DoctorName = "Jozef";
+            appointmentView.DoctorSurname = "Jozefic";
+
             appointmentView.Duration = 30;
             appointmentView.RoomId = 201;
             appointmentView.PeriodType = PeriodType.APPOINTMENT;
             appointmentView.StartTime = new DateTime();
             //
             AppointmentView appointmentView1 = new AppointmentView();
-            Doctor doctor1 = new Doctor();
-            doctor1.Name = "Jozef";
-            doctor1.Surname = "Jozic";
+           
 
-            appointmentView1.Doctor = doctor1;
+            appointmentView1.DoctorName = "Stefan";
+            appointmentView1.DoctorSurname = "Mitrovic";
             appointmentView1.Duration = 30;
             appointmentView1.RoomId = 102;
             appointmentView1.PeriodType = PeriodType.OPERATION;
@@ -66,7 +65,7 @@ namespace ZdravoHospital.GUI.PatientUI
         private void editButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
-            MessageBox.Show("Appointment you pressed has doctors name: " + appointmentView.Doctor.Name);
+            MessageBox.Show("Appointment you pressed has doctors name: " + appointmentView.DoctorName);
         }
     }
 }

@@ -6,8 +6,8 @@ using System.Text;
 namespace ZdravoHospital.GUI.PatientUI.ViewModel
 {
     public class AppointmentView : Period
-    {
-        //TO DO: ucitaj listu doktora i setuj doktora na ovog
-        public Doctor Doctor { get; set; }
+    { 
+        public string DoctorName { get; set; }
+        public string DoctorSurname { get; set; }
     }
 }
