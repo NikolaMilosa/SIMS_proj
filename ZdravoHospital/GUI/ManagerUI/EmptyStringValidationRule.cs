@@ -10,9 +10,17 @@ namespace ZdravoHospital.GUI.ManagerUI
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value.ToString().Equals(String.Empty))
+            try
+            {
+                if (value.ToString().Equals(String.Empty))
+                    return new ValidationResult(false, null);
+                return new ValidationResult(true, null);
+            }
+            catch
+            {
                 return new ValidationResult(false, null);
-            return new ValidationResult(true, null);
+            }
+            
         }
     }
 }

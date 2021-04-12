@@ -66,9 +66,6 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.Title = "Room adding dialog";
             TypeComboBox.SelectedIndex = 0;
             YesRadioButton.IsChecked = true;
-
-            IdTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            NameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }
 
         public RoomAddOrEdit(Room r)

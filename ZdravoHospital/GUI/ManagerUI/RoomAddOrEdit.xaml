@@ -33,7 +33,7 @@
             <TextBox.Text>
                 <Binding Path="Id" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:IdValidationRule ValidationStep="RawProposedValue"/>
+                        <local:IdValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -57,7 +57,7 @@
             <TextBox.Text>
                 <Binding Path="RoomName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
