@@ -5,25 +5,144 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
         mc:Ignorable="d"
-        Title=""
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        SizeToContent="WidthAndHeight">
-    <Grid Height="450" Width="400" Background="Beige">
-        <Label x:Name="IdLabel" Content="Id:" KeyboardNavigation.TabNavigation="None" FontSize="18" HorizontalAlignment="Left" Margin="40,70,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="IdTextBox" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" Height="34" Margin="165,70,0,0" Text="" TextWrapping="NoWrap" VerticalAlignment="Top" Width="172" TextChanged="IdTextBox_TextChanged"/>
-        <Label x:Name="NameLabel" Content="Name:" KeyboardNavigation.TabNavigation="None" FontSize="18" Margin="40,125,0,0" Height="34" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="NameTextBox" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" Height="34" Margin="165,125,0,0" Text="" TextWrapping="NoWrap" VerticalAlignment="Top" Width="172" TextChanged="NameTextBox_TextChanged"/>
-        <Label x:Name="SupplierLabel" KeyboardNavigation.TabNavigation="None" Content="Supplier:" FontSize="18" HorizontalAlignment="Left" Height="35" Margin="40,175,0,0" VerticalAlignment="Top" Width="80"/>
-        <TextBox x:Name="SupplierTextBox" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" Height="35" Margin="165,175,0,0" Text="" TextWrapping="NoWrap" VerticalAlignment="Top" Width="172" TextChanged="SupplierTextBox_TextChanged"/>
-        <Label x:Name="QuantityLabel" Content="Quantity:" KeyboardNavigation.TabNavigation="None" FontSize="18" HorizontalAlignment="Left" Height="35" Margin="40,225,0,0" VerticalAlignment="Top" Width="88"/>
-        <TextBox x:Name="QuantityTextBox" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" Height="35" Margin="165,225,0,0" Text="" TextWrapping="NoWrap" VerticalAlignment="Top" Width="86" TextChanged="QuantityTextBox_TextChanged"/>
-        <ComboBox x:Name="TypeComboBox" FontSize="18" HorizontalAlignment="Left" Height="35" Margin="165,275,0,0" VerticalAlignment="Top" Width="172"/>
-        <Label x:Name="TypeLabel" Content="Type:" FontSize="18"  HorizontalAlignment="Left" Height="35" Margin="40,275,0,0" VerticalAlignment="Top" Width="80"/>
-        <Label x:Name="IdWarningLabel" Foreground="Red" Visibility="Hidden" FontSize="18" HorizontalAlignment="Left" Height="35" Margin="165,27,0,0" VerticalAlignment="Top" Width="172"/>
-        <Button x:Name="ConfirmButton" IsEnabled="False" Content="Confirm" Background="#bec4c2" FontSize="18" HorizontalAlignment="Left" Height="45" Margin="165,350,0,0" VerticalAlignment="Top" Width="90" Click="ConfirmButton_Click"/>
-        <Button x:Name="CancelButton" Content="Cancel" FontSize="18" Background="Beige" HorizontalAlignment="Left" Height="45" Margin="270,350,0,0" VerticalAlignment="Top" Width="90" Click="CancelButton_Click"/>
-        <Label x:Name="QuantityWarningLabel" VerticalContentAlignment="Center" FontSize="18" Foreground="Red" Visibility="Visible" HorizontalAlignment="Left" Height="35" Margin="260,225,0,0" VerticalAlignment="Top" Width="107"/>
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
+    <Grid Width="450" Height="500" Background="Beige">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         
+        <!-- Labels -->
+        <Label Grid.Column="0" Grid.Row="1" Content="ID:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="Name:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="3" Content="Supplier:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="Quantity:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="Type:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+    
+        <!-- Input area -->
+        <TextBox x:Name="IdTextBox" Grid.Row="1" Grid.Column="1" FontSize="18" HorizontalAlignment="Left" Width="100" Height="35" VerticalAlignment="Top" VerticalContentAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="Id" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:InventoryIdValidationRule ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorFieldId"/>
+                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+
+        <TextBox x:Name="NameTextBox" Grid.Row="2" Grid.Column="1" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="InventoryName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox x:Name="SupplierTextBox" Grid.Row="3" Grid.Column="1" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="Supplier" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox x:Name="QuantityTextBox" Grid.Row="4" Grid.Column="1" FontSize="18" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="Quantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <local:QuantityValidationRule ValidationStep="ConvertedProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorFieldQuantity"/>
+                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+
+        <ComboBox x:Name="TypeComboBox" Grid.Row="5" Grid.Column="1" FontSize="18" Width="230" Text="{Binding Path=InventoryType, Converter={local:InventoryTypeConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ComboBoxItem>STATIC</ComboBoxItem>
+            <ComboBoxItem>DYNAMIC</ComboBoxItem>
+        </ComboBox>
+        
+        <!-- Buttons -->
+
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="18" Content="Confirm" Margin="10,0,10,10" Click="ConfirmButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=IdTextBox}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=NameTextBox}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SupplierTextBox}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=QuantityTextBox}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=IdTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=NameTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=SupplierTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=QuantityTextBox}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="CancelButton" Grid.Column="1" Background="beige" FontSize="18" Content="Cancel" Margin="10,0,10,10" Click="CancelButton_Click"/>
+
+        </Grid>
     </Grid>
 </Window>

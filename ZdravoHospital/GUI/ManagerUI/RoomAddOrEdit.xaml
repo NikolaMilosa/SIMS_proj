@@ -5,21 +5,113 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        Title=""
-        SizeToContent="WidthAndHeight">
-    <Grid Height="400" Width="400" Background="Beige">
-        <Label x:Name="IdLabel" Content="ID :" KeyboardNavigation.TabNavigation="None" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="35" Margin="40,70,0,0" VerticalAlignment="Top" Width="90"/>
-        <TextBox x:Name="IdTextBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="35" Margin="165,70,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="77" TextChanged="IdTextBox_TextChanged"/>
-        <Label x:Name="NameLabel" Content="Name :" Width="90" Height="35" KeyboardNavigation.TabNavigation="None" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="40,120,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="NameTextBox" TextWrapping="NoWrap" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,120,0,0" FontSize="18" VerticalAlignment="Top" Width="200" Height="35" TextChanged="NameTextBox_TextChanged"/>
-        <Label x:Name="RoomTypeLabel" Content="Type :" FontSize="18" KeyboardNavigation.TabNavigation="None" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="40,170,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="RoomTypeComboBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,170,0,0" VerticalAlignment="Top" Width="200" Height="30" SelectionChanged="RoomTypeComboBox_SelectionChanged"/>
-        <Label x:Name="AvailableLabel" Content="Availability :" VerticalContentAlignment="Center" KeyboardNavigation.TabNavigation="None" FontSize="18" HorizontalAlignment="Left" Height="32" Margin="40,220,0,0" VerticalAlignment="Top" Width="110"/>
-        <RadioButton x:Name="YesRadioButton" GroupName="YesNo" Content="Yes" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,220,0,0" VerticalAlignment="Top" Height="32" KeyDown="YesRadioButton_KeyDown"/>
-        <RadioButton x:Name="NoRadioButton" GroupName="YesNo" Content="No" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="32" Margin="253,220,0,0" VerticalAlignment="Top" Width="62" KeyDown="NoRadioButton_KeyDown"/>
-        <Button x:Name="ConfirmButton" Content="Confirm" Background="#bec4c2" FontSize="18" HorizontalAlignment="Left" Height="45" Margin="165,321,0,0" VerticalAlignment="Top" Width="90" Click="ConfirmButton_Click"/>
-        <Button x:Name="CancelButton" Content="Cancel" FontSize="18" Background="Beige" HorizontalAlignment="Left" Height="45" Margin="270,321,0,0" VerticalAlignment="Top" Width="90" Click="CancelButton_Click"/>
-        <Label x:Name="WarningLabel" FontSize="18" VerticalContentAlignment="Center" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Left" Height="35" Margin="265,70,0,0" VerticalAlignment="Top" Width="100"/>
+        Title="" 
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
+    <Grid Height="500" Width="450" Background="Beige">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Labels -->
+        <Label Grid.Column="0" Grid.Row="1" Content="ID:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="Name:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="3" Content="Type:"  Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="Available:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        
+        <!-- Input area -->
+        <TextBox x:Name="IdTextBox" Grid.Row="1" Grid.Column="1" FontSize="18" HorizontalAlignment="Left" Width="100" Height="35" VerticalAlignment="Top" VerticalContentAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="Id" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:RoomIdValidationRule ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorField"/>
+                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+
+
+        <TextBox x:Name="NameTextBox" Grid.Row="2" Grid.Column="1" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="RoomName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <ComboBox x:Name="TypeComboBox" Grid.Row="3" Grid.Column="1" Text="{Binding Path=RoomType, Converter={local:RoomTypeConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
+            <ComboBoxItem>APPOINTMENT</ComboBoxItem>
+            <ComboBoxItem>BEDROOM</ComboBoxItem>
+            <ComboBoxItem>OPERATING</ComboBoxItem>
+            <ComboBoxItem>STORAGE</ComboBoxItem>
+        </ComboBox>
+
+        <Grid Grid.Row="4" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <RadioButton x:Name="YesRadioButton" Grid.Column="0" Height="20" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" GroupName="YesNo" Content="Yes" Margin="10,0,0,0" PreviewKeyDown="YesRadioButton_PreviewKeyDown"/>
+            <RadioButton x:Name="NoRadioButton" Grid.Column="1" FontSize="18" Height="20" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="YesNo" Content="No" Margin="10,0,0,0" PreviewKeyDown="NoRadioButton_PreviewKeyDown"/>
+        </Grid>
+        
+        <!-- Buttons -->
+        <Grid Grid.Row="6" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="18" Content="Confirm" Margin="10" Click="ConfirmButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=IdTextBox}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=NameTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=IdTextBox}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="CancelButton" Grid.Column="1" Background="beige" FontSize="18" Content="Cancel" Margin="10" Click="CancelButton_Click"/>
+
+        </Grid>
+
     </Grid>
 </Window>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,143 +18,316 @@ namespace ZdravoHospital.GUI.ManagerUI
     /// <summary>
     /// Interaction logic for InventoryAddOrEdit.xaml
     /// </summary>
-    public partial class InventoryAddOrEdit : Window
+    public partial class InventoryAddOrEdit : Window, INotifyPropertyChanged
     {
-        List<InventoryType> inventoryTypes = new List<InventoryType>() { InventoryType.DYNAMIC_INVENTORY, InventoryType.STATIC_INVENTORY };
+        //Fields:
+        private string _id;
+        private string _name;
+        private string _supplier;
+        private int _quantity;
+        private InventoryType _inventoryType;
+
         bool isAdder;
-        Inventory newInventory;
+        Window dialog;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        public string Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        public string InventoryName
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("InventoryName");
+            }
+        }
+
+        public string Supplier
+        {
+            get { return _supplier; }
+            set
+            {
+                _supplier = value;
+                OnPropertyChanged("Supplier");
+            }
+        }
+
+        public int Quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                OnPropertyChanged("Quantity");
+            }
+        }
+
+        public InventoryType InventoryType
+        {
+            get { return _inventoryType; }
+            set
+            {
+                _inventoryType = value;
+                OnPropertyChanged("InventoryType");
+            }
+        }
 
         public InventoryAddOrEdit()
         {
             InitializeComponent();
-            Binding binding = new Binding() { Converter = new InventoryTypeConverter() };
-            binding.Source = inventoryTypes;
-            TypeComboBox.SetBinding(ComboBox.ItemsSourceProperty, binding);
+            this.DataContext = this;
 
-            TypeComboBox.SelectedIndex = 0;
             isAdder = true;
-            this.Title = "Inventory adding";
+            this.Title = "Inventory adding dialog";
+            TypeComboBox.SelectedIndex = 0;
         }
 
-        public InventoryAddOrEdit(Inventory inv)
+        public InventoryAddOrEdit(Inventory i)
         {
             InitializeComponent();
-            this.newInventory = inv;
+            this.DataContext = this;
 
-            this.Title = "Inventory editing";
+            this.Title = "Inventory editing dialog";
             isAdder = false;
 
-            Binding binding = new Binding() { Converter = new InventoryTypeConverter() };
-            binding.Source = inventoryTypes;
-            TypeComboBox.SetBinding(ComboBox.ItemsSourceProperty, binding);
+            Id = i.Id;
+            InventoryName = i.Name;
+            Supplier = i.Supplier;
+            Quantity = i.Quantity;
+            InventoryType = i.InventoryType;
 
-            TypeComboBox.SelectedIndex = inventoryTypes.IndexOf(newInventory.InventoryType);
-            NameTextBox.Text = newInventory.Name;
-
-            SupplierTextBox.Text = newInventory.Supplier;
-            QuantityTextBox.Text = newInventory.Quantity.ToString();
-
-            IdTextBox.Text = newInventory.Id;
             IdTextBox.IsEnabled = false;
-            IdWarningLabel.Visibility = Visibility.Hidden;
-
-            fieldChecker();
-        }
-
-        private void fieldChecker()
-        {
-            if (NameTextBox.Text.Equals(String.Empty) || SupplierTextBox.Text.Equals(String.Empty) || IdWarningLabel.Visibility == Visibility.Visible || QuantityWarningLabel.Visibility == Visibility.Visible)
-                ConfirmButton.IsEnabled = false;
-            else
-                ConfirmButton.IsEnabled = true;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string selectedValue = TypeComboBox.SelectedItem.ToString();
-            InventoryType temp;
-            if (selectedValue.Equals("STATIC"))
-                temp = InventoryType.STATIC_INVENTORY;
-            else
-                temp = InventoryType.DYNAMIC_INVENTORY;
-
             if (isAdder)
             {
-                newInventory = new Inventory(NameTextBox.Text, SupplierTextBox.Text, Int32.Parse(QuantityTextBox.Text), temp, IdTextBox.Text);
-                if (!Model.Resources.inventory.ContainsKey(newInventory.Id))
+                if (Model.Resources.rooms.Count == 0)
                 {
-                    Model.Resources.inventory[newInventory.Id] = newInventory;
-                    ManagerWindow.oInventory.Add(newInventory);
-                    Model.Resources.SerializeInventory();
-                    this.Close();
+                    dialog = new WarningDialog(this);
+                    dialog.ShowDialog();
+                    return;
+                }
+
+                Model.Resources.inventory[Id] = new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id);
+                ManagerWindow.Inventory.Add(Model.Resources.inventory[Id]);
+
+                //If adding there cannot be the same instance of Inventory in the system meaning :
+                foreach (Room room in Model.Resources.rooms.Values)
+                {
+                    if (room.RoomType == RoomType.STORAGE_ROOM)
+                    {
+                        room.Inventory[Id] = Quantity;
+                        Model.Resources.SerializeRooms();
+                        Model.Resources.SerializeInventory();
+                        this.Close();
+                        return;
+                    }
+                }
+
+                foreach (Room room in Model.Resources.rooms.Values)
+                {
+                    if (room.RoomType == RoomType.BREAK_ROOM)
+                    {
+                        room.Inventory[Id] = Quantity;
+                        Model.Resources.SerializeRooms();
+                        Model.Resources.SerializeInventory();
+                        this.Close();
+                        return;
+                    }
+                }
+
+                foreach (Room room in Model.Resources.rooms.Values)
+                {
+                    if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
+                    {
+                        room.Inventory[Id] = Quantity;
+                        Model.Resources.SerializeRooms();
+                        Model.Resources.SerializeInventory();
+                        this.Close();
+                        return;
+                    }
                 }
             }
             else
             {
-                int index = ManagerWindow.oInventory.IndexOf(newInventory);
-                newInventory.Name = NameTextBox.Text;
-                newInventory.InventoryType = temp;
-                newInventory.Supplier = SupplierTextBox.Text;
-                newInventory.Quantity = Int32.Parse(QuantityTextBox.Text);
-                ManagerWindow.oInventory.Remove(ManagerWindow.oInventory[index]);
-                ManagerWindow.oInventory.Insert(index, newInventory);
-                Model.Resources.SerializeInventory();
-                this.Close();
+                int index = ManagerWindow.Inventory.IndexOf(Model.Resources.inventory[Id]);
+
+                Model.Resources.inventory[Id].Name = InventoryName;
+                Model.Resources.inventory[Id].Supplier = Supplier;
+                Model.Resources.inventory[Id].InventoryType = InventoryType;
+
+                //Calculate the difference:
+                int difference = Model.Resources.inventory[Id].Quantity - Quantity;
+
+                if (difference > 0)
+                {
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.STORAGE_ROOM)
+                        {
+                            if (room.Inventory[Id] - difference > 0)
+                            {
+                                room.Inventory[Id] -= difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
+
+                            difference -= room.Inventory[Id];
+                            room.Inventory.Remove(Id);
+                        }
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.BREAK_ROOM)
+                        {
+                            if (room.Inventory[Id] - difference > 0)
+                            {
+                                room.Inventory[Id] -= difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
+
+                            difference -= room.Inventory[Id];
+                            room.Inventory.Remove(Id);
+                        }
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
+                        {
+                            if (room.Inventory[Id] - difference > 0)
+                            {
+                                room.Inventory[Id] -= difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
+
+                            difference -= room.Inventory[Id];
+                            room.Inventory.Remove(Id);
+                        }
+                    }
+                }
+                else if (difference < 0)
+                {
+                    difference += -2 * difference;
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.STORAGE_ROOM)
+                        {
+                            if (room.Inventory.ContainsKey(Id))
+                            {
+                                room.Inventory[Id] += difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
+
+                        }
+
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.BREAK_ROOM)
+                        {
+                            if (room.Inventory.ContainsKey(Id))
+                            {
+                                room.Inventory[Id] += difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
+
+                        }
+
+                    }
+
+                    foreach (Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
+                        {
+                            if (room.Inventory.ContainsKey(Id))
+                            {
+                                room.Inventory[Id] += difference;
+
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
+
+                        }
+
+                    }
+                }
             }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Model.Resources.inventory.ContainsKey(IdTextBox.Text))
-            {
-                IdWarningLabel.Content = "Item exists!";
-                IdWarningLabel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                IdWarningLabel.Visibility = Visibility.Hidden;
-            }
-
-            fieldChecker();
-        }
-
-        private void SupplierTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            fieldChecker();
-        }
-
-        private void QuantityTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            int temp;
-            if (Int32.TryParse(QuantityTextBox.Text, out temp))
-            {
-                if(temp >= 0)
-                    QuantityWarningLabel.Visibility = Visibility.Hidden;
-                else
-                {
-                    QuantityWarningLabel.Content = "- Negative!";
-                    QuantityWarningLabel.Visibility = Visibility.Visible;
-                }
-            }
-            else
-            {
-                if (QuantityTextBox.Text.Length != 0)
-                {
-                    QuantityWarningLabel.Visibility = Visibility.Visible;
-                    QuantityWarningLabel.Content = "- Only digits!";
-                }
-            }
-            fieldChecker();
-        }
-
-        private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            fieldChecker();
         }
     }
 }

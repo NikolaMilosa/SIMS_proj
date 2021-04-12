@@ -5,18 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        Title="Warning!" 
-        SizeToContent="WidthAndHeight">
-    <Grid Height="300" Width="350" Background="Beige">
-        <Label x:Name="TitleLabel" KeyboardNavigation.TabNavigation="None" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" HorizontalAlignment="Center" Height="37" Margin="0,15,0,0" VerticalAlignment="Top" Width="330"/>
-        <Label x:Name="TextLabel" FontSize="18" KeyboardNavigation.TabNavigation="None" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="155" VerticalAlignment="Top" Width="294" Margin="0,65,0,0">
-            <TextBlock x:Name="MainText" TextAlignment="Center" TextWrapping="Wrap">
-            </TextBlock>
-        </Label>
-        <Button x:Name="ConfirmButton" Content="Confirm" FontSize="18" HorizontalAlignment="Left" Height="43" Margin="75,242,0,0" VerticalAlignment="Top" Width="90" Click="ConfirmButton_Click"/>
-        <Button x:Name="CancelButton" Content="Cancel" FontSize="18" HorizontalAlignment="Left" Height="43" Margin="180,242,0,0" VerticalAlignment="Top" Width="90" Click="CancelButton_Click"/>
+        Title="Warning"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
+    <Grid Height="250" Width="300" Background="Beige">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <Label x:Name="WarningTitle" Grid.Row="0" FontSize="18" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="WarningText" Grid.Row="0" FontSize="18" Margin="7,7,7,0" TextAlignment="Center" TextWrapping="Wrap"/>
+            <TextBlock x:Name="WarningElement" Grid.Row="1" FontSize="18" Margin="7,0,7,7" TextAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="ConfirmButton" Grid.Column="0" FontSize="18" Content="Confirm" Background="#bec4c2" Height="52" Width="90" Click="ConfirmButton_Click"/>
+            <Button x:Name="CancelButton" Grid.Column="1" FontSize="18" Content="Cancel" Background="Beige" Height="52" Width="90" Click="CancelButton_Click"/>
+        </Grid>
     </Grid>
 </Window>

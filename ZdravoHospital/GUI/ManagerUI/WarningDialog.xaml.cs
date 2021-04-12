@@ -23,24 +23,33 @@ namespace ZdravoHospital.GUI.ManagerUI
         public WarningDialog(Object o)
         {
             InitializeComponent();
-            someObject = o;
-            Type objectType = someObject.GetType();
+            this.someObject = o;
 
-            switch (objectType.Name)
+            switch (someObject.GetType().Name)
             {
+                case nameof(InventoryAddOrEdit):
+                    WarningTitle.Content = "Warning! No available rooms";
+                    WarningText.Text = "There are no rooms where inventory would be stored...";
+                    ConfirmButton.IsEnabled = false;
+                    break;
                 case nameof(Room):
-                    TitleLabel.Content = "Warning! Deleting a room";
-                    MainText.Text = "You are deleting a room with ID : " + ((Room)someObject).Id.ToString() + "! If you wish to continue press \"Confirm\"";
+                    WarningTitle.Content = "Warning! Deleting a room";
+                    WarningText.Text = "You are about to delete a room! If you wish to conitnue press \"Confirm\"";
+                    WarningElement.Text = "Room Id : " + ((Room)someObject).Id;
                     break;
                 case nameof(Inventory):
-                    TitleLabel.Content = "Warning! Deleting inventory!";
-                    MainText.Text = "You are deleting inventory with ID : " + ((Inventory)someObject).Name + "! If you wish to continue press \"Confirm\"";
+                    WarningTitle.Content = "Warning! Deleting inventory";
+                    WarningText.Text = "You are about to delete some inventory! If you wish to continue press \"Confirm\"";
+                    WarningElement.Text = "Inventory Id : " + ((Inventory)someObject).Id;
                     break;
                 default:
-                    TitleLabel.Content = "Warning! Deleting staff!";
-                    MainText.Text = "You are deleting staff member with USERNAME : " + ((Person)someObject).Username + "! If you wish to continue press \"Confirm\"";
+                    WarningTitle.Content = "Warning! Deleting staff";
+                    WarningText.Text = "You are about to delete a member of staff! If you wish to continue press \"Confirm\"";
+                    WarningElement.Text = "Staff username : " + ((Employee)someObject).Username;
                     break;
             }
+
+
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -50,27 +59,34 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            Type objectType = someObject.GetType();
-            switch (objectType.Name)
+            object id;
+            switch (someObject.GetType().Name)
             {
                 case nameof(Room):
-                    int id = ((Room)someObject).Id;
-                    Model.Resources.rooms.Remove(id);
-                    ManagerWindow.oRooms.Remove((Room)someObject);
+                    id = ((Room)someObject).Id;
+                    Model.Resources.rooms.Remove((int)id);
+                    ManagerWindow.Rooms.Remove((Room)someObject);
                     Model.Resources.SerializeRooms();
-                    this.Close();
                     break;
                 case nameof(Inventory):
-                    string ident = ((Inventory)someObject).Id;
-                    Model.Resources.inventory.Remove(ident);
-                    ManagerWindow.oInventory.Remove((Inventory)someObject);
+                    id = ((Inventory)someObject).Id;
+                    Model.Resources.inventory.Remove((string)id);
+                    ManagerWindow.Inventory.Remove((Inventory)someObject);
                     Model.Resources.SerializeInventory();
-                    this.Close();
+
+                    foreach(Room room in Model.Resources.rooms.Values)
+                    {
+                        if (room.Inventory.ContainsKey(id.ToString()))
+                            room.Inventory.Remove(id.ToString());
+                    }
+                    Model.Resources.SerializeRooms();
+
                     break;
                 default:
-                    //Code for Staff deleting
+                    //Code for staff deleting
                     break;
             }
+            this.Close();
         }
     }
 }
