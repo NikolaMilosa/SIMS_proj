@@ -46,11 +46,21 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 
-                <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10">
+                <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
                     </DataGrid.Columns>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Style>
                 </DataGrid>
             </Grid>
             
@@ -95,6 +105,11 @@
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
                     </DataGrid.Columns>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </Style>
+                    </DataGrid.Style>
                 </DataGrid>
             </Grid>
 

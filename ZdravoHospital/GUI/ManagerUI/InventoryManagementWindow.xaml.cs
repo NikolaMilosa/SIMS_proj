@@ -124,6 +124,57 @@ namespace ZdravoHospital.GUI.ManagerUI
             FirstRooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
         }
 
-        
+        private void FirstRoomDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (FirstRoomDataGrid.SelectedIndex + 1 < FirstRoomDataGrid.Items.Count)
+                    FirstRoomDataGrid.SelectedIndex += 1;
+                else if (FirstRoomDataGrid.SelectedIndex + 1 == FirstRoomDataGrid.Items.Count)
+                {
+                    FirstRoomDataGrid.ScrollIntoView(FirstRoomDataGrid.Items[0]);
+                    FirstRoomDataGrid.SelectedIndex = 0;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (FirstRoomDataGrid.SelectedIndex - 1 >= 0)
+                    FirstRoomDataGrid.SelectedIndex -= 1;
+                else if (FirstRoomDataGrid.SelectedIndex - 1 < 0)
+                {
+                    FirstRoomDataGrid.ScrollIntoView(FirstRoomDataGrid.Items[FirstRoomDataGrid.Items.Count - 1]);
+                    FirstRoomDataGrid.SelectedIndex = FirstRoomDataGrid.Items.Count - 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Right)
+            {
+                SecondRoomComboBox.Focus();
+            }
+            else if (e.Key == Key.Tab)
+            {
+                FinishButton.Focus();
+            }
+            else if (e.Key == Key.Escape)
+            {
+                FirstRoomComboBox.Focus();
+            }
+            else if (e.Key == Key.Enter)
+            {
+                if (FirstRoom != null && SecondRoom != null)
+                {
+                    Window dialog = new InventoryManagementQuantitySelector(FirstRoom, SecondRoom, FirstRoomInventory, SecondRoomInventory, ((InventoryDTO)FirstRoomDataGrid.SelectedItem).Id);
+                    dialog.ShowDialog();
+                }
+                e.Handled = true;
+            }
+        }
     }
 }
