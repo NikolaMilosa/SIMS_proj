@@ -13,5 +13,10 @@ namespace Model
             Username = username;
             SpecialistType = specialistType;
         }
+
+        public override string ToString()
+        {
+            return Username + " | " + Name + " " + Surname;
+        }
     }
 }

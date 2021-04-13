@@ -72,5 +72,14 @@ namespace ZdravoHospital.GUI.Secretary
                 NavigationService.Navigate(new SecretaryNotificationsPage());
             }
         }
+
+        private void PeriodsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                NavigationService.Navigate(new SecretaryPeriodsPage());
+            }
+        }
     }
 }

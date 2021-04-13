@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace Model
 {
@@ -12,5 +13,30 @@ namespace Model
         public int RoomId { get; set; }
         public string Details { get; set; }
 
+        public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, int roomId)
+        {
+            StartTime = startTime;
+            Duration = duration;
+            PeriodType = periodType;
+            PatientUsername = patientUsername;
+            DoctorUsername = doctorUsername;
+            RoomId = roomId;
+        }
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(StartTime.Hour.ToString());
+            builder.Append(" : ");
+            builder.Append(StartTime.Minute.ToString());
+            builder.Append(" - ");
+            DateTime endTime = StartTime.AddMinutes(Duration);
+            builder.Append(endTime.Hour.ToString());
+            builder.Append(" : ");
+            builder.Append(endTime.Minute.ToString());
+            builder.Append(" | ");
+            builder.Append(RoomId);
+            
+            return builder.ToString();
+        }
     }
 }
