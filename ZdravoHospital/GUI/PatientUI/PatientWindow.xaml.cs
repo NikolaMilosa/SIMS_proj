@@ -43,7 +43,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void addAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AddAppointmentPage(Patient.Username));
+            myFrame.Navigate(new AddAppointmentPage(null,true,Patient.Username));
         }
 
         private void appointmentsButton_Click(object sender, RoutedEventArgs e)

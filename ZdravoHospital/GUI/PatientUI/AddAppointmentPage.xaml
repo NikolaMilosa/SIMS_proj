@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="708" d:DesignWidth="804"
       Title="AddAppointmentPage"
@@ -41,6 +42,7 @@
                 <TextBlock Text="Select date:   " Margin="0,0,80,0" FontSize="24"/>
                 <DatePicker Name="selectDate"  Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2"  VerticalAlignment="Center" Background="White" Width="200"
                         SelectedDate="{Binding Path=Period.StartTime,Mode=OneWayToSource}"
+                        DisplayDateStart="{x:Static sys:DateTime.Today}"
                         >
                     <DatePicker.Resources>
                         <Style TargetType="{x:Type Border}">

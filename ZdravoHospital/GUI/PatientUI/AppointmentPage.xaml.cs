@@ -29,30 +29,6 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             InitializeComponent();
             fillList(username);
-            //AppointmentView appointmentView = new AppointmentView();
-            
-            /*
-            appointmentView.DoctorName = "Jozef";
-            appointmentView.DoctorSurname = "Jozefic";
-
-            appointmentView.Duration = 30;
-            appointmentView.RoomId = 201;
-            appointmentView.PeriodType = PeriodType.APPOINTMENT;
-            appointmentView.StartTime = new DateTime();
-            //
-            AppointmentView appointmentView1 = new AppointmentView();
-           
-
-            appointmentView1.DoctorName = "Stefan";
-            appointmentView1.DoctorSurname = "Mitrovic";
-            appointmentView1.Duration = 30;
-            appointmentView1.RoomId = 102;
-            appointmentView1.PeriodType = PeriodType.OPERATION;
-            appointmentView1.StartTime = new DateTime();
-            //
-            AppointmentList.Add(appointmentView);
-            AppointmentList.Add(appointmentView1);
-            */
             DataContext = this;
         }
 
@@ -80,7 +56,8 @@ namespace ZdravoHospital.GUI.PatientUI
         private void editButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
-            MessageBox.Show("Appointment you pressed has doctors name: " + appointmentView.DoctorName);
+
+            NavigationService.Navigate(new AddAppointmentPage(appointmentView.Period, false, null));
         }
     }
 }
