@@ -32,5 +32,10 @@ namespace Model
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+
+        public override string ToString()
+        {
+            return Id + " | " + Name;
+        }
     }
 }

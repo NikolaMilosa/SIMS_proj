@@ -55,12 +55,16 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void DeleteNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            Notification notification = (Notification)NotificationsListView.SelectedItem;
-            Notifications.Remove(notification);
-            Model.Resources.notifications.Remove(notification);
+            if(NotificationsListView.SelectedItem != null)
+            {
+                Notification notification = (Notification)NotificationsListView.SelectedItem;
+                Notifications.Remove(notification);
+                Model.Resources.notifications.Remove(notification);
 
-            Model.Resources.SaveNotifications();
-            CollectionViewSource.GetDefaultView(NotificationsListView.ItemsSource).Refresh();
+                Model.Resources.SaveNotifications();
+                CollectionViewSource.GetDefaultView(NotificationsListView.ItemsSource).Refresh();
+            }
+            
         }
     }
 }

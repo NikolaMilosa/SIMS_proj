@@ -45,5 +45,10 @@ namespace Model
         {
 
         }
+
+        public override string ToString()
+        {
+            return Username + " | " + Name + " " + Surname;
+        }
     }
 }
