@@ -13,6 +13,8 @@ namespace Model
         public int RoomId { get; set; }
         public string Details { get; set; }
 
+        public Period() { }
+
         public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, int roomId)
         {
             StartTime = startTime;
