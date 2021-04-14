@@ -48,16 +48,27 @@ namespace ZdravoHospital.GUI.PatientUI
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
-            AppointmentList.Remove(appointmentView);
-            Model.Resources.periods.Remove(appointmentView.Period);
-            Model.Resources.SavePeriods();
+            if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2)) 
+            {
+                MessageBox.Show("You can't cancel period within 2 days from it's start!");
+            }
+            else 
+            {
+                AppointmentList.Remove(appointmentView);
+                Model.Resources.periods.Remove(appointmentView.Period);
+                Model.Resources.SavePeriods();
+            }
+
         }
 
         private void editButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
 
-            NavigationService.Navigate(new AddAppointmentPage(appointmentView.Period, false, null));
+            if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2))
+                MessageBox.Show("You can't edit period within 2 days from it's start!");
+            else
+                NavigationService.Navigate(new AddAppointmentPage(appointmentView.Period, false, null));
         }
     }
 }

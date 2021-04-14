@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,8 @@ namespace ZdravoHospital.GUI.PatientUI
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
         public Period Period { get; set; }
 
+        public List<TimeSpan> TimeList { get; set; }
+
        bool Mode { get; set; }//true=add,false=edit
 
         public AddAppointmentPage(Period period,bool mode,string username)
@@ -41,20 +44,15 @@ namespace ZdravoHospital.GUI.PatientUI
                 Period = new Period();
                 Period.PatientUsername =username;
                 Period.Duration = 30;
-                //selectDate.DisplayDateStart = DateTime.Today;
             }
            else
             {
                 Period = period;
                 selectDate.SelectedDate = Period.StartTime;
-                if(Period.StartTime.AddDays(-3) > DateTime.Today)
-                    selectDate.DisplayDateStart = Period.StartTime.AddDays(-3);
-                selectDate.DisplayDateEnd = Period.StartTime.AddDays(3);
                 selectDoctor.SelectedItem = getDoctor(Period.DoctorUsername);
                 selectTime.SelectedItem = Period.StartTime.TimeOfDay;
             }
-           
-            
+           selectDate.DisplayDateStart = DateTime.Today.AddDays(3);
         }
 
         public DoctorView getDoctor(string username)
@@ -73,10 +71,28 @@ namespace ZdravoHospital.GUI.PatientUI
         public void generateTimeSpan()
         {
             PeriodList = new ObservableCollection<TimeSpan>();
+            TimeList = new List<TimeSpan>();
+            TimeList.Add(new TimeSpan(8, 0, 0));
+            TimeList.Add(new TimeSpan(8, 30, 0));
+            TimeList.Add(new TimeSpan(9, 0, 0));
+            TimeList.Add(new TimeSpan(9, 30, 0));
+            TimeList.Add(new TimeSpan(10, 0, 0));
+            TimeList.Add(new TimeSpan(10, 30, 0));
+            TimeList.Add(new TimeSpan(11, 0, 0));
+            TimeList.Add(new TimeSpan(11, 30, 0));
+            TimeList.Add(new TimeSpan(12, 0, 0));
+            TimeList.Add(new TimeSpan(12, 30, 0));
+            TimeList.Add(new TimeSpan(13, 0, 0));
+            TimeList.Add(new TimeSpan(13, 30, 0));
+            TimeList.Add(new TimeSpan(14, 0, 0));
+            TimeList.Add(new TimeSpan(14, 30, 0));
+            TimeList.Add(new TimeSpan(15, 0, 0));
+            TimeList.Add(new TimeSpan(15, 30, 0));
+            //
             PeriodList.Add(new TimeSpan(8, 0, 0));
             PeriodList.Add(new TimeSpan(8, 30, 0));
             PeriodList.Add(new TimeSpan(9, 0, 0));
-            PeriodList.Add(new TimeSpan(9, 0, 0));
+            PeriodList.Add(new TimeSpan(9, 30, 0));
             PeriodList.Add(new TimeSpan(10, 0, 0));
             PeriodList.Add(new TimeSpan(10, 30, 0));
             PeriodList.Add(new TimeSpan(11, 0, 0));
@@ -89,6 +105,8 @@ namespace ZdravoHospital.GUI.PatientUI
             PeriodList.Add(new TimeSpan(14, 30, 0));
             PeriodList.Add(new TimeSpan(15, 0, 0));
             PeriodList.Add(new TimeSpan(15, 30, 0));
+
+
         }
 
         public void fillList() 
@@ -113,7 +131,7 @@ namespace ZdravoHospital.GUI.PatientUI
                 Period.StartTime=Period.StartTime.Date+ (TimeSpan)selectTime.SelectedItem; 
                 Period.DoctorUsername=((DoctorView)selectDoctor.SelectedItem).Username;
                 Period.RoomId = getFreeRoom();
-                if (checkPeriod() && Period.RoomId!=-1)
+                if (checkPeriod(Period) && Period.RoomId!=-1)
                 {
                     if (Mode)
                     {
@@ -143,7 +161,7 @@ namespace ZdravoHospital.GUI.PatientUI
                     {
                         if(period.RoomId==room.Id)
                         {
-                            if (doPeriodsOverlap(period))
+                            if (doPeriodsOverlap(period,Period))
                             {
                                 exists = true;
                                 break;
@@ -158,7 +176,7 @@ namespace ZdravoHospital.GUI.PatientUI
             return roomId;
         }
 
-        private bool checkPeriod() 
+        private bool checkPeriod(Period checkedPeriod) 
         {
             bool doesntExist = true;
 
@@ -168,7 +186,7 @@ namespace ZdravoHospital.GUI.PatientUI
                 {
                     if (period.PatientUsername.Equals(Period.PatientUsername)) //proveri da li pacijent tad ima zakazano
                     {
-                        if (doPeriodsOverlap(period))
+                        if (doPeriodsOverlap(period,checkedPeriod))
                         {
                             MessageBox.Show("Patient has an existing appointment at selected time!");
                             doesntExist = false;
@@ -177,7 +195,7 @@ namespace ZdravoHospital.GUI.PatientUI
                     }
                     else if (period.DoctorUsername.Equals(Period.DoctorUsername))//proveri da li doktor tad ima zakazano
                     {
-                        if(doPeriodsOverlap(period))
+                        if(doPeriodsOverlap(period,checkedPeriod))
                         {
                             MessageBox.Show("Doctor has an existing appointment at selected time!");
                             doesntExist = false;
@@ -189,17 +207,80 @@ namespace ZdravoHospital.GUI.PatientUI
             return doesntExist;
         }
 
-        private bool doPeriodsOverlap(Period period)
+        private bool doPeriodsOverlap(Period period,Period checkedPeriod)
         {
             DateTime endingtDateTime = period.StartTime.AddMinutes(period.Duration);
-            DateTime endingDateTimePeriod = Period.StartTime.AddMinutes(30);
-            if (period.Equals(Period))//u slucaju kad edituje period
+            DateTime endingDateTimePeriod = checkedPeriod.StartTime.AddMinutes(30);
+            if (period.Equals(checkedPeriod))//u slucaju kad edituje period
                 return false;
 
-            if ((Period.StartTime >= period.StartTime && Period.StartTime < endingtDateTime) || (endingDateTimePeriod > period.StartTime && endingDateTimePeriod <= endingtDateTime))
+            if ((checkedPeriod.StartTime >= period.StartTime && checkedPeriod.StartTime < endingtDateTime) || (endingDateTimePeriod > period.StartTime && endingDateTimePeriod <= endingtDateTime))
                 return true;
 
             return false;
+        }
+
+        private void suggestButton_Click(object sender, RoutedEventArgs e)
+        {
+            Period period = new Period();
+            period.PatientUsername = Period.PatientUsername;
+            if (selectDoctor.SelectedItem != null && selectDate.SelectedDate == null && selectTime.SelectedItem == null) 
+            {
+                period.DoctorUsername=((DoctorView)selectDoctor.SelectedItem).Username;
+                int dayNums = 3;
+                PeriodList.Clear();
+                while (PeriodList.Count < 2)
+                {
+                    selectDate.SelectedDate = DateTime.Today.AddDays(dayNums);
+                    PeriodList.Clear();
+                    foreach (TimeSpan timeSpan in TimeList)
+                    {
+                        if (PeriodList.Count == 4)
+                        {
+                            break;
+                        }
+                        period.StartTime = DateTime.Today.AddDays(dayNums);
+                        period.StartTime += timeSpan;
+                        if (checkPeriod(period))
+                        {
+                            MessageBox.Show(period.StartTime.ToString());
+                            PeriodList.Add(timeSpan);
+
+                        }
+                    }
+                    ++dayNums;
+                    
+                }
+                    MessageBox.Show("Time list is updated to suggested times!");
+            }
+            else if(selectDoctor.SelectedItem == null && selectDate.SelectedDate != null && selectTime.SelectedItem != null)
+            {
+
+                period.StartTime = (DateTime)selectDate.SelectedDate;
+                period.StartTime += (TimeSpan)selectTime.SelectedItem;
+                //
+                foreach (DoctorView doctor in DoctorList.ToList())
+                {
+                    foreach (Period period1 in Model.Resources.periods)
+                    {
+                        if (period1.DoctorUsername.Equals(doctor.Username))
+                             if (doPeriodsOverlap(period1, period))
+                                    {
+                                        DoctorList.Remove(doctor);
+                                        break;
+                                    }
+                    }
+                    
+                }
+               
+                if(DoctorList.Count>0)
+                    MessageBox.Show("Doctor list is updated to suggested doctors!");
+                //
+            }
+            else
+            {
+                MessageBox.Show("Please choose doctor or time so the system could suggest you  periods!");
+            }
         }
     }
 }
