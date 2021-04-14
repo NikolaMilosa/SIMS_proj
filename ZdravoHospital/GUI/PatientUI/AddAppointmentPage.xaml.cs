@@ -251,7 +251,10 @@ namespace ZdravoHospital.GUI.PatientUI
                     ++dayNums;
                     
                 }
-                    MessageBox.Show("Time list is updated to suggested times!");
+                
+                MessageBox.Show("Time list is updated to suggested times!");
+                selectTime.Focus();
+                selectTime.IsDropDownOpen = true;
             }
             else if(selectDoctor.SelectedItem == null && selectDate.SelectedDate != null && selectTime.SelectedItem != null)
             {
@@ -272,9 +275,15 @@ namespace ZdravoHospital.GUI.PatientUI
                     }
                     
                 }
-               
-                if(DoctorList.Count>0)
+
+                if (DoctorList.Count > 0)
+                {
                     MessageBox.Show("Doctor list is updated to suggested doctors!");
+                    selectDoctor.Focus();
+                    selectDoctor.IsDropDownOpen = true;
+                }
+                else
+                    MessageBox.Show("There is no available doctor at the selected time!");
                 //
             }
             else
