@@ -54,20 +54,20 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" FontSize="18" Content="Confirm" Background="#bec4c2" Height="52" Width="100">
+            <Button x:Name="ConfirmButton" FontSize="18" Content="Confirm" Background="#bec4c2" Height="52" Width="100" Click="ConfirmButton_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
-                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="IsEnabled" Value="True"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ElementName=QuantityTextBox, Path=Text}" Value="">
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=QuantityTextBox}" Value="False"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True"/>
-                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=QuantityTextBox, Path=Text}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=QuantityTextBox, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

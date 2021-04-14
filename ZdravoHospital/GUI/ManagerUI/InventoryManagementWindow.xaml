@@ -31,7 +31,7 @@
 
                 <Label Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="From :" FontSize="18" Width="60" Margin="50,0,0,0"/>
                 
-                <ComboBox x:Name="FirstRoomComboBox" ItemsSource="{Binding FirstRooms, Mode=TwoWay}" SelectedItem="{Binding FirstRoom, Mode=TwoWay}" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0">
+                <ComboBox x:Name="FirstRoomComboBox" ItemsSource="{Binding FirstRooms, Mode=TwoWay}" SelectedItem="{Binding FirstRoom, Mode=TwoWay}" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="FirstRoomComboBox_PreviewKeyDown">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
@@ -45,8 +45,8 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                
-                <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown">
+
+                <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown" GotFocus="FirstRoomDataGrid_GotFocus">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
@@ -74,8 +74,8 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="From :" FontSize="18" Width="60" Margin="50,0,0,0"/>
-                
-                <ComboBox x:Name="SecondRoomComboBox" ItemsSource="{Binding SecondRooms, Mode=TwoWay}" SelectedItem="{Binding SecondRoom, Mode=TwoWay}" IsReadOnly="True" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0">
+
+                <ComboBox x:Name="SecondRoomComboBox" ItemsSource="{Binding SecondRooms, Mode=TwoWay}" SelectedItem="{Binding SecondRoom, Mode=TwoWay}" IsReadOnly="True" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="SecondRoomComboBox_PreviewKeyDown">
                     <ComboBox.Style>
                         <Style TargetType="{x:Type ComboBox}">
                             <Setter Property="IsEnabled" Value="True"/>
@@ -115,7 +115,7 @@
 
         </Grid>
 
-        <Button x:Name="FinishButton" Grid.Row="1" FontSize="18" Content="Finish" Background="#bec4c2" Height="52" Width="100"/>
+        <Button x:Name="FinishButton" Grid.Row="1" FontSize="18" Content="Finish" Background="#bec4c2" Height="52" Width="100" Click="FinishButton_Click"/>
 
     </Grid>
 </Window>

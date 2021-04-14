@@ -24,9 +24,9 @@ namespace ZdravoHospital.GUI.ManagerUI
         //Fields:
         private int _maxInventory;
         private string _definitionText;
-        private string _enteredQuantity;
+        private int _enteredQuantity;
 
-        public string EnteredQuantity
+        public int EnteredQuantity
         {
             get { return _enteredQuantity; }
             set
@@ -91,6 +91,44 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (secondRoom.Inventory.ContainsKey(id))
+            {
+                secondRoom.Inventory[id] += EnteredQuantity;
+                foreach (InventoryDTO i in secondRoomDTOs)
+                    if (i.Id.Equals(id))
+                        i.Quantity += EnteredQuantity;
+            }
+            else
+            {
+                secondRoom.Inventory[id] = EnteredQuantity;
+                secondRoomDTOs.Add(new InventoryDTO(Model.Resources.inventory[id].Name, EnteredQuantity, id));
+            }
+
+
+            if (firstRoom.Inventory[id] - EnteredQuantity == 0)
+            {
+                firstRoom.Inventory.Remove(id);
+                foreach (InventoryDTO i in firstRoomDTOs)
+                    if (i.Id.Equals(id))
+                    {
+                        firstRoomDTOs.Remove(i);
+                        break;
+                    }
+            }
+            else
+            {
+                firstRoom.Inventory[id] -= EnteredQuantity;
+                foreach (InventoryDTO i in firstRoomDTOs)
+                    if (i.Id.Equals(id))
+                        i.Quantity -= EnteredQuantity;
+            }
+
+            Model.Resources.SerializeRooms();
             this.Close();
         }
     }

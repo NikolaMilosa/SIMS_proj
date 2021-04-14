@@ -157,14 +157,17 @@ namespace ZdravoHospital.GUI.ManagerUI
             else if (e.Key == Key.Right)
             {
                 SecondRoomComboBox.Focus();
+                e.Handled = true;
             }
             else if (e.Key == Key.Tab)
             {
                 FinishButton.Focus();
+                e.Handled = true;
             }
             else if (e.Key == Key.Escape)
             {
                 FirstRoomComboBox.Focus();
+                e.Handled = true;
             }
             else if (e.Key == Key.Enter)
             {
@@ -173,6 +176,46 @@ namespace ZdravoHospital.GUI.ManagerUI
                     Window dialog = new InventoryManagementQuantitySelector(FirstRoom, SecondRoom, FirstRoomInventory, SecondRoomInventory, ((InventoryDTO)FirstRoomDataGrid.SelectedItem).Id);
                     dialog.ShowDialog();
                 }
+                e.Handled = true;
+            }
+        }
+
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FirstRoomDataGrid_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (FirstRoomDataGrid.Items.Count > 0)
+            {
+                FirstRoomDataGrid.SelectedIndex = 0;
+                FirstRoomDataGrid.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            }
+        }
+
+        private void FirstRoomComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Right)
+            {
+                SecondRoomComboBox.Focus();
+                e.Handled = true;
+            } 
+            else if (e.Key == Key.Left)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SecondRoomComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                FirstRoomComboBox.Focus();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Right)
+            {
                 e.Handled = true;
             }
         }
