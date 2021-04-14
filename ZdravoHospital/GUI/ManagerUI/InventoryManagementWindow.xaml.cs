@@ -205,6 +205,34 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 e.Handled = true;
             }
+            else if (e.Key == Key.Enter)
+            {
+                if (FirstRoomComboBox.IsDropDownOpen == false)
+                    FirstRoomComboBox.IsDropDownOpen = true;
+                else
+                    FirstRoomComboBox.IsDropDownOpen = false;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (FirstRoomComboBox.IsDropDownOpen == false)
+                    FirstRoomDataGrid.Focus();
+                else
+                {
+                    if (FirstRoomComboBox.SelectedIndex + 1 < FirstRoomComboBox.Items.Count)
+                        FirstRoomComboBox.SelectedIndex += 1;
+                }
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (FirstRoomComboBox.IsDropDownOpen == true)
+                {
+                    if (FirstRoomComboBox.SelectedIndex - 1 >= 0)
+                        FirstRoomComboBox.SelectedIndex -= 1;
+                }
+                e.Handled = true;
+            }
         }
 
         private void SecondRoomComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -216,6 +244,36 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
             else if (e.Key == Key.Right)
             {
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Enter)
+            {
+                if (SecondRoomComboBox.IsDropDownOpen == false)
+                    SecondRoomComboBox.IsDropDownOpen = true;
+                else
+                    SecondRoomComboBox.IsDropDownOpen = false;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (SecondRoomComboBox.IsDropDownOpen == false)
+                    FinishButton.Focus();
+                else
+                {
+                    if (SecondRoomComboBox.SelectedIndex + 1 < SecondRoomComboBox.Items.Count)
+                        SecondRoomComboBox.SelectedIndex += 1;
+
+                }
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (SecondRoomComboBox.IsDropDownOpen == true)
+                {
+                    if (SecondRoomComboBox.SelectedIndex - 1 >= 0)
+                        SecondRoomComboBox.SelectedIndex -= 1;
+                }
+
                 e.Handled = true;
             }
         }
