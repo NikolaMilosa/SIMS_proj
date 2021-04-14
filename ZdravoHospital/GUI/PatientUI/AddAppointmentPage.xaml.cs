@@ -95,6 +95,7 @@ namespace ZdravoHospital.GUI.PatientUI
             {
                 Period.StartTime=Period.StartTime.Date+ (TimeSpan)selectTime.SelectedItem; 
                 Period.DoctorUsername=((DoctorView)selectDoctor.SelectedItem).Username;
+                
                 Period.RoomId = Validate.getFreeRoom(Period);
                 if (Validate.checkPeriod(Period,true) && Period.RoomId!=-1)
                 {
@@ -104,8 +105,9 @@ namespace ZdravoHospital.GUI.PatientUI
                         Model.Resources.periods.Add(Period);
                         
                     }
-
+                    
                     Model.Resources.SavePeriods();
+                    NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
                 }
             }
         }

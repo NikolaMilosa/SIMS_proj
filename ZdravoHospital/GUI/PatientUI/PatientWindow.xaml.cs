@@ -50,5 +50,10 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             myFrame.Navigate(new AppointmentPage(Patient.Username));
         }
+
+        private void notificationsButton_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(new NotificationsPage(Patient.Username));
+        }
     }
 }

@@ -102,7 +102,8 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             int roomId = -1;
             Model.Resources.OpenRooms();
-            Model.Resources.OpenPeriods();
+            if(Resources.periods==null)
+              Model.Resources.OpenPeriods();
 
             bool exists = true;
             foreach (Room room in Model.Resources.rooms.Values)
@@ -151,7 +152,8 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static bool checkPeriod(Period checkedPeriod,bool writeWarnings)
         {
             bool doesntExist = true;
-            Model.Resources.OpenPeriods();
+            if (Resources.periods == null)
+                Model.Resources.OpenPeriods();
             foreach (Period period in Model.Resources.periods)
             {
                 if (period.StartTime.Date == checkedPeriod.StartTime.Date)
