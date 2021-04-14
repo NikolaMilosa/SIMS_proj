@@ -185,6 +185,8 @@ namespace ZdravoHospital.GUI.ManagerUI
                     {
                         if (room.RoomType == RoomType.STORAGE_ROOM)
                         {
+                            if (!room.Inventory.ContainsKey(Id))
+                                continue;
                             if (room.Inventory[Id] - difference > 0)
                             {
                                 room.Inventory[Id] -= difference;
@@ -201,6 +203,18 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                             difference -= room.Inventory[Id];
                             room.Inventory.Remove(Id);
+                            if (difference == 0)
+                            {
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
+                                
                         }
                     }
 
@@ -208,6 +222,8 @@ namespace ZdravoHospital.GUI.ManagerUI
                     {
                         if (room.RoomType == RoomType.BREAK_ROOM)
                         {
+                            if (!room.Inventory.ContainsKey(Id))
+                                continue;
                             if (room.Inventory[Id] - difference > 0)
                             {
                                 room.Inventory[Id] -= difference;
@@ -224,6 +240,17 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                             difference -= room.Inventory[Id];
                             room.Inventory.Remove(Id);
+                            if (difference == 0)
+                            {
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
                         }
                     }
 
@@ -231,6 +258,8 @@ namespace ZdravoHospital.GUI.ManagerUI
                     {
                         if (room.RoomType == RoomType.APPOINTMENT_ROOM || room.RoomType == RoomType.OPERATING_ROOM)
                         {
+                            if (!room.Inventory.ContainsKey(Id))
+                                continue;
                             if (room.Inventory[Id] - difference > 0)
                             {
                                 room.Inventory[Id] -= difference;
@@ -247,6 +276,17 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                             difference -= room.Inventory[Id];
                             room.Inventory.Remove(Id);
+                            if (difference == 0)
+                            {
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+                                this.Close();
+                                return;
+                            }
                         }
                     }
                 }
@@ -271,7 +311,20 @@ namespace ZdravoHospital.GUI.ManagerUI
                                 this.Close();
                                 return;
                             }
+                            else
+                            {
+                                room.Inventory[Id] = difference;
 
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
                         }
 
                     }
@@ -294,7 +347,20 @@ namespace ZdravoHospital.GUI.ManagerUI
                                 this.Close();
                                 return;
                             }
+                            else
+                            {
+                                room.Inventory[Id] = difference;
 
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
                         }
 
                     }
@@ -317,7 +383,20 @@ namespace ZdravoHospital.GUI.ManagerUI
                                 this.Close();
                                 return;
                             }
+                            else
+                            {
+                                room.Inventory[Id] = difference;
 
+                                Model.Resources.inventory[Id].Quantity = Quantity;
+                                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+
+                                Model.Resources.SerializeRooms();
+                                Model.Resources.SerializeInventory();
+
+                                this.Close();
+                                return;
+                            }
                         }
 
                     }

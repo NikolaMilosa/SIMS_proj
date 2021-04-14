@@ -79,7 +79,7 @@
                 <Binding Path="Quantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
-                        <local:QuantityValidationRule ValidationStep="ConvertedProposedValue"/>
+                        <local:QuantityValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

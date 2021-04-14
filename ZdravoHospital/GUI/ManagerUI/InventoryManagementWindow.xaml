@@ -1,0 +1,121 @@
+﻿<Window x:Class="ZdravoHospital.GUI.ManagerUI.InventoryManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        mc:Ignorable="d"
+        Title="Inventory management"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
+    <Grid Width="1000" Height="600" Background="Beige">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="90"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Grid -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="300"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="From :" FontSize="18" Width="60" Margin="50,0,0,0"/>
+                
+                <ComboBox x:Name="FirstRoomComboBox" ItemsSource="{Binding FirstRooms, Mode=TwoWay}" SelectedItem="{Binding FirstRoom, Mode=TwoWay}" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="FirstRoomComboBox_PreviewKeyDown">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                        <Binding Path="Id"/>
+                                        <Binding Path="Name"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown" GotFocus="FirstRoomDataGrid_GotFocus">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                    </DataGrid.Columns>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Style>
+                </DataGrid>
+            </Grid>
+            
+            <!-- Right Grid -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="300"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="From :" FontSize="18" Width="60" Margin="50,0,0,0"/>
+
+                <ComboBox x:Name="SecondRoomComboBox" ItemsSource="{Binding SecondRooms, Mode=TwoWay}" SelectedItem="{Binding SecondRoom, Mode=TwoWay}" IsReadOnly="True" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="SecondRoomComboBox_PreviewKeyDown">
+                    <ComboBox.Style>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=FirstRoomComboBox, Path=SelectedIndex}" Value="-1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.Style>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                        <Binding Path="Id"/>
+                                        <Binding Path="Name"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <DataGrid x:Name="SecondRoomDataGrid" Grid.Row="3" ItemsSource="{Binding SecondRoomInventory, Mode=TwoWay}" AutoGenerateColumns="false" HeadersVisibility="Column" FontSize="18" Margin="10,10,20,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                    </DataGrid.Columns>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </Style>
+                    </DataGrid.Style>
+                </DataGrid>
+            </Grid>
+
+        </Grid>
+
+        <Button x:Name="FinishButton" Grid.Row="1" FontSize="18" Content="Finish" Background="#bec4c2" Height="52" Width="100" Click="FinishButton_Click"/>
+
+    </Grid>
+</Window>

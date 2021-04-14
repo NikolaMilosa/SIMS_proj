@@ -123,8 +123,11 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void TableGotFocus(object sender, RoutedEventArgs e)
         {
-            dataGrid.SelectedIndex = 0;
-            dataGrid.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            if (dataGrid.Items.Count > 0)
+            {
+                dataGrid.SelectedIndex = 0;
+                dataGrid.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            }
         }
 
         private void TableKeyHandles(object sender, KeyEventArgs e)
@@ -202,6 +205,12 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void AddInventoryButton_Click(object sender, RoutedEventArgs e)
         {
             dialog = new InventoryAddOrEdit();
+            dialog.ShowDialog();
+        }
+
+        private void ManageInventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            dialog = new InventoryManagementWindow();
             dialog.ShowDialog();
         }
     }
