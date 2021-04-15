@@ -50,7 +50,8 @@ namespace ZdravoHospital.GUI.PatientUI
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
             if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2)) 
             {
-                MessageBox.Show("You can't cancel period within 2 days from it's start!");
+                customOkDialog dialog = new customOkDialog("Warning", "You can't cancel period within 2 days from it's start!");
+                dialog.Show();
             }
             else 
             {
@@ -66,7 +67,10 @@ namespace ZdravoHospital.GUI.PatientUI
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
 
             if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2))
-                MessageBox.Show("You can't edit period within 2 days from it's start!");
+            {
+                customOkDialog dialog = new customOkDialog("Warning", "You can't edit period within 2 days from it's start!");
+                dialog.Show();
+            }
             else
                 NavigationService.Navigate(new AddAppointmentPage(appointmentView.Period, false, null));
         }

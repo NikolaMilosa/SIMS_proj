@@ -7,12 +7,45 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
+using System.Threading;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public static class Validate
     {
+        public static void therapyNotification(object patientUsername)
+        {
+            string username = (string)patientUsername;
+            Patient patient= Resources.patients[username];
+            while (true)
+            {
+                foreach (Prescription prescription in patient.Prescription)
+                {
+                    if (prescription.StartHours >= DateTime.Now && prescription.StartHours <= DateTime.Now.AddMinutes(5))
+                    {
+                        customOkDialog customOkDialog = new customOkDialog("Therapy", generatePrescreption(prescription));
+                        customOkDialog.ShowDialog();
+                    }
+                 }//PREPRAVI
+                
+               Thread.Sleep(TimeSpan.FromMinutes(5));
+            }
+           
+        }
 
+        public static string generatePrescreption(Prescription prescription)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Starting time:");
+            stringBuilder.AppendLine(prescription.StartHours.ToString());
+            stringBuilder.Append("Ending time:");
+            stringBuilder.AppendLine(prescription.EndDate.ToString());
+            stringBuilder.Append("Medications:");
+            foreach (Therapy therapy in prescription.TherapyList)
+                stringBuilder.AppendLine(therapy.Medicine.MedicineName);
+
+            return stringBuilder.ToString();
+        }
         public static void suggestDoctor(Period checkedPeriod, ObservableCollection<DoctorView> doctorList)
         { 
             foreach (DoctorView doctor in doctorList.ToList())
@@ -54,7 +87,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
                 }
                 ++dayNums;
             }
-            MessageBox.Show("Time list is updated to suggested times!");
+          
+            customOkDialog customOkDialog = new customOkDialog("Suggested time", "Time list is updated to suggested times!");
+            customOkDialog.ShowDialog();
         }
 
         public static void generateTimeSpan(List<TimeSpan> timeList)
@@ -126,7 +161,8 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
                         return room.Id;
                 }
             }
-            MessageBox.Show("Theres no rooms available at selected time!");
+            customOkDialog customOkDialog = new customOkDialog("Warning", "There is no free rooms at selected time!");
+            customOkDialog.ShowDialog();
             return roomId;
         }
 
@@ -163,7 +199,10 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
                         if (doPeriodsOverlap(period, checkedPeriod))
                         {
                             if(writeWarnings)
-                                MessageBox.Show("Patient has an existing appointment at selected time!");
+                            {
+                                customOkDialog customOkDialog = new customOkDialog("Warning", "Patient has an existing appointment at selected time!");
+                                customOkDialog.ShowDialog();
+                            }
                             doesntExist = false;
                             break;
                         }
@@ -173,7 +212,12 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
                         if (doPeriodsOverlap(period, checkedPeriod))
                         {
                            if(writeWarnings)
-                                MessageBox.Show("Doctor has an existing appointment at selected time!");
+                            {
+                                customOkDialog customOkDialog = new customOkDialog("Warning", "Doctor has an existing appointment at selected time!");
+                                customOkDialog.ShowDialog();
+
+                            }
+                              
                            doesntExist = false;
                            break;
                         }

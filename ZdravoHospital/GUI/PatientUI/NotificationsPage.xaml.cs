@@ -22,25 +22,32 @@ namespace ZdravoHospital.GUI.PatientUI
     public partial class NotificationsPage : Page
     {
         public ObservableCollection<NotificationView> NotificationList { get; set; }
+        
+        public string PatientUsername { get; set; }
         public NotificationsPage(string username)
         {
             InitializeComponent();
             DataContext = this;
-            fillList(username);
+            PatientUsername = username;
+            fillList();
         }
 
-        private void fillList(string username)
+        private void fillList()
         {
             NotificationList = new ObservableCollection<NotificationView>();
             Model.Resources.OpenNotifications();
             foreach(Notification notification in Model.Resources.notifications)
             {
-                if (notification.UsernameRecievers.ContainsKey(username))
+                if (notification.UsernameRecievers.ContainsKey(PatientUsername))
                 {
-                    NotificationList.Add(new NotificationView(notification,username));
+                    NotificationList.Add(new NotificationView(notification, PatientUsername));
                 }
             }
         }
 
+        private void notificationDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.Navigate(new NotificationDetailsPage((NotificationView)notificationDataGrid.SelectedItem, PatientUsername));
+        }
     }
 }

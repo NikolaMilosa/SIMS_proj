@@ -89,7 +89,8 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             if (selectTime.SelectedItem == null || selectDate.SelectedDate == null || selectDoctor.SelectedItem == null)
             {
-                MessageBox.Show("Please select doctor,date and time when you want to schedule appointment.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                customOkDialog customOkDialog = new customOkDialog("Warning", "Please select doctor, date and time when you want to schedule appointment.!");
+                customOkDialog.ShowDialog();
             }
             else
             {
@@ -99,14 +100,19 @@ namespace ZdravoHospital.GUI.PatientUI
                 Period.RoomId = Validate.getFreeRoom(Period);
                 if (Validate.checkPeriod(Period,true) && Period.RoomId!=-1)
                 {
+                    customOkDialog customOkDialog = null;
                     if (Mode)
                     {
                         Model.Resources.OpenPeriods();
                         Model.Resources.periods.Add(Period);
-                        
+                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully added!");
                     }
-                    
+                    else
+                    {
+                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully edited!");
+                    }
                     Model.Resources.SavePeriods();
+                    customOkDialog.ShowDialog();
                     NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
                 }
             }
@@ -138,18 +144,27 @@ namespace ZdravoHospital.GUI.PatientUI
                 fillList();
                 Validate.suggestDoctor(period, DoctorList);
                 if (DoctorList.Count <= 0)
-                    MessageBox.Show("There is no available doctor at the selected time!");
+                {
+                    customOkDialog customOkDialog = new customOkDialog("Warning", "There is no available doctor at the selected time!");
+                    customOkDialog.ShowDialog();
+                }
                 else
                 {
-                    MessageBox.Show("Doctor list is updated to suggested doctors!");
-                    selectDoctor.Focus();
+                    customOkDialog customOkDialog = new customOkDialog("Suggested doctor", "Doctor list is updated to suggested doctors!");
+                    customOkDialog.ShowDialog();
                     selectDoctor.IsDropDownOpen = true;
                 }
             }
             else
             {
-                MessageBox.Show("Please choose doctor or time so the system could suggest you  periods!");
+                customOkDialog customOkDialog = new customOkDialog("Warning", "Please choose doctor or time so the system could suggest you  periods!");
+                customOkDialog.ShowDialog();
             }
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
         }
     }
 }
