@@ -7,6 +7,7 @@
         <Brush x:Key="Blue">#0460FF</Brush>
         <Brush x:Key="BlueHover">#0440FF</Brush>
         <Brush x:Key="BlackHover">#0b0b0b</Brush>
+        <Brush x:Key="DarkGray">#222222</Brush>
         <Brush x:Key="LightGray">#bfbfbf</Brush>
         
         <Style x:Key="BlueButton" TargetType="Button">

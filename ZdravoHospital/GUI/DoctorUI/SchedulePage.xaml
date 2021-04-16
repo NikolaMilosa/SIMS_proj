@@ -29,7 +29,8 @@
                       Height="35"
                       Width="400"
                               VerticalAlignment="Center"
-                              VerticalContentAlignment="Center">
+                              VerticalContentAlignment="Center"
+                              SelectionChanged="DoctorsComboBox_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock>
@@ -405,6 +406,12 @@
                         <StackPanel x:Name="MondayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
+                        <Button Focusable="False"
+                                Background="Transparent"
+                                Cursor="Cross"
+                                ToolTip = "New appointment/operation"
+                                BorderThickness = "0"
+                                Click="NewAppointmentButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="1"
                 BorderBrush="Black"
@@ -414,6 +421,12 @@
                         <StackPanel x:Name="TuesdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
+                        <Button Focusable="False"
+                                Background="Transparent"
+                                Cursor="Cross"
+                                ToolTip = "New appointment/operation"
+                                BorderThickness = "0"
+                                Click="NewAppointmentButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="2"
                 BorderBrush="Black"
@@ -423,6 +436,12 @@
                         <StackPanel x:Name="WednesdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
+                        <Button Focusable="False"
+                                Background="Transparent"
+                                Cursor="Cross"
+                                ToolTip = "New appointment/operation"
+                                BorderThickness = "0"
+                                Click="NewAppointmentButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="3"
                 BorderBrush="Black"
@@ -432,6 +451,12 @@
                         <StackPanel x:Name="ThursdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
+                        <Button Focusable="False"
+                                Background="Transparent"
+                                Cursor="Cross"
+                                ToolTip = "New appointment/operation"
+                                BorderThickness = "0"
+                                Click="NewAppointmentButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="4"
                 BorderBrush="Black"
@@ -441,6 +466,12 @@
                         <StackPanel x:Name="FridayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
+                        <Button Focusable="False"
+                                Background="Transparent"
+                                Cursor="Cross"
+                                ToolTip = "New appointment/operation"
+                                BorderThickness = "0"
+                                Click="NewAppointmentButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="5"
                 BorderBrush="Black"
@@ -450,6 +481,12 @@
                         <StackPanel x:Name="SaturdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
+                        <Button Focusable="False"
+                                Background="Transparent"
+                                Cursor="Cross"
+                                ToolTip = "New appointment/operation"
+                                BorderThickness = "0"
+                                Click="NewAppointmentButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="6"
                 BorderBrush="Black"
@@ -459,6 +496,12 @@
                         <StackPanel x:Name="SundayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
+                        <Button Focusable="False"
+                                Background="Transparent"
+                                Cursor="Cross"
+                                ToolTip = "New appointment/operation"
+                                BorderThickness = "0"
+                                Click="NewAppointmentButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="7"
                 BorderBrush="Black"
@@ -467,7 +510,8 @@
             </ScrollViewer>
         </DockPanel>
         <Grid Name="NewPeriodPopUp"
-                   Background="Transparent">
+                   Background="Transparent"
+              Visibility="Hidden">
             <DockPanel Background="Black"
                        Opacity="0.8">
             </DockPanel>
