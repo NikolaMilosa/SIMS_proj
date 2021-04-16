@@ -109,7 +109,7 @@
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
-                        BorderBrush="Transparent"
+                        BorderBrush="Transparent" Click="notificationsButton_Click"
                         
                         >
                         <StackPanel Orientation="Horizontal" Height="50">

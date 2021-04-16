@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.Validations;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
 
 namespace ZdravoHospital.GUI.PatientUI
@@ -26,6 +28,8 @@ namespace ZdravoHospital.GUI.PatientUI
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
         public Period Period { get; set; }
 
+        public List<TimeSpan> TimeList { get; set; }
+
        bool Mode { get; set; }//true=add,false=edit
 
         public AddAppointmentPage(Period period,bool mode,string username)
@@ -34,27 +38,23 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             DataContext = this;
             Mode = mode;
-            generateTimeSpan();
+            PeriodList = new ObservableCollection<TimeSpan>();
+            Validate.generateObesrvableTimes(PeriodList);
             fillList();
             if(mode)
             {
                 Period = new Period();
                 Period.PatientUsername =username;
                 Period.Duration = 30;
-                //selectDate.DisplayDateStart = DateTime.Today;
             }
            else
             {
                 Period = period;
                 selectDate.SelectedDate = Period.StartTime;
-                if(Period.StartTime.AddDays(-3) > DateTime.Today)
-                    selectDate.DisplayDateStart = Period.StartTime.AddDays(-3);
-                selectDate.DisplayDateEnd = Period.StartTime.AddDays(3);
                 selectDoctor.SelectedItem = getDoctor(Period.DoctorUsername);
                 selectTime.SelectedItem = Period.StartTime.TimeOfDay;
             }
-           
-            
+           selectDate.DisplayDateStart = DateTime.Today.AddDays(3);
         }
 
         public DoctorView getDoctor(string username)
@@ -70,31 +70,15 @@ namespace ZdravoHospital.GUI.PatientUI
             return null;
         }
 
-        public void generateTimeSpan()
-        {
-            PeriodList = new ObservableCollection<TimeSpan>();
-            PeriodList.Add(new TimeSpan(8, 0, 0));
-            PeriodList.Add(new TimeSpan(8, 30, 0));
-            PeriodList.Add(new TimeSpan(9, 0, 0));
-            PeriodList.Add(new TimeSpan(9, 0, 0));
-            PeriodList.Add(new TimeSpan(10, 0, 0));
-            PeriodList.Add(new TimeSpan(10, 30, 0));
-            PeriodList.Add(new TimeSpan(11, 0, 0));
-            PeriodList.Add(new TimeSpan(11, 30, 0));
-            PeriodList.Add(new TimeSpan(12, 0, 0));
-            PeriodList.Add(new TimeSpan(12, 30, 0));
-            PeriodList.Add(new TimeSpan(13, 0, 0));
-            PeriodList.Add(new TimeSpan(13, 30, 0));
-            PeriodList.Add(new TimeSpan(14, 0, 0));
-            PeriodList.Add(new TimeSpan(14, 30, 0));
-            PeriodList.Add(new TimeSpan(15, 0, 0));
-            PeriodList.Add(new TimeSpan(15, 30, 0));
-        }
-
         public void fillList() 
         {
             Model.Resources.DeserializeDoctors();
-            DoctorList = new ObservableCollection<DoctorView>();
+
+            if (DoctorList == null)
+                DoctorList = new ObservableCollection<DoctorView>();
+            else
+                DoctorList.Clear();
+
             foreach (Doctor doctor in Model.Resources.doctors.Values) 
             {
                 DoctorList.Add(new DoctorView(doctor));
@@ -105,101 +89,82 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             if (selectTime.SelectedItem == null || selectDate.SelectedDate == null || selectDoctor.SelectedItem == null)
             {
-                MessageBox.Show("Please select doctor,date and time when you want to schedule appointment.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                customOkDialog customOkDialog = new customOkDialog("Warning", "Please select doctor, date and time when you want to schedule appointment.!");
+                customOkDialog.ShowDialog();
             }
             else
             {
-                //ispraviti!!!!!!
                 Period.StartTime=Period.StartTime.Date+ (TimeSpan)selectTime.SelectedItem; 
                 Period.DoctorUsername=((DoctorView)selectDoctor.SelectedItem).Username;
-                Period.RoomId = getFreeRoom();
-                if (checkPeriod() && Period.RoomId!=-1)
+                
+                Period.RoomId = Validate.getFreeRoom(Period);
+                if (Validate.checkPeriod(Period,true) && Period.RoomId!=-1)
                 {
+                    customOkDialog customOkDialog = null;
                     if (Mode)
                     {
                         Model.Resources.OpenPeriods();
                         Model.Resources.periods.Add(Period);
-                        
+                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully added!");
                     }
-
+                    else
+                    {
+                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully edited!");
+                    }
                     Model.Resources.SavePeriods();
+                    customOkDialog.ShowDialog();
+                    NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
                 }
             }
         }
 
-        private int getFreeRoom()
+       
+
+        private void suggestButton_Click(object sender, RoutedEventArgs e)
         {
-            int roomId = -1;
-            Model.Resources.OpenRooms();
-            if(Mode)
-                Model.Resources.OpenPeriods();
-            bool exists = true;
-            foreach (Room room in Model.Resources.rooms.Values)
+            Period period = new Period();
+            period.PatientUsername = Period.PatientUsername;
+
+            if (selectDoctor.SelectedItem != null && selectDate.SelectedDate == null && selectTime.SelectedItem == null) //suggest time based on doctor
             {
-                if(room.RoomType==RoomType.APPOINTMENT_ROOM && room.Available)
+                period.DoctorUsername = ((DoctorView)selectDoctor.SelectedItem).Username;
+                Validate.suggestTime(period, PeriodList);
+                selectDate.SelectedDate = period.StartTime;
+                selectTime.Focus();
+                selectTime.IsDropDownOpen = true;
+            }
+            else if(selectDoctor.SelectedItem == null && selectDate.SelectedDate != null && selectTime.SelectedItem != null)//suggest doctor based on time
+            {
+
+                period.StartTime = (DateTime)selectDate.SelectedDate;
+                period.StartTime += (TimeSpan)selectTime.SelectedItem;
+                if (!Validate.checkPeriod(period, true))
+                    return;
+
+                fillList();
+                Validate.suggestDoctor(period, DoctorList);
+                if (DoctorList.Count <= 0)
                 {
-                    exists = false;
-                    foreach (Period period in Model.Resources.periods)
-                    {
-                        if(period.RoomId==room.Id)
-                        {
-                            if (doPeriodsOverlap(period))
-                            {
-                                exists = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!exists)
-                        return room.Id;
+                    customOkDialog customOkDialog = new customOkDialog("Warning", "There is no available doctor at the selected time!");
+                    customOkDialog.ShowDialog();
+                }
+                else
+                {
+                    customOkDialog customOkDialog = new customOkDialog("Suggested doctor", "Doctor list is updated to suggested doctors!");
+                    customOkDialog.ShowDialog();
+                    selectDoctor.IsDropDownOpen = true;
                 }
             }
-            MessageBox.Show("Theres no rooms available at selected time!");
-            return roomId;
-        }
-
-        private bool checkPeriod() 
-        {
-            bool doesntExist = true;
-
-            foreach (Period period in Model.Resources.periods)
-            {    
-                if (period.StartTime.Date == Period.StartTime.Date)
-                {
-                    if (period.PatientUsername.Equals(Period.PatientUsername)) //proveri da li pacijent tad ima zakazano
-                    {
-                        if (doPeriodsOverlap(period))
-                        {
-                            MessageBox.Show("Patient has an existing appointment at selected time!");
-                            doesntExist = false;
-                            break;
-                        }
-                    }
-                    else if (period.DoctorUsername.Equals(Period.DoctorUsername))//proveri da li doktor tad ima zakazano
-                    {
-                        if(doPeriodsOverlap(period))
-                        {
-                            MessageBox.Show("Doctor has an existing appointment at selected time!");
-                            doesntExist = false;
-                            break;
-                        }
-                    }
-                } 
+            else
+            {
+                customOkDialog customOkDialog = new customOkDialog("Warning", "Please choose doctor or time so the system could suggest you  periods!");
+                customOkDialog.ShowDialog();
             }
-            return doesntExist;
         }
 
-        private bool doPeriodsOverlap(Period period)
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
-            DateTime endingtDateTime = period.StartTime.AddMinutes(period.Duration);
-            DateTime endingDateTimePeriod = Period.StartTime.AddMinutes(30);
-            if (period.Equals(Period))//u slucaju kad edituje period
-                return false;
-
-            if ((Period.StartTime >= period.StartTime && Period.StartTime < endingtDateTime) || (endingDateTimePeriod > period.StartTime && endingDateTimePeriod <= endingtDateTime))
-                return true;
-
-            return false;
+            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
         }
     }
 }

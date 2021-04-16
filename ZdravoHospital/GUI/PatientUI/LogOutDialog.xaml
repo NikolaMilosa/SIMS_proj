@@ -11,7 +11,7 @@
         Background="Transparent"
         AllowsTransparency="True">
 
-    <Border Background="#9be5aa" CornerRadius="40">
+    <Border Background="#9be5aa" CornerRadius="40" BorderBrush="Black" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -36,12 +36,13 @@
                     Text="Are you sure you want to log out?"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                        FontSize="16"
                     >
                     </TextBlock>
                 </StackPanel>
-            <Button BorderBrush="Transparent" Foreground="White" Content="Yes" Grid.Column="0" Grid.Row="1" Background="Transparent" Click="Button_Click" >
+            <Button BorderBrush="Transparent" FontSize="15" Foreground="White" Content="Yes" Grid.Column="0" Grid.Row="1" Background="Transparent" Click="Button_Click" >
                 </Button>
-            <Button  BorderBrush="Transparent" Foreground="White" Content="No" Grid.Column="2" Grid.Row="1" Background="Transparent" Click="Button_Click_1" >
+            <Button  BorderBrush="Transparent" FontSize="15" Foreground="White" Content="No" Grid.Column="2" Grid.Row="1" Background="Transparent" Click="Button_Click_1" >
                 </Button>
             </Grid>
         </Border>

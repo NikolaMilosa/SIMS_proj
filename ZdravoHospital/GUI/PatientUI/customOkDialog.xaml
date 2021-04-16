@@ -1,0 +1,55 @@
+﻿<Window x:Class="ZdravoHospital.GUI.PatientUI.customOkDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+        mc:Ignorable="d"
+        Title="customOkDialog" Height="180" Width="350"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Border Background="#9be5aa" CornerRadius="40" BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
+                <TextBlock 
+                    Text="{Binding DialogTitle}"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                     Margin="0,0,0,40"
+                    >
+                </TextBlock>
+                <TextBlock
+                        Foreground="White"
+                    Text="{Binding DialogContent}"
+                    TextWrapping="Wrap"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                        FontSize="16"
+                    >
+                </TextBlock>
+            </StackPanel>
+            <Button BorderBrush="Transparent" FontSize="15" 
+                    Foreground="White" Content="Ok"  Grid.Row="1"
+                    FontWeight="Bold"
+                    Name="okButton" Width="100"
+                    Grid.ColumnSpan="2" 
+                    HorizontalAlignment="Center"
+                    Background="Transparent" Click="okButton_Click"  >
+            </Button>
+            
+        </Grid>
+    </Border>
+</Window>

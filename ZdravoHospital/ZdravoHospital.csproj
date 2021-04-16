@@ -43,10 +43,12 @@
     <None Remove="Images\PatientUI\addIconBlack.png" />
     <None Remove="Images\PatientUI\appointmentIcon.png" />
     <None Remove="Images\PatientUI\appointmentIconBlack.png" />
+    <None Remove="Images\PatientUI\backIcon.png" />
     <None Remove="Images\PatientUI\historyIcon.png" />
     <None Remove="Images\PatientUI\hospitalIcon.png" />
     <None Remove="Images\PatientUI\logoutIcon.png" />
     <None Remove="Images\PatientUI\notificationIcon.png" />
+    <None Remove="Images\PatientUI\notificationIconBlack.png" />
     <None Remove="Images\PatientUI\profileIcon.png" />
     <None Remove="Images\PatientUI\therapyIcon.png" />
   </ItemGroup>
@@ -82,10 +84,12 @@
     <Resource Include="Images\PatientUI\addIconBlack.png" />
     <Resource Include="Images\PatientUI\appointmentIcon.png" />
     <Resource Include="Images\PatientUI\appointmentIconBlack.png" />
+    <Resource Include="Images\PatientUI\backIcon.png" />
     <Resource Include="Images\PatientUI\historyIcon.png" />
     <Resource Include="Images\PatientUI\hospitalIcon.png" />
     <Resource Include="Images\PatientUI\logoutIcon.png" />
     <Resource Include="Images\PatientUI\notificationIcon.png" />
+    <Resource Include="Images\PatientUI\notificationIconBlack.png" />
     <Resource Include="Images\PatientUI\profileIcon.png" />
     <Resource Include="Images\PatientUI\therapyIcon.png" />
   </ItemGroup>

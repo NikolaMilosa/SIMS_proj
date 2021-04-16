@@ -1,14 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 namespace Model
 {
    public class Prescription
    {
-      public string doctorUsername;
-      public DateTime startHours;
-      public int timesPerDay;
-      public int pauseInDays;
-      public DateTime endDate;
    
-   }
+        public Prescription() { }
+
+        public string DoctorUsername { get; set; }
+        public DateTime StartHours { get; set; }
+        public int TimesPerDay { get; set; }
+        public int PauseInDays { get; set; }
+        public DateTime EndDate { get; set; }
+        public  List<Therapy> TherapyList { get; set; }
+
+    }
 }
