@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 namespace ZdravoHospital.GUI.PatientUI
 {
     /// <summary>
-    /// Interaction logic for AnamnesisPage.xaml
+    /// Interaction logic for PeriodDetailsPage.xaml
     /// </summary>
     public partial class AnamnesisPage : Page
     {

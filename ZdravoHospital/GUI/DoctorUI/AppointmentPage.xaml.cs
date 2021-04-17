@@ -47,6 +47,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             StartTimeTextBox.Text = period.StartTime.ToString("HH:mm");
             DurationTextBox.Text = period.Duration.ToString();
             RoomsComboBox.SelectedItem = Model.Resources.rooms[period.RoomId];
+
+            if (DateTime.Now >= period.StartTime)
+                CancelAppointmentButton.IsEnabled = false;
+            else
+                AnamnesisButton.IsEnabled = false;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -212,6 +217,11 @@ namespace ZdravoHospital.GUI.DoctorUI
                 MessageBox.Show("Appointment canceled successfully.", "Success");
                 NavigationService.GoBack();
             }
+        }
+
+        private void AnamnesisButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PeriodDetailsPage(this.period));
         }
     }
 }

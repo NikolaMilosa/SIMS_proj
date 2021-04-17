@@ -54,8 +54,13 @@ namespace ZdravoHospital.GUI.DoctorUI
                 StartTimeTextBox.IsEnabled = false;
                 DurationTextBox.IsEnabled = false;
                 RoomsComboBox.IsEnabled = false;
-                CancelOperatioButton.IsEnabled = false;
+                CancelOperationButton.IsEnabled = false;
             }
+
+            if (DateTime.Now >= period.StartTime)
+                CancelOperationButton.IsEnabled = false;
+            else
+                OperationReportButton.IsEnabled = false;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -220,6 +225,11 @@ namespace ZdravoHospital.GUI.DoctorUI
                 MessageBox.Show("Operation canceled successfully.", "Success");
                 NavigationService.GoBack();
             }
+        }
+
+        private void OperationReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PeriodDetailsPage(this.period));
         }
     }
 }

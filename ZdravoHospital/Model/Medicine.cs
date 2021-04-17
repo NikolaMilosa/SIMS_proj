@@ -15,11 +15,11 @@ namespace Model
             MedicineName = name;
         }
 
-        public Medicine(string name, string supplier)
-        {
-            MedicineName = name;
-            Supplier = supplier;
-        }
+        //public Medicine(string name, string supplier)
+        //{
+        //    MedicineName = name;
+        //    Supplier = supplier;
+        //}
 
         public override string ToString()
         {

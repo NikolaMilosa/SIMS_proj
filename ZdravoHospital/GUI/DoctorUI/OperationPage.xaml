@@ -91,12 +91,19 @@
                       Height="40"/>
         </StackPanel>
 
-        <Button Name="CancelOperatioButton"
+        <Button Name="CancelOperationButton"
                     Content="Cancel operation"
                     FontSize="25"
                     Margin="25"
                     Padding="10" 
                 Click="CancelOperationButton_Click"/>
+
+        <Button Name="OperationReportButton"
+                    Content="Operation report"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10" 
+                    Click="OperationReportButton_Click"/>
         
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
