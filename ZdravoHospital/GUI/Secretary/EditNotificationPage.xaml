@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:val="clr-namespace:ZdravoHospital.GUI.Secretary.Validation"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="EditNotificationPage"
@@ -24,7 +25,7 @@
             <Button x:Name="NavigateBackButton" Height="60" Width="60" VerticalAlignment="Center" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Click="NavigateBackButton_Click" Margin="0,0,50,0">
                 <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
             </Button>
-            <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,45,0"> New notification</TextBlock>
+            <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,45,0"> Edit notification</TextBlock>
             <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10,10,20,10">
                 <StackPanel Width="150" Background="White">
                     <Button Content="About"/>
@@ -60,7 +61,15 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Margin="10">
             <TextBlock FontFamily="Yu Gothic" FontSize="20"> Custom recipient (optional)</TextBlock>
-            <TextBox x:Name="CustomRecipientTextBox" Height="40" Margin="0,0,0,20" Text="{Binding Path=CustomRecipient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="CustomRecipientTextBox" Height="40" Margin="0,0,0,20" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="CustomRecipient" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:UsernameValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBlock FontFamily="Yu Gothic" FontSize="20"> Title</TextBlock>
             <TextBox x:Name="TitleTextBox" Height="40" Text="{Binding Path=NotificationTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
@@ -70,6 +79,19 @@
         </StackPanel>
         <Button x:Name="SendNotificationButton" Grid.Row="5" Foreground="Black" Background="Transparent" Width="120" Margin="40,0,40,0" Click="SendNotificationButton_Click" ToolTip="Send notification">
             <materialDesign:PackIcon Kind="EmailSend" Width="40" Height="40"></materialDesign:PackIcon>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomRecipientTextBox}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
         </Button>
     </Grid>
 </Page>

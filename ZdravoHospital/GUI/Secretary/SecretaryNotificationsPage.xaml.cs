@@ -50,7 +50,10 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void EditNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new EditNotificationPage((Model.Notification)NotificationsListView.SelectedItem));
+            if(NotificationsListView.SelectedItem != null)
+            {
+                NavigationService.Navigate(new EditNotificationPage((Model.Notification)NotificationsListView.SelectedItem));
+            }
         }
 
         private void DeleteNotificationButton_Click(object sender, RoutedEventArgs e)

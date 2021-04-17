@@ -280,8 +280,8 @@ namespace ZdravoHospital.GUI.Secretary
                         Model.Resources.SavePatients();
                     }
 
-                    MessageBox.Show("Added successfully");
-                    NavigationService.Navigate(new SecretaryHomePage());
+                    //MessageBox.Show("Added successfully");
+                    NavigationService.Navigate(new PatientsView());
                 }
 
             }

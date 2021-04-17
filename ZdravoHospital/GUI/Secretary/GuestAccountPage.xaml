@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:val="clr-namespace:ZdravoHospital.GUI.Secretary.Validation"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="GuestAccountPage"
@@ -44,8 +45,14 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBlock x:Name="ime" Margin="8,0,0,0" FontWeight="Bold" >First name</TextBlock>
-            <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                     Text="{Binding Path=PName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox x:Name="FirstNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="PName" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -56,8 +63,14 @@
 
         <StackPanel Grid.Row="2" Grid.Column="1">
             <TextBlock x:Name="parentsName" Margin="8,0,0,0" FontWeight="Bold">Last name</TextBlock>
-            <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                     Text="{Binding Path=Surname, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox x:Name="LastNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Surname" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -68,8 +81,14 @@
 
         <StackPanel Grid.Row="3" Grid.Column="1">
             <TextBlock Margin="8,0,0,0" FontWeight="Bold">Citizen ID</TextBlock>
-            <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                             Text="{Binding Path=CitizenId, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox x:Name="CitizenIdTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="CitizenId" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -80,8 +99,14 @@
 
         <StackPanel Grid.Row="4" Grid.Column="1">
             <TextBlock Margin="8,0,0,0" FontWeight="Bold">Health card number *</TextBlock>
-            <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42"
-                             Text="{Binding Path=HealthCardNumber, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox x:Name="HealthCardNumberTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="HealthCardNumber" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -97,6 +122,22 @@
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=FirstNameTextBox}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LastNameTextBox}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=HealthCardNumberTextBox}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CitizenIdTextBox}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
         </Button>
     </Grid>
 </Page>

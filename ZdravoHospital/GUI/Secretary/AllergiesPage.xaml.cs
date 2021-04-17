@@ -25,6 +25,7 @@ namespace ZdravoHospital.GUI.Secretary
         public ObservableCollection<string> MedicalAllergens { get; set; }
         public ObservableCollection<string> IngredientAllergens { get; set; }
         public Patient SelectedPatient { get; set; }
+        public string CustomAllergen { get; set; }
 
         public AllergiesPage(Model.Patient selectedPatient)
         {
