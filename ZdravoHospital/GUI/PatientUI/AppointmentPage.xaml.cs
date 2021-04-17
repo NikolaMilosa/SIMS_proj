@@ -55,9 +55,14 @@ namespace ZdravoHospital.GUI.PatientUI
             }
             else 
             {
-                AppointmentList.Remove(appointmentView);
-                Model.Resources.periods.Remove(appointmentView.Period);
-                Model.Resources.SavePeriods();
+                RemoveAppointmentDialog removeAppointmentDialog = new RemoveAppointmentDialog();
+                removeAppointmentDialog.ShowDialog();
+                if(RemoveAppointmentDialog.YesPressed)
+                {
+                    AppointmentList.Remove(appointmentView);
+                    Model.Resources.periods.Remove(appointmentView.Period);
+                    Model.Resources.SavePeriods();
+                }
             }
 
         }
