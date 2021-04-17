@@ -25,7 +25,8 @@ namespace ZdravoHospital.GUI.DoctorUI
         public event PropertyChangedEventHandler PropertyChanged;
 
         private StackPanel[] stackPanels;
-        private DockPanel[] dockPanels;
+        private EmptyPeriodButton[] lastEmptyPeriodButtons;
+        private EmptyPeriodButton selectedEmptyPeriodButton;
         
         public SchedulePage()
         {
@@ -56,14 +57,14 @@ namespace ZdravoHospital.GUI.DoctorUI
             stackPanels[5] = SaturdayStackPanel;
             stackPanels[6] = SundayStackPanel;
 
-            dockPanels = new DockPanel[7];
-            dockPanels[0] = MondayDockPanel;
-            dockPanels[1] = TuesdayDockPanel;
-            dockPanels[2] = WednesdayDockPanel;
-            dockPanels[3] = ThursdayDockPanel;
-            dockPanels[4] = FridayDockPanel;
-            dockPanels[5] = SaturdayDockPanel;
-            dockPanels[6] = SundayDockPanel;
+            lastEmptyPeriodButtons = new EmptyPeriodButton[7];
+            lastEmptyPeriodButtons[0] = MondayLastEmptyPeriodButton;
+            lastEmptyPeriodButtons[1] = TuesdayLastEmptyPeriodButton;
+            lastEmptyPeriodButtons[2] = WednesdayLastEmptyPeriodButton;
+            lastEmptyPeriodButtons[3] = ThursdayLastEmptyPeriodButton;
+            lastEmptyPeriodButtons[4] = FridayLastEmptyPeriodButton;
+            lastEmptyPeriodButtons[5] = SaturdayLastEmptyPeriodButton;
+            lastEmptyPeriodButtons[6] = SundayLastEmptyPeriodButton;
 
             DoctorsComboBox.ItemsSource = Model.Resources.doctors.Values;
             DoctorsComboBox.SelectedItem = Model.Resources.doctors[App.currentUser]; // Triger poziva prvo popunjavanje kalendara
@@ -72,11 +73,6 @@ namespace ZdravoHospital.GUI.DoctorUI
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public void PeriodButton_Click(Object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void PreviousWeekButton_Click(object sender, RoutedEventArgs e)
@@ -125,69 +121,113 @@ namespace ZdravoHospital.GUI.DoctorUI
 
                 for (int j = 0; j < periods.Count; j++)
                 {
-                    Period period = periods[j];
-
-                    Button emptyPeriodButton = new Button
+                    EmptyPeriodButton emptyPeriodButton = new EmptyPeriodButton
                     {
                         Focusable = false,
                         Background = Brushes.Transparent,
                         Cursor = Cursors.Cross,
                         ToolTip = "New appointment/operation",
-                        BorderThickness = new Thickness(0)
+                        BorderThickness = new Thickness(0),
+                        StartTime = j > 0 ? 
+                                    periods[j - 1].StartTime.AddMinutes(periods[j - 1].Duration)
+                                    : new DateTime(DaysDates[i].Year, // u slucaju prvog dugmeta postavi da pocinje u ponoc
+                                                   DaysDates[i].Month,
+                                                   DaysDates[i].Day,
+                                                   0, 0, 0),
                     };
+                    emptyPeriodButton.Duration = (int)(periods[j].StartTime - emptyPeriodButton.StartTime).TotalMinutes;
+                    emptyPeriodButton.Click += EmptyPeriodButton_Click;
                     stackPanels[i].Children.Add(emptyPeriodButton);
 
                     if (j == 0)
-                        emptyPeriodButton.Height = (period.StartTime.Hour * 60 + period.StartTime.Minute) * 4;
+                        emptyPeriodButton.Height = (periods[j].StartTime.Hour * 60 + periods[j].StartTime.Minute) * 4;
                     else
                         emptyPeriodButton.Height = ((periods[j].StartTime - periods[j - 1].StartTime).TotalMinutes - periods[j - 1].Duration) * 4;
 
-                    Patient patient = Model.Resources.patients[period.PatientUsername];
+                    Patient patient = Model.Resources.patients[periods[j].PatientUsername];
 
                     PeriodButton periodButton = new PeriodButton
                     {
-                        Period = period,
-                        Height = period.Duration * 4
+                        Period = periods[j],
+                        Height = periods[j].Duration * 4
                     };
-                    periodButton.UpperText.Text = period.StartTime.ToString("HH:mm") + "-" + period.StartTime.AddMinutes(period.Duration).ToString("HH:mm") + " " +
-                                                  period.PeriodType.ToString().Substring(0, 1) + period.PeriodType.ToString().ToLower().Remove(0, 1) + " [" + period.RoomId + "]";
+                    periodButton.UpperText.Text = periods[j].StartTime.ToString("HH:mm") + "-" + periods[j].StartTime.AddMinutes(periods[j].Duration).ToString("HH:mm") + " " +
+                                                  periods[j].PeriodType.ToString().Substring(0, 1) + periods[j].PeriodType.ToString().ToLower().Remove(0, 1) + " [" + periods[j].RoomId + "]";
                     periodButton.LowerText.Text = patient.Name + " " + patient.Surname;
                     periodButton.Click += PeriodButton_Click;
                     stackPanels[i].Children.Add(periodButton);
                 }
+
+                if (periods.Count > 0)
+                {
+                    Period lastPeriod = periods[periods.Count - 1];
+                    lastEmptyPeriodButtons[i].StartTime = lastPeriod.StartTime.AddMinutes(lastPeriod.Duration);
+                }
+                else
+                {
+                    lastEmptyPeriodButtons[i].StartTime = new DateTime(DaysDates[i].Year, // u slucaju prvog dugmeta postavi da pocinje u ponoc
+                                                                       DaysDates[i].Month,
+                                                                       DaysDates[i].Day,
+                                                                       0, 0, 0);
+                }
+
+                DateTime endTime = new DateTime(DaysDates[i].AddDays(1).Year,
+                                                                 DaysDates[i].AddDays(1).Month,
+                                                                 DaysDates[i].AddDays(1).Day,
+                                                                 0, 0, 0);
+                lastEmptyPeriodButtons[i].Duration = (int)(endTime - lastEmptyPeriodButtons[i].StartTime).TotalMinutes;
             }
         }
 
         private void SortPeriods(List<Period> periods)
         {
             for (int i = 0; i < periods.Count - 1; i++)
-                for (int j = 1; j < periods.Count - i - 1; j++)
-                    if (periods[j].StartTime < periods[i].StartTime)
+                for (int j = 0; j < periods.Count - i - 1; j++)
+                    if (periods[j].StartTime > periods[j + 1].StartTime)
                     {
-                        Period temp = periods[i];
-                        periods[i] = periods[j];
+                        Period temp = periods[j + 1];
+                        periods[j + 1] = periods[j];
                         periods[j] = temp;
                     }
         }
 
-        private void NewAppointmentButton_Click(object sender, RoutedEventArgs e)
+        public void PeriodButton_Click(Object sender, RoutedEventArgs e)
         {
 
         }
 
+        private void EmptyPeriodButton_Click(object sender, RoutedEventArgs e)
+        {
+            EmptyPeriodButton emptyPeriodButton = sender as EmptyPeriodButton;
+            Doctor selectedDoctor = DoctorsComboBox.SelectedItem as Doctor;
+
+            if (selectedDoctor.Username == App.currentUser && !selectedDoctor.SpecialistType.Equals("Doctor"))
+            {
+                selectedEmptyPeriodButton = emptyPeriodButton;
+                NewPeriodPopUp.Visibility = Visibility.Visible;
+            }
+            else
+                NavigationService.Navigate(new NewAppointmentPage(DoctorsComboBox.SelectedItem as Doctor,
+                                                                  emptyPeriodButton.StartTime, emptyPeriodButton.Duration));
+        }
+
+        private void NewAppointmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new NewAppointmentPage(DoctorsComboBox.SelectedItem as Doctor,
+                                                              selectedEmptyPeriodButton.StartTime, selectedEmptyPeriodButton.Duration));
+            NewPeriodPopUp.Visibility = Visibility.Hidden;
+        }
+
         private void NewOperationButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new NewOperationPage(DoctorsComboBox.SelectedItem as Doctor,
+                                                            selectedEmptyPeriodButton.StartTime, selectedEmptyPeriodButton.Duration));
+            NewPeriodPopUp.Visibility = Visibility.Hidden;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NewPeriodPopUp.Visibility = Visibility.Hidden;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

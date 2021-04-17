@@ -406,12 +406,13 @@
                         <StackPanel x:Name="MondayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
-                        <Button Focusable="False"
+                        <local:EmptyPeriodButton x:Name="MondayLastEmptyPeriodButton" 
+                                Focusable="False"
                                 Background="Transparent"
                                 Cursor="Cross"
                                 ToolTip = "New appointment/operation"
                                 BorderThickness = "0"
-                                Click="NewAppointmentButton_Click"/>
+                                Click="EmptyPeriodButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="1"
                 BorderBrush="Black"
@@ -421,12 +422,13 @@
                         <StackPanel x:Name="TuesdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
-                        <Button Focusable="False"
+                        <local:EmptyPeriodButton x:Name="TuesdayLastEmptyPeriodButton" 
+                                Focusable="False"
                                 Background="Transparent"
                                 Cursor="Cross"
                                 ToolTip = "New appointment/operation"
                                 BorderThickness = "0"
-                                Click="NewAppointmentButton_Click"/>
+                                Click="EmptyPeriodButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="2"
                 BorderBrush="Black"
@@ -436,12 +438,13 @@
                         <StackPanel x:Name="WednesdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
-                        <Button Focusable="False"
+                        <local:EmptyPeriodButton x:Name="WednesdayLastEmptyPeriodButton" 
+                                Focusable="False"
                                 Background="Transparent"
                                 Cursor="Cross"
                                 ToolTip = "New appointment/operation"
                                 BorderThickness = "0"
-                                Click="NewAppointmentButton_Click"/>
+                                Click="EmptyPeriodButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="3"
                 BorderBrush="Black"
@@ -451,12 +454,13 @@
                         <StackPanel x:Name="ThursdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
-                        <Button Focusable="False"
+                        <local:EmptyPeriodButton x:Name="ThursdayLastEmptyPeriodButton" 
+                                Focusable="False"
                                 Background="Transparent"
                                 Cursor="Cross"
                                 ToolTip = "New appointment/operation"
                                 BorderThickness = "0"
-                                Click="NewAppointmentButton_Click"/>
+                                Click="EmptyPeriodButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="4"
                 BorderBrush="Black"
@@ -466,12 +470,13 @@
                         <StackPanel x:Name="FridayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
-                        <Button Focusable="False"
+                        <local:EmptyPeriodButton x:Name="FridayLastEmptyPeriodButton" 
+                                Focusable="False"
                                 Background="Transparent"
                                 Cursor="Cross"
                                 ToolTip = "New appointment/operation"
                                 BorderThickness = "0"
-                                Click="NewAppointmentButton_Click"/>
+                                Click="EmptyPeriodButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="5"
                 BorderBrush="Black"
@@ -481,12 +486,13 @@
                         <StackPanel x:Name="SaturdayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
-                        <Button Focusable="False"
+                        <local:EmptyPeriodButton x:Name="SaturdayLastEmptyPeriodButton" 
+                                Focusable="False"
                                 Background="Transparent"
                                 Cursor="Cross"
                                 ToolTip = "New appointment/operation"
                                 BorderThickness = "0"
-                                Click="NewAppointmentButton_Click"/>
+                                Click="EmptyPeriodButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="6"
                 BorderBrush="Black"
@@ -496,12 +502,13 @@
                         <StackPanel x:Name="SundayStackPanel"
                                 DockPanel.Dock="Top">
                         </StackPanel>
-                        <Button Focusable="False"
+                        <local:EmptyPeriodButton x:Name="SundayLastEmptyPeriodButton" 
+                                Focusable="False"
                                 Background="Transparent"
                                 Cursor="Cross"
                                 ToolTip = "New appointment/operation"
                                 BorderThickness = "0"
-                                Click="NewAppointmentButton_Click"/>
+                                Click="EmptyPeriodButton_Click"/>
                     </DockPanel>
                     <Border Grid.Column="7"
                 BorderBrush="Black"
