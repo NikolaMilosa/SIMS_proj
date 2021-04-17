@@ -40,6 +40,23 @@ namespace ZdravoHospital
             //Model.Resources.accounts[d2.Username] = new Credentials(d2.Username, "zigara", RoleType.DOCTOR);
             //Model.Resources.SerializeDoctors();
             //Model.Resources.SaveAccounts();
+
+            //Period p1 = new Period(new DateTime(2021, 4, 12, 10, 0, 0), 45, PeriodType.APPOINTMENT, "patient1", "zigara", 201);
+            //Period p2 = new Period(new DateTime(2021, 4, 12, 8, 0, 0), 25, PeriodType.OPERATION, "patient2", "zigara", 103);
+            //Period p3 = new Period(new DateTime(2021, 4, 12, 12, 0, 0), 145, PeriodType.OPERATION, "patient1", "zigara", 103);
+            //Period p4 = new Period(new DateTime(2021, 4, 19, 19, 0, 0), 145, PeriodType.APPOINTMENT, "patient2", "zigara", 201);
+            //Period p5 = new Period(new DateTime(2021, 4, 21, 18, 0, 0), 30, PeriodType.APPOINTMENT, "patient1", "zigara", 201);
+            //Period p6 = new Period(new DateTime(2021, 4, 13, 10, 0, 0), 20, PeriodType.APPOINTMENT, "patient2", "pantela", 201);
+            //Period p7 = new Period(new DateTime(2021, 4, 16, 12, 0, 0), 30, PeriodType.APPOINTMENT, "patient1", "pantela", 201);
+            //Model.Resources.OpenPeriods();
+            //Model.Resources.periods.Add(p1);
+            //Model.Resources.periods.Add(p2);
+            //Model.Resources.periods.Add(p3);
+            //Model.Resources.periods.Add(p4);
+            //Model.Resources.periods.Add(p5);
+            //Model.Resources.periods.Add(p6);
+            //Model.Resources.periods.Add(p7);
+            //Model.Resources.SavePeriods();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
