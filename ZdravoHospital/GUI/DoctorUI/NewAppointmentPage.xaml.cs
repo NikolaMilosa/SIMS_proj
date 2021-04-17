@@ -71,10 +71,10 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             if (available == 0)
             {
-                MessageBox.Show("Appointment created successfully.", "Success");
-
                 Model.Resources.periods.Add(period);
                 Model.Resources.SavePeriods();
+
+                MessageBox.Show("Appointment created successfully.", "Success");
 
                 NavigationService.GoBack();
             }

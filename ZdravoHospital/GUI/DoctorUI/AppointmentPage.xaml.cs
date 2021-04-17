@@ -18,31 +18,38 @@ using System.Windows.Shapes;
 namespace ZdravoHospital.GUI.DoctorUI
 {
     /// <summary>
-    /// Interaction logic for NewOperationPage.xaml
+    /// Interaction logic for AppointmentPage.xaml
     /// </summary>
-    public partial class NewOperationPage : Page
+    public partial class AppointmentPage : Page
     {
-        public Doctor Doctor { get; set; }
+        public ObservableCollection<Doctor> Doctors { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
 
-        public NewOperationPage(Doctor doctor, DateTime startTime, int duration)
+        private Period period;
+
+        public AppointmentPage(Period period)
         {
             InitializeComponent();
 
             this.DataContext = this;
 
-            Doctor = doctor;
+            this.period = period;
+
+            Doctors = new ObservableCollection<Doctor>(Model.Resources.doctors.Values);
             Patients = new ObservableCollection<Patient>(Model.Resources.patients.Values);
             Model.Resources.OpenRooms();
-            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values.Where(room => room.RoomType == RoomType.OPERATING_ROOM));
+            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values.Where(room => room.RoomType == RoomType.APPOINTMENT_ROOM));
 
-            AppointmentDatePicker.SelectedDate = startTime.Date;
-            StartTimeTextBox.Text = startTime.ToString("HH:mm");
-            DurationTextBox.Text = duration.ToString();
+            DoctorsComboBox.SelectedItem  = Model.Resources.doctors[period.DoctorUsername];
+            PatientsComboBox.SelectedItem = Model.Resources.patients[period.PatientUsername];
+            AppointmentDatePicker.SelectedDate = period.StartTime.Date;
+            StartTimeTextBox.Text = period.StartTime.ToString("HH:mm");
+            DurationTextBox.Text = period.Duration.ToString();
+            RoomsComboBox.SelectedItem = Model.Resources.rooms[period.RoomId];
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
@@ -52,7 +59,8 @@ namespace ZdravoHospital.GUI.DoctorUI
             if (!IsInputValid())
                 return;
 
-            string[] parts = StartTimeTextBox.Text.Split(':');
+            string time = StartTimeTextBox.Text;
+            string[] parts = time.Split(':');
             int hours = Int32.Parse(parts[0]);
             int minutes = Int32.Parse(parts[1]);
             DateTime dateTime = new DateTime(AppointmentDatePicker.SelectedDate.Value.Year,
@@ -60,19 +68,28 @@ namespace ZdravoHospital.GUI.DoctorUI
                                     AppointmentDatePicker.SelectedDate.Value.Day,
                                     hours, minutes, 0);
 
-            Period period = new Period(dateTime, Int32.Parse(DurationTextBox.Text), PeriodType.OPERATION,
+            Period editedPeriod = new Period(dateTime, Int32.Parse(DurationTextBox.Text), PeriodType.APPOINTMENT,
                                        (PatientsComboBox.SelectedItem as Patient).Username,
-                                       Doctor.Username,
+                                       (DoctorsComboBox.SelectedItem as Doctor).Username,
                                        (RoomsComboBox.SelectedItem as Room).Id);
 
-            int available = IsPeriodAvailable(period);
+            int available = IsPeriodAvailable(editedPeriod, this.period);
 
             if (available == 0)
             {
-                Model.Resources.periods.Add(period);
+                foreach (Period existingPeriod in Model.Resources.periods)
+                {
+                    if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
+                    {
+                        Model.Resources.periods.Remove(existingPeriod);
+                        break;
+                    }
+                }
+
+                Model.Resources.periods.Add(editedPeriod);
                 Model.Resources.SavePeriods();
 
-                MessageBox.Show("Operation created successfully.", "Success");
+                MessageBox.Show("Appointment edited successfully.", "Success");
 
                 NavigationService.GoBack();
             }
@@ -133,12 +150,15 @@ namespace ZdravoHospital.GUI.DoctorUI
             return true;
         }
 
-        private int IsPeriodAvailable(Period period) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
+        private int IsPeriodAvailable(Period period, Period periodToIgnore) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
         {
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
 
             foreach (Period existingPeriod in Model.Resources.periods)
             {
+                if (existingPeriod.RoomId == periodToIgnore.RoomId && existingPeriod.StartTime == periodToIgnore.StartTime)
+                    continue;
+
                 DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
 
                 if (period.RoomId == existingPeriod.RoomId)
@@ -170,6 +190,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             }
 
             return 0;
+        }
+
+        private void CancelAppointmentButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
