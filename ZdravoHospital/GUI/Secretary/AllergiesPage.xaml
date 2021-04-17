@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:val="clr-namespace:ZdravoHospital.GUI.Secretary.Validation"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="AllergiesPage"
@@ -69,7 +70,15 @@
 
         <WrapPanel Grid.Row="9" VerticalAlignment="Bottom">
             <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Custom:</TextBlock>
-            <TextBox x:Name="CustomAllergenTextBox" Width="150" Margin="10,5,5,5" TextChanged="SearchMedicalAllergensTextBox_TextChanged"></TextBox>
+            <TextBox x:Name="CustomAllergenTextBox" Width="150" Margin="10,5,5,5" TextChanged="SearchMedicalAllergensTextBox_TextChanged" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="CustomAllergen" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:AlphaNumericSpacesDashValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <WrapPanel VerticalAlignment="Center">
                 <RadioButton GroupName="AllergenType" Name="MedicalRadioButton" Margin="5,0,10,0" VerticalAlignment="Bottom">Medical</RadioButton>
                 <RadioButton GroupName="AllergenType" Name="IngredientRadioButton">Ingredient</RadioButton>

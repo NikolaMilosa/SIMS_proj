@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:val="clr-namespace:ZdravoHospital.GUI.Secretary.Validation"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
@@ -60,7 +61,15 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Margin="10">
             <TextBlock FontFamily="Yu Gothic" FontSize="20"> Custom recipient (optional)</TextBlock>
-            <TextBox x:Name="CustomRecipientTextBox" Height="40" Margin="0,0,0,20" Text="{Binding Path=CustomRecipient, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="CustomRecipientTextBox" Height="40" Margin="0,0,0,20" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="CustomRecipient" Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:UsernameValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBlock FontFamily="Yu Gothic" FontSize="20"> Title </TextBlock>
             <TextBox x:Name="TitleTextBox" Height="40" Text="{Binding Path=NotificationTitle, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
