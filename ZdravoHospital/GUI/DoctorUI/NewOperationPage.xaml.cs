@@ -73,7 +73,6 @@ namespace ZdravoHospital.GUI.DoctorUI
                 Model.Resources.SavePeriods();
 
                 MessageBox.Show("Operation created successfully.", "Success");
-
                 NavigationService.GoBack();
             }
             else if (available == 1)

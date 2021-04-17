@@ -89,9 +89,9 @@ namespace ZdravoHospital.GUI.DoctorUI
                 Model.Resources.periods.Add(editedPeriod);
                 Model.Resources.SavePeriods();
 
-                MessageBox.Show("Appointment edited successfully.", "Success");
+                this.period = editedPeriod;
 
-                NavigationService.GoBack();
+                MessageBox.Show("Appointment edited successfully.", "Success");
             }
             else if (available == 1)
             {
@@ -194,7 +194,24 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void CancelAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel the appointment?\nThis action cannot be undone.",
+                                                      "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                foreach (Period existingPeriod in Model.Resources.periods)
+                {
+                    if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
+                    {
+                        Model.Resources.periods.Remove(existingPeriod);
+                        break;
+                    }
+                }
 
+                Model.Resources.SavePeriods();
+
+                MessageBox.Show("Appointment canceled successfully.", "Success");
+                NavigationService.GoBack();
+            }
         }
     }
 }

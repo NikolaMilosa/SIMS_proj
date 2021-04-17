@@ -75,7 +75,6 @@ namespace ZdravoHospital.GUI.DoctorUI
                 Model.Resources.SavePeriods();
 
                 MessageBox.Show("Appointment created successfully.", "Success");
-
                 NavigationService.GoBack();
             }
             else if (available == 1)
