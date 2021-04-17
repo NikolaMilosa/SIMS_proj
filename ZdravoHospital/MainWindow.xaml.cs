@@ -57,6 +57,33 @@ namespace ZdravoHospital
             //Model.Resources.periods.Add(p6);
             //Model.Resources.periods.Add(p7);
             //Model.Resources.SavePeriods();
+
+            //Ingredient i1 = new Ingredient("ingredient1");
+            //Ingredient i2 = new Ingredient("ingredient2");
+            //Ingredient i3 = new Ingredient("ingredient3");
+            //Ingredient i4 = new Ingredient("ingredient4");
+            //Ingredient i5 = new Ingredient("ingredient5");
+            //Ingredient i6 = new Ingredient("ingredient6");
+            //Medicine m1 = new Medicine("medicine1", "supplier1");
+            //m1.Ingredients = new List<Ingredient>();
+            //m1.Ingredients.Add(i1);
+            //m1.Ingredients.Add(i2);
+            //m1.Ingredients.Add(i3);
+            //Medicine m2 = new Medicine("medicine2", "supplier1");
+            //m2.Ingredients = new List<Ingredient>();
+            //m2.Ingredients.Add(i2);
+            //m2.Ingredients.Add(i4);
+            //m2.Ingredients.Add(i5);
+            //Medicine m3 = new Medicine("medicine3", "supplier2");
+            //m3.Ingredients = new List<Ingredient>();
+            //m3.Ingredients.Add(i2);
+            //m3.Ingredients.Add(i5);
+            //m3.Ingredients.Add(i6);
+            //Model.Resources.OpenMedicines();
+            //Model.Resources.medicines.Add(m1);
+            //Model.Resources.medicines.Add(m2);
+            //Model.Resources.medicines.Add(m3);
+            //Model.Resources.SaveMedicines();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
