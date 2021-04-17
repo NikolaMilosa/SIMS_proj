@@ -44,13 +44,13 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="1" Margin="1,20,1,20" BorderBrush="Black" BorderThickness="2">
-                    <TextBlock TextWrapping="Wrap" FontSize="14" Text="{Binding NotificationView.Notification.Text}"></TextBlock>
+                <Border Grid.Row="1" Margin="1,20,1,20" BorderBrush="Black" BorderThickness="2" CornerRadius="20">
+                    <TextBlock Margin="10,10,10,10" TextWrapping="Wrap" FontSize="14" Text="{Binding NotificationView.Notification.Text}"></TextBlock>
                 </Border>
 
-                <Button x:Name="backButton" Grid.Row="2" Width="150" Background="Transparent" BorderBrush="Transparent" Click="backButton_Click" > 
+                <Button x:Name="backButton" Grid.Row="2" Width="150" Background="Transparent" BorderBrush="Transparent" Click="backButton_Click" HorizontalAlignment="Right"> 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Source="/Images/PatientUI/backIcon.png"  Height="30"></Image>
+                        <Image Source="/Images/PatientUI/backIconBlack.png"  Height="30"></Image>
                         <TextBlock Text="Back" FontSize="22" Margin="20,0,0,0" FontWeight="Bold"></TextBlock>
                     </StackPanel>
                 </Button>

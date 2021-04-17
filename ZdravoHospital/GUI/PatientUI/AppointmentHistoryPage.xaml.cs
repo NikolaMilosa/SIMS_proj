@@ -44,7 +44,12 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void anamnesisButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
+            if(appointmentView.Period.Details==null)
+            {
+                appointmentView.Period.Details = "No available anamnesis for selected appointment!";
+            }
+            NavigationService.Navigate(new AnamnesisPage(appointmentView.Period.Details, appointmentView.Period.PatientUsername));
         }
     }
 }

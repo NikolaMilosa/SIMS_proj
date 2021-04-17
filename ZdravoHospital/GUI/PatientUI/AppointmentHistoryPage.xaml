@@ -22,8 +22,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
-                <Image Source="/Images/PatientUI/appointmentIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
-                <TextBlock Text="My appointments" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
+                <Image Source="/Images/PatientUI/historyIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
+                <TextBlock Text="Appointments history" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
             <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="appointmentDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding AppointmentList}" >

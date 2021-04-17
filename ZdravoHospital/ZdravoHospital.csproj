@@ -41,10 +41,13 @@
     <None Remove="Images\ManagerUI\testingAccount.png" />
     <None Remove="Images\PatientUI\addIcon.png" />
     <None Remove="Images\PatientUI\addIconBlack.png" />
+    <None Remove="Images\PatientUI\anamnesisIcon.png" />
     <None Remove="Images\PatientUI\appointmentIcon.png" />
     <None Remove="Images\PatientUI\appointmentIconBlack.png" />
     <None Remove="Images\PatientUI\backIcon.png" />
+    <None Remove="Images\PatientUI\backIconBlack.png" />
     <None Remove="Images\PatientUI\historyIcon.png" />
+    <None Remove="Images\PatientUI\historyIconBlack.png" />
     <None Remove="Images\PatientUI\hospitalIcon.png" />
     <None Remove="Images\PatientUI\logoutIcon.png" />
     <None Remove="Images\PatientUI\notificationIcon.png" />
@@ -82,10 +85,13 @@
     <Resource Include="Images\ManagerUI\testingAccount.png" />
     <Resource Include="Images\PatientUI\addIcon.png" />
     <Resource Include="Images\PatientUI\addIconBlack.png" />
+    <Resource Include="Images\PatientUI\anamnesisIcon.png" />
     <Resource Include="Images\PatientUI\appointmentIcon.png" />
     <Resource Include="Images\PatientUI\appointmentIconBlack.png" />
     <Resource Include="Images\PatientUI\backIcon.png" />
+    <Resource Include="Images\PatientUI\backIconBlack.png" />
     <Resource Include="Images\PatientUI\historyIcon.png" />
+    <Resource Include="Images\PatientUI\historyIconBlack.png" />
     <Resource Include="Images\PatientUI\hospitalIcon.png" />
     <Resource Include="Images\PatientUI\logoutIcon.png" />
     <Resource Include="Images\PatientUI\notificationIcon.png" />
