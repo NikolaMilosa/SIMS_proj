@@ -74,5 +74,10 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             myFrame.Navigate(new NotificationsPage(Patient.Username));
         }
+
+        private void appointmentHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(new AppointmentHistoryPage(Patient.Username));
+        }
     }
 }

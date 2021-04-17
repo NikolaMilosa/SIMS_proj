@@ -38,7 +38,7 @@ namespace ZdravoHospital.GUI.PatientUI
             AppointmentList = new ObservableCollection<AppointmentView>();
             foreach (Period period in Model.Resources.periods)
             {
-                if (period.PatientUsername.Equals(username)) 
+                if (period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration)>DateTime.Now) 
                 {
                     AppointmentList.Add(new AppointmentView(period));
                 }

@@ -80,7 +80,7 @@
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
-                        BorderBrush="Transparent" 
+                        BorderBrush="Transparent" Click="appointmentHistoryButton_Click" 
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
                             <Image Source="/Images/PatientUI/historyIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
