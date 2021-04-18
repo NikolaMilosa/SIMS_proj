@@ -176,19 +176,88 @@ namespace ZdravoHospital.GUI.Secretary
             CollectionViewSource.GetDefaultView(PatientsListBox.ItemsSource).Refresh();
         }
 
+        private int IsPeriodAvailable(Period period) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
+        {
+            if (period.StartTime < DateTime.Now.AddMinutes(15))
+            {
+                return 4;
+            }
+            DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
+
+            foreach (Period existingPeriod in Model.Resources.periods)
+            {
+                DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
+
+                if (period.RoomId == existingPeriod.RoomId)
+                {
+                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
+                        return 1;
+
+                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
+                        return 1;
+                }
+
+                if (period.DoctorUsername == existingPeriod.DoctorUsername)
+                {
+                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
+                        return 2;
+
+                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
+                        return 2;
+                }
+
+                if (period.PatientUsername == existingPeriod.PatientUsername)
+                {
+                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
+                        return 3;
+
+                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
+                        return 3;
+                }
+            }
+
+            return 0;
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (this.Patient == null || this.Doctor == null || this.PeriodTypeIndex == -1 || this.Room == null || this.Date == null)
+            {
+                MessageBox.Show("Please fill all the fields.", "Fill all the fields");
+                return;
+            }
             string[] splits = Time.Split(":");
             DateTime date = new DateTime(Date.Year, Date.Month, Date.Day, Int32.Parse(splits[0]), Int32.Parse(splits[1]), 0);
             Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id, -1);
-            Model.Resources.OpenPeriods();
-            if (Model.Resources.periods == null)
-                Model.Resources.periods = new List<Model.Period>();
+            int available = IsPeriodAvailable(period);
 
-            Model.Resources.periods.Add(period);
-            Model.Resources.SavePeriods();
+            if (available == 0)
+            {
+                Model.Resources.OpenPeriods();
+                if (Model.Resources.periods == null)
+                    Model.Resources.periods = new List<Model.Period>();
 
-            NavigationService.Navigate(new SecretaryPeriodsPage());
+                Model.Resources.periods.Add(period);
+                Model.Resources.SavePeriods();
+
+                NavigationService.Navigate(new SecretaryPeriodsPage());
+            }
+            else if (available == 1)
+            {
+                MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
+            }
+            else if (available == 2)
+            {
+                MessageBox.Show("Selected doctor is unavailable in selected period.", "Doctor unavailable");
+            }
+            else if (available == 3)
+            {
+                MessageBox.Show("Selected patient is unavailable in selected period.", "Patient unavailable");
+            }
+            else
+            {
+                MessageBox.Show("Selected time is not acceptable.", "Time unacceptable");
+            }
         }
     }
 }
