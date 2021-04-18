@@ -20,20 +20,10 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             while (true)
             {
                 foreach (Prescription prescription in patient.Prescription)
-                {/*
-                    if (prescription.StartHours >= DateTime.Now && prescription.StartHours <= DateTime.Now.AddMinutes(5))
+                {
+                    foreach (Therapy therapy in prescription.TherapyList)
                     {
-                        customOkDialog customOkDialog = new customOkDialog("Therapy", generatePrescreption(prescription));
-                        customOkDialog.ShowDialog();
-                    }
-                    */
-                    foreach(Therapy therapy in prescription.TherapyList)
-                    {
-                        if (therapy.StartHours >= DateTime.Now && therapy.StartHours <= DateTime.Now.AddMinutes(5))
-                        {
-                            customOkDialog customOkDialog = new customOkDialog("Therapy", generatePrescreption(therapy));
-                            customOkDialog.ShowDialog();
-                        }
+                         generateTime(therapy);  
                     }
                  }//PREPRAVI
                 
@@ -42,18 +32,34 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
            
         }
 
-        public static string generatePrescreption(Therapy therapy)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("Starting time:");
-            stringBuilder.AppendLine(therapy.StartHours.ToString());
-            stringBuilder.Append("Ending time:");
-            stringBuilder.AppendLine(therapy.EndDate.ToString());
-            stringBuilder.Append("Medications: ");
-            stringBuilder.Append(therapy.Medicine.MedicineName);
 
-            return stringBuilder.ToString();
+  
+        public static List<DateTime> generateTime(Therapy therapy)
+        {
+            DateTime dateIterator = new DateTime();
+            dateIterator = therapy.StartHours.AddSeconds(0);
+            List<DateTime> notificationList = new List<DateTime>();
+            while (dateIterator.Date < therapy.EndDate.Date)
+            {
+                for (int i = 0; i < therapy.TimesPerDay; ++i)
+                {
+                    notificationList.Add(dateIterator.AddHours(i*24/therapy.TimesPerDay));
+                }
+             dateIterator= dateIterator.AddDays(therapy.PauseInDays+1);
+            }
+
+            foreach(DateTime dateTime in notificationList)
+            {
+                if(dateTime>=DateTime.Now && dateTime<=DateTime.Now.AddMinutes(5))
+                {
+                    customOkDialog customOkDialog = new customOkDialog("Therapy","You have prescripted "+therapy.Medicine.MedicineName+" at "+dateTime.ToString("HH:mm"));
+                    customOkDialog.ShowDialog();
+                }
+            }
+            return notificationList;
         }
+
+
         public static void suggestDoctor(Period checkedPeriod, ObservableCollection<DoctorView> doctorList)
         { 
             foreach (DoctorView doctor in doctorList.ToList())
