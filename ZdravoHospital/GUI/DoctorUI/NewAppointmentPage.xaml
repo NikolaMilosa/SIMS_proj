@@ -60,6 +60,13 @@
             </ComboBox>
         </StackPanel>
 
+        <Button Name="PatientInfoButton"
+                    Content="Patient info"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10" 
+                Click="PatientInfoButton_Click"/>
+
         <StackPanel Orientation="Horizontal">
             <Label Content="Date:"
                    FontSize="25"

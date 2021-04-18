@@ -1,0 +1,251 @@
+﻿<Page x:Class="ZdravoHospital.GUI.DoctorUI.PatientInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PatientInfoPage">
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Height="80"
+                        Background="Black">
+                <Button DockPanel.Dock="Bottom"
+                    Content="Back"
+                    Padding="10" 
+                    Width="100"
+                    FontSize="20"
+                    Name="BackButton"
+                    Margin="80, 15"
+                    Click="BackButton_Click"/>
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                        Margin="70, 20">
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="First name: {0}">
+                                <Binding Path="Patient.Name"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Parents name: {0}">
+                                <Binding Path="Patient.ParentsName"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Last name: {0}">
+                                <Binding Path="Patient.Surname"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Gender: {0}">
+                                <Binding Path="Patient.Gender"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Health card ID: {0}">
+                                <Binding Path="Patient.HealthCardNumber"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Citizen ID: {0}">
+                                <Binding Path="Patient.CitizenId"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Date of birth: {0}">
+                                <Binding Path="Patient.DateOfBirth"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Blood type: {0}">
+                                <Binding Path="Patient.BloodType"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Marital status: {0}">
+                                <Binding Path="Patient.MaritalStatus"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Phone: {0}">
+                                <Binding Path="Patient.PhoneNumber"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Email: {0}">
+                                <Binding Path="Patient.Email"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="20">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Address: {0}">
+                                <Binding Path="Patient.Address"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Margin="0, 0, 80, 0">
+                    <Button x:Name="AlergiesButton"
+                        Content="See alergies list"
+                        FontSize="20"
+                        Width="150"
+                        Margin="30"
+                            Click="AlergiesButton_Click"/>
+                    <ListView x:Name="PeriodsListView"
+                          Height="500"
+                              HorizontalContentAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0"
+                                           FontSize="18"
+                                           TextAlignment="Center">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0:dd.MM.yyyy.} | {1} [Room: {2}] | Doctor: {3} {4}">
+                                                <Binding Path="Period.StartTime"/>
+                                                <Binding Path="Period.PeriodType"/>
+                                                <Binding Path="Period.RoomId"/>
+                                                <Binding Path="Doctor.Name"/>
+                                                <Binding Path="Doctor.Surname"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button x:Name="PeriodDetailsButton"
+                                        Grid.Column="1"
+                                        Content="More info"
+                                        FontSize="18"
+                                        Width="100"
+                                            Click="PeriodDetailsButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+        <Grid Name="AlergiesPopUp"
+                   Background="Transparent"
+              Visibility="Hidden">
+            <Grid Background="Black"
+                           Opacity="0.96">
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                       Background="Black">
+                    <Button DockPanel.Dock="Bottom"
+                    Content="Close"
+                    Padding="10" 
+                    Width="100"
+                    FontSize="20"
+                    Name="CloseAllergiesPopUpButton"
+                    Margin="80, 15"
+                    Click="CloseAllergiesPopUpButton_Click"/>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="Medicine allergies:"
+                                       FontSize="20"
+                                       Margin="20"
+                                        Foreground="White"
+                                       TextAlignment="Center"/>
+                            <ListBox x:Name="MedicineAllergiesList"
+                             Width="400"
+                                     FontSize="20"
+                                     Height="700"
+                             ItemsSource="{Binding Patient.MedicineAllergens}"
+                                     Margin="100, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+
+                        <TextBlock Text="Ingredient allergies:"
+                                       FontSize="20"
+                                       Margin="20"
+                                        Foreground="White"
+                                       TextAlignment="Center"/>
+                        <ListBox x:Name="IngredientAllergiesList"
+                             Width="400"
+                                     FontSize="20"
+                                     Height="700"
+                             ItemsSource="{Binding Patient.IngredientAllergens}"
+                                     Margin="100, 0"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Name="PeriodDetailsPopUp"
+                   Background="Transparent"
+              Visibility="Hidden">
+            <Grid Background="Black"
+                           Opacity="0.96">
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                       Background="Black">
+                    <Button DockPanel.Dock="Bottom"
+                    Content="Close"
+                    Padding="10" 
+                    Width="100"
+                    FontSize="20"
+                    Name="ClosePeriodDetailsPopUpButton"
+                    Margin="80, 15"
+                    Click="ClosePeriodDetailsPopUpButton_Click"/>
+                </StackPanel>
+                <TextBlock Grid.Row="1"
+                           Background="White"
+                           Margin="100"
+                           Height="500"
+                           FontSize="20"
+                           Text="{Binding SelectedPeriod.Period.Details}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
