@@ -520,7 +520,7 @@
                    Background="Transparent"
               Visibility="Hidden">
             <DockPanel Background="Black"
-                       Opacity="0.8">
+                       Opacity="0.95">
             </DockPanel>
             <StackPanel Background="#222222"
                         Margin="0, -100, 0, 0"

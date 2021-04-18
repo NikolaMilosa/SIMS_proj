@@ -223,5 +223,10 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             NavigationService.Navigate(new PeriodDetailsPage(this.period));
         }
+
+        private void PatientInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PatientInfoPage(PatientsComboBox.SelectedItem as Patient));
+        }
     }
 }

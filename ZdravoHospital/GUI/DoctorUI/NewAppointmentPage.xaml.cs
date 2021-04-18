@@ -172,5 +172,13 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             return 0;
         }
+
+        private void PatientInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            Patient patient = PatientsComboBox.SelectedItem as Patient;
+
+            if (patient != null)
+                NavigationService.Navigate(new PatientInfoPage(patient));
+        }
     }
 }
