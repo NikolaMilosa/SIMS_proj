@@ -188,7 +188,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static bool doPeriodsOverlap(Period period, Period checkedPeriod)
         {
             DateTime endingtDateTime = period.StartTime.AddMinutes(period.Duration);
-            DateTime endingDateTimePeriod = checkedPeriod.StartTime.AddMinutes(30);
+            DateTime endingDateTimePeriod = checkedPeriod.StartTime.AddMinutes(checkedPeriod.Duration);
             if (period.Equals(checkedPeriod))//u slucaju kad edituje period
                 return false;
 
