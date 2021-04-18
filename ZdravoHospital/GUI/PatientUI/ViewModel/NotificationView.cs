@@ -25,10 +25,12 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
                     From = role.ToString() + " " + Resources.doctors[Notification.UsernameSender].Name + " " + Resources.doctors[Notification.UsernameSender].Surname;
                     break;
 
-                default:
+                case RoleType.SECERATRY:
                     From = "Secretary Srdjan Sukovic";
                     break;
-
+                default:
+                    From = "Manager Nikola Milosavljevic";
+                    break;
             }
         }
 

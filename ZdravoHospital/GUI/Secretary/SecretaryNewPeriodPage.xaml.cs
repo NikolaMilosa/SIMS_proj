@@ -180,7 +180,7 @@ namespace ZdravoHospital.GUI.Secretary
         {
             string[] splits = Time.Split(":");
             DateTime date = new DateTime(Date.Year, Date.Month, Date.Day, Int32.Parse(splits[0]), Int32.Parse(splits[1]), 0);
-            Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id);
+            Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id, -1);
             Model.Resources.OpenPeriods();
             if (Model.Resources.periods == null)
                 Model.Resources.periods = new List<Model.Period>();

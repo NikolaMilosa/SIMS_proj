@@ -79,7 +79,8 @@ namespace ZdravoHospital.GUI.DoctorUI
             Period editedPeriod = new Period(dateTime, Int32.Parse(DurationTextBox.Text), PeriodType.APPOINTMENT,
                                        (PatientsComboBox.SelectedItem as Patient).Username,
                                        (DoctorsComboBox.SelectedItem as Doctor).Username,
-                                       (RoomsComboBox.SelectedItem as Room).Id);
+                                       (RoomsComboBox.SelectedItem as Room).Id,
+                                       this.period.PrescriptionId);
 
             int available = IsPeriodAvailable(editedPeriod, this.period);
 
