@@ -401,6 +401,11 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                     }
                 }
+                ManagerWindow.Inventory.Remove(ManagerWindow.Inventory[index]);
+                ManagerWindow.Inventory.Insert(index, Model.Resources.inventory[Id]);
+                Model.Resources.SerializeRooms();
+                Model.Resources.SerializeInventory();
+                this.Close();
             }
         }
 
