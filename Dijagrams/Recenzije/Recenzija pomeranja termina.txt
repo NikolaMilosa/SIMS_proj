@@ -1,0 +1,9 @@
+Recenzovan : Aleksic Nikola
+Recenzent : Milosavljevic Nikola
+
+- Za konektore bih koristio neku drugu boju od inicijalnog ulaza kako bi se lakse razlikovali.
+- Suvisno koriscenje konektora <<A>>, moguce samo prevezati.
+- CheckDoctorsAvailability, CheckPatientsAvailability, FindFreeRoom : ne bih paralelizovao zato sto ako jedan vrati null
+ostali ne moraju da se izvrse.
+
+Ostale stvari bih i ja isto uradio.
