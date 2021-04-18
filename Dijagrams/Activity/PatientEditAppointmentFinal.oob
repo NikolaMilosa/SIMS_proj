@@ -950,7 +950,7 @@ IndxFKName=%REFR%_FK
 IndxThreshold=
 ColnFKName=%.3:PARENT%_%COLUMN%
 ColnFKNameUse=No</a:ModelOptionsText>
-<a:RepositoryFilename>D:\Fax\SIMS\git\SIMS_proj\Dijagrams\Activity\PatientEditAppointmentFinal.oom</a:RepositoryFilename>
+<a:RepositoryFilename>%[PRJ_ROOT_DIR]%\Activity\PatientEditAppointmentFinal.oom</a:RepositoryFilename>
 <c:Keywords>
 <o:Keyword Id="o3">
 <a:ObjectID>44F7B6CB-086D-420A-A904-9A6CEF86E45D</a:ObjectID>

@@ -1,0 +1,6 @@
+Recezent: Aleksic Nikola
+Recenzovan: Nikola Milosavljevic
+Fale tipovi objekata.
+Upitno koriscenje loop-ova,podrazumevaju se. 
+Fali rekurzivna akcija u modelservisu za konvertovanje iz inventory u inventoryDTO.
+Ostale funkcionalnosti bih isto uradio.
