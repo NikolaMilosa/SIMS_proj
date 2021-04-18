@@ -63,7 +63,8 @@ namespace ZdravoHospital.GUI.DoctorUI
             Period period = new Period(dateTime, Int32.Parse(DurationTextBox.Text), PeriodType.OPERATION,
                                        (PatientsComboBox.SelectedItem as Patient).Username,
                                        Doctor.Username,
-                                       (RoomsComboBox.SelectedItem as Room).Id);
+                                       (RoomsComboBox.SelectedItem as Room).Id,
+                                       -1);
 
             int available = IsPeriodAvailable(period);
 

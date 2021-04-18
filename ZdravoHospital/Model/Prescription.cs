@@ -8,6 +8,7 @@ namespace Model
    
         public Prescription() { }
 
+        public int Id { get; set; }
         public string DoctorUsername { get; set; }
         public  List<Therapy> TherapyList { get; set; }
 
