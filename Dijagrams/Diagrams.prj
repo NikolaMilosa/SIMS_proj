@@ -507,7 +507,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>BA6AF7C1-D0AA-4076-B90B-9592FBD78AE2</a:CustomPictureID>
+<a:CustomPictureID>DA00844F-5948-496C-9D1F-4C95F71979EB</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -529,7 +529,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>BA6AF7C1-D0AA-4076-B90B-9592FBD78AE2</a:CustomPictureID>
+<a:CustomPictureID>DA00844F-5948-496C-9D1F-4C95F71979EB</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -550,7 +550,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:CreationDate>1618209314</a:CreationDate>
 <a:Creator>Nikola</a:Creator>
 <a:ModificationDate>1617882326</a:ModificationDate>
-<a:Modifier>Acer Aspire 5</a:Modifier>
+<a:Modifier>Nikola</a:Modifier>
 <a:Location>file:///%[PRJ_ROOT_DIR]%/Class/ZdravoHospital.oom</a:Location>
 <a:Extension>oom</a:Extension>
 <a:ModelDocument.ModelID>3E50604E-6332-4896-BED2-EC9985811F07</a:ModelDocument.ModelID>
@@ -563,7 +563,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:CreationDate>1618209324</a:CreationDate>
 <a:Creator>Nikola</a:Creator>
 <a:ModificationDate>1618209001</a:ModificationDate>
-<a:Modifier>Acer Aspire 5</a:Modifier>
+<a:Modifier>Nikola</a:Modifier>
 <a:Location>file:///%[PRJ_ROOT_DIR]%/Sequence/ManagingInventorySeq.oom</a:Location>
 <a:Extension>oom</a:Extension>
 <a:ModelDocument.ModelID>461E850F-9966-40C6-8853-3A912455AB3B</a:ModelDocument.ModelID>
