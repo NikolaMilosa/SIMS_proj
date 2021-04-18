@@ -34,11 +34,13 @@ namespace ZdravoHospital.GUI.PatientUI
             Patient = Model.Resources.patients[username];
             //obrisi
             Prescription prescription = new Prescription();
-            prescription.StartHours = DateTime.Now.AddMinutes(2);
-            prescription.EndDate = DateTime.Now.AddDays(4);
+            //prescription.StartHours = DateTime.Now.AddMinutes(2);
+            //prescription.EndDate = DateTime.Now.AddDays(4);
             prescription.TherapyList = new List<Therapy>();
             Medicine medicine = new Medicine("Brufen");
             Therapy therapy = new Therapy();
+            therapy.StartHours = DateTime.Now.AddMinutes(2);
+            therapy.EndDate = therapy.StartHours.AddDays(4);
             therapy.Medicine = medicine;
             prescription.TherapyList.Add(therapy);
             Patient.Prescription = new List<Prescription>();

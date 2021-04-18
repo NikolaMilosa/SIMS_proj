@@ -20,11 +20,20 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             while (true)
             {
                 foreach (Prescription prescription in patient.Prescription)
-                {
+                {/*
                     if (prescription.StartHours >= DateTime.Now && prescription.StartHours <= DateTime.Now.AddMinutes(5))
                     {
                         customOkDialog customOkDialog = new customOkDialog("Therapy", generatePrescreption(prescription));
                         customOkDialog.ShowDialog();
+                    }
+                    */
+                    foreach(Therapy therapy in prescription.TherapyList)
+                    {
+                        if (therapy.StartHours >= DateTime.Now && therapy.StartHours <= DateTime.Now.AddMinutes(5))
+                        {
+                            customOkDialog customOkDialog = new customOkDialog("Therapy", generatePrescreption(therapy));
+                            customOkDialog.ShowDialog();
+                        }
                     }
                  }//PREPRAVI
                 
@@ -33,16 +42,15 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
            
         }
 
-        public static string generatePrescreption(Prescription prescription)
+        public static string generatePrescreption(Therapy therapy)
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("Starting time:");
-            stringBuilder.AppendLine(prescription.StartHours.ToString());
+            stringBuilder.AppendLine(therapy.StartHours.ToString());
             stringBuilder.Append("Ending time:");
-            stringBuilder.AppendLine(prescription.EndDate.ToString());
-            stringBuilder.Append("Medications:");
-            foreach (Therapy therapy in prescription.TherapyList)
-                stringBuilder.AppendLine(therapy.Medicine.MedicineName);
+            stringBuilder.AppendLine(therapy.EndDate.ToString());
+            stringBuilder.Append("Medications: ");
+            stringBuilder.Append(therapy.Medicine.MedicineName);
 
             return stringBuilder.ToString();
         }
