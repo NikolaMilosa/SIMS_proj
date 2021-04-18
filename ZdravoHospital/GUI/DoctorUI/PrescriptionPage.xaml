@@ -1,0 +1,137 @@
+﻿<Page x:Class="ZdravoHospital.GUI.DoctorUI.PrescriptionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PrescriptionPage">
+
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Height="80"
+                        Background="Black">
+                <Button DockPanel.Dock="Bottom"
+                    Content="Cancel"
+                    Padding="10" 
+                    Width="100"
+                    FontSize="20"
+                    Name="CancelButton"
+                    Margin="80, 15"
+                    Click="CancelButton_Click"/>
+                <Button DockPanel.Dock="Bottom"
+                    Content="Add therapy"
+                    Padding="10" 
+                    Width="150"
+                    FontSize="20"
+                    Name="AddTherapyButton"
+                    Margin="500, 15, 50, 15"
+                    Click="AddTherapyButton_Click"/>
+                <Button DockPanel.Dock="Bottom"
+                    Content="Confirm prescription"
+                    Padding="10" 
+                    Width="220"
+                    FontSize="20"
+                    Name="ConfirmButton"
+                    Margin="80, 15"
+                    Click="ConfirmButton_Click"/>
+            </StackPanel>
+            <Grid>
+                <ListView Grid.Column="1"
+                            Margin="200, 50"
+                              x:Name="TherapiesListView"
+                          Height="500"
+                              HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </DockPanel>
+        <Grid Name="NewTherapyPopup"
+                   Background="Transparent"
+                            Visibility="Hidden">
+            <Grid Background="Black"
+                  Opacity="0.96">
+            </Grid>
+            <Grid>
+                <StackPanel Background="White"
+                            Width="500"
+                            Height="400">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Medicine:" 
+                   FontSize="25"
+                   Margin="10"/>
+                        <ComboBox Name="PatientsComboBox"
+                      Width="350"
+                      Height="40"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Start time:" 
+                   FontSize="25"
+                   Margin="10"/>
+                        <TextBox x:Name="StartTimeTextBox"
+                     Width="100"
+                     Height="40"
+                     FontSize="25"
+                     TextAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Times per day:" 
+                   FontSize="25"
+                   Margin="10"/>
+                        <TextBox x:Name="TimesPerDayTextBox"
+                     Width="100"
+                     Height="40"
+                     FontSize="25"
+                     TextAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Pause in days:" 
+                   FontSize="25"
+                   Margin="10"/>
+                        <TextBox x:Name="PauseInDaysTextBox"
+                     Width="100"
+                     Height="40"
+                     FontSize="25"
+                     TextAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="End date:"
+                   FontSize="25"
+                   Margin="10"/>
+                        <Viewbox Width="200">
+                            <DatePicker Name="EndDatePicker"
+                            FontSize="15"
+                            Margin="5"/>
+                        </Viewbox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+                        <Button Name="CancelTherapyButton"
+                    Content="Cancel"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10"
+                            Click="CancelTherapyButton_Click"/>
+                        <Button Name="ConfirmTherapyButton"
+                    Content="Confirm"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10" Click="ConfirmTherapyButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

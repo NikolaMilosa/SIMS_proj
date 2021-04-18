@@ -111,6 +111,13 @@
                     Margin="25"
                     Padding="10" 
                     Click="OperationReportButton_Click"/>
+
+        <Button Name="PrescriptionButton"
+                    Content="Prescription"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10" 
+                    Click="PrescriptionButton_Click"/>
         
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">

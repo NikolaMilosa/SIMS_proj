@@ -51,7 +51,10 @@ namespace ZdravoHospital.GUI.DoctorUI
             if (DateTime.Now >= period.StartTime)
                 CancelAppointmentButton.IsEnabled = false;
             else
+            {
                 AnamnesisButton.IsEnabled = false;
+                PrescriptionButton.IsEnabled = false;
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -227,6 +230,11 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void PatientInfoButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new PatientInfoPage(PatientsComboBox.SelectedItem as Patient));
+        }
+
+        private void PrescriptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PrescriptionPage());
         }
     }
 }
