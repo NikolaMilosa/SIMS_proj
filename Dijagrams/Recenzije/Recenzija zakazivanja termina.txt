@@ -1,0 +1,7 @@
+Recenzovan: Srdjan Sukovic
+Recenzent: Luka Matic
+
+Opcija gde su doktor, pacijent i soba dostupni se podrazumeva nakon prethodnih opcija gde navedeni entiteti nisu dostupni,
+te je moglo i bez toga.
+Nije specificirano kako se timespan dobavlja.
+Popunjavanje forme je moglo biti detaljnije opisano.
