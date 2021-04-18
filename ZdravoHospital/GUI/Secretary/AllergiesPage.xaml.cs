@@ -22,8 +22,8 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class AllergiesPage : Page
     {
-        public ObservableCollection<string> MedicalAllergens { get; set; }
-        public ObservableCollection<string> IngredientAllergens { get; set; }
+        public ObservableCollection<Model.Medicine> MedicalAllergens { get; set; }
+        public ObservableCollection<Model.Ingredient> IngredientAllergens { get; set; }
         public Patient SelectedPatient { get; set; }
         public string CustomAllergen { get; set; }
 
@@ -32,11 +32,15 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             this.DataContext = this;
             SelectedPatient = selectedPatient;
+            Model.Resources.OpenMedicines();
+            Model.Resources.OpenIngredients();
 
-            var logFileMedical = File.ReadAllLines(@"..\..\..\Resources\drugs.txt");
-            MedicalAllergens = new ObservableCollection<string>(logFileMedical);
-            var logFileIngredient = File.ReadAllLines(@"..\..\..\Resources\ingredients.txt");
-            IngredientAllergens = new ObservableCollection<string>(logFileIngredient);
+            //var logFileMedical = File.ReadAllLines(@"..\..\..\Resources\drugs.txt");
+            //MedicalAllergens = new ObservableCollection<string>(logFileMedical);
+            //var logFileIngredient = File.ReadAllLines(@"..\..\..\Resources\ingredients.txt");
+            //IngredientAllergens = new ObservableCollection<string>(logFileIngredient);
+            MedicalAllergens = new ObservableCollection<Model.Medicine>(Model.Resources.medicines);
+            IngredientAllergens = new ObservableCollection<Model.Ingredient>(Model.Resources.ingredients);
 
             ICollectionView viewMedical = (ICollectionView)CollectionViewSource.GetDefaultView(MedicalAllergens);
             ICollectionView viewIngredient = (ICollectionView)CollectionViewSource.GetDefaultView(IngredientAllergens);
@@ -50,7 +54,7 @@ namespace ZdravoHospital.GUI.Secretary
             if (String.IsNullOrEmpty(SearchMedicalAllergensTextBox.Text))
                 return true;
             else
-                return ((item as string).IndexOf(SearchMedicalAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                return (((Medicine)item).MedicineName.IndexOf(SearchMedicalAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private bool UserFilterIngredientAllergens(object item)
@@ -58,7 +62,7 @@ namespace ZdravoHospital.GUI.Secretary
             if (String.IsNullOrEmpty(SearchIngredientAllergensTextBox.Text))
                 return true;
             else
-                return ((item as string).IndexOf(SearchIngredientAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                return (((Ingredient)item).IngredientName.IndexOf(SearchIngredientAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private void SearchMedicalAllergensTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -94,8 +98,14 @@ namespace ZdravoHospital.GUI.Secretary
         {
             if(MedicalAllergensListBox.SelectedItem != null)
             {
-                var selectedAllergen = (string)MedicalAllergensListBox.SelectedItem;
-                Medicine medicalAllergen = new Medicine(selectedAllergen);
+                var selectedAllergen = ((Medicine)(MedicalAllergensListBox.SelectedItem)).MedicineName;
+                Medicine medicalAllergen = null;
+                foreach (var med in Model.Resources.medicines)
+                {
+                    if (med.MedicineName.Equals(selectedAllergen))
+                        medicalAllergen = med;
+                }
+                
 
                 if (SelectedPatient.MedicineAllergens == null)
                 {
@@ -145,7 +155,7 @@ namespace ZdravoHospital.GUI.Secretary
         {
             if (IngredientAllergensListBox.SelectedItem != null)
             {
-                var selectedAllergen = (string)IngredientAllergensListBox.SelectedItem;
+                var selectedAllergen = ((Ingredient)IngredientAllergensListBox.SelectedItem).IngredientName;
                 Ingredient ingredientAllergen = new Ingredient(selectedAllergen);
 
                 if (SelectedPatient.IngredientAllergens == null)
@@ -153,6 +163,7 @@ namespace ZdravoHospital.GUI.Secretary
                     SelectedPatient.IngredientAllergens = new List<Ingredient>();
                 }
 
+              
                 if(isIngredientAllergenUnique(SelectedPatient.IngredientAllergens, ingredientAllergen))
                 {
                     SelectedPatient.IngredientAllergens.Add(ingredientAllergen);
@@ -290,7 +301,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            NavigationService.Navigate(new PatientsView());
         }
     }
 }

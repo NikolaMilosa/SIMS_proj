@@ -151,8 +151,9 @@ namespace ZdravoHospital.GUI.Secretary
                             }
                         }
                         Model.Resources.SavePatients();
-                        CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
 
+                        if (CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
+                            CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
                     }
                 }
             }
@@ -178,7 +179,8 @@ namespace ZdravoHospital.GUI.Secretary
                             }
                         }
                         Model.Resources.SavePatients();
-                        CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
+                        if(CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
+                            CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
 
                     }
                 }

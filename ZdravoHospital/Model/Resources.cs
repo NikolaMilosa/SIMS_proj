@@ -16,6 +16,7 @@ namespace Model
         public static List<Notification> notifications;
         public static Dictionary<string,Inventory> inventory;
         public static List<Medicine> medicines;
+        public static List<Ingredient> ingredients;
         public static void OpenAccounts()
         {
             accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
@@ -141,6 +142,22 @@ namespace Model
         {
             string json = JsonConvert.SerializeObject(medicines);
             File.WriteAllText(@"..\..\..\Resources\medicines.json", json);
+        }
+
+        public static void OpenIngredients()
+        {
+            if (File.Exists(@"..\..\..\Resources\ingredients.json"))
+                ingredients = JsonConvert.DeserializeObject<List<Ingredient>>(File.ReadAllText(@"..\..\..\Resources\ingredients.json"));
+
+            if (ingredients == null)
+                ingredients = new List<Ingredient>();
+
+        }
+
+        public static void SaveIngredients()
+        {
+            string json = JsonConvert.SerializeObject(ingredients);
+            File.WriteAllText(@"..\..\..\Resources\ingredients.json", json);
         }
     }
 }
