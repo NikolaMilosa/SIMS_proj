@@ -221,6 +221,11 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (this.Patient == null || this.Doctor == null || this.PeriodTypeIndex == -1 || this.Room == null || this.Date == null)
+            {
+                MessageBox.Show("Please fill all the fields.", "Fill all the fields");
+                return;
+            }
             string[] splits = Time.Split(":");
             DateTime date = new DateTime(Date.Year, Date.Month, Date.Day, Int32.Parse(splits[0]), Int32.Parse(splits[1]), 0);
             Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id, -1);
