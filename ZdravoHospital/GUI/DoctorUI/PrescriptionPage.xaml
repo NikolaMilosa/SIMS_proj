@@ -41,13 +41,14 @@
             </StackPanel>
             <Grid>
                 <ListView Grid.Column="1"
-                            Margin="200, 50"
+                            Margin="200"
                               x:Name="TherapiesListView"
                           Height="500"
+                          FontSize="20"
                               HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-
+                            <TextBlock Text="{Binding Path=Medicine.MedicineName}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -67,7 +68,8 @@
                         <Label Content="Medicine:" 
                    FontSize="25"
                    Margin="10"/>
-                        <ComboBox Name="PatientsComboBox"
+                        <ComboBox Name="MedicinesComboBox"
+                                  SelectionChanged="MedicinesComboBox_SelectionChanged"
                       Width="350"
                       Height="40"/>
                     </StackPanel>
@@ -76,7 +78,7 @@
                         <Label Content="Start time:" 
                    FontSize="25"
                    Margin="10"/>
-                        <TextBox x:Name="StartTimeTextBox"
+                        <TextBox x:Name="StartHoursTextBox"
                      Width="100"
                      Height="40"
                      FontSize="25"

@@ -19,7 +19,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             Patient patient= Resources.patients[username];
             while (true)
             {
-                foreach (Prescription prescription in patient.Prescription)
+                foreach (Prescription prescription in patient.Prescriptions)
                 {
                     foreach (Therapy therapy in prescription.TherapyList)
                     {

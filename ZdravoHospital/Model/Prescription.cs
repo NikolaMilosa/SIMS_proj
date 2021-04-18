@@ -6,7 +6,10 @@ namespace Model
    public class Prescription
    {
    
-        public Prescription() { }
+        public Prescription() 
+        {
+            TherapyList = new List<Therapy>();
+        }
 
         public int Id { get; set; }
         public string DoctorUsername { get; set; }
