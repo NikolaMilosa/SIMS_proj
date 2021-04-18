@@ -124,6 +124,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             Period period = new Period();
             period.PatientUsername = Period.PatientUsername;
+            period.Duration = 30;
 
             if (selectDoctor.SelectedItem != null && selectDate.SelectedDate == null && selectTime.SelectedItem == null) //suggest time based on doctor
             {
