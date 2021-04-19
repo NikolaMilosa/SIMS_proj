@@ -43,8 +43,8 @@ namespace ZdravoHospital.GUI.PatientUI
             therapy.TimesPerDay = 2;
             therapy.PauseInDays = 1;
             prescription.TherapyList.Add(therapy);
-            Patient.Prescription = new List<Prescription>();
-            Patient.Prescription.Add(prescription); 
+            Patient.Prescriptions = new List<Prescription>();
+            Patient.Prescriptions.Add(prescription); 
             //----------------------------------------------------------------------------
             Thread thread = new Thread(new ParameterizedThreadStart(Validate.therapyNotification));
             

@@ -41,7 +41,8 @@ namespace ZdravoHospital.GUI.DoctorUI
             Model.Resources.OpenRooms();
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values.Where(room => room.RoomType == RoomType.OPERATING_ROOM));
 
-            PatientsComboBox.SelectedItem = Model.Resources.patients[period.PatientUsername];
+            Patient patient = Model.Resources.patients[period.PatientUsername];
+            PatientsComboBox.SelectedItem = patient;
             AppointmentDatePicker.SelectedDate = period.StartTime.Date;
             StartTimeTextBox.Text = period.StartTime.ToString("HH:mm");
             DurationTextBox.Text = period.Duration.ToString();
@@ -58,9 +59,14 @@ namespace ZdravoHospital.GUI.DoctorUI
             }
 
             if (DateTime.Now >= period.StartTime)
+            {
                 CancelOperationButton.IsEnabled = false;
+            }
             else
+            {
                 OperationReportButton.IsEnabled = false;
+                PrescriptionButton.IsEnabled = false;
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -236,6 +242,11 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void PatientInfoButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new PatientInfoPage(PatientsComboBox.SelectedItem as Patient));
+        }
+
+        private void PrescriptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PrescriptionPage(this.period));
         }
     }
 }
