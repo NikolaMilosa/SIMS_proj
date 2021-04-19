@@ -1,0 +1,7 @@
+Recenzovan: Luka Matic
+Recenzent: Srdjan Sukovic
+
+Nakon prikazivanja povratne informacije o alergiji na izabran lek, trebalo bi omoguciti odustanak pored odabira novog leka.
+Nakon izdavanja recepta je mogla biti odradjena akcija slanja notifikacije pacijentu kojem je izdat recept.
+Umesto notifikacije o alergiji, mogla je biti odradjena automatska provera leka koja bi za konkretnog pacijenta 
+onemogucila njegov odabir. 
