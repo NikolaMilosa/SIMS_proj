@@ -84,6 +84,11 @@ namespace ZdravoHospital
             //Model.Resources.medicines.Add(m2);
             //Model.Resources.medicines.Add(m3);
             //Model.Resources.SaveMedicines();
+
+            //Model.Resources.OpenPatients();
+            //foreach (Patient p in Model.Resources.patients.Values)
+            //    p.Prescriptions = new List<Prescription>();
+            //Model.Resources.SavePatients();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
