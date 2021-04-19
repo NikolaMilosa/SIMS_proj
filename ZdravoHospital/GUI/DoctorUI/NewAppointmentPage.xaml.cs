@@ -78,6 +78,10 @@ namespace ZdravoHospital.GUI.DoctorUI
                 MessageBox.Show("Appointment created successfully.", "Success");
                 NavigationService.GoBack();
             }
+            else if (available == -1)
+            {
+                MessageBox.Show("Cannot create appointment in the past.", "Invalid date and time");
+            }
             else if (available == 1)
             {
                 MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
@@ -137,6 +141,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private int IsPeriodAvailable(Period period) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
         {
+            if (period.StartTime < DateTime.Now)
+                return -1;
+
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
 
             foreach (Period existingPeriod in Model.Resources.periods)

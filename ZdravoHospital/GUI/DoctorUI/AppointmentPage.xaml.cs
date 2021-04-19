@@ -51,6 +51,12 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             if (DateTime.Now >= period.StartTime)
             {
+                DoctorsComboBox.IsEnabled = false;
+                PatientsComboBox.IsEnabled = false;
+                AppointmentDatePicker.IsEnabled = false;
+                StartTimeTextBox.IsEnabled = false;
+                DurationTextBox.IsEnabled = false;
+                RoomsComboBox.IsEnabled = false;
                 CancelAppointmentButton.IsEnabled = false;
             }
             else
@@ -104,6 +110,10 @@ namespace ZdravoHospital.GUI.DoctorUI
                 this.period = editedPeriod;
 
                 MessageBox.Show("Appointment edited successfully.", "Success");
+            }
+            else if (available == -1)
+            {
+                MessageBox.Show("Cannot create appointment in the past.", "Invalid date and time");
             }
             else if (available == 1)
             {
@@ -162,8 +172,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             return true;
         }
 
-        private int IsPeriodAvailable(Period period, Period periodToIgnore) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
+        private int IsPeriodAvailable(Period period, Period periodToIgnore) // vraca 0 ako je termin ok, -1 ako je termin u proslosti, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
         {
+            if (period.StartTime < DateTime.Now)
+                return -1;
+
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
 
             foreach (Period existingPeriod in Model.Resources.periods)
