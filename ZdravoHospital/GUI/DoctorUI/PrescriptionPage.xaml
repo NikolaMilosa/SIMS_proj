@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="800"
       Title="PrescriptionPage">
 
     <Grid>
@@ -39,9 +39,24 @@
                     Margin="80, 15"
                     Click="ConfirmButton_Click"/>
             </StackPanel>
-            <Grid>
-                <ListView Grid.Column="1"
-                            Margin="200"
+            <StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                            Width="500">
+                    <Button Name="EditTherapyButton"
+                    Content="Edit"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10"
+                            Click="EditTherapyButton_Click"/>
+                    <Button Name="RemoveTherapyButton"
+                    Content="Remove"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10" Click="RemoveTherapyButton_Click"/>
+                </StackPanel>
+                <ListView Margin="300, 100"
                               x:Name="TherapiesListView"
                           Height="500"
                           FontSize="20"
@@ -52,7 +67,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </Grid>
+            </StackPanel>
         </DockPanel>
         <Grid Name="NewTherapyPopup"
                    Background="Transparent"

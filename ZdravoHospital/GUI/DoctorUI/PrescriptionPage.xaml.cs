@@ -3,17 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -22,10 +16,12 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class PrescriptionPage : Page, INotifyPropertyChanged
     {
+        public ObservableCollection<Therapy> Therapies { get; set; }
         public Prescription Prescription { get; set; }
         private Period period;
         private Patient patient;
         private Therapy therapy;
+        private bool editing;
 
         public PrescriptionPage(Period period)
         {
@@ -33,6 +29,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             
             this.period = period;
             this.patient = Model.Resources.patients[period.PatientUsername];
+            this.editing = false;
 
             if (period.PrescriptionId == -1)
             {
@@ -47,7 +44,22 @@ namespace ZdravoHospital.GUI.DoctorUI
                         this.Prescription = prescription;
             }
 
-            TherapiesListView.ItemsSource = Prescription.TherapyList;
+            Therapies = new ObservableCollection<Therapy>();
+
+            foreach (Therapy therapy in Prescription.TherapyList)
+            {
+                Therapy t = new Therapy()
+                {
+                    Medicine = therapy.Medicine,
+                    StartHours = therapy.StartHours,
+                    TimesPerDay = therapy.TimesPerDay,
+                    PauseInDays = therapy.PauseInDays,
+                    EndDate = therapy.EndDate
+                };
+                Therapies.Add(t);
+            }
+
+            TherapiesListView.ItemsSource = Therapies;
             Model.Resources.OpenMedicines();
             MedicinesComboBox.ItemsSource = Model.Resources.medicines;
         }
@@ -67,10 +79,19 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void AddTherapyButton_Click(object sender, RoutedEventArgs e)
         {
             NewTherapyPopup.Visibility = Visibility.Visible;
+            StartHoursTextBox.Text = "00:00";
+            TimesPerDayTextBox.Text = "0";
+            PauseInDaysTextBox.Text = "0";
+            EndDatePicker.SelectedDate = DateTime.Now.Date;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            Prescription.TherapyList = new List<Therapy>();
+
+            foreach (Therapy t in Therapies)
+                Prescription.TherapyList.Add(t);
+
             if (period.PrescriptionId != -1) // ako se edituje
                 foreach (Prescription prescription in patient.Prescriptions)
                     if (prescription.Id == period.PrescriptionId)
@@ -93,6 +114,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void CancelTherapyButton_Click(object sender, RoutedEventArgs e)
         {
             NewTherapyPopup.Visibility = Visibility.Hidden;
+            editing = false;
         }
 
         private void ConfirmTherapyButton_Click(object sender, RoutedEventArgs e)
@@ -109,19 +131,32 @@ namespace ZdravoHospital.GUI.DoctorUI
                                     EndDatePicker.SelectedDate.Value.Month,
                                     EndDatePicker.SelectedDate.Value.Day);
 
-            therapy = new Therapy()
+            if (editing)
             {
-                Medicine = MedicinesComboBox.SelectedItem as Medicine,
-                StartHours = start,
-                TimesPerDay = Int32.Parse(TimesPerDayTextBox.Text),
-                PauseInDays = Int32.Parse(PauseInDaysTextBox.Text),
-                EndDate = end
-            };
+                therapy.Medicine = MedicinesComboBox.SelectedItem as Medicine;
+                therapy.StartHours = start;
+                therapy.TimesPerDay = Int32.Parse(TimesPerDayTextBox.Text);
+                therapy.PauseInDays = Int32.Parse(PauseInDaysTextBox.Text);
+                therapy.EndDate = end;
+            }
+            else
+            {
+                Therapy therapy = new Therapy()
+                {
+                    Medicine = MedicinesComboBox.SelectedItem as Medicine,
+                    StartHours = start,
+                    TimesPerDay = Int32.Parse(TimesPerDayTextBox.Text),
+                    PauseInDays = Int32.Parse(PauseInDaysTextBox.Text),
+                    EndDate = end
+                };
 
-            this.Prescription.TherapyList.Add(therapy);
+                Therapies.Add(therapy);
+            }
+
             CollectionViewSource.GetDefaultView(TherapiesListView.ItemsSource).Refresh();
 
             NewTherapyPopup.Visibility = Visibility.Hidden;
+            editing = false;
         }
 
         private bool IsInputValid()
@@ -175,6 +210,36 @@ namespace ZdravoHospital.GUI.DoctorUI
                         MessageBox.Show("Patient is allergic to an ingredient in selected medicine (" + ingredient.IngredientName + ")", "Allergy detected");
                         return;
                     }
+        }
+
+        private void EditTherapyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TherapiesListView.SelectedIndex == -1)
+                return;
+
+            editing = true;
+            therapy = (TherapiesListView.SelectedItem) as Therapy;
+            
+            foreach (Medicine medicine in MedicinesComboBox.Items)
+                if (medicine.MedicineName.Equals(therapy.Medicine.MedicineName))
+                {
+                    MedicinesComboBox.SelectedItem = medicine;
+                    break;
+                }
+            StartHoursTextBox.Text = therapy.StartHours.ToString("HH:mm");
+            TimesPerDayTextBox.Text = therapy.TimesPerDay.ToString();
+            PauseInDaysTextBox.Text = therapy.PauseInDays.ToString();
+            EndDatePicker.SelectedDate = therapy.EndDate;
+
+            NewTherapyPopup.Visibility = Visibility.Visible;
+        }
+
+        private void RemoveTherapyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TherapiesListView.SelectedIndex == -1)
+                return;
+
+            Therapies.Remove(TherapiesListView.SelectedItem as Therapy);
         }
     }
 }
