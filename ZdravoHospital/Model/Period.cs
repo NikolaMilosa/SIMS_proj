@@ -17,9 +17,12 @@ namespace Model
         public bool IsUrgent { get; set; }
         
 
-        public Period() { }
+        public Period() 
+        {
 
-        public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, int roomId, int prescriptionId)
+        }
+
+        public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, int roomId)
         {
             StartTime = startTime;
             Duration = duration;

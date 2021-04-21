@@ -228,7 +228,7 @@ namespace ZdravoHospital.GUI.Secretary
             }
             string[] splits = Time.Split(":");
             DateTime date = new DateTime(Date.Year, Date.Month, Date.Day, Int32.Parse(splits[0]), Int32.Parse(splits[1]), 0);
-            Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id, -1);
+            Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id);
             int available = IsPeriodAvailable(period);
 
             if (available == 0)

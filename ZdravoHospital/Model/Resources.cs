@@ -35,6 +35,9 @@ namespace Model
         public static void OpenPatients()
         {
             patients = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
+
+            if (patients == null)
+                patients = new Dictionary<string, Patient>();
         }
 
         public static void SavePatients()
@@ -162,6 +165,21 @@ namespace Model
         {
             string json = JsonConvert.SerializeObject(ingredients);
             File.WriteAllText(@"..\..\..\Resources\ingredients.json", json);
+        }
+
+        public static void OpenSpecializations()
+        {
+            if (File.Exists(@"..\..\..\Resources\specializations.json"))
+                specializations = JsonConvert.DeserializeObject<List<Specialization>>(File.ReadAllText(@"..\..\..\Resources\specializations.json"));
+
+            if (specializations == null)
+                specializations = new List<Specialization>();
+        }
+
+        public static void SaveSpecializations()
+        {
+            string json = JsonConvert.SerializeObject(specializations);
+            File.WriteAllText(@"..\..\..\Resources\specializations.json", json);
         }
     }
 }
