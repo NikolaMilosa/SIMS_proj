@@ -100,10 +100,12 @@ namespace ZdravoHospital.GUI.ManagerUI
                 _secondRoom = value;
 
                 SecondRoomInventory = new ObservableCollection<InventoryDTO>();
+                /* TODO : */
+                /*
                 if(_secondRoom != null)
                     foreach (KeyValuePair<string, int> kvp in _secondRoom.Inventory)
                         SecondRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[kvp.Key].Name, kvp.Value, kvp.Key));
-
+                */
                 OnPropertyChanged("SecondRoomInventory");
             }
         }
