@@ -117,6 +117,9 @@ namespace Model
         {
             if(File.Exists(@"..\..\..\Resources\notifications.json"))
                 notifications = JsonConvert.DeserializeObject<List<Notification>>(File.ReadAllText(@"..\..\..\Resources\notifications.json"));
+
+            if (notifications == null)
+                notifications = new List<Notification>();
         }
 
         public static void OpenPeriods() 
@@ -180,6 +183,20 @@ namespace Model
         {
             string json = JsonConvert.SerializeObject(specializations);
             File.WriteAllText(@"..\..\..\Resources\specializations.json", json);
+        }
+        public static void SavePersonNotifications()
+        {
+            string json = JsonConvert.SerializeObject(personNotifications);
+            File.WriteAllText(@"..\..\..\Resources\personNotifications.json", json);
+        }
+
+        public static void OpenPersonNotifications()
+        {
+            if (File.Exists(@"..\..\..\Resources\personNotifications.json"))
+                personNotifications = JsonConvert.DeserializeObject<List<PersonNotification>>(File.ReadAllText(@"..\..\..\Resources\personNotifications.json"));
+            
+            if (personNotifications == null)
+                personNotifications = new List<PersonNotification>();
         }
     }
 }

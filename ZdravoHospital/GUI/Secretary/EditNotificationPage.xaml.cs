@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.Secretary
         private string _notificationTitle;
         private string _notificationText;
         private string _customRecipient;
-        public Dictionary<string, bool> Recipients;
+        public List<string> Recipients;
         public Model.Notification SelectedNotification { get; set; }
 
         public string NotificationTitle
@@ -80,6 +80,16 @@ namespace ZdravoHospital.GUI.Secretary
             }
             return count;
         }
+        public Model.RoleType findRoleByUsername(string username)
+        {
+            Model.Resources.OpenAccounts();
+            foreach (KeyValuePair<string, Model.Credentials> entry in Model.Resources.accounts)
+            {
+                if (entry.Key.Equals(username))
+                    return entry.Value.Role;
+            }
+            return Model.RoleType.PATIENT;
+        }
         public void FindNotificationRoles()
         {
             int managerNum = 0;
@@ -87,12 +97,13 @@ namespace ZdravoHospital.GUI.Secretary
             int doctorNum = 0;
             int patientNum = 0;
             Model.Resources.OpenAccounts();
+            Model.Resources.OpenPersonNotifications();
 
-            foreach (KeyValuePair<string, Model.Credentials> entry in Model.Resources.accounts)
+            foreach(var notification in Model.Resources.personNotifications)
             {
-                /*if (SelectedNotification.UsernameRecievers.ContainsKey(entry.Key))
+                if(SelectedNotification.NotificationId == notification.NotificationId)
                 {
-                    switch (entry.Value.Role)
+                    switch (this.findRoleByUsername(notification.Username))
                     {
                         case Model.RoleType.SECERATRY:
                             secretaryNum++;
@@ -109,27 +120,26 @@ namespace ZdravoHospital.GUI.Secretary
                         default:
                             break;
                     }
-                }   */
-                if(managerNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.MANAGER))
-                    ManagerCheckBox.IsChecked = true;
-                if (secretaryNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.SECERATRY))
-                    SecretaryCheckBox.IsChecked = true;
-                if (doctorNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.DOCTOR))
-                    DoctorCheckBox.IsChecked = true;
-                if (patientNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.PATIENT))
-                    PatientCheckBox.IsChecked = true;
-
+                }
+                
             }
-
+            if (managerNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.MANAGER))
+                ManagerCheckBox.IsChecked = true;
+            if (secretaryNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.SECERATRY))
+                SecretaryCheckBox.IsChecked = true;
+            if (doctorNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.DOCTOR))
+                DoctorCheckBox.IsChecked = true;
+            if (patientNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.PATIENT))
+                PatientCheckBox.IsChecked = true;
         }
         public EditNotificationPage(Model.Notification selectedNotification)
         {
             InitializeComponent();
             this.DataContext = this;
-            Recipients = new Dictionary<string, bool>();
+            Recipients = new List<string>();
             SelectedNotification = selectedNotification;
-            //InitializeBindingFields();
-            //FindNotificationRoles();
+            InitializeBindingFields();
+            FindNotificationRoles();
         }
         private void FillRecipients()
         {
@@ -146,31 +156,40 @@ namespace ZdravoHospital.GUI.Secretary
                     || (entry.Value.Role.Equals(Model.RoleType.PATIENT) && (bool)PatientCheckBox.IsChecked))
                 {
                     if (!entry.Key.Equals(CustomRecipient))
-                        Recipients.Add(entry.Key, false);
+                        Recipients.Add(entry.Key);
                 }
                 if (entry.Key.Equals(CustomRecipient))
                     customRecipientExists = true;
             }
             if (CustomRecipient != null && customRecipientExists)
             {
-                Recipients.Add(CustomRecipient, false);
+                Recipients.Add(CustomRecipient);
             }
 
         }
 
         private void SendNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-           /* FillRecipients();
-            Model.Notification newNotification = new Model.Notification(NotificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, NotificationTitle + "(edit)", Recipients);
+            FillRecipients();
 
             Model.Resources.OpenNotifications();
-            if (Model.Resources.notifications == null)
-                Model.Resources.notifications = new List<Model.Notification>();
+            Model.Resources.OpenPersonNotifications();
 
+            Model.Notification newNotification = new Model.Notification(NotificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, NotificationTitle, SelectedNotification.NotificationId);
+            
+            Model.Resources.notifications.RemoveAll(elem => elem.NotificationId == SelectedNotification.NotificationId);
             Model.Resources.notifications.Add(newNotification);
             Model.Resources.SaveNotifications();
 
-            NavigationService.Navigate(new SecretaryNotificationsPage());*/
+            Model.Resources.personNotifications.RemoveAll(elem => elem.NotificationId == SelectedNotification.NotificationId);
+            foreach (var recipient in Recipients)
+            {
+                Model.PersonNotification personNotification = new Model.PersonNotification(recipient, SelectedNotification.NotificationId, false);
+                Model.Resources.personNotifications.Add(personNotification);
+            }
+            Model.Resources.SavePersonNotifications();
+
+            NavigationService.Navigate(new SecretaryNotificationsPage());
         }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {

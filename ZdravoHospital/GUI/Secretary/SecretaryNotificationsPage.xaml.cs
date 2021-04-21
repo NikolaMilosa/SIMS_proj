@@ -26,18 +26,10 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             this.DataContext = this;
-            Notifications = new ObservableCollection<Model.Notification>();
             Model.Resources.OpenNotifications();
-            ListToObservableCollection(Model.Resources.notifications);
+            Notifications = new ObservableCollection<Notification>(Model.Resources.notifications);
         }
 
-        private void ListToObservableCollection(List<Model.Notification> list)
-        {
-            foreach(var item in list)
-            {
-                Notifications.Add(item);
-            }
-        }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
@@ -55,6 +47,12 @@ namespace ZdravoHospital.GUI.Secretary
                 NavigationService.Navigate(new EditNotificationPage((Model.Notification)NotificationsListView.SelectedItem));
             }
         }
+        private void removePersonNotifications(int id)
+        {
+            Model.Resources.OpenPersonNotifications();
+            Model.Resources.personNotifications.RemoveAll(elem => elem.NotificationId == id);
+            Model.Resources.SavePersonNotifications();
+        }
 
         private void DeleteNotificationButton_Click(object sender, RoutedEventArgs e)
         {
@@ -63,6 +61,8 @@ namespace ZdravoHospital.GUI.Secretary
                 Notification notification = (Notification)NotificationsListView.SelectedItem;
                 Notifications.Remove(notification);
                 Model.Resources.notifications.Remove(notification);
+
+                this.removePersonNotifications(notification.NotificationId);
 
                 Model.Resources.SaveNotifications();
                 CollectionViewSource.GetDefaultView(NotificationsListView.ItemsSource).Refresh();
