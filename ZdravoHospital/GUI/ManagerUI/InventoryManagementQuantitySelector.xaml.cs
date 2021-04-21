@@ -26,6 +26,39 @@ namespace ZdravoHospital.GUI.ManagerUI
         private int _maxInventory;
         private string _definitionText;
         private int _enteredQuantity;
+        private DateTime _chosenDate;
+        private string _inputTime;
+        private bool _isStatic;
+
+        public string InputTime
+        {
+            get { return _inputTime; }
+            set
+            {
+                _inputTime = value;
+                OnPropertyChanged("InputTime");
+            }
+        }
+
+        public DateTime ChosenDate
+        {
+            get { return _chosenDate; }
+            set
+            {
+                _chosenDate = value;
+                OnPropertyChanged("ChosenDate");
+            }
+        }
+
+        public bool IsStatic
+        {
+            get { return _isStatic; }
+            set
+            {
+                _isStatic = value;
+                OnPropertyChanged("IsStatic");
+            }
+        }
 
         public int EnteredQuantity
         {
@@ -74,7 +107,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private ObservableCollection<InventoryDTO> secondRoomDTOs;
         private string id;
 
-        public InventoryManagementQuantitySelector(Room fr, Room sr, ObservableCollection<InventoryDTO> fri, ObservableCollection<InventoryDTO> sri, string id)
+        public InventoryManagementQuantitySelector(Room fr, Room sr, ObservableCollection<InventoryDTO> fri, ObservableCollection<InventoryDTO> sri, InventoryDTO invItem)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -83,11 +116,14 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.secondRoom = sr;
             this.firstRoomDTOs = fri;
             this.secondRoomDTOs = sri;
-            this.id = id;
+            this.id = invItem.Id;
+            this.IsStatic = (invItem.InventoryType == InventoryType.STATIC_INVENTORY);
+            this.ChosenDate = DateTime.Today;
 
             /* TODO : */
 
             DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + Model.Resources.inventory[id].Name + "' would you like to transfer?";
+
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -98,6 +134,54 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
            /* TODO : */
+        }
+
+        private void DateTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void DatePicker_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!DatePicker.IsDropDownOpen)
+            {
+                if (e.Key == Key.Enter)
+                {
+                    DatePicker.IsDropDownOpen = true;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Tab) { }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (e.Key == Key.Enter)
+                {
+                    ChosenDate = (DateTime)DatePicker.SelectedDate;
+                    DatePicker.IsDropDownOpen = false;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Left) { }
+                else if (e.Key == Key.Right) { }
+                else if (e.Key == Key.Up) { }
+                else if (e.Key == Key.Down) { }
+                else if (e.Key == Key.Tab)
+                {
+                    DatePicker.IsDropDownOpen = false;
+                    e.Handled = true;
+                    CancelButton.Focus();
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
         }
     }
 }
