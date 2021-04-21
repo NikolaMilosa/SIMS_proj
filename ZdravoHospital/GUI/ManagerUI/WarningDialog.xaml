@@ -15,7 +15,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="WarningTitle" Grid.Row="0" FontSize="18" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label x:Name="WarningTitle" Grid.Row="0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

@@ -48,16 +48,39 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
+                <Label Grid.Row="2" FontSize="18" Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="- Unavailable!" Foreground="Red">
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FirstRoomAvailable, Mode=TwoWay}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=FirstRoomComboBox, Path=SelectedIndex}" Value="-1">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+
                 <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown" GotFocus="FirstRoomDataGrid_GotFocus">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding InventoryType, Converter={converters:InventoryTypeConverter}}"/>
                     </DataGrid.Columns>
                     <DataGrid.Style>
                         <Style TargetType="{x:Type DataGrid}">
                             <Setter Property="IsEnabled" Value="True"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding FirstRoomAvailable}" Value="False">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SecondRoomAvailable}" Value="False">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -102,10 +125,27 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
+                <Label Grid.Row="2" Grid.Column="1" FontSize="18" Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="- Unavailable!" Foreground="Red">
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SecondRoomAvailable, Mode=TwoWay}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+
                 <DataGrid x:Name="SecondRoomDataGrid" Grid.Row="3" ItemsSource="{Binding SecondRoomInventory, Mode=TwoWay}" AutoGenerateColumns="false" HeadersVisibility="Column" FontSize="18" Margin="10,10,20,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding InventoryType, Converter={converters:InventoryTypeConverter}}"/>
                     </DataGrid.Columns>
                     <DataGrid.Style>
                         <Style TargetType="{x:Type DataGrid}">

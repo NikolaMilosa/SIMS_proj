@@ -3,5 +3,10 @@
     "InventoryId": "123",
     "RoomId": 106,
     "Quantity": 120
+  },
+  {
+    "InventoryId": "124FFD",
+    "RoomId": 106,
+    "Quantity": 50
   }
 ]

@@ -5,5 +5,12 @@
     "Quantity": 120,
     "InventoryType": 0,
     "Id": "123"
+  },
+  "124FFD": {
+    "Name": "stitches",
+    "Supplier": "JANKOVIC DOO",
+    "Quantity": 50,
+    "InventoryType": 1,
+    "Id": "124FFD"
   }
 }

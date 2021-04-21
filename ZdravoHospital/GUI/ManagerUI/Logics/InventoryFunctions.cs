@@ -14,7 +14,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             /* Visual */
             ManagerWindow.Inventory.Remove(someInventory);
 
-
             Model.Resources.inventory.Remove(someInventory.Id);
             Model.Resources.SerializeInventory();
             return true;
