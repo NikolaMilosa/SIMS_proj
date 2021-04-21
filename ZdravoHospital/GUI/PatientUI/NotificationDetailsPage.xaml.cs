@@ -27,7 +27,7 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             PatientUsername = username;
             NotificationView = notificationView;
-            NotificationView.Notification.UsernameRecievers[username] = true;
+            //NotificationView.Notification.UsernameRecievers[username] = true;
             Model.Resources.SaveNotifications();
             DataContext = this;
         }

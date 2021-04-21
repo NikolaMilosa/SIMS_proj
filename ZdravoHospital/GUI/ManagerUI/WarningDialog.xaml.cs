@@ -74,11 +74,14 @@ namespace ZdravoHospital.GUI.ManagerUI
                     ManagerWindow.Inventory.Remove((Inventory)someObject);
                     Model.Resources.SerializeInventory();
 
+                    /* TODO: */
+                    /*
                     foreach(Room room in Model.Resources.rooms.Values)
                     {
                         if (room.Inventory.ContainsKey(id.ToString()))
                             room.Inventory.Remove(id.ToString());
                     }
+                    */
                     Model.Resources.SerializeRooms();
 
                     break;

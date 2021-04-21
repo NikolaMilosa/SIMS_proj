@@ -15,7 +15,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
         public NotificationView(Notification notification,string username)
         {
             Notification = notification;
-            Seen = notification.UsernameRecievers[username];
+           // Seen = notification.UsernameRecievers[username];
             Model.Resources.OpenAccounts();
             Model.RoleType role = Resources.accounts[Notification.UsernameSender].Role;
             switch(role)
