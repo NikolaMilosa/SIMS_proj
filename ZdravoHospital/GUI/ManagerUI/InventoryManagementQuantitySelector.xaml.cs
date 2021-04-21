@@ -84,7 +84,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.secondRoomDTOs = sri;
             this.id = id;
 
-            MaxInventory = fr.Inventory[id];
+            /* TODO : */
 
             DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + Model.Resources.inventory[id].Name + "' would you like to transfer?";
         }
@@ -96,40 +96,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (secondRoom.Inventory.ContainsKey(id))
-            {
-                secondRoom.Inventory[id] += EnteredQuantity;
-                foreach (InventoryDTO i in secondRoomDTOs)
-                    if (i.Id.Equals(id))
-                        i.Quantity += EnteredQuantity;
-            }
-            else
-            {
-                secondRoom.Inventory[id] = EnteredQuantity;
-                secondRoomDTOs.Add(new InventoryDTO(Model.Resources.inventory[id].Name, EnteredQuantity, id));
-            }
-
-
-            if (firstRoom.Inventory[id] - EnteredQuantity == 0)
-            {
-                firstRoom.Inventory.Remove(id);
-                foreach (InventoryDTO i in firstRoomDTOs)
-                    if (i.Id.Equals(id))
-                    {
-                        firstRoomDTOs.Remove(i);
-                        break;
-                    }
-            }
-            else
-            {
-                firstRoom.Inventory[id] -= EnteredQuantity;
-                foreach (InventoryDTO i in firstRoomDTOs)
-                    if (i.Id.Equals(id))
-                        i.Quantity -= EnteredQuantity;
-            }
-
-            Model.Resources.SerializeRooms();
-            this.Close();
+           /* TODO : */
         }
     }
 }

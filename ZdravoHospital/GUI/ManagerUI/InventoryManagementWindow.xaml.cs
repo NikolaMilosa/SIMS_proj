@@ -81,9 +81,11 @@ namespace ZdravoHospital.GUI.ManagerUI
                 SecondRooms.Remove(_firstRoom);
 
                 FirstRoomInventory = new ObservableCollection<InventoryDTO>();
+                /* TODO : */
+                /*
                 foreach (KeyValuePair<string, int> kvp in _firstRoom.Inventory)
                     FirstRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[kvp.Key].Name, kvp.Value, kvp.Key));
-
+                */
                 OnPropertyChanged("FirstRoomInventory");
 
                 OnPropertyChanged("SecondRooms");
