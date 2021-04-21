@@ -141,7 +141,7 @@ namespace ZdravoHospital.GUI.Secretary
         }
         private void SendNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            FillRecipients();
+            /*FillRecipients();
             Model.Notification newNotification = new Model.Notification(NotificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, NotificationTitle, Recipients);
 
             Model.Resources.OpenNotifications();
@@ -151,7 +151,7 @@ namespace ZdravoHospital.GUI.Secretary
             Model.Resources.notifications.Add(newNotification);
             Model.Resources.SaveNotifications();
 
-            NavigationService.Navigate(new SecretaryNotificationsPage());
+            NavigationService.Navigate(new SecretaryNotificationsPage());*/
         }
     }
 }

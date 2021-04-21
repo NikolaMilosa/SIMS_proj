@@ -133,7 +133,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void RemoveMedicalAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var listBox in FindVisualChildren<ListBox>(this))
+            /*foreach (var listBox in FindVisualChildren<ListBox>(this))
             {
                 if (listBox.Name == "MedicalAllergensListBox")
                 {
@@ -156,12 +156,12 @@ namespace ZdravoHospital.GUI.Secretary
                             CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
                     }
                 }
-            }
+            }*/
         }
 
         private void RemoveIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var listBox in FindVisualChildren<ListBox>(this))
+           /* foreach (var listBox in FindVisualChildren<ListBox>(this))
             {
                 if (listBox.Name == "IngredientAllergensListBox")
                 {
@@ -184,7 +184,7 @@ namespace ZdravoHospital.GUI.Secretary
 
                     }
                 }
-            }
+            }*/
         }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {

@@ -90,7 +90,7 @@ namespace ZdravoHospital.GUI.Secretary
 
             foreach (KeyValuePair<string, Model.Credentials> entry in Model.Resources.accounts)
             {
-                if (SelectedNotification.UsernameRecievers.ContainsKey(entry.Key))
+                /*if (SelectedNotification.UsernameRecievers.ContainsKey(entry.Key))
                 {
                     switch (entry.Value.Role)
                     {
@@ -109,7 +109,7 @@ namespace ZdravoHospital.GUI.Secretary
                         default:
                             break;
                     }
-                }   
+                }   */
                 if(managerNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.MANAGER))
                     ManagerCheckBox.IsChecked = true;
                 if (secretaryNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.SECERATRY))
@@ -128,8 +128,8 @@ namespace ZdravoHospital.GUI.Secretary
             this.DataContext = this;
             Recipients = new Dictionary<string, bool>();
             SelectedNotification = selectedNotification;
-            InitializeBindingFields();
-            FindNotificationRoles();
+            //InitializeBindingFields();
+            //FindNotificationRoles();
         }
         private void FillRecipients()
         {
@@ -160,7 +160,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void SendNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            FillRecipients();
+           /* FillRecipients();
             Model.Notification newNotification = new Model.Notification(NotificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, NotificationTitle + "(edit)", Recipients);
 
             Model.Resources.OpenNotifications();
@@ -170,7 +170,7 @@ namespace ZdravoHospital.GUI.Secretary
             Model.Resources.notifications.Add(newNotification);
             Model.Resources.SaveNotifications();
 
-            NavigationService.Navigate(new SecretaryNotificationsPage());
+            NavigationService.Navigate(new SecretaryNotificationsPage());*/
         }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {
