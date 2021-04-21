@@ -38,10 +38,10 @@ namespace ZdravoHospital.GUI.PatientUI
             Model.Resources.OpenNotifications();
             foreach(Notification notification in Model.Resources.notifications)
             {
-                if (notification.UsernameRecievers.ContainsKey(PatientUsername))
-                {
-                    NotificationList.Add(new NotificationView(notification, PatientUsername));
-                }
+                //if (notification.UsernameRecievers.ContainsKey(PatientUsername))
+                //{
+                  //  NotificationList.Add(new NotificationView(notification, PatientUsername));
+                //}
             }
         }
 
