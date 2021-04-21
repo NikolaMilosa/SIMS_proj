@@ -12,7 +12,10 @@ namespace Model
         public string DoctorUsername { get; set; }
         public int RoomId { get; set; }
         public string Details { get; set; }
-        public int PrescriptionId { get; set; }
+        public Prescription Prescription { get; set; }
+        public int Mark { get; set; }
+        public bool IsUrgent { get; set; }
+        
 
         public Period() { }
 
@@ -24,7 +27,6 @@ namespace Model
             PatientUsername = patientUsername;
             DoctorUsername = doctorUsername;
             RoomId = roomId;
-            PrescriptionId = -1;
         }
 
         public override string ToString()

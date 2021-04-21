@@ -13,10 +13,14 @@ namespace Model
         public static Dictionary<string, Doctor> doctors;
         public static Dictionary<int, Room> rooms;
         public static List<Period> periods;
-        public static List<Notification> notifications;
         public static Dictionary<string,Inventory> inventory;
         public static List<Medicine> medicines;
         public static List<Ingredient> ingredients;
+        public static List<Notification> notifications;
+        public static List<PersonNotification> personNotifications;
+        public static List<Specialization> specializations;
+
+
         public static void OpenAccounts()
         {
             accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));

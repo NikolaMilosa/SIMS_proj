@@ -10,5 +10,7 @@ namespace Model
         public int PauseInDays { get; set; }
         public DateTime EndDate { get; set; }
 
+        public string Instructions { get; set; }
+
     }
 }

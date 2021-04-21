@@ -4,9 +4,9 @@ namespace Model
 {
     public class Doctor : Person
     {
-        public string SpecialistType { get; set; }
+        public Specialization SpecialistType { get; set; }
 
-        public Doctor(string name, string surname, string username, string specialistType)
+        public Doctor(string name, string surname, string username, Specialization specialistType)
         {
             Name = name;
             Surname = surname;

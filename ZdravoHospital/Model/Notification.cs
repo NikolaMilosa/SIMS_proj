@@ -9,15 +9,15 @@ namespace Model
         public DateTime CreateDate { get; set; }
         public string UsernameSender { get; set; }
         public string Title { get; set; }
-        public Dictionary<string, bool> UsernameRecievers { get; set; }
+        public int NotificationId { get; set; }
 
-        public Notification(string text, DateTime createDate, string usernameSender, string title, Dictionary<string, bool> usernameRecievers)
+        public Notification(string text, DateTime createDate, string usernameSender, string title, int notificationid)
         {
             Text = text;
             CreateDate = createDate;
             UsernameSender = usernameSender;
             Title = title;
-            UsernameRecievers = usernameRecievers;
+            NotificationId = notificationid;
         }
 
         public override string ToString()
