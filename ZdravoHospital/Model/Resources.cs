@@ -62,7 +62,7 @@ namespace Model
 
         public static void SerializeRooms()
         {
-            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms));
+            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms, Formatting.Indented));
         }
 
         public static void OpenInventory()
@@ -74,7 +74,7 @@ namespace Model
 
         public static void SerializeInventory()
         {
-            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory));
+            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory, Formatting.Indented));
         }
 
         internal static void CloseAllManager()
@@ -174,7 +174,7 @@ namespace Model
 
         public static void SerializeRoomInventory()
         {
-            File.WriteAllText(@"..\..\..\Resources\roomInventory.json", JsonConvert.SerializeObject(roomInventory));
+            File.WriteAllText(@"..\..\..\Resources\roomInventory.json", JsonConvert.SerializeObject(roomInventory, Formatting.Indented));
         }
     }
 }

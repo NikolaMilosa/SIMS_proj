@@ -59,7 +59,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            bool result = true;
+            bool result = false;
             object id;
             switch (someObject.GetType().Name)
             {
@@ -67,21 +67,7 @@ namespace ZdravoHospital.GUI.ManagerUI
                     result = Logics.RoomFunctions.DeleteRoom((Room)someObject);
                     break;
                 case nameof(Inventory):
-                    id = ((Inventory)someObject).Id;
-                    Model.Resources.inventory.Remove((string)id);
-                    ManagerWindow.Inventory.Remove((Inventory)someObject);
-                    Model.Resources.SerializeInventory();
-
-                    /* TODO: */
-                    /*
-                    foreach(Room room in Model.Resources.rooms.Values)
-                    {
-                        if (room.Inventory.ContainsKey(id.ToString()))
-                            room.Inventory.Remove(id.ToString());
-                    }
-                    */
-                    Model.Resources.SerializeRooms();
-
+                    result = Logics.InventoryFunctions.DeleteInventory((Inventory)someObject);
                     break;
                 default:
                     //Code for staff deleting

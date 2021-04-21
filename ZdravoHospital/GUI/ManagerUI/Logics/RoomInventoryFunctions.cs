@@ -40,5 +40,12 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             return ret;
         }
+
+        public static void DeleteByInventoryId(string iid)
+        {
+            Model.Resources.roomInventory.RemoveAll(ri => ri.InventoryId.Equals(iid));
+
+            Model.Resources.SerializeRoomInventory();
+        }
     }
 }
