@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace ZdravoHospital.GUI.ManagerUI
+namespace ZdravoHospital.GUI.ManagerUI.DTOs
 {
     public class InventoryDTO : INotifyPropertyChanged
     {

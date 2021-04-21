@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
+        xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         mc:Ignorable="d"
         Title="Select quantity" 
         SizeToContent="WidthAndHeight"
@@ -20,16 +22,16 @@
 
         <TextBox x:Name="QuantityTextBox" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Width="70" Height="30">
             <TextBox.Resources>
-                <local:MaxInventoryBindingProxy x:Key="proxy" Data="{Binding}"/>
+                <validation:MaxInventoryBindingProxy x:Key="proxy" Data="{Binding}"/>
             </TextBox.Resources>
             <TextBox.Text>
                 <Binding Path="EnteredQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:QuantityValidationRule ValidationStep="RawProposedValue">
-                            <local:QuantityValidationRule.Wrapper>
-                                <local:MaxInventoryWrapper Max="{Binding Path=Data.MaxInventory, Source={StaticResource proxy}}"/>
-                            </local:QuantityValidationRule.Wrapper>
-                        </local:QuantityValidationRule>
+                        <validation:QuantityValidationRule ValidationStep="RawProposedValue">
+                            <validation:QuantityValidationRule.Wrapper>
+                                <validation:MaxInventoryWrapper Max="{Binding Path=Data.MaxInventory, Source={StaticResource proxy}}"/>
+                            </validation:QuantityValidationRule.Wrapper>
+                        </validation:QuantityValidationRule>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

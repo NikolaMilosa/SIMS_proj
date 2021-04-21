@@ -19,6 +19,7 @@ namespace Model
         public static List<Notification> notifications;
         public static List<PersonNotification> personNotifications;
         public static List<Specialization> specializations;
+        public static List<RoomInventory> roomInventory;
 
 
         public static void OpenAccounts()
@@ -162,6 +163,18 @@ namespace Model
         {
             string json = JsonConvert.SerializeObject(ingredients);
             File.WriteAllText(@"..\..\..\Resources\ingredients.json", json);
+        }
+
+        public static void OpenRoomInventory()
+        {
+            roomInventory = JsonConvert.DeserializeObject<List<RoomInventory>>(File.ReadAllText(@"..\..\..\Resources\roomInventory.json"));
+            if (roomInventory == null)
+                roomInventory = new List<RoomInventory>();
+        }
+
+        public static void SerializeRoomInventory()
+        {
+            File.WriteAllText(@"..\..\..\Resources\roomInventory.json", JsonConvert.SerializeObject(roomInventory));
         }
     }
 }

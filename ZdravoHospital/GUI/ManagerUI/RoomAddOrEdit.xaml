@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
+        xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         mc:Ignorable="d"
         Title="" 
         SizeToContent="WidthAndHeight"
@@ -34,7 +36,7 @@
             <TextBox.Text>
                 <Binding Path="Id" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:RoomIdValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:RoomIdValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -58,13 +60,13 @@
             <TextBox.Text>
                 <Binding Path="RoomName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
 
-        <ComboBox x:Name="TypeComboBox" Grid.Row="3" Grid.Column="1" Text="{Binding Path=RoomType, Converter={local:RoomTypeConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
+        <ComboBox x:Name="TypeComboBox" Grid.Row="3" Grid.Column="1" Text="{Binding Path=RoomType, Converter={converters:RoomTypeConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
             <ComboBoxItem>APPOINTMENT</ComboBoxItem>
             <ComboBoxItem>BEDROOM</ComboBoxItem>
             <ComboBoxItem>OPERATING</ComboBoxItem>

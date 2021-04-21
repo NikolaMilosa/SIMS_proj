@@ -6,7 +6,8 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using Model;
 
-namespace ZdravoHospital.GUI.ManagerUI
+
+namespace ZdravoHospital.GUI.ManagerUI.Converters
 {
     class RoomTypeConverter : MarkupExtension, IValueConverter
     {

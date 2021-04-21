@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
+        xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         mc:Ignorable="d"
         Title="Inventory management"
         SizeToContent="WidthAndHeight"

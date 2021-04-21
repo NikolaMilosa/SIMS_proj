@@ -3,7 +3,7 @@
     "RoomType": 2,
     "Id": 100,
     "Name": "Bedroom 2",
-    "Available": false
+    "Available": true
   },
   "101": {
     "RoomType": 1,
@@ -11,22 +11,10 @@
     "Name": "Operating room 2",
     "Available": true
   },
-  "103": {
-    "RoomType": 1,
-    "Id": 103,
-    "Name": "Operating room 1",
-    "Available": false
-  },
   "104": {
     "RoomType": 2,
     "Id": 104,
     "Name": "bedroom 1",
-    "Available": true
-  },
-  "105": {
-    "RoomType": 3,
-    "Id": 105,
-    "Name": "Big storage",
     "Available": true
   },
   "201": {
@@ -35,10 +23,16 @@
     "Name": "Appointment room 1",
     "Available": true
   },
-  "124": {
-    "RoomType": 1,
-    "Id": 124,
-    "Name": "changed name",
-    "Available": false
+  "106": {
+    "RoomType": 3,
+    "Id": 106,
+    "Name": "BIG storage",
+    "Available": true
+  },
+  "505": {
+    "RoomType": 2,
+    "Id": 505,
+    "Name": "Bedroom 3",
+    "Available": true
   }
 }

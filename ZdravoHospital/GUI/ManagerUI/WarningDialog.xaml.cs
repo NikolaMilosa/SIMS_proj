@@ -59,14 +59,12 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            bool result = true;
             object id;
             switch (someObject.GetType().Name)
             {
                 case nameof(Room):
-                    id = ((Room)someObject).Id;
-                    Model.Resources.rooms.Remove((int)id);
-                    ManagerWindow.Rooms.Remove((Room)someObject);
-                    Model.Resources.SerializeRooms();
+                    result = Logics.RoomFunctions.DeleteRoom((Room)someObject);
                     break;
                 case nameof(Inventory):
                     id = ((Inventory)someObject).Id;
@@ -88,6 +86,11 @@ namespace ZdravoHospital.GUI.ManagerUI
                 default:
                     //Code for staff deleting
                     break;
+            }
+
+            if (!result)
+            {
+                MessageBox.Show("Cannot delete the room since there aren't any available rooms to store the inventory...");
             }
             this.Close();
         }
