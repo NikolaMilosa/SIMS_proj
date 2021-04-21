@@ -96,7 +96,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void AddMedicalAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MedicalAllergensListBox.SelectedItem != null)
+            /*if(MedicalAllergensListBox.SelectedItem != null)
             {
                 var selectedAllergen = ((Medicine)(MedicalAllergensListBox.SelectedItem)).MedicineName;
                 Medicine medicalAllergen = null;
@@ -148,12 +148,12 @@ namespace ZdravoHospital.GUI.Secretary
                 }
                 
             }
-
+*/
         }
 
         private void AddIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            if (IngredientAllergensListBox.SelectedItem != null)
+           /* if (IngredientAllergensListBox.SelectedItem != null)
             {
                 var selectedAllergen = ((Ingredient)IngredientAllergensListBox.SelectedItem).IngredientName;
                 Ingredient ingredientAllergen = new Ingredient(selectedAllergen);
@@ -199,12 +199,12 @@ namespace ZdravoHospital.GUI.Secretary
                     IngredientSuccessLabel.Visibility = Visibility.Visible;
                 }
                 
-            }
+            }*/
         }
 
         private void AddCustomAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)MedicalRadioButton.IsChecked && CustomAllergenTextBox.Text != String.Empty)
+            /*if ((bool)MedicalRadioButton.IsChecked && CustomAllergenTextBox.Text != String.Empty)
             {
                 Medicine medicalAllergen = new Medicine(CustomAllergenTextBox.Text);
 
@@ -291,7 +291,7 @@ namespace ZdravoHospital.GUI.Secretary
                     CustomSuccessLabel.Content = "Already exists.";
                     CustomSuccessLabel.Visibility = Visibility.Visible;
                 }
-            }
+            }*/
         }
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
