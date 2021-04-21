@@ -47,5 +47,15 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.SerializeRoomInventory();
         }
+
+        public static void DeleteByReference(RoomInventory ri)
+        {
+            Model.Resources.roomInventory.Remove(ri);
+        }
+
+        public static void AddNewReference(RoomInventory ri)
+        {
+            Model.Resources.roomInventory.Add(ri);
+        }
     }
 }

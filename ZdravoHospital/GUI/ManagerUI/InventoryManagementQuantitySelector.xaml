@@ -119,10 +119,18 @@
                 </Label>
 
                 <TextBox x:Name="TimeTextBox" Grid.Column="1" FontSize="18" HorizontalAlignment="Left" Width="100" Height="30" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="20,0,0,0">
+                    <TextBox.Resources>
+                        <validation:PassedTimeBindingProxy x:Key="proxy" Data="{Binding}"/>
+                    </TextBox.Resources>
                     <TextBox.Text>
                         <Binding Path="InputTime" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <validation:TimeInputValidationRule ValidationStep="RawProposedValue"/>
+                                <validation:TimeInputValidationRule ValidationStep="RawProposedValue">
+                                    <validation:TimeInputValidationRule.Wrapper>
+                                        <validation:PassedTimeWrapper PassedTime="{Binding Data.ChosenDate, Source={StaticResource proxy}}"/>
+                                    </validation:TimeInputValidationRule.Wrapper>  
+                                </validation:TimeInputValidationRule>
+                                <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -181,6 +189,9 @@
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=DatePicker, Path=SelectedDate}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=TimeTextBox, Path=Text}" Value="">
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
                         </Style.Triggers>

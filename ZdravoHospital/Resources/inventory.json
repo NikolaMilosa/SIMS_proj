@@ -6,11 +6,11 @@
     "InventoryType": 0,
     "Id": "123"
   },
-  "124FFD": {
+  "123FD": {
     "Name": "stitches",
-    "Supplier": "JANKOVIC DOO",
-    "Quantity": 50,
+    "Supplier": "some supplier",
+    "Quantity": 150,
     "InventoryType": 1,
-    "Id": "124FFD"
+    "Id": "123FD"
   }
 }
