@@ -2,17 +2,17 @@
   {
     "InventoryId": "123FD",
     "RoomId": 106,
-    "Quantity": 50
+    "Quantity": 60
   },
   {
     "InventoryId": "123FD",
     "RoomId": 505,
-    "Quantity": 70
+    "Quantity": 40
   },
   {
     "InventoryId": "333FF",
     "RoomId": 106,
-    "Quantity": 8
+    "Quantity": 2
   },
   {
     "InventoryId": "123",
@@ -43,5 +43,15 @@
     "InventoryId": "333FF",
     "RoomId": 100,
     "Quantity": 3
+  },
+  {
+    "InventoryId": "123FD",
+    "RoomId": 101,
+    "Quantity": 20
+  },
+  {
+    "InventoryId": "333FF",
+    "RoomId": 505,
+    "Quantity": 6
   }
 ]

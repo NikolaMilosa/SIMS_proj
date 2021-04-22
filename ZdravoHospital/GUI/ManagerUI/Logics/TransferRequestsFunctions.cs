@@ -68,12 +68,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     reciever.Quantity += tr.Quantity;
                 }
             }
-            /* Delete this transferRequest */
-            Model.Resources.transferRequests.Remove(tr);
 
             /* Serialize */
             Model.Resources.SerializeRoomInventory();
-            Model.Resources.SerializeTransferRequests();
+            if (Model.Resources.transferRequests.Remove(tr))
+                Model.Resources.SerializeTransferRequests();
 
             if(ManagerWindow.dialog != null)
             {
