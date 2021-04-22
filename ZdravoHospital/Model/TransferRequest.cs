@@ -1,4 +1,7 @@
 using System;
+using System.Threading;
+
+using ZdravoHospital.GUI.ManagerUI.Logics;
 
 namespace Model
 {
@@ -47,6 +50,15 @@ namespace Model
             this.InventoryId = invId;
             this.Quantity = quantity;
             this.TimeOfExecution = whenToDo;
+        }
+
+        public void DoWork()
+        {
+            TimeSpan ts = TimeOfExecution.Subtract(DateTime.Now);
+
+            Thread.Sleep(ts);
+
+            TransferRequestsFunctions.ExecuteRequest(this);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Model
         public static List<PersonNotification> personNotifications;
         public static List<Specialization> specializations;
         public static List<RoomInventory> roomInventory;
+        public static List<TransferRequest> transferRequests;
 
 
         public static void OpenAccounts()
@@ -211,6 +212,18 @@ namespace Model
         {
             File.WriteAllText(@"..\..\..\Resources\roomInventory.json", JsonConvert.SerializeObject(roomInventory, Formatting.Indented));
 
+        }
+
+        public static void OpenTransferRequests()
+        {
+            transferRequests = JsonConvert.DeserializeObject<List<TransferRequest>>(File.ReadAllText(@"..\..\..\Resources\transferRequests.json"));
+            if (transferRequests == null)
+                transferRequests = new List<TransferRequest>();
+        }
+
+        public static void SerializeTransferRequests()
+        {
+            File.WriteAllText(@"..\..\..\Resources\transferRequests.json", JsonConvert.SerializeObject(transferRequests, Formatting.Indented));
         }
     }
 }

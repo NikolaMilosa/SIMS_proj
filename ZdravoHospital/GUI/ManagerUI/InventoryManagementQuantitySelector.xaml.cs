@@ -239,10 +239,11 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void MoveStaticInventory()
         {
             TimeSpan enteredTime = TimeSpan.ParseExact(InputTime, "c", null);
-
             ChosenDate = ChosenDate.Add(enteredTime);
 
-            MessageBox.Show(ChosenDate.ToString());
+            TransferRequest newRequest = new TransferRequest(firstRoom.Id, secondRoom.Id, processedItem.Id, EnteredQuantity, ChosenDate);
+
+            Logics.TransferRequestsFunctions.CreateAndStartTransfer(newRequest);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.ManagerUI
     public partial class ManagerWindow : Window
     {
         Employee activeManager;
-        Window dialog;
+        public static Window dialog;
         DataGrid dataGrid;
         Grid grid;
 
@@ -47,6 +47,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             Model.Resources.OpenInventory();
             Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
+
+            Model.Resources.OpenTransferRequests();
         }
 
         private void MainMenuGotFocus(object sender, RoutedEventArgs e)
