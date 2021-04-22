@@ -44,7 +44,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public static void ExecuteRequest(TransferRequest tr)
         {
-            if (Model.Resources.rooms.ContainsKey(tr.SenderRoom) && Model.Resources.rooms.ContainsKey(tr.RecipientRoom))
+            if (Model.Resources.rooms.ContainsKey(tr.SenderRoom) && Model.Resources.rooms.ContainsKey(tr.RecipientRoom) && Model.Resources.inventory.ContainsKey(tr.InventoryId))
             {
                 /* Handle database transfer */
                 RoomInventory sender = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(tr.SenderRoom, tr.InventoryId);
