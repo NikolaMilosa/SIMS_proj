@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace ZdravoHospital.GUI.ManagerUI
+using Model;
+
+namespace ZdravoHospital.GUI.ManagerUI.DTOs
 {
     public class InventoryDTO : INotifyPropertyChanged
     {
@@ -11,7 +13,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private string _name;
         private int _quantity;
         private string _id;
-
+        private InventoryType _inventoryType;
         public string Id
         {
             get { return _id; }
@@ -41,6 +43,16 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
         }
 
+        public InventoryType InventoryType
+        {
+            get { return _inventoryType; }
+            set
+            {
+                _inventoryType = value;
+                OnPropertyChanged("InventoryType");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string name)
@@ -51,11 +63,12 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
         }
 
-        public InventoryDTO(string n, int q, string i)
+        public InventoryDTO(string n, int q, string i, InventoryType it)
         {
             this.Name = n;
             this.Quantity = q;
             this.Id = i;
+            this.InventoryType = it;
         }
     }
 }

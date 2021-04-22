@@ -1,0 +1,12 @@
+[
+  {
+    "InventoryId": "123",
+    "RoomId": 106,
+    "Quantity": 120
+  },
+  {
+    "InventoryId": "123FD",
+    "RoomId": 106,
+    "Quantity": 150
+  }
+]

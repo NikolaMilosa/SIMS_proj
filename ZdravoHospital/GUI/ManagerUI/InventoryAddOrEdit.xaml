@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
+        xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen">
@@ -35,7 +37,7 @@
             <TextBox.Text>
                 <Binding Path="Id" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:InventoryIdValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:InventoryIdValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -58,7 +60,7 @@
             <TextBox.Text>
                 <Binding Path="InventoryName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -68,7 +70,7 @@
             <TextBox.Text>
                 <Binding Path="Supplier" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -78,8 +80,8 @@
             <TextBox.Text>
                 <Binding Path="Quantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
-                        <local:QuantityValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:QuantityValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -98,7 +100,7 @@
             </Validation.ErrorTemplate>
         </TextBox>
 
-        <ComboBox x:Name="TypeComboBox" Grid.Row="5" Grid.Column="1" FontSize="18" Width="230" Text="{Binding Path=InventoryType, Converter={local:InventoryTypeConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ComboBox x:Name="TypeComboBox" Grid.Row="5" Grid.Column="1" FontSize="18" Width="230" Text="{Binding Path=InventoryType, Converter={converters:InventoryTypeConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ComboBoxItem>STATIC</ComboBoxItem>
             <ComboBoxItem>DYNAMIC</ComboBoxItem>
         </ComboBox>

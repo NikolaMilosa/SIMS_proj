@@ -41,6 +41,8 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             this.DataContext = this;
 
+            Model.Resources.OpenRoomInventory();
+
             Model.Resources.OpenRooms();
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             Model.Resources.OpenInventory();

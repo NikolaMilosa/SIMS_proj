@@ -59,35 +59,24 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            bool result = false;
             object id;
             switch (someObject.GetType().Name)
             {
                 case nameof(Room):
-                    id = ((Room)someObject).Id;
-                    Model.Resources.rooms.Remove((int)id);
-                    ManagerWindow.Rooms.Remove((Room)someObject);
-                    Model.Resources.SerializeRooms();
+                    result = Logics.RoomFunctions.DeleteRoom((Room)someObject);
                     break;
                 case nameof(Inventory):
-                    id = ((Inventory)someObject).Id;
-                    Model.Resources.inventory.Remove((string)id);
-                    ManagerWindow.Inventory.Remove((Inventory)someObject);
-                    Model.Resources.SerializeInventory();
-
-                    /* TODO: */
-                    /*
-                    foreach(Room room in Model.Resources.rooms.Values)
-                    {
-                        if (room.Inventory.ContainsKey(id.ToString()))
-                            room.Inventory.Remove(id.ToString());
-                    }
-                    */
-                    Model.Resources.SerializeRooms();
-
+                    result = Logics.InventoryFunctions.DeleteInventory((Inventory)someObject);
                     break;
                 default:
                     //Code for staff deleting
                     break;
+            }
+
+            if (!result)
+            {
+                MessageBox.Show("Cannot delete the room since there aren't any available rooms to store the inventory...");
             }
             this.Close();
         }

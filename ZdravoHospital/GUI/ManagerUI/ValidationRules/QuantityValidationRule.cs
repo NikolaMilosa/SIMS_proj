@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ZdravoHospital.GUI.ManagerUI
+namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
     public class QuantityValidationRule : ValidationRule
     {
@@ -18,7 +18,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 int quantity = Int32.Parse(value.ToString());
 
-                if(quantity < 1)
+                if (quantity < 1)
                     return new ValidationResult(false, "- Atleast one...");
 
                 if (Wrapper != null)
@@ -32,19 +32,19 @@ namespace ZdravoHospital.GUI.ManagerUI
             catch
             {
                 return new ValidationResult(false, "- Only digits...");
-            }   
+            }
         }
     }
 
     public class MaxInventoryWrapper : DependencyObject
     {
         public static readonly DependencyProperty MaxInventoryProperty = DependencyProperty.Register("Max", typeof(int), typeof(MaxInventoryWrapper), new FrameworkPropertyMetadata(0));
-    
+
         public int Max
         {
             get { return (int)GetValue(MaxInventoryProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(MaxInventoryProperty, value);
             }
         }

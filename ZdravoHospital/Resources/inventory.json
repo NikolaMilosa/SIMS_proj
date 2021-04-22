@@ -1,1 +1,16 @@
-{"333":{"Name":"beds","Supplier":"ikea","Quantity":20,"InventoryType":0,"Id":"333"},"222":{"Name":"stitches","Supplier":"some supp","Quantity":250,"InventoryType":1,"Id":"222"},"111":{"Name":"sissors","Supplier":"some supp","Quantity":50,"InventoryType":1,"Id":"111"}}
+{
+  "123": {
+    "Name": "niddle",
+    "Supplier": "JANKOVIC DOO",
+    "Quantity": 120,
+    "InventoryType": 0,
+    "Id": "123"
+  },
+  "123FD": {
+    "Name": "stitches",
+    "Supplier": "some supplier",
+    "Quantity": 150,
+    "InventoryType": 1,
+    "Id": "123FD"
+  }
+}

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using Model;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI
 {
@@ -26,6 +27,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         private ObservableCollection<Room> _secondRooms;
         private Room _firstRoom;
         private Room _secondRoom;
+        private bool _firstRoomAvailable;
+        private bool _secondRoomAvailable;
 
         private ObservableCollection<InventoryDTO> _firstRoomInventory;
         private ObservableCollection<InventoryDTO> _secondRoomInventory;
@@ -77,17 +80,24 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 _firstRoom = value;
 
+                FirstRoomAvailable = _firstRoom.Available;
+
                 SecondRooms = new ObservableCollection<Room>(FirstRooms);
                 SecondRooms.Remove(_firstRoom);
 
                 FirstRoomInventory = new ObservableCollection<InventoryDTO>();
                 /* TODO : */
-                /*
-                foreach (KeyValuePair<string, int> kvp in _firstRoom.Inventory)
-                    FirstRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[kvp.Key].Name, kvp.Value, kvp.Key));
-                */
-                OnPropertyChanged("FirstRoomInventory");
+                foreach(RoomInventory ri in Model.Resources.roomInventory)
+                {
+                    if (ri.RoomId == FirstRoom.Id)
+                    {
+                        FirstRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[ri.InventoryId].Name, ri.Quantity,
+                            ri.InventoryId, Model.Resources.inventory[ri.InventoryId].InventoryType));
 
+                    }
+                }
+                
+                OnPropertyChanged("FirstRoomInventory");
                 OnPropertyChanged("SecondRooms");
             }
         }
@@ -99,14 +109,45 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 _secondRoom = value;
 
+                if(_secondRoom != null)
+                    SecondRoomAvailable = _secondRoom.Available;
+
                 SecondRoomInventory = new ObservableCollection<InventoryDTO>();
                 /* TODO : */
-                /*
                 if(_secondRoom != null)
-                    foreach (KeyValuePair<string, int> kvp in _secondRoom.Inventory)
-                        SecondRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[kvp.Key].Name, kvp.Value, kvp.Key));
-                */
+                {
+                    foreach (RoomInventory ri in Model.Resources.roomInventory)
+                    {
+                        if (ri.RoomId == SecondRoom.Id)
+                        {
+                            SecondRoomInventory.Add(new InventoryDTO(Model.Resources.inventory[ri.InventoryId].Name, ri.Quantity,
+                                ri.InventoryId, Model.Resources.inventory[ri.InventoryId].InventoryType));
+
+                        }
+                    }
+                }
+                
                 OnPropertyChanged("SecondRoomInventory");
+            }
+        }
+
+        public bool FirstRoomAvailable
+        {
+            get { return _firstRoomAvailable; }
+            set
+            {
+                _firstRoomAvailable = value;
+                OnPropertyChanged("FirstRoomAvailable");
+            }
+        }
+
+        public bool SecondRoomAvailable
+        {
+            get { return _secondRoomAvailable; }
+            set
+            {
+                _secondRoomAvailable = value;
+                OnPropertyChanged("SecondRoomAvailable");
             }
         }
 
@@ -177,7 +218,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 if (FirstRoom != null && SecondRoom != null)
                 {
-                    Window dialog = new InventoryManagementQuantitySelector(FirstRoom, SecondRoom, FirstRoomInventory, SecondRoomInventory, ((InventoryDTO)FirstRoomDataGrid.SelectedItem).Id);
+                    Window dialog = new InventoryManagementQuantitySelector(FirstRoom, SecondRoom, FirstRoomInventory, SecondRoomInventory, (InventoryDTO)FirstRoomDataGrid.SelectedItem);
                     dialog.ShowDialog();
                 }
                 e.Handled = true;
