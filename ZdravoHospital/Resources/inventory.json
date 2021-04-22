@@ -3,7 +3,7 @@
     "Name": "niddle",
     "Supplier": "JANKOVIC DOO",
     "Quantity": 120,
-    "InventoryType": 0,
+    "InventoryType": 1,
     "Id": "123"
   },
   "123FD": {
@@ -12,5 +12,12 @@
     "Quantity": 150,
     "InventoryType": 1,
     "Id": "123FD"
+  },
+  "333FF": {
+    "Name": "bed",
+    "Supplier": "some supplier",
+    "Quantity": 20,
+    "InventoryType": 0,
+    "Id": "333FF"
   }
 }
