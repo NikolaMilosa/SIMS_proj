@@ -22,6 +22,7 @@ namespace ZdravoHospital.GUI.ManagerUI
     /// </summary>
     public partial class InventoryManagementQuantitySelector : Window, INotifyPropertyChanged
     {
+        #region fields
         //Fields:
         private int _maxInventory;
         private string _definitionText;
@@ -107,6 +108,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private ObservableCollection<InventoryDTO> secondRoomDTOs;
         private string id;
         private InventoryDTO processedItem;
+        #endregion end
 
         public InventoryManagementQuantitySelector(Room fr, Room sr, ObservableCollection<InventoryDTO> fri, ObservableCollection<InventoryDTO> sri, InventoryDTO invItem)
         {
@@ -142,7 +144,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             
             if (IsStatic)
             {
-                /* TODO : */
+                MoveStaticInventory();
             }
             else
             {
@@ -232,6 +234,15 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
 
             Model.Resources.SerializeRoomInventory();
+        }
+    
+        private void MoveStaticInventory()
+        {
+            TimeSpan enteredTime = TimeSpan.ParseExact(InputTime, "c", null);
+
+            ChosenDate = ChosenDate.Add(enteredTime);
+
+            MessageBox.Show(ChosenDate.ToString());
         }
     }
 }
