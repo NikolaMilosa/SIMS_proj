@@ -5,6 +5,7 @@
 <Workspace>
 	<Local Expanded="Yes">
 		<Model Expanded="Yes" ID="{AE36B16C-9B7B-4887-B7CB-C9DE3C5B4EDD}" Loaded="No" Name="Diagrams" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Diagrams.prj"/>
+		<Model Expanded="Yes" ID="{AE36B16C-9B7B-4887-B7CB-C9DE3C5B4EDD}" Loaded="No" Name="Diagrams" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Diagrams.prj"/>
 		<Model Expanded="Yes" ID="{AE36B16C-9B7B-4887-B7CB-C9DE3C5B4EDD}" Name="Diagrams" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Diagrams.prj"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
