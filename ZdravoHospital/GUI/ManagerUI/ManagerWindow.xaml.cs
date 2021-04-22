@@ -49,6 +49,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
 
             Model.Resources.OpenTransferRequests();
+            Logics.TransferRequestsFunctions.RunOrExecute();
         }
 
         private void MainMenuGotFocus(object sender, RoutedEventArgs e)

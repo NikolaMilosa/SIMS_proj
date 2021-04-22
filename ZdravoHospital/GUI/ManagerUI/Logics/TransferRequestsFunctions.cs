@@ -9,6 +9,31 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public static class TransferRequestsFunctions
     {
+        public static void RunOrExecute()
+        {
+            if (Model.Resources.transferRequests.Count != 0)
+            {
+                List<TransferRequest> loaded = new List<TransferRequest>(Model.Resources.transferRequests);
+                foreach(TransferRequest tr in loaded)
+                {
+                    if (tr.TimeOfExecution < DateTime.Now)
+                    {
+                        ExecuteRequest(tr);
+                    }
+                    else
+                    {
+                        StartTransfer(tr);
+                    }
+                }
+            }
+        }
+
+        public static void StartTransfer(TransferRequest tr)
+        {
+            Task t = new Task(() => tr.DoWork());
+            t.Start();
+        }
+
         public static void CreateAndStartTransfer(TransferRequest tr)
         {
             Model.Resources.transferRequests.Add(tr);
@@ -19,28 +44,30 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public static void ExecuteRequest(TransferRequest tr)
         {
-            /* Handle database transfer */
-            RoomInventory sender = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(tr.SenderRoom, tr.InventoryId);
-            RoomInventory reciever = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(tr.RecipientRoom, tr.InventoryId);
+            if (Model.Resources.rooms.ContainsKey(tr.SenderRoom) && Model.Resources.rooms.ContainsKey(tr.RecipientRoom))
+            {
+                /* Handle database transfer */
+                RoomInventory sender = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(tr.SenderRoom, tr.InventoryId);
+                RoomInventory reciever = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(tr.RecipientRoom, tr.InventoryId);
 
-            if (sender.Quantity - tr.Quantity == 0)
-            {
-                RoomInventoryFunctions.DeleteByReference(sender);
-            }
-            else
-            {
-                sender.Quantity -= tr.Quantity;
-            }
+                if (sender.Quantity - tr.Quantity == 0)
+                {
+                    RoomInventoryFunctions.DeleteByReference(sender);
+                }
+                else
+                {
+                    sender.Quantity -= tr.Quantity;
+                }
 
-            if (reciever == null)
-            {
-                RoomInventoryFunctions.AddNewReference(new RoomInventory(tr.InventoryId, tr.RecipientRoom, tr.Quantity));
+                if (reciever == null)
+                {
+                    RoomInventoryFunctions.AddNewReference(new RoomInventory(tr.InventoryId, tr.RecipientRoom, tr.Quantity));
+                }
+                else
+                {
+                    reciever.Quantity += tr.Quantity;
+                }
             }
-            else
-            {
-                reciever.Quantity += tr.Quantity;
-            }
-
             /* Delete this transferRequest */
             Model.Resources.transferRequests.Remove(tr);
 
@@ -48,16 +75,19 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SerializeRoomInventory();
             Model.Resources.SerializeTransferRequests();
 
-            if (ManagerWindow.dialog.GetType().Name.Equals(nameof(InventoryManagementWindow)))
+            if(ManagerWindow.dialog != null)
             {
-                InventoryManagementWindow activeWindow = (InventoryManagementWindow)ManagerWindow.dialog;
-                /* Update the visuals */
-                Room helper = activeWindow.FirstRoom;
-                activeWindow.FirstRoom = activeWindow.SecondRoom;
-                activeWindow.SecondRoom = helper;
+                if (ManagerWindow.dialog.GetType().Name.Equals(nameof(InventoryManagementWindow)))
+                {
+                    InventoryManagementWindow activeWindow = (InventoryManagementWindow)ManagerWindow.dialog;
+                    /* Update the visuals */
+                    Room helper = activeWindow.FirstRoom;
+                    activeWindow.FirstRoom = activeWindow.SecondRoom;
+                    activeWindow.SecondRoom = helper;
 
-                activeWindow.SecondRoom = activeWindow.FirstRoom;
-                activeWindow.FirstRoom = helper;
+                    activeWindow.SecondRoom = activeWindow.FirstRoom;
+                    activeWindow.FirstRoom = helper;
+                }
             }
         }
     }
