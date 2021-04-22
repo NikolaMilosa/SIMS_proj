@@ -35,13 +35,13 @@ namespace ZdravoHospital.GUI.PatientUI
         private void fillList()
         {
             NotificationList = new ObservableCollection<NotificationView>();
-            Model.Resources.OpenNotifications();
-            foreach(Notification notification in Model.Resources.notifications)
+            Model.Resources.OpenPersonNotifications();
+            foreach(PersonNotification personNotification in Model.Resources.personNotifications)
             {
-                //if (notification.UsernameRecievers.ContainsKey(PatientUsername))
-                //{
-                  //  NotificationList.Add(new NotificationView(notification, PatientUsername));
-                //}
+                if (personNotification.Username.Equals(PatientUsername))
+                {
+                    NotificationList.Add(new NotificationView(personNotification, PatientUsername));
+                }
             }
         }
 

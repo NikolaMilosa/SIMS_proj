@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -27,8 +28,15 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             PatientUsername = username;
             NotificationView = notificationView;
-            //NotificationView.Notification.UsernameRecievers[username] = true;
-            Model.Resources.SaveNotifications();
+           foreach(PersonNotification personNotification in Model.Resources.personNotifications)
+            {
+                if (personNotification.NotificationId.Equals(NotificationView.Notification.NotificationId) && personNotification.Username.Equals(username))
+                {
+                    personNotification.IsRead = true;
+                    break;
+                }
+            }
+            Model.Resources.SavePersonNotifications();
             DataContext = this;
         }
 
