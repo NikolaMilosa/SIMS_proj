@@ -200,7 +200,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
             else if (e.Key == Key.F)
             {
-                if (Model.Resources.inventory.Count != 0)
+                if (Model.Resources.inventory.Count != 0 && InventoryTable.Visibility == Visibility.Visible)
                 {
                     dialog = new FilterDialog();
                     dialog.ShowDialog();
