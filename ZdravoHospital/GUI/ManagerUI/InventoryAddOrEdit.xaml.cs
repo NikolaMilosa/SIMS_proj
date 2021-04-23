@@ -106,6 +106,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             InventoryType = i.InventoryType;
 
             IdTextBox.IsEnabled = false;
+            QuantityTextBox.IsEnabled = false;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -155,66 +156,6 @@ namespace ZdravoHospital.GUI.ManagerUI
             Model.Resources.inventory[Id].Name = InventoryName;
             Model.Resources.inventory[Id].Supplier = Supplier;
             Model.Resources.inventory[Id].InventoryType = InventoryType;
-
-            /* Quantity handling */
-            int difference = Model.Resources.inventory[Id].Quantity - Quantity;
-            Model.Resources.inventory[Id].Quantity = Quantity;
-
-            if(difference < 0)
-            {
-                /* Should add more inventory to the stock */
-                Room suitableRoom = FindRoomByPrio();
-
-                RoomInventory editedRoomInventory = FindRoomInventoryByRoomAndInventory(suitableRoom.Id, Id);
-
-                if (editedRoomInventory == null)
-                {
-                    editedRoomInventory = new RoomInventory(Id, suitableRoom.Id, -difference);
-                    Model.Resources.roomInventory.Add(editedRoomInventory);
-                }
-                else
-                {
-                    editedRoomInventory.Quantity += (-difference);
-                }
-            }
-            else if (difference > 0)
-            {
-                /* Should take inventory out of the stock */
-                RoomType currentPriority = (RoomType)3;             //This is BREAK_ROOM
-
-                List<RoomInventory> onStock = FindAllRoomsWithInventory(Id);
-
-                while(difference != 0)
-                {
-                    foreach(RoomInventory ri in onStock)
-                    {
-                        if (Model.Resources.rooms[ri.RoomId].RoomType == currentPriority)
-                        {
-                            if (ri.Quantity - difference < 0)
-                            {
-                                difference -= ri.Quantity;
-                                Model.Resources.roomInventory.Remove(ri);
-                            } 
-                            else if (ri.Quantity - difference > 0)
-                            {
-                                ri.Quantity -= difference;
-                                difference = 0;
-                            }
-                            else
-                            {
-                                difference = 0;
-                                Model.Resources.roomInventory.Remove(ri);
-                            }
-                        }
-                    }
-
-                    if (difference == 0)
-                        break;
-
-                    currentPriority--;
-                }
-                
-            }
 
             /* Visual changing */
             ManagerWindow.Inventory.Insert(index,Model.Resources.inventory[Id]);

@@ -77,7 +77,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     return false;
                 }
 
-                /* Can be refactored when room transfering is added */
+                /* Can be refactored when room transfering is added, this transfers from a room being deleted 
+                 * other suitable room */
 
                 List<RoomInventory> transportsRoomInventory = RoomInventoryFunctions.FindAllInventoryInRoom(transportRoom.Id);
 
