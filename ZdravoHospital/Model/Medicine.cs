@@ -9,6 +9,7 @@ namespace Model
         public string Supplier { get; set; }
         public MedicineStatus Status { get; set; }
         public string Note { get; set; }
+        public List<string> ReplacementMedication { get; set; }
         
 
         public List<Ingredient> Ingredients { get; set; }

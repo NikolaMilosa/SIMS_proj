@@ -10,7 +10,6 @@ namespace Model
         public BloodType BloodType { get; set; }
         public List<string> MedicineAllergens { get; set; }
         public List<string> IngredientAllergens { get; set; }
-        public int HospitalMark { get; set; }
         public int RecentActions { get; set; }
 
         public Patient(string healthCardNum, string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID, BloodType bloodType)

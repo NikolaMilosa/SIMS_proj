@@ -13,7 +13,7 @@ namespace Model
         public int RoomId { get; set; }
         public string Details { get; set; }
         public Prescription Prescription { get; set; }
-        public int Mark { get; set; }
+        public PeriodMark PeriodMark { get; set; }
         public bool IsUrgent { get; set; }
         
 
