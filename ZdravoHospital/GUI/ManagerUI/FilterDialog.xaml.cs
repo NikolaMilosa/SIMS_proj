@@ -74,7 +74,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             get { return _type; }
             set
             {
-                _type = value;
+                string[] parts = value.ToString().Split(" ");
+                _type = parts[1];
                 OnPropertyChanged("Type");
             }
         }
@@ -100,7 +101,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             InventoryName = "";
             Supplier = "";
             Quantity = "";
-            Type = "BOTH";
+            Type = " BOTH";
             TypeComboBox.SelectedIndex = 0;
         }
 
@@ -119,6 +120,7 @@ namespace ZdravoHospital.GUI.ManagerUI
                     }
                 }
                 this.Close();
+                return;
             }
 
             ManagerWindow.Inventory.Clear();
@@ -160,8 +162,11 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 if (!Type.Equals("BOTH"))
                 {
-                    if ((Type.Equals("STATIC") && i.InventoryType == InventoryType.DYNAMIC_INVENTORY) ||
-                        (Type.Equals("DYNAMIC") && i.InventoryType == InventoryType.STATIC_INVENTORY))
+                    if (Type.Equals("STATIC") && i.InventoryType == InventoryType.DYNAMIC_INVENTORY)
+                    {
+                        continue;
+                    }
+                    else if (Type.Equals("DYNAMIC") && i.InventoryType == InventoryType.STATIC_INVENTORY)
                     {
                         continue;
                     }
