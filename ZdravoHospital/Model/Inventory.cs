@@ -21,5 +21,14 @@ namespace Model
             this.Id = i;
         }
 
+        public Inventory(Inventory i)
+        {
+            this.Name = i.Name;
+            this.Supplier = i.Supplier;
+            this.Quantity = i.Quantity;
+            this.InventoryType = i.InventoryType;
+            this.Id = i.Id;
+        }
+
     }
 }

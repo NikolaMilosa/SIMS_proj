@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Windows;
@@ -24,9 +25,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         Employee activeManager;
         public static Window dialog;
         DataGrid dataGrid;
-        Grid grid;
 
-        //Observable collections:
         public static ObservableCollection<Room> Rooms { get; set; }
         public static ObservableCollection<Person> Persons { get; set; }
         public static ObservableCollection<Inventory> Inventory { get; set; }
@@ -198,6 +197,14 @@ namespace ZdravoHospital.GUI.ManagerUI
                     dialog.ShowDialog();
                 }
                     
+            }
+            else if (e.Key == Key.F)
+            {
+                if (Model.Resources.inventory.Count != 0)
+                {
+                    dialog = new FilterDialog();
+                    dialog.ShowDialog();
+                }
             }
         }
 
