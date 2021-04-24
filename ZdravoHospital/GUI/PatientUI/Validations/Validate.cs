@@ -16,16 +16,22 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static void therapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
-            Patient patient= Resources.patients[username];
+            Resources.OpenPeriods();
+
             while (true)
             {
-                foreach (Prescription prescription in patient.Prescriptions)
+
+                foreach(Period period in Resources.periods)
                 {
-                    foreach (Therapy therapy in prescription.TherapyList)
+                    if(period.PatientUsername.Equals(username))
                     {
-                         generateTime(therapy);  
+                        if(period.Prescription!=null)
+                            foreach(Therapy therapy in period.Prescription.TherapyList)
+                            {
+                                        generateTime(therapy);
+                            }
                     }
-                 }//PREPRAVI
+                }
                 
                Thread.Sleep(TimeSpan.FromMinutes(5));
             }

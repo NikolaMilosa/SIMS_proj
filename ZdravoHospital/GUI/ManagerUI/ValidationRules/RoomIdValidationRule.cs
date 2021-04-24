@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Windows.Controls;
-
-using Model;
-
-namespace ZdravoHospital.GUI.ManagerUI
+namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
     class RoomIdValidationRule : ValidationRule
     {

@@ -26,7 +26,6 @@ namespace ZdravoHospital.GUI.Secretary
         private bool _secretaryChecked;
         private bool _doctorChecked;
         private bool _patientChecked;
-        public Dictionary<string, bool> Recipients;
 
         public string NotificationTitle 
         { 
@@ -91,6 +90,7 @@ namespace ZdravoHospital.GUI.Secretary
                 OnPropertyChanged("PatientChecked");
             }
         }
+        public List<string> Recipients { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -106,7 +106,7 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             this.DataContext = this;
-            Recipients = new Dictionary<string, bool>();
+            Recipients = new List<string>();
         }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -128,28 +128,44 @@ namespace ZdravoHospital.GUI.Secretary
                     || (entry.Value.Role.Equals(Model.RoleType.PATIENT) && PatientChecked))
                 {
                     if(!entry.Key.Equals(CustomRecipient))
-                        Recipients.Add(entry.Key, false);
+                        Recipients.Add(entry.Key);
                 }
                 if (entry.Key.Equals(CustomRecipient))
                     customRecipientExists = true;
             }
             if(CustomRecipient != null && customRecipientExists)
             {
-                Recipients.Add(CustomRecipient, false);
+                Recipients.Add(CustomRecipient);
             }
-
+        }
+        private int calculateNotificationId(List<Model.Notification> notifications)
+        {
+            if (notifications.Count == 0)
+                return 1;
+            else
+            {
+                return notifications[notifications.Count - 1].NotificationId + 1;
+            }
         }
         private void SendNotificationButton_Click(object sender, RoutedEventArgs e)
         {
             FillRecipients();
-            Model.Notification newNotification = new Model.Notification(NotificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, NotificationTitle, Recipients);
-
+           
             Model.Resources.OpenNotifications();
-            if (Model.Resources.notifications == null)
-                Model.Resources.notifications = new List<Model.Notification>();
-            
+            Model.Resources.OpenPersonNotifications();
+
+            int notificationId = this.calculateNotificationId(Model.Resources.notifications);
+            Model.Notification newNotification = new Model.Notification(NotificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, NotificationTitle, notificationId);
+
             Model.Resources.notifications.Add(newNotification);
             Model.Resources.SaveNotifications();
+
+            foreach(var recipient in Recipients)
+            {
+                Model.PersonNotification personNotification = new Model.PersonNotification(recipient, notificationId, false);
+                Model.Resources.personNotifications.Add(personNotification);
+            }
+            Model.Resources.SavePersonNotifications();
 
             NavigationService.Navigate(new SecretaryNotificationsPage());
         }

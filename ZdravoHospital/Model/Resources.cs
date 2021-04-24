@@ -13,10 +13,15 @@ namespace Model
         public static Dictionary<string, Doctor> doctors;
         public static Dictionary<int, Room> rooms;
         public static List<Period> periods;
-        public static List<Notification> notifications;
         public static Dictionary<string,Inventory> inventory;
         public static List<Medicine> medicines;
         public static List<Ingredient> ingredients;
+        public static List<Notification> notifications;
+        public static List<PersonNotification> personNotifications;
+        public static List<Specialization> specializations;
+        public static List<RoomInventory> roomInventory;
+        public static List<TransferRequest> transferRequests;
+
         public static void OpenAccounts()
         {
             accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));
@@ -31,6 +36,9 @@ namespace Model
         public static void OpenPatients()
         {
             patients = JsonConvert.DeserializeObject<Dictionary<string, Patient>>(File.ReadAllText(@"..\..\..\Resources\patients.json"));
+
+            if (patients == null)
+                patients = new Dictionary<string, Patient>();
         }
 
         public static void SavePatients()
@@ -57,7 +65,7 @@ namespace Model
 
         public static void SerializeRooms()
         {
-            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms));
+            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms, Formatting.Indented));
         }
 
         public static void OpenInventory()
@@ -69,7 +77,7 @@ namespace Model
 
         public static void SerializeInventory()
         {
-            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory));
+            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory, Formatting.Indented));
         }
 
         internal static void CloseAllManager()
@@ -110,6 +118,9 @@ namespace Model
         {
             if(File.Exists(@"..\..\..\Resources\notifications.json"))
                 notifications = JsonConvert.DeserializeObject<List<Notification>>(File.ReadAllText(@"..\..\..\Resources\notifications.json"));
+
+            if (notifications == null)
+                notifications = new List<Notification>();
         }
 
         public static void OpenPeriods() 
@@ -158,6 +169,60 @@ namespace Model
         {
             string json = JsonConvert.SerializeObject(ingredients);
             File.WriteAllText(@"..\..\..\Resources\ingredients.json", json);
+        }
+
+
+        public static void OpenSpecializations()
+        {
+            if (File.Exists(@"..\..\..\Resources\specializations.json"))
+                specializations = JsonConvert.DeserializeObject<List<Specialization>>(File.ReadAllText(@"..\..\..\Resources\specializations.json"));
+
+            if (specializations == null)
+                specializations = new List<Specialization>();
+        }
+
+        public static void SaveSpecializations()
+        {
+            string json = JsonConvert.SerializeObject(specializations);
+            File.WriteAllText(@"..\..\..\Resources\specializations.json", json);
+        }
+        public static void SavePersonNotifications()
+        {
+            string json = JsonConvert.SerializeObject(personNotifications);
+            File.WriteAllText(@"..\..\..\Resources\personNotifications.json", json);
+        }
+
+        public static void OpenPersonNotifications()
+        {
+            if (File.Exists(@"..\..\..\Resources\personNotifications.json"))
+                personNotifications = JsonConvert.DeserializeObject<List<PersonNotification>>(File.ReadAllText(@"..\..\..\Resources\personNotifications.json"));
+
+            if (personNotifications == null)
+                personNotifications = new List<PersonNotification>();
+        }
+        public static void OpenRoomInventory()
+        {
+            roomInventory = JsonConvert.DeserializeObject<List<RoomInventory>>(File.ReadAllText(@"..\..\..\Resources\roomInventory.json"));
+            if (roomInventory == null)
+                roomInventory = new List<RoomInventory>();
+        }
+
+        public static void SerializeRoomInventory()
+        {
+            File.WriteAllText(@"..\..\..\Resources\roomInventory.json", JsonConvert.SerializeObject(roomInventory, Formatting.Indented));
+
+        }
+
+        public static void OpenTransferRequests()
+        {
+            transferRequests = JsonConvert.DeserializeObject<List<TransferRequest>>(File.ReadAllText(@"..\..\..\Resources\transferRequests.json"));
+            if (transferRequests == null)
+                transferRequests = new List<TransferRequest>();
+        }
+
+        public static void SerializeTransferRequests()
+        {
+            File.WriteAllText(@"..\..\..\Resources\transferRequests.json", JsonConvert.SerializeObject(transferRequests, Formatting.Indented));
         }
     }
 }

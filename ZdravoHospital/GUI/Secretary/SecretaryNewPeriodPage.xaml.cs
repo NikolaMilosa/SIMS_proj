@@ -183,37 +183,36 @@ namespace ZdravoHospital.GUI.Secretary
                 return 4;
             }
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
+            MessageBox.Show(periodEndtime.ToString());
 
             foreach (Period existingPeriod in Model.Resources.periods)
             {
                 DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
 
-                if (period.RoomId == existingPeriod.RoomId)
-                {
-                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 1;
-
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 1;
-                }
-
                 if (period.DoctorUsername == existingPeriod.DoctorUsername)
                 {
-                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 2;
-
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 2;
+                    if(period.StartTime < existingPeriodEndTime && periodEndtime > existingPeriod.StartTime)
+                    {
+                        return 1;
+                    }
                 }
 
                 if (period.PatientUsername == existingPeriod.PatientUsername)
                 {
-                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 3;
-
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 3;
+                    if (period.StartTime < existingPeriodEndTime && periodEndtime > existingPeriod.StartTime)
+                    {
+                        return 2;
+                    }
                 }
+
+                if (period.RoomId == existingPeriod.RoomId)
+                {
+                    if (period.StartTime < existingPeriodEndTime && periodEndtime > existingPeriod.StartTime)
+                    {
+                        return 3;
+                    }
+                }
+
             }
 
             return 0;
@@ -228,7 +227,7 @@ namespace ZdravoHospital.GUI.Secretary
             }
             string[] splits = Time.Split(":");
             DateTime date = new DateTime(Date.Year, Date.Month, Date.Day, Int32.Parse(splits[0]), Int32.Parse(splits[1]), 0);
-            Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id, -1);
+            Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id);
             int available = IsPeriodAvailable(period);
 
             if (available == 0)
@@ -244,15 +243,15 @@ namespace ZdravoHospital.GUI.Secretary
             }
             else if (available == 1)
             {
-                MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
+                MessageBox.Show("Selected doctor is unavailable in selected period.", "Doctor unavailable");
             }
             else if (available == 2)
             {
-                MessageBox.Show("Selected doctor is unavailable in selected period.", "Doctor unavailable");
+                MessageBox.Show("Selected patient is unavailable in selected period.", "Patient unavailable");
             }
             else if (available == 3)
             {
-                MessageBox.Show("Selected patient is unavailable in selected period.", "Patient unavailable");
+                MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
             }
             else
             {

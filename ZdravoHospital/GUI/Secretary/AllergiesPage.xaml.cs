@@ -22,8 +22,8 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class AllergiesPage : Page
     {
-        public ObservableCollection<Model.Medicine> MedicalAllergens { get; set; }
-        public ObservableCollection<Model.Ingredient> IngredientAllergens { get; set; }
+        public ObservableCollection<string> MedicalAllergens { get; set; }
+        public ObservableCollection<string> IngredientAllergens { get; set; }
         public Patient SelectedPatient { get; set; }
         public string CustomAllergen { get; set; }
 
@@ -39,8 +39,10 @@ namespace ZdravoHospital.GUI.Secretary
             //MedicalAllergens = new ObservableCollection<string>(logFileMedical);
             //var logFileIngredient = File.ReadAllLines(@"..\..\..\Resources\ingredients.txt");
             //IngredientAllergens = new ObservableCollection<string>(logFileIngredient);
-            MedicalAllergens = new ObservableCollection<Model.Medicine>(Model.Resources.medicines);
-            IngredientAllergens = new ObservableCollection<Model.Ingredient>(Model.Resources.ingredients);
+            //MedicalAllergens = new ObservableCollection<Model.Medicine>(Model.Resources.medicines);
+            //IngredientAllergens = new ObservableCollection<Model.Ingredient>(Model.Resources.ingredients);
+            medicineListToStringList(Model.Resources.medicines);
+            ingredientListToStringList(Model.Resources.ingredients);
 
             ICollectionView viewMedical = (ICollectionView)CollectionViewSource.GetDefaultView(MedicalAllergens);
             ICollectionView viewIngredient = (ICollectionView)CollectionViewSource.GetDefaultView(IngredientAllergens);
@@ -49,12 +51,29 @@ namespace ZdravoHospital.GUI.Secretary
             viewIngredient.Filter = UserFilterIngredientAllergens;
         }
 
+        private void medicineListToStringList(List<Model.Medicine> meds)
+        {
+            this.MedicalAllergens = new ObservableCollection<string>();
+            foreach(var med in meds)
+            {
+                this.MedicalAllergens.Add(med.MedicineName);
+            }
+        }
+        private void ingredientListToStringList(List<Model.Ingredient> ings)
+        {
+            this.IngredientAllergens = new ObservableCollection<string>();
+            foreach (var ing in ings)
+            {
+                this.IngredientAllergens.Add(ing.IngredientName);
+            }
+        }
+
         private bool UserFilterMedicalAllergens(object item)
         {
             if (String.IsNullOrEmpty(SearchMedicalAllergensTextBox.Text))
                 return true;
             else
-                return (((Medicine)item).MedicineName.IndexOf(SearchMedicalAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                return ((item as string).IndexOf(SearchMedicalAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private bool UserFilterIngredientAllergens(object item)
@@ -62,7 +81,7 @@ namespace ZdravoHospital.GUI.Secretary
             if (String.IsNullOrEmpty(SearchIngredientAllergensTextBox.Text))
                 return true;
             else
-                return (((Ingredient)item).IngredientName.IndexOf(SearchIngredientAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                return ((item as string).IndexOf(SearchIngredientAllergensTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private void SearchMedicalAllergensTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -75,20 +94,20 @@ namespace ZdravoHospital.GUI.Secretary
             CollectionViewSource.GetDefaultView(IngredientAllergensListBox.ItemsSource).Refresh();
         }
 
-        private bool isMedicineAllergenUnique(List<Medicine> allergens, Medicine newAllergen)
+        private bool isMedicineAllergenUnique(List<string> allergens, Medicine newAllergen)
         {
             foreach(var allergen in allergens)
             {
-                if (allergen.MedicineName.Equals(newAllergen.MedicineName))
+                if (allergen.Equals(newAllergen.MedicineName))
                     return false;
             }
             return true;
         }
-        private bool isIngredientAllergenUnique(List<Ingredient> allergens, Ingredient newAllergen)
+        private bool isIngredientAllergenUnique(List<string> allergens, Ingredient newAllergen)
         {
             foreach (var allergen in allergens)
             {
-                if (allergen.IngredientName.Equals(newAllergen.IngredientName))
+                if (allergen.Equals(newAllergen.IngredientName))
                     return false;
             }
             return true;
@@ -98,23 +117,23 @@ namespace ZdravoHospital.GUI.Secretary
         {
             if(MedicalAllergensListBox.SelectedItem != null)
             {
-                var selectedAllergen = ((Medicine)(MedicalAllergensListBox.SelectedItem)).MedicineName;
+                var selectedAllergenName = (MedicalAllergensListBox.SelectedItem) as string;
                 Medicine medicalAllergen = null;
                 foreach (var med in Model.Resources.medicines)
                 {
-                    if (med.MedicineName.Equals(selectedAllergen))
+                    if (med.MedicineName.Equals(selectedAllergenName))
                         medicalAllergen = med;
                 }
                 
 
                 if (SelectedPatient.MedicineAllergens == null)
                 {
-                    SelectedPatient.MedicineAllergens = new List<Medicine>();
+                    SelectedPatient.MedicineAllergens = new List<string>();
                 }
 
                 if (isMedicineAllergenUnique(SelectedPatient.MedicineAllergens, medicalAllergen))
                 {
-                    SelectedPatient.MedicineAllergens.Add(medicalAllergen);
+                    SelectedPatient.MedicineAllergens.Add(medicalAllergen.MedicineName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))
@@ -148,25 +167,24 @@ namespace ZdravoHospital.GUI.Secretary
                 }
                 
             }
-
         }
 
         private void AddIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
         {
             if (IngredientAllergensListBox.SelectedItem != null)
             {
-                var selectedAllergen = ((Ingredient)IngredientAllergensListBox.SelectedItem).IngredientName;
+                var selectedAllergen = (IngredientAllergensListBox.SelectedItem) as string;
                 Ingredient ingredientAllergen = new Ingredient(selectedAllergen);
 
                 if (SelectedPatient.IngredientAllergens == null)
                 {
-                    SelectedPatient.IngredientAllergens = new List<Ingredient>();
+                    SelectedPatient.IngredientAllergens = new List<string>();
                 }
 
               
                 if(isIngredientAllergenUnique(SelectedPatient.IngredientAllergens, ingredientAllergen))
                 {
-                    SelectedPatient.IngredientAllergens.Add(ingredientAllergen);
+                    SelectedPatient.IngredientAllergens.Add(ingredientAllergen.IngredientName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))
@@ -210,12 +228,12 @@ namespace ZdravoHospital.GUI.Secretary
 
                 if (SelectedPatient.MedicineAllergens == null)
                 {
-                    SelectedPatient.MedicineAllergens = new List<Medicine>();
+                    SelectedPatient.MedicineAllergens = new List<string>();
                 }
 
                 if (isMedicineAllergenUnique(SelectedPatient.MedicineAllergens, medicalAllergen))
                 {
-                    SelectedPatient.MedicineAllergens.Add(medicalAllergen);
+                    SelectedPatient.MedicineAllergens.Add(medicalAllergen.MedicineName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))
@@ -254,12 +272,12 @@ namespace ZdravoHospital.GUI.Secretary
 
                 if (SelectedPatient.IngredientAllergens == null)
                 {
-                    SelectedPatient.IngredientAllergens = new List<Ingredient>();
+                    SelectedPatient.IngredientAllergens = new List<string>();
                 }
 
                 if(isIngredientAllergenUnique(SelectedPatient.IngredientAllergens, ingredientAllergen))
                 {
-                    SelectedPatient.IngredientAllergens.Add(ingredientAllergen);
+                    SelectedPatient.IngredientAllergens.Add(ingredientAllergen.IngredientName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))

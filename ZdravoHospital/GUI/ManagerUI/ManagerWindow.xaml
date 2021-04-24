@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
+        xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         mc:Ignorable="d"
         Title="Manager panel"
         ResizeMode="NoResize"
@@ -51,43 +53,87 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="RoomsButton" Grid.Row="0" Background="#bec4c2" BorderThickness="0,1,0,0" GotFocus="MainMenuGotFocus">
+                <Button x:Name="RoomsButton" Grid.Row="0" Background="#bec4c2" BorderThickness="0,1,0,0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../Images/ManagerUI/rooms.png" Width="60" />
                         <Separator Visibility="Hidden" Width="10"/>
                         <TextBlock Text="Rooms" Width="100" FontSize="18" VerticalAlignment="Center"/>
                         <Separator Visibility="Hidden" Width="10"/>
-                        <Image x:Name="RoomsMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
+                        <Image x:Name="RoomsMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=RoomsButton, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="StaffButton" Grid.Row="1" Background="#bec4c2" BorderThickness="0,1,0,0" GotFocus="MainMenuGotFocus">
+                <Button x:Name="StaffButton" Grid.Row="1" Background="#bec4c2" BorderThickness="0,1,0,0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../Images/ManagerUI/staff.png" Width="60" />
                         <Separator Visibility="Hidden" Width="10"/>
                         <TextBlock Text="Staff" Width="100" FontSize="18" VerticalAlignment="Center"/>
                         <Separator Visibility="Hidden" Width="10"/>
-                        <Image x:Name="StaffMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
+                        <Image x:Name="StaffMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
                 
-                <Button x:Name="InventoryButton" Grid.Row="2" Background="#bec4c2" BorderThickness="0,1,0,0" GotFocus="MainMenuGotFocus">
+                <Button x:Name="InventoryButton" Grid.Row="2" Background="#bec4c2" BorderThickness="0,1,0,0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../Images/ManagerUI/inventory.png" Width="60" />
                         <Separator Visibility="Hidden" Width="10"/>
                         <TextBlock Text="Inventory" Width="100" FontSize="18" VerticalAlignment="Center"/>
                         <Separator Visibility="Hidden" Width="10"/>
-                        <Image x:Name="InventoryMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
+                        <Image x:Name="InventoryMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=InventoryButton, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="NotificationsButton" Grid.Row="3" Background="#bec4c2" BorderThickness="0,1,0,1" GotFocus="MainMenuGotFocus">
+                <Button x:Name="NotificationsButton" Grid.Row="3" Background="#bec4c2" BorderThickness="0,1,0,1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../Images/ManagerUI/notifications.png" Width="60" Visibility="Visible"/>
                         <Separator Visibility="Hidden" Width="10"/>
                         <TextBlock Text="Notifications" Width="100" FontSize="18" VerticalAlignment="Center"/>
                         <Separator Visibility="Hidden" Width="10"/>
-                        <Image x:Name="NotificationsMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25" Visibility="Hidden"/>
+                        <Image x:Name="NotificationsMenuArrow" Source="../../Images/ManagerUI/arrow.png" Width="25">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=NotificationsButton, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                     </StackPanel>
                 </Button>
             </Grid>
@@ -101,7 +147,7 @@
             </Grid.RowDefinitions>
             
             <!-- Submenu for rooms -->
-            <Grid x:Name="SubMenuRooms" Grid.Row="1" Height="320" VerticalAlignment="Top" Visibility="Hidden" PreviewKeyDown="SubMenuButtonHandler">
+            <Grid x:Name="SubMenuRooms" Grid.Row="1" Height="320" VerticalAlignment="Top" PreviewKeyDown="SubMenuButtonHandler">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -113,9 +159,29 @@
                 <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Add room" Click="AddRoom_Click"/>
                 <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,1" Content="Manage inventory" Click="ManageInventoryButton_Click"/>
 
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuInventory, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=NotificationsButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=RoomsButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
             </Grid>
+            
             <!-- Submenu for inventory-->
-            <Grid x:Name="SubMenuInventory" Grid.Row="1" Height="480" VerticalAlignment="Top" Visibility="Hidden" PreviewKeyDown="SubMenuButtonHandler">
+            <Grid x:Name="SubMenuInventory" Grid.Row="1" Height="480" VerticalAlignment="Top" PreviewKeyDown="SubMenuButtonHandler">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -127,27 +193,46 @@
 
                 <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Click="ShowInventoryButton_Click"/>
                 <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1" Click="AddInventoryButton_Click"/>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=NotificationsButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=InventoryButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
             </Grid>
         </Grid>
         
         <!-- DataGrids -->
-        <DataGrid x:Name="InitialTable" Visibility="Visible"  Grid.Column="2" IsReadOnly="True" Margin="20,20,20,20"/>
+        <DataGrid x:Name="InitialTable" Grid.Column="2" IsReadOnly="True" Margin="20,20,20,20" Visibility="Visible"/>
 
-        <DataGrid x:Name="RoomsTable" KeyboardNavigation.TabNavigation="Local" HeadersVisibility="Column" Visibility="Hidden" AlternatingRowBackground="LightBlue" RowBackground="LightYellow" Grid.Column="2" FontSize="20" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Rooms}" Margin="20,20,20,20" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+        <DataGrid x:Name="RoomsTable" KeyboardNavigation.TabNavigation="Local" Visibility="Hidden" HeadersVisibility="Column" AlternatingRowBackground="LightBlue" RowBackground="LightYellow" Grid.Column="2" FontSize="20" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="20,20,20,20" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Path=RoomType, Converter={local:RoomTypeConverter}}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=RoomType, Converter={converters:RoomTypeConverter}}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Available" Binding="{Binding Path=Available, Converter={local:AvailabilityConverter}}"/>
+                <DataGridTextColumn Header="Available" Binding="{Binding Path=Available, Converter={converters:AvailabilityConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid x:Name="InventoryTable" KeyboardNavigation.TabNavigation="Local" HeadersVisibility="Column" Visibility="Hidden" Grid.Column="2" Margin="20,20,20,20" AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Inventory}" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+        <DataGrid x:Name="InventoryTable" KeyboardNavigation.TabNavigation="Local" Visibility="Hidden" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Inventory, Mode=TwoWay}" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Path=InventoryType, Converter={local:InventoryTypeConverter}}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=InventoryType, Converter={converters:InventoryTypeConverter}}"/>
                 <DataGridTextColumn Header="Supplier" Binding="{Binding Supplier}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

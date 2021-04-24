@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Windows;
@@ -22,11 +23,9 @@ namespace ZdravoHospital.GUI.ManagerUI
     public partial class ManagerWindow : Window
     {
         Employee activeManager;
-        Window dialog;
+        public static Window dialog;
         DataGrid dataGrid;
-        Grid grid;
 
-        //Observable collections:
         public static ObservableCollection<Room> Rooms { get; set; }
         public static ObservableCollection<Person> Persons { get; set; }
         public static ObservableCollection<Inventory> Inventory { get; set; }
@@ -41,63 +40,33 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             this.DataContext = this;
 
+            Model.Resources.OpenRoomInventory();
+
             Model.Resources.OpenRooms();
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             Model.Resources.OpenInventory();
             Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
+
+            Model.Resources.OpenTransferRequests();
+            Logics.TransferRequestsFunctions.RunOrExecute();
         }
 
-        private void MainMenuGotFocus(object sender, RoutedEventArgs e)
+        private void TurnOffTables()
         {
-            TurnOffAllVisiblitiy();
-            if (RoomsButton.IsFocused)
-            {
-                SubMenuRooms.Visibility = Visibility.Visible;
-                RoomsMenuArrow.Visibility = Visibility.Visible;
-            }
-            else if (StaffButton.IsFocused)
-            {
-                StaffMenuArrow.Visibility = Visibility.Visible;
-            }
-            else if (InventoryButton.IsFocused)
-            {
-                SubMenuInventory.Visibility = Visibility.Visible;
-                InventoryMenuArrow.Visibility = Visibility.Visible;
-            }
-            else if (NotificationsButton.IsFocused)
-            {
-                NotificationsMenuArrow.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void TurnOffAllVisiblitiy()
-        {
-            //As you add menus add here visibility turn off
-            SubMenuRooms.Visibility = Visibility.Hidden;
-            RoomsMenuArrow.Visibility = Visibility.Hidden;
-            StaffMenuArrow.Visibility = Visibility.Hidden;
-            SubMenuInventory.Visibility = Visibility.Hidden;
-            InventoryMenuArrow.Visibility = Visibility.Hidden;
-            NotificationsMenuArrow.Visibility = Visibility.Hidden;
+            RoomsTable.Visibility = Visibility.Hidden;
+            StaffTable.Visibility = Visibility.Hidden;
+            InventoryTable.Visibility = Visibility.Hidden;
         }
 
         private void ShowRooms_Click(object sender, RoutedEventArgs e)
         {
-            ClearAllTables();
+            TurnOffTables();
             RoomsTable.Visibility = Visibility.Visible;
-        }
-
-        private void ClearAllTables()
-        {
-            //As you add tables add here their turnoffers
-            RoomsTable.Visibility = Visibility.Hidden;
-            InventoryTable.Visibility = Visibility.Hidden;
-            StaffTable.Visibility = Visibility.Hidden;
         }
 
         private void ShowInventoryButton_Click(object sender, RoutedEventArgs e)
         {
-            ClearAllTables();
+            TurnOffTables();
             InventoryTable.Visibility = Visibility.Visible;
         }
 
@@ -193,6 +162,14 @@ namespace ZdravoHospital.GUI.ManagerUI
                     dialog.ShowDialog();
                 }
                     
+            }
+            else if (e.Key == Key.F)
+            {
+                if (Model.Resources.inventory.Count != 0 && InventoryTable.Visibility == Visibility.Visible)
+                {
+                    dialog = new FilterDialog();
+                    dialog.ShowDialog();
+                }
             }
         }
 

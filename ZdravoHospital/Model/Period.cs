@@ -12,11 +12,17 @@ namespace Model
         public string DoctorUsername { get; set; }
         public int RoomId { get; set; }
         public string Details { get; set; }
-        public int PrescriptionId { get; set; }
+        public Prescription Prescription { get; set; }
+        public PeriodMark PeriodMark { get; set; }
+        public bool IsUrgent { get; set; }
+        
 
-        public Period() { }
+        public Period() 
+        {
 
-        public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, int roomId, int prescriptionId)
+        }
+
+        public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, int roomId)
         {
             StartTime = startTime;
             Duration = duration;
@@ -24,7 +30,6 @@ namespace Model
             PatientUsername = patientUsername;
             DoctorUsername = doctorUsername;
             RoomId = roomId;
-            PrescriptionId = -1;
         }
 
         public override string ToString()

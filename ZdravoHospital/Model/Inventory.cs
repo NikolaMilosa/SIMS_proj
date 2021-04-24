@@ -8,7 +8,6 @@ namespace Model
         public string Supplier { get; set; }
         public int Quantity { get; set; }
         public InventoryType InventoryType { get; set; }
-
         public string Id { get; set; }
 
         public Inventory() { }
@@ -20,6 +19,15 @@ namespace Model
             this.Quantity = qu;
             this.InventoryType = it;
             this.Id = i;
+        }
+
+        public Inventory(Inventory i)
+        {
+            this.Name = i.Name;
+            this.Supplier = i.Supplier;
+            this.Quantity = i.Quantity;
+            this.InventoryType = i.InventoryType;
+            this.Id = i.Id;
         }
 
     }

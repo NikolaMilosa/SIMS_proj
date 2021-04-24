@@ -12,10 +12,18 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
 
         public bool Seen { get; set; }
 
-        public NotificationView(Notification notification,string username)
+        public NotificationView(PersonNotification personNotification,string username)
         {
-            Notification = notification;
-            Seen = notification.UsernameRecievers[username];
+            Resources.OpenNotifications();
+            foreach(Notification notification in Resources.notifications)
+            {
+                if (notification.NotificationId == personNotification.NotificationId)
+                {
+                    Notification = notification;
+                    break;
+                }
+            }
+            Seen = personNotification.IsRead;
             Model.Resources.OpenAccounts();
             Model.RoleType role = Resources.accounts[Notification.UsernameSender].Role;
             switch(role)

@@ -137,23 +137,26 @@ namespace ZdravoHospital.GUI.Secretary
             {
                 if (listBox.Name == "MedicalAllergensListBox")
                 {
-                    Patient patient = (Patient)PatientsDataGrid.SelectedItem;
-                    patient.MedicineAllergens.Remove((Medicine)listBox.SelectedItem);
-                    if (File.Exists(@"..\..\..\Resources\patients.json"))
+                    if(listBox.SelectedItem != null)
                     {
-                        Model.Resources.OpenPatients();
-                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
+                        Patient patient = (Patient)PatientsDataGrid.SelectedItem;
+                        patient.MedicineAllergens.Remove((string)listBox.SelectedItem);
+                        if (File.Exists(@"..\..\..\Resources\patients.json"))
                         {
-                            if (item.Key.Equals(patient.Username))
+                            Model.Resources.OpenPatients();
+                            foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
                             {
-                                Model.Resources.patients[item.Key] = patient;
-                                break;
+                                if (item.Key.Equals(patient.Username))
+                                {
+                                    Model.Resources.patients[item.Key] = patient;
+                                    break;
+                                }
                             }
-                        }
-                        Model.Resources.SavePatients();
+                            Model.Resources.SavePatients();
 
-                        if (CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
-                            CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
+                            if (CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
+                                CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
+                        }
                     }
                 }
             }
@@ -165,23 +168,25 @@ namespace ZdravoHospital.GUI.Secretary
             {
                 if (listBox.Name == "IngredientAllergensListBox")
                 {
-                    Patient patient = (Patient)PatientsDataGrid.SelectedItem;
-                    patient.IngredientAllergens.Remove((Ingredient)listBox.SelectedItem);
-                    if (File.Exists(@"..\..\..\Resources\patients.json"))
+                    if(listBox.SelectedItem != null)
                     {
-                        Model.Resources.OpenPatients();
-                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
+                        Patient patient = (Patient)PatientsDataGrid.SelectedItem;
+                        patient.IngredientAllergens.Remove((string)listBox.SelectedItem);
+                        if (File.Exists(@"..\..\..\Resources\patients.json"))
                         {
-                            if (item.Key.Equals(patient.Username))
+                            Model.Resources.OpenPatients();
+                            foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
                             {
-                                Model.Resources.patients[item.Key] = patient;
-                                break;
+                                if (item.Key.Equals(patient.Username))
+                                {
+                                    Model.Resources.patients[item.Key] = patient;
+                                    break;
+                                }
                             }
+                            Model.Resources.SavePatients();
+                            if (CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
+                                CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
                         }
-                        Model.Resources.SavePatients();
-                        if(CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
-                            CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
-
                     }
                 }
             }

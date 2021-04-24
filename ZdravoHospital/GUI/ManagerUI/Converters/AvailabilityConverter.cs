@@ -4,24 +4,23 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 using System.Windows.Markup;
-using Model;
 
-namespace ZdravoHospital.GUI.ManagerUI
+namespace ZdravoHospital.GUI.ManagerUI.Converters
 {
-    class InventoryTypeConverter : MarkupExtension, IValueConverter
+    class AvailabilityConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((InventoryType)value == InventoryType.STATIC_INVENTORY)
-                return "STATIC";
-            return "DYNAMIC";
+            if ((bool)value)
+                return "YES";
+            return "NO";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.ToString().Equals("STATIC"))
-                return InventoryType.STATIC_INVENTORY;
-            return InventoryType.DYNAMIC_INVENTORY;
+            if (value.ToString().Equals("YES"))
+                return true;
+            return false;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
@@ -30,4 +29,3 @@ namespace ZdravoHospital.GUI.ManagerUI
         }
     }
 }
-

@@ -193,14 +193,14 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         public void PeriodButton_Click(Object sender, RoutedEventArgs e)
         {
-            Period period = (sender as PeriodButton).Period;
+            //Period period = (sender as PeriodButton).Period;
 
-            if (period.PeriodType == PeriodType.APPOINTMENT)
-                NavigationService.Navigate(new AppointmentPage(period));
-            else if ((DoctorsComboBox.SelectedItem as Doctor).Username == App.currentUser)
-                NavigationService.Navigate(new OperationPage(period, false));
-            else
-                NavigationService.Navigate(new OperationPage(period, true));
+            //if (period.PeriodType == PeriodType.APPOINTMENT)
+            //    NavigationService.Navigate(new AppointmentPage(period));
+            //else if ((DoctorsComboBox.SelectedItem as Doctor).Username == App.currentUser)
+            //    NavigationService.Navigate(new OperationPage(period, false));
+            //else
+            //    NavigationService.Navigate(new OperationPage(period, true));
         }
 
         private void EmptyPeriodButton_Click(object sender, RoutedEventArgs e)
