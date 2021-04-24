@@ -46,6 +46,9 @@
     <None Remove="Images\PatientUI\appointmentIconBlack.png" />
     <None Remove="Images\PatientUI\backIcon.png" />
     <None Remove="Images\PatientUI\backIconBlack.png" />
+    <None Remove="Images\PatientUI\emptyStar.png" />
+    <None Remove="Images\PatientUI\evaluateIcon.png" />
+    <None Remove="Images\PatientUI\fullStar.png" />
     <None Remove="Images\PatientUI\historyIcon.png" />
     <None Remove="Images\PatientUI\historyIconBlack.png" />
     <None Remove="Images\PatientUI\hospitalIcon.png" />
@@ -90,6 +93,9 @@
     <Resource Include="Images\PatientUI\appointmentIconBlack.png" />
     <Resource Include="Images\PatientUI\backIcon.png" />
     <Resource Include="Images\PatientUI\backIconBlack.png" />
+    <Resource Include="Images\PatientUI\emptyStar.png" />
+    <Resource Include="Images\PatientUI\evaluateIcon.png" />
+    <Resource Include="Images\PatientUI\fullStar.png" />
     <Resource Include="Images\PatientUI\historyIcon.png" />
     <Resource Include="Images\PatientUI\historyIconBlack.png" />
     <Resource Include="Images\PatientUI\hospitalIcon.png" />

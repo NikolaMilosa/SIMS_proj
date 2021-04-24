@@ -51,5 +51,11 @@ namespace ZdravoHospital.GUI.PatientUI
             }
             NavigationService.Navigate(new AnamnesisPage(appointmentView.Period.Details, appointmentView.Period.PatientUsername));
         }
+
+        private void rateButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
+            NavigationService.Navigate(new EvaluateAppointmentPage(appointmentView));
+        }
     }
 }

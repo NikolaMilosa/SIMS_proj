@@ -4,8 +4,8 @@ namespace Model
 {
    public class PeriodMark
    {
-      public string comment;
-      public int mark;
+      public string Comment { get; set; }
+      public int Mark { get; set; }
    
    }
 }

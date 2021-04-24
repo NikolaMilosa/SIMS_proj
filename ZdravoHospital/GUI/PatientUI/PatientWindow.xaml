@@ -9,7 +9,8 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        UseLayoutRounding="True">
     <Border Background="#9be5aa"
             CornerRadius="20">
         <Grid>
