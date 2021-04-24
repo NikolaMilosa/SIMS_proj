@@ -1,0 +1,14 @@
+﻿<Page x:Class="ZdravoHospital.GUI.PatientUI.EvaluateAppointmentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="708" d:DesignWidth="804"
+      Title="EvaluateAppointmentPage">
+
+    <Border Background="White" CornerRadius="20">
+        
+    </Border>
+</Page>
