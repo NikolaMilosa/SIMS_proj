@@ -22,7 +22,6 @@ namespace Model
         public static List<RoomInventory> roomInventory;
         public static List<TransferRequest> transferRequests;
 
-
         public static void OpenAccounts()
         {
             accounts = JsonConvert.DeserializeObject<Dictionary<string, Credentials>>(File.ReadAllText(@"..\..\..\Resources\accounts.json"));

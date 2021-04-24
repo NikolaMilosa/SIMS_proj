@@ -51,57 +51,22 @@ namespace ZdravoHospital.GUI.ManagerUI
             Logics.TransferRequestsFunctions.RunOrExecute();
         }
 
-        private void MainMenuGotFocus(object sender, RoutedEventArgs e)
+        private void TurnOffTables()
         {
-            TurnOffAllVisiblitiy();
-            if (RoomsButton.IsFocused)
-            {
-                SubMenuRooms.Visibility = Visibility.Visible;
-                RoomsMenuArrow.Visibility = Visibility.Visible;
-            }
-            else if (StaffButton.IsFocused)
-            {
-                StaffMenuArrow.Visibility = Visibility.Visible;
-            }
-            else if (InventoryButton.IsFocused)
-            {
-                SubMenuInventory.Visibility = Visibility.Visible;
-                InventoryMenuArrow.Visibility = Visibility.Visible;
-            }
-            else if (NotificationsButton.IsFocused)
-            {
-                NotificationsMenuArrow.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void TurnOffAllVisiblitiy()
-        {
-            //As you add menus add here visibility turn off
-            SubMenuRooms.Visibility = Visibility.Hidden;
-            RoomsMenuArrow.Visibility = Visibility.Hidden;
-            StaffMenuArrow.Visibility = Visibility.Hidden;
-            SubMenuInventory.Visibility = Visibility.Hidden;
-            InventoryMenuArrow.Visibility = Visibility.Hidden;
-            NotificationsMenuArrow.Visibility = Visibility.Hidden;
+            RoomsTable.Visibility = Visibility.Hidden;
+            StaffTable.Visibility = Visibility.Hidden;
+            InventoryTable.Visibility = Visibility.Hidden;
         }
 
         private void ShowRooms_Click(object sender, RoutedEventArgs e)
         {
-            ClearAllTables();
+            TurnOffTables();
             RoomsTable.Visibility = Visibility.Visible;
-        }
-
-        private void ClearAllTables()
-        {
-            //As you add tables add here their turnoffers
-            RoomsTable.Visibility = Visibility.Hidden;
-            InventoryTable.Visibility = Visibility.Hidden;
-            StaffTable.Visibility = Visibility.Hidden;
         }
 
         private void ShowInventoryButton_Click(object sender, RoutedEventArgs e)
         {
-            ClearAllTables();
+            TurnOffTables();
             InventoryTable.Visibility = Visibility.Visible;
         }
 
