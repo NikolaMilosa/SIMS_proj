@@ -21,9 +21,6 @@ namespace ZdravoHospital.GUI.PatientUI
     public partial class EvaluateAppointmentPage : Page
     {
         public AppointmentView AppointmentView { get; set; }
-
-
-
         public PeriodMark PeriodMark { get; set; }
         public EvaluateAppointmentPage(AppointmentView appointmentView)
         {
