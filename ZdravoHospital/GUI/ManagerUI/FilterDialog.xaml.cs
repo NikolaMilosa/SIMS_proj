@@ -107,75 +107,38 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            /* Nothing is entered */
-            if (Id.Trim().Equals(String.Empty) && InventoryName.Trim().Equals(String.Empty) && Supplier.Trim().Equals(String.Empty) &&
-                Quantity.Trim().Equals(String.Empty) && Type.Equals("BOTH"))
-            {
-                if (ManagerWindow.Inventory.Count != Model.Resources.inventory.Count)
-                {
-                    ManagerWindow.Inventory.Clear();
-                    foreach (Inventory i in Model.Resources.inventory.Values)
-                    {
-                        ManagerWindow.Inventory.Add(i);
-                    }
-                }
-                this.Close();
-                return;
-            }
+            ICollectionView itemsVisual = CollectionViewSource.GetDefaultView(ManagerWindow.Inventory);
 
-            ManagerWindow.Inventory.Clear();
-
-            foreach (Inventory i in Model.Resources.inventory.Values)
-            {
-                if (!Id.Trim().Equals(String.Empty))
-                {
-                    if (i.Id.IndexOf(Id) == -1)
-                    {
-                        continue;
-                    }
-                }
-
-                if (!InventoryName.Trim().Equals(String.Empty))
-                {
-                    if (i.Name.IndexOf(InventoryName) == -1)
-                    {
-                        continue;
-                    }
-                }
-
-                if (!Supplier.Trim().Equals(String.Empty))
-                {
-                    if (i.Supplier.IndexOf(Supplier) == -1)
-                    {
-                        continue;
-                    }
-                }
-
-                if (!Quantity.Trim().Equals(String.Empty))
-                {
-                    int enteredQuantity = int.Parse(Quantity);
-                    if (i.Quantity > enteredQuantity)
-                    {
-                        continue;
-                    }
-                }
-
-                if (!Type.Equals("BOTH"))
-                {
-                    if (Type.Equals("STATIC") && i.InventoryType == InventoryType.DYNAMIC_INVENTORY)
-                    {
-                        continue;
-                    }
-                    else if (Type.Equals("DYNAMIC") && i.InventoryType == InventoryType.STATIC_INVENTORY)
-                    {
-                        continue;
-                    }
-                }
-
-                ManagerWindow.Inventory.Add(i);
-            }
+            itemsVisual.Filter = InventoryFilter;
 
             this.Close();
+        }
+
+        private bool InventoryFilter(object item)
+        {
+            Inventory inventory = item as Inventory;
+
+            int enteredInv;
+
+            if (Quantity.Trim().Equals(String.Empty))
+                enteredInv = int.MaxValue;
+            else
+                enteredInv = int.Parse(Quantity);
+
+            if (inventory.Id.Contains(Id.Trim()) && 
+                inventory.Name.Contains(InventoryName.Trim()) && 
+                inventory.Supplier.Contains(Supplier.Trim()) &&
+                inventory.Quantity <= enteredInv && 
+                ((Type.Equals("STATIC") && inventory.InventoryType == InventoryType.STATIC_INVENTORY) || 
+                (Type.Equals("DYNAMIC") && inventory.InventoryType == InventoryType.DYNAMIC_INVENTORY) ||
+                (Type.Equals("BOTH"))))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
