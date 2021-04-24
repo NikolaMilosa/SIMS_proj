@@ -35,27 +35,32 @@ namespace ZdravoHospital.GUI.PatientUI
                 appointmentView.Period.PeriodMark = new PeriodMark();
                 appointmentView.Period.PeriodMark.Mark = -1;
             }
-            
-                PeriodMark = appointmentView.Period.PeriodMark;
-                switch (PeriodMark.Mark)
-                {
-                    case 1:
-                        buttonStar1_Click(null, null);
-                        break;
-                    case 2:
-                        buttonStar2_Click(null, null);
-                        break;
-                    case 3:
-                        buttonStar3_Click(null, null);
-                        break;
-                    case 4:
-                        buttonStar4_Click(null, null);
-                        break;
-                    case 5:
-                        buttonStar5_Click(null, null);
-                        break;
-                }
-                   
+
+            PeriodMark = appointmentView.Period.PeriodMark;
+            setMark();
+
+        }
+
+        private void setMark()
+        {
+            switch (PeriodMark.Mark)
+            {
+                case 1:
+                    buttonStar1_Click(null, null);
+                    break;
+                case 2:
+                    buttonStar2_Click(null, null);
+                    break;
+                case 3:
+                    buttonStar3_Click(null, null);
+                    break;
+                case 4:
+                    buttonStar4_Click(null, null);
+                    break;
+                case 5:
+                    buttonStar5_Click(null, null);
+                    break;
+            }
         }
 
         private void confirmButton_Click(object sender, RoutedEventArgs e)
