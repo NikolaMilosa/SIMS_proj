@@ -86,7 +86,6 @@ namespace ZdravoHospital.GUI.ManagerUI
                 SecondRooms.Remove(_firstRoom);
 
                 FirstRoomInventory = new ObservableCollection<InventoryDTO>();
-                /* TODO : */
                 foreach(RoomInventory ri in Model.Resources.roomInventory)
                 {
                     if (ri.RoomId == FirstRoom.Id)
@@ -113,7 +112,6 @@ namespace ZdravoHospital.GUI.ManagerUI
                     SecondRoomAvailable = _secondRoom.Available;
 
                 SecondRoomInventory = new ObservableCollection<InventoryDTO>();
-                /* TODO : */
                 if(_secondRoom != null)
                 {
                     foreach (RoomInventory ri in Model.Resources.roomInventory)
