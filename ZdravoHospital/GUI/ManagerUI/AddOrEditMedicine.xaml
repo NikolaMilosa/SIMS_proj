@@ -55,7 +55,7 @@
 
         <Label Grid.Row="2" FontSize="18" Grid.Column="1" Margin="10,0,20,0" Content="{Binding MedicineStatus, Mode=TwoWay, Converter={converters:MedicineStatusConverter}}"/>
 
-        <Button x:Name="AddIngredientButton" Grid.Row="3" Grid.Column="1"  Width="175" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#bec4c2">
+        <Button x:Name="AddIngredientButton" Grid.Row="3" Grid.Column="1"  Width="175" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#bec4c2" Click="AddIngredientButton_Click">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../../Images/ManagerUI/plus.png" Width="30"/>
                 <Separator Visibility="Hidden" Width="10" />

@@ -21,6 +21,7 @@ namespace ZdravoHospital.GUI.ManagerUI
     /// </summary>
     public partial class AddOrEditMedicine : Window, INotifyPropertyChanged
     {
+        #region Fields
         //Fields:
         private string _name;
         private MedicineStatus _medicineStatus;
@@ -70,6 +71,12 @@ namespace ZdravoHospital.GUI.ManagerUI
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+        #endregion
+
+        //Helper
+        Medicine passedMedicine;
+        List<Ingredient> temporaryIngredients;
+        bool isAdder;
 
         public AddOrEditMedicine()
         {
@@ -79,8 +86,15 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.Title = "Add medicine";
 
             MedicineStatus = MedicineStatus.STAGED;
-        }
 
+            this.passedMedicine = new Medicine();
+            this.Ingredients = new ObservableCollection<Ingredient>();
+            this.temporaryIngredients = new List<Ingredient>();
+
+            this.isAdder = true;
+        }
+        
+        
         public AddOrEditMedicine(Medicine m)
         {
             InitializeComponent();
@@ -88,9 +102,21 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             this.Title = "Edit medicine";
 
+            this.NameTextBox.IsEnabled = false;
+
             this.MedicineName = m.MedicineName;
             this.MedicineStatus = m.Status;
-            this.Ingredients = new ObservableCollection<Ingredient>(m.Ingredients);
+            this.Ingredients = new ObservableCollection<Ingredient>();
+            this.passedMedicine = m;
+            this.temporaryIngredients = new List<Ingredient>();
+
+            m.Ingredients.ForEach(i => 
+            {
+                this.temporaryIngredients.Add(new Ingredient(i.IngredientName));
+                this.Ingredients.Add(new Ingredient(i.IngredientName));
+            });
+
+            this.isAdder = false;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -100,6 +126,16 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            Medicine newMedicine = new Medicine() { MedicineName = MedicineName.Trim().ToLower(), Status = MedicineStatus, Note = "", Supplier = "", Ingredients = temporaryIngredients };
+            if (isAdder)
+            {
+                Logics.MedicineFunctions.AddNewMedicine(newMedicine);
+            }
+            else
+            {
+                Logics.MedicineFunctions.EditMedicine(passedMedicine, newMedicine);
+            }
+
             this.Close();
         }
 
@@ -157,6 +193,28 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 e.Handled = true;
             }
+            else if (e.Key == Key.Enter)
+            {
+                if (IngredientsTable.SelectedIndex != -1)
+                {
+                    Window ingredientDialog = new IngredientEnteringDialog(temporaryIngredients, Ingredients, (Ingredient)IngredientsTable.SelectedItem);
+                    ingredientDialog.ShowDialog();
+                }
+            }
+            else if (e.Key == Key.Delete)
+            {
+                if (IngredientsTable.SelectedIndex != -1)
+                {
+                    Window warningDialog = new WarningDialog((Ingredient)IngredientsTable.SelectedItem, temporaryIngredients, Ingredients);
+                    warningDialog.ShowDialog();
+                }
+            }
+        }
+
+        private void AddIngredientButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window ingredientDialog = new IngredientEnteringDialog(temporaryIngredients, Ingredients);
+            ingredientDialog.ShowDialog();
         }
     }
 }
