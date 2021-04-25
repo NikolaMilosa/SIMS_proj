@@ -52,20 +52,5 @@
         "IngredientName": "ingredient6"
       }
     ]
-  },
-  {
-    "MedicineName": "tester",
-    "Supplier": "",
-    "Status": 3,
-    "Note": "",
-    "ReplacementMedication": [],
-    "Ingredients": [
-      {
-        "IngredientName": "test ing 1"
-      },
-      {
-        "IngredientName": "some ing"
-      }
-    ]
   }
 ]

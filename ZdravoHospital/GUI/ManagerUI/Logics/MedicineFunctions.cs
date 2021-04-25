@@ -37,5 +37,15 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             return true;
         }
+
+        public static bool DeleteMedicine(Medicine medicine)
+        {
+            Model.Resources.medicines.Remove(medicine);
+            ManagerWindow.Medicines.Remove(medicine);
+
+            Model.Resources.SaveMedicines();
+
+            return true;
+        }
     }
 }

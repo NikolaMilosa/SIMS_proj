@@ -50,6 +50,11 @@ namespace ZdravoHospital.GUI.ManagerUI
                     WarningText.Text = "You are about to delete some ingredients from medicine, but it won't be permanent just yet!";
                     WarningElement.Text = "Ingredient name : " + ((Ingredient)someObject).IngredientName;
                     break;
+                case nameof(Medicine):
+                    WarningTitle.Content = "Warning! Deleting medicine";
+                    WarningText.Text = "You are about to delete some medicine! If you wish to continue press \"Confirm\"";
+                    WarningElement.Text = "Medicine name : " + ((Medicine)someObject).MedicineName;
+                    break;
                 default:
                     WarningTitle.Content = "Warning! Deleting staff";
                     WarningText.Text = "You are about to delete a member of staff! If you wish to continue press \"Confirm\"";
@@ -79,6 +84,9 @@ namespace ZdravoHospital.GUI.ManagerUI
                     break;
                 case nameof(Ingredient):
                     result = Logics.MedicineFunctions.DeleteIngredientFromMedicine((Ingredient)someObject, (List<Ingredient>)otherParams[0], (ObservableCollection<Ingredient>)otherParams[1]);
+                    break;
+                case nameof(Medicine):
+                    result = Logics.MedicineFunctions.DeleteMedicine((Medicine)someObject);
                     break;
                 default:
                     //Code for staff deleting
