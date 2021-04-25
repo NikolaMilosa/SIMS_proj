@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,10 +21,12 @@ namespace ZdravoHospital.GUI.ManagerUI
     public partial class WarningDialog : Window
     {
         Object someObject;
-        public WarningDialog(Object o)
+        object[] otherParams;
+        public WarningDialog(Object o, params object[] otherParams)
         {
             InitializeComponent();
             this.someObject = o;
+            this.otherParams = otherParams;
 
             switch (someObject.GetType().Name)
             {
@@ -41,6 +44,16 @@ namespace ZdravoHospital.GUI.ManagerUI
                     WarningTitle.Content = "Warning! Deleting inventory";
                     WarningText.Text = "You are about to delete some inventory! If you wish to continue press \"Confirm\"";
                     WarningElement.Text = "Inventory Id : " + ((Inventory)someObject).Id;
+                    break;
+                case nameof(Ingredient):
+                    WarningTitle.Content = "Warning! Deleting ingredient";
+                    WarningText.Text = "You are about to delete some ingredients from medicine, but it won't be permanent just yet!";
+                    WarningElement.Text = "Ingredient name : " + ((Ingredient)someObject).IngredientName;
+                    break;
+                case nameof(Medicine):
+                    WarningTitle.Content = "Warning! Deleting medicine";
+                    WarningText.Text = "You are about to delete some medicine! If you wish to continue press \"Confirm\"";
+                    WarningElement.Text = "Medicine name : " + ((Medicine)someObject).MedicineName;
                     break;
                 default:
                     WarningTitle.Content = "Warning! Deleting staff";
@@ -68,6 +81,12 @@ namespace ZdravoHospital.GUI.ManagerUI
                     break;
                 case nameof(Inventory):
                     result = Logics.InventoryFunctions.DeleteInventory((Inventory)someObject);
+                    break;
+                case nameof(Ingredient):
+                    result = Logics.MedicineFunctions.DeleteIngredientFromMedicine((Ingredient)someObject, (List<Ingredient>)otherParams[0], (ObservableCollection<Ingredient>)otherParams[1]);
+                    break;
+                case nameof(Medicine):
+                    result = Logics.MedicineFunctions.DeleteMedicine((Medicine)someObject);
                     break;
                 default:
                     //Code for staff deleting
