@@ -13,6 +13,37 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public static class Validate
     {
+        public static bool IsSurveyAvailable(string username)
+        {
+            bool availability = false;
+            Model.Resources.OpenPeriods();
+            int numOfPeriods = 0;
+            foreach (Period period in Model.Resources.periods)
+            {
+                if (period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration) < DateTime.Now)
+                {
+                    numOfPeriods++;
+                }
+            }
+            if (numOfPeriods>=3 && !AnyRecentSurveys(username))
+                availability = true;
+            return availability;
+        }
+
+        public static bool AnyRecentSurveys(string username)
+        {
+            bool recentSurvey = false;
+            Model.Resources.OpenSurveys();
+            foreach(Survey survey in Resources.surveys)
+            {
+                if (survey.PatientUsername.Equals(username) && survey.CreationDate >= DateTime.Now.AddDays(-14))
+                {
+                    recentSurvey = true;
+                    break;
+                }
+            }
+            return recentSurvey;
+        }
         public static void therapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;

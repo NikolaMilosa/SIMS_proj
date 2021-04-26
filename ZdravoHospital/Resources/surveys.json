@@ -1,0 +1,11 @@
+[
+  {
+    "PatientUsername": "ljuba",
+    "CreationDate": "2021-04-26T22:02:00.1092944+02:00",
+    "AppointmentAccessibility": 1,
+    "Care": 2,
+    "Recommendation": 2,
+    "Hygiene": 2,
+    "Comment": "sadads"
+  }
+]

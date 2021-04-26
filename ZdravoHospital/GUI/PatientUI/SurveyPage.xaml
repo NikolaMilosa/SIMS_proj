@@ -3,11 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI" xmlns:local1="clr-namespace:ZdravoHospital.GUI.PatientUI.Validations"
       mc:Ignorable="d" 
       d:DesignHeight="708" d:DesignWidth="804"
       Title="SurveyPage">
-
+    <Page.Resources>
+        <local1:RadioBtnToIntConverter x:Key="converter"></local1:RadioBtnToIntConverter>
+    </Page.Resources>
     <Border Background="White" CornerRadius="20">
         <Grid>
 
@@ -34,45 +36,45 @@
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="0,0,0,0">
                 <TextBlock Text="How easily you get the appointment in our clinic?" FontSize="28"></TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="10,20,0,0">
-                    <RadioButton Content="Very hard" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Hard" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Easy" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Very easy" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                <StackPanel x:Name="firstRadioButtonPanel" Orientation="Horizontal" Margin="10,20,0,0">
+                    <RadioButton IsChecked="{Binding Path=Survey.AppointmentAccessibility,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=1}" Content="Very hard" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.AppointmentAccessibility,Mode=OneWayToSource, Converter={StaticResource converter}, ConverterParameter=2}" Content="Hard" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.AppointmentAccessibility, Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=3}" Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.AppointmentAccessibility,Mode=OneWayToSource, Converter={StaticResource converter}, ConverterParameter=4}" Content="Easy" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.AppointmentAccessibility, Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=5}" Content="Very easy" Margin="40,0,0,0" FontSize="17"></RadioButton>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" Margin="0,10,0,0">
                 <TextBlock Text="How would you rate the  care you received from our clinic?" FontSize="28"></TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="10,20,0,0">
-                    <RadioButton Content="Very poor" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Poor" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Good" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Great" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                <StackPanel  x:Name="secondRadioButtonPanel" Orientation="Horizontal" Margin="10,20,0,0">
+                    <RadioButton IsChecked="{Binding Path=Survey.Care,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=1}" Content="Very poor" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Care,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=2}" Content="Poor" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Care,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=3}" Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Care,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=4}" Content="Good" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Care,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=5}" Content="Great" Margin="40,0,0,0" FontSize="17"></RadioButton>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical" Margin="0,10,0,0">
                 <TextBlock Text="How likely are you to recommend our facility?" FontSize="28"></TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="10,20,0,0">
-                    <RadioButton Content="Very unlikely" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Unlikely" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Likely" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Very likely" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                <StackPanel  x:Name="thirdRadioButtonPanel" Orientation="Horizontal" Margin="10,20,0,0">
+                    <RadioButton IsChecked="{Binding Path=Survey.Recommendation,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=1}" Content="Very unlikely" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Recommendation,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=2}" Content="Unlikely" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Recommendation,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=3}" Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Recommendation,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=4}" Content="Likely" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Recommendation,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=5}" Content="Very likely" Margin="40,0,0,0" FontSize="17"></RadioButton>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical" Margin="0,10,0,0">
                 <TextBlock Text="Do you satisfy with our hygiene maintenance of clinic?" FontSize="28"></TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="10,20,0,0">
-                    <RadioButton Content="Very unsatisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Unsatisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Satisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
-                    <RadioButton Content="Very satisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                <StackPanel  x:Name="fourthRadioButtonPanel" Orientation="Horizontal" Margin="10,20,0,0">
+                    <RadioButton IsChecked="{Binding Path=Survey.Hygiene,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=1}" Content="Very unsatisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Hygiene,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=2}" Content="Unsatisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Hygiene,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=3}" Content="Normal" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Hygiene,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=4}" Content="Satisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
+                    <RadioButton IsChecked="{Binding Path=Survey.Hygiene,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=5}" Content="Very satisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
                 </StackPanel>
             </StackPanel>
 
@@ -80,13 +82,14 @@
                 <TextBlock Text="Anything you would add:" Margin="0,0,0,0" FontSize="28"></TextBlock>
                 <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="1,1,2,1">
                     <TextBox Margin="8,8,8,8" Height="100" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
-                             >
+                            Text="{Binding Path=Survey.Comment}" >
                     </TextBox>
                 </Border>
             </StackPanel>
 
             <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Name="submitmButton" Content="Submit" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="submitmButton_Click" ></Button>
+                <Button Name="submitmButton" Content="Submit" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="submitmButton_Click">
+                </Button>
                 <Button Name="cancelButton" Content="Cancel" Width="150" Margin="100,0,0,0" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="cancelButton_Click"></Button>
             </StackPanel>
 
