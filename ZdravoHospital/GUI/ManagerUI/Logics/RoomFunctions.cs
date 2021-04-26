@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Text.RegularExpressions;
 using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
@@ -112,6 +112,30 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SerializeRooms();
 
             return true;
+        }
+
+        public static void AddRoom(Room room)
+        {
+            room.Name = Regex.Replace(room.Name, @"\s+", " ");
+            room.Name = room.Name.Trim();
+
+            Model.Resources.rooms[room.Id] = room;
+            ManagerWindow.Rooms.Add(Model.Resources.rooms[room.Id]);
+            Model.Resources.SerializeRooms();
+        }
+
+        public static void EditRoom(Room room)
+        {
+            int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[room.Id]);
+            ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
+
+            room.Name = Regex.Replace(room.Name, @"\s+", " ");
+            room.Name = room.Name.Trim();
+
+            Model.Resources.rooms[room.Id] = room;
+            Model.Resources.SerializeRooms();
+
+            ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[room.Id]);
         }
     }
 }

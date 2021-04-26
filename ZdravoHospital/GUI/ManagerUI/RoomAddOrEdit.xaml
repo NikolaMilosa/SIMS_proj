@@ -61,6 +61,7 @@
                 <Binding Path="RoomName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:RoomNamesValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

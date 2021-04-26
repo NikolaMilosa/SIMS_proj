@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-
+using System.Text.RegularExpressions;
 using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
@@ -11,6 +11,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
     {
         public static void AddNewMedicine(Medicine newMedicine)
         {
+            newMedicine.MedicineName = Regex.Replace(newMedicine.MedicineName, @"\s+", " ");
+            newMedicine.MedicineName = newMedicine.MedicineName.Trim().ToLower();
             Model.Resources.medicines.Add(newMedicine);
             ManagerWindow.Medicines.Add(newMedicine);
 
@@ -19,6 +21,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public static void EditMedicine(Medicine oldMedicine, Medicine newMedicine)
         {
+            newMedicine.MedicineName = Regex.Replace(newMedicine.MedicineName, @"\s+", " ");
+            newMedicine.MedicineName = newMedicine.MedicineName.Trim().ToLower();
+
             int index = Model.Resources.medicines.IndexOf(oldMedicine);
             Model.Resources.medicines.Remove(oldMedicine);
             Model.Resources.medicines.Insert(index, newMedicine);

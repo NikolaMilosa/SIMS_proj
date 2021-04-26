@@ -52,5 +52,20 @@
         "IngredientName": "ingredient6"
       }
     ]
+  },
+  {
+    "MedicineName": "two words",
+    "Supplier": "",
+    "Status": 3,
+    "Note": "",
+    "ReplacementMedication": [],
+    "Ingredients": [
+      {
+        "IngredientName": "magnesium"
+      },
+      {
+        "IngredientName": "hloro phorm"
+      }
+    ]
   }
 ]

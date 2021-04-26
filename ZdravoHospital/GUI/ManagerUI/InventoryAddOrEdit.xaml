@@ -61,6 +61,7 @@
                 <Binding Path="InventoryName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:InventoryNameSupplierValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -71,6 +72,7 @@
                 <Binding Path="Supplier" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:InventoryNameSupplierValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

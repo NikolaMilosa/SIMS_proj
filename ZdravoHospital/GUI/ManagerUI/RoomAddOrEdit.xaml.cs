@@ -106,21 +106,13 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             if (isAdder)
             {
-                Model.Resources.rooms[Id] = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
-                ManagerWindow.Rooms.Add(Model.Resources.rooms[Id]);
-                Model.Resources.SerializeRooms();
+                Room newRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
+                Logics.RoomFunctions.AddRoom(newRoom);
             }
             else
             {
-                int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[Id]);
-                ManagerWindow.Rooms.Remove(Model.Resources.rooms[Id]);
-
-                Model.Resources.rooms[Id].Name = RoomName;
-                Model.Resources.rooms[Id].RoomType = RoomType;
-                Model.Resources.rooms[Id].Available = (YesRadioButton.IsChecked == true) ? true : false;
-                Model.Resources.SerializeRooms();
-
-                ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[Id]);
+                Room replaceRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
+                Logics.RoomFunctions.EditRoom(replaceRoom);
             }
 
             this.Close();
