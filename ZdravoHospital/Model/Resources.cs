@@ -151,7 +151,7 @@ namespace Model
 
         public static void SaveMedicines()
         {
-            string json = JsonConvert.SerializeObject(medicines);
+            string json = JsonConvert.SerializeObject(medicines, Formatting.Indented);
             File.WriteAllText(@"..\..\..\Resources\medicines.json", json);
         }
 

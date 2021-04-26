@@ -19,5 +19,12 @@
     "Quantity": 20,
     "InventoryType": 0,
     "Id": "333FF"
+  },
+  "444DD": {
+    "Name": "machine",
+    "Supplier": "some supp",
+    "Quantity": 50,
+    "InventoryType": 0,
+    "Id": "444DD"
   }
 }

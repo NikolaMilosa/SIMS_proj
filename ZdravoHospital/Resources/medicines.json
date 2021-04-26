@@ -2,6 +2,9 @@
   {
     "MedicineName": "medicine1",
     "Supplier": "supplier1",
+    "Status": 3,
+    "Note": "",
+    "ReplacementMedication": [],
     "Ingredients": [
       {
         "IngredientName": "ingredient1"
@@ -17,6 +20,9 @@
   {
     "MedicineName": "medicine2",
     "Supplier": "supplier1",
+    "Status": 3,
+    "Note": "",
+    "ReplacementMedication": [],
     "Ingredients": [
       {
         "IngredientName": "ingredient2"
@@ -32,6 +38,9 @@
   {
     "MedicineName": "medicine3",
     "Supplier": "supplier2",
+    "Status": 3,
+    "Note": "",
+    "ReplacementMedication": [],
     "Ingredients": [
       {
         "IngredientName": "ingredient2"

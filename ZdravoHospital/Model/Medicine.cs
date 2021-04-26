@@ -17,6 +17,14 @@ namespace Model
         public Medicine(string name)
         {
             MedicineName = name;
+            Ingredients = new List<Ingredient>();
+            ReplacementMedication = new List<string>();
+        }
+
+        public Medicine()
+        {
+            Ingredients = new List<Ingredient>();
+            ReplacementMedication = new List<string>();
         }
 
         //public Medicine(string name, string supplier)

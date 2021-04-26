@@ -36,6 +36,7 @@
     <None Remove="Images\ManagerUI\arrow.png" />
     <None Remove="Images\ManagerUI\inventory.png" />
     <None Remove="Images\ManagerUI\notifications.png" />
+    <None Remove="Images\ManagerUI\plus.png" />
     <None Remove="Images\ManagerUI\Rooms.png" />
     <None Remove="Images\ManagerUI\staff.png" />
     <None Remove="Images\ManagerUI\testingAccount.png" />
@@ -83,6 +84,7 @@
     <Resource Include="Images\ManagerUI\arrow.png" />
     <Resource Include="Images\ManagerUI\inventory.png" />
     <Resource Include="Images\ManagerUI\notifications.png" />
+    <Resource Include="Images\ManagerUI\plus.png" />
     <Resource Include="Images\ManagerUI\Rooms.png" />
     <Resource Include="Images\ManagerUI\staff.png" />
     <Resource Include="Images\ManagerUI\testingAccount.png" />

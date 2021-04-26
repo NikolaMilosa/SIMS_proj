@@ -193,6 +193,8 @@
 
                 <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Click="ShowInventoryButton_Click"/>
                 <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1" Click="AddInventoryButton_Click"/>
+                <Button Grid.Row="4" x:Name="ShowMedicineButton" FontSize="18" Background="#bec4c2" Content="Show medicne" BorderThickness="1,0,0,1" Click="ShowMedicineButton_Click"/>
+                <Button Grid.Row="5" x:Name="AddMedicineButton" FontSize="18" Background="#bec4c2" Content="Add medicne" BorderThickness="1,0,0,1" Click="AddMedicineButton_Click"/>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Visible"/>
@@ -238,5 +240,14 @@
         </DataGrid>
 
         <DataGrid x:Name="StaffTable" Visibility="Hidden" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20"/>
+
+        <DataGrid x:Name="MedicineTable" KeyboardNavigation.TabNavigation="Local" Visibility="Hidden" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Medicines, Mode=TwoWay}" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding MedicineName}" Width="2*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=Status, Converter={converters:MedicineStatusConverter}}" Width="*"/>
+                <DataGridTextColumn Header="Number of ingredients" Binding="{Binding Ingredients.Count}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
     </Grid>
 </Window>

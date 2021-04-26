@@ -29,25 +29,33 @@ namespace ZdravoHospital.GUI.ManagerUI
         public static ObservableCollection<Room> Rooms { get; set; }
         public static ObservableCollection<Person> Persons { get; set; }
         public static ObservableCollection<Inventory> Inventory { get; set; }
+        public static ObservableCollection<Medicine> Medicines { get; set; }
 
         public ManagerWindow(string au)
         {
             InitializeComponent();
-
+            /* Account greeting setting */
             activeManager = Model.Resources.findManager(au);
             WelcomeLabel.Content += activeManager.Name;
+            
+            /* Initial focus */
             RoomsButton.Focus();
 
             this.DataContext = this;
 
+            /* Opening database */
             Model.Resources.OpenRoomInventory();
-
             Model.Resources.OpenRooms();
-            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             Model.Resources.OpenInventory();
-            Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
-
             Model.Resources.OpenTransferRequests();
+            Model.Resources.OpenMedicines();
+
+            /* Handiling visuals */
+            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
+            Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
+            Medicines = new ObservableCollection<Medicine>(Model.Resources.medicines);
+
+            /* Handling transfer requests */
             Logics.TransferRequestsFunctions.RunOrExecute();
         }
 
@@ -56,6 +64,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             RoomsTable.Visibility = Visibility.Hidden;
             StaffTable.Visibility = Visibility.Hidden;
             InventoryTable.Visibility = Visibility.Hidden;
+            MedicineTable.Visibility = Visibility.Hidden;
         }
 
         private void ShowRooms_Click(object sender, RoutedEventArgs e)
@@ -86,6 +95,8 @@ namespace ZdravoHospital.GUI.ManagerUI
                 dataGrid = RoomsTable;
             else if (InventoryTable.Visibility == Visibility.Visible)
                 dataGrid = InventoryTable;
+            else if (MedicineTable.Visibility == Visibility.Visible)
+                dataGrid = MedicineTable;
             else
                 dataGrid = InitialTable;
         }
@@ -115,7 +126,10 @@ namespace ZdravoHospital.GUI.ManagerUI
             else if (e.Key == Key.Down)
             {
                 if (dataGrid.SelectedIndex + 1 < dataGrid.Items.Count)
+                {
                     dataGrid.SelectedIndex += 1;
+                    dataGrid.ScrollIntoView(dataGrid.Items[dataGrid.SelectedIndex]);
+                }
                 else if (dataGrid.SelectedIndex + 1 == dataGrid.Items.Count)
                 {
                     dataGrid.ScrollIntoView(dataGrid.Items[0]);
@@ -127,7 +141,10 @@ namespace ZdravoHospital.GUI.ManagerUI
             else if (e.Key == Key.Up)
             {
                 if (dataGrid.SelectedIndex - 1 >= 0)
+                {
                     dataGrid.SelectedIndex -= 1;
+                    dataGrid.ScrollIntoView(dataGrid.Items[dataGrid.SelectedIndex]);
+                }
                 else if (dataGrid.SelectedIndex - 1 < 0)
                 {
                     dataGrid.ScrollIntoView(dataGrid.Items[dataGrid.Items.Count - 1]);
@@ -148,6 +165,10 @@ namespace ZdravoHospital.GUI.ManagerUI
                     else if (InventoryTable.Visibility == Visibility.Visible)
                     {
                         dialog = new InventoryAddOrEdit((Inventory)dataGrid.SelectedItem);
+                    }
+                    else if (MedicineTable.Visibility == Visibility.Visible)
+                    {
+                        dialog = new AddOrEditMedicine((Medicine)dataGrid.SelectedItem);
                     }
                     dialog.ShowDialog();
                 }
@@ -188,6 +209,18 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void ManageInventoryButton_Click(object sender, RoutedEventArgs e)
         {
             dialog = new InventoryManagementWindow();
+            dialog.ShowDialog();
+        }
+
+        private void ShowMedicineButton_Click(object sender, RoutedEventArgs e)
+        {
+            TurnOffTables();
+            MedicineTable.Visibility = Visibility.Visible;
+        }
+
+        private void AddMedicineButton_Click(object sender, RoutedEventArgs e)
+        {
+            dialog = new AddOrEditMedicine();
             dialog.ShowDialog();
         }
     }

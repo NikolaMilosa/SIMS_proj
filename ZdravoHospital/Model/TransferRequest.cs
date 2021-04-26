@@ -56,7 +56,8 @@ namespace Model
         {
             TimeSpan ts = TimeOfExecution.Subtract(DateTime.Now);
 
-            Thread.Sleep(ts);
+            if (ts > new TimeSpan(0,0,0))
+                Thread.Sleep(ts);
 
             TransferRequestsFunctions.ExecuteRequest(this);
         }
