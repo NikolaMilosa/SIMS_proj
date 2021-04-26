@@ -1,60 +1,6 @@
 [
   {
-    "MedicineName": "medicine1",
-    "Supplier": "supplier1",
-    "Status": 3,
-    "Note": "",
-    "ReplacementMedication": [],
-    "Ingredients": [
-      {
-        "IngredientName": "ingredient1"
-      },
-      {
-        "IngredientName": "ingredient2"
-      },
-      {
-        "IngredientName": "ingredient3"
-      }
-    ]
-  },
-  {
-    "MedicineName": "medicine2",
-    "Supplier": "supplier1",
-    "Status": 3,
-    "Note": "",
-    "ReplacementMedication": [],
-    "Ingredients": [
-      {
-        "IngredientName": "ingredient2"
-      },
-      {
-        "IngredientName": "ingredient4"
-      },
-      {
-        "IngredientName": "ingredient5"
-      }
-    ]
-  },
-  {
-    "MedicineName": "medicine3",
-    "Supplier": "supplier2",
-    "Status": 3,
-    "Note": "",
-    "ReplacementMedication": [],
-    "Ingredients": [
-      {
-        "IngredientName": "ingredient2"
-      },
-      {
-        "IngredientName": "ingredient5"
-      },
-      {
-        "IngredientName": "ingredient6"
-      }
-    ]
-  },
-  {
-    "MedicineName": "two words",
+    "MedicineName": "brufen",
     "Supplier": "",
     "Status": 3,
     "Note": "",
@@ -64,7 +10,25 @@
         "IngredientName": "magnesium"
       },
       {
-        "IngredientName": "hloro phorm"
+        "IngredientName": "zink"
+      }
+    ]
+  },
+  {
+    "MedicineName": "test medication",
+    "Supplier": "",
+    "Status": 3,
+    "Note": "",
+    "ReplacementMedication": [],
+    "Ingredients": [
+      {
+        "IngredientName": "tester one"
+      },
+      {
+        "IngredientName": "tester two"
+      },
+      {
+        "IngredientName": "tester three"
       }
     ]
   }

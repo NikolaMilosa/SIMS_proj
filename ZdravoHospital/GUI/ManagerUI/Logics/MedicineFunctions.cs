@@ -52,5 +52,26 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             return true;
         }
+
+        public static void AddIngredientToMedicine(Ingredient ingredient, List<Ingredient> existingIngredients, ObservableCollection<Ingredient> viewableIngredients)
+        {
+            ingredient.IngredientName = Regex.Replace(ingredient.IngredientName, @"\s+", " ");
+            existingIngredients.Add(ingredient);
+            viewableIngredients.Add(ingredient);
+        }
+
+        public static void EditIngredientInMedicine(Ingredient ingredient, string newName, List<Ingredient> existingIngredients, ObservableCollection<Ingredient> viewableIngredients)
+        {
+            int indexView = viewableIngredients.IndexOf(ingredient);
+            viewableIngredients.Remove(ingredient);
+
+            int indexExisisting = existingIngredients.FindIndex(i => i.IngredientName.Equals(ingredient.IngredientName));
+            existingIngredients.RemoveAt(indexExisisting);
+
+            ingredient.IngredientName = Regex.Replace(newName, @"\s+", " ");
+
+            viewableIngredients.Insert(indexView, ingredient);
+            existingIngredients.Insert(indexExisisting, ingredient);
+        }
     }
 }

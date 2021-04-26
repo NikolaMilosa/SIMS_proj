@@ -111,7 +111,6 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            /* TODO : */
             if (isAdder)
             {
                 AddInventory();
@@ -126,62 +125,18 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void AddInventory()
         {
-            Room someRoom = FindRoomByPrio();
-
-            if (someRoom == null)
+            if (!Logics.InventoryFunctions.AddInventory(new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id)))
             {
                 dialog = new WarningDialog(this);
                 dialog.ShowDialog();
                 return;
             }
-
-            /* Has where to input inventory */
-            Model.Resources.inventory[Id] = new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id);
-            Model.Resources.roomInventory.Add(new RoomInventory(Id,someRoom.Id,Quantity));
-
-            Model.Resources.SerializeInventory();
-            Model.Resources.SerializeRoomInventory();
-
-            ManagerWindow.Inventory.Add(Model.Resources.inventory[Id]);
         }
 
         private void EditInventory()
         {
-            int index = ManagerWindow.Inventory.IndexOf(Model.Resources.inventory[Id]);
-            /* Visual changing */
-            ManagerWindow.Inventory.Remove(Model.Resources.inventory[Id]);
-
-            /* Basic fields */
-
-            Model.Resources.inventory[Id].Name = InventoryName;
-            Model.Resources.inventory[Id].Supplier = Supplier;
-            Model.Resources.inventory[Id].InventoryType = InventoryType;
-
-            /* Visual changing */
-            ManagerWindow.Inventory.Insert(index,Model.Resources.inventory[Id]);
-
-            Model.Resources.SerializeInventory();
-            Model.Resources.SerializeRoomInventory();
-        }
-
-        private Room FindRoomByPrio()
-        {
-            return Logics.RoomFunctions.FindRoomByPrio();
-        }
-
-        private Room FindRoomByType(RoomType rt)
-        {
-            return Logics.RoomFunctions.FindRoomByType(rt);
-        }
-
-        private RoomInventory FindRoomInventoryByRoomAndInventory(int roomId, string inventoryId)
-        {
-            return Logics.RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(roomId, inventoryId);
-        }
-
-        private List<RoomInventory> FindAllRoomsWithInventory(string inventoryId)
-        {
-            return Logics.RoomInventoryFunctions.FindAllRoomsWithInventory(inventoryId);
+            Inventory newInventory = new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id);
+            Logics.InventoryFunctions.EditInventory(Model.Resources.inventory[Id],newInventory);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

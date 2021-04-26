@@ -88,23 +88,13 @@ namespace ZdravoHospital.GUI.ManagerUI
             if (isAdder)
             {
                 Ingredient i = new Ingredient(EnteredName.Trim().ToLower());
-                ExistingNames.Add(i);
-                viewableIngredients.Add(i);
+                Logics.MedicineFunctions.AddIngredientToMedicine(i, ExistingNames, viewableIngredients);
             }
             else
             {
                 if (!passedIngredient.IngredientName.Equals(EnteredName.Trim().ToLower()))
                 {
-                    /* Visual handling */
-                    int index = viewableIngredients.IndexOf(passedIngredient);
-                    viewableIngredients.Remove(passedIngredient);
-                    int indexEx = ExistingNames.FindIndex(i => i.IngredientName.Equals(passedIngredient.IngredientName));
-                    ExistingNames.RemoveAll(i => i.IngredientName.Equals(passedIngredient.IngredientName));
-
-                    passedIngredient.IngredientName = EnteredName.Trim().ToLower();
-
-                    viewableIngredients.Insert(index, passedIngredient);
-                    ExistingNames.Insert(indexEx, passedIngredient);
+                    Logics.MedicineFunctions.EditIngredientInMedicine(passedIngredient, EnteredName, ExistingNames, viewableIngredients);
                 }   
             }
             
