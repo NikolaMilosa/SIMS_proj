@@ -19,19 +19,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 int quantity = Int32.Parse(value.ToString());
 
                 if (quantity < 1)
-                    return new ValidationResult(false, "- Atleast one...");
+                    return new ValidationResult(false, "'Quantity' needs to be atleast 1 or more...");
 
                 if (Wrapper != null)
                 {
                     if (quantity > Wrapper.Max)
-                        return new ValidationResult(false, "- Too much...");
+                        return new ValidationResult(false, "There isn't that much inventory of that type in the room...");
                 }
 
                 return new ValidationResult(true, null);
             }
             catch
             {
-                return new ValidationResult(false, "- Only digits...");
+                return new ValidationResult(false, "'Quantity' accepts only digits...");
             }
         }
     }

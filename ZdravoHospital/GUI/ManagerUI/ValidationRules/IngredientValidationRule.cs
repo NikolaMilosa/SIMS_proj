@@ -22,12 +22,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
             if (input.Equals(String.Empty))
             {
-                return new ValidationResult(false, "- Can't be empty...");
+                return new ValidationResult(false, "Ingredient name cannot be empty...");
             }
 
             if (!Regex.IsMatch(input, @"^([a-z]+(\s[a-z]+)*)$"))
             {
-                return new ValidationResult(false, "- Wrong char...");
+                return new ValidationResult(false, "You have typed an unsupported character...");
             }
 
             Ingredient checker = Wrapper.ExistingNames.Find(i => i.IngredientName.Equals(input));
@@ -37,7 +37,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             }
             else
             {
-                return new ValidationResult(false, "- Already exists...");
+                return new ValidationResult(false, "Ingredient with that name already exists...");
             }
         }
     }

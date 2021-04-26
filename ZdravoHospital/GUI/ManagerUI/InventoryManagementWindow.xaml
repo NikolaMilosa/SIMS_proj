@@ -9,14 +9,53 @@
         mc:Ignorable="d"
         Title="Inventory management"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        >
     <Grid Width="1000" Height="600" Background="Beige">
         <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
             <RowDefinition/>
             <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <!-- Error displaying -->
+        <Label x:Name="FirstRoomUnavailable" Grid.Row="0" Grid.ColumnSpan="2" Content="Room in the left is unavailable, transfering cannot be done..." FontSize="20" Margin="0,10,0,0" Foreground="Red" FontWeight="SemiBold" FontStyle="Italic" HorizontalAlignment="Center">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding FirstRoomAvailable}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=FirstRoomComboBox, Path=SelectedIndex}" Value="-1">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+
+        <Label x:Name="SecondRoomUnavailable" Grid.Row="0" Grid.ColumnSpan="2" Content="Room in the right is unavailable, transfering cannot be done but adding and subtracting inventory can..." FontSize="20" Margin="0,10,0,0" Foreground="Red" FontWeight="SemiBold" FontStyle="Italic" HorizontalAlignment="Center">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SecondRoomAvailable}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=FirstRoomUnavailable, Path=Visibility}" Value="Visible">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -25,15 +64,14 @@
             <!-- Left Grid -->
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition Height="300"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="From :" FontSize="18" Width="60" Margin="50,0,0,0"/>
-                
-                <ComboBox x:Name="FirstRoomComboBox" ItemsSource="{Binding FirstRooms, Mode=TwoWay}" SelectedItem="{Binding FirstRoom, Mode=TwoWay}" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="FirstRoomComboBox_PreviewKeyDown">
+                <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="From :" FontSize="18" Width="60" Margin="50,0,0,0"/>
+
+                <ComboBox x:Name="FirstRoomComboBox" ItemsSource="{Binding FirstRooms, Mode=TwoWay}" SelectedItem="{Binding FirstRoom, Mode=TwoWay}" Grid.Row="1" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="FirstRoomComboBox_PreviewKeyDown">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
@@ -48,22 +86,6 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <Label Grid.Row="2" FontSize="18" Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="- Unavailable!" Foreground="Red">
-                    <Label.Style>
-                        <Style TargetType="{x:Type Label}">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding FirstRoomAvailable, Mode=TwoWay}" Value="False">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=FirstRoomComboBox, Path=SelectedIndex}" Value="-1">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Label.Style>
-                </Label>
-
                 <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown" GotFocus="FirstRoomDataGrid_GotFocus">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
@@ -74,13 +96,7 @@
                         <Style TargetType="{x:Type DataGrid}">
                             <Setter Property="IsEnabled" Value="True"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding FirstRoomAvailable}" Value="False">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding SecondRoomAvailable}" Value="False">
+                                <DataTrigger Binding="{Binding ElementName=FirstRoomUnavailable, Path=Visibility}" Value="Visible">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -92,15 +108,14 @@
             <!-- Right Grid -->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition Height="300"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="To :" FontSize="18" Width="60" Margin="50,0,0,0"/>
+                <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="To :" FontSize="18" Width="60" Margin="50,0,0,0"/>
 
-                <ComboBox x:Name="SecondRoomComboBox" ItemsSource="{Binding SecondRooms, Mode=TwoWay}" SelectedItem="{Binding SecondRoom, Mode=TwoWay}" IsReadOnly="True" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="SecondRoomComboBox_PreviewKeyDown">
+                <ComboBox x:Name="SecondRoomComboBox" ItemsSource="{Binding SecondRooms, Mode=TwoWay}" SelectedItem="{Binding SecondRoom, Mode=TwoWay}" IsReadOnly="True" Grid.Row="1" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="SecondRoomComboBox_PreviewKeyDown">
                     <ComboBox.Style>
                         <Style TargetType="{x:Type ComboBox}">
                             <Setter Property="IsEnabled" Value="True"/>
@@ -125,22 +140,6 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <Label Grid.Row="2" Grid.Column="1" FontSize="18" Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" Content="- Unavailable!" Foreground="Red">
-                    <Label.Style>
-                        <Style TargetType="{x:Type Label}">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SecondRoomAvailable, Mode=TwoWay}" Value="False">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Label.Style>
-                </Label>
-
                 <DataGrid x:Name="SecondRoomDataGrid" Grid.Row="3" ItemsSource="{Binding SecondRoomInventory, Mode=TwoWay}" AutoGenerateColumns="false" HeadersVisibility="Column" FontSize="18" Margin="10,10,20,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
@@ -157,7 +156,7 @@
 
         </Grid>
 
-        <Button x:Name="FinishButton" Grid.Row="1" FontSize="18" Content="Finish" Background="#bec4c2" Height="52" Width="100" Click="FinishButton_Click"/>
+        <Button x:Name="FinishButton" Grid.Row="2" FontSize="18" Content="Finish" Background="#bec4c2" Height="52" Width="100" Click="FinishButton_Click"/>
 
     </Grid>
 </Window>

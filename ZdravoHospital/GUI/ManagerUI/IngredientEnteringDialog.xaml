@@ -8,10 +8,13 @@
         mc:Ignorable="d"
         Title=""
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        >
     <Grid Width="370" Height="200" Background="Beige">
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,9 +22,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" FontSize="18" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+        <!-- Error adorners -->
+        <AdornerDecorator Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,5">
+            <TextBlock Text="{Binding ElementName=NameTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+        </AdornerDecorator>
 
-        <TextBox x:Name="NameTextBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Width="100" Height="30">
+        <Label Grid.Row="1" Grid.Column="0" FontSize="18" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
+
+        <TextBox x:Name="NameTextBox" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Row="1" Grid.Column="1" Width="200" Height="30">
             <TextBox.Resources>
                 <validation:MaxInventoryBindingProxy x:Key="proxy" Data="{Binding}"/>
             </TextBox.Resources>
@@ -33,26 +41,22 @@
                                 <validation:IngredientNameWrapper ExistingNames="{Binding Path=Data.ExistingNames, Source={StaticResource proxy}}"/>
                             </validation:IngredientValidationRule.Wrapper>
                         </validation:IngredientValidationRule>
-                        <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorField"/>
-                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
-                    </Grid>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="BorderBrush" Value="#FFABADB3"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=QuantityTextBox, Path=(Validation.HasError)}" Value="True">
+                            <Setter Property="BorderBrush" Value="Red"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
         </TextBox>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <Button x:Name="ConfirmButton" FontSize="18" Content="Confirm" Background="#bec4c2" Height="52" Width="100" HorizontalAlignment="Left" Margin="70,0,0,0" Click="ConfirmButton_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">

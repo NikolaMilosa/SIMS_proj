@@ -80,14 +80,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 {
                     InventoryManagementWindow activeWindow = (InventoryManagementWindow)ManagerWindow.dialog;
                     /* Update the visuals */
-                    Room tempRoomSender = activeWindow.FirstRoom;
-                    Room tempRoomReciever = activeWindow.SecondRoom;
 
-                    activeWindow.FirstRoom = tempRoomReciever;
-                    activeWindow.SecondRoom = tempRoomSender;
-
-                    activeWindow.FirstRoom = tempRoomSender;
-                    activeWindow.SecondRoom = tempRoomReciever;
+                    activeWindow.FirstRoom = activeWindow.FirstRoom;
+                    activeWindow.SecondRoom = activeWindow.SecondRoom;
                 }
             }
         }

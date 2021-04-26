@@ -214,7 +214,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
             else if (e.Key == Key.Enter)
             {
-                if (FirstRoom != null && SecondRoom != null)
+                if (FirstRoom != null && SecondRoom != null && FirstRoomAvailable && SecondRoomAvailable)
                 {
                     Window dialog = new InventoryManagementQuantitySelector(FirstRoom, SecondRoom, FirstRoomInventory, SecondRoomInventory, (InventoryDTO)FirstRoomDataGrid.SelectedItem);
                     dialog.ShowDialog();

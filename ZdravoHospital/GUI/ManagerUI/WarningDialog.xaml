@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="Warning"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        >
     <Grid Height="250" Width="300" Background="Beige">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

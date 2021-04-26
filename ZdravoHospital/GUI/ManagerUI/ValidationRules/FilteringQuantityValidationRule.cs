@@ -19,13 +19,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             {
                 if (enteredQuantity <= 0)
                 {
-                    return new ValidationResult(false, "Atleast one...");
+                    return new ValidationResult(false, "Quantity needs to be atleast 1 or more...");
                 }
 
                 return new ValidationResult(true, null);
             }
 
-            return new ValidationResult(false, "Only digits...");
+            return new ValidationResult(false, "Quantity can only accept digits...");
         }
     }
 }

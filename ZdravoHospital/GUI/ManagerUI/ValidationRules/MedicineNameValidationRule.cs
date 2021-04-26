@@ -20,12 +20,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
             if (input.Equals(String.Empty))
             {
-                return new ValidationResult(false, "- Can't be empty...");
+                return new ValidationResult(false, "'Name' cannot be empty...");
             }
 
             if (!Regex.IsMatch(input, @"^([a-z]+(\s[a-z]+)*)$"))
             {
-                return new ValidationResult(false, "- Wrong char...");
+                return new ValidationResult(false, "In 'Name' you have entered an unsupported character...");
             }
 
             var doesExist = Model.Resources.medicines.Find(m => m.MedicineName.ToLower().Equals(input));
@@ -36,7 +36,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             }
             else
             {
-                return new ValidationResult(false, "- Already exists...");
+                return new ValidationResult(false, "Medicine with that name already exists...");
             }
         }
     }

@@ -22,8 +22,9 @@ namespace ZdravoHospital.GUI.ManagerUI
     public partial class AddOrEditMedicine : Window, INotifyPropertyChanged
     {
         #region Fields
-        //Fields:
+        //Fields
         private string _name;
+        private string _supplier;
         private MedicineStatus _medicineStatus;
         private ObservableCollection<Ingredient> _ingredients;
 
@@ -37,6 +38,15 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
         }
 
+        public string Supplier
+        {
+            get { return _supplier; }
+            set
+            {
+                _supplier = value;
+                OnPropertyChanged("Supplier");
+            }
+        }
         public MedicineStatus MedicineStatus
         {
             get { return _medicineStatus; }
@@ -105,6 +115,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.NameTextBox.IsEnabled = false;
 
             this.MedicineName = m.MedicineName;
+            this.Supplier = m.Supplier;
             this.MedicineStatus = m.Status;
             this.Ingredients = new ObservableCollection<Ingredient>();
             this.passedMedicine = m;
@@ -126,7 +137,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            Medicine newMedicine = new Medicine() { MedicineName = MedicineName.Trim().ToLower(), Status = MedicineStatus, Note = "", Supplier = "", Ingredients = temporaryIngredients };
+            Medicine newMedicine = new Medicine() { MedicineName = MedicineName.Trim().ToLower(), Status = MedicineStatus, Note = "", Supplier = Supplier, Ingredients = temporaryIngredients };
             if (isAdder)
             {
                 Logics.MedicineFunctions.AddNewMedicine(newMedicine);

@@ -16,9 +16,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             input = Regex.Replace(input, @"\s+", " ");
             input = input.Trim();
 
+            if (input.Equals(String.Empty))
+            {
+                return new ValidationResult(false, "Red marked fields cannot be empty...");
+            }
+
             if (!Regex.IsMatch(input, @"^([A-Za-z]+(\s[A-Za-z]+)*)$"))
             {
-                return new ValidationResult(false, null);
+                return new ValidationResult(false, "You have entered an unsupported character...");
             }
 
             return new ValidationResult(true, null);

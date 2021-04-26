@@ -18,7 +18,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
             if (input.Equals(String.Empty) || !Regex.IsMatch(input, @"^([a-zA-Z]+(\s([a-zA-Z]+|[1-9][0-9]*))*)$"))
             {
-                return new ValidationResult(false, null);
+                return new ValidationResult(false, "In 'Name' you entered an unsupported character...");
             }
 
             return new ValidationResult(true, null);
