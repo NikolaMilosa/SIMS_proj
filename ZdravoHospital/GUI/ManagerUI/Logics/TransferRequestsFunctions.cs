@@ -28,50 +28,50 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
         }
 
-        public static void StartTransfer(TransferRequest tr)
+        public static void StartTransfer(TransferRequest transferRequest)
         {
-            Task t = new Task(() => tr.DoWork());
+            Task t = new Task(() => transferRequest.DoWork());
             t.Start();
         }
 
-        public static void CreateAndStartTransfer(TransferRequest tr)
+        public static void CreateAndStartTransfer(TransferRequest transferRequest)
         {
-            Model.Resources.transferRequests.Add(tr);
+            Model.Resources.transferRequests.Add(transferRequest);
             Model.Resources.SerializeTransferRequests();
-            Task t = new Task(() => tr.DoWork());
+            Task t = new Task(() => transferRequest.DoWork());
             t.Start();
         }
 
-        public static void ExecuteRequest(TransferRequest tr)
+        public static void ExecuteRequest(TransferRequest transferRequest)
         {
-            if (Model.Resources.rooms.ContainsKey(tr.SenderRoom) && Model.Resources.rooms.ContainsKey(tr.RecipientRoom) && Model.Resources.inventory.ContainsKey(tr.InventoryId))
+            if (Model.Resources.rooms.ContainsKey(transferRequest.SenderRoom) && Model.Resources.rooms.ContainsKey(transferRequest.RecipientRoom) && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
             {
                 /* Handle database transfer */
-                RoomInventory sender = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(tr.SenderRoom, tr.InventoryId);
-                RoomInventory reciever = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(tr.RecipientRoom, tr.InventoryId);
+                RoomInventory sender = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
+                RoomInventory reciever = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
 
-                if (sender.Quantity - tr.Quantity == 0)
+                if (sender.Quantity - transferRequest.Quantity == 0)
                 {
                     RoomInventoryFunctions.DeleteByReference(sender);
                 }
                 else
                 {
-                    sender.Quantity -= tr.Quantity;
+                    sender.Quantity -= transferRequest.Quantity;
                 }
 
                 if (reciever == null)
                 {
-                    RoomInventoryFunctions.AddNewReference(new RoomInventory(tr.InventoryId, tr.RecipientRoom, tr.Quantity));
+                    RoomInventoryFunctions.AddNewReference(new RoomInventory(transferRequest.InventoryId, transferRequest.RecipientRoom, transferRequest.Quantity));
                 }
                 else
                 {
-                    reciever.Quantity += tr.Quantity;
+                    reciever.Quantity += transferRequest.Quantity;
                 }
             }
 
             /* Serialize */
             Model.Resources.SerializeRoomInventory();
-            if (Model.Resources.transferRequests.Remove(tr))
+            if (Model.Resources.transferRequests.Remove(transferRequest))
                 Model.Resources.SerializeTransferRequests();
 
             if(ManagerWindow.dialog != null)
