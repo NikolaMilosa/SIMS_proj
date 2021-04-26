@@ -13,6 +13,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             newMedicine.MedicineName = Regex.Replace(newMedicine.MedicineName, @"\s+", " ");
             newMedicine.MedicineName = newMedicine.MedicineName.Trim().ToLower();
+
+            newMedicine.Supplier = Regex.Replace(newMedicine.Supplier, @"\s+", " ");
+            newMedicine.Supplier = newMedicine.Supplier.Trim();
+            newMedicine.Supplier = newMedicine.Supplier.Substring(0, 1).ToUpper() + newMedicine.Supplier.Substring(1).ToLower();
+
             Model.Resources.medicines.Add(newMedicine);
             ManagerWindow.Medicines.Add(newMedicine);
 
@@ -23,6 +28,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             newMedicine.MedicineName = Regex.Replace(newMedicine.MedicineName, @"\s+", " ");
             newMedicine.MedicineName = newMedicine.MedicineName.Trim().ToLower();
+
+            newMedicine.Supplier = Regex.Replace(newMedicine.Supplier, @"\s+", " ");
+            newMedicine.Supplier = newMedicine.Supplier.Trim();
+            newMedicine.Supplier = newMedicine.Supplier.Substring(0, 1).ToUpper() + newMedicine.Supplier.Substring(1).ToLower();
 
             int index = Model.Resources.medicines.IndexOf(oldMedicine);
             Model.Resources.medicines.Remove(oldMedicine);

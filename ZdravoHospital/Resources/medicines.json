@@ -1,7 +1,7 @@
 [
   {
     "MedicineName": "brufen",
-    "Supplier": "",
+    "Supplier": "Some supp",
     "Status": 3,
     "Note": "",
     "ReplacementMedication": [],
@@ -11,12 +11,15 @@
       },
       {
         "IngredientName": "zink"
+      },
+      {
+        "IngredientName": "natrium"
       }
     ]
   },
   {
     "MedicineName": "test medication",
-    "Supplier": "",
+    "Supplier": "Jankovic",
     "Status": 3,
     "Note": "",
     "ReplacementMedication": [],
