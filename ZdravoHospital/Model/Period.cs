@@ -15,6 +15,7 @@ namespace Model
         public Prescription Prescription { get; set; }
         public PeriodMark PeriodMark { get; set; }
         public bool IsUrgent { get; set; }
+        public Referral Referral { get; set; }
         
 
         public Period() 
