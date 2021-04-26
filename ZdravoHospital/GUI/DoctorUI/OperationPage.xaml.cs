@@ -18,31 +18,63 @@ using System.Windows.Shapes;
 namespace ZdravoHospital.GUI.DoctorUI
 {
     /// <summary>
-    /// Interaction logic for NewOperationPage.xaml
+    /// Interaction logic for OperationPage.xaml
     /// </summary>
-    public partial class NewOperationPage : Page
+    public partial class OperationPage : Page
     {
         public Doctor Doctor { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
 
-        public NewOperationPage(Doctor doctor, DateTime startTime, int duration)
+        private Period period;
+
+        public OperationPage(Period period, bool readonlyMode)
         {
             InitializeComponent();
 
             this.DataContext = this;
 
-            Doctor = doctor;
+            this.period = period;
+
+            Doctor = Model.Resources.doctors[period.DoctorUsername];
             Patients = new ObservableCollection<Patient>(Model.Resources.patients.Values);
             Model.Resources.OpenRooms();
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values.Where(room => room.RoomType == RoomType.OPERATING_ROOM));
 
-            AppointmentDatePicker.SelectedDate = startTime.Date;
-            StartTimeTextBox.Text = startTime.ToString("HH:mm");
-            DurationTextBox.Text = duration.ToString();
+            Patient patient = Model.Resources.patients[period.PatientUsername];
+            PatientsComboBox.SelectedItem = patient;
+            AppointmentDatePicker.SelectedDate = period.StartTime.Date;
+            StartTimeTextBox.Text = period.StartTime.ToString("HH:mm");
+            DurationTextBox.Text = period.Duration.ToString();
+            RoomsComboBox.SelectedItem = Model.Resources.rooms[period.RoomId];
+
+            if (readonlyMode)
+            {
+                PatientsComboBox.IsEnabled = false;
+                AppointmentDatePicker.IsEnabled = false;
+                StartTimeTextBox.IsEnabled = false;
+                DurationTextBox.IsEnabled = false;
+                RoomsComboBox.IsEnabled = false;
+                CancelOperationButton.IsEnabled = false;
+            }
+
+            if (DateTime.Now >= period.StartTime)
+            {
+                PatientsComboBox.IsEnabled = false;
+                AppointmentDatePicker.IsEnabled = false;
+                StartTimeTextBox.IsEnabled = false;
+                DurationTextBox.IsEnabled = false;
+                RoomsComboBox.IsEnabled = false;
+                CancelOperationButton.IsEnabled = false;
+            }
+            else
+            {
+                OperationReportButton.IsEnabled = false;
+                PrescriptionButton.IsEnabled = false;
+            }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
@@ -60,20 +92,30 @@ namespace ZdravoHospital.GUI.DoctorUI
                                     AppointmentDatePicker.SelectedDate.Value.Day,
                                     hours, minutes, 0);
 
-            Period period = new Period(dateTime, Int32.Parse(DurationTextBox.Text), PeriodType.OPERATION,
+            Period editedPeriod = new Period(dateTime, Int32.Parse(DurationTextBox.Text), PeriodType.OPERATION,
                                        (PatientsComboBox.SelectedItem as Patient).Username,
                                        Doctor.Username,
                                        (RoomsComboBox.SelectedItem as Room).Id);
 
-            int available = IsPeriodAvailable(period);
+            int available = IsPeriodAvailable(editedPeriod, this.period);
 
             if (available == 0)
             {
-                Model.Resources.periods.Add(period);
+                foreach (Period existingPeriod in Model.Resources.periods)
+                {
+                    if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
+                    {
+                        Model.Resources.periods.Remove(existingPeriod);
+                        break;
+                    }
+                }
+
+                Model.Resources.periods.Add(editedPeriod);
                 Model.Resources.SavePeriods();
 
-                MessageBox.Show("Operation created successfully.", "Success");
-                NavigationService.GoBack();
+                this.period = editedPeriod;
+
+                MessageBox.Show("Operation edited successfully.", "Success");
             }
             else if (available == -1)
             {
@@ -136,7 +178,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             return true;
         }
 
-        private int IsPeriodAvailable(Period period) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
+        private int IsPeriodAvailable(Period period, Period periodToIgnore) // vraca 0 ako je termin ok, -1 ako je termin u proslosti, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
         {
             if (period.StartTime < DateTime.Now)
                 return -1;
@@ -145,6 +187,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             foreach (Period existingPeriod in Model.Resources.periods)
             {
+                if (existingPeriod.RoomId == periodToIgnore.RoomId && existingPeriod.StartTime == periodToIgnore.StartTime)
+                    continue;
+
                 DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
 
                 if (period.RoomId == existingPeriod.RoomId)
@@ -187,12 +232,41 @@ namespace ZdravoHospital.GUI.DoctorUI
             return 0;
         }
 
+        private void CancelOperationButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel the operation?\nThis action cannot be undone.",
+                                                      "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                foreach (Period existingPeriod in Model.Resources.periods)
+                {
+                    if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
+                    {
+                        Model.Resources.periods.Remove(existingPeriod);
+                        break;
+                    }
+                }
+
+                Model.Resources.SavePeriods();
+
+                MessageBox.Show("Operation canceled successfully.", "Success");
+                NavigationService.GoBack();
+            }
+        }
+
+        private void OperationReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new PeriodDetailsPage(this.period));
+        }
+
         private void PatientInfoButton_Click(object sender, RoutedEventArgs e)
         {
-            Patient patient = PatientsComboBox.SelectedItem as Patient;
-            
-            if (patient != null)
-                NavigationService.Navigate(new PatientInfoPage(patient));
+            NavigationService.Navigate(new PatientInfoPage(PatientsComboBox.SelectedItem as Patient));
+        }
+
+        private void PrescriptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            //NavigationService.Navigate(new PrescriptionPage(this.period));
         }
     }
 }
