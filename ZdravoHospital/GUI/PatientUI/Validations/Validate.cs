@@ -13,6 +13,52 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public static class Validate
     {
+        public static void ShowOkDialog(string title,string content)
+        {
+            customOkDialog customOkDialog = new customOkDialog(title, content);
+            customOkDialog.ShowDialog();
+        }
+        public static bool TrollDetected()
+        {
+            bool detected = false;
+            if(PatientWindow.RecentActionsNum>=5)
+            {
+                detected = true;
+                ShowOkDialog("Troll detected", "Too much recent actions have been detected! Please wait couple of minutes then try again!");
+            }
+            return detected;
+        }
+        public static bool IsSurveyAvailable(string username)
+        {
+            bool availability = false;
+            Model.Resources.OpenPeriods();
+            int numOfPeriods = 0;
+            foreach (Period period in Model.Resources.periods)
+            {
+                if (period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration) < DateTime.Now)
+                {
+                    numOfPeriods++;
+                }
+            }
+            if (numOfPeriods>=3 && !AnyRecentSurveys(username))
+                availability = true;
+            return availability;
+        }
+
+        public static bool AnyRecentSurveys(string username)
+        {
+            bool recentSurvey = false;
+            Model.Resources.OpenSurveys();
+            foreach(Survey survey in Resources.surveys)
+            {
+                if (survey.PatientUsername.Equals(username) && survey.CreationDate >= DateTime.Now.AddDays(-14))
+                {
+                    recentSurvey = true;
+                    break;
+                }
+            }
+            return recentSurvey;
+        }
         public static void therapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
@@ -32,8 +78,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
                             }
                     }
                 }
-                
+              
                Thread.Sleep(TimeSpan.FromMinutes(5));
+                PatientWindow.RecentActionsNum = 0;
             }
            
         }

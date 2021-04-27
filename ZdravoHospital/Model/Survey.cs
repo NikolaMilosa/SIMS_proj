@@ -6,11 +6,13 @@ namespace Model
    /// - Is annonymous
    public class Survey
    {
-      public int appointmentAccessibility;
-      public int care;
-      public int recommendation;
-      public int hygiene;
-      public string comment;
+      public string PatientUsername { get; set; }
+      public DateTime CreationDate { get; set; }
+      public int AppointmentAccessibility{get; set;}
+      public int Care{get; set;}
+      public int Recommendation{get; set;}
+      public int Hygiene{get; set;}
+      public string Comment{get; set;}
    
    }
 }

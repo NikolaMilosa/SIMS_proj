@@ -47,11 +47,12 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Validations.Validate.TrollDetected())
+                return;
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
             if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2)) 
             {
-                customOkDialog dialog = new customOkDialog("Warning", "You can't cancel period within 2 days from it's start!");
-                dialog.Show();
+                Validations.Validate.ShowOkDialog("Warning", "You can't cancel period within 2 days from it's start!");
             }
             else 
             {
@@ -59,6 +60,7 @@ namespace ZdravoHospital.GUI.PatientUI
                 removeAppointmentDialog.ShowDialog();
                 if(RemoveAppointmentDialog.YesPressed)
                 {
+                    ++PatientWindow.RecentActionsNum;
                     AppointmentList.Remove(appointmentView);
                     Model.Resources.periods.Remove(appointmentView.Period);
                     Model.Resources.SavePeriods();
@@ -70,12 +72,11 @@ namespace ZdravoHospital.GUI.PatientUI
         private void editButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
+            if (Validations.Validate.TrollDetected())
+                return;
 
             if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2))
-            {
-                customOkDialog dialog = new customOkDialog("Warning", "You can't edit period within 2 days from it's start!");
-                dialog.Show();
-            }
+               Validations.Validate.ShowOkDialog("Warning", "You can't edit period within 2 days from it's start!");
             else
                 NavigationService.Navigate(new AddAppointmentPage(appointmentView.Period, false, null));
         }

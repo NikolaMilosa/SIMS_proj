@@ -21,6 +21,7 @@ namespace Model
         public static List<Specialization> specializations;
         public static List<RoomInventory> roomInventory;
         public static List<TransferRequest> transferRequests;
+        public static List<Survey> surveys;
 
         public static void OpenAccounts()
         {
@@ -223,6 +224,20 @@ namespace Model
         public static void SerializeTransferRequests()
         {
             File.WriteAllText(@"..\..\..\Resources\transferRequests.json", JsonConvert.SerializeObject(transferRequests, Formatting.Indented));
+        }
+
+        public static void SaveSurveys()
+        {
+            File.WriteAllText(@"..\..\..\Resources\surveys.json", JsonConvert.SerializeObject(surveys,Formatting.Indented));
+        }
+
+        public static void OpenSurveys()
+        {
+            if (File.Exists(@"..\..\..\Resources\surveys.json"))
+                surveys = JsonConvert.DeserializeObject<List<Survey>>(File.ReadAllText(@"..\..\..\Resources\surveys.json"));
+
+            if (surveys == null)
+                surveys = new List<Survey>();
         }
     }
 }

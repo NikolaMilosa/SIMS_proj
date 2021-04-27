@@ -81,12 +81,15 @@ namespace ZdravoHospital.GUI.PatientUI
 
             foreach (Doctor doctor in Model.Resources.doctors.Values) 
             {
-                DoctorList.Add(new DoctorView(doctor));
+                if(doctor.SpecialistType.SpecializationName.Equals("Doctor"))
+                     DoctorList.Add(new DoctorView(doctor));
             }
         }
 
         private void confirmButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Validations.Validate.TrollDetected())
+                return;
             if (selectTime.SelectedItem == null || selectDate.SelectedDate == null || selectDoctor.SelectedItem == null)
             {
                 customOkDialog customOkDialog = new customOkDialog("Warning", "Please select doctor, date and time when you want to schedule appointment.!");
@@ -111,6 +114,7 @@ namespace ZdravoHospital.GUI.PatientUI
                     {
                         customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully edited!");
                     }
+                    ++PatientWindow.RecentActionsNum;
                     Model.Resources.SavePeriods();
                     customOkDialog.ShowDialog();
                     NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
