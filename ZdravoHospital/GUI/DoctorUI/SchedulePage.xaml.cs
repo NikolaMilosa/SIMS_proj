@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -102,19 +103,52 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void PopulateCalendar()
         {
-            Doctor selectedDoctor = DoctorsComboBox.SelectedItem as Doctor;
+            string selectedDoctorsUsername = (DoctorsComboBox.SelectedItem as Doctor).Username;
 
             Model.Resources.OpenPeriods();
             Model.Resources.OpenPatients();
+
+            List<Period> periods = null;
 
             for (int i = 0; i < stackPanels.Length; i++)
             {
                 stackPanels[i].Children.Clear();
 
-                List<Period> periods = new List<Period>();
+                Period previousDayLastPeriod = null;
+                int durationAfterMidnight = 0;
+                DateTime endTime = DateTime.Now.AddDays(-1);
+
+                if (i == 0)
+                    previousDayLastPeriod = GetPreviousDaysLastPeriod(DaysDates[i].AddDays(-1).Date, selectedDoctorsUsername);
+                else if (periods.Count > 0)
+                    previousDayLastPeriod = periods[periods.Count - 1];
+
+                if (previousDayLastPeriod != null)
+                {
+                    endTime = previousDayLastPeriod.StartTime.AddMinutes(previousDayLastPeriod.Duration);
+
+                    if (endTime.Date == DaysDates[i].Date)
+                    {
+                        durationAfterMidnight = endTime.Hour * 60 + endTime.Minute;
+                        Patient patient = Model.Resources.patients[previousDayLastPeriod.PatientUsername];
+
+                        PeriodButton periodButton = new PeriodButton
+                        {
+                            Period = previousDayLastPeriod,
+                            Height = durationAfterMidnight * 4
+                        };
+                        periodButton.UpperText.Text = previousDayLastPeriod.StartTime.ToString("HH:mm") + "-" + previousDayLastPeriod.StartTime.AddMinutes(previousDayLastPeriod.Duration).ToString("HH:mm") + " " +
+                                                      previousDayLastPeriod.PeriodType.ToString().Substring(0, 1) + previousDayLastPeriod.PeriodType.ToString().ToLower().Remove(0, 1) + " [" + previousDayLastPeriod.RoomId + "]";
+                        periodButton.LowerText.Text = patient.Name + " " + patient.Surname;
+                        periodButton.Click += PeriodButton_Click;
+                        stackPanels[i].Children.Add(periodButton);
+                    }
+                }
+
+                periods = new List<Period>();
 
                 foreach (Period period in Model.Resources.periods)
-                    if (period.StartTime.Date == DaysDates[i].Date && period.DoctorUsername.Equals(selectedDoctor.Username))
+                    if (period.StartTime.Date == DaysDates[i].Date && period.DoctorUsername.Equals(selectedDoctorsUsername))
                         periods.Add(period);
 
                 SortPeriods(periods);
@@ -140,16 +174,41 @@ namespace ZdravoHospital.GUI.DoctorUI
                     stackPanels[i].Children.Add(emptyPeriodButton);
 
                     if (j == 0)
-                        emptyPeriodButton.Height = (periods[j].StartTime.Hour * 60 + periods[j].StartTime.Minute) * 4;
+                    {
+                        if (endTime.Date == DaysDates[i].Date)
+                        {
+                            DateTime midnight = new DateTime(DaysDates[i].Year,
+                                                             DaysDates[i].Month,
+                                                             DaysDates[i].Day,
+                                                             0, 0, 0);
+                            emptyPeriodButton.Height = ((periods[j].StartTime - midnight).TotalMinutes - durationAfterMidnight) * 4;
+                        }
+                        else
+                            emptyPeriodButton.Height = (periods[j].StartTime.Hour * 60 + periods[j].StartTime.Minute) * 4;
+                    }
                     else
                         emptyPeriodButton.Height = ((periods[j].StartTime - periods[j - 1].StartTime).TotalMinutes - periods[j - 1].Duration) * 4;
 
                     Patient patient = Model.Resources.patients[periods[j].PatientUsername];
 
+                    int height = 0;
+
+                    if (periods[j].StartTime.AddMinutes(periods[j].Duration).Date > periods[j].StartTime.Date)
+                    {
+                        DateTime midnight = new DateTime(DaysDates[i].Year,
+                                                         DaysDates[i].Month,
+                                                         DaysDates[i].Day,
+                                                         0, 0, 0);
+                        midnight = midnight.AddDays(1);
+                        height = (int)(midnight - periods[j].StartTime).TotalMinutes * 4;
+                    }
+                    else
+                        height = periods[j].Duration * 4;
+
                     PeriodButton periodButton = new PeriodButton
                     {
                         Period = periods[j],
-                        Height = periods[j].Duration * 4
+                        Height = height
                     };
                     periodButton.UpperText.Text = periods[j].StartTime.ToString("HH:mm") + "-" + periods[j].StartTime.AddMinutes(periods[j].Duration).ToString("HH:mm") + " " +
                                                   periods[j].PeriodType.ToString().Substring(0, 1) + periods[j].PeriodType.ToString().ToLower().Remove(0, 1) + " [" + periods[j].RoomId + "]";
@@ -171,12 +230,31 @@ namespace ZdravoHospital.GUI.DoctorUI
                                                                        0, 0, 0);
                 }
 
-                DateTime endTime = new DateTime(DaysDates[i].AddDays(1).Year,
+                endTime = new DateTime(DaysDates[i].AddDays(1).Year,
                                                                  DaysDates[i].AddDays(1).Month,
                                                                  DaysDates[i].AddDays(1).Day,
                                                                  0, 0, 0);
                 lastEmptyPeriodButtons[i].Duration = (int)(endTime - lastEmptyPeriodButtons[i].StartTime).TotalMinutes;
             }
+        }
+
+        private Period GetPreviousDaysLastPeriod(DateTime previousDay, string selectedDoctorsUsername)
+        {
+            List<Period> previousDaysPeriods = 
+                Model.Resources.periods.Where(p => p.StartTime.Date == previousDay.Date && p.DoctorUsername.Equals(selectedDoctorsUsername)).ToList();
+
+            if (previousDaysPeriods.Count > 0)
+            {
+                Period lastPeriod = previousDaysPeriods[0];
+
+                foreach (Period period in previousDaysPeriods)
+                    if (period.StartTime.Date > lastPeriod.StartTime)
+                        lastPeriod = period;
+
+                return lastPeriod;
+            }
+            else
+                return null;
         }
 
         private void SortPeriods(List<Period> periods)
@@ -193,14 +271,14 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         public void PeriodButton_Click(Object sender, RoutedEventArgs e)
         {
-            //Period period = (sender as PeriodButton).Period;
+            Period period = (sender as PeriodButton).Period;
 
-            //if (period.PeriodType == PeriodType.APPOINTMENT)
-            //    NavigationService.Navigate(new AppointmentPage(period));
-            //else if ((DoctorsComboBox.SelectedItem as Doctor).Username == App.currentUser)
-            //    NavigationService.Navigate(new OperationPage(period, false));
-            //else
-            //    NavigationService.Navigate(new OperationPage(period, true));
+            if (period.PeriodType == PeriodType.APPOINTMENT)
+                NavigationService.Navigate(new AppointmentPage(period));
+            else if ((DoctorsComboBox.SelectedItem as Doctor).Username == App.currentUser)
+                NavigationService.Navigate(new OperationPage(period, false));
+            else
+                NavigationService.Navigate(new OperationPage(period, true));
         }
 
         private void EmptyPeriodButton_Click(object sender, RoutedEventArgs e)

@@ -156,6 +156,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
                     if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
                         return 1;
+
+                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
+                        return 1;
                 }
 
                 if (period.DoctorUsername == existingPeriod.DoctorUsername)
@@ -165,6 +168,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
                     if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
                         return 2;
+
+                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
+                        return 2;
                 }
 
                 if (period.PatientUsername == existingPeriod.PatientUsername)
@@ -173,6 +179,9 @@ namespace ZdravoHospital.GUI.DoctorUI
                         return 3;
 
                     if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
+                        return 3;
+
+                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
                         return 3;
                 }
             }
