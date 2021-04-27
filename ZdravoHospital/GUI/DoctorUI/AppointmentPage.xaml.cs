@@ -99,7 +99,16 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             if (available == 0)
             {
-                this.period = editedPeriod;
+                foreach (Period existingPeriod in Model.Resources.periods)
+                {
+                    if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
+                    {
+                        Model.Resources.periods.Remove(existingPeriod);
+                        break;
+                    }
+                }
+
+                Model.Resources.periods.Add(editedPeriod);
                 Model.Resources.SavePeriods();
 
                 this.period = editedPeriod;
