@@ -24,6 +24,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private int _id;
         private string _name;
         private RoomType _roomType;
+        private Logics.RoomFunctions roomFunctions;
 
         public int Id
         {
@@ -62,6 +63,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
+            this.roomFunctions = new Logics.RoomFunctions();
+
             isAdder = true;
             this.Title = "Room adding dialog";
             TypeComboBox.SelectedIndex = 0;
@@ -72,6 +75,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             InitializeComponent();
             this.DataContext = this;
+
+            this.roomFunctions = new Logics.RoomFunctions();
 
             IdTextBox.IsEnabled = false;
 
@@ -106,21 +111,13 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             if (isAdder)
             {
-                Model.Resources.rooms[Id] = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
-                ManagerWindow.Rooms.Add(Model.Resources.rooms[Id]);
-                Model.Resources.SerializeRooms();
+                Room newRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
+                roomFunctions.AddRoom(newRoom);
             }
             else
             {
-                int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[Id]);
-                ManagerWindow.Rooms.Remove(Model.Resources.rooms[Id]);
-
-                Model.Resources.rooms[Id].Name = RoomName;
-                Model.Resources.rooms[Id].RoomType = RoomType;
-                Model.Resources.rooms[Id].Available = (YesRadioButton.IsChecked == true) ? true : false;
-                Model.Resources.SerializeRooms();
-
-                ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[Id]);
+                Room replaceRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
+                roomFunctions.EditRoom(replaceRoom);
             }
 
             this.Close();

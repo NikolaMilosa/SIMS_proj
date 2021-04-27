@@ -118,6 +118,11 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             Inventory inventory = item as Inventory;
 
+            if (!Supplier.Trim().Equals(String.Empty))
+                Supplier = Supplier.Trim().Substring(0, 1).ToUpper() + Supplier.Trim().Substring(1).ToLower();
+            else
+                Supplier = Supplier.Trim();
+
             int enteredInv;
 
             if (Quantity.Trim().Equals(String.Empty))
@@ -125,9 +130,9 @@ namespace ZdravoHospital.GUI.ManagerUI
             else
                 enteredInv = int.Parse(Quantity);
 
-            if (inventory.Id.Contains(Id.Trim()) && 
-                inventory.Name.Contains(InventoryName.Trim()) && 
-                inventory.Supplier.Contains(Supplier.Trim()) &&
+            if (inventory.Id.Contains(Id.Trim().ToUpper()) && 
+                inventory.Name.Contains(InventoryName.Trim().ToLower()) && 
+                inventory.Supplier.Contains(Supplier) &&
                 inventory.Quantity <= enteredInv && 
                 ((Type.Equals("STATIC") && inventory.InventoryType == InventoryType.STATIC_INVENTORY) || 
                 (Type.Equals("DYNAMIC") && inventory.InventoryType == InventoryType.DYNAMIC_INVENTORY) ||

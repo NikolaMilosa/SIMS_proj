@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
@@ -14,16 +15,21 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 string id = value.ToString();
 
                 if (id.Equals(String.Empty))
-                    return new ValidationResult(false, "- Can't be empty...");
+                    return new ValidationResult(false, "Id cannot be empty...");
+
+                string regex = @"[a-zA-Z0-9]+";
+
+                if (!Regex.IsMatch(id, regex))
+                    return new ValidationResult(false, "In id you have entered an unsupported character...");
 
                 if (Model.Resources.inventory.ContainsKey(id))
-                    return new ValidationResult(false, "- Id exists...");
+                    return new ValidationResult(false, "Inventory with that Id already exists...");
 
                 return new ValidationResult(true, null);
             }
             catch
             {
-                return new ValidationResult(false, "- Unknown...");
+                return new ValidationResult(false, "Unknown...");
             }
         }
     }

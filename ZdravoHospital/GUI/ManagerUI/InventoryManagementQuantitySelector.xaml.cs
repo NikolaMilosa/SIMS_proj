@@ -31,6 +31,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         private string _inputTime;
         private bool _isStatic;
 
+        private Logics.TransferRequestsFunctions transferRequestsFunctions;
+
         public string InputTime
         {
             get { return _inputTime; }
@@ -114,6 +116,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             InitializeComponent();
             this.DataContext = this;
+
+            this.transferRequestsFunctions = new Logics.TransferRequestsFunctions();
 
             this.firstRoom = fr;
             this.secondRoom = sr;
@@ -207,7 +211,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void MoveDynamicInventory()
         {
-            Logics.TransferRequestsFunctions.ExecuteRequest(new TransferRequest(firstRoom.Id, secondRoom.Id, processedItem.Id, EnteredQuantity, DateTime.Now));
+            transferRequestsFunctions.ExecuteRequest(new TransferRequest(firstRoom.Id, secondRoom.Id, processedItem.Id, EnteredQuantity, DateTime.Now));
         }
     
         private void MoveStaticInventory()
@@ -217,7 +221,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             TransferRequest newRequest = new TransferRequest(firstRoom.Id, secondRoom.Id, processedItem.Id, EnteredQuantity, ChosenDate);
 
-            Logics.TransferRequestsFunctions.CreateAndStartTransfer(newRequest);
+            transferRequestsFunctions.CreateAndStartTransfer(newRequest);
         }
     }
 }

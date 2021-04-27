@@ -1,55 +1,37 @@
 [
   {
-    "MedicineName": "medicine1",
-    "Supplier": "supplier1",
+    "MedicineName": "brufen",
+    "Supplier": "Some supp",
     "Status": 3,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [
       {
-        "IngredientName": "ingredient1"
+        "IngredientName": "magnesium"
       },
       {
-        "IngredientName": "ingredient2"
+        "IngredientName": "zink"
       },
       {
-        "IngredientName": "ingredient3"
+        "IngredientName": "natrium"
       }
     ]
   },
   {
-    "MedicineName": "medicine2",
-    "Supplier": "supplier1",
+    "MedicineName": "test medication",
+    "Supplier": "Jankovic",
     "Status": 3,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [
       {
-        "IngredientName": "ingredient2"
+        "IngredientName": "tester one"
       },
       {
-        "IngredientName": "ingredient4"
+        "IngredientName": "tester two"
       },
       {
-        "IngredientName": "ingredient5"
-      }
-    ]
-  },
-  {
-    "MedicineName": "medicine3",
-    "Supplier": "supplier2",
-    "Status": 3,
-    "Note": "",
-    "ReplacementMedication": [],
-    "Ingredients": [
-      {
-        "IngredientName": "ingredient2"
-      },
-      {
-        "IngredientName": "ingredient5"
-      },
-      {
-        "IngredientName": "ingredient6"
+        "IngredientName": "tester three"
       }
     ]
   }

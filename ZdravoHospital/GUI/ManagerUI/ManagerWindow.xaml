@@ -246,6 +246,7 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding MedicineName}" Width="2*"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Path=Status, Converter={converters:MedicineStatusConverter}}" Width="*"/>
                 <DataGridTextColumn Header="Number of ingredients" Binding="{Binding Ingredients.Count}"/>
+                <DataGridTextColumn Header="Supplier" Width="*" Binding="{Binding Supplier}"/>
             </DataGrid.Columns>
         </DataGrid>
         

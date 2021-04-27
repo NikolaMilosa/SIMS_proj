@@ -9,22 +9,44 @@
         mc:Ignorable="d"
         Title="" 
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        >
     <Grid Height="500" Width="450" Background="Beige">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         
+        <!-- Error adorners -->
+        <AdornerDecorator Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,5">
+            <TextBlock Text="{Binding ElementName=IdTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" FontWeight="SemiBold" FontStyle="Italic" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+        </AdornerDecorator>
+        <AdornerDecorator Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,5">
+            <TextBlock Text="{Binding ElementName=NameTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" FontWeight="SemiBold" FontStyle="Italic" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=IdTextBox, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </AdornerDecorator>
+
+
         <!-- Labels -->
         <Label Grid.Column="0" Grid.Row="1" Content="ID:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Grid.Column="0" Grid.Row="2" Content="Name:" Width="90" Height="35" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top"/>
@@ -40,19 +62,16 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <AdornedElementPlaceholder Grid.Column="0" x:Name="ErrorField"/>
-                        <TextBlock Grid.Column="1" Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Height="35"/>
-                    </Grid>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="BorderBrush" Value="#FFABADB3"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=IdTextBox, Path=(Validation.HasError)}" Value="True">
+                            <Setter Property="BorderBrush" Value="Red"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
         </TextBox>
 
 
@@ -60,10 +79,20 @@
             <TextBox.Text>
                 <Binding Path="RoomName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validation:EmptyStringValidationRule ValidationStep="RawProposedValue"/>
+                        <validation:RoomNamesValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="BorderBrush" Value="#FFABADB3"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NameTextBox, Path=(Validation.HasError)}" Value="True">
+                            <Setter Property="BorderBrush" Value="Red"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
         </TextBox>
 
         <ComboBox x:Name="TypeComboBox" Grid.Row="3" Grid.Column="1" Text="{Binding Path=RoomType, Converter={converters:RoomTypeConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
@@ -102,6 +131,9 @@
                                 <Setter Property="IsEnabled" Value="True"/>
                             </MultiDataTrigger>
                             <DataTrigger Binding="{Binding Path=Text, ElementName=NameTextBox}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=NameTextBox}" Value="True">
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=Text, ElementName=IdTextBox}" Value="0">

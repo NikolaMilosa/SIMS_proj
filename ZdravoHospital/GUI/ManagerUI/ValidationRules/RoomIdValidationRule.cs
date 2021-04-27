@@ -11,16 +11,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             try
             {
+                if (value.ToString().Trim().Equals(String.Empty))
+                    return new ValidationResult(false, "'Id' field cannot be empty...");
+
                 int id = int.Parse(value.ToString());
 
                 if (Model.Resources.rooms.ContainsKey(id))
-                    return new ValidationResult(false, "- Id exists...");
+                    return new ValidationResult(false, "Room with that Id already exists...");
 
                 return new ValidationResult(true, null);
             }
             catch
             {
-                return new ValidationResult(false, "- Only digits...");
+                return new ValidationResult(false, "'Id' accepts only digits...");
             }
         }
     }

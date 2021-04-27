@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,14 +15,29 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         public IngredientNameWrapper Wrapper { get; set; }
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            Ingredient checker = Wrapper.ExistingNames.Find(i => i.IngredientName.Equals(value.ToString().Trim().ToLower()));
+            string input = value as string;
+
+            input = Regex.Replace(input, @"\s+", " ");
+            input = input.Trim().ToLower();
+
+            if (input.Equals(String.Empty))
+            {
+                return new ValidationResult(false, "Ingredient name cannot be empty...");
+            }
+
+            if (!Regex.IsMatch(input, @"^([a-z]+(\s[a-z]+)*)$"))
+            {
+                return new ValidationResult(false, "You have typed an unsupported character...");
+            }
+
+            Ingredient checker = Wrapper.ExistingNames.Find(i => i.IngredientName.Equals(input));
             if (checker == null)
             {
                 return new ValidationResult(true, null);
             }
             else
             {
-                return new ValidationResult(false, "- Already exists...");
+                return new ValidationResult(false, "Ingredient with that name already exists...");
             }
         }
     }

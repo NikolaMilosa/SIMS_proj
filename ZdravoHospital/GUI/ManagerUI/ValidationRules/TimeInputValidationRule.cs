@@ -14,10 +14,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string input = value.ToString();
+            string input = value.ToString().Trim();
+
+            if (input.Equals(String.Empty))
+                return new ValidationResult(false, "'Time' cannot be left empty...");
 
             if(input.IndexOf("-") != -1 || input.IndexOf(".") != -1 || input.IndexOf(":") == -1)
-                return new ValidationResult(false, "eg. 19:45(:15)");
+                return new ValidationResult(false, "The correct format is 'HH:mm(:ss)' \n eg 19:45:13");
 
             try
             {
@@ -26,13 +29,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 {
                     if(timeOfDay <= DateTime.Now.TimeOfDay)
                     {
-                        return new ValidationResult(false, "Has to be future");
+                        return new ValidationResult(false, "Time you typed has already passed...");
                     }
                 }
             }
             catch
             {
-                return new ValidationResult(false, "eg. 19:45(:15)");
+                return new ValidationResult(false, "The correct format is 'HH:mm(:ss)' \n eg 19:45:13");
             }
 
             return new ValidationResult(true, null);
