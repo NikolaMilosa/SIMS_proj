@@ -81,7 +81,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
             foreach (Doctor doctor in Model.Resources.doctors.Values) 
             {
-                
+                if(doctor.SpecialistType.SpecializationName.Equals("Doctor"))
                      DoctorList.Add(new DoctorView(doctor));
             }
         }
