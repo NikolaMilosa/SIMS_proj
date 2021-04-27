@@ -58,7 +58,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,0">
-                <Button Name="confirmButton" Content="Confirm" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="confirmButton_Click"></Button>
+                <Button Name="confirmButton" Content="Confirm" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="ConfirmButton_Click"></Button>
                 <Button Name="cancelButton" Content="Cancel" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="cancelButton_Click"></Button>
                 <Button Name="suggestButton" Content="Suggest" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Margin="120,0,0,0" Click="suggestButton_Click"></Button>
             </StackPanel>

@@ -30,96 +30,32 @@ namespace ZdravoHospital.GUI.PatientUI
 
         public List<TimeSpan> TimeList { get; set; }
 
-       bool Mode { get; set; }//true=add,false=edit
+        AddAppointmentValidations Validations { get; set; }
+
+        public  bool Mode { get; set; }//true=add,false=edit
 
         public AddAppointmentPage(Period period,bool mode,string username)
-        {
-            
+        {  
             InitializeComponent();
+            Validations = new AddAppointmentValidations(this);
             DataContext = this;
             Mode = mode;
             PeriodList = new ObservableCollection<TimeSpan>();
+
             Validate.generateObesrvableTimes(PeriodList);
-            fillList();
-            if(mode)
-            {
-                Period = new Period();
-                Period.PatientUsername =username;
-                Period.Duration = 30;
-            }
-           else
-            {
-                Period = period;
-                selectDate.SelectedDate = Period.StartTime;
-                selectDoctor.SelectedItem = getDoctor(Period.DoctorUsername);
-                selectTime.SelectedItem = Period.StartTime.TimeOfDay;
-            }
-           selectDate.DisplayDateStart = DateTime.Today.AddDays(3);
+            Validations.FillDoctorList();
+            Validations.GeneratePeriod(period, username);
         }
 
-        public DoctorView getDoctor(string username)
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-           
-            
-            foreach(DoctorView doctor in DoctorList)
-            {
-                if (doctor.Username.Equals(username))
-                    return doctor;
-            }
-
-            return null;
-        }
-
-        public void fillList() 
-        {
-            Model.Resources.DeserializeDoctors();
-
-            if (DoctorList == null)
-                DoctorList = new ObservableCollection<DoctorView>();
-            else
-                DoctorList.Clear();
-
-            foreach (Doctor doctor in Model.Resources.doctors.Values) 
-            {
-                if(doctor.SpecialistType.SpecializationName.Equals("Doctor"))
-                     DoctorList.Add(new DoctorView(doctor));
-            }
-        }
-
-        private void confirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Validations.Validate.TrollDetected())
+            if (!Validations.CheckPeriodAvailibility())
                 return;
-            if (selectTime.SelectedItem == null || selectDate.SelectedDate == null || selectDoctor.SelectedItem == null)
-            {
-                customOkDialog customOkDialog = new customOkDialog("Warning", "Please select doctor, date and time when you want to schedule appointment.!");
-                customOkDialog.ShowDialog();
-            }
-            else
-            {
-                Period.StartTime=Period.StartTime.Date+ (TimeSpan)selectTime.SelectedItem; 
-                Period.DoctorUsername=((DoctorView)selectDoctor.SelectedItem).Username;
-                
-                Period.RoomId = Validate.getFreeRoom(Period);
-                if (Validate.checkPeriod(Period,true) && Period.RoomId!=-1)
-                {
-                    customOkDialog customOkDialog = null;
-                    if (Mode)
-                    {
-                        Model.Resources.OpenPeriods();
-                        Model.Resources.periods.Add(Period);
-                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully added!");
-                    }
-                    else
-                    {
-                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully edited!");
-                    }
-                    ++PatientWindow.RecentActionsNum;
-                    Model.Resources.SavePeriods();
-                    customOkDialog.ShowDialog();
-                    NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
-                }
-            }
+   
+            Validations.SerializePeriod();
+
+            ++PatientWindow.RecentActionsNum;
+            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
         }
 
        
@@ -146,7 +82,7 @@ namespace ZdravoHospital.GUI.PatientUI
                 if (!Validate.checkPeriod(period, true))
                     return;
 
-                fillList();
+                Validations.FillDoctorList();
                 Validate.suggestDoctor(period, DoctorList);
                 if (DoctorList.Count <= 0)
                 {
