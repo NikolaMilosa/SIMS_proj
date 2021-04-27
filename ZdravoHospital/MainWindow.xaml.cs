@@ -48,18 +48,18 @@ namespace ZdravoHospital
             //Model.Resources.accounts[d2.Username] = new Credentials(d2.Username, "zigara", RoleType.DOCTOR);
             //Model.Resources.SaveAccounts();
 
-            Patient p1 = new Patient("123", "Stefan", "Ljubovic", "ljuba@gmail.com", new DateTime(1999, 4, 23), "060123456",
-                "ljuba", "Milojko", MaritalStatus.DIVORCED, Gender.MALE, "789", BloodType.A_POSITIVE);
-            Patient p2 = new Patient("456", "Nikolaj", "Satara", "saki@gmail.com", new DateTime(1963, 5, 17), "066987654",
-                "saki", "Milojko", MaritalStatus.MARRIED, Gender.MALE, "624", BloodType.B_NEGATIVE);
-            Model.Resources.OpenPatients();
-            Model.Resources.patients[p1.Username] = p1;
-            Model.Resources.patients[p2.Username] = p2;
-            Model.Resources.SavePatients();
+            //Patient p1 = new Patient("123", "Stefan", "Ljubovic", "ljuba@gmail.com", new DateTime(1999, 4, 23), "060123456",
+            //    "ljuba", "Milojko", MaritalStatus.DIVORCED, Gender.MALE, "789", BloodType.A_POSITIVE);
+            //Patient p2 = new Patient("456", "Nikolaj", "Satara", "saki@gmail.com", new DateTime(1963, 5, 17), "066987654",
+            //    "saki", "Milojko", MaritalStatus.MARRIED, Gender.MALE, "624", BloodType.B_NEGATIVE);
+            //Model.Resources.OpenPatients();
+            //Model.Resources.patients[p1.Username] = p1;
+            //Model.Resources.patients[p2.Username] = p2;
+            //Model.Resources.SavePatients();
 
-            Model.Resources.accounts[p1.Username] = new Credentials(p1.Username, "ljuba", RoleType.PATIENT);
-            Model.Resources.accounts[p2.Username] = new Credentials(p2.Username, "saki", RoleType.PATIENT);
-            Model.Resources.SaveAccounts();
+            //Model.Resources.accounts[p1.Username] = new Credentials(p1.Username, "ljuba", RoleType.PATIENT);
+            //Model.Resources.accounts[p2.Username] = new Credentials(p2.Username, "saki", RoleType.PATIENT);
+            //Model.Resources.SaveAccounts();
 
             //Period p1 = new Period(new DateTime(2021, 4, 12, 10, 0, 0), 45, PeriodType.APPOINTMENT, "patient1", "zigara", 201);
             //Period p2 = new Period(new DateTime(2021, 4, 12, 8, 0, 0), 25, PeriodType.OPERATION, "patient2", "zigara", 103);

@@ -13,6 +13,21 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public static class Validate
     {
+        public static void ShowOkDialog(string title,string content)
+        {
+            customOkDialog customOkDialog = new customOkDialog(title, content);
+            customOkDialog.ShowDialog();
+        }
+        public static bool TrollDetected()
+        {
+            bool detected = false;
+            if(PatientWindow.RecentActionsNum>=5)
+            {
+                detected = true;
+                ShowOkDialog("Troll detected", "Too much recent actions have been detected! Please wait couple of minutes then try again!");
+            }
+            return detected;
+        }
         public static bool IsSurveyAvailable(string username)
         {
             bool availability = false;
@@ -63,8 +78,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
                             }
                     }
                 }
-                
+              
                Thread.Sleep(TimeSpan.FromMinutes(5));
+                PatientWindow.RecentActionsNum = 0;
             }
            
         }

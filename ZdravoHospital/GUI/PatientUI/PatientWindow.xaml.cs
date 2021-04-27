@@ -19,24 +19,27 @@ namespace ZdravoHospital.GUI.PatientUI
     /// <summary>
     /// Interaction logic for PatientWindow.xaml
     /// </summary>
-    public partial class PatientWindow : Window,INotifyPropertyChanged
+    public partial class PatientWindow : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public string WelcomeMessage { get; set; }
 
         public Patient Patient { get; set; }
 
         private bool _SurveyAvailable { get; set; }
-        public  bool SurveyAvailable {
+        public bool SurveyAvailable {
             get
             {
                 return _SurveyAvailable;
             }
-            set 
+            set
             {
                 _SurveyAvailable = value;
                 OnPropertyChanged("SurveyAvailable");
-            } 
+            }
         }
+
+        public static int RecentActionsNum { get; set; }
 
         public PatientWindow(string username)
         {
@@ -47,6 +50,7 @@ namespace ZdravoHospital.GUI.PatientUI
             Model.Resources.OpenPatients();
             Patient = Model.Resources.patients[username];
             SurveyAvailable = Validate.IsSurveyAvailable(username);
+            RecentActionsNum = Patient.RecentActions;
             //obrisi-----------------------------------------------------
             //Prescription prescription = new Prescription();
             //prescription.TherapyList = new List<Therapy>();
@@ -62,15 +66,14 @@ namespace ZdravoHospital.GUI.PatientUI
             //Patient.Prescriptions.Add(prescription); 
             //----------------------------------------------------------------------------
             Thread thread = new Thread(new ParameterizedThreadStart(Validate.therapyNotification));
-            
+
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start(username);
 
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected  void OnPropertyChanged(string name)
+        protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
@@ -83,7 +86,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void addAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AddAppointmentPage(null,true,Patient.Username));
+            myFrame.Navigate(new AddAppointmentPage(null, true, Patient.Username));
         }
 
         private void appointmentsButton_Click(object sender, RoutedEventArgs e)
@@ -104,6 +107,23 @@ namespace ZdravoHospital.GUI.PatientUI
         private void surveyButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new SurveyPage(this));
+        }
+
+        private void ForEachExample()
+        {
+            List<string> listaStringova = new List<string>();
+            listaStringova.Add("Uros");
+            listaStringova.Add("Nikola");
+           
+            foreach(string string1 in listaStringova)
+           {
+
+           }
+                //isto kao i
+            for(int i = 0; i < listaStringova.Count; ++i)
+            {
+                string string1 = listaStringova[i];
+            }
         }
     }
 }

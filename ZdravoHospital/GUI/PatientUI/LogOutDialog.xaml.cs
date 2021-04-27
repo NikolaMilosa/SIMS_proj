@@ -28,6 +28,8 @@ namespace ZdravoHospital.GUI.PatientUI
         private void Button_Click(object sender, RoutedEventArgs e)//yes button
         {
             MainWindow mainWindow = new MainWindow();
+            patientWindow.Patient.RecentActions = PatientWindow.RecentActionsNum;
+            Model.Resources.SavePatients();
             mainWindow.Show();
             Close();
             patientWindow.Close();
