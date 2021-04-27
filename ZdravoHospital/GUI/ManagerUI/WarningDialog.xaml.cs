@@ -22,6 +22,11 @@ namespace ZdravoHospital.GUI.ManagerUI
     {
         Object someObject;
         object[] otherParams;
+
+        Logics.RoomFunctions roomFunctions;
+        Logics.InventoryFunctions inventoryFunctions;
+        Logics.MedicineFunctions medicineFunctions;
+
         public WarningDialog(Object o, params object[] otherParams)
         {
             InitializeComponent();
@@ -39,21 +44,25 @@ namespace ZdravoHospital.GUI.ManagerUI
                     WarningTitle.Content = "Warning! Deleting a room";
                     WarningText.Text = "You are about to delete a room! If you wish to conitnue press \"Confirm\"";
                     WarningElement.Text = "Room Id : " + ((Room)someObject).Id;
+                    roomFunctions = new Logics.RoomFunctions();
                     break;
                 case nameof(Inventory):
                     WarningTitle.Content = "Warning! Deleting inventory";
                     WarningText.Text = "You are about to delete some inventory! If you wish to continue press \"Confirm\"";
                     WarningElement.Text = "Inventory Id : " + ((Inventory)someObject).Id;
+                    inventoryFunctions = new Logics.InventoryFunctions();
                     break;
                 case nameof(Ingredient):
                     WarningTitle.Content = "Warning! Deleting ingredient";
                     WarningText.Text = "You are about to delete some ingredients from medicine, but it won't be permanent just yet!";
                     WarningElement.Text = "Ingredient name : " + ((Ingredient)someObject).IngredientName;
+                    medicineFunctions = new Logics.MedicineFunctions();
                     break;
                 case nameof(Medicine):
                     WarningTitle.Content = "Warning! Deleting medicine";
                     WarningText.Text = "You are about to delete some medicine! If you wish to continue press \"Confirm\"";
                     WarningElement.Text = "Medicine name : " + ((Medicine)someObject).MedicineName;
+                    medicineFunctions = new Logics.MedicineFunctions();
                     break;
                 default:
                     WarningTitle.Content = "Warning! Deleting staff";
@@ -77,16 +86,16 @@ namespace ZdravoHospital.GUI.ManagerUI
             switch (someObject.GetType().Name)
             {
                 case nameof(Room):
-                    result = Logics.RoomFunctions.DeleteRoom((Room)someObject);
+                    result = roomFunctions.DeleteRoom((Room)someObject);
                     break;
                 case nameof(Inventory):
-                    result = Logics.InventoryFunctions.DeleteInventory((Inventory)someObject);
+                    result = inventoryFunctions.DeleteInventory((Inventory)someObject);
                     break;
                 case nameof(Ingredient):
-                    result = Logics.MedicineFunctions.DeleteIngredientFromMedicine((Ingredient)someObject, (List<Ingredient>)otherParams[0], (ObservableCollection<Ingredient>)otherParams[1]);
+                    result = medicineFunctions.DeleteIngredientFromMedicine((Ingredient)someObject, (List<Ingredient>)otherParams[0], (ObservableCollection<Ingredient>)otherParams[1]);
                     break;
                 case nameof(Medicine):
-                    result = Logics.MedicineFunctions.DeleteMedicine((Medicine)someObject);
+                    result = medicineFunctions.DeleteMedicine((Medicine)someObject);
                     break;
                 default:
                     //Code for staff deleting

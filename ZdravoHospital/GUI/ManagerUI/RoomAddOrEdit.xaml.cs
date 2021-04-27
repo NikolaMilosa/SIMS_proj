@@ -24,6 +24,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private int _id;
         private string _name;
         private RoomType _roomType;
+        private Logics.RoomFunctions roomFunctions;
 
         public int Id
         {
@@ -62,6 +63,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
+            this.roomFunctions = new Logics.RoomFunctions();
+
             isAdder = true;
             this.Title = "Room adding dialog";
             TypeComboBox.SelectedIndex = 0;
@@ -72,6 +75,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             InitializeComponent();
             this.DataContext = this;
+
+            this.roomFunctions = new Logics.RoomFunctions();
 
             IdTextBox.IsEnabled = false;
 
@@ -107,12 +112,12 @@ namespace ZdravoHospital.GUI.ManagerUI
             if (isAdder)
             {
                 Room newRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
-                Logics.RoomFunctions.AddRoom(newRoom);
+                roomFunctions.AddRoom(newRoom);
             }
             else
             {
                 Room replaceRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
-                Logics.RoomFunctions.EditRoom(replaceRoom);
+                roomFunctions.EditRoom(replaceRoom);
             }
 
             this.Close();

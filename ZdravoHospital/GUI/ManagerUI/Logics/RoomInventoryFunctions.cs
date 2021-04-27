@@ -6,9 +6,11 @@ using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
-    public static class RoomInventoryFunctions
+    public class RoomInventoryFunctions
     {
-        public static RoomInventory FindRoomInventoryByRoomAndInventory(int roomId, string inventoryId)
+        public RoomInventoryFunctions() { }
+
+        public RoomInventory FindRoomInventoryByRoomAndInventory(int roomId, string inventoryId)
         {
             foreach (RoomInventory ri in Model.Resources.roomInventory)
             {
@@ -19,7 +21,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return null;
         }
 
-        public static List<RoomInventory> FindAllRoomsWithInventory(string inventoryId)
+        public List<RoomInventory> FindAllRoomsWithInventory(string inventoryId)
         {
             List<RoomInventory> ret = new List<RoomInventory>();
 
@@ -30,7 +32,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return ret;
         }
 
-        public static List<RoomInventory> FindAllInventoryInRoom(int roomId)
+        public List<RoomInventory> FindAllInventoryInRoom(int roomId)
         {
             List<RoomInventory> ret = new List<RoomInventory>();
 
@@ -41,19 +43,19 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return ret;
         }
 
-        public static void DeleteByInventoryId(string iid)
+        public void DeleteByInventoryId(string iid)
         {
             Model.Resources.roomInventory.RemoveAll(ri => ri.InventoryId.Equals(iid));
 
             Model.Resources.SerializeRoomInventory();
         }
 
-        public static void DeleteByReference(RoomInventory ri)
+        public void DeleteByReference(RoomInventory ri)
         {
             Model.Resources.roomInventory.Remove(ri);
         }
 
-        public static void AddNewReference(RoomInventory ri)
+        public void AddNewReference(RoomInventory ri)
         {
             Model.Resources.roomInventory.Add(ri);
         }

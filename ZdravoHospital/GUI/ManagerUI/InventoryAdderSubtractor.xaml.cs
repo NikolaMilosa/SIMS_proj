@@ -39,6 +39,10 @@ namespace ZdravoHospital.GUI.ManagerUI
         private Inventory _passedInventory;
         private bool _isLessThan;
 
+        private Logics.TransferRequestsFunctions transferRequestsFunctions;
+        private Logics.RoomInventoryFunctions roomInventoryFunctions;
+        private Logics.InventoryFunctions inventoryFunctions;
+
         public string SelectedInventory
         {
             get { return _selectedInventory; }
@@ -69,9 +73,9 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 if (_selectedRoom != null)
                 {
-                    MinInventory = Logics.TransferRequestsFunctions.GetScheduledInventoryForRoom(PassedInventory, _selectedRoom);
+                    MinInventory = transferRequestsFunctions.GetScheduledInventoryForRoom(PassedInventory, _selectedRoom);
 
-                    RoomInventory roomInventory = Logics.RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(_selectedRoom.Id, PassedInventory.Id);
+                    RoomInventory roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(_selectedRoom.Id, PassedInventory.Id);
 
                     if (PassedInventory.InventoryType == InventoryType.DYNAMIC_INVENTORY && roomInventory != null)
                     {
@@ -133,6 +137,10 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
+            this.transferRequestsFunctions = new Logics.TransferRequestsFunctions();
+            this.roomInventoryFunctions = new Logics.RoomInventoryFunctions();
+            this.inventoryFunctions = new Logics.InventoryFunctions();
+
             this.Rooms = new List<Room>(Model.Resources.rooms.Values);
             this.PassedInventory = inventory;
 
@@ -175,7 +183,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            Logics.InventoryFunctions.EditInventoryAmount(PassedInventory, EnteredQuantity, SelectedRoom);
+            inventoryFunctions.EditInventoryAmount(PassedInventory, EnteredQuantity, SelectedRoom);
             this.Close();
             }
 

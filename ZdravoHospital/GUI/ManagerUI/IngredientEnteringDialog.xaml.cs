@@ -85,16 +85,17 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            Logics.MedicineFunctions medicineFunctions = new Logics.MedicineFunctions();
             if (isAdder)
             {
                 Ingredient i = new Ingredient(EnteredName.Trim().ToLower());
-                Logics.MedicineFunctions.AddIngredientToMedicine(i, ExistingNames, viewableIngredients);
+                medicineFunctions.AddIngredientToMedicine(i, ExistingNames, viewableIngredients);
             }
             else
             {
                 if (!passedIngredient.IngredientName.Equals(EnteredName.Trim().ToLower()))
                 {
-                    Logics.MedicineFunctions.EditIngredientInMedicine(passedIngredient, EnteredName, ExistingNames, viewableIngredients);
+                    medicineFunctions.EditIngredientInMedicine(passedIngredient, EnteredName, ExistingNames, viewableIngredients);
                 }   
             }
             

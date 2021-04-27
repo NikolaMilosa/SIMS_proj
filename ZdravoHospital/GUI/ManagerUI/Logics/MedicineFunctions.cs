@@ -7,9 +7,11 @@ using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
-    public static class MedicineFunctions
+    public class MedicineFunctions
     {
-        public static void AddNewMedicine(Medicine newMedicine)
+        public MedicineFunctions() { }
+
+        public void AddNewMedicine(Medicine newMedicine)
         {
             newMedicine.MedicineName = Regex.Replace(newMedicine.MedicineName, @"\s+", " ");
             newMedicine.MedicineName = newMedicine.MedicineName.Trim().ToLower();
@@ -24,7 +26,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SaveMedicines();
         }
 
-        public static void EditMedicine(Medicine oldMedicine, Medicine newMedicine)
+        public void EditMedicine(Medicine oldMedicine, Medicine newMedicine)
         {
             newMedicine.MedicineName = Regex.Replace(newMedicine.MedicineName, @"\s+", " ");
             newMedicine.MedicineName = newMedicine.MedicineName.Trim().ToLower();
@@ -44,7 +46,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SaveMedicines();
         }
 
-        public static bool DeleteIngredientFromMedicine(Ingredient ingredient, List<Ingredient> temporarayIngredients, ObservableCollection<Ingredient> viewableIngredients)
+        public bool DeleteIngredientFromMedicine(Ingredient ingredient, List<Ingredient> temporarayIngredients, ObservableCollection<Ingredient> viewableIngredients)
         {
             viewableIngredients.Remove(ingredient);
             temporarayIngredients.RemoveAll(i => i.IngredientName.Equals(ingredient.IngredientName));
@@ -52,7 +54,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return true;
         }
 
-        public static bool DeleteMedicine(Medicine medicine)
+        public bool DeleteMedicine(Medicine medicine)
         {
             Model.Resources.medicines.Remove(medicine);
             ManagerWindow.Medicines.Remove(medicine);
@@ -62,14 +64,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return true;
         }
 
-        public static void AddIngredientToMedicine(Ingredient ingredient, List<Ingredient> existingIngredients, ObservableCollection<Ingredient> viewableIngredients)
+        public void AddIngredientToMedicine(Ingredient ingredient, List<Ingredient> existingIngredients, ObservableCollection<Ingredient> viewableIngredients)
         {
             ingredient.IngredientName = Regex.Replace(ingredient.IngredientName, @"\s+", " ");
             existingIngredients.Add(ingredient);
             viewableIngredients.Add(ingredient);
         }
 
-        public static void EditIngredientInMedicine(Ingredient ingredient, string newName, List<Ingredient> existingIngredients, ObservableCollection<Ingredient> viewableIngredients)
+        public void EditIngredientInMedicine(Ingredient ingredient, string newName, List<Ingredient> existingIngredients, ObservableCollection<Ingredient> viewableIngredients)
         {
             int indexView = viewableIngredients.IndexOf(ingredient);
             viewableIngredients.Remove(ingredient);

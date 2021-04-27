@@ -31,6 +31,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         public static ObservableCollection<Inventory> Inventory { get; set; }
         public static ObservableCollection<Medicine> Medicines { get; set; }
 
+        Logics.TransferRequestsFunctions transferRequestsFunctions;
+
         public ManagerWindow(string au)
         {
             InitializeComponent();
@@ -42,6 +44,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             RoomsButton.Focus();
 
             this.DataContext = this;
+
+            this.transferRequestsFunctions = new Logics.TransferRequestsFunctions();
 
             /* Opening database */
             Model.Resources.OpenRoomInventory();
@@ -56,7 +60,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             Medicines = new ObservableCollection<Medicine>(Model.Resources.medicines);
 
             /* Handling transfer requests */
-            Logics.TransferRequestsFunctions.RunOrExecute();
+            transferRequestsFunctions.RunOrExecute();
         }
 
         private void TurnOffTables()

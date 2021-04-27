@@ -137,14 +137,15 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            Logics.MedicineFunctions medicineFunctions = new Logics.MedicineFunctions();
             Medicine newMedicine = new Medicine() { MedicineName = MedicineName.Trim().ToLower(), Status = MedicineStatus, Note = "", Supplier = Supplier, Ingredients = temporaryIngredients };
             if (isAdder)
             {
-                Logics.MedicineFunctions.AddNewMedicine(newMedicine);
+                medicineFunctions.AddNewMedicine(newMedicine);
             }
             else
             {
-                Logics.MedicineFunctions.EditMedicine(passedMedicine, newMedicine);
+                medicineFunctions.EditMedicine(passedMedicine, newMedicine);
             }
 
             this.Close();

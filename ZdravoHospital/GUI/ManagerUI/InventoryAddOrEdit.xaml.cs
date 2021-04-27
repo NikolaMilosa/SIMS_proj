@@ -21,6 +21,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         bool isAdder;
         Window dialog;
 
+        private Logics.InventoryFunctions inventoryFunctions;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string name)
@@ -86,6 +88,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
+            this.inventoryFunctions = new Logics.InventoryFunctions();
+
             isAdder = true;
             this.Title = "Inventory adding dialog";
             TypeComboBox.SelectedIndex = 0;
@@ -95,6 +99,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             InitializeComponent();
             this.DataContext = this;
+
+            this.inventoryFunctions = new Logics.InventoryFunctions();
 
             this.Title = "Inventory editing dialog";
             isAdder = false;
@@ -125,7 +131,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void AddInventory()
         {
-            if (!Logics.InventoryFunctions.AddInventory(new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id)))
+            if (!inventoryFunctions.AddInventory(new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id)))
             {
                 dialog = new WarningDialog(this);
                 dialog.ShowDialog();
@@ -136,7 +142,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void EditInventory()
         {
             Inventory newInventory = new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id);
-            Logics.InventoryFunctions.EditInventory(Model.Resources.inventory[Id],newInventory);
+            inventoryFunctions.EditInventory(Model.Resources.inventory[Id],newInventory);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

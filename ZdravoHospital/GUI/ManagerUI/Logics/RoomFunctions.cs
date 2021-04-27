@@ -6,47 +6,34 @@ using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
-    public static class RoomFunctions
+    public class RoomFunctions
     {
-        public static Room FindRoomByType(RoomType rt)
+        public RoomFunctions() { }
+
+        public Room FindRoomByType(RoomType rt, Room room)
         {
-            foreach (Room r in Model.Resources.rooms.Values)
+            if (room != null)
             {
-                if (r.Available == true && r.RoomType == rt)
-                    return r;
+                foreach (Room r in Model.Resources.rooms.Values)
+                {
+                    if (r.Available == true && r.RoomType == rt && r.Id != room.Id)
+                        return r;
+                }
             }
+            else
+            {
+                foreach (Room r in Model.Resources.rooms.Values)
+                {
+                    if (r.Available == true && r.RoomType == rt)
+                        return r;
+                }
+            }
+            
 
             return null;
         }
 
-        public static Room FindRoomByType(RoomType rt, Room room)
-        {
-            foreach (Room r in Model.Resources.rooms.Values)
-            {
-                if (r.Available == true && r.RoomType == rt && r.Id != room.Id)
-                    return r;
-            }
-
-            return null;
-        }
-
-        public static Room FindRoomByPrio()
-        {
-            Room someRoom = FindRoomByType(RoomType.STORAGE_ROOM);
-
-            if (someRoom == null)
-                someRoom = FindRoomByType(RoomType.BREAK_ROOM);
-
-            if (someRoom == null)
-                someRoom = FindRoomByType(RoomType.APPOINTMENT_ROOM);
-
-            if (someRoom == null)
-                someRoom = FindRoomByType(RoomType.OPERATING_ROOM);
-
-            return someRoom;
-        }
-
-        public static Room FindRoomByPrio(Room notThisRoom)
+        public Room FindRoomByPrio(Room notThisRoom)
         {
             Room someRoom = FindRoomByType(RoomType.STORAGE_ROOM, notThisRoom);
 
@@ -62,10 +49,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return someRoom;
         }
 
-        public static bool DeleteRoom(Room room)
+        public bool DeleteRoom(Room room)
         {
             /* First handle its inventory */
-            List<RoomInventory> roomsInventory = RoomInventoryFunctions.FindAllInventoryInRoom(room.Id);
+            RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
+            List<RoomInventory> roomsInventory = roomInventoryService.FindAllInventoryInRoom(room.Id);
 
             if(roomsInventory.Count != 0)
             {
@@ -80,7 +68,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 /* Can be refactored when room transfering is added, this transfers from a room being deleted 
                  * other suitable room */
 
-                List<RoomInventory> transportsRoomInventory = RoomInventoryFunctions.FindAllInventoryInRoom(transportRoom.Id);
+                List<RoomInventory> transportsRoomInventory = roomInventoryService.FindAllInventoryInRoom(transportRoom.Id);
 
                 foreach (RoomInventory ri in roomsInventory)
                 {
@@ -114,7 +102,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return true;
         }
 
-        public static void AddRoom(Room room)
+        public void AddRoom(Room room)
         {
             room.Name = Regex.Replace(room.Name, @"\s+", " ");
             room.Name = room.Name.Trim();
@@ -124,7 +112,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SerializeRooms();
         }
 
-        public static void EditRoom(Room room)
+        public void EditRoom(Room room)
         {
             int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[room.Id]);
             ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);

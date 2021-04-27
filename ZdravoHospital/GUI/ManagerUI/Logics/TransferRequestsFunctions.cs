@@ -7,9 +7,9 @@ using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
-    public static class TransferRequestsFunctions
+    public class TransferRequestsFunctions
     {
-        public static void RunOrExecute()
+        public void RunOrExecute()
         {
             if (Model.Resources.transferRequests.Count != 0)
             {
@@ -28,13 +28,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
         }
 
-        public static void StartTransfer(TransferRequest transferRequest)
+        public void StartTransfer(TransferRequest transferRequest)
         {
             Task t = new Task(() => transferRequest.DoWork());
             t.Start();
         }
 
-        public static void CreateAndStartTransfer(TransferRequest transferRequest)
+        public void CreateAndStartTransfer(TransferRequest transferRequest)
         {
             Model.Resources.transferRequests.Add(transferRequest);
             Model.Resources.SerializeTransferRequests();
@@ -42,17 +42,18 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             t.Start();
         }
 
-        public static void ExecuteRequest(TransferRequest transferRequest)
+        public void ExecuteRequest(TransferRequest transferRequest)
         {
             if (Model.Resources.rooms.ContainsKey(transferRequest.SenderRoom) && Model.Resources.rooms.ContainsKey(transferRequest.RecipientRoom) && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
             {
+                RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
                 /* Handle database transfer */
-                RoomInventory sender = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
-                RoomInventory reciever = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
+                RoomInventory sender = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
+                RoomInventory reciever = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
 
                 if (sender.Quantity - transferRequest.Quantity == 0)
                 {
-                    RoomInventoryFunctions.DeleteByReference(sender);
+                    roomInventoryService.DeleteByReference(sender);
                 }
                 else
                 {
@@ -61,7 +62,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
                 if (reciever == null)
                 {
-                    RoomInventoryFunctions.AddNewReference(new RoomInventory(transferRequest.InventoryId, transferRequest.RecipientRoom, transferRequest.Quantity));
+                    roomInventoryService.AddNewReference(new RoomInventory(transferRequest.InventoryId, transferRequest.RecipientRoom, transferRequest.Quantity));
                 }
                 else
                 {
@@ -87,7 +88,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
         }
 
-        public static int GetScheduledInventoryForRoom(Inventory inventory, Room room)
+        public int GetScheduledInventoryForRoom(Inventory inventory, Room room)
         {
             int scheduledInventory = 0;
 

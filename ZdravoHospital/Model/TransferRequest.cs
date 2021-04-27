@@ -59,7 +59,9 @@ namespace Model
             if (ts > new TimeSpan(0,0,0))
                 Thread.Sleep(ts);
 
-            TransferRequestsFunctions.ExecuteRequest(this);
+            TransferRequestsFunctions transferRequestsFunctions = new TransferRequestsFunctions();
+
+            transferRequestsFunctions.ExecuteRequest(this);
         }
     }
 }
