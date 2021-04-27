@@ -86,5 +86,20 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 }
             }
         }
+
+        public static int GetScheduledInventoryForRoom(Inventory inventory, Room room)
+        {
+            int scheduledInventory = 0;
+
+            Model.Resources.transferRequests.ForEach(tr =>
+            {
+                if (tr.SenderRoom == room.Id && tr.InventoryId.Equals(inventory.Id))
+                {
+                    scheduledInventory += tr.Quantity;
+                }
+            });
+
+            return scheduledInventory;
+        }
     }
 }

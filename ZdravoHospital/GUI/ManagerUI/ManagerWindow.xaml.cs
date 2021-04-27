@@ -192,6 +192,14 @@ namespace ZdravoHospital.GUI.ManagerUI
                     dialog.ShowDialog();
                 }
             }
+            else if (e.Key == Key.Add)
+            {
+                if (InventoryTable.Visibility == Visibility.Visible && InventoryTable.SelectedIndex != -1)
+                {
+                    dialog = new InventoryAdderSubtractor((Inventory)InventoryTable.SelectedItem);
+                    dialog.ShowDialog();
+                }
+            }
         }
 
         private void AddRoom_Click(object sender, RoutedEventArgs e)

@@ -99,6 +99,12 @@
                                 <DataTrigger Binding="{Binding ElementName=FirstRoomUnavailable, Path=Visibility}" Value="Visible">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=SecondRoomUnavailable, Path=Visibility}" Value="Visible">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </DataGrid.Style>

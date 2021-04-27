@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "SenderRoom": 201,
+    "RecipientRoom": 101,
+    "InventoryId": "333FF",
+    "Quantity": 4,
+    "TimeOfExecution": "2021-04-27T02:30:00+02:00"
+  }
+]

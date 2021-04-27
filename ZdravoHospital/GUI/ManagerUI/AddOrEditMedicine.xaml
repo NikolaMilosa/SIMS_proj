@@ -29,10 +29,10 @@
     
         <!-- Error adorners -->
         <AdornerDecorator Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,5">
-            <TextBlock Text="{Binding ElementName=NameTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding ElementName=NameTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" FontWeight="SemiBold" FontStyle="Italic" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap"/>
         </AdornerDecorator>
         <AdornerDecorator Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,5">
-            <TextBlock Text="{Binding ElementName=SupplierTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap">
+            <TextBlock Text="{Binding ElementName=SupplierTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" FontWeight="SemiBold" FontStyle="Italic" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="Visibility" Value="Visible"/>

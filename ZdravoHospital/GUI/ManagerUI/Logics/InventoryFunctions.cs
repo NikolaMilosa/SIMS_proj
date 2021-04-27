@@ -72,5 +72,52 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.SerializeInventory();
         }
+
+        public static void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
+        {
+            int difference;
+
+            RoomInventory roomInventory = RoomInventoryFunctions.FindRoomInventoryByRoomAndInventory(room.Id, inventory.Id);
+            if (roomInventory == null)
+            {
+                RoomInventoryFunctions.AddNewReference(new RoomInventory(inventory.Id, room.Id, newQuantity));
+                difference = newQuantity;
+            }
+            else
+            {
+                if (newQuantity == roomInventory.Quantity)
+                    return;
+
+                difference = newQuantity - roomInventory.Quantity;
+                roomInventory.Quantity = newQuantity;
+
+                if (newQuantity == 0)
+                {
+                    RoomInventoryFunctions.DeleteByReference(roomInventory);
+                }
+            }
+
+            int index = ManagerWindow.Inventory.IndexOf(inventory);
+            ManagerWindow.Inventory.Remove(inventory);
+
+            if (difference < 0)
+            {
+                difference = (-1) * difference;
+                Model.Resources.inventory[inventory.Id].Quantity -= difference;
+                if (Model.Resources.inventory[inventory.Id].Quantity == 0)
+                    Model.Resources.inventory.Remove(inventory.Id);
+            }
+            else
+            {
+                Model.Resources.inventory[inventory.Id].Quantity += difference;
+            }
+            
+            ManagerWindow.Inventory.Insert(index, inventory);
+
+            
+
+            Model.Resources.SerializeRoomInventory();
+            Model.Resources.SerializeInventory();
+        }
     }
 }
