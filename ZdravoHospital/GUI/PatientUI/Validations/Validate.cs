@@ -13,6 +13,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public static class Validate
     {
+
         public static void ShowOkDialog(string title,string content)
         {
             customOkDialog customOkDialog = new customOkDialog(title, content);
@@ -130,34 +131,6 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             }
         }
 
-        public static void suggestTime(Period period,ObservableCollection<TimeSpan> periodList)
-        {
-            int dayNums = 3;
-            List<TimeSpan> timeList = new List<TimeSpan>();
-            generateTimeSpan(timeList);
-            periodList.Clear();
-            while (periodList.Count < 2)
-            {
-                periodList.Clear();
-                foreach (TimeSpan timeSpan in timeList)
-                {
-                    if (periodList.Count == 4)
-                    {
-                        break;
-                    }
-                    period.StartTime = DateTime.Today.AddDays(dayNums);
-                    period.StartTime += timeSpan;
-                    if (Validate.checkPeriod(period, false))
-                    {
-                        periodList.Add(timeSpan);
-                    }
-                }
-                ++dayNums;
-            }
-          
-            customOkDialog customOkDialog = new customOkDialog("Suggested time", "Time list is updated to suggested times!");
-            customOkDialog.ShowDialog();
-        }
 
         public static void generateTimeSpan(List<TimeSpan> timeList)
         {
@@ -231,11 +204,6 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             customOkDialog customOkDialog = new customOkDialog("Warning", "There is no free rooms at selected time!");
             customOkDialog.ShowDialog();
             return roomId;
-        }
-
-        internal static void generateTimeSpan(ObservableCollection<TimeSpan> periodList)
-        {
-            throw new NotImplementedException();
         }
 
         public static bool doPeriodsOverlap(Period period, Period checkedPeriod)
