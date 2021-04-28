@@ -140,14 +140,19 @@
                                    FontSize="25"
                                    Foreground="White"
                                    Margin="10"/>
-                    <ComboBox Grid.Row="1"
+                    <ComboBox Style="{StaticResource DarkComboBox}" Grid.Row="1"
                                Grid.Column="2"
                               Name="MedicinesComboBox"
                                   FontSize="20"
                   HorizontalAlignment="Left"
                                   SelectionChanged="MedicinesComboBox_SelectionChanged"
-                      Width="350"
-                      Height="40"/>
+                              KeyUp="MedicinesComboBox_KeyUp"
+                              GotFocus="MedicinesComboBox_GotFocus"
+                              IsTextSearchEnabled="False"
+                      Width="450"
+                      Height="40"
+                              StaysOpenOnEdit="True"
+                              IsEditable="True"/>
 
                         <TextBlock Grid.Row="2"
                                Grid.Column="1"
@@ -210,7 +215,7 @@
                                Grid.Column="2" 
                   HorizontalAlignment="Left"
                               Width="200">
-                    <DatePicker Name="EndDatePicker"
+                    <DatePicker Style="{DynamicResource DarkDatePicker}" Name="EndDatePicker"
                             FontSize="15"/>
                 </Viewbox>
 
@@ -230,6 +235,7 @@
                              x:Name="InstructionsTextBox"
                          VerticalScrollBarVisibility="Visible"
                      Height="240"
+                         Padding="5"
                      FontSize="25"/>
 
                 <StackPanel Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal"

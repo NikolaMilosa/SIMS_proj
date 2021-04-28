@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Navigation;
 
 namespace ZdravoHospital.GUI.DoctorUI
@@ -86,13 +86,14 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void AddTherapyButton_Click(object sender, RoutedEventArgs e)
         {
-            NewTherapyPopup.Visibility = Visibility.Visible;
+            MedicinesComboBox.Text = "";
             MedicinesComboBox.SelectedIndex = -1;
             StartHoursTextBox.Text = "00:00";
             TimesPerDayTextBox.Text = "0";
             PauseInDaysTextBox.Text = "0";
             EndDatePicker.SelectedDate = DateTime.Now.Date;
             InstructionsTextBox.Text = "";
+            NewTherapyPopup.Visibility = Visibility.Visible;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -139,6 +140,8 @@ namespace ZdravoHospital.GUI.DoctorUI
                 therapy.PauseInDays = Int32.Parse(PauseInDaysTextBox.Text);
                 therapy.EndDate = end;
                 therapy.Instructions = InstructionsTextBox.Text;
+
+                TherapiesListView.Items.Refresh();
             }
             else
             {
@@ -156,7 +159,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             }
 
             OnPropertyChanged("Therapies");
-
+            
             NewTherapyPopup.Visibility = Visibility.Hidden;
             editing = false;
         }
@@ -242,6 +245,23 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void RemoveTherapyButton_Click(object sender, RoutedEventArgs e)
         {
             Therapies.Remove((sender as Button).DataContext as Therapy);
+        }
+
+        private void MedicinesComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            string text = MedicinesComboBox.Text;
+            MedicinesComboBox.SelectedIndex = -1;
+            MedicinesComboBox.Text = text;
+            TextBox textBox = MedicinesComboBox.Template.FindName("PART_EditableTextBox", MedicinesComboBox) as TextBox;
+            textBox.CaretIndex = text.Length;
+            MedicinesComboBox.IsDropDownOpen = true;
+            MedicinesComboBox.ItemsSource = 
+                Model.Resources.medicines.Where(m => m.MedicineName.Contains(MedicinesComboBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        private void MedicinesComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MedicinesComboBox.IsDropDownOpen = true;
         }
     }
 }
