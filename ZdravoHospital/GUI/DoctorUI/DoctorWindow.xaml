@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
         mc:Ignorable="d"
         Title="DoctorWindow" Height="700" Width="1500"
+        MinWidth="500"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
     <Window.Resources>

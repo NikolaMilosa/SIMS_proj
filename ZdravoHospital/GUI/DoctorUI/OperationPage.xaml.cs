@@ -266,7 +266,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void PrescriptionButton_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new PrescriptionPage(this.period));
+            NavigationService.Navigate(new PrescriptionPage(this.period));
         }
     }
 }

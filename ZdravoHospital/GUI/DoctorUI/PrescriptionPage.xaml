@@ -1,0 +1,265 @@
+﻿<Page x:Class="ZdravoHospital.GUI.DoctorUI.PrescriptionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1920"
+      Title="PrescriptionPage"
+      SizeChanged="PageSizeChanged">
+    <Grid>
+        <Grid Background="{StaticResource DarkGray}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" 
+                        Background="Black">
+                <DockPanel Margin="{Binding TopPanelMargin}">
+                    <Button DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Margin="20, 10, 20, 20"
+                            Height="50"
+                            Width="100"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelButton"
+                            Click="CancelButton_Click"/>
+                    <WrapPanel DockPanel.Dock="Right"
+                               FlowDirection="RightToLeft">
+                        <Button Content="Confirm prescription"
+                                Padding="10" 
+                                Width="220"
+                                Height="50"
+                                Margin="10, 10, 10, 20"
+                                Style="{StaticResource BlueButton}"
+                                Name="ConfirmButton"
+                                Click="ConfirmButton_Click"/>
+                        <Button Content="Add therapy"
+                                Padding="10" 
+                                Width="150"
+                                Margin="10, 10, 0, 20"
+                                Style="{StaticResource BlueButton}"
+                                Height="50"
+                                Name="AddTherapyButton"
+                                Click="AddTherapyButton_Click"/>
+                    </WrapPanel>
+                </DockPanel>
+            </StackPanel>
+            <ListView Grid.Row="1"
+                      x:Name="TherapiesListView"
+                      HorizontalContentAlignment="Stretch"
+                      Background="{StaticResource DarkGray}"
+                      BorderThickness="0"
+                      Margin="0, 8, 0, 0"
+                      Padding="{Binding ListViewMargin}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="Black" 
+                              Margin="8"
+                              Focusable="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       DockPanel.Dock="Left"
+                                       Text="{Binding Path=Medicine.MedicineName}"
+                                       Margin="30, 10"
+                                       Foreground="White" 
+                                       FontSize="21" 
+                                       VerticalAlignment="Center"
+                                       TextAlignment="Center"/>
+                            <WrapPanel Grid.Column="2"
+                                       DockPanel.Dock="Right" 
+                                       FlowDirection="RightToLeft">
+                                    <Button x:Name="RemoveTheapyButton" 
+                                            Content="Remove" 
+                                            Height="40"
+                                            Padding="10"
+                                            Margin="30, 15, 15, 15"
+                                            Width="110"
+                                            Style="{StaticResource BlueButton}"
+                                            Click="RemoveTherapyButton_Click"/>
+                                    <Button x:Name="EditTheapyButton" 
+                                            Content="Edit" 
+                                            Height="40"
+                                            Padding="10"
+                                            Margin="15"
+                                            Width="80"
+                                            Style="{StaticResource BlueButton}"
+                                            Click="EditTherapyButton_Click"/>
+                                </WrapPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Name="NewTherapyPopup"
+                   Background="Transparent"
+                            Visibility="Hidden">
+            <Grid Background="Black"
+                  Opacity="0.85">
+            </Grid>
+            <Grid Background="{StaticResource DarkGray}"
+                            Width="800"
+                            Height="700">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="Medicine:               " 
+                                   FontSize="25"
+                                   Foreground="White"
+                                   Margin="10"/>
+                    <ComboBox Style="{StaticResource DarkComboBox}" Grid.Row="1"
+                               Grid.Column="2"
+                              Name="MedicinesComboBox"
+                                  FontSize="20"
+                  HorizontalAlignment="Left"
+                                  SelectionChanged="MedicinesComboBox_SelectionChanged"
+                              KeyUp="MedicinesComboBox_KeyUp"
+                              GotFocus="MedicinesComboBox_GotFocus"
+                              IsTextSearchEnabled="False"
+                      Width="450"
+                      Height="40"
+                              StaysOpenOnEdit="True"
+                              IsEditable="True"/>
+
+                        <TextBlock Grid.Row="2"
+                               Grid.Column="1"
+                               Text="Start time:" 
+                                   Foreground="White"
+                   FontSize="25"
+                   Margin="10"/>
+                    <TextBox Grid.Row="2"
+                               Grid.Column="2" 
+                  HorizontalAlignment="Left"
+                             x:Name="StartHoursTextBox"
+                     Width="100"
+                     Height="40"
+                              Background="Black"
+                              Foreground="White"
+                     FontSize="25"
+                     TextAlignment="Center"/>
+
+                <TextBlock Grid.Row="3"
+                               Grid.Column="1" 
+                             Text="Times per day:" 
+                                   Foreground="White"
+                   FontSize="25"
+                   Margin="10"/>
+                <TextBox Grid.Row="3"
+                               Grid.Column="2" 
+                  HorizontalAlignment="Left"
+                              Background="Black"
+                              Foreground="White"
+                             x:Name="TimesPerDayTextBox"
+                     Width="100"
+                     Height="40"
+                     FontSize="25"
+                     TextAlignment="Center"/>
+
+                <TextBlock Grid.Row="4"
+                               Grid.Column="1" 
+                             Text="Pause in days:" 
+                                   Foreground="White"
+                   FontSize="25"
+                   Margin="10"/>
+                <TextBox Grid.Row="4"
+                               Grid.Column="2" 
+                  HorizontalAlignment="Left"
+                             x:Name="PauseInDaysTextBox"
+                     Width="100"
+                     Height="40"
+                              Background="Black"
+                              Foreground="White"
+                     FontSize="25"
+                     TextAlignment="Center"/>
+
+                <TextBlock Grid.Row="5"
+                               Grid.Column="1" 
+                             Text="End date:"
+                                   Foreground="White"
+                   FontSize="25"
+                   Margin="10"/>
+                <Viewbox Grid.Row="5"
+                               Grid.Column="2" 
+                  HorizontalAlignment="Left"
+                              Width="200">
+                    <DatePicker Style="{DynamicResource DarkDatePicker}" Name="EndDatePicker"
+                            FontSize="15"/>
+                </Viewbox>
+
+                <TextBlock Grid.Row="6"
+                               Grid.Column="1" 
+                             Text="Instructions:"
+                                   Foreground="White"
+                   FontSize="25"
+                   Margin="10"/>
+                <TextBox Grid.Row="7"
+                               Grid.Column="1"
+                         Grid.ColumnSpan="2"
+                  HorizontalAlignment="Stretch"
+                         TextWrapping="Wrap"
+                              Background="Black"
+                              Foreground="White"
+                             x:Name="InstructionsTextBox"
+                         VerticalScrollBarVisibility="Visible"
+                     Height="240"
+                         Padding="5"
+                     FontSize="25"/>
+
+                <StackPanel Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                            Margin="0, 30">
+                    <Button Name="CancelTherapyButton"
+                                Style="{StaticResource BlueButton}"
+                    Content="Cancel"
+                    FontSize="25"
+                    Margin="80, 0"
+                            Height="50"
+                            Width="130"
+                    Padding="10"
+                            Click="CancelTherapyButton_Click"/>
+                    <Button Name="ConfirmTherapyButton"
+                                Style="{StaticResource BlueButton}"
+                    Content="Confirm"
+                    FontSize="25"
+                            Height="50"
+                            Width="130"
+                    Margin="80, 0"
+                    Padding="10" Click="ConfirmTherapyButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
