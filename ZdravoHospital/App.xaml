@@ -7,8 +7,8 @@
         <Brush x:Key="Blue">#0460FF</Brush>
         <Brush x:Key="BlueHover">#0440FF</Brush>
         <Brush x:Key="BlackHover">#0b0b0b</Brush>
-        <Brush x:Key="DarkGray">#222222</Brush>
-        <Brush x:Key="LightGray">#bfbfbf</Brush>
+        <Brush x:Key="DarkGray">#111111</Brush>
+        <Brush x:Key="LightGray">#BFBFBF</Brush>
         
         <Style x:Key="BlueButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource Blue}"/>
