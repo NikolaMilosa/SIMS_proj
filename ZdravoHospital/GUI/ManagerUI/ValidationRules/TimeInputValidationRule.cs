@@ -92,6 +92,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             foreach (RoomSchedule r in Model.Resources.roomSchedule)
             {
+                if (r.ScheduleType == ReservationType.TRANSFER)
+                    continue;
                 if (passedTime >= r.StartTime && passedTime <= r.EndTime && r.RoomId == firstRoom.Id)
                 {
                     /* Start time is in the middle of another renovation */

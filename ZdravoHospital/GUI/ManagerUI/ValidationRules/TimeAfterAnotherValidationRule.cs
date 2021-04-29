@@ -86,6 +86,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             foreach (RoomSchedule rs in Model.Resources.roomSchedule)
             {
+                if (rs.ScheduleType == ReservationType.TRANSFER)
+                    continue;
                 if (room.Id == rs.RoomId)
                 {
                     if ((start >= rs.StartTime && rs.EndTime >= start) ||

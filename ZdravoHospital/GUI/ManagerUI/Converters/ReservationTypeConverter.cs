@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Markup;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI.Converters
 {
@@ -18,6 +19,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Converters
                 return "[ APPOINTMENT ]";
             if ((ReservationType)value == ReservationType.OPERATION)
                 return "[ OPERATION   ]";
+            if ((ReservationType)value == ReservationType.TRANSFER)
+                return "[ TRANSFER    ]";
 
             return "";
         }

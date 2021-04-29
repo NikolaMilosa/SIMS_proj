@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Model;
+
 namespace ZdravoHospital.GUI.ManagerUI.DTOs
 {
-    public enum ReservationType
-    {
-        APPOINTMENT,
-        OPERATION,
-        RENOVATION
-    }
     public class ReservationDTO : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

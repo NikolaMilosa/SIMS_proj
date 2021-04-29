@@ -15,7 +15,7 @@
     "RoomType": 2,
     "Id": 104,
     "Name": "bedroom 1",
-    "Available": true
+    "Available": false
   },
   "201": {
     "RoomType": 0,

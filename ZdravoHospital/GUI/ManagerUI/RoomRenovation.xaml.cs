@@ -33,7 +33,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private DateTime _endDate;
 
         //Logics:
-        private RoomFunctions roomFunctions;
+        private RoomScheduleFunctions roomScheduleFunctions;
 
         public ObservableCollection<Room> Rooms
         {
@@ -51,7 +51,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             set
             {
                 _selectedRoom = value;
-                RoomSchedule = roomFunctions.GetRoomSchedule(_selectedRoom);
+                RoomSchedule = roomScheduleFunctions.GetRoomSchedule(_selectedRoom);
 
                 OnPropertyChanged("RoomSchedule");
                 OnPropertyChanged("SelectedRoom");
@@ -125,7 +125,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             InitializeComponent();
             this.DataContext = this;
-            roomFunctions = new RoomFunctions();
+            roomScheduleFunctions = new RoomScheduleFunctions();
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             StartDate = DateTime.Today;
         }
@@ -140,7 +140,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             DateTime startTime = StartDate.Add(TimeSpan.ParseExact(StartTime, "c", null));
             DateTime endTime = EndDate.Add(TimeSpan.ParseExact(EndTime, "c", null));
 
-            RoomSchedule roomSchedule = new RoomSchedule() { StartTime = startTime, EndTime = endTime, RoomId = SelectedRoom.Id };
+            RoomSchedule roomSchedule = new RoomSchedule() { StartTime = startTime, EndTime = endTime, RoomId = SelectedRoom.Id, ScheduleType = ReservationType.RENOVATION };
 
             RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
             roomScheduleFunctions.CreateAndScheduleRenovationStart(roomSchedule);

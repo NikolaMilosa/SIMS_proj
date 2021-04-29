@@ -3,15 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class InventoryFunctions
     {
+        private static Mutex inventoryMutex;
+
+        public static Mutex GetInventoryMutex()
+        {
+            if (inventoryMutex == null)
+                inventoryMutex = new Mutex();
+            return inventoryMutex;
+        }
+
         public InventoryFunctions() { }
 
         public bool DeleteInventory(Inventory someInventory)
         {
+            GetInventoryMutex().WaitOne();
+
             RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
             roomInventoryService.DeleteByInventoryId(someInventory.Id);
 
@@ -20,6 +32,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.inventory.Remove(someInventory.Id);
             Model.Resources.SerializeInventory();
+
+            GetInventoryMutex().ReleaseMutex();
             return true;
         }
 
@@ -46,6 +60,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
             /* Found a room to put some inventory in */
+            GetInventoryMutex().WaitOne();
+
             Model.Resources.inventory[newInventory.Id] = newInventory;
             roomInventoryFunctions.AddNewReference(new RoomInventory(newInventory.Id, someRoom.Id, newInventory.Quantity));
 
@@ -53,11 +69,15 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SerializeRoomInventory();
 
             ManagerWindow.Inventory.Add(Model.Resources.inventory[newInventory.Id]);
+
+            GetInventoryMutex().ReleaseMutex();
             return true;
         }
 
         public void EditInventory(Inventory oldInventory, Inventory newInventory)
         {
+            GetInventoryMutex().WaitOne();
+
             int index = ManagerWindow.Inventory.IndexOf(oldInventory);
             ManagerWindow.Inventory.Remove(oldInventory);
 
@@ -77,6 +97,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             ManagerWindow.Inventory.Insert(index, newInventory);
 
             Model.Resources.SerializeInventory();
+
+            GetInventoryMutex().ReleaseMutex();
         }
 
         public void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
@@ -105,6 +127,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 }
             }
 
+            GetInventoryMutex().WaitOne();
+
             int index = ManagerWindow.Inventory.IndexOf(inventory);
             ManagerWindow.Inventory.Remove(inventory);
 
@@ -122,10 +146,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             
             ManagerWindow.Inventory.Insert(index, inventory);
 
-            
-
             Model.Resources.SerializeRoomInventory();
             Model.Resources.SerializeInventory();
+
+            GetInventoryMutex().ReleaseMutex();
         }
     }
 }

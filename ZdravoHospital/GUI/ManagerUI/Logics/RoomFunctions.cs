@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 
@@ -10,6 +11,16 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomFunctions
     {
+        private static Mutex roomMutex;
+
+        public static Mutex GetRoomMutex()
+        {
+            if (roomMutex == null)
+                roomMutex = new Mutex();
+
+            return roomMutex;
+        }
+
         public RoomFunctions() { }
 
         public Room FindRoomByType(RoomType rt, Room room)
@@ -72,6 +83,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
                 List<RoomInventory> transportsRoomInventory = roomInventoryService.FindAllInventoryInRoom(transportRoom.Id);
 
+                GetRoomMutex().WaitOne();
+
                 foreach (RoomInventory ri in roomsInventory)
                 {
                     bool handeled = false;
@@ -92,7 +105,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
                     Model.Resources.roomInventory.Remove(ri);
                 }
+
+                GetRoomMutex().ReleaseMutex();
             }
+
+            GetRoomMutex().WaitOne();
 
             /* Delete from dataBase and visual */
             ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
@@ -100,6 +117,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.SerializeRoomInventory();
             Model.Resources.SerializeRooms();
+
+            GetRoomMutex().ReleaseMutex();
 
             return true;
         }
@@ -109,13 +128,18 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             room.Name = Regex.Replace(room.Name, @"\s+", " ");
             room.Name = room.Name.Trim();
 
+            GetRoomMutex().WaitOne();
+
             Model.Resources.rooms[room.Id] = room;
             ManagerWindow.Rooms.Add(Model.Resources.rooms[room.Id]);
             Model.Resources.SerializeRooms();
+
+            GetRoomMutex().ReleaseMutex();
         }
 
         public void EditRoom(Room room)
         {
+            GetRoomMutex().WaitOne();
             int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[room.Id]);
             ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
 
@@ -126,60 +150,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SerializeRooms();
 
             ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[room.Id]);
-        }
-
-        public ObservableCollection<RoomScheduleDTO> GetRoomSchedule(Room room)
-        {
-            ObservableCollection<RoomScheduleDTO> roomSchedule = new ObservableCollection<RoomScheduleDTO>();
-
-            /* How many days ahead to show */
-            DateTime end = DateTime.Today.AddMonths(2);
-
-            for (DateTime begin = DateTime.Today; begin <= end; begin = begin.AddDays(1))
-            {
-                RoomScheduleDTO roomScheduleInstance = new RoomScheduleDTO(begin);
-                roomScheduleInstance.Reservations = GetReservationsForRoom(room, begin);
-                roomSchedule.Add(roomScheduleInstance);
-            }
-
-            return roomSchedule;
-        }
-
-        public ObservableCollection<ReservationDTO> GetReservationsForRoom(Room room, DateTime day)
-        { 
-            ObservableCollection<ReservationDTO> reservations = new ObservableCollection<ReservationDTO>();
-
-            DateTime end = day.AddDays(1);
-            Model.Resources.periods.ForEach(p =>
-            {
-                if (p.StartTime >= day && p.StartTime < end && p.RoomId == room.Id)
-                {
-                    ReservationType rt = ReservationType.RENOVATION;
-                    if (p.PeriodType == PeriodType.APPOINTMENT)
-                        rt = ReservationType.APPOINTMENT;
-                    else if (p.PeriodType == PeriodType.OPERATION)
-                        rt = ReservationType.OPERATION;
-
-                    DateTime reservationEnd = p.StartTime.AddMinutes(p.Duration);
-
-                    ReservationDTO reservation = new ReservationDTO(rt,p.StartTime, reservationEnd);
-                    reservations.Add(reservation);
-                }
-            });
-
-            Model.Resources.roomSchedule.ForEach(r =>
-            {
-                if (r.RoomId == room.Id)
-                {
-                    if ((r.StartTime >= day && r.StartTime < end) || (day >= r.StartTime && end <= r.EndTime) || (r.EndTime >= day && r.EndTime < end))
-                    {
-                        /* Starts today */
-                        ReservationDTO reservation = new ReservationDTO(ReservationType.RENOVATION, r.StartTime, r.EndTime);
-                        reservations.Add(reservation);
-                    }
-                }
-            });
-            return reservations;
-        }
+            GetRoomMutex().ReleaseMutex();
+        }        
     }
 }

@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Model;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class MedicineFunctions
     {
+        private static Mutex medicineMutex;
+
+        public static Mutex GetMedicineMutex()
+        {
+            if (medicineMutex == null)
+                medicineMutex = new Mutex();
+            return medicineMutex;
+        }
+
         public MedicineFunctions() { }
 
         public void AddNewMedicine(Medicine newMedicine)
@@ -20,10 +30,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newMedicine.Supplier = newMedicine.Supplier.Trim();
             newMedicine.Supplier = newMedicine.Supplier.Substring(0, 1).ToUpper() + newMedicine.Supplier.Substring(1).ToLower();
 
+            GetMedicineMutex().WaitOne();
+
             Model.Resources.medicines.Add(newMedicine);
             ManagerWindow.Medicines.Add(newMedicine);
 
             Model.Resources.SaveMedicines();
+
+            GetMedicineMutex().ReleaseMutex();
         }
 
         public void EditMedicine(Medicine oldMedicine, Medicine newMedicine)
@@ -35,6 +49,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newMedicine.Supplier = newMedicine.Supplier.Trim();
             newMedicine.Supplier = newMedicine.Supplier.Substring(0, 1).ToUpper() + newMedicine.Supplier.Substring(1).ToLower();
 
+            GetMedicineMutex().WaitOne();
+
             int index = Model.Resources.medicines.IndexOf(oldMedicine);
             Model.Resources.medicines.Remove(oldMedicine);
             Model.Resources.medicines.Insert(index, newMedicine);
@@ -44,6 +60,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             ManagerWindow.Medicines.Insert(index, newMedicine);
 
             Model.Resources.SaveMedicines();
+
+            GetMedicineMutex().ReleaseMutex();
         }
 
         public bool DeleteIngredientFromMedicine(Ingredient ingredient, List<Ingredient> temporarayIngredients, ObservableCollection<Ingredient> viewableIngredients)
@@ -56,10 +74,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public bool DeleteMedicine(Medicine medicine)
         {
+            GetMedicineMutex().WaitOne();
+
             Model.Resources.medicines.Remove(medicine);
             ManagerWindow.Medicines.Remove(medicine);
 
             Model.Resources.SaveMedicines();
+
+            GetMedicineMutex().ReleaseMutex();
 
             return true;
         }

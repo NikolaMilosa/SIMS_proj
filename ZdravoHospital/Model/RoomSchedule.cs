@@ -12,6 +12,7 @@ namespace Model
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int RoomId { get; set; }
+        public ReservationType ScheduleType { get; set; }
 
         public void WaitStartRenovation()
         {
