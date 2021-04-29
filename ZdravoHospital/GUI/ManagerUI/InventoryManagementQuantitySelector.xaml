@@ -25,9 +25,9 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
 
             <!-- Error adorners -->
@@ -35,7 +35,7 @@
                 <TextBlock Text="{Binding ElementName=QuantityTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" FontWeight="SemiBold" FontStyle="Italic" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap"/>
             </AdornerDecorator>
             <AdornerDecorator Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,5">
-                <TextBlock Text="{Binding ElementName=TimeTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" TextAlignment="Center" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap">
+                <TextBlock Text="{Binding ElementName=TimeTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" TextAlignment="Center" FontWeight="SemiBold" FontStyle="Italic" Foreground="Red" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Visibility" Value="Visible"/>
@@ -146,7 +146,9 @@
                             <Binding.ValidationRules>
                                 <validation:TimeInputValidationRule ValidationStep="RawProposedValue">
                                     <validation:TimeInputValidationRule.Wrapper>
-                                        <validation:PassedTimeWrapper PassedTime="{Binding Data.ChosenDate, Source={StaticResource proxy}}"/>
+                                        <validation:PassedTimeWrapper PassedTime="{Binding Data.ChosenDate, Source={StaticResource proxy}}"
+                                                                      PassedFirstRoom="{Binding Data.FirstRoom, Source={StaticResource proxy}}"
+                                                                      PassedSecondRoom="{Binding Data.SecondRoom, Source={StaticResource proxy}}"/>
                                     </validation:TimeInputValidationRule.Wrapper>
                                 </validation:TimeInputValidationRule>
                             </Binding.ValidationRules>

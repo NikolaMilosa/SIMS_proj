@@ -189,6 +189,17 @@
                VerticalAlignment="Center"
                Margin="20,0,0,0"/>
 
+
+        <DatePicker Grid.Row="4" Grid.Column="1"
+                    FontSize="18"
+                    HorizontalAlignment="Left"
+                    Margin="20,0,0,0"
+                    Width="170"
+                    VerticalAlignment="Center"
+                    x:Name="FirstPicker"
+                    DisplayDateStart="{x:Static sys:DateTime.Today}"
+                    SelectedDate="{Binding StartDate}" PreviewKeyDown="FirstPicker_PreviewKeyDown"/>
+
         <TextBox x:Name="StartTimeTextBox" Grid.Row="5" Grid.Column="1"
                  Height="35"
                  FontSize="18"
@@ -204,7 +215,9 @@
                     <Binding.ValidationRules>
                         <validation:TimeInputValidationRule ValidationStep="RawProposedValue">
                             <validation:TimeInputValidationRule.Wrapper>
-                                <validation:PassedTimeWrapper PassedTime="{Binding Data.StartDate, Source={StaticResource proxy}}"/>
+                                <validation:PassedTimeWrapper PassedTime="{Binding Data.StartDate, Source={StaticResource proxy}}" 
+                                                              PassedFirstRoom="{Binding Data.SelectedRoom, Source={StaticResource proxy}}"
+                                                              PassedSecondRoom="{Binding Data.SelectedRoom, Source={StaticResource proxy}}"/>
                             </validation:TimeInputValidationRule.Wrapper>
                         </validation:TimeInputValidationRule>
                     </Binding.ValidationRules>
@@ -221,16 +234,16 @@
             </TextBox.Style>
         </TextBox>
 
-        <DatePicker Grid.Row="4" Grid.Column="1"
+        <DatePicker Grid.Row="6" Grid.Column="1"
                     FontSize="18"
                     HorizontalAlignment="Left"
                     Margin="20,0,0,0"
                     Width="170"
                     VerticalAlignment="Center"
-                    x:Name="FirstPicker"
-                    DisplayDateStart="{x:Static sys:DateTime.Today}"
-                    SelectedDate="{Binding StartDate}"/>
-
+                    x:Name="SecondPicker"
+                    DisplayDateStart="{Binding ElementName=FirstPicker, Path=SelectedDate}"
+                    SelectedDate="{Binding EndDate}" PreviewKeyDown="SecondPicker_PreviewKeyDown"/>
+        
         <TextBox x:Name="EndTimeTextBox" Grid.Row="7" Grid.Column="1"
                  Height="35"
                  FontSize="18"
@@ -252,7 +265,9 @@
                         </validation:TimeInputValidationRule>
                         <validation:TimeAfterAnotherValidationRule ValidationStep="RawProposedValue">
                             <validation:TimeAfterAnotherValidationRule.Wrapper>
-                                <validation:OtherPassedTimeWrapper OtherPassedTime="{Binding Data.StartDate, Source={StaticResource otherProxy}}" ThisDate="{Binding Data.EndDate, Source={StaticResource otherProxy}}"/>
+                                <validation:OtherPassedTimeWrapper OtherPassedDate="{Binding Data.StartDate, Source={StaticResource otherProxy}}" 
+                                                                   ThisDate="{Binding Data.EndDate, Source={StaticResource otherProxy}}"
+                                                                   OtherPassedTime="{Binding Data.StartTime, Source={StaticResource otherProxy}}"/>
                             </validation:TimeAfterAnotherValidationRule.Wrapper>
                         </validation:TimeAfterAnotherValidationRule>
                     </Binding.ValidationRules>
@@ -269,16 +284,6 @@
             </TextBox.Style>
         </TextBox>
 
-        <DatePicker Grid.Row="6" Grid.Column="1"
-                    FontSize="18"
-                    HorizontalAlignment="Left"
-                    Margin="20,0,0,0"
-                    Width="170"
-                    VerticalAlignment="Center"
-                    x:Name="SecondPicker"
-                    DisplayDateStart="{Binding ElementName=FirstPicker, Path=SelectedDate}"
-                    SelectedDate="{Binding EndDate}"/>
-
         <!-- Buttons -->
 
         <Grid Grid.Row="8" Grid.Column="1">
@@ -287,7 +292,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="18" Content="Confirm" Height="52" Width="105" Margin="0,0,10,0" HorizontalAlignment="Right">
+            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="18" Content="Confirm" Height="52" Width="105" Margin="0,0,10,0" HorizontalAlignment="Right" Click="ConfirmButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="IsEnabled" Value="True"/>
@@ -314,7 +319,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="CancelButton" Grid.Column="1" Background="beige" FontSize="18" Content="Cancel" Height="52" Width="105" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <Button x:Name="CancelButton" Grid.Column="1" Background="beige" FontSize="18" Content="Cancel" Height="52" Width="105" HorizontalAlignment="Right" Margin="0,0,20,0" Click="CancelButton_Click"/>
 
         </Grid>
 

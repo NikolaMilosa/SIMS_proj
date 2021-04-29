@@ -33,6 +33,25 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private Logics.TransferRequestsFunctions transferRequestsFunctions;
 
+        public Room FirstRoom
+        {
+            get { return firstRoom; }
+            set 
+            { 
+                firstRoom = value;
+                OnPropertyChanged("FirstRoom");
+            }
+        }
+        public Room SecondRoom
+        {
+            get { return secondRoom; }
+            set 
+            { 
+                secondRoom = value;
+                OnPropertyChanged("SecondRoom");
+            }
+        }
+
         public string InputTime
         {
             get { return _inputTime; }
@@ -119,8 +138,8 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             this.transferRequestsFunctions = new Logics.TransferRequestsFunctions();
 
-            this.firstRoom = fr;
-            this.secondRoom = sr;
+            FirstRoom = fr;
+            SecondRoom = sr;
             this.firstRoomDTOs = fri;
             this.secondRoomDTOs = sri;
             this.id = invItem.Id;

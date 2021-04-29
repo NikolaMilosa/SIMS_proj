@@ -96,6 +96,7 @@ namespace ZdravoHospital.GUI.ManagerUI
                 _startDate = value;
                 OnPropertyChanged("StartDate");
                 EndDate = value;
+                StartTime = "";
             }
         }
 
@@ -106,6 +107,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 _endDate = value;
                 OnPropertyChanged("EndDate");
+                EndTime = "";
             }
         }
         
@@ -128,6 +130,94 @@ namespace ZdravoHospital.GUI.ManagerUI
             StartDate = DateTime.Today;
         }
 
-        
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FirstPicker_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!FirstPicker.IsDropDownOpen)
+            {
+                if (e.Key == Key.Enter)
+                {
+                    FirstPicker.IsDropDownOpen = true;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Tab) { }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (e.Key == Key.Enter)
+                {
+                    StartDate = (DateTime)FirstPicker.SelectedDate;
+                    FirstPicker.IsDropDownOpen = false;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Left) { }
+                else if (e.Key == Key.Right) { }
+                else if (e.Key == Key.Up) { }
+                else if (e.Key == Key.Down) { }
+                else if (e.Key == Key.Tab)
+                {
+                    FirstPicker.IsDropDownOpen = false;
+                    e.Handled = true;
+                    CancelButton.Focus();
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void SecondPicker_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!SecondPicker.IsDropDownOpen)
+            {
+                if (e.Key == Key.Enter)
+                {
+                    SecondPicker.IsDropDownOpen = true;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Tab) { }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (e.Key == Key.Enter)
+                {
+                    EndDate = (DateTime)SecondPicker.SelectedDate;
+                    SecondPicker.IsDropDownOpen = false;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Left) { }
+                else if (e.Key == Key.Right) { }
+                else if (e.Key == Key.Up) { }
+                else if (e.Key == Key.Down) { }
+                else if (e.Key == Key.Tab)
+                {
+                    SecondPicker.IsDropDownOpen = false;
+                    e.Handled = true;
+                    CancelButton.Focus();
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }

@@ -18,7 +18,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             {
                 var timeOfDay = TimeSpan.ParseExact(input, "c", null);
                 DateTime typedDate = Wrapper.ThisDate.Add(timeOfDay);
-                if (Wrapper.OtherPassedTime > typedDate)
+
+                var otherTimeOfDay = TimeSpan.ParseExact(Wrapper.OtherPassedTime, "c", null);
+                DateTime otherTypedDate = Wrapper.OtherPassedDate.Add(otherTimeOfDay);
+                if (otherTypedDate >= typedDate)
                 {
                     return new ValidationResult(false, "'Start time' is ahead of 'End time'...");
                 }
@@ -33,12 +36,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
     public class OtherPassedTimeWrapper : DependencyObject
     {
-        public static readonly DependencyProperty OtherPassedTimeProperty = DependencyProperty.Register("OtherPassedTime", typeof(DateTime), typeof(OtherPassedTimeWrapper), null);
+        public static readonly DependencyProperty OtherPassedDateProperty = DependencyProperty.Register("OtherPassedDate", typeof(DateTime), typeof(OtherPassedTimeWrapper), null);
     
-        public DateTime OtherPassedTime
+        public DateTime OtherPassedDate
         {
-            get { return (DateTime)GetValue(OtherPassedTimeProperty); }
-            set { SetValue(OtherPassedTimeProperty, value); }
+            get { return (DateTime)GetValue(OtherPassedDateProperty); }
+            set { SetValue(OtherPassedDateProperty, value); }
         }
 
         public DateTime ThisDate
@@ -48,6 +51,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         }
 
         public static readonly DependencyProperty ThisDateProperty = DependencyProperty.Register("ThisDate", typeof(DateTime), typeof(OtherPassedTimeWrapper), null);
+
+
+        public string OtherPassedTime
+        {
+            get { return (string)GetValue(OtherPassedTimeProperty); }
+            set { SetValue(OtherPassedTimeProperty, value); }
+        }
+        
+        public static readonly DependencyProperty OtherPassedTimeProperty = DependencyProperty.Register("OtherPassedTime", typeof(string), typeof(OtherPassedTimeWrapper), null);
+
 
     }
 
