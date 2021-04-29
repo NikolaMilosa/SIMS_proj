@@ -2,7 +2,7 @@
   {
     "MedicineName": "brufen",
     "Supplier": "Some supp",
-    "Status": 3,
+    "Status": 2,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [
@@ -20,7 +20,7 @@
   {
     "MedicineName": "test medication",
     "Supplier": "Jankovic",
-    "Status": 3,
+    "Status": 1,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [
@@ -54,7 +54,43 @@
     ]
   },
   {
-    "MedicineName": "bromazepam",
+    "MedicineName": "qweqweqwe",
+    "Supplier": "Some supp",
+    "Status": 2,
+    "Note": "",
+    "ReplacementMedication": [],
+    "Ingredients": [
+      {
+        "IngredientName": "magnesium"
+      },
+      {
+        "IngredientName": "zink"
+      },
+      {
+        "IngredientName": "natrium"
+      }
+    ]
+  },
+  {
+    "MedicineName": "zxczxczcx",
+    "Supplier": "Some supp",
+    "Status": 1,
+    "Note": "",
+    "ReplacementMedication": [],
+    "Ingredients": [
+      {
+        "IngredientName": "magnesium"
+      },
+      {
+        "IngredientName": "zink"
+      },
+      {
+        "IngredientName": "natrium"
+      }
+    ]
+  },
+  {
+    "MedicineName": "uytry",
     "Supplier": "Some supp",
     "Status": 3,
     "Note": "",
@@ -72,9 +108,9 @@
     ]
   },
   {
-    "MedicineName": "bromazepam",
+    "MedicineName": "hgjgh",
     "Supplier": "Some supp",
-    "Status": 3,
+    "Status": 0,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [
@@ -90,45 +126,9 @@
     ]
   },
   {
-    "MedicineName": "bromazepam",
+    "MedicineName": "rtytet",
     "Supplier": "Some supp",
-    "Status": 3,
-    "Note": "",
-    "ReplacementMedication": [],
-    "Ingredients": [
-      {
-        "IngredientName": "magnesium"
-      },
-      {
-        "IngredientName": "zink"
-      },
-      {
-        "IngredientName": "natrium"
-      }
-    ]
-  },
-  {
-    "MedicineName": "bromazepam",
-    "Supplier": "Some supp",
-    "Status": 3,
-    "Note": "",
-    "ReplacementMedication": [],
-    "Ingredients": [
-      {
-        "IngredientName": "magnesium"
-      },
-      {
-        "IngredientName": "zink"
-      },
-      {
-        "IngredientName": "natrium"
-      }
-    ]
-  },
-  {
-    "MedicineName": "bromazepam",
-    "Supplier": "Some supp",
-    "Status": 3,
+    "Status": 0,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [
