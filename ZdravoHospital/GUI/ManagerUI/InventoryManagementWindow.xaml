@@ -86,7 +86,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown" GotFocus="FirstRoomDataGrid_GotFocus">
+                <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" ItemsSource="{Binding FirstRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" FontSize="18" Margin="20,10,10,10" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown" GotFocus="FirstRoomDataGrid_GotFocus">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
@@ -146,7 +146,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <DataGrid x:Name="SecondRoomDataGrid" Grid.Row="3" ItemsSource="{Binding SecondRoomInventory, Mode=TwoWay}" AutoGenerateColumns="false" HeadersVisibility="Column" FontSize="18" Margin="10,10,20,10">
+                <DataGrid x:Name="SecondRoomDataGrid" Grid.Row="3" ItemsSource="{Binding SecondRoomInventory, Mode=TwoWay}" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" AutoGenerateColumns="false" HeadersVisibility="Column" FontSize="18" Margin="10,10,20,10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>

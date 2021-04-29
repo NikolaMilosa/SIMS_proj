@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 using Model;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {

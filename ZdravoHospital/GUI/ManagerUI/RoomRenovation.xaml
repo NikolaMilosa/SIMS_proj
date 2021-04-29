@@ -1,0 +1,237 @@
+﻿<Window x:Class="ZdravoHospital.GUI.ManagerUI.RoomRenovation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI"
+        xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
+        xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Renovation planning"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid Height="700" Width="600" Background="Beige">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        <Label Grid.Row="1" Content="Choose a room:"
+               FontSize="18"
+               HorizontalAlignment="Left" 
+               VerticalAlignment="Top"
+               Margin="20,0,0,0"/>
+
+        <ComboBox Grid.Row="1" Grid.Column="2"
+                  FontSize="18"
+                  VerticalContentAlignment="Center"
+                  HorizontalAlignment="Left"
+                  Width="250" Height="35"
+                  Margin="20,0,0,0"
+                  ItemsSource="{Binding Rooms}"
+                  SelectedItem="{Binding SelectedRoom}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="Id"/>
+                                <Binding Path="Name"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        
+        <ListView x:Name="RoomScheduleView" Grid.Row="2" Grid.RowSpan="2"
+                  Grid.ColumnSpan="2"
+                  Margin="20,10"
+                  ItemsSource="{Binding RoomSchedule, Mode=TwoWay}"
+                  HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="Beige" Height="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="{Binding Date.DayOfWeek}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="5,5,0,0"
+                               FontSize="16"/>
+
+                        <Label Content="{Binding Date}"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top"
+                               Margin="0,5,5,0"
+                               FontSize="16"
+                               Grid.Column="1"/>
+
+                        <Label Grid.Row="1" Grid.ColumnSpan="2"
+                               Content="No reservations for the day"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               FontSize="16">
+                            <Label.Style>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Reservations.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+
+                        <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                                  Margin="5"
+                                  ItemsSource="{Binding Reservations}"
+                                  HorizontalContentAlignment="Stretch">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="Auto" Background="LightBlue">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="5" Height="Auto" Width="Auto" Background="LightYellow">
+                                            <Label Content="{Binding Start, Converter={converters:BasicTimeConverter}}" FontSize="14"/>
+                                            <Label Content=" - " FontSize="14"/>
+                                            <Label Content="{Binding End, Converter={converters:BasicTimeConverter}}" FontSize="14"/>
+                                            <Label Content="   (" FontSize="14"/>
+                                            <Label Content="{Binding ReservationType}" FontSize="14"/>
+                                            <Label Content=")" FontSize="14"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.Style>
+                                <Style TargetType="{x:Type ListView}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Reservations.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.Style>
+                        </ListView>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Label Grid.Row="4"
+               Content="Start time:"
+               FontSize="18"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Margin="20,0,0,0"/>
+
+        <Label Grid.Row="5"
+               Content="Start date:"
+               FontSize="18"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Margin="20,0,0,0"/>
+
+        <Label Grid.Row="6"
+               Content="End time:"
+               FontSize="18"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Margin="20,0,0,0"/>
+
+        <Label Grid.Row="7"
+               Content="End date:"
+               FontSize="18"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Margin="20,0,0,0"/>
+
+        <TextBox x:Name="StartTimeTextBox" Grid.Row="4" Grid.Column="1"
+                 Height="35"
+                 FontSize="18"
+                 VerticalContentAlignment="Center"
+                 HorizontalAlignment="Left"
+                 Width="170"
+                 Margin="20,0,0,0"/>
+
+        <DatePicker Grid.Row="5" Grid.Column="1"
+                    FontSize="18"
+                    HorizontalAlignment="Left"
+                    Margin="20,0,0,0"
+                    Width="170"
+                    VerticalAlignment="Center"
+                    x:Name="FirstPicker"
+                    DisplayDate="{x:Static sys:DateTime.Today}"/>
+
+        <TextBox x:Name="EndTimeTextBox" Grid.Row="6" Grid.Column="1"
+                 Height="35"
+                 FontSize="18"
+                 VerticalContentAlignment="Center"
+                 HorizontalAlignment="Left"
+                 Width="170"
+                 Margin="20,0,0,0"/>
+
+        <DatePicker Grid.Row="7" Grid.Column="1"
+                    FontSize="18"
+                    HorizontalAlignment="Left"
+                    Margin="20,0,0,0"
+                    Width="170"
+                    VerticalAlignment="Center"
+                    DisplayDateStart="{Binding ElementName=FirstPicker, Path=SelectedDate}"/>
+        
+        <!-- Buttons -->
+
+        <Grid Grid.Row="8" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="18" Content="Confirm" Height="52" Width="105" Margin="0,0,10,0" HorizontalAlignment="Right">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=StartTimeTextBox, Path=Text}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=StartTimeTextBox, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=EndTimeTextBox, Path=Text}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=EndTimeTextBox, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="CancelButton" Grid.Column="1" Background="beige" FontSize="18" Content="Cancel" Height="52" Width="105" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+
+        </Grid>
+
+    </Grid>
+</Window>

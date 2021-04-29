@@ -53,6 +53,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             Model.Resources.OpenInventory();
             Model.Resources.OpenTransferRequests();
             Model.Resources.OpenMedicines();
+            Model.Resources.OpenPeriods();
 
             /* Handiling visuals */
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
@@ -233,6 +234,12 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void AddMedicineButton_Click(object sender, RoutedEventArgs e)
         {
             dialog = new AddOrEditMedicine();
+            dialog.ShowDialog();
+        }
+
+        private void PlanRenovation_Click(object sender, RoutedEventArgs e)
+        {
+            dialog = new RoomRenovation();
             dialog.ShowDialog();
         }
     }

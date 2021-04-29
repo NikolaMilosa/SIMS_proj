@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using Model;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
@@ -124,6 +126,49 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.SerializeRooms();
 
             ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[room.Id]);
+        }
+
+        public ObservableCollection<RoomScheduleDTO> GetRoomSchedule(Room room)
+        {
+            ObservableCollection<RoomScheduleDTO> roomSchedule = new ObservableCollection<RoomScheduleDTO>();
+
+            DateTime end = DateTime.Today.AddDays(4);
+
+            for (DateTime begin = DateTime.Today; begin <= end; begin = begin.AddDays(1))
+            {
+                RoomScheduleDTO roomScheduleInstance = new RoomScheduleDTO(begin);
+                roomScheduleInstance.Reservations = GetReservationsForRoom(room, begin);
+                roomSchedule.Add(roomScheduleInstance);
+            }
+
+            return roomSchedule;
+        }
+
+        public ObservableCollection<ReservationDTO> GetReservationsForRoom(Room room, DateTime day)
+        { 
+            ObservableCollection<ReservationDTO> reservations = new ObservableCollection<ReservationDTO>();
+
+            DateTime end = day.AddDays(1);
+            Model.Resources.periods.ForEach(p =>
+            {
+                if (p.StartTime > day && p.StartTime < end && p.RoomId == room.Id)
+                {
+                    ReservationType rt;
+                    if (p.PeriodType == PeriodType.APPOINTMENT)
+                        rt = ReservationType.APPOINTMENT;
+                    else if (p.PeriodType == PeriodType.OPERATION)
+                        rt = ReservationType.OPERATION;
+                    else
+                        rt = ReservationType.RENOVATION;
+
+                    DateTime reservationEnd = p.StartTime.AddMinutes(p.Duration);
+
+                    ReservationDTO reservation = new ReservationDTO(rt,p.StartTime, reservationEnd);
+                    reservations.Add(reservation);
+                }
+            });
+            
+            return reservations;
         }
     }
 }
