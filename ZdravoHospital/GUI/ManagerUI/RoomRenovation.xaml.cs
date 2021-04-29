@@ -137,6 +137,14 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            DateTime startTime = StartDate.Add(TimeSpan.ParseExact(StartTime, "c", null));
+            DateTime endTime = EndDate.Add(TimeSpan.ParseExact(EndTime, "c", null));
+
+            RoomSchedule roomSchedule = new RoomSchedule() { StartTime = startTime, EndTime = endTime, RoomId = SelectedRoom.Id };
+
+            RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
+            roomScheduleFunctions.CreateAndScheduleRenovationStart(roomSchedule);
+
             this.Close();
         }
 

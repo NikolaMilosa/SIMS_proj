@@ -21,18 +21,18 @@
     "RoomType": 0,
     "Id": 201,
     "Name": "Appointment room 1",
-    "Available": true
+    "Available": false
   },
   "106": {
     "RoomType": 3,
     "Id": 106,
     "Name": "BIG storage",
-    "Available": false
+    "Available": true
   },
   "505": {
     "RoomType": 2,
     "Id": 505,
     "Name": "Bedroom 3",
-    "Available": false
+    "Available": true
   }
 }
