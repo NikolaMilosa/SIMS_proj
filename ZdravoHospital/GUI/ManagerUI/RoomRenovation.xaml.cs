@@ -95,6 +95,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 _startDate = value;
                 OnPropertyChanged("StartDate");
+                EndDate = value;
             }
         }
 
@@ -124,6 +125,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.DataContext = this;
             roomFunctions = new RoomFunctions();
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
+            StartDate = DateTime.Today;
         }
 
         

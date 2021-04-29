@@ -4,27 +4,22 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 using System.Windows.Markup;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Converters
 {
-    class BasicTimeConverter : MarkupExtension, IValueConverter
+    class ReservationTypeConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            DateTime date = (DateTime)value;
+            if ((ReservationType)value == ReservationType.RENOVATION)
+                return "[ RENOVATION  ]";
+            if ((ReservationType)value == ReservationType.APPOINTMENT)
+                return "[ APPOINTMENT ]";
+            if ((ReservationType)value == ReservationType.OPERATION)
+                return "[ OPERATION   ]";
 
-            StringBuilder str = new StringBuilder();
-            str.Append(date.Day);
-            str.Append("/");
-            str.Append(date.Month);
-            str.Append("/");
-            str.Append(date.Year);
-            str.Append("  ");
-            str.Append(date.Hour);
-            str.Append(":");
-            str.Append(date.Minute);
-
-            return str.ToString();
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

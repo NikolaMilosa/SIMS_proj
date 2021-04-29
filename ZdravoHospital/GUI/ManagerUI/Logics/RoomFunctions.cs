@@ -132,7 +132,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             ObservableCollection<RoomScheduleDTO> roomSchedule = new ObservableCollection<RoomScheduleDTO>();
 
-            DateTime end = DateTime.Today.AddDays(4);
+            /* How many days ahead to show */
+            DateTime end = DateTime.Today.AddMonths(2);
 
             for (DateTime begin = DateTime.Today; begin <= end; begin = begin.AddDays(1))
             {
@@ -151,15 +152,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             DateTime end = day.AddDays(1);
             Model.Resources.periods.ForEach(p =>
             {
-                if (p.StartTime > day && p.StartTime < end && p.RoomId == room.Id)
+                if (p.StartTime >= day && p.StartTime < end && p.RoomId == room.Id)
                 {
-                    ReservationType rt;
+                    ReservationType rt = ReservationType.RENOVATION;
                     if (p.PeriodType == PeriodType.APPOINTMENT)
                         rt = ReservationType.APPOINTMENT;
                     else if (p.PeriodType == PeriodType.OPERATION)
                         rt = ReservationType.OPERATION;
-                    else
-                        rt = ReservationType.RENOVATION;
 
                     DateTime reservationEnd = p.StartTime.AddMinutes(p.Duration);
 
@@ -167,7 +166,19 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     reservations.Add(reservation);
                 }
             });
-            
+
+            Model.Resources.roomSchedule.ForEach(r =>
+            {
+                if (r.RoomId == room.Id)
+                {
+                    if ((r.StartTime >= day && r.StartTime < end) || (day >= r.StartTime && end <= r.EndTime) || (r.EndTime >= day && r.EndTime < end))
+                    {
+                        /* Starts today */
+                        ReservationDTO reservation = new ReservationDTO(ReservationType.RENOVATION, r.StartTime, r.EndTime);
+                        reservations.Add(reservation);
+                    }
+                }
+            });
             return reservations;
         }
     }

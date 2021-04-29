@@ -22,6 +22,7 @@ namespace Model
         public static List<RoomInventory> roomInventory;
         public static List<TransferRequest> transferRequests;
         public static List<Survey> surveys;
+        public static List<RoomSchedule> roomSchedule;
 
         public static void OpenAccounts()
         {
@@ -238,6 +239,18 @@ namespace Model
 
             if (surveys == null)
                 surveys = new List<Survey>();
+        }
+        
+        public static void OpenRoomSchedule()
+        {
+            roomSchedule = JsonConvert.DeserializeObject<List<RoomSchedule>>(File.ReadAllText(@"..\..\..\Resources\roomSchedule.json"));
+            if (roomSchedule == null)
+                roomSchedule = new List<RoomSchedule>();
+        }
+
+        public static void SerializeRoomSchedule()
+        {
+            File.WriteAllText(@"..\..\..\Resources\roomSchedule.json", JsonConvert.SerializeObject(roomSchedule, Formatting.Indented));
         }
     }
 }

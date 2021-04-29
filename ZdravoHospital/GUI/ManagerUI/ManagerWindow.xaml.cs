@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 
 using Model;
 
+using ZdravoHospital.GUI.ManagerUI.DTOs;
+
 namespace ZdravoHospital.GUI.ManagerUI
 {
     /// <summary>
@@ -54,6 +56,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             Model.Resources.OpenTransferRequests();
             Model.Resources.OpenMedicines();
             Model.Resources.OpenPeriods();
+            Model.Resources.OpenRoomSchedule();
 
             /* Handiling visuals */
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
