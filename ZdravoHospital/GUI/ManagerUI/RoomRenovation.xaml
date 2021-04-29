@@ -258,16 +258,12 @@
             <TextBox.Text>
                 <Binding Path="EndTime" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validation:TimeInputValidationRule ValidationStep="RawProposedValue">
-                            <validation:TimeInputValidationRule.Wrapper>
-                                <validation:PassedTimeWrapper PassedTime="{Binding Data.EndDate, Source={StaticResource proxy}}"/>
-                            </validation:TimeInputValidationRule.Wrapper>
-                        </validation:TimeInputValidationRule>
                         <validation:TimeAfterAnotherValidationRule ValidationStep="RawProposedValue">
                             <validation:TimeAfterAnotherValidationRule.Wrapper>
                                 <validation:OtherPassedTimeWrapper OtherPassedDate="{Binding Data.StartDate, Source={StaticResource otherProxy}}" 
                                                                    ThisDate="{Binding Data.EndDate, Source={StaticResource otherProxy}}"
-                                                                   OtherPassedTime="{Binding Data.StartTime, Source={StaticResource otherProxy}}"/>
+                                                                   OtherPassedTime="{Binding Data.StartTime, Source={StaticResource otherProxy}}"
+                                                                   PassedRoom="{Binding Data.SelectedRoom, Source={StaticResource otherProxy}}"/>
                             </validation:TimeAfterAnotherValidationRule.Wrapper>
                         </validation:TimeAfterAnotherValidationRule>
                     </Binding.ValidationRules>

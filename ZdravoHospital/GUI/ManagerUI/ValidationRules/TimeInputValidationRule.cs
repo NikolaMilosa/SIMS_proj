@@ -37,11 +37,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                     /* Checking for renovation */
                     string answer = CheckIntersectPeriods(timeOfDay,Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
                     if (!answer.Equals(String.Empty))
-                        return new ValidationResult(false, "There is a medical intervention planned at that time... It ends on " + answer);
+                        return new ValidationResult(false, "There is a medical intervention planned at that time... " + answer);
 
                     answer = CheckIntersectRenovations(timeOfDay, Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
                     if (!answer.Equals(String.Empty))
-                        return new ValidationResult(false, "There is a renovation already planned at that time... It ends on " + answer);
+                        return new ValidationResult(false, "There is a renovation already planned at that time... " + answer);
                 }
                 else
                 {
