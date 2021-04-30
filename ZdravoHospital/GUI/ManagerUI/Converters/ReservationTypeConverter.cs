@@ -14,13 +14,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((ReservationType)value == ReservationType.RENOVATION)
-                return "[ RENOVATION  ]";
+                return "Type: RENOVATION  ";
             if ((ReservationType)value == ReservationType.APPOINTMENT)
-                return "[ APPOINTMENT ]";
+                return "Type: APPOINTMENT ";
             if ((ReservationType)value == ReservationType.OPERATION)
-                return "[ OPERATION   ]";
+                return "Type: OPERATION   ";
             if ((ReservationType)value == ReservationType.TRANSFER)
-                return "[ TRANSFER    ]";
+                return "Type: TRANSFER    ";
 
             return "";
         }

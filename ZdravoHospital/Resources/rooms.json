@@ -34,5 +34,11 @@
     "Id": 505,
     "Name": "Bedroom 3",
     "Available": true
+  },
+  "102": {
+    "RoomType": 1,
+    "Id": 102,
+    "Name": "tester",
+    "Available": true
   }
 }
