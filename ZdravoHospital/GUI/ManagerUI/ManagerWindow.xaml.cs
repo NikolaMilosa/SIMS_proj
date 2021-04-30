@@ -61,7 +61,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             Model.Resources.OpenPeriods();
             Model.Resources.OpenRoomSchedule();
 
-            /* Handiling visuals */
+            /* Handling visuals */
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
             Medicines = new ObservableCollection<Medicine>(Model.Resources.medicines);

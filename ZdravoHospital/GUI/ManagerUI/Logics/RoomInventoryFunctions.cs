@@ -10,14 +10,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomInventoryFunctions
     {
-        private static Mutex roomInventoryMutex;
+        private static Mutex _roomInventoryMutex;
 
         public static Mutex GetRoomInventoryMutex()
         {
-            if (roomInventoryMutex == null)
-                roomInventoryMutex = new Mutex();
+            if (_roomInventoryMutex == null)
+                _roomInventoryMutex = new Mutex();
 
-            return roomInventoryMutex;
+            return _roomInventoryMutex;
         }
 
         public RoomInventoryFunctions() { }
@@ -35,9 +35,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public List<RoomInventory> FindAllRoomsWithInventory(string inventoryId)
         {
-            List<RoomInventory> ret = new List<RoomInventory>();
+            var ret = new List<RoomInventory>();
 
-            foreach (RoomInventory ri in Model.Resources.roomInventory)
+            foreach (var ri in Model.Resources.roomInventory)
                 if (ri.InventoryId.Equals(inventoryId))
                     ret.Add(ri);
 
@@ -46,9 +46,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public List<RoomInventory> FindAllInventoryInRoom(int roomId)
         {
-            List<RoomInventory> ret = new List<RoomInventory>();
+            var ret = new List<RoomInventory>();
 
-            foreach (RoomInventory ri in Model.Resources.roomInventory)
+            foreach (var ri in Model.Resources.roomInventory)
                 if (ri.RoomId == roomId)
                     ret.Add(ri);
 

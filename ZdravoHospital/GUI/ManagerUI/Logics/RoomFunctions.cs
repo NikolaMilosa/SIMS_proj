@@ -11,14 +11,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomFunctions
     {
-        private static Mutex roomMutex;
+        private static Mutex _roomMutex;
 
         public static Mutex GetRoomMutex()
         {
-            if (roomMutex == null)
-                roomMutex = new Mutex();
+            if (_roomMutex == null)
+                _roomMutex = new Mutex();
 
-            return roomMutex;
+            return _roomMutex;
         }
 
         public RoomFunctions() { }
@@ -27,7 +27,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             if (room != null)
             {
-                foreach (Room r in Model.Resources.rooms.Values)
+                foreach (var r in Model.Resources.rooms.Values)
                 {
                     if (r.Available == true && r.RoomType == rt && r.Id != room.Id)
                         return r;
@@ -35,7 +35,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
             else
             {
-                foreach (Room r in Model.Resources.rooms.Values)
+                foreach (var r in Model.Resources.rooms.Values)
                 {
                     if (r.Available == true && r.RoomType == rt)
                         return r;
@@ -48,7 +48,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public Room FindRoomByPrio(Room notThisRoom)
         {
-            Room someRoom = FindRoomByType(RoomType.STORAGE_ROOM, notThisRoom);
+            var someRoom = FindRoomByType(RoomType.STORAGE_ROOM, notThisRoom);
 
             if (someRoom == null)
                 someRoom = FindRoomByType(RoomType.BREAK_ROOM, notThisRoom);
@@ -65,12 +65,12 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public bool DeleteRoom(Room room)
         {
             /* First handle its inventory */
-            RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
-            List<RoomInventory> roomsInventory = roomInventoryService.FindAllInventoryInRoom(room.Id);
+            var roomInventoryService = new RoomInventoryFunctions();
+            var roomsInventory = roomInventoryService.FindAllInventoryInRoom(room.Id);
 
             if(roomsInventory.Count != 0)
             {
-                Room transportRoom = FindRoomByPrio(room);
+                var transportRoom = FindRoomByPrio(room);
 
                 if (transportRoom == null)
                 {
@@ -78,27 +78,27 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     return false;
                 }
 
-                /* Can be refactored when room transfering is added, this transfers from a room being deleted 
+                /* Can be refactored when room transferring is added, this transfers from a room being deleted 
                  * other suitable room */
 
-                List<RoomInventory> transportsRoomInventory = roomInventoryService.FindAllInventoryInRoom(transportRoom.Id);
+                var transportsRoomInventory = roomInventoryService.FindAllInventoryInRoom(transportRoom.Id);
 
                 GetRoomMutex().WaitOne();
 
-                foreach (RoomInventory ri in roomsInventory)
+                foreach (var ri in roomsInventory)
                 {
-                    bool handeled = false;
-                    foreach(RoomInventory tri in transportsRoomInventory)
+                    var handled = false;
+                    foreach(var tri in transportsRoomInventory)
                     {
                         if (tri.InventoryId.Equals(ri.InventoryId))
                         {
                             tri.Quantity += ri.Quantity;
-                            handeled = true;
+                            handled = true;
                             break;
                         }
                     }
 
-                    if (!handeled)
+                    if (!handled)
                     {
                         Model.Resources.roomInventory.Add(new RoomInventory(ri.InventoryId, transportRoom.Id, ri.Quantity));
                     }
@@ -140,7 +140,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public void EditRoom(Room room)
         {
             GetRoomMutex().WaitOne();
-            int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[room.Id]);
+            var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[room.Id]);
             ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
 
             room.Name = Regex.Replace(room.Name, @"\s+", " ");

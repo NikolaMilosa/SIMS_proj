@@ -16,10 +16,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
             try
             {
-                int quantity = Int32.Parse(value.ToString());
+                var quantity = int.Parse(value.ToString());
 
                 if (quantity < 1)
-                    return new ValidationResult(false, "'Quantity' needs to be atleast 1 or more...");
+                    return new ValidationResult(false, "'Quantity' needs to be at least 1 or more...");
 
                 if (Wrapper != null)
                 {

@@ -14,9 +14,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         public OtherPassedTimeWrapper Wrapper { get; set; }
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string input = value.ToString().Trim();
+            var input = value.ToString().Trim();
 
-            if (input.Equals(String.Empty))
+            if (input.Equals(string.Empty))
                 return new ValidationResult(false, "'Time' cannot be left empty...");
 
             if (input.IndexOf("-") != -1 || input.IndexOf(".") != -1 || input.IndexOf(":") == -1)
@@ -25,23 +25,23 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             try
             {
                 var timeOfDay = TimeSpan.ParseExact(input, "c", null);
-                DateTime endDate = Wrapper.ThisDate.Add(timeOfDay);
+                var endDate = Wrapper.ThisDate.Add(timeOfDay);
 
                 var otherTimeOfDay = TimeSpan.ParseExact(Wrapper.OtherPassedTime, "c", null);
-                DateTime startDate = Wrapper.OtherPassedDate.Add(otherTimeOfDay);
+                var startDate = Wrapper.OtherPassedDate.Add(otherTimeOfDay);
                 if (startDate >= endDate)
                 {
                     return new ValidationResult(false, "'Start time' is ahead of 'End time'...");
                 }
 
-                string answer = CheckIntersectPeriods(startDate, endDate, Wrapper.PassedRoom);
-                if (!answer.Equals(String.Empty))
+                var answer = CheckIntersectPeriods(startDate, endDate, Wrapper.PassedRoom);
+                if (!answer.Equals(string.Empty))
                 {
                     return new ValidationResult(false, answer);
                 }
 
                 answer = CheckIntersectRoomSchedule(startDate, endDate, Wrapper.PassedRoom);
-                if (!answer.Equals(String.Empty))
+                if (!answer.Equals(string.Empty))
                 {
                     return new ValidationResult(false, answer);
                 }
@@ -57,18 +57,18 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public string CheckIntersectPeriods(DateTime start, DateTime end, Room room)
         {
-            foreach (Period p in Model.Resources.periods)
+            foreach (var p in Model.Resources.periods)
             {
                 if (room.Id == p.RoomId)
                 {
-                    DateTime endTime = p.StartTime.AddMinutes(p.Duration);
+                    var endTime = p.StartTime.AddMinutes(p.Duration);
                     if ((start >= p.StartTime && endTime >= start) ||
                         (p.StartTime >= start && end >= endTime) ||
                         (end >= p.StartTime && endTime >= end))
                     {
                         /* Intersects with a period */
-                        DateTime startTime = p.StartTime;
-                        StringBuilder sb = new StringBuilder();
+                        var startTime = p.StartTime;
+                        var sb = new StringBuilder();
                         sb.Append("The time span you entered intersects with a medical intervention that is scheduled for ");
                         sb.Append(startTime.Day).Append("/").Append(startTime.Month).Append("/").Append(startTime.Year);
                         sb.Append(", lasting from ").Append(startTime.Hour).Append(":").Append(startTime.Minute).Append(" until ");
@@ -79,12 +79,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
         }
 
         public string CheckIntersectRoomSchedule(DateTime start, DateTime end, Room room)
         {
-            foreach (RoomSchedule rs in Model.Resources.roomSchedule)
+            foreach (var rs in Model.Resources.roomSchedule)
             {
                 if (rs.ScheduleType == ReservationType.TRANSFER)
                     continue;
@@ -95,9 +95,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                         (end >= rs.StartTime && rs.EndTime >= end))
                     {
                         /* Intersects with a period */
-                        DateTime startTime = rs.StartTime;
-                        DateTime endTime = rs.EndTime;
-                        StringBuilder sb = new StringBuilder();
+                        var startTime = rs.StartTime;
+                        var endTime = rs.EndTime;
+                        var sb = new StringBuilder();
                         sb.Append("The time span you entered intersects with room renovation that is scheduled for ");
                         sb.Append(startTime.Day).Append("/").Append(startTime.Month).Append("/").Append(startTime.Year);
                         sb.Append(", ").Append(startTime.Hour).Append(":").Append(startTime.Minute).Append(" until ");
@@ -109,7 +109,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
         }
     }
 
@@ -119,14 +119,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
     
         public DateTime OtherPassedDate
         {
-            get { return (DateTime)GetValue(OtherPassedDateProperty); }
-            set { SetValue(OtherPassedDateProperty, value); }
+            get => (DateTime)GetValue(OtherPassedDateProperty);
+            set => SetValue(OtherPassedDateProperty, value);
         }
 
         public DateTime ThisDate
         {
-            get { return (DateTime)GetValue(ThisDateProperty); }
-            set { SetValue(ThisDateProperty, value); }
+            get => (DateTime)GetValue(ThisDateProperty);
+            set => SetValue(ThisDateProperty, value);
         }
 
         public static readonly DependencyProperty ThisDateProperty = DependencyProperty.Register("ThisDate", typeof(DateTime), typeof(OtherPassedTimeWrapper), null);
@@ -134,8 +134,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public string OtherPassedTime
         {
-            get { return (string)GetValue(OtherPassedTimeProperty); }
-            set { SetValue(OtherPassedTimeProperty, value); }
+            get => (string)GetValue(OtherPassedTimeProperty);
+            set => SetValue(OtherPassedTimeProperty, value);
         }
         
         public static readonly DependencyProperty OtherPassedTimeProperty = DependencyProperty.Register("OtherPassedTime", typeof(string), typeof(OtherPassedTimeWrapper), null);
@@ -144,8 +144,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public Room PassedRoom
         {
-            get { return (Room)GetValue(PassedRoomProperty); }
-            set { SetValue(PassedRoomProperty, value); }
+            get => (Room)GetValue(PassedRoomProperty);
+            set => SetValue(PassedRoomProperty, value);
         }
     }
 
@@ -158,8 +158,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public object Data
         {
-            get { return (object)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get => (object)GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
         }
 
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(OtherPassedTimeBindingProxy), new PropertyMetadata(null));

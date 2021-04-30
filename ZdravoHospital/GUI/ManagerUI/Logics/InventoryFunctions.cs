@@ -9,13 +9,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class InventoryFunctions
     {
-        private static Mutex inventoryMutex;
+        private static Mutex _inventoryMutex;
 
         public static Mutex GetInventoryMutex()
         {
-            if (inventoryMutex == null)
-                inventoryMutex = new Mutex();
-            return inventoryMutex;
+            if (_inventoryMutex == null)
+                _inventoryMutex = new Mutex();
+            return _inventoryMutex;
         }
 
         public InventoryFunctions() { }
@@ -24,7 +24,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             GetInventoryMutex().WaitOne();
 
-            RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
+            var roomInventoryService = new RoomInventoryFunctions();
             roomInventoryService.DeleteByInventoryId(someInventory.Id);
 
             /* Visual */
@@ -39,10 +39,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public bool AddInventory(Inventory newInventory)
         {
-            RoomFunctions roomFunctions = new RoomFunctions();
-            RoomInventoryFunctions roomInventoryFunctions = new RoomInventoryFunctions();
+            var roomFunctions = new RoomFunctions();
+            var roomInventoryFunctions = new RoomInventoryFunctions();
 
-            Room someRoom = roomFunctions.FindRoomByPrio(null);
+            var someRoom = roomFunctions.FindRoomByPrio(null);
 
             if (someRoom == null)
             {
@@ -78,7 +78,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             GetInventoryMutex().WaitOne();
 
-            int index = ManagerWindow.Inventory.IndexOf(oldInventory);
+            var index = ManagerWindow.Inventory.IndexOf(oldInventory);
             ManagerWindow.Inventory.Remove(oldInventory);
 
             /* Clean input */
@@ -103,11 +103,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
         {
-            RoomInventoryFunctions roomInventoryFunctions = new RoomInventoryFunctions();
+            var roomInventoryFunctions = new RoomInventoryFunctions();
 
             int difference;
 
-            RoomInventory roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(room.Id, inventory.Id);
+            var roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(room.Id, inventory.Id);
             if (roomInventory == null)
             {
                 roomInventoryFunctions.AddNewReference(new RoomInventory(inventory.Id, room.Id, newQuantity));
@@ -129,7 +129,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             GetInventoryMutex().WaitOne();
 
-            int index = ManagerWindow.Inventory.IndexOf(inventory);
+            var index = ManagerWindow.Inventory.IndexOf(inventory);
             ManagerWindow.Inventory.Remove(inventory);
 
             if (difference < 0)

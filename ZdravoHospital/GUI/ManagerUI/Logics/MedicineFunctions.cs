@@ -10,13 +10,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class MedicineFunctions
     {
-        private static Mutex medicineMutex;
+        private static Mutex _medicineMutex;
 
         public static Mutex GetMedicineMutex()
         {
-            if (medicineMutex == null)
-                medicineMutex = new Mutex();
-            return medicineMutex;
+            if (_medicineMutex == null)
+                _medicineMutex = new Mutex();
+            return _medicineMutex;
         }
 
         public MedicineFunctions() { }
@@ -51,7 +51,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             GetMedicineMutex().WaitOne();
 
-            int index = Model.Resources.medicines.IndexOf(oldMedicine);
+            var index = Model.Resources.medicines.IndexOf(oldMedicine);
             Model.Resources.medicines.Remove(oldMedicine);
             Model.Resources.medicines.Insert(index, newMedicine);
 
@@ -95,16 +95,16 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void EditIngredientInMedicine(Ingredient ingredient, string newName, List<Ingredient> existingIngredients, ObservableCollection<Ingredient> viewableIngredients)
         {
-            int indexView = viewableIngredients.IndexOf(ingredient);
+            var indexView = viewableIngredients.IndexOf(ingredient);
             viewableIngredients.Remove(ingredient);
 
-            int indexExisisting = existingIngredients.FindIndex(i => i.IngredientName.Equals(ingredient.IngredientName));
-            existingIngredients.RemoveAt(indexExisisting);
+            var indexExisting = existingIngredients.FindIndex(i => i.IngredientName.Equals(ingredient.IngredientName));
+            existingIngredients.RemoveAt(indexExisting);
 
             ingredient.IngredientName = Regex.Replace(newName, @"\s+", " ");
 
             viewableIngredients.Insert(indexView, ingredient);
-            existingIngredients.Insert(indexExisisting, ingredient);
+            existingIngredients.Insert(indexExisting, ingredient);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
         private InventoryType _inventoryType;
         public string Id
         {
-            get { return _id; }
+            get => _id;
             set
             {
                 _id = value;
@@ -25,7 +25,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
         }
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 _name = value;
@@ -35,7 +35,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
 
         public int Quantity
         {
-            get { return _quantity; }
+            get => _quantity;
             set
             {
                 _quantity = value;
@@ -45,7 +45,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
 
         public InventoryType InventoryType
         {
-            get { return _inventoryType; }
+            get => _inventoryType;
             set
             {
                 _inventoryType = value;

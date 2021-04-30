@@ -24,7 +24,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
 
         public ReservationType ReservationType
         {
-            get { return _reservationType; }
+            get => _reservationType;
             set
             {
                 _reservationType = value;
@@ -34,7 +34,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
 
         public DateTime Start
         {
-            get { return _start; }
+            get => _start;
             set
             {
                 _start = value;
@@ -44,7 +44,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
 
         public DateTime End
         {
-            get { return _end; }
+            get => _end;
             set
             {
                 _end = value;

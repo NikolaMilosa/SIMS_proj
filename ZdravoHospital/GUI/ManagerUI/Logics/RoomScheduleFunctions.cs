@@ -13,14 +13,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomScheduleFunctions
     {
-        private static Mutex roomScheduleMutex;
+        private static Mutex _roomScheduleMutex;
 
         public static Mutex GetRoomScheduleMutex()
         {
-            if (roomScheduleMutex == null)
-                roomScheduleMutex = new Mutex();
+            if (_roomScheduleMutex == null)
+                _roomScheduleMutex = new Mutex();
 
-            return roomScheduleMutex;
+            return _roomScheduleMutex;
         }
 
         public RoomScheduleFunctions() { }
@@ -53,7 +53,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void ScheduleRenovationStart(RoomSchedule roomSchedule)
         {
-            Task t = new Task(() => roomSchedule.WaitStartRenovation());
+            var t = new Task(roomSchedule.WaitStartRenovation);
             t.Start();
         }
 
@@ -64,7 +64,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 GetRoomScheduleMutex().WaitOne();
                 /* Handle visuals */
                 
-                int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomSchedule.RoomId]);
+                var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomSchedule.RoomId]);
                 Application.Current.Dispatcher.BeginInvoke(new Func<bool>(
                                     () => ManagerWindow.Rooms.Remove(Model.Resources.rooms[roomSchedule.RoomId])));
 
@@ -76,7 +76,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 GetRoomScheduleMutex().ReleaseMutex();
             }
 
-            Task t = new Task(() => roomSchedule.WaitEndRenovation());
+            Task t = new Task(roomSchedule.WaitEndRenovation);
             t.Start();
         }
 
@@ -86,7 +86,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             {
                 GetRoomScheduleMutex().WaitOne();
                 /* Handle visuals */
-                int index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomSchedule.RoomId]);
+                var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomSchedule.RoomId]);
                 Application.Current.Dispatcher.BeginInvoke(new Func<bool>(
                                     () => ManagerWindow.Rooms.Remove(Model.Resources.rooms[roomSchedule.RoomId])));
 
@@ -115,7 +115,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (roomSchedule.ScheduleType != ReservationType.TRANSFER)
                 return false;
 
-            foreach (RoomSchedule rs in Model.Resources.roomSchedule)
+            foreach (var rs in Model.Resources.roomSchedule)
             {
                 if (rs.RoomId == roomSchedule.RoomId && rs.StartTime == roomSchedule.StartTime && rs.EndTime == roomSchedule.EndTime && rs.ScheduleType == roomSchedule.ScheduleType)
                     continue;
@@ -145,8 +145,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             for (DateTime begin = DateTime.Today; begin <= end; begin = begin.AddDays(1))
             {
-                RoomScheduleDTO roomScheduleInstance = new RoomScheduleDTO(begin);
-                roomScheduleInstance.Reservations = GetReservationsForRoom(room, begin);
+                RoomScheduleDTO roomScheduleInstance = new RoomScheduleDTO(begin)
+                {
+                    Reservations = GetReservationsForRoom(room, begin)
+                };
                 roomSchedule.Add(roomScheduleInstance);
             }
 
@@ -155,22 +157,22 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public ObservableCollection<ReservationDTO> GetReservationsForRoom(Room room, DateTime day)
         {
-            ObservableCollection<ReservationDTO> reservations = new ObservableCollection<ReservationDTO>();
+            var reservations = new ObservableCollection<ReservationDTO>();
 
-            DateTime end = day.AddDays(1);
+            var end = day.AddDays(1);
             Model.Resources.periods.ForEach(p =>
             {
                 if (p.StartTime >= day && p.StartTime < end && p.RoomId == room.Id)
                 {
-                    ReservationType rt = ReservationType.RENOVATION;
+                    var rt = ReservationType.RENOVATION;
                     if (p.PeriodType == PeriodType.APPOINTMENT)
                         rt = ReservationType.APPOINTMENT;
                     else if (p.PeriodType == PeriodType.OPERATION)
                         rt = ReservationType.OPERATION;
 
-                    DateTime reservationEnd = p.StartTime.AddMinutes(p.Duration);
+                    var reservationEnd = p.StartTime.AddMinutes(p.Duration);
 
-                    ReservationDTO reservation = new ReservationDTO(rt, p.StartTime, reservationEnd);
+                    var reservation = new ReservationDTO(rt, p.StartTime, reservationEnd);
                     reservations.Add(reservation);
                 }
             });
@@ -182,7 +184,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     if ((r.StartTime >= day && r.StartTime < end) || (day >= r.StartTime && end <= r.EndTime) || (r.EndTime >= day && r.EndTime < end))
                     {
                         /* Starts today */
-                        ReservationDTO reservation = new ReservationDTO(r.ScheduleType, r.StartTime, r.EndTime);
+                        var reservation = new ReservationDTO(r.ScheduleType, r.StartTime, r.EndTime);
                         reservations.Add(reservation);
                     }
                 }

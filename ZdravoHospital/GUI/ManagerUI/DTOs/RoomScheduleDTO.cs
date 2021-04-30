@@ -23,7 +23,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
 
         public DateTime Date
         {
-            get { return _date; }
+            get => _date;
             set
             {
                 _date = value;
@@ -33,7 +33,7 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
 
         public ObservableCollection<ReservationDTO> Reservations
         {
-            get { return _reservations; }
+            get => _reservations;
             set
             {
                 _reservations = value;

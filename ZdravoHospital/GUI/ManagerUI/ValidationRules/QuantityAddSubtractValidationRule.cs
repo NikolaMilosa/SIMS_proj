@@ -14,7 +14,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             try
             {
-                int quantity = Int32.Parse(value.ToString());
+                var quantity = int.Parse(value.ToString());
 
                 if (quantity < 0)
                 {
@@ -23,7 +23,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
                 if (quantity < Wrapper.Min)
                 {
-                    return new ValidationResult(false, "Cannot be less than '" + Wrapper.Min + "' since it's reserved for transfering...");
+                    return new ValidationResult(false, "Cannot be less than '" + Wrapper.Min + "' since it's reserved for transferring...");
                 }
 
                 return new ValidationResult(true, null);
@@ -41,11 +41,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public int Min
         {
-            get { return (int)GetValue(MinInventoryProperty); }
-            set
-            {
-                SetValue(MinInventoryProperty, value);
-            }
+            get => (int)GetValue(MinInventoryProperty);
+            set => SetValue(MinInventoryProperty, value);
         }
     }
 
@@ -58,8 +55,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public object Data
         {
-            get { return (object)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get => (object)GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
         }
 
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(MinInventoryBindingProxy), new PropertyMetadata(null));

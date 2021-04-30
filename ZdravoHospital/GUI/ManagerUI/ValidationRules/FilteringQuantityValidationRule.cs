@@ -19,7 +19,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             {
                 if (enteredQuantity <= 0)
                 {
-                    return new ValidationResult(false, "Quantity needs to be atleast 1 or more...");
+                    return new ValidationResult(false, "Quantity needs to be at least 1 or more...");
                 }
 
                 return new ValidationResult(true, null);

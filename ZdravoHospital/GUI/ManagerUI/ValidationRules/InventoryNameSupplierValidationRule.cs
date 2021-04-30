@@ -11,12 +11,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string input = value as string;
+            var input = value as string;
 
             input = Regex.Replace(input, @"\s+", " ");
             input = input.Trim();
 
-            if (input.Equals(String.Empty))
+            if (input.Equals(string.Empty))
             {
                 return new ValidationResult(false, "Red marked fields cannot be empty...");
             }

@@ -31,30 +31,30 @@ namespace ZdravoHospital.GUI.ManagerUI
         private string _inputTime;
         private bool _isStatic;
 
-        private Logics.TransferRequestsFunctions transferRequestsFunctions;
+        private Logics.TransferRequestsFunctions _transferRequestsFunctions;
 
         public Room FirstRoom
         {
-            get { return firstRoom; }
+            get => _firstRoom;
             set 
             { 
-                firstRoom = value;
+                _firstRoom = value;
                 OnPropertyChanged("FirstRoom");
             }
         }
         public Room SecondRoom
         {
-            get { return secondRoom; }
+            get => _secondRoom;
             set 
             { 
-                secondRoom = value;
+                _secondRoom = value;
                 OnPropertyChanged("SecondRoom");
             }
         }
 
         public string InputTime
         {
-            get { return _inputTime; }
+            get => _inputTime;
             set
             {
                 _inputTime = value;
@@ -64,7 +64,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public DateTime ChosenDate
         {
-            get { return _chosenDate; }
+            get => _chosenDate;
             set
             {
                 _chosenDate = value;
@@ -74,7 +74,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public bool IsStatic
         {
-            get { return _isStatic; }
+            get => _isStatic;
             set
             {
                 _isStatic = value;
@@ -84,7 +84,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public int EnteredQuantity
         {
-            get { return _enteredQuantity; }
+            get => _enteredQuantity;
             set
             {
                 _enteredQuantity = value;
@@ -94,7 +94,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public int MaxInventory
         {
-            get { return _maxInventory; }
+            get => _maxInventory;
             set
             {
                 _maxInventory = value;
@@ -104,7 +104,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string DefinitionText
         {
-            get { return _definitionText; }
+            get => _definitionText;
             set
             {
                 _definitionText = value;
@@ -123,39 +123,35 @@ namespace ZdravoHospital.GUI.ManagerUI
         }
 
         //Helpers:
-        private Room firstRoom;
-        private Room secondRoom;
-        private ObservableCollection<InventoryDTO> firstRoomDTOs;
-        private ObservableCollection<InventoryDTO> secondRoomDTOs;
-        private string id;
-        private InventoryDTO processedItem;
+        private Room _firstRoom;
+        private Room _secondRoom;
+        private string _id;
+        private InventoryDTO _processedItem;
         #endregion end
 
-        public InventoryManagementQuantitySelector(Room fr, Room sr, ObservableCollection<InventoryDTO> fri, ObservableCollection<InventoryDTO> sri, InventoryDTO invItem)
+        public InventoryManagementQuantitySelector(Room fr, Room sr, InventoryDTO invItem)
         {
             InitializeComponent();
             this.DataContext = this;
 
-            this.transferRequestsFunctions = new Logics.TransferRequestsFunctions();
+            this._transferRequestsFunctions = new Logics.TransferRequestsFunctions();
 
             FirstRoom = fr;
             SecondRoom = sr;
-            this.firstRoomDTOs = fri;
-            this.secondRoomDTOs = sri;
-            this.id = invItem.Id;
+            this._id = invItem.Id;
             this.IsStatic = (invItem.InventoryType == InventoryType.STATIC_INVENTORY);
             this.ChosenDate = DateTime.Today;
-            this.processedItem = invItem;
+            this._processedItem = invItem;
 
             /* Checking if there are any scheduled inventory changes for this room and that inventory */
             this.MaxInventory = invItem.Quantity;
             foreach (TransferRequest tr in Model.Resources.transferRequests)
             {
-                if (tr.SenderRoom == firstRoom.Id && tr.InventoryId.Equals(processedItem.Id))
+                if (tr.SenderRoom == _firstRoom.Id && tr.InventoryId.Equals(_processedItem.Id))
                     MaxInventory -= tr.Quantity;
             }
 
-            DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + Model.Resources.inventory[id].Name + "' would you like to transfer?";
+            DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + Model.Resources.inventory[_id].Name + "' would you like to transfer?";
             
             if (MaxInventory != invItem.Quantity)
             {
@@ -230,7 +226,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void MoveDynamicInventory()
         {
-            transferRequestsFunctions.ExecuteRequest(new TransferRequest(firstRoom.Id, secondRoom.Id, processedItem.Id, EnteredQuantity, DateTime.Now));
+            _transferRequestsFunctions.ExecuteRequest(new TransferRequest(_firstRoom.Id, _secondRoom.Id, _processedItem.Id, EnteredQuantity, DateTime.Now));
         }
     
         private void MoveStaticInventory()
@@ -238,9 +234,9 @@ namespace ZdravoHospital.GUI.ManagerUI
             TimeSpan enteredTime = TimeSpan.ParseExact(InputTime, "c", null);
             ChosenDate = ChosenDate.Add(enteredTime);
 
-            TransferRequest newRequest = new TransferRequest(firstRoom.Id, secondRoom.Id, processedItem.Id, EnteredQuantity, ChosenDate);
+            TransferRequest newRequest = new TransferRequest(_firstRoom.Id, _secondRoom.Id, _processedItem.Id, EnteredQuantity, ChosenDate);
 
-            transferRequestsFunctions.CreateAndStartTransfer(newRequest);
+            _transferRequestsFunctions.CreateAndStartTransfer(newRequest);
         }
     }
 }

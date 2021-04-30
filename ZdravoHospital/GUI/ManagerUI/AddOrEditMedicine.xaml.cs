@@ -30,7 +30,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string MedicineName
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 _name = value;
@@ -40,7 +40,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string Supplier
         {
-            get { return _supplier; }
+            get => _supplier;
             set
             {
                 _supplier = value;
@@ -49,7 +49,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         }
         public MedicineStatus MedicineStatus
         {
-            get { return _medicineStatus; }
+            get => _medicineStatus;
             set
             {
                 _medicineStatus = value;
@@ -84,9 +84,9 @@ namespace ZdravoHospital.GUI.ManagerUI
         #endregion
 
         //Helper
-        Medicine passedMedicine;
-        List<Ingredient> temporaryIngredients;
-        bool isAdder;
+        Medicine _passedMedicine;
+        List<Ingredient> _temporaryIngredients;
+        bool _isAdder;
 
         public AddOrEditMedicine()
         {
@@ -97,11 +97,11 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             MedicineStatus = MedicineStatus.STAGED;
 
-            this.passedMedicine = new Medicine();
+            this._passedMedicine = new Medicine();
             this.Ingredients = new ObservableCollection<Ingredient>();
-            this.temporaryIngredients = new List<Ingredient>();
+            this._temporaryIngredients = new List<Ingredient>();
 
-            this.isAdder = true;
+            this._isAdder = true;
         }
         
         
@@ -118,16 +118,16 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.Supplier = m.Supplier;
             this.MedicineStatus = m.Status;
             this.Ingredients = new ObservableCollection<Ingredient>();
-            this.passedMedicine = m;
-            this.temporaryIngredients = new List<Ingredient>();
+            this._passedMedicine = m;
+            this._temporaryIngredients = new List<Ingredient>();
 
             m.Ingredients.ForEach(i => 
             {
-                this.temporaryIngredients.Add(new Ingredient(i.IngredientName));
+                this._temporaryIngredients.Add(new Ingredient(i.IngredientName));
                 this.Ingredients.Add(new Ingredient(i.IngredientName));
             });
 
-            this.isAdder = false;
+            this._isAdder = false;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -137,15 +137,15 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            Logics.MedicineFunctions medicineFunctions = new Logics.MedicineFunctions();
-            Medicine newMedicine = new Medicine() { MedicineName = MedicineName.Trim().ToLower(), Status = MedicineStatus, Note = "", Supplier = Supplier, Ingredients = temporaryIngredients };
-            if (isAdder)
+            var medicineFunctions = new Logics.MedicineFunctions();
+            var newMedicine = new Medicine() { MedicineName = MedicineName.Trim().ToLower(), Status = MedicineStatus, Note = "", Supplier = Supplier, Ingredients = _temporaryIngredients };
+            if (_isAdder)
             {
                 medicineFunctions.AddNewMedicine(newMedicine);
             }
             else
             {
-                medicineFunctions.EditMedicine(passedMedicine, newMedicine);
+                medicineFunctions.EditMedicine(_passedMedicine, newMedicine);
             }
 
             this.Close();
@@ -209,7 +209,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 if (IngredientsTable.SelectedIndex != -1)
                 {
-                    Window ingredientDialog = new IngredientEnteringDialog(temporaryIngredients, Ingredients, (Ingredient)IngredientsTable.SelectedItem);
+                    Window ingredientDialog = new IngredientEnteringDialog(_temporaryIngredients, Ingredients, (Ingredient)IngredientsTable.SelectedItem);
                     ingredientDialog.ShowDialog();
                 }
             }
@@ -217,7 +217,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             {
                 if (IngredientsTable.SelectedIndex != -1)
                 {
-                    Window warningDialog = new WarningDialog((Ingredient)IngredientsTable.SelectedItem, temporaryIngredients, Ingredients);
+                    Window warningDialog = new WarningDialog((Ingredient)IngredientsTable.SelectedItem, _temporaryIngredients, Ingredients);
                     warningDialog.ShowDialog();
                 }
             }
@@ -225,7 +225,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void AddIngredientButton_Click(object sender, RoutedEventArgs e)
         {
-            Window ingredientDialog = new IngredientEnteringDialog(temporaryIngredients, Ingredients);
+            Window ingredientDialog = new IngredientEnteringDialog(_temporaryIngredients, Ingredients);
             ingredientDialog.ShowDialog();
         }
     }

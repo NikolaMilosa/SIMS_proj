@@ -36,16 +36,14 @@ namespace ZdravoHospital.GUI.ManagerUI
         private string _roomInventoryQuantity;
         private int _enteredQuantity;
         private int _minInventory;
-        private Inventory _passedInventory;
-        private bool _isLessThan;
 
-        private Logics.TransferRequestsFunctions transferRequestsFunctions;
-        private Logics.RoomInventoryFunctions roomInventoryFunctions;
-        private Logics.InventoryFunctions inventoryFunctions;
+        private Logics.TransferRequestsFunctions _transferRequestsFunctions;
+        private Logics.RoomInventoryFunctions _roomInventoryFunctions;
+        private Logics.InventoryFunctions _inventoryFunctions;
 
         public string SelectedInventory
         {
-            get { return _selectedInventory; }
+            get => _selectedInventory;
             set
             {
                 _selectedInventory = value;
@@ -55,7 +53,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public List<Room> Rooms
         {
-            get { return _rooms; }
+            get => _rooms;
             set
             {
                 _rooms = value;
@@ -65,7 +63,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public Room SelectedRoom
         {
-            get { return _selectedRoom; }
+            get => _selectedRoom;
             set
             {
                 _selectedRoom = value;
@@ -73,9 +71,9 @@ namespace ZdravoHospital.GUI.ManagerUI
 
                 if (_selectedRoom != null)
                 {
-                    MinInventory = transferRequestsFunctions.GetScheduledInventoryForRoom(PassedInventory, _selectedRoom);
+                    MinInventory = _transferRequestsFunctions.GetScheduledInventoryForRoom(PassedInventory, _selectedRoom);
 
-                    RoomInventory roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(_selectedRoom.Id, PassedInventory.Id);
+                    var roomInventory = _roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(_selectedRoom.Id, PassedInventory.Id);
 
                     if (PassedInventory.InventoryType == InventoryType.DYNAMIC_INVENTORY && roomInventory != null)
                     {
@@ -102,7 +100,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string RoomInventoryQuantity
         {
-            get { return _roomInventoryQuantity; }
+            get => _roomInventoryQuantity;
             set
             {
                 _roomInventoryQuantity = value;
@@ -112,7 +110,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public int EnteredQuantity
         {
-            get { return _enteredQuantity; }
+            get => _enteredQuantity;
             set
             {
                 _enteredQuantity = value;
@@ -122,7 +120,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public int MinInventory
         {
-            get { return _minInventory; }
+            get => _minInventory;
             set
             {
                 _minInventory = value;
@@ -137,9 +135,9 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
-            this.transferRequestsFunctions = new Logics.TransferRequestsFunctions();
-            this.roomInventoryFunctions = new Logics.RoomInventoryFunctions();
-            this.inventoryFunctions = new Logics.InventoryFunctions();
+            this._transferRequestsFunctions = new Logics.TransferRequestsFunctions();
+            this._roomInventoryFunctions = new Logics.RoomInventoryFunctions();
+            this._inventoryFunctions = new Logics.InventoryFunctions();
 
             this.Rooms = new List<Room>(Model.Resources.rooms.Values);
             this.PassedInventory = inventory;
@@ -183,7 +181,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            inventoryFunctions.EditInventoryAmount(PassedInventory, EnteredQuantity, SelectedRoom);
+            _inventoryFunctions.EditInventoryAmount(PassedInventory, EnteredQuantity, SelectedRoom);
             this.Close();
             }
 
