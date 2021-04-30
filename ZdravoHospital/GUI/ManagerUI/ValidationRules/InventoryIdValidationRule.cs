@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 if (id.Equals(string.Empty))
                     return new ValidationResult(false, "Id cannot be empty...");
 
-                var regex = @"[a-zA-Z0-9]+";
+                var regex = @"^[a-zA-Z0-9]+$";
 
                 if (!Regex.IsMatch(id, regex))
                     return new ValidationResult(false, "In id you have entered an unsupported character...");

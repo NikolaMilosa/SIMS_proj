@@ -4,47 +4,5 @@
     "EndTime": "2021-05-01T15:21:59.7306056+02:00",
     "RoomId": 201,
     "ScheduleType": 2
-  },
-  {
-    "StartTime": "2021-04-30T23:44:00+02:00",
-    "EndTime": "2021-04-30T23:46:00+02:00",
-    "RoomId": 100,
-    "ScheduleType": 3
-  },
-  {
-    "StartTime": "2021-04-30T23:46:00+02:00",
-    "EndTime": "2021-04-30T23:48:00+02:00",
-    "RoomId": 104,
-    "ScheduleType": 3
-  },
-  {
-    "StartTime": "2021-04-30T23:44:00+02:00",
-    "EndTime": "2021-04-30T23:46:00+02:00",
-    "RoomId": 101,
-    "ScheduleType": 3
-  },
-  {
-    "StartTime": "2021-04-30T23:44:00+02:00",
-    "EndTime": "2021-04-30T23:46:00+02:00",
-    "RoomId": 104,
-    "ScheduleType": 3
-  },
-  {
-    "StartTime": "2021-04-30T23:46:00+02:00",
-    "EndTime": "2021-04-30T23:48:00+02:00",
-    "RoomId": 101,
-    "ScheduleType": 3
-  },
-  {
-    "StartTime": "2021-04-30T23:44:00+02:00",
-    "EndTime": "2021-04-30T23:46:00+02:00",
-    "RoomId": 106,
-    "ScheduleType": 3
-  },
-  {
-    "StartTime": "2021-04-30T23:46:00+02:00",
-    "EndTime": "2021-04-30T23:48:00+02:00",
-    "RoomId": 102,
-    "ScheduleType": 3
   }
 ]
