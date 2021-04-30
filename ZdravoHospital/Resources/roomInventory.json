@@ -83,5 +83,20 @@
     "InventoryId": "444DD",
     "RoomId": 104,
     "Quantity": 2
+  },
+  {
+    "InventoryId": "OLM22",
+    "RoomId": 106,
+    "Quantity": 17
+  },
+  {
+    "InventoryId": "OLM22",
+    "RoomId": 104,
+    "Quantity": 5
+  },
+  {
+    "InventoryId": "OLM22",
+    "RoomId": 101,
+    "Quantity": 3
   }
 ]

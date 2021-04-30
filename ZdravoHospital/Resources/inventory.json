@@ -26,5 +26,12 @@
     "Quantity": 50,
     "InventoryType": 0,
     "Id": "444DD"
+  },
+  "OLM22": {
+    "Name": "chair",
+    "Supplier": "Ikea",
+    "Quantity": 25,
+    "InventoryType": 0,
+    "Id": "OLM22"
   }
 }

@@ -99,12 +99,15 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 GetRoomScheduleMutex().ReleaseMutex();
             }
 
-            if (Model.Resources.roomSchedule.Remove(roomSchedule))
+            GetRoomScheduleMutex().WaitOne();
+            if (Model.Resources.roomSchedule.RemoveAll(r => r.StartTime == roomSchedule.StartTime && 
+                                                            r.EndTime == roomSchedule.EndTime &&
+                                                            r.RoomId == roomSchedule.RoomId &&
+                                                            r.ScheduleType == roomSchedule.ScheduleType) > 0)
             {
-                GetRoomScheduleMutex().WaitOne();
                 Model.Resources.SerializeRoomSchedule();
-                GetRoomScheduleMutex().ReleaseMutex();
             }
+            GetRoomScheduleMutex().ReleaseMutex();
         }
 
         public bool IsInsideRenovation(RoomSchedule roomSchedule)
