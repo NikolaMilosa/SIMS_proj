@@ -141,6 +141,19 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
                 { ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[roomId]); }));
+
+            /* If a room is show in manage inventory it should update */
+            if (ManagerWindow.dialog != null)
+            {
+                if (ManagerWindow.dialog.GetType().Name.Equals(nameof(InventoryManagementWindow)))
+                {
+                    InventoryManagementWindow activeWindow = (InventoryManagementWindow)ManagerWindow.dialog;
+                    /* Update the visuals */
+
+                    activeWindow.FirstRoom = activeWindow.FirstRoom;
+                    activeWindow.SecondRoom = activeWindow.SecondRoom;
+                }
+            }
             GetRoomMutex().ReleaseMutex();
         }
     }

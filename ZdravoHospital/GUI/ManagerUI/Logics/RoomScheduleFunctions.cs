@@ -59,16 +59,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void ScheduleRenovationEnd(RoomSchedule roomSchedule)
         {
-            if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
-            {
-                GetRoomScheduleMutex().WaitOne();
-                
-                Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
-                Model.Resources.SerializeRoomSchedule();
-
-                GetRoomScheduleMutex().ReleaseMutex();
+            if (!CheckIfStillValid(roomSchedule))
                 return;
-            }
 
             if (Model.Resources.rooms[roomSchedule.RoomId].Available)
             {
@@ -82,16 +74,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void FinishRenovation(RoomSchedule roomSchedule)
         {
-            if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
-            {
-                GetRoomScheduleMutex().WaitOne();
-
-                Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
-                Model.Resources.SerializeRoomSchedule();
-
-                GetRoomScheduleMutex().ReleaseMutex();
+            if (!CheckIfStillValid(roomSchedule))
                 return;
-            }
 
             if (!Model.Resources.rooms[roomSchedule.RoomId].Available && !IsInsideRenovation(roomSchedule))
             {
@@ -108,6 +92,22 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 Model.Resources.SerializeRoomSchedule();
             }
             GetRoomScheduleMutex().ReleaseMutex();
+        }
+
+        public bool CheckIfStillValid(RoomSchedule roomSchedule)
+        {
+            if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
+            {
+                GetRoomScheduleMutex().WaitOne();
+
+                Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
+                Model.Resources.SerializeRoomSchedule();
+
+                GetRoomScheduleMutex().ReleaseMutex();
+                return false;
+            }
+
+            return true;
         }
 
         public bool IsInsideRenovation(RoomSchedule roomSchedule)
@@ -128,15 +128,31 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void CreateAndScheduleRenovationStart(RoomSchedule roomSchedule)
         {
-            GetRoomScheduleMutex().WaitOne();
+            if (!CheckIfExists(roomSchedule))
+            {
+                GetRoomScheduleMutex().WaitOne();
 
-            Model.Resources.roomSchedule.Add(roomSchedule);
-            Model.Resources.SerializeRoomSchedule();
-            ScheduleRenovationStart(roomSchedule);
-            
-            GetRoomScheduleMutex().ReleaseMutex();
+                Model.Resources.roomSchedule.Add(roomSchedule);
+                Model.Resources.SerializeRoomSchedule();
+                ScheduleRenovationStart(roomSchedule);
+
+                GetRoomScheduleMutex().ReleaseMutex();
+            }
         }
 
+        public bool CheckIfExists(RoomSchedule roomSchedule)
+        {
+            var exists = false;
+
+            Model.Resources.roomSchedule.ForEach(rs =>
+            {
+                if (rs.RoomId == roomSchedule.RoomId && rs.StartTime == roomSchedule.StartTime &&
+                    rs.EndTime == roomSchedule.EndTime)
+                    exists = true;
+            });
+
+            return exists;
+        }
 
         public ObservableCollection<RoomScheduleDTO> GetRoomSchedule(Room room)
         {

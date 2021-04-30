@@ -58,6 +58,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             t.Start();
 
             /* Create a roomSchedule for this transfer */
+            
             RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
             
             RoomSchedule roomScheduleSender = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution, EndTime = transferRequest.TimeOfExecution.AddMinutes(2), RoomId = transferRequest.SenderRoom, ScheduleType = ReservationType.TRANSFER };
@@ -65,17 +66,20 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             RoomSchedule roomScheduleReciever = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution.AddMinutes(2), EndTime = transferRequest.TimeOfExecution.AddMinutes(4), RoomId = transferRequest.RecipientRoom, ScheduleType = ReservationType.TRANSFER };
             roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleReciever);
+            
         }
 
         public void ExecuteRequest(TransferRequest transferRequest)
         {
+            GetTransferRequestMutex().WaitOne();
+
             if (Model.Resources.rooms.ContainsKey(transferRequest.SenderRoom) && Model.Resources.rooms.ContainsKey(transferRequest.RecipientRoom) && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
             {
                 RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
                 /* Handle database transfer */
                 RoomInventory sender = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
                 RoomInventory receiver = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
-
+                
                 if (sender.Quantity - transferRequest.Quantity == 0)
                 {
                     roomInventoryService.DeleteByReference(sender);
@@ -95,7 +99,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 }
             }
 
-            GetTransferRequestMutex().WaitOne();
             /* Serialize */
             if (Model.Resources.transferRequests.Remove(transferRequest))
                 Model.Resources.SerializeTransferRequests();
