@@ -59,21 +59,21 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void ScheduleRenovationEnd(RoomSchedule roomSchedule)
         {
-            if (Model.Resources.rooms[roomSchedule.RoomId].Available)
+            if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
             {
                 GetRoomScheduleMutex().WaitOne();
-                /* Handle visuals */
                 
-                var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomSchedule.RoomId]);
-                Application.Current.Dispatcher.BeginInvoke(new Func<bool>(
-                                    () => ManagerWindow.Rooms.Remove(Model.Resources.rooms[roomSchedule.RoomId])));
+                Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
+                Model.Resources.SerializeRoomSchedule();
 
-                Model.Resources.rooms[roomSchedule.RoomId].Available = false;
-                Model.Resources.SerializeRooms();
-
-                Application.Current.Dispatcher.BeginInvoke(new Action(delegate () 
-                                    { ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[roomSchedule.RoomId]); }));
                 GetRoomScheduleMutex().ReleaseMutex();
+                return;
+            }
+
+            if (Model.Resources.rooms[roomSchedule.RoomId].Available)
+            {
+                var roomFunctions = new RoomFunctions();
+                roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, false);
             }
 
             Task t = new Task(roomSchedule.WaitEndRenovation);
@@ -82,21 +82,21 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void FinishRenovation(RoomSchedule roomSchedule)
         {
-            if (!Model.Resources.rooms[roomSchedule.RoomId].Available && !IsInsideRenovation(roomSchedule))
+            if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
             {
                 GetRoomScheduleMutex().WaitOne();
-                /* Handle visuals */
-                var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomSchedule.RoomId]);
-                Application.Current.Dispatcher.BeginInvoke(new Func<bool>(
-                                    () => ManagerWindow.Rooms.Remove(Model.Resources.rooms[roomSchedule.RoomId])));
 
-                Model.Resources.rooms[roomSchedule.RoomId].Available = true;
-                Model.Resources.SerializeRooms();
-
-                Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
-                    { ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[roomSchedule.RoomId]); }));
+                Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
+                Model.Resources.SerializeRoomSchedule();
 
                 GetRoomScheduleMutex().ReleaseMutex();
+                return;
+            }
+
+            if (!Model.Resources.rooms[roomSchedule.RoomId].Available && !IsInsideRenovation(roomSchedule))
+            {
+                var roomFunctions = new RoomFunctions();
+                roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, true);
             }
 
             GetRoomScheduleMutex().WaitOne();
@@ -129,23 +129,25 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public void CreateAndScheduleRenovationStart(RoomSchedule roomSchedule)
         {
             GetRoomScheduleMutex().WaitOne();
+
             Model.Resources.roomSchedule.Add(roomSchedule);
             Model.Resources.SerializeRoomSchedule();
             ScheduleRenovationStart(roomSchedule);
+            
             GetRoomScheduleMutex().ReleaseMutex();
         }
 
 
         public ObservableCollection<RoomScheduleDTO> GetRoomSchedule(Room room)
         {
-            ObservableCollection<RoomScheduleDTO> roomSchedule = new ObservableCollection<RoomScheduleDTO>();
+            var roomSchedule = new ObservableCollection<RoomScheduleDTO>();
 
             /* How many days ahead to show */
-            DateTime end = DateTime.Today.AddDays(14);
+            var end = DateTime.Today.AddDays(14);
 
-            for (DateTime begin = DateTime.Today; begin <= end; begin = begin.AddDays(1))
+            for (var begin = DateTime.Today; begin <= end; begin = begin.AddDays(1))
             {
-                RoomScheduleDTO roomScheduleInstance = new RoomScheduleDTO(begin)
+                var roomScheduleInstance = new RoomScheduleDTO(begin)
                 {
                     Reservations = GetReservationsForRoom(room, begin)
                 };

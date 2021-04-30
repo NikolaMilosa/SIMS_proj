@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 
@@ -81,32 +82,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 /* Can be refactored when room transferring is added, this transfers from a room being deleted 
                  * other suitable room */
 
-                var transportsRoomInventory = roomInventoryService.FindAllInventoryInRoom(transportRoom.Id);
-
-                GetRoomMutex().WaitOne();
-
-                foreach (var ri in roomsInventory)
-                {
-                    var handled = false;
-                    foreach(var tri in transportsRoomInventory)
-                    {
-                        if (tri.InventoryId.Equals(ri.InventoryId))
-                        {
-                            tri.Quantity += ri.Quantity;
-                            handled = true;
-                            break;
-                        }
-                    }
-
-                    if (!handled)
-                    {
-                        Model.Resources.roomInventory.Add(new RoomInventory(ri.InventoryId, transportRoom.Id, ri.Quantity));
-                    }
-
-                    Model.Resources.roomInventory.Remove(ri);
-                }
-
-                GetRoomMutex().ReleaseMutex();
+                roomInventoryService.TransportRoomInventory(room, transportRoom);
             }
 
             GetRoomMutex().WaitOne();
@@ -114,8 +90,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             /* Delete from dataBase and visual */
             ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
             Model.Resources.rooms.Remove(room.Id);
-
-            Model.Resources.SerializeRoomInventory();
+            
             Model.Resources.SerializeRooms();
 
             GetRoomMutex().ReleaseMutex();
@@ -151,6 +126,22 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[room.Id]);
             GetRoomMutex().ReleaseMutex();
-        }        
+        }
+
+        public void ChangeRoomAvailability(int roomId, bool newValue)
+        {
+            GetRoomMutex().WaitOne();
+            /* Handle visuals */
+            var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomId]);
+            Application.Current.Dispatcher.BeginInvoke(new Func<bool>(
+                () => ManagerWindow.Rooms.Remove(Model.Resources.rooms[roomId])));
+
+            Model.Resources.rooms[roomId].Available = newValue;
+            Model.Resources.SerializeRooms();
+
+            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+                { ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[roomId]); }));
+            GetRoomMutex().ReleaseMutex();
+        }
     }
 }

@@ -58,24 +58,66 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public void DeleteByInventoryId(string iid)
         {
             GetRoomInventoryMutex().WaitOne();
+            
             Model.Resources.roomInventory.RemoveAll(ri => ri.InventoryId.Equals(iid));
-
             Model.Resources.SerializeRoomInventory();
+            
             GetRoomInventoryMutex().ReleaseMutex();
         }
 
         public void DeleteByReference(RoomInventory ri)
         {
             GetRoomInventoryMutex().WaitOne();
+            
             Model.Resources.roomInventory.Remove(ri);
+            Model.Resources.SerializeRoomInventory();
+
             GetRoomInventoryMutex().ReleaseMutex();
         }
 
         public void AddNewReference(RoomInventory ri)
         {
             GetRoomInventoryMutex().WaitOne();
+            
             Model.Resources.roomInventory.Add(ri);
+            Model.Resources.SerializeRoomInventory();
+            
             GetRoomInventoryMutex().ReleaseMutex();
+        }
+
+        public void SetNewQuantity(RoomInventory roomInventory, int newQuantity)
+        {
+            GetRoomInventoryMutex().WaitOne();
+            
+            roomInventory.Quantity = newQuantity;
+            Model.Resources.SerializeRoomInventory();
+            
+            GetRoomInventoryMutex().ReleaseMutex();
+        }
+
+        public void TransportRoomInventory(Room firstRoom, Room secondRoom)
+        {
+            var firstRoomInventory = FindAllInventoryInRoom(firstRoom.Id);
+            var secondRoomInventory = FindAllInventoryInRoom(secondRoom.Id);
+
+            foreach (var roomInventory in firstRoomInventory)
+            {
+                var existenceInSecondRoom = secondRoomInventory.Find(ri => ri.InventoryId.Equals(roomInventory.InventoryId));
+                if (existenceInSecondRoom == null)
+                {
+                    /* doesn't exist there */
+                    var newRoomInventory = new RoomInventory(roomInventory.InventoryId, secondRoom.Id, roomInventory.Quantity);
+                    AddNewReference(newRoomInventory);
+                }
+                else
+                {
+                    /* just edit its quantity */
+                    SetNewQuantity(existenceInSecondRoom, roomInventory.Quantity + existenceInSecondRoom.Quantity);
+                }
+
+                /* delete the reference */
+                DeleteByReference(roomInventory);
+            }
         }
     }
 }

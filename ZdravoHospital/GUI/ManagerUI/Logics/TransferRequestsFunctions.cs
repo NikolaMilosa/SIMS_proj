@@ -74,7 +74,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
                 /* Handle database transfer */
                 RoomInventory sender = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
-                RoomInventory reciever = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
+                RoomInventory receiver = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
 
                 if (sender.Quantity - transferRequest.Quantity == 0)
                 {
@@ -82,26 +82,21 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 }
                 else
                 {
-                    GetTransferRequestMutex().WaitOne();
-                    sender.Quantity -= transferRequest.Quantity;
-                    GetTransferRequestMutex().ReleaseMutex();
+                    roomInventoryService.SetNewQuantity(sender, sender.Quantity - transferRequest.Quantity);
                 }
 
-                if (reciever == null)
+                if (receiver == null)
                 {
                     roomInventoryService.AddNewReference(new RoomInventory(transferRequest.InventoryId, transferRequest.RecipientRoom, transferRequest.Quantity));
                 }
                 else
                 {
-                    GetTransferRequestMutex().WaitOne();
-                    reciever.Quantity += transferRequest.Quantity;
-                    GetTransferRequestMutex().ReleaseMutex();
+                    roomInventoryService.SetNewQuantity(receiver, receiver.Quantity + transferRequest.Quantity);
                 }
             }
 
             GetTransferRequestMutex().WaitOne();
             /* Serialize */
-            Model.Resources.SerializeRoomInventory();
             if (Model.Resources.transferRequests.Remove(transferRequest))
                 Model.Resources.SerializeTransferRequests();
 
