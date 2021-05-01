@@ -25,14 +25,14 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void OpenMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            CloseMenuButton.Visibility = Visibility.Visible;
-            OpenMenuButton.Visibility = Visibility.Collapsed;
+            //CloseMenuButton.Visibility = Visibility.Visible;
+            //OpenMenuButton.Visibility = Visibility.Collapsed;
         }
 
         private void CloseMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            CloseMenuButton.Visibility = Visibility.Collapsed;
-            OpenMenuButton.Visibility = Visibility.Visible;
+            //CloseMenuButton.Visibility = Visibility.Collapsed;
+            //OpenMenuButton.Visibility = Visibility.Visible;
         }
 
         private void AddPatientItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -24,5 +24,30 @@ namespace ZdravoHospital.GUI.Secretary
             SecretaryUsername = username;
             this.SecretaryMainFrame.Content = new SecretaryHomePage();
         }
+
+        private void AddPatientItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void SeePatientsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void GuestItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void NotificationsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void PeriodsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
