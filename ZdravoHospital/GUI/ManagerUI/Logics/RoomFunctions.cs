@@ -65,6 +65,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public bool DeleteRoom(Room room)
         {
+            GetRoomMutex().WaitOne();
+
             /* First handle its inventory */
             var roomInventoryService = new RoomInventoryFunctions();
             var roomsInventory = roomInventoryService.FindAllInventoryInRoom(room.Id);
@@ -84,9 +86,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
                 roomInventoryService.TransportRoomInventory(room, transportRoom);
             }
-
-            GetRoomMutex().WaitOne();
-
+            
             /* Delete from dataBase and visual */
             ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
             Model.Resources.rooms.Remove(room.Id);

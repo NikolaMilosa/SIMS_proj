@@ -38,6 +38,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public bool AddInventory(Inventory newInventory)
         {
+            GetInventoryMutex().WaitOne();
             var roomFunctions = new RoomFunctions();
             var roomInventoryFunctions = new RoomInventoryFunctions();
 
@@ -59,8 +60,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
             /* Found a room to put some inventory in */
-            GetInventoryMutex().WaitOne();
-
+            
             Model.Resources.inventory[newInventory.Id] = newInventory;
             Model.Resources.SerializeInventory();
             ManagerWindow.Inventory.Add(Model.Resources.inventory[newInventory.Id]);
@@ -97,6 +97,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
         {
+            GetInventoryMutex().WaitOne();
+
             var roomInventoryFunctions = new RoomInventoryFunctions();
 
             int difference;
@@ -123,8 +125,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     roomInventoryFunctions.SetNewQuantity(roomInventory, newQuantity);
                 }
             }
-
-            GetInventoryMutex().WaitOne();
 
             var index = ManagerWindow.Inventory.IndexOf(inventory);
             ManagerWindow.Inventory.Remove(inventory);

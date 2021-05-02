@@ -21,7 +21,7 @@
     "RoomType": 0,
     "Id": 201,
     "Name": "Appointment room 1",
-    "Available": false
+    "Available": true
   },
   "106": {
     "RoomType": 3,
@@ -33,12 +33,6 @@
     "RoomType": 2,
     "Id": 505,
     "Name": "Bedroom 3",
-    "Available": true
-  },
-  "102": {
-    "RoomType": 1,
-    "Id": 102,
-    "Name": "tester",
     "Available": true
   }
 }

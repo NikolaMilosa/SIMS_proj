@@ -2,7 +2,7 @@
   {
     "InventoryId": "123FD",
     "RoomId": 106,
-    "Quantity": 72
+    "Quantity": 84
   },
   {
     "InventoryId": "123FD",
@@ -37,7 +37,7 @@
   {
     "InventoryId": "444DD",
     "RoomId": 106,
-    "Quantity": 24
+    "Quantity": 35
   },
   {
     "InventoryId": "123FD",
@@ -77,7 +77,7 @@
   {
     "InventoryId": "OLM22",
     "RoomId": 106,
-    "Quantity": 15
+    "Quantity": 14
   },
   {
     "InventoryId": "OLM22",
@@ -87,17 +87,7 @@
   {
     "InventoryId": "OLM22",
     "RoomId": 101,
-    "Quantity": 3
-  },
-  {
-    "InventoryId": "123FD",
-    "RoomId": 102,
-    "Quantity": 12
-  },
-  {
-    "InventoryId": "444DD",
-    "RoomId": 102,
-    "Quantity": 14
+    "Quantity": 2
   },
   {
     "InventoryId": "333FF",
@@ -105,8 +95,18 @@
     "Quantity": 5
   },
   {
+    "InventoryId": "444DD",
+    "RoomId": 100,
+    "Quantity": 3
+  },
+  {
     "InventoryId": "OLM22",
-    "RoomId": 102,
-    "Quantity": 2
+    "RoomId": 100,
+    "Quantity": 3
+  },
+  {
+    "InventoryId": "OLM22",
+    "RoomId": 505,
+    "Quantity": 1
   }
 ]

@@ -64,10 +64,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetMedicineMutex().ReleaseMutex();
         }
 
-        public bool DeleteIngredientFromMedicine(Ingredient ingredient, List<Ingredient> temporarayIngredients, ObservableCollection<Ingredient> viewableIngredients)
+        public bool DeleteIngredientFromMedicine(Ingredient ingredient, List<Ingredient> temporaryIngredients, ObservableCollection<Ingredient> viewableIngredients)
         {
             viewableIngredients.Remove(ingredient);
-            temporarayIngredients.RemoveAll(i => i.IngredientName.Equals(ingredient.IngredientName));
+            temporaryIngredients.RemoveAll(i => i.IngredientName.Equals(ingredient.IngredientName));
 
             return true;
         }

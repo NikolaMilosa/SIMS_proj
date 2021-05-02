@@ -75,10 +75,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             if (Model.Resources.rooms.ContainsKey(transferRequest.SenderRoom) && Model.Resources.rooms.ContainsKey(transferRequest.RecipientRoom) && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
             {
-                RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
+                var roomInventoryService = new RoomInventoryFunctions();
                 /* Handle database transfer */
-                RoomInventory sender = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
-                RoomInventory receiver = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
+                var sender = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
+                var receiver = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
                 
                 if (sender.Quantity - transferRequest.Quantity == 0)
                 {

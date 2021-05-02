@@ -84,6 +84,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
 
             GetRoomScheduleMutex().WaitOne();
+
             if (Model.Resources.roomSchedule.RemoveAll(r => r.StartTime == roomSchedule.StartTime && 
                                                             r.EndTime == roomSchedule.EndTime &&
                                                             r.RoomId == roomSchedule.RoomId &&
@@ -91,15 +92,23 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             {
                 Model.Resources.SerializeRoomSchedule();
             }
+
             GetRoomScheduleMutex().ReleaseMutex();
         }
 
         public bool CheckIfStillValid(RoomSchedule roomSchedule)
         {
+            if (!Model.Resources.roomSchedule.Contains(roomSchedule))
+            {
+                /* if this reference was not found in the list make it not valid */
+                return false;
+            }
+
             if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
             {
                 GetRoomScheduleMutex().WaitOne();
 
+                /* If the target room for this room schedule doesn't exist delete all other room schedules for this room.*/
                 Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
                 Model.Resources.SerializeRoomSchedule();
 
@@ -128,20 +137,22 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void CreateAndScheduleRenovationStart(RoomSchedule roomSchedule)
         {
+            GetRoomScheduleMutex().WaitOne();
+
             if (!CheckIfExists(roomSchedule))
             {
-                GetRoomScheduleMutex().WaitOne();
-
                 Model.Resources.roomSchedule.Add(roomSchedule);
                 Model.Resources.SerializeRoomSchedule();
                 ScheduleRenovationStart(roomSchedule);
-
-                GetRoomScheduleMutex().ReleaseMutex();
             }
+
+            GetRoomScheduleMutex().ReleaseMutex();
         }
 
         public bool CheckIfExists(RoomSchedule roomSchedule)
         {
+            /* If two transfer requests are created for the same room as receiver room it is possible that those two rooms will have the
+             exact same room schedule. Therefore, do not include its duplicate.*/
             var exists = false;
 
             Model.Resources.roomSchedule.ForEach(rs =>

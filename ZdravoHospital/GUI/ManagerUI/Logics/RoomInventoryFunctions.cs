@@ -33,17 +33,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return null;
         }
 
-        public List<RoomInventory> FindAllRoomsWithInventory(string inventoryId)
-        {
-            var ret = new List<RoomInventory>();
-
-            foreach (var ri in Model.Resources.roomInventory)
-                if (ri.InventoryId.Equals(inventoryId))
-                    ret.Add(ri);
-
-            return ret;
-        }
-
         public List<RoomInventory> FindAllInventoryInRoom(int roomId)
         {
             var ret = new List<RoomInventory>();
@@ -97,6 +86,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void TransportRoomInventory(Room firstRoom, Room secondRoom)
         {
+            GetRoomInventoryMutex().WaitOne();
+
             var firstRoomInventory = FindAllInventoryInRoom(firstRoom.Id);
             var secondRoomInventory = FindAllInventoryInRoom(secondRoom.Id);
 
@@ -118,6 +109,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 /* delete the reference */
                 DeleteByReference(roomInventory);
             }
+
+            GetRoomInventoryMutex().ReleaseMutex();
         }
     }
 }
