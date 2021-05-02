@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="AllergiesPage"
-      Background="Beige">
+      Background="#FFF3F2FC">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,46 +30,44 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="DarkCyan">
-            <Button x:Name="NavigateBackButton" Height="60" Width="60" VerticalAlignment="Center" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Click="NavigateBackButton_Click" Margin="0,0,75,0">
-                <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
-            </Button>
-            <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,120,0"> Allergies</TextBlock>
-            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10,10,20,10">
-                <StackPanel Width="150" Background="White">
-                    <Button Content="About"/>
-                    <Button Content="Help"/>
-                    <Separator/>
-                    <Button Content="Logout"/>
-                </StackPanel>
-            </materialDesign:PopupBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <TextBlock FontFamily="Yu Gothic" FontSize="28" FontWeight="Bold" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"> Allergies</TextBlock>
         </StackPanel>
 
         <WrapPanel Grid.Row="1" VerticalAlignment="Bottom">
-            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Medical allergens</TextBlock>
-            <TextBox x:Name="SearchMedicalAllergensTextBox" Width="195" Margin="20,5,5,5" TextChanged="SearchMedicalAllergensTextBox_TextChanged"> </TextBox>
+            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="Black" VerticalAlignment="Bottom" Margin="10,0,20,0"> Medical allergens</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Search" Height="25" Width="25" Margin="15,0,5,5" VerticalAlignment="Bottom"></materialDesign:PackIcon>
+                <TextBox x:Name="SearchMedicalAllergensTextBox" Width="150" Margin="0,5,5,5" TextChanged="SearchMedicalAllergensTextBox_TextChanged"></TextBox>
+            </StackPanel>
+            
         </WrapPanel>
 
         <WrapPanel Grid.Row="4">
             <Label x:Name="MedicalSuccessLabel" Foreground="#FF30A911" Visibility="Hidden" Margin="10,0,0,0" Width="150" > Added successfully.</Label>
-            <Button x:Name="AddMedicalAllergenButton" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="220,0,10,0" Foreground="AntiqueWhite" Background="MidnightBlue" Click="AddMedicalAllergenButton_Click"> + </Button>
+            <Button x:Name="AddMedicalAllergenButton" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="215,0,10,0" Foreground="Black" Background="#4267B2" Click="AddMedicalAllergenButton_Click"> + </Button>
         </WrapPanel>
-        
-        <ListBox x:Name="MedicalAllergensListBox" Grid.Row="2" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding MedicalAllergens}"></ListBox>
+
+        <ListBox x:Name="MedicalAllergensListBox" Grid.Row="2" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding MedicalAllergens}" ItemContainerStyle="{StaticResource SimpleListBoxItem}"></ListBox>
         <WrapPanel Grid.Row="5" VerticalAlignment="Bottom" >
-            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Ingredient allergens</TextBlock>
-            <TextBox x:Name="SearchIngredientAllergensTextBox" Width="170" Margin="20,5,5,5" TextChanged="SearchIngredientAllergensTextBox_TextChanged" HorizontalAlignment="Stretch"></TextBox>
+            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="Black" VerticalAlignment="Bottom" Margin="10,0,0,2"> Ingredient allergens</TextBlock>
+
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Search" Height="25" Width="25" Margin="15,0,5,5" VerticalAlignment="Bottom"></materialDesign:PackIcon>
+                <TextBox x:Name="SearchIngredientAllergensTextBox" Width="150" Margin="0,5,5,5" TextChanged="SearchIngredientAllergensTextBox_TextChanged" HorizontalAlignment="Stretch"></TextBox>
+            </StackPanel>
+            
         </WrapPanel>
-        <ListBox x:Name="IngredientAllergensListBox" Grid.Row="6" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding IngredientAllergens}"></ListBox>
+        <ListBox x:Name="IngredientAllergensListBox" Grid.Row="6" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding IngredientAllergens}" ItemContainerStyle="{StaticResource SimpleListBoxItem}"></ListBox>
         
 
         <WrapPanel Grid.Row="8">
             <Label x:Name="IngredientSuccessLabel" Foreground="#FF30A911" Visibility="Hidden" Margin="10,0,0,0" Width="150">Added successfully.</Label>
-            <Button x:Name="AddIngredientAllergenButton" Grid.Row="8" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="220,0,10,0" Foreground="AntiqueWhite" Background="MidnightBlue" Click="AddIngredientAllergenButton_Click">+</Button>
+            <Button x:Name="AddIngredientAllergenButton" Grid.Row="8" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="215,0,10,0" Foreground="Black" Background="#4267B2" Click="AddIngredientAllergenButton_Click">+</Button>
         </WrapPanel>
 
         <WrapPanel Grid.Row="9" VerticalAlignment="Bottom">
-            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="MidnightBlue" VerticalAlignment="Bottom" Margin="10,0,0,2"> Custom:</TextBlock>
+            <TextBlock FontFamily="Yu Gothic" FontSize="22" Foreground="Black" VerticalAlignment="Bottom" Margin="10,0,0,2"> Custom:</TextBlock>
             <TextBox x:Name="CustomAllergenTextBox" Width="150" Margin="10,5,5,5" TextChanged="SearchMedicalAllergensTextBox_TextChanged" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
                     <Binding Path="CustomAllergen" UpdateSourceTrigger="PropertyChanged">
@@ -87,10 +85,24 @@
 
         <WrapPanel Grid.Row="10" Margin="0,2,0,0">
             <Label x:Name="CustomSuccessLabel" Foreground="#FF30A911" Visibility="Hidden" Margin="10,0,0,0" Width="150" >Added successfully.</Label>
-            <Button x:Name="AddCustomAllergenButton" Grid.Row="10" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="220,0,10,0" Foreground="AntiqueWhite" Background="MidnightBlue" Click="AddCustomAllergenButton_Click">+</Button>
+            <Button x:Name="AddCustomAllergenButton" Grid.Row="10" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="215,0,10,0" Foreground="Black" Background="#4267B2" Click="AddCustomAllergenButton_Click">+</Button>
         </WrapPanel>
 
-        <Button x:Name="FinishButton" Grid.Row="11" Background="MidnightBlue" Foreground="AntiqueWhite" FontFamily="Yu Gothic" FontSize="22" Width="100" Height="40" Click="FinishButton_Click"> FINISH </Button>
+        <Button x:Name="FinishButton" Grid.Row="11" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" FontSize="14" Width="90" Height="30" Click="FinishButton_Click" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="ContentSaveAll" Margin="0,0,20,0" >
+                    <materialDesign:PackIcon.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </materialDesign:PackIcon.RenderTransform>
+                </materialDesign:PackIcon>
+                <TextBlock FontFamily="Yu Gothic" FontSize="16"><Run Text="Save"/></TextBlock>
+            </StackPanel>
+        </Button>
         
     </Grid>
 </Page>

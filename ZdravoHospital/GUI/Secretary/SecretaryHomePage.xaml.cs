@@ -35,51 +35,6 @@ namespace ZdravoHospital.GUI.Secretary
             //OpenMenuButton.Visibility = Visibility.Visible;
         }
 
-        private void AddPatientItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
-            {
-                NavigationService.Navigate(new PatientRegistrationPage());
-            }
-
-        }
-
-        private void SeePatientsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
-            {
-                NavigationService.Navigate(new PatientsView());
-            }
-        }
-
-        private void GuestItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
-            {
-                NavigationService.Navigate(new GuestAccountPage());
-            }
-
-        }
-
-        private void NotificationsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
-            {
-                NavigationService.Navigate(new SecretaryNotificationsPage());
-            }
-        }
-
-        private void PeriodsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
-            {
-                NavigationService.Navigate(new SecretaryPeriodsPage());
-            }
-        }
+        
     }
 }
