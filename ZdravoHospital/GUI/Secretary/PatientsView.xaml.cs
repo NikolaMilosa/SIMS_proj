@@ -42,7 +42,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void EditPatientButton_Click(object sender, RoutedEventArgs e)
         {
-            var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
+            /*var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
 
             if (selectedPatient == null)
             {
@@ -58,12 +58,12 @@ namespace ZdravoHospital.GUI.Secretary
                 {
                     NavigationService.Navigate(new EditGuestPage(selectedPatient));
                 }
-            }
+            }*/
         }
 
         private void DeletePatientButton_Click(object sender, RoutedEventArgs e)
         {
-            this.PatientsDataGrid.ItemsSource = PatientsForTable;
+            /*this.PatientsDataGrid.ItemsSource = PatientsForTable;
 
             var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
 
@@ -93,7 +93,7 @@ namespace ZdravoHospital.GUI.Secretary
                     Model.Resources.SaveAccounts();
                 }
 
-            }
+            }*/
         }
 
         private void HomePageButton_Click(object sender, RoutedEventArgs e)
@@ -102,7 +102,7 @@ namespace ZdravoHospital.GUI.Secretary
         }
 
         private void AddAllergyInfoButton_Click(object sender, RoutedEventArgs e)
-        {
+        {/*
             var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
             if (selectedPatient == null)
             {
@@ -111,10 +111,10 @@ namespace ZdravoHospital.GUI.Secretary
             else
             {
                 NavigationService.Navigate(new AllergiesPage(selectedPatient));
-            }
+            }*/
         }
 
-        public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        /*public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
         {
             if (depObj != null)
             {
@@ -129,11 +129,11 @@ namespace ZdravoHospital.GUI.Secretary
                         yield return childOfChild;
                 }
             }
-        }
+        }*/
 
         private void RemoveMedicalAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var listBox in FindVisualChildren<ListBox>(this))
+            /*foreach (var listBox in FindVisualChildren<ListBox>(this))
             {
                 if (listBox.Name == "MedicalAllergensListBox")
                 {
@@ -159,12 +159,12 @@ namespace ZdravoHospital.GUI.Secretary
                         }
                     }
                 }
-            }
+            }*/
         }
 
         private void RemoveIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var listBox in FindVisualChildren<ListBox>(this))
+            /*foreach (var listBox in FindVisualChildren<ListBox>(this))
             {
                 if (listBox.Name == "IngredientAllergensListBox")
                 {
@@ -189,11 +189,23 @@ namespace ZdravoHospital.GUI.Secretary
                         }
                     }
                 }
-            }
+            }*/
         }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void DetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var rowItem = (sender as Button).DataContext as Patient;
+            string name = rowItem.Name;
+            MessageBox.Show(name);
+        }
+
+        private void PatientsSearcBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
