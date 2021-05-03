@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="400"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -24,7 +25,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Margin="0,0,10,0">
             <materialDesign:PackIcon Kind="Search" Height="27" Width="27" VerticalAlignment="Bottom" Margin="0,0,0,5"></materialDesign:PackIcon>
-            <TextBox x:Name="PatientsSearcBox" Width="160" Margin="0,5,0,5" TextChanged="PatientsSearcBox_TextChanged" HorizontalAlignment="Stretch" Height="27"></TextBox>
+            <TextBox x:Name="PatientsSearchBox" Width="160" Margin="0,5,0,5" TextChanged="PatientsSearchBox_TextChanged" HorizontalAlignment="Stretch" Height="27"></TextBox>
         </StackPanel>
 
         <ListView Grid.Row="2" Margin="10,0,10,10" Name="PatientsListView" ItemsSource="{Binding Path=PatientsForTable}" AlternationCount="2">
@@ -48,20 +49,40 @@
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
                             <materialDesign:PackIcon Kind="PersonCardDetails" Width="15" Height="15" Margin="0 0 5 2" VerticalAlignment="Bottom"></materialDesign:PackIcon>
-                            <TextBlock Text="{Binding CitizenId}" Width="100" Margin="0,0,5,0" FontSize="14" FontFamily="Yu Gothic"></TextBlock>
-                            <Button x:Name="DetailsButton" Click="DetailsButton_Click" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="160 0 0 0">
+                            <TextBlock Text="{Binding CitizenId}" Width="120" Margin="0,0,5,0" FontSize="14" FontFamily="Yu Gothic"></TextBlock>
+                            <Button x:Name="DetailsButton" Click="DetailsButton_Click" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="140,0,0,0">
                                 <materialDesign:PackIcon Kind="ArrowRight" Width="15" Height="15"></materialDesign:PackIcon>
                             </Button>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
                             <materialDesign:PackIcon Kind="SwissCrossBox" Width="15" Height="15" Margin="0 0 5 2" VerticalAlignment="Bottom"></materialDesign:PackIcon>
-                            <TextBlock Text="{Binding HealthCardNumber}" Width="100" Margin="0,0,5,0" FontSize="14" FontFamily="Yu Gothic"></TextBlock>
+                            <TextBlock Text="{Binding HealthCardNumber}" Width="120" Margin="0,0,5,0" FontSize="14" FontFamily="Yu Gothic"></TextBlock>
                         </StackPanel>
                         
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                            <Setter Property="Background" Value="#FFEDEDED" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
+        <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0" >
+            <Button x:Name="DeletePatientButton" Height="30" Background="Transparent" Click="DeletePatientButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Delete" Height="25" Width="25" VerticalAlignment="Center"></materialDesign:PackIcon>
+                    <TextBlock Margin="5,0,0,0" FontSize="16" Text="Remove  " VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

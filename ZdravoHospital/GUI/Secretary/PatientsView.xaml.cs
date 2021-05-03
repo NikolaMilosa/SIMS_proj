@@ -40,33 +40,12 @@ namespace ZdravoHospital.GUI.Secretary
             PatientsForTable = dictionaryToList(Model.Resources.patients);
         }
 
-        private void EditPatientButton_Click(object sender, RoutedEventArgs e)
-        {
-            /*var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
-
-            if (selectedPatient == null)
-            {
-                
-            }
-            else
-            {
-                if (!selectedPatient.IsGuest)
-                {
-                    NavigationService.Navigate(new EditPatientPage(selectedPatient));
-                }
-                else
-                {
-                    NavigationService.Navigate(new EditGuestPage(selectedPatient));
-                }
-            }*/
-        }
 
         private void DeletePatientButton_Click(object sender, RoutedEventArgs e)
         {
-            /*this.PatientsDataGrid.ItemsSource = PatientsForTable;
+            //this.PatientsListView.ItemsSource = PatientsForTable;
 
-            var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
-
+            var selectedPatient = ((Patient)PatientsListView.SelectedItem);
             if (selectedPatient == null)
             {
                 
@@ -93,12 +72,7 @@ namespace ZdravoHospital.GUI.Secretary
                     Model.Resources.SaveAccounts();
                 }
 
-            }*/
-        }
-
-        private void HomePageButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new SecretaryHomePage());
+            }
         }
 
         private void AddAllergyInfoButton_Click(object sender, RoutedEventArgs e)
@@ -191,21 +165,18 @@ namespace ZdravoHospital.GUI.Secretary
                 }
             }*/
         }
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
 
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
-            var rowItem = (sender as Button).DataContext as Patient;
-            string name = rowItem.Name;
-            MessageBox.Show(name);
+            var selectedPatient = (sender as Button).DataContext as Patient;
+            string name = selectedPatient.Name;
+            NavigationService.Navigate(new PatientDetailsPage(selectedPatient));
         }
 
-        private void PatientsSearcBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void PatientsSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+
     }
 }

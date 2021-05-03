@@ -339,8 +339,7 @@ namespace ZdravoHospital.GUI.Secretary
                         }
                     }
                     Model.Resources.SavePatients();
-                    MessageBox.Show("Successfuly changed.");
-                    NavigationService.Navigate(new PatientsView());
+                    NavigationService.Navigate(new PatientDetailsPage(patient));
                 }
             }
         }
