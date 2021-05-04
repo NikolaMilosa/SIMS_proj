@@ -50,7 +50,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Medicine medicine = (sender as Button).DataContext as Medicine;
+            NavigationService.Navigate(new MedicineInfoPage(medicine));
         }
 
         private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

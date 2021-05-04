@@ -13,7 +13,7 @@
         <Style x:Key="BlueButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource Blue}"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="21"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -39,7 +39,7 @@
         <Style x:Key="BlackButton" TargetType="Button">
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Foreground" Value="{StaticResource LightGray}"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="21"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Template">
                 <Setter.Value>

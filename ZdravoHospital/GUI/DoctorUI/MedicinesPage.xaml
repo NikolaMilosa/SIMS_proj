@@ -26,8 +26,9 @@
                 <ColumnDefinition Width="0.18*"/>
             </Grid.ColumnDefinitions>
             <DockPanel Grid.Row="1" Grid.Column="1">
-                <WrapPanel Orientation="Horizontal"  DockPanel.Dock="Left"
-                            VerticalAlignment="Center">
+                <WrapPanel Orientation="Horizontal"
+                           DockPanel.Dock="Left"
+                           VerticalAlignment="Center">
                     <TextBlock Text="Show:"
                                FontSize="25"
                                Margin="0, 0, 15, 0"
@@ -40,7 +41,8 @@
                               Style="{StaticResource DarkComboBox}"
                               SelectionChanged="StatusComboBox_SelectionChanged"/>
                 </WrapPanel>
-                <WrapPanel Orientation="Horizontal" DockPanel.Dock="Right"
+                <WrapPanel Orientation="Horizontal" 
+                           DockPanel.Dock="Right"
                            VerticalAlignment="Center"
                             HorizontalAlignment="Right">
                     <TextBlock
@@ -49,7 +51,7 @@
                             Margin="15, 0, 0, 0"
                            Foreground="White"
                             Name="SearchTextBlock"
-                        TextAlignment="Center"></TextBlock>
+                        TextAlignment="Center"/>
                     <TextBox Name="SearchTextBox"
                              Width="400"
                              FontSize="25"
@@ -108,11 +110,12 @@
                                        Foreground="White" 
                                             Margin="30, 10, 15, 17"
                                             Width="130"
-                                       TextAlignment="Center"/>       
+                                       TextAlignment="Center"/>
                             <Button x:Name="DetailsButton" 
                                             Content="Details" 
                                             Height="40"
                                             Padding="10"
+                                    FontSize="21"
                                             Margin="15"
                                             Width="100"
                                             Style="{StaticResource BlueButton}"
