@@ -26,6 +26,9 @@ namespace ZdravoHospital.GUI.Secretary
         public ObservableCollection<string> IngredientAllergens { get; set; }
         public Patient SelectedPatient { get; set; }
         public string CustomAllergen { get; set; }
+        public ObservableCollection<string> AddedMedicalAllergens { get; set; }
+        public ObservableCollection<string> AddedIngredientAllergens { get; set; }
+        public ObservableCollection<string> AddedCustomAllergens { get; set; }
 
         public AllergiesPage(Model.Patient selectedPatient)
         {
@@ -34,6 +37,12 @@ namespace ZdravoHospital.GUI.Secretary
             SelectedPatient = selectedPatient;
             Model.Resources.OpenMedicines();
             Model.Resources.OpenIngredients();
+            AddedMedicalAllergens = new ObservableCollection<string>();
+            AddedIngredientAllergens = new ObservableCollection<string>();
+            AddedCustomAllergens = new ObservableCollection<string>();
+
+            initAddedIngredientAllergens();
+            initAddedMedicalAllergens();
 
             //var logFileMedical = File.ReadAllLines(@"..\..\..\Resources\drugs.txt");
             //MedicalAllergens = new ObservableCollection<string>(logFileMedical);
@@ -51,6 +60,26 @@ namespace ZdravoHospital.GUI.Secretary
             viewIngredient.Filter = UserFilterIngredientAllergens;
         }
 
+        private void initAddedMedicalAllergens()
+        {
+            if(SelectedPatient.MedicineAllergens != null)
+            {
+                foreach(var allergen in SelectedPatient.MedicineAllergens)
+                {
+                    AddedMedicalAllergens.Add(allergen);
+                }
+            }
+        }
+        private void initAddedIngredientAllergens()
+        {
+            if (SelectedPatient.IngredientAllergens != null)
+            {
+                foreach (var allergen in SelectedPatient.IngredientAllergens)
+                {
+                    AddedIngredientAllergens.Add(allergen);
+                }
+            }
+        }
         private void medicineListToStringList(List<Model.Medicine> meds)
         {
             this.MedicalAllergens = new ObservableCollection<string>();
@@ -134,6 +163,7 @@ namespace ZdravoHospital.GUI.Secretary
                 if (isMedicineAllergenUnique(SelectedPatient.MedicineAllergens, medicalAllergen))
                 {
                     SelectedPatient.MedicineAllergens.Add(medicalAllergen.MedicineName);
+                    AddedMedicalAllergens.Add(medicalAllergen.MedicineName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))
@@ -150,20 +180,12 @@ namespace ZdravoHospital.GUI.Secretary
                         Model.Resources.SavePatients();
 
                         //////////// FEEDBACK MESSAGE //////////////////////////
-                        Random r = new Random();
-                        Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                        MedicalSuccessLabel.Foreground = brush;
-                        MedicalSuccessLabel.Content = "Added successfully.";
-                        MedicalSuccessLabel.Visibility = Visibility.Visible;
+
                     }
                 }
                 else
                 {
-                    Random r = new Random();
-                    Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                    MedicalSuccessLabel.Foreground = brush;
-                    MedicalSuccessLabel.Content = "Already exists.";
-                    MedicalSuccessLabel.Visibility = Visibility.Visible;
+                    MessageBox.Show("Medical allergen already added.");
                 }
                 
             }
@@ -185,6 +207,7 @@ namespace ZdravoHospital.GUI.Secretary
                 if(isIngredientAllergenUnique(SelectedPatient.IngredientAllergens, ingredientAllergen))
                 {
                     SelectedPatient.IngredientAllergens.Add(ingredientAllergen.IngredientName);
+                    AddedIngredientAllergens.Add(ingredientAllergen.IngredientName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))
@@ -201,20 +224,12 @@ namespace ZdravoHospital.GUI.Secretary
                         Model.Resources.SavePatients();
 
                         //////////// FEEDBACK MESSAGE //////////////////////////
-                        Random r = new Random();
-                        Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                        IngredientSuccessLabel.Foreground = brush;
-                        IngredientSuccessLabel.Content = "Added successfully.";
-                        IngredientSuccessLabel.Visibility = Visibility.Visible;
+
                     }
                 }
                 else
                 {
-                    Random r = new Random();
-                    Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                    IngredientSuccessLabel.Foreground = brush;
-                    IngredientSuccessLabel.Content = "Already exists.";
-                    IngredientSuccessLabel.Visibility = Visibility.Visible;
+                    MessageBox.Show("Ingredient allergen already added.");
                 }
                 
             }
@@ -234,6 +249,7 @@ namespace ZdravoHospital.GUI.Secretary
                 if (isMedicineAllergenUnique(SelectedPatient.MedicineAllergens, medicalAllergen))
                 {
                     SelectedPatient.MedicineAllergens.Add(medicalAllergen.MedicineName);
+                    AddedCustomAllergens.Add(medicalAllergen.MedicineName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))
@@ -250,20 +266,12 @@ namespace ZdravoHospital.GUI.Secretary
                         Model.Resources.SavePatients();
 
                         //////////// FEEDBACK MESSAGE //////////////////////////
-                        Random r = new Random();
-                        Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                        CustomSuccessLabel.Foreground = brush;
-                        CustomSuccessLabel.Content = "Added successfully.";
-                        CustomSuccessLabel.Visibility = Visibility.Visible;
+
                     }
                 }
                 else
                 {
-                    Random r = new Random();
-                    Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                    CustomSuccessLabel.Foreground = brush;
-                    CustomSuccessLabel.Content = "Already exists.";
-                    CustomSuccessLabel.Visibility = Visibility.Visible;
+                    MessageBox.Show("Medical allergen already added.");
                 }
             }
             else if ((bool)IngredientRadioButton.IsChecked && CustomAllergenTextBox.Text != String.Empty)
@@ -278,6 +286,7 @@ namespace ZdravoHospital.GUI.Secretary
                 if(isIngredientAllergenUnique(SelectedPatient.IngredientAllergens, ingredientAllergen))
                 {
                     SelectedPatient.IngredientAllergens.Add(ingredientAllergen.IngredientName);
+                    AddedCustomAllergens.Add(ingredientAllergen.IngredientName);
 
                     ///////////// UPDATING THE RESOURCES ////////////////
                     if (File.Exists(@"..\..\..\Resources\patients.json"))
@@ -294,32 +303,93 @@ namespace ZdravoHospital.GUI.Secretary
                         Model.Resources.SavePatients();
 
                         //////////// FEEDBACK MESSAGE //////////////////////////
-                        Random r = new Random();
-                        Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                        CustomSuccessLabel.Foreground = brush;
-                        CustomSuccessLabel.Content = "Added successfully.";
-                        CustomSuccessLabel.Visibility = Visibility.Visible;
+
                     }
                 }
                 else
                 {
-                    Random r = new Random();
-                    Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(100, 233)));
-                    CustomSuccessLabel.Foreground = brush;
-                    CustomSuccessLabel.Content = "Already exists.";
-                    CustomSuccessLabel.Visibility = Visibility.Visible;
+                    MessageBox.Show("Ingredient allergen already added.");
                 }
             }
         }
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PatientsView());
+            NavigationService.Navigate(new PatientDetailsPage(SelectedPatient));
         }
 
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveMedicalAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PatientsView());
+            if (AddedMedicalAllergensListBox.SelectedItem != null)
+            {
+                SelectedPatient.MedicineAllergens.Remove((string)AddedMedicalAllergensListBox.SelectedItem);
+                AddedMedicalAllergens.Remove((string)AddedMedicalAllergensListBox.SelectedItem);
+                if (File.Exists(@"..\..\..\Resources\patients.json"))
+                {
+                    Model.Resources.OpenPatients();
+                    foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
+                    {
+                        if (item.Key.Equals(SelectedPatient.Username))
+                        {
+                            Model.Resources.patients[item.Key] = SelectedPatient;
+                            break;
+                        }
+                    }
+                    Model.Resources.SavePatients();
+
+                    if (CollectionViewSource.GetDefaultView(AddedMedicalAllergensListBox.ItemsSource) != null)
+                        CollectionViewSource.GetDefaultView(AddedMedicalAllergensListBox.ItemsSource).Refresh();
+                }
+            }
+        }
+
+        private void RemoveIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AddedIngredientAllergensListBox.SelectedItem != null)
+            {
+                SelectedPatient.IngredientAllergens.Remove((string)AddedIngredientAllergensListBox.SelectedItem);
+                AddedIngredientAllergens.Remove((string)AddedIngredientAllergensListBox.SelectedItem);
+                if (File.Exists(@"..\..\..\Resources\patients.json"))
+                {
+                    Model.Resources.OpenPatients();
+                    foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
+                    {
+                        if (item.Key.Equals(SelectedPatient.Username))
+                        {
+                            Model.Resources.patients[item.Key] = SelectedPatient;
+                            break;
+                        }
+                    }
+                    Model.Resources.SavePatients();
+                    if (CollectionViewSource.GetDefaultView(AddedIngredientAllergensListBox.ItemsSource) != null)
+                        CollectionViewSource.GetDefaultView(AddedIngredientAllergensListBox.ItemsSource).Refresh();
+                }
+            }
+        }
+
+        private void RemoveCustomAllergenButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AddedCustomAllergensListBox.SelectedItem != null)
+            {
+                SelectedPatient.IngredientAllergens.Remove((string)AddedCustomAllergensListBox.SelectedItem);
+                SelectedPatient.MedicineAllergens.Remove((string)AddedCustomAllergensListBox.SelectedItem);
+                AddedCustomAllergens.Remove((string)AddedCustomAllergensListBox.SelectedItem);
+                if (File.Exists(@"..\..\..\Resources\patients.json"))
+                {
+                    Model.Resources.OpenPatients();
+                    foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
+                    {
+                        if (item.Key.Equals(SelectedPatient.Username))
+                        {
+                            Model.Resources.patients[item.Key] = SelectedPatient;
+                            break;
+                        }
+                    }
+                    Model.Resources.SavePatients();
+                    if (CollectionViewSource.GetDefaultView(AddedCustomAllergensListBox.ItemsSource) != null)
+                        CollectionViewSource.GetDefaultView(AddedCustomAllergensListBox.ItemsSource).Refresh();
+                }
+            }
         }
     }
 }

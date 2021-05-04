@@ -108,5 +108,10 @@ namespace ZdravoHospital.GUI.Secretary
                 NavigationService.Navigate(new EditGuestPage(Patient));
             }
         }
+
+        private void EditAllergiesButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AllergiesPage(this.Patient));
+        }
     }
 }

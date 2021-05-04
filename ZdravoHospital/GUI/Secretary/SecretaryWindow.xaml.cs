@@ -82,5 +82,15 @@ namespace ZdravoHospital.GUI.Secretary
         {
             SecretaryMainFrame.Content = new SecretaryHomePage();
         }
+
+        private void PatientsViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            SecretaryMainFrame.Content = new PatientsView();
+        }
+
+        private void PeriodsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SecretaryMainFrame.Content = new SecretaryPeriodsPage();
+        }
     }
 }
