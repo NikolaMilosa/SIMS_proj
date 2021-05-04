@@ -27,6 +27,11 @@ namespace ZdravoHospital.GUI.DoctorUI
                 relevantTextBlock = NameTextBlock;
             else
                 relevantTextBlock = StatusTextBlock;
+
+            if (medicine.Status == MedicineStatus.REJECTED)
+                RejectButton.IsEnabled = false;
+            else if (medicine.Status == MedicineStatus.APPROVED)
+                ApproveButton.IsEnabled = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -61,12 +66,20 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void RejectButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Medicine.Status = MedicineStatus.REJECTED;
+            OnPropertyChanged("Medicine");
+            RejectButton.IsEnabled = false;
+            ApproveButton.IsEnabled = true;
+            Model.Resources.SaveMedicines();
         }
 
         private void ApproveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Medicine.Status = MedicineStatus.APPROVED;
+            OnPropertyChanged("Medicine");
+            ApproveButton.IsEnabled = false;
+            RejectButton.IsEnabled = true;
+            Model.Resources.SaveMedicines();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)

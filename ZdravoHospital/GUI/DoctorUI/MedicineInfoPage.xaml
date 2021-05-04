@@ -163,8 +163,7 @@
                             Height="45"
                             Width="200"
                             Style="{StaticResource BlueButton}"
-                            Name="RemoveIngredientsButton"
-                            Click="BackButton_Click"/>
+                            Name="RemoveIngredientsButton"/>
                             <Button
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Right"
@@ -173,8 +172,7 @@
                             Height="45"
                             Width="60"
                             Style="{StaticResource BlueButton}"
-                            Name="AddIngredientsButton"
-                            Click="BackButton_Click"/>
+                            Name="AddIngredientsButton"/>
                         </DockPanel>
                     </Grid>
                     <Grid  Margin="50, 0, 0, 0" 
@@ -207,8 +205,7 @@
                             Height="45"
                             Width="200"
                             Style="{StaticResource BlueButton}"
-                            Name="RemoveReplacentsButton"
-                            Click="BackButton_Click"/>
+                            Name="RemoveReplacentsButton"/>
                             <Button
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Right"
@@ -217,8 +214,7 @@
                             Height="45"
                             Width="60"
                             Style="{StaticResource BlueButton}"
-                            Name="AddReplacmentsButton"
-                            Click="BackButton_Click"/>
+                            Name="AddReplacmentsButton"/>
                         </DockPanel>
                     </Grid>
                     <Grid Margin="50, 40, 50, 0" 
