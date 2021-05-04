@@ -1,0 +1,140 @@
+﻿<Page x:Class="ZdravoHospital.GUI.Secretary.PatientDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:cvt="clr-namespace:ZdravoHospital"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="PatientDetailsPage"
+      Background="#FFF3F2FC">
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="255"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="250"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="PersonCircleOutline" Height="70" Width="70" Margin="0,0,-20,0"></materialDesign:PackIcon>
+                    <Button x:Name="EditPatientButton" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent" Click="EditPatientButton_Click">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                            <materialDesign:PackIcon Kind="Create" Height="25" Width="25"></materialDesign:PackIcon>
+                            <TextBlock FontFamily="Yu Gothic" FontSize="18" FontWeight="Black" Text="Edit  "></TextBlock>
+                        </StackPanel>
+                        
+                    </Button>
+                </StackPanel>
+                <TextBlock Grid.Row="1" FontFamily="Yu Gothic" FontSize="26" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Bottom"> Main info</TextBlock>
+                <Border Grid.Row="2" BorderBrush="Black" BorderThickness="0,1,0,1" Margin="10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15" Width="120"> Full name:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Name, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.ParentsName, Mode=OneWay}" Margin="5,0,0,0" FontSize="15" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Surname, Mode=OneWay}" Margin="5,0,0,0" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Date of birth:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.DateOfBirth, Mode=OneWay, Converter={cvt:DateTimeFormatter}}" FontWeight="Bold" FontSize="14"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Citizen ID:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.CitizenId, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Health card:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.HealthCardNumber, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Blood type:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.BloodType, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Gender:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Gender, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Marital status:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.MaritalStatus, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Email:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Email, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Telephone:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.PhoneNumber, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <TextBlock Grid.Row="3" FontFamily="Yu Gothic" FontSize="26" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Bottom"> Credentials </TextBlock>
+                
+                <Border Grid.Row="4" BorderBrush="Black" BorderThickness="0,1,0,1" Margin="10">
+                    <StackPanel Margin="0,10,0,20">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Username:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Username, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Password:</TextBlock>
+                            <TextBlock x:Name="PasswordTextBlock" Text="{Binding Path=Password, Mode=OneWay}" FontSize="15" FontWeight="Bold" Margin="0,0,25,0" VerticalAlignment="Center"></TextBlock>
+                            <Button x:Name="ShowPasswordButton" Click="ShowPasswordButton_Click" Background="Transparent" BorderBrush="Transparent" Focusable="False" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Name="ShowPasswordIcon" Width="16" Height="16" Kind="Show" Margin="0,0,0,0" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Grid.Row="5" FontFamily="Yu Gothic" FontSize="26" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Bottom"> Address</TextBlock>
+                <Border Grid.Row="6" BorderBrush="Black" BorderThickness="0,1,0,1" Margin="10">
+                    <StackPanel Margin="0,10,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Country:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Address.City.Country.Name, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> City:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Address.City.Name, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text=", " Margin="0,0,5,0" FontSize="15" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Address.City.PostalCode, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Yu Gothic" FontSize="15"  Width="120"> Street:</TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Address.StreetName, Mode=OneWay}" FontSize="15" FontWeight="Bold" Margin="0,0,5,0"></TextBlock>
+                            <TextBlock Text="{Binding Path=Patient.Address.Number, Mode=OneWay}" FontSize="15" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="7" Margin="10,0,0,0" VerticalAlignment="Bottom">
+                    <TextBlock FontFamily="Yu Gothic" FontSize="26" FontWeight="Bold" VerticalAlignment="Bottom"> Allergies</TextBlock>
+                    <Button x:Name="EditAllergiesButton" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent" Click="EditAllergiesButton_Click">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                            <materialDesign:PackIcon Kind="Create" Height="20" Width="20"></materialDesign:PackIcon>
+                            <TextBlock FontFamily="Yu Gothic" FontSize="16" FontWeight="Black" Text="Edit  "></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <Border Grid.Row="8" BorderBrush="Black" BorderThickness="0,1,0,1" Margin="10">
+                    <StackPanel Margin="0,10,0,0">
+                        <TextBlock FontFamily="Yu Gothic" FontSize="16"> Medical allergens </TextBlock>
+                        <ListBox x:Name="MedicalAllergensListBox" Height="70"  ItemsSource="{Binding Path=Patient.MedicineAllergens, Mode=OneWay}"></ListBox>
+                        <TextBlock FontFamily="Yu Gothic" Margin="0,10,0,0" FontSize="16"> Ingredient allergens</TextBlock>
+                        <ListBox x:Name="IngredientAllergensListBox" Height="70" ItemsSource="{Binding Path=Patient.IngredientAllergens, Mode=OneWay}"></ListBox>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>
