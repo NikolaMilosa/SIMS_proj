@@ -37,7 +37,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string EnteredName
         {
-            get { return _enteredName; }
+            get => _enteredName;
             set
             {
                 _enteredName = value;
@@ -46,9 +46,9 @@ namespace ZdravoHospital.GUI.ManagerUI
         }
 
         //Helper
-        ObservableCollection<Ingredient> viewableIngredients;
-        Ingredient passedIngredient;
-        bool isAdder;
+        ObservableCollection<Ingredient> _viewableIngredients;
+        Ingredient _passedIngredient;
+        bool _isAdder;
 
         public IngredientEnteringDialog(List<Ingredient> en, ObservableCollection<Ingredient> oc)
         {
@@ -57,9 +57,9 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             ExistingNames = en;
 
-            this.viewableIngredients = oc;
+            this._viewableIngredients = oc;
 
-            this.isAdder = true;
+            this._isAdder = true;
         }
 
         public IngredientEnteringDialog(List<Ingredient> en, ObservableCollection<Ingredient> oc, Ingredient i)
@@ -69,10 +69,10 @@ namespace ZdravoHospital.GUI.ManagerUI
 
             ExistingNames = en;
 
-            this.viewableIngredients = oc;
-            this.passedIngredient = i;
+            this._viewableIngredients = oc;
+            this._passedIngredient = i;
 
-            this.isAdder = false;
+            this._isAdder = false;
 
             EnteredName = i.IngredientName;
         }
@@ -85,17 +85,17 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            Logics.MedicineFunctions medicineFunctions = new Logics.MedicineFunctions();
-            if (isAdder)
+            var medicineFunctions = new Logics.MedicineFunctions();
+            if (_isAdder)
             {
-                Ingredient i = new Ingredient(EnteredName.Trim().ToLower());
-                medicineFunctions.AddIngredientToMedicine(i, ExistingNames, viewableIngredients);
+                var i = new Ingredient(EnteredName.Trim().ToLower());
+                medicineFunctions.AddIngredientToMedicine(i, ExistingNames, _viewableIngredients);
             }
             else
             {
-                if (!passedIngredient.IngredientName.Equals(EnteredName.Trim().ToLower()))
+                if (!_passedIngredient.IngredientName.Equals(EnteredName.Trim().ToLower()))
                 {
-                    medicineFunctions.EditIngredientInMedicine(passedIngredient, EnteredName, ExistingNames, viewableIngredients);
+                    medicineFunctions.EditIngredientInMedicine(_passedIngredient, EnteredName, ExistingNames, _viewableIngredients);
                 }   
             }
             

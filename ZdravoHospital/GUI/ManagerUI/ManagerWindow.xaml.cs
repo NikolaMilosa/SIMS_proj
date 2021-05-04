@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 
 using Model;
 
+using ZdravoHospital.GUI.ManagerUI.DTOs;
+
 namespace ZdravoHospital.GUI.ManagerUI
 {
     /// <summary>
@@ -32,6 +34,8 @@ namespace ZdravoHospital.GUI.ManagerUI
         public static ObservableCollection<Medicine> Medicines { get; set; }
 
         Logics.TransferRequestsFunctions transferRequestsFunctions;
+        Logics.RoomScheduleFunctions roomScheduleFunctions;
+
 
         public ManagerWindow(string au)
         {
@@ -46,6 +50,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             this.DataContext = this;
 
             this.transferRequestsFunctions = new Logics.TransferRequestsFunctions();
+            this.roomScheduleFunctions = new Logics.RoomScheduleFunctions();
 
             /* Opening database */
             Model.Resources.OpenRoomInventory();
@@ -53,14 +58,19 @@ namespace ZdravoHospital.GUI.ManagerUI
             Model.Resources.OpenInventory();
             Model.Resources.OpenTransferRequests();
             Model.Resources.OpenMedicines();
+            Model.Resources.OpenPeriods();
+            Model.Resources.OpenRoomSchedule();
 
-            /* Handiling visuals */
+            /* Handling visuals */
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
             Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
             Medicines = new ObservableCollection<Medicine>(Model.Resources.medicines);
 
             /* Handling transfer requests */
             transferRequestsFunctions.RunOrExecute();
+
+            /* Handling room renovation */
+            roomScheduleFunctions.RunOrExecute();
         }
 
         private void TurnOffTables()
@@ -233,6 +243,12 @@ namespace ZdravoHospital.GUI.ManagerUI
         private void AddMedicineButton_Click(object sender, RoutedEventArgs e)
         {
             dialog = new AddOrEditMedicine();
+            dialog.ShowDialog();
+        }
+
+        private void PlanRenovation_Click(object sender, RoutedEventArgs e)
+        {
+            dialog = new RoomRenovation();
             dialog.ShowDialog();
         }
     }

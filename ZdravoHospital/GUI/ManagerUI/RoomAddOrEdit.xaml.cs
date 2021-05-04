@@ -24,7 +24,7 @@ namespace ZdravoHospital.GUI.ManagerUI
         private int _id;
         private string _name;
         private RoomType _roomType;
-        private Logics.RoomFunctions roomFunctions;
+        private Logics.RoomFunctions _roomFunctions;
 
         public int Id
         {
@@ -38,7 +38,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string RoomName
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 _name = value;
@@ -56,16 +56,16 @@ namespace ZdravoHospital.GUI.ManagerUI
             }
         }
 
-        bool isAdder;
+        bool _isAdder;
 
         public RoomAddOrEdit()
         {
             InitializeComponent();
             this.DataContext = this;
 
-            this.roomFunctions = new Logics.RoomFunctions();
+            this._roomFunctions = new Logics.RoomFunctions();
 
-            isAdder = true;
+            _isAdder = true;
             this.Title = "Room adding dialog";
             TypeComboBox.SelectedIndex = 0;
             YesRadioButton.IsChecked = true;
@@ -76,11 +76,11 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
-            this.roomFunctions = new Logics.RoomFunctions();
+            this._roomFunctions = new Logics.RoomFunctions();
 
             IdTextBox.IsEnabled = false;
 
-            isAdder = false;
+            _isAdder = false;
             this.Title = "Room editing dialog";
             Id = r.Id;
             RoomName = r.Name;
@@ -109,15 +109,15 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (isAdder)
+            if (_isAdder)
             {
-                Room newRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
-                roomFunctions.AddRoom(newRoom);
+                var newRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
+                _roomFunctions.AddRoom(newRoom);
             }
             else
             {
-                Room replaceRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
-                roomFunctions.EditRoom(replaceRoom);
+                var replaceRoom = new Room(RoomType, Id, RoomName, (YesRadioButton.IsChecked == true) ? true : false);
+                _roomFunctions.EditRoom(replaceRoom);
             }
 
             this.Close();

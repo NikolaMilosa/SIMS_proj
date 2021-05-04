@@ -12,12 +12,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             try
             {
-                string id = value.ToString();
+                var id = value.ToString();
 
-                if (id.Equals(String.Empty))
+                if (id.Equals(string.Empty))
                     return new ValidationResult(false, "Id cannot be empty...");
 
-                string regex = @"[a-zA-Z0-9]+";
+                var regex = @"^[a-zA-Z0-9]+$";
 
                 if (!Regex.IsMatch(id, regex))
                     return new ValidationResult(false, "In id you have entered an unsupported character...");

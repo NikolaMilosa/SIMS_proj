@@ -11,12 +11,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string input = value as string;
+            var input = value as string;
 
             input = Regex.Replace(input, @"\s+", " ");
             input = input.Trim();
 
-            if (input.Equals(String.Empty) || !Regex.IsMatch(input, @"^([a-zA-Z]+(\s([a-zA-Z]+|[1-9][0-9]*))*)$"))
+            if (input.Equals(string.Empty) || !Regex.IsMatch(input, @"^([a-zA-Z]+(\s([a-zA-Z]+|[1-9][0-9]*))*)$"))
             {
                 return new ValidationResult(false, "In 'Name' you entered an unsupported character...");
             }

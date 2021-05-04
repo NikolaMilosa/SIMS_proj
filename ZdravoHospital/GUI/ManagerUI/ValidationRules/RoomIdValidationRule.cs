@@ -14,7 +14,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 if (value.ToString().Trim().Equals(String.Empty))
                     return new ValidationResult(false, "'Id' field cannot be empty...");
 
-                int id = int.Parse(value.ToString());
+                var id = int.Parse(value.ToString());
 
                 if (Model.Resources.rooms.ContainsKey(id))
                     return new ValidationResult(false, "Room with that Id already exists...");

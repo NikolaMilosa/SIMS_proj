@@ -8,23 +8,30 @@
   },
   "123FD": {
     "Name": "stitches",
-    "Supplier": "some supplier",
+    "Supplier": "Some supplier",
     "Quantity": 152,
     "InventoryType": 1,
     "Id": "123FD"
   },
   "333FF": {
     "Name": "bed",
-    "Supplier": "some supplier",
+    "Supplier": "Some supplier",
     "Quantity": 20,
     "InventoryType": 0,
     "Id": "333FF"
   },
   "444DD": {
     "Name": "machine",
-    "Supplier": "some supp",
+    "Supplier": "Some supp",
     "Quantity": 50,
     "InventoryType": 0,
     "Id": "444DD"
+  },
+  "OLM22": {
+    "Name": "chair",
+    "Supplier": "Ikea",
+    "Quantity": 25,
+    "InventoryType": 0,
+    "Id": "OLM22"
   }
 }

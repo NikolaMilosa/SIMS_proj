@@ -3,32 +3,46 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class InventoryFunctions
     {
+        private static Mutex _inventoryMutex;
+
+        public static Mutex GetInventoryMutex()
+        {
+            if (_inventoryMutex == null)
+                _inventoryMutex = new Mutex();
+            return _inventoryMutex;
+        }
+
         public InventoryFunctions() { }
 
         public bool DeleteInventory(Inventory someInventory)
         {
-            RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
+            var roomInventoryService = new RoomInventoryFunctions();
             roomInventoryService.DeleteByInventoryId(someInventory.Id);
 
+            GetInventoryMutex().WaitOne();
             /* Visual */
             ManagerWindow.Inventory.Remove(someInventory);
 
             Model.Resources.inventory.Remove(someInventory.Id);
             Model.Resources.SerializeInventory();
+
+            GetInventoryMutex().ReleaseMutex();
             return true;
         }
 
         public bool AddInventory(Inventory newInventory)
         {
-            RoomFunctions roomFunctions = new RoomFunctions();
-            RoomInventoryFunctions roomInventoryFunctions = new RoomInventoryFunctions();
+            GetInventoryMutex().WaitOne();
+            var roomFunctions = new RoomFunctions();
+            var roomInventoryFunctions = new RoomInventoryFunctions();
 
-            Room someRoom = roomFunctions.FindRoomByPrio(null);
+            var someRoom = roomFunctions.FindRoomByPrio(null);
 
             if (someRoom == null)
             {
@@ -46,19 +60,21 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
             /* Found a room to put some inventory in */
+            
             Model.Resources.inventory[newInventory.Id] = newInventory;
-            roomInventoryFunctions.AddNewReference(new RoomInventory(newInventory.Id, someRoom.Id, newInventory.Quantity));
-
             Model.Resources.SerializeInventory();
-            Model.Resources.SerializeRoomInventory();
-
             ManagerWindow.Inventory.Add(Model.Resources.inventory[newInventory.Id]);
+
+            GetInventoryMutex().ReleaseMutex();
+            roomInventoryFunctions.AddNewReference(new RoomInventory(newInventory.Id, someRoom.Id, newInventory.Quantity));
             return true;
         }
 
         public void EditInventory(Inventory oldInventory, Inventory newInventory)
         {
-            int index = ManagerWindow.Inventory.IndexOf(oldInventory);
+            GetInventoryMutex().WaitOne();
+
+            var index = ManagerWindow.Inventory.IndexOf(oldInventory);
             ManagerWindow.Inventory.Remove(oldInventory);
 
             /* Clean input */
@@ -73,19 +89,21 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
             Model.Resources.inventory[oldInventory.Id] = newInventory;
-
             ManagerWindow.Inventory.Insert(index, newInventory);
-
             Model.Resources.SerializeInventory();
+
+            GetInventoryMutex().ReleaseMutex();
         }
 
         public void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
         {
-            RoomInventoryFunctions roomInventoryFunctions = new RoomInventoryFunctions();
+            GetInventoryMutex().WaitOne();
+
+            var roomInventoryFunctions = new RoomInventoryFunctions();
 
             int difference;
 
-            RoomInventory roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(room.Id, inventory.Id);
+            var roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(room.Id, inventory.Id);
             if (roomInventory == null)
             {
                 roomInventoryFunctions.AddNewReference(new RoomInventory(inventory.Id, room.Id, newQuantity));
@@ -97,15 +115,18 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     return;
 
                 difference = newQuantity - roomInventory.Quantity;
-                roomInventory.Quantity = newQuantity;
 
                 if (newQuantity == 0)
                 {
                     roomInventoryFunctions.DeleteByReference(roomInventory);
                 }
+                else
+                {
+                    roomInventoryFunctions.SetNewQuantity(roomInventory, newQuantity);
+                }
             }
 
-            int index = ManagerWindow.Inventory.IndexOf(inventory);
+            var index = ManagerWindow.Inventory.IndexOf(inventory);
             ManagerWindow.Inventory.Remove(inventory);
 
             if (difference < 0)
@@ -121,11 +142,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
             
             ManagerWindow.Inventory.Insert(index, inventory);
-
             
-
-            Model.Resources.SerializeRoomInventory();
             Model.Resources.SerializeInventory();
+
+            GetInventoryMutex().ReleaseMutex();
         }
     }
 }

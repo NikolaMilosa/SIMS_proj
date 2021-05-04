@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
@@ -9,6 +10,16 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class TransferRequestsFunctions
     {
+        private static Mutex transferRequestMutex;
+
+        public static Mutex GetTransferRequestMutex()
+        {
+            if (transferRequestMutex == null)
+                transferRequestMutex = new Mutex();
+
+            return transferRequestMutex;
+        }
+
         public void RunOrExecute()
         {
             if (Model.Resources.transferRequests.Count != 0)
@@ -36,42 +47,59 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void CreateAndStartTransfer(TransferRequest transferRequest)
         {
+            GetTransferRequestMutex().WaitOne();
+
             Model.Resources.transferRequests.Add(transferRequest);
             Model.Resources.SerializeTransferRequests();
+
+            GetTransferRequestMutex().ReleaseMutex();
+
             Task t = new Task(() => transferRequest.DoWork());
             t.Start();
+
+            /* Create a roomSchedule for this transfer */
+            
+            RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
+            
+            RoomSchedule roomScheduleSender = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution, EndTime = transferRequest.TimeOfExecution.AddMinutes(2), RoomId = transferRequest.SenderRoom, ScheduleType = ReservationType.TRANSFER };
+            roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleSender);
+
+            RoomSchedule roomScheduleReciever = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution.AddMinutes(2), EndTime = transferRequest.TimeOfExecution.AddMinutes(4), RoomId = transferRequest.RecipientRoom, ScheduleType = ReservationType.TRANSFER };
+            roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleReciever);
+            
         }
 
         public void ExecuteRequest(TransferRequest transferRequest)
         {
+            GetTransferRequestMutex().WaitOne();
+
             if (Model.Resources.rooms.ContainsKey(transferRequest.SenderRoom) && Model.Resources.rooms.ContainsKey(transferRequest.RecipientRoom) && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
             {
-                RoomInventoryFunctions roomInventoryService = new RoomInventoryFunctions();
+                var roomInventoryService = new RoomInventoryFunctions();
                 /* Handle database transfer */
-                RoomInventory sender = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
-                RoomInventory reciever = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
-
+                var sender = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.SenderRoom, transferRequest.InventoryId);
+                var receiver = roomInventoryService.FindRoomInventoryByRoomAndInventory(transferRequest.RecipientRoom, transferRequest.InventoryId);
+                
                 if (sender.Quantity - transferRequest.Quantity == 0)
                 {
                     roomInventoryService.DeleteByReference(sender);
                 }
                 else
                 {
-                    sender.Quantity -= transferRequest.Quantity;
+                    roomInventoryService.SetNewQuantity(sender, sender.Quantity - transferRequest.Quantity);
                 }
 
-                if (reciever == null)
+                if (receiver == null)
                 {
                     roomInventoryService.AddNewReference(new RoomInventory(transferRequest.InventoryId, transferRequest.RecipientRoom, transferRequest.Quantity));
                 }
                 else
                 {
-                    reciever.Quantity += transferRequest.Quantity;
+                    roomInventoryService.SetNewQuantity(receiver, receiver.Quantity + transferRequest.Quantity);
                 }
             }
 
             /* Serialize */
-            Model.Resources.SerializeRoomInventory();
             if (Model.Resources.transferRequests.Remove(transferRequest))
                 Model.Resources.SerializeTransferRequests();
 
@@ -86,6 +114,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     activeWindow.SecondRoom = activeWindow.SecondRoom;
                 }
             }
+            GetTransferRequestMutex().ReleaseMutex();
         }
 
         public int GetScheduledInventoryForRoom(Inventory inventory, Room room)

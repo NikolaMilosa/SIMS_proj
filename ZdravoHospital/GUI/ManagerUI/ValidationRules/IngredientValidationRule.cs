@@ -15,7 +15,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         public IngredientNameWrapper Wrapper { get; set; }
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string input = value as string;
+            var input = value as string;
 
             input = Regex.Replace(input, @"\s+", " ");
             input = input.Trim().ToLower();
@@ -30,7 +30,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 return new ValidationResult(false, "You have typed an unsupported character...");
             }
 
-            Ingredient checker = Wrapper.ExistingNames.Find(i => i.IngredientName.Equals(input));
+            var checker = Wrapper.ExistingNames.Find(i => i.IngredientName.Equals(input));
             if (checker == null)
             {
                 return new ValidationResult(true, null);
@@ -48,11 +48,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
     
         public List<Ingredient> ExistingNames
         {
-            get { return (List<Ingredient>)GetValue(IngredientsProperty); }
-            set
-            {
-                SetValue(IngredientsProperty, value);
-            }
+            get => (List<Ingredient>)GetValue(IngredientsProperty);
+            set => SetValue(IngredientsProperty, value);
         }
     }
 
@@ -67,8 +64,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public object Data
         {
-            get { return (object)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get => (object)GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
         }
     }
 }

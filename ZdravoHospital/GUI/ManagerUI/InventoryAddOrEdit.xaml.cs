@@ -18,10 +18,10 @@ namespace ZdravoHospital.GUI.ManagerUI
         private int _quantity;
         private InventoryType _inventoryType;
 
-        bool isAdder;
-        Window dialog;
+        bool _isAdder;
+        Window _dialog;
 
-        private Logics.InventoryFunctions inventoryFunctions;
+        private Logics.InventoryFunctions _inventoryFunctions;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -35,7 +35,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string Id
         {
-            get { return _id; }
+            get => _id;
             set
             {
                 _id = value;
@@ -45,7 +45,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string InventoryName
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 _name = value;
@@ -55,7 +55,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string Supplier
         {
-            get { return _supplier; }
+            get => _supplier;
             set
             {
                 _supplier = value;
@@ -65,7 +65,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public int Quantity
         {
-            get { return _quantity; }
+            get => _quantity;
             set
             {
                 _quantity = value;
@@ -75,7 +75,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public InventoryType InventoryType
         {
-            get { return _inventoryType; }
+            get => _inventoryType;
             set
             {
                 _inventoryType = value;
@@ -88,9 +88,9 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
-            this.inventoryFunctions = new Logics.InventoryFunctions();
+            this._inventoryFunctions = new Logics.InventoryFunctions();
 
-            isAdder = true;
+            _isAdder = true;
             this.Title = "Inventory adding dialog";
             TypeComboBox.SelectedIndex = 0;
         }
@@ -100,10 +100,10 @@ namespace ZdravoHospital.GUI.ManagerUI
             InitializeComponent();
             this.DataContext = this;
 
-            this.inventoryFunctions = new Logics.InventoryFunctions();
+            this._inventoryFunctions = new Logics.InventoryFunctions();
 
             this.Title = "Inventory editing dialog";
-            isAdder = false;
+            _isAdder = false;
 
             Id = i.Id;
             InventoryName = i.Name;
@@ -117,7 +117,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (isAdder)
+            if (_isAdder)
             {
                 AddInventory();
             }
@@ -131,18 +131,18 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void AddInventory()
         {
-            if (!inventoryFunctions.AddInventory(new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id)))
+            if (!_inventoryFunctions.AddInventory(new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id)))
             {
-                dialog = new WarningDialog(this);
-                dialog.ShowDialog();
+                _dialog = new WarningDialog(this);
+                _dialog.ShowDialog();
                 return;
             }
         }
 
         private void EditInventory()
         {
-            Inventory newInventory = new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id);
-            inventoryFunctions.EditInventory(Model.Resources.inventory[Id],newInventory);
+            var newInventory = new Inventory(InventoryName, Supplier, Quantity, InventoryType, Id);
+            _inventoryFunctions.EditInventory(Model.Resources.inventory[Id],newInventory);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

@@ -31,7 +31,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string Id
         {
-            get { return _id; }
+            get => _id;
             set
             {
                 _id = value;
@@ -41,7 +41,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string InventoryName
         {
-            get { return _inventoryName; }
+            get => _inventoryName;
             set
             {
                 _inventoryName = value;
@@ -51,7 +51,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string Supplier
         {
-            get { return _supplier; }
+            get => _supplier;
             set
             {
                 _supplier = value;
@@ -61,7 +61,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string Quantity
         {
-            get { return _quantity; }
+            get => _quantity;
             set
             {
                 _quantity = value;
@@ -71,7 +71,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         public string Type
         {
-            get { return _type; }
+            get => _type;
             set
             {
                 string[] parts = value.ToString().Split(" ");
@@ -107,7 +107,7 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            ICollectionView itemsVisual = CollectionViewSource.GetDefaultView(ManagerWindow.Inventory);
+            var itemsVisual = CollectionViewSource.GetDefaultView(ManagerWindow.Inventory);
 
             itemsVisual.Filter = InventoryFilter;
 
@@ -116,16 +116,16 @@ namespace ZdravoHospital.GUI.ManagerUI
 
         private bool InventoryFilter(object item)
         {
-            Inventory inventory = item as Inventory;
+            var inventory = item as Inventory;
 
-            if (!Supplier.Trim().Equals(String.Empty))
+            if (!Supplier.Trim().Equals(string.Empty))
                 Supplier = Supplier.Trim().Substring(0, 1).ToUpper() + Supplier.Trim().Substring(1).ToLower();
             else
                 Supplier = Supplier.Trim();
 
             int enteredInv;
 
-            if (Quantity.Trim().Equals(String.Empty))
+            if (Quantity.Trim().Equals(string.Empty))
                 enteredInv = int.MaxValue;
             else
                 enteredInv = int.Parse(Quantity);

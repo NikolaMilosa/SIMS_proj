@@ -27,12 +27,12 @@
     "RoomType": 3,
     "Id": 106,
     "Name": "BIG storage",
-    "Available": false
+    "Available": true
   },
   "505": {
     "RoomType": 2,
     "Id": 505,
     "Name": "Bedroom 3",
-    "Available": false
+    "Available": true
   }
 }
