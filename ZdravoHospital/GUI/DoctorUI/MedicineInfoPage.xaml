@@ -149,7 +149,7 @@
                                  Grid.Row="1"
                                  SelectionMode="Multiple"
                                  FontSize="21"
-                                 ItemsSource="{Binding Medicine.Ingredients}"
+                                 ItemsSource="{Binding Ingredients}"
                                  Width="400"
                          MinHeight="600"
                              Background="Black"
@@ -163,7 +163,8 @@
                             Height="45"
                             Width="200"
                             Style="{StaticResource BlueButton}"
-                            Name="RemoveIngredientsButton"/>
+                            Name="RemoveIngredientsButton"
+                                Click="RemoveIngredientsButton_Click"/>
                             <Button
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Right"
@@ -172,7 +173,8 @@
                             Height="45"
                             Width="60"
                             Style="{StaticResource BlueButton}"
-                            Name="AddIngredientsButton"/>
+                            Name="AddIngredientsButton"
+                                Click="AddIngredientsButton_Click"/>
                         </DockPanel>
                     </Grid>
                     <Grid  Margin="50, 0, 0, 0" 
@@ -190,7 +192,7 @@
                         <ListBox x:Name="ReplacementsListBox"
                                    Grid.Row="1"
                                  SelectionMode="Multiple"
-                                 ItemsSource="{Binding Medicine.ReplacementMedication}" 
+                                 ItemsSource="{Binding Replacements}" 
                                  Width="400"
                                  MinHeight="600"
                                  FontSize="20"
@@ -205,7 +207,8 @@
                             Height="45"
                             Width="200"
                             Style="{StaticResource BlueButton}"
-                            Name="RemoveReplacentsButton"/>
+                            Name="RemoveReplacementsButton"
+                                Click="RemoveReplacementsButton_Click"/>
                             <Button
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Right"
@@ -214,7 +217,8 @@
                             Height="45"
                             Width="60"
                             Style="{StaticResource BlueButton}"
-                            Name="AddReplacmentsButton"/>
+                            Name="AddReplacmentsButton"
+                                Click="AddReplacmentsButton_Click"/>
                         </DockPanel>
                     </Grid>
                     <Grid Margin="50, 40, 50, 0" 
@@ -235,6 +239,7 @@
                                Foreground="White"
                                 Margin="20, 0, 0, 20"/>
                             <TextBox Grid.Row="0" Grid.Column="1" 
+                                     Name="MedicineNameTextBox"
                                      Background="{StaticResource DarkGray}"
                                      MaxWidth="750"
                                FontSize="25"
@@ -244,7 +249,8 @@
                                FontSize="25"
                                Foreground="White"
                                 Margin="20, 0, 0, 0"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" 
+                        <TextBox Grid.Row="1" Grid.Column="1" 
+                                     Name="SupplierTextBox" 
                                      Background="{StaticResource DarkGray}"
                                FontSize="25"
                                      MaxWidth="750"
@@ -265,5 +271,93 @@
                 </WrapPanel>
             </StackPanel>
         </ScrollViewer>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Name="IngredientsPopUp"
+                   Background="Transparent"
+              Visibility="Collapsed">
+            <DockPanel Background="Black"
+                       Opacity="0.95">
+            </DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Background="#222222"
+                        Margin="0, 0, 0, 0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <ListBox x:Name="AvailableIngredientsListBox"
+                         Height="500"
+                         Margin="30"
+                         SelectionMode="Multiple"
+                                 Width="400"
+                                 FontSize="20"
+                                 Background="Black"
+                                 Foreground="White"/>
+                    <DockPanel Margin="30, 0, 30, 30">
+                        <Button
+                        DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Height="45"
+                            Width="120"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelIngredientsPopUpButton"
+                            Click="CancelIngredientsPopUpButton_Click"
+                            HorizontalAlignment="Right"/>
+                        <Button
+                        DockPanel.Dock="Right"
+                            Content="Add selection"
+                            Padding="10"
+                            Height="45"
+                            Width="170"
+                            Style="{StaticResource BlueButton}"
+                            Name="AddSelectedIngredientsButton"
+                            Click="AddSelectedIngredientsButton_Click"
+                            HorizontalAlignment="Right"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Name="ReplacementsPopUp"
+                   Background="Transparent"
+              Visibility="Collapsed">
+            <DockPanel Background="Black"
+                       Opacity="0.95">
+            </DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Background="#222222"
+                        Margin="0, 0, 0, 0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <ListBox x:Name="AvailableReplacementsListBox"
+                         Height="500"
+                         Margin="30"
+                         SelectionMode="Multiple"
+                                 Width="400"
+                                 FontSize="20"
+                                 Background="Black"
+                                 Foreground="White"/>
+                    <DockPanel Margin="30, 0, 30, 30">
+                        <Button
+                        DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Height="45"
+                            Width="120"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelReplacementsPopUpButton"
+                            Click="CancelReplacementsPopUpButton_Click"
+                            HorizontalAlignment="Right"/>
+                        <Button
+                        DockPanel.Dock="Right"
+                            Content="Add selection"
+                            Padding="10"
+                            Height="45"
+                            Width="170"
+                            Style="{StaticResource BlueButton}"
+                            Name="AddSelectedReplacementsButton"
+                            Click="AddSelectedReplacementsButton_Click"
+                            HorizontalAlignment="Right"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

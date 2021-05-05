@@ -1,5 +1,8 @@
 ﻿using Model;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -11,10 +14,13 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class MedicineInfoPage : Page, INotifyPropertyChanged
     {
+        private TextBlock relevantTextBlock;
+
         public Medicine Medicine { get; set; }
         public double NameSupplierWidth { get; set; }
         public Thickness TopSectionsMargin { get; set; }
-        private TextBlock relevantTextBlock;
+        public ObservableCollection<Ingredient> Ingredients { get; set; }
+        public ObservableCollection<string> Replacements { get; set; }
 
         public MedicineInfoPage(Medicine medicine)
         {
@@ -32,6 +38,31 @@ namespace ZdravoHospital.GUI.DoctorUI
                 RejectButton.IsEnabled = false;
             else if (medicine.Status == MedicineStatus.APPROVED)
                 ApproveButton.IsEnabled = false;
+
+            Model.Resources.OpenIngredients();
+            AvailableIngredientsListBox.ItemsSource = new List<Ingredient>();
+
+            foreach (Ingredient i in Model.Resources.ingredients)
+                if (Medicine.Ingredients.Find(ing => ing.IngredientName.Equals(i.IngredientName)) == null)
+                    (AvailableIngredientsListBox.ItemsSource as List<Ingredient>).Add(i);
+
+            Ingredients = new ObservableCollection<Ingredient>();
+
+            foreach (Ingredient ingredient in medicine.Ingredients)
+                Ingredients.Add(ingredient);
+
+            AvailableReplacementsListBox.ItemsSource = new List<string>();
+
+            foreach (Medicine m in Model.Resources.medicines)
+                if (!m.MedicineName.Equals(medicine.MedicineName) && Medicine.Replacements.Find(medicineName => medicineName.Equals(m.MedicineName)) == null)
+                    (AvailableReplacementsListBox.ItemsSource as List<string>).Add(m.MedicineName);
+
+            Replacements = new ObservableCollection<string>();
+
+            foreach (string replacement in medicine.Replacements)
+                Replacements.Add(replacement);
+
+            NotesTextBox.Text = medicine.Note;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -91,6 +122,9 @@ namespace ZdravoHospital.GUI.DoctorUI
             ReplacementsGrid.RowDefinitions[2].Height = GridLength.Auto;
             NotesGrid.RowDefinitions[0].Height = GridLength.Auto;
             NotesGrid.RowDefinitions[1].Height = GridLength.Auto;
+
+            MedicineNameTextBox.Text = Medicine.MedicineName;
+            SupplierTextBox.Text = Medicine.Supplier;
         }
 
         private void ConfirmChangesButton_Click(object sender, RoutedEventArgs e)
@@ -102,6 +136,106 @@ namespace ZdravoHospital.GUI.DoctorUI
             ReplacementsGrid.RowDefinitions[2].Height = new GridLength(0);
             NotesGrid.RowDefinitions[0].Height = new GridLength(0);
             NotesGrid.RowDefinitions[1].Height = new GridLength(0);
+
+            Medicine.Ingredients = new List<Ingredient>();
+            foreach (Ingredient i in IngredientsListBox.Items)
+                Medicine.Ingredients.Add(i);
+
+            Medicine.Replacements = new List<string>();
+            foreach (string r in ReplacementsListBox.Items)
+                Medicine.Replacements.Add(r);
+
+            Medicine.MedicineName = MedicineNameTextBox.Text;
+            Medicine.Supplier = SupplierTextBox.Text;
+            Medicine.Note = NotesTextBox.Text;
+
+            OnPropertyChanged("Medicine");
+
+            Model.Resources.SaveMedicines();
+        }
+
+        private void RemoveIngredientsButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Ingredient> selection = new List<Ingredient>();
+
+            foreach (Ingredient ingredient in IngredientsListBox.SelectedItems)
+                selection.Add(ingredient);
+
+            foreach (Ingredient ingredient in selection)
+            {
+                Ingredients.Remove(ingredient);
+                (AvailableIngredientsListBox.ItemsSource as List<Ingredient>).Add(ingredient);
+            }
+        }
+
+        private void AddIngredientsButton_Click(object sender, RoutedEventArgs e)
+        {
+            IngredientsPopUp.Visibility = Visibility.Visible;
+        }
+
+        private void RemoveReplacementsButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> selection = new List<string>();
+
+            foreach (string replacement in ReplacementsListBox.SelectedItems)
+                selection.Add(replacement);
+
+            foreach (string replacement in selection)
+            {
+                Replacements.Remove(replacement);
+                (AvailableReplacementsListBox.ItemsSource as List<string>).Add(replacement);
+            }
+        }
+
+        private void AddReplacmentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReplacementsPopUp.Visibility = Visibility.Visible;
+        }
+
+        private void CancelIngredientsPopUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            AvailableIngredientsListBox.SelectedIndex = -1;
+            IngredientsPopUp.Visibility = Visibility.Collapsed;
+        }
+
+        private void AddSelectedIngredientsButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Ingredient> selection = new List<Ingredient>();
+
+            foreach (Ingredient ingredient in AvailableIngredientsListBox.SelectedItems)
+                selection.Add(ingredient);
+
+            foreach (Ingredient ingredient in selection)
+            {
+                Ingredients.Add(ingredient);
+                (AvailableIngredientsListBox.ItemsSource as List<Ingredient>).Remove(ingredient);
+            }
+
+            AvailableIngredientsListBox.Items.Refresh();
+            IngredientsPopUp.Visibility = Visibility.Collapsed;
+        }
+
+        private void CancelReplacementsPopUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            AvailableReplacementsListBox.SelectedIndex = -1;
+            ReplacementsPopUp.Visibility = Visibility.Collapsed;
+        }
+
+        private void AddSelectedReplacementsButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> selection = new List<string>();
+
+            foreach (string replacement in AvailableReplacementsListBox.SelectedItems)
+                selection.Add(replacement);
+
+            foreach (string replacement in selection)
+            {
+                Replacements.Add(replacement);
+                (AvailableReplacementsListBox.ItemsSource as List<string>).Remove(replacement);
+            }
+
+            AvailableReplacementsListBox.Items.Refresh();
+            ReplacementsPopUp.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -1,20 +1,27 @@
 [
   {
-    "MedicineName": "brufen",
-    "Supplier": "Some supp",
+    "MedicineName": "Brufen",
+    "Supplier": "Hemofarm",
     "Status": 1,
-    "Note": "",
-    "ReplacementMedication": [
+    "Note": "Some notes",
+    "Replacements": [
       "test medication"
     ],
-    "Ingredients": []
+    "Ingredients": [
+      {
+        "IngredientName": "zink"
+      },
+      {
+        "IngredientName": "tester two"
+      }
+    ]
   },
   {
     "MedicineName": "test medication",
     "Supplier": "Jankovic",
     "Status": 0,
     "Note": "",
-    "ReplacementMedication": [],
+    "Replacements": [],
     "Ingredients": [
       {
         "IngredientName": "tester one"
@@ -32,7 +39,7 @@
     "Supplier": "Some supp",
     "Status": 0,
     "Note": "",
-    "ReplacementMedication": [],
+    "Replacements": [],
     "Ingredients": [
       {
         "IngredientName": "magnesium"
