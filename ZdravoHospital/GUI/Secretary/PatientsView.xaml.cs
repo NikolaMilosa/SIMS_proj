@@ -40,33 +40,12 @@ namespace ZdravoHospital.GUI.Secretary
             PatientsForTable = dictionaryToList(Model.Resources.patients);
         }
 
-        private void EditPatientButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
-
-            if (selectedPatient == null)
-            {
-                
-            }
-            else
-            {
-                if (!selectedPatient.IsGuest)
-                {
-                    NavigationService.Navigate(new EditPatientPage(selectedPatient));
-                }
-                else
-                {
-                    NavigationService.Navigate(new EditGuestPage(selectedPatient));
-                }
-            }
-        }
 
         private void DeletePatientButton_Click(object sender, RoutedEventArgs e)
         {
-            this.PatientsDataGrid.ItemsSource = PatientsForTable;
+            //this.PatientsListView.ItemsSource = PatientsForTable;
 
-            var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
-
+            var selectedPatient = ((Patient)PatientsListView.SelectedItem);
             if (selectedPatient == null)
             {
                 
@@ -96,104 +75,17 @@ namespace ZdravoHospital.GUI.Secretary
             }
         }
 
-        private void HomePageButton_Click(object sender, RoutedEventArgs e)
+        private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new SecretaryHomePage());
+            var selectedPatient = (sender as Button).DataContext as Patient;
+            string name = selectedPatient.Name;
+            NavigationService.Navigate(new PatientDetailsPage(selectedPatient));
         }
 
-        private void AddAllergyInfoButton_Click(object sender, RoutedEventArgs e)
+        private void PatientsSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var selectedPatient = ((Patient)PatientsDataGrid.SelectedItem);
-            if (selectedPatient == null)
-            {
 
-            }
-            else
-            {
-                NavigationService.Navigate(new AllergiesPage(selectedPatient));
-            }
         }
 
-        public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-
-                    if (child != null && child is T)
-                        yield return (T)child;
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                        yield return childOfChild;
-                }
-            }
-        }
-
-        private void RemoveMedicalAllergenButton_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var listBox in FindVisualChildren<ListBox>(this))
-            {
-                if (listBox.Name == "MedicalAllergensListBox")
-                {
-                    if(listBox.SelectedItem != null)
-                    {
-                        Patient patient = (Patient)PatientsDataGrid.SelectedItem;
-                        patient.MedicineAllergens.Remove((string)listBox.SelectedItem);
-                        if (File.Exists(@"..\..\..\Resources\patients.json"))
-                        {
-                            Model.Resources.OpenPatients();
-                            foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                            {
-                                if (item.Key.Equals(patient.Username))
-                                {
-                                    Model.Resources.patients[item.Key] = patient;
-                                    break;
-                                }
-                            }
-                            Model.Resources.SavePatients();
-
-                            if (CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
-                                CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
-                        }
-                    }
-                }
-            }
-        }
-
-        private void RemoveIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var listBox in FindVisualChildren<ListBox>(this))
-            {
-                if (listBox.Name == "IngredientAllergensListBox")
-                {
-                    if(listBox.SelectedItem != null)
-                    {
-                        Patient patient = (Patient)PatientsDataGrid.SelectedItem;
-                        patient.IngredientAllergens.Remove((string)listBox.SelectedItem);
-                        if (File.Exists(@"..\..\..\Resources\patients.json"))
-                        {
-                            Model.Resources.OpenPatients();
-                            foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                            {
-                                if (item.Key.Equals(patient.Username))
-                                {
-                                    Model.Resources.patients[item.Key] = patient;
-                                    break;
-                                }
-                            }
-                            Model.Resources.SavePatients();
-                            if (CollectionViewSource.GetDefaultView(listBox.ItemsSource) != null)
-                                CollectionViewSource.GetDefaultView(listBox.ItemsSource).Refresh();
-                        }
-                    }
-                }
-            }
-        }
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
     }
 }

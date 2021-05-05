@@ -183,7 +183,6 @@ namespace ZdravoHospital.GUI.Secretary
                 return 4;
             }
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
-            MessageBox.Show(periodEndtime.ToString());
 
             foreach (Period existingPeriod in Model.Resources.periods)
             {

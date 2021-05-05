@@ -124,7 +124,7 @@ namespace ZdravoHospital.GUI.Secretary
                 Model.Resources.patients.Add(guestID, guestPatient);
                 Model.Resources.SavePatients();
                 MessageBox.Show("Added successfully");
-                NavigationService.Navigate(new SecretaryHomePage());
+                NavigationService.Navigate(new PatientsView());
             }
 
 

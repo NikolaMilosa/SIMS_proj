@@ -9,14 +9,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="EditPatientPage"
-      Background="Beige">
+      Background="#FFF3F2FC">
     <Page.Resources>
-        <SolidColorBrush x:Key="defaultColor" Color="#FF000E57"></SolidColorBrush>
+        <SolidColorBrush x:Key="defaultColor" Color="#4267B2"></SolidColorBrush>
     </Page.Resources>
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <Grid Background="Beige">
+            <Grid Background="#FFF3F2FC">
                 <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -42,23 +44,18 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition Width="40"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="DarkCyan">
-                    <Button x:Name="NavigateBackButton" Height="60" Width="60" VerticalAlignment="Center" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Click="NavigateBackButton_Click" Margin="0,0,75,0">
-                        <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
-                    </Button>
-                    <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,90,0"> Edit patient</TextBlock>
-                    <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10,10,20,10">
-                        <StackPanel Width="150" Background="White">
-                            <Button Content="About"/>
-                            <Button Content="Help"/>
-                            <Separator/>
-                            <Button Content="Logout"/>
-                        </StackPanel>
-                    </materialDesign:PopupBox>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="Yu Gothic" FontSize="20" FontWeight="Bold" HorizontalAlignment="Stretch" VerticalAlignment="Center"> Main info </TextBlock>
                 </StackPanel>
 
+                <Rectangle Grid.Row="1" Grid.Column="1" Grid.RowSpan="11" Fill="White">
+                    <Rectangle.Effect>
+                        <BlurEffect Radius="5"></BlurEffect>
+                    </Rectangle.Effect>
+                </Rectangle>
+
                 <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold" >First name</TextBlock>
+                    <TextBlock Margin="8,0,0,0" >First name</TextBlock>
                     <TextBox x:Name="FirstNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="PName" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -76,7 +73,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Parent's name</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Parent's name</TextBlock>
                     <TextBox x:Name="ParentsNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="ParentsName" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -94,7 +91,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Last name</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Last name</TextBlock>
                     <TextBox x:Name="LastNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42">
                         <TextBox.Text>
                             <Binding Path="Surname" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -112,7 +109,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="4" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Citizen ID</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Citizen ID</TextBlock>
                     <TextBox x:Name="CitizenIdTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="CitizenId" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -131,7 +128,7 @@
 
 
                 <StackPanel Grid.Row="5" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Date of birth</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Date of birth</TextBlock>
                     <DatePicker Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" VerticalAlignment="Top" Background="White"
                                 SelectedDate="{Binding Path=DateOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <DatePicker.Resources>
@@ -143,7 +140,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="6" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Health card number</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Health card number</TextBlock>
                     <TextBox x:Name="HealthCardNumberTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="HealthCardNumber" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -161,7 +158,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="7" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Blood type</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Blood type</TextBlock>
                     <ComboBox Name="BloodTypeComboBox" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42"
                              SelectedValuePath="Content">
                         <ComboBox.Resources>
@@ -181,7 +178,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="8" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Gender</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Gender</TextBlock>
                     <ComboBox Name="GenderComboBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42"
                              SelectedValuePath="Content">
                         <ComboBox.Resources>
@@ -195,7 +192,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="9" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Marital status</TextBlock>
+                    <TextBlock Margin="8,0,0,0">Marital status</TextBlock>
                     <ComboBox Name ="MaritalStatusComboBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42"
                              SelectedValuePath="Content">
                         <ComboBox.Resources>
@@ -211,7 +208,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="10" Grid.Column="1">
-                    <TextBlock x:Name="EmailTextBox" Margin="8,0,0,0" FontWeight="Bold">Email address</TextBlock>
+                    <TextBlock x:Name="EmailTextBox" Margin="8,0,0,0">Email address</TextBlock>
                     <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="Email" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -229,7 +226,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="11" Grid.Column="1">
-                    <TextBlock x:Name="PhoneNumberTextBox" Margin="8,0,0,0" FontWeight="Bold">Phone number</TextBlock>
+                    <TextBlock x:Name="PhoneNumberTextBox" Margin="8,0,0,0">Phone number</TextBlock>
                     <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="Telephone" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -246,8 +243,18 @@
                     </TextBox>
                 </StackPanel>
 
-                <StackPanel Grid.Row="12" Grid.Column="1">
-                    <TextBlock x:Name="UsernameTextBox" Margin="8,0,0,0" FontWeight="Bold">Username *</TextBlock>
+                <StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="Yu Gothic" FontSize="20" FontWeight="Bold">Credentials</TextBlock>
+                </StackPanel>
+
+                <Rectangle Grid.Row="13" Grid.Column="1"  Fill="White" Grid.RowSpan="2">
+                    <Rectangle.Effect>
+                        <BlurEffect Radius="5"></BlurEffect>
+                    </Rectangle.Effect>
+                </Rectangle>
+
+                <StackPanel Grid.Row="13" Grid.Column="1">
+                    <TextBlock x:Name="UsernameTextBox" Margin="8,0,0,0">Username *</TextBlock>
                     <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42"
                              Text="{Binding Path=Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
                         <TextBox.Resources>
@@ -258,8 +265,8 @@
                     </TextBox>
                 </StackPanel>
 
-                <StackPanel Grid.Row="13" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Password *</TextBlock>
+                <StackPanel Grid.Row="14" Grid.Column="1">
+                    <TextBlock Margin="8,0,0,0">Password *</TextBlock>
                     <TextBox x:Name="PasswordTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="Password" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -276,8 +283,18 @@
                     </TextBox>
                 </StackPanel>
 
-                <StackPanel Grid.Row="14" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Country</TextBlock>
+                <StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="1" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="Yu Gothic" FontSize="20" FontWeight="Bold">Address</TextBlock>
+                </StackPanel>
+
+                <Rectangle Grid.Row="16" Grid.Column="1" Grid.RowSpan="4" Fill="White">
+                    <Rectangle.Effect>
+                        <BlurEffect Radius="5"></BlurEffect>
+                    </Rectangle.Effect>
+                </Rectangle>
+
+                <StackPanel Grid.Row="16" Grid.Column="1">
+                    <TextBlock Margin="8,0,0,0">Country</TextBlock>
                     <TextBox x:Name="CountryTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="Country" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -295,8 +312,8 @@
                 </StackPanel>
 
 
-                <StackPanel Grid.Row="15" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">City</TextBlock>
+                <StackPanel Grid.Row="17" Grid.Column="1">
+                    <TextBlock Margin="8,0,0,0">City</TextBlock>
                     <TextBox x:Name="CityTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="City" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -313,8 +330,8 @@
                     </TextBox>
                 </StackPanel>
 
-                <StackPanel Grid.Row="16" Grid.Column="1">
-                    <TextBlock Margin="8,0,0,0" FontWeight="Bold">Postal code</TextBlock>
+                <StackPanel Grid.Row="18" Grid.Column="1">
+                    <TextBlock Margin="8,0,0,0">Postal code</TextBlock>
                     <TextBox x:Name="PostalCodeTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
                             <Binding Path="PostalCode" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -333,7 +350,7 @@
 
 
 
-                <Grid Grid.Row="17" Grid.Column="1">
+                <Grid Grid.Row="19" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
@@ -341,7 +358,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                        <TextBlock Margin="8,0,0,0" FontWeight="Bold">Street name</TextBlock>
+                        <TextBlock Margin="8,0,0,0">Street name</TextBlock>
                         <TextBox x:Name="StreetNameTextBox" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                             <TextBox.Text>
                                 <Binding Path="StreetName" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -358,7 +375,7 @@
                         </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="0" Grid.Column="2">
-                        <TextBlock Margin="8,0,0,0" FontWeight="Bold">Street number</TextBlock>
+                        <TextBlock Margin="8,0,0,0">Street number</TextBlock>
                         <TextBox x:Name="StreetNumberTextBox" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                             <TextBox.Text>
                                 <Binding Path="StreetNum" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -376,8 +393,8 @@
                     </StackPanel>
                 </Grid>
 
-                <Button Name="FinishButton" Grid.Row="18" Grid.Column="1" Margin="100,20" BorderThickness="3" Background="{DynamicResource defaultColor}" Foreground="Beige" FontSize="24" FontFamily="Comic Sans MS"
-                Click="FinishButton_Click">FINISH
+                <Button Name="FinishButton" Grid.Row="20" Grid.Column="1" Height="30" Width="90" HorizontalAlignment="Right" BorderThickness="3" Background="{DynamicResource defaultColor}" Foreground="Black" FontSize="14" FontFamily="Yu Gothic"
+                Click="FinishButton_Click" Margin="0,0,10,0">FINISH
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5"/>

@@ -9,13 +9,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="EditGuestPage"
-      Background="Beige">
+      Background="#FFF3F2FC">
     <Page.Resources>
-        <SolidColorBrush x:Key="defaultColor" Color="#FF000E57"></SolidColorBrush>
+        <SolidColorBrush x:Key="defaultColor" Color="#4267B2"></SolidColorBrush>
     </Page.Resources>
-    <Grid>
+    <Grid Margin="0,10,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -27,23 +29,13 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="DarkCyan">
-            <Button x:Name="NavigateBackButton" Height="60" Width="60" VerticalAlignment="Center" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Click="NavigateBackButton_Click" Margin="0,0,75,0">
-                <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
-            </Button>
-            <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,110,0"> Edit guest</TextBlock>
-            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10,10,20,10">
-                <StackPanel Width="150" Background="White">
-                    <Button Content="About"/>
-                    <Button Content="Help"/>
-                    <Separator/>
-                    <Button Content="Logout"/>
-                </StackPanel>
-            </materialDesign:PopupBox>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Top" Grid.Column="1">
+            <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"> Edit guest</TextBlock>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBlock x:Name="ime" Margin="8,0,0,0" FontWeight="Bold" >First name</TextBlock>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <TextBlock x:Name="ime" Margin="8,0,0,0">First name</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
                     <Binding Path="PName" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
@@ -60,8 +52,8 @@
             </TextBox>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="1">
-            <TextBlock x:Name="parentsName" Margin="8,0,0,0" FontWeight="Bold">Last name</TextBlock>
+        <StackPanel Grid.Row="3" Grid.Column="1">
+            <TextBlock x:Name="parentsName" Margin="8,0,0,0">Last name</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
                     <Binding Path="Surname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -78,8 +70,8 @@
             </TextBox>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Grid.Column="1">
-            <TextBlock Margin="8,0,0,0" FontWeight="Bold">Citizen ID</TextBlock>
+        <StackPanel Grid.Row="4" Grid.Column="1">
+            <TextBlock Margin="8,0,0,0">Citizen ID</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
                     <Binding Path="CitizenId" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -96,8 +88,8 @@
             </TextBox>
         </StackPanel>
 
-        <StackPanel Grid.Row="4" Grid.Column="1">
-            <TextBlock Margin="8,0,0,0" FontWeight="Bold">Health card number *</TextBlock>
+        <StackPanel Grid.Row="5" Grid.Column="1">
+            <TextBlock Margin="8,0,0,0">Health card number *</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" IsReadOnly="True" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
                     <Binding Path="HealthCardNumber" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -114,13 +106,9 @@
             </TextBox>
         </StackPanel>
 
-        <Button Name="FinishButton" Grid.Row="5" Grid.Column="1" Margin="100,30" BorderThickness="3" Background="{DynamicResource defaultColor}" Foreground="Beige" FontSize="24" FontFamily="Comic Sans MS"
-                Click="FinishButton_Click">FINISH
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
+        <Button Name="FinishButton" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="90" Grid.Row="6" Grid.Column="1" BorderThickness="3" Background="{DynamicResource defaultColor}" Foreground="Black" FontWeight="Bold" FontSize="14" FontFamily="Yu Gothic"
+                Click="FinishButton_Click" Margin="0,10,10,0">FINISH
+
         </Button>
     </Grid>
 </Page>

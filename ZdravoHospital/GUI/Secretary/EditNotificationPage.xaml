@@ -9,35 +9,24 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="EditNotificationPage"
-      Background="LightGray">
+      Background="#FFF3F2FC">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="160"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="130"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Background="DarkCyan">
-            <Button x:Name="NavigateBackButton" Height="60" Width="60" VerticalAlignment="Center" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Click="NavigateBackButton_Click" Margin="0,0,50,0">
-                <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
-            </Button>
-            <TextBlock FontFamily="Yu Gothic" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,45,0"> Edit notification</TextBlock>
-            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10,10,20,10">
-                <StackPanel Width="150" Background="White">
-                    <Button Content="About"/>
-                    <Button Content="Help"/>
-                    <Separator/>
-                    <Button Content="Logout"/>
-                </StackPanel>
-            </materialDesign:PopupBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBlock FontFamily="Yu Gothic" FontSize="28" FontWeight="Bold" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"> Edit notification</TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Margin="10">
-            <Border BorderBrush="Black" BorderThickness="1" Padding="10,10,10,40">
+            <Border BorderBrush="Black" BorderThickness="1" Padding="10,10,10,10">
                 <StackPanel>
                     <TextBlock FontFamily="Yu Gothic" FontSize="20" Margin="0,0,0,10"> Recipients</TextBlock>
                     <WrapPanel>
@@ -77,21 +66,20 @@
             <TextBlock FontFamily="Yu Gothic" FontSize="20"> Content</TextBlock>
             <TextBox x:Name="ContentTextBox" Height="140" Margin="0,0,0,19" TextWrapping="Wrap" Text="{Binding Path=NotificationText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
-        <Button x:Name="SendNotificationButton" Grid.Row="5" Foreground="Black" Background="Transparent" Width="120" Margin="40,0,40,0" Click="SendNotificationButton_Click" ToolTip="Send notification">
-            <materialDesign:PackIcon Kind="EmailSend" Width="40" Height="40"></materialDesign:PackIcon>
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="IsEnabled" Value="False"/>
-                    <Style.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomRecipientTextBox}" Value="False"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="IsEnabled" Value="True"/>
-                        </MultiDataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
+        <Button x:Name="SendNotificationButton" Grid.Row="5" Foreground="Black" Background="Transparent" Width="100" Height="30" Margin="0,0,10,0" HorizontalAlignment="Right" Click="SendNotificationButton_Click" ToolTip="Send notification">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="EmailSend" Margin="0,0,20,0" >
+                    <materialDesign:PackIcon.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </materialDesign:PackIcon.RenderTransform>
+                </materialDesign:PackIcon>
+                <TextBlock FontFamily="Yu Gothic" FontSize="16"><Run Text="Send"/></TextBlock>
+            </StackPanel>
         </Button>
     </Grid>
 </Page>
