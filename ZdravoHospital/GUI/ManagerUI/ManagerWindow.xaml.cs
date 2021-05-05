@@ -60,6 +60,8 @@ namespace ZdravoHospital.GUI.ManagerUI
             Model.Resources.OpenMedicines();
             Model.Resources.OpenPeriods();
             Model.Resources.OpenRoomSchedule();
+            Model.Resources.OpenMedicineRecension();
+            Model.Resources.DeserializeDoctors();
 
             /* Handling visuals */
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
@@ -195,6 +197,7 @@ namespace ZdravoHospital.GUI.ManagerUI
                 {
                     dialog = new WarningDialog(dataGrid.SelectedItem);
                     dialog.ShowDialog();
+                    e.Handled = true;
                 }
                     
             }
@@ -204,6 +207,7 @@ namespace ZdravoHospital.GUI.ManagerUI
                 {
                     dialog = new FilterDialog();
                     dialog.ShowDialog();
+                    e.Handled = true;
                 }
             }
             else if (e.Key == Key.Add)
@@ -212,6 +216,33 @@ namespace ZdravoHospital.GUI.ManagerUI
                 {
                     dialog = new InventoryAdderSubtractor((Inventory)InventoryTable.SelectedItem);
                     dialog.ShowDialog();
+                    e.Handled = true;
+                }
+            }
+            else if (e.Key == Key.S)
+            {
+                if (MedicineTable.Visibility == Visibility.Visible)
+                {
+                    Medicine selectedMedicine = (Medicine)MedicineTable.SelectedItem;
+                    if (selectedMedicine.Status != MedicineStatus.APPROVED && selectedMedicine.Status != MedicineStatus.PENDING)
+                    {
+                        dialog = new ValidationRequestDialog(selectedMedicine);
+                        dialog.ShowDialog();
+                        e.Handled = true;
+                    }
+                }
+            }
+            else if (e.Key == Key.R)
+            {
+                if (MedicineTable.Visibility == Visibility.Visible)
+                {
+                    Medicine selectedMedicine = (Medicine) MedicineTable.SelectedItem;
+                    if (selectedMedicine.Status == MedicineStatus.REJECTED)
+                    {
+                        dialog = new RejectionNoteDialog(selectedMedicine);
+                        dialog.ShowDialog();
+                        e.Handled = true;
+                    }
                 }
             }
         }

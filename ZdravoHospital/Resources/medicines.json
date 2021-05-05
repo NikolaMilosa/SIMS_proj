@@ -20,7 +20,7 @@
   {
     "MedicineName": "test medication",
     "Supplier": "Jankovic",
-    "Status": 3,
+    "Status": 0,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [
@@ -38,7 +38,7 @@
   {
     "MedicineName": "bromazepam",
     "Supplier": "Some supp",
-    "Status": 3,
+    "Status": 0,
     "Note": "",
     "ReplacementMedication": [],
     "Ingredients": [

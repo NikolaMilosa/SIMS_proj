@@ -106,5 +106,32 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             viewableIngredients.Insert(indexView, ingredient);
             existingIngredients.Insert(indexExisting, ingredient);
         }
+
+        public void SendMedicineOnRecension(Medicine medicine, Doctor doctor)
+        {
+            GetMedicineMutex().WaitOne();
+            
+            var medicineRecension = new MedicineRecension(){DoctorUsername = doctor.Username, MedicineName = medicine.MedicineName, RecensionNote = ""};
+
+
+            Model.Resources.medicineRecensions.RemoveAll(mr => mr.MedicineName.Equals(medicine.MedicineName));
+            Model.Resources.medicineRecensions.Add(medicineRecension);
+            Model.Resources.SerializeMedicineRecension();
+
+            int index = ManagerWindow.Medicines.IndexOf(medicine);
+            ManagerWindow.Medicines.Remove(medicine);
+            medicine.Status = MedicineStatus.PENDING;
+
+            ManagerWindow.Medicines.Insert(index, medicine);
+
+            Model.Resources.SaveMedicines();
+
+            GetMedicineMutex().ReleaseMutex();
+        }
+
+        public MedicineRecension FindMedicineRecension(Medicine medicine)
+        {
+            return Model.Resources.medicineRecensions.Find(m => m.MedicineName.Equals(medicine.MedicineName));
+        }
     }
 }
