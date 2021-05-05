@@ -10,6 +10,9 @@ namespace Model
         {
             this.SpecializationName = s;
         }
-
+        public override string ToString()
+        {
+            return SpecializationName;
+        }
     }
 }

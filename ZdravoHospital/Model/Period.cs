@@ -1,4 +1,6 @@
+using Newtonsoft.Json;
 using System;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Model
@@ -16,6 +18,9 @@ namespace Model
         public PeriodMark PeriodMark { get; set; }
         public bool IsUrgent { get; set; }
         public Referral Referral { get; set; }
+
+        [JsonIgnore]
+        public ObservableCollection<Model.MovePeriod> MovePeriods { get; set; }
         
 
         public Period() 
@@ -31,6 +36,17 @@ namespace Model
             PatientUsername = patientUsername;
             DoctorUsername = doctorUsername;
             RoomId = roomId;
+        }
+
+        // for urgent periods
+        public Period(DateTime startTime, int duration, string patientUsername, string doctorUsername, bool isUrgent)
+        {
+            StartTime = startTime;
+            Duration = duration;
+            PatientUsername = patientUsername;
+            DoctorUsername = doctorUsername;
+            IsUrgent = isUrgent;
+            MovePeriods = new ObservableCollection<MovePeriod>();
         }
 
         public override string ToString()

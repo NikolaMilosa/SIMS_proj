@@ -1,1 +1,8 @@
-[{"SpecializationName":"Doctor"},{"SpecializationName":"Cardio surgent"}]
+[
+  { "SpecializationName": "Doctor" },
+  { "SpecializationName": "Cardio surgent" },
+  { "SpecializationName": "Radiology" },
+  { "SpecializationName": "Neurology" },
+  { "SpecializationName": "Internal medicine" },
+  { "SpecializationName": "Orthopaedics" }
+]

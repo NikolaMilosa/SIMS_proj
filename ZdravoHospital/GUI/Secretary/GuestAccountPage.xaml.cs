@@ -74,8 +74,10 @@ namespace ZdravoHospital.GUI.Secretary
                 OnPropertyChanged("HealthCardNumber");
             }
         }
-        public GuestAccountPage()
+        public bool CameFromUrgent { get; set; }
+        public GuestAccountPage(bool cameFromUrgent)
         {
+            CameFromUrgent = cameFromUrgent;
             InitializeComponent();
             this.DataContext = this;
         }
@@ -114,7 +116,10 @@ namespace ZdravoHospital.GUI.Secretary
                     Model.Resources.patients.Add(guestID, guestPatient);
                     Model.Resources.SavePatients();
                     MessageBox.Show("Added successfully");
-                    NavigationService.Navigate(new SecretaryHomePage());
+                    if (CameFromUrgent)
+                        NavigationService.Navigate(new SecretaryUrgentPeriodPage());
+                    else
+                        NavigationService.Navigate(new PatientsView());
                 }
 
             }
@@ -124,14 +129,14 @@ namespace ZdravoHospital.GUI.Secretary
                 Model.Resources.patients.Add(guestID, guestPatient);
                 Model.Resources.SavePatients();
                 MessageBox.Show("Added successfully");
-                NavigationService.Navigate(new PatientsView());
+                if (CameFromUrgent)
+                    NavigationService.Navigate(new SecretaryUrgentPeriodPage());
+                else
+                    NavigationService.Navigate(new PatientsView());
             }
 
 
         }
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
+
     }
 }
