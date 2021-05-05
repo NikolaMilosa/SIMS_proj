@@ -1,4 +1,5 @@
 ﻿using Model;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -13,6 +14,8 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class MedicinesPage : Page, INotifyPropertyChanged
     {
+        private List<Medicine> medicines;
+
         public Thickness ListViewPadding { get; set; }
         public double ListItemWidth { get; set; }
 
@@ -22,8 +25,21 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             this.DataContext = this;
 
+            Model.Resources.OpenMedicineRecensions();
             Model.Resources.OpenMedicines();
-            MedicinesListView.ItemsSource = Model.Resources.medicines.Where(m => m.Status != MedicineStatus.STAGED);
+
+            medicines = new List<Medicine>();
+
+            foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
+                if (mr.DoctorUsername.Equals(App.currentUser))
+                    foreach (Medicine m in Model.Resources.medicines)
+                        if (mr.MedicineName.Equals(m.MedicineName))
+                        {
+                            medicines.Add(m);
+                            break;
+                        }
+
+            MedicinesListView.ItemsSource = medicines;
             MedicinesListView.Items.Filter = Filter;
 
             StatusComboBox.Items.Add("All");
@@ -59,13 +75,13 @@ namespace ZdravoHospital.GUI.DoctorUI
             string selection = StatusComboBox.SelectedValue.ToString();
 
             if (selection.Equals("All"))
-                MedicinesListView.ItemsSource = Model.Resources.medicines.Where(m => m.Status != MedicineStatus.STAGED);
+                MedicinesListView.ItemsSource = medicines;
             else if (selection.Equals("Pending"))
-                MedicinesListView.ItemsSource = Model.Resources.medicines.Where(m => m.Status == MedicineStatus.PENDING);
+                MedicinesListView.ItemsSource = medicines.Where(m => m.Status == MedicineStatus.PENDING);
             else if (selection.Equals("Approved"))
-                MedicinesListView.ItemsSource = Model.Resources.medicines.Where(m => m.Status == MedicineStatus.APPROVED);
+                MedicinesListView.ItemsSource = medicines.Where(m => m.Status == MedicineStatus.APPROVED);
             else if (selection.Equals("Rejected"))
-                MedicinesListView.ItemsSource = Model.Resources.medicines.Where(m => m.Status == MedicineStatus.REJECTED);
+                MedicinesListView.ItemsSource = medicines.Where(m => m.Status == MedicineStatus.REJECTED);
         }
 
         private void SearchTextBox_KeyUp(object sender, KeyEventArgs e)

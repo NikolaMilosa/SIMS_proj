@@ -116,7 +116,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.medicineRecensions.RemoveAll(mr => mr.MedicineName.Equals(medicine.MedicineName));
             Model.Resources.medicineRecensions.Add(medicineRecension);
-            Model.Resources.SerializeMedicineRecension();
+            Model.Resources.SerializeMedicineRecensions();
 
             int index = ManagerWindow.Medicines.IndexOf(medicine);
             ManagerWindow.Medicines.Remove(medicine);

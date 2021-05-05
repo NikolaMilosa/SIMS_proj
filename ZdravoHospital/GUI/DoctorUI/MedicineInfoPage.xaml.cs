@@ -145,6 +145,19 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (string r in ReplacementsListBox.Items)
                 Medicine.Replacements.Add(r);
 
+            foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
+                if (mr.MedicineName.Equals(Medicine.MedicineName))
+                    mr.MedicineName = MedicineNameTextBox.Text;
+
+            foreach (Medicine m in Model.Resources.medicines)
+                foreach (string r in m.Replacements)
+                    if (r.Equals(Medicine.MedicineName))
+                    {
+                        m.Replacements.Remove(r);
+                        m.Replacements.Add(MedicineNameTextBox.Text);
+                        break;
+                    }
+
             Medicine.MedicineName = MedicineNameTextBox.Text;
             Medicine.Supplier = SupplierTextBox.Text;
             Medicine.Note = NotesTextBox.Text;
@@ -152,6 +165,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             OnPropertyChanged("Medicine");
 
             Model.Resources.SaveMedicines();
+            Model.Resources.SerializeMedicineRecensions();
         }
 
         private void RemoveIngredientsButton_Click(object sender, RoutedEventArgs e)
