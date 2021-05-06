@@ -58,13 +58,13 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public void AddFreeTimes(int daysFromToday)//adding free times to timeList on the date which is passed as parameter
         {
             List<TimeSpan> timeList = new List<TimeSpan>();
-            Validate.generateTimeSpan(timeList);
+            Validate.GenerateTimeSpan(timeList);
 
             foreach (TimeSpan timeSpan in timeList) if (Page.PeriodList.Count < 4)
                 {
                     Page.Period.StartTime = DateTime.Today.AddDays(daysFromToday);
                     Page.Period.StartTime += timeSpan;
-                    if (Validate.checkPeriod(Page.Period, false))
+                    if (Validate.CheckPeriodAvailability(Page.Period, false))
                         Page.PeriodList.Add(timeSpan);
                 }
         }
@@ -73,7 +73,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             Page.Period.StartTime = (DateTime)Page.selectDate.SelectedDate;
             Page.Period.StartTime += (TimeSpan)Page.selectTime.SelectedItem;
-            if (!Validate.checkPeriod(Page.Period, true))
+            if (!Validate.CheckPeriodAvailability(Page.Period, true))
                 return;
 
             AddDoctorsToList();
@@ -81,7 +81,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void AddDoctorsToList()//if they are free at selected time
         {
-            Validate.suggestDoctor(Page.Period, Page.DoctorList);
+            Validate.SuggestDoctor(Page.Period, Page.DoctorList);
             if (Page.DoctorList.Count == 0)
                 Validate.ShowOkDialog("Warning", "There is no available doctor at the selected time!");
             else

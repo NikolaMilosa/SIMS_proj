@@ -35,7 +35,7 @@ namespace ZdravoHospital.GUI.PatientUI
             Mode = mode;
             PeriodList = new ObservableCollection<TimeSpan>();
 
-            Validate.generateObesrvableTimes(PeriodList);
+            Validate.GenerateObesrvableTimes(PeriodList);
             Validations.FillDoctorList();
             Validations.GeneratePeriod(period, username);
         }

@@ -25,7 +25,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
             FillOutPeriod();
 
-            if (!Validate.checkPeriod(Page.Period, true) || Page.Period.RoomId == -1)
+            if (!Validate.CheckPeriodAvailability(Page.Period, true) || Page.Period.RoomId == -1)
                 available = false;
 
             return available;
@@ -63,7 +63,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             Page.Period.StartTime = Page.Period.StartTime.Date + (TimeSpan)Page.selectTime.SelectedItem;
             Page.Period.DoctorUsername = ((DoctorView)Page.selectDoctor.SelectedItem).Username;
-            Page.Period.RoomId = Validate.getFreeRoom(Page.Period);
+            Page.Period.RoomId = Validate.GetFreeRoom(Page.Period);
         }
 
         public void FillDoctorList()
