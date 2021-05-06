@@ -54,8 +54,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             GetTransferRequestMutex().ReleaseMutex();
 
-            Task t = new Task(() => transferRequest.DoWork());
-            t.Start();
+            StartTransfer(transferRequest);
 
             /* Create a roomSchedule for this transfer */
             
@@ -64,8 +63,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             RoomSchedule roomScheduleSender = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution, EndTime = transferRequest.TimeOfExecution.AddMinutes(2), RoomId = transferRequest.SenderRoom, ScheduleType = ReservationType.TRANSFER };
             roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleSender);
 
-            RoomSchedule roomScheduleReciever = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution.AddMinutes(2), EndTime = transferRequest.TimeOfExecution.AddMinutes(4), RoomId = transferRequest.RecipientRoom, ScheduleType = ReservationType.TRANSFER };
-            roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleReciever);
+            RoomSchedule roomScheduleReceiver = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution.AddMinutes(2), EndTime = transferRequest.TimeOfExecution.AddMinutes(4), RoomId = transferRequest.RecipientRoom, ScheduleType = ReservationType.TRANSFER };
+            roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleReceiver);
             
         }
 

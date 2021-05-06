@@ -77,7 +77,7 @@
   {
     "InventoryId": "OLM22",
     "RoomId": 106,
-    "Quantity": 14
+    "Quantity": 12
   },
   {
     "InventoryId": "OLM22",
@@ -113,5 +113,10 @@
     "InventoryId": "333FF",
     "RoomId": 106,
     "Quantity": 1
+  },
+  {
+    "InventoryId": "OLM22",
+    "RoomId": 201,
+    "Quantity": 2
   }
 ]
