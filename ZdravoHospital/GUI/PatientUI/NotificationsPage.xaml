@@ -26,7 +26,7 @@
             </StackPanel>
 
 
-            <DataGrid MouseDoubleClick="notificationDataGrid_MouseDoubleClick" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="notificationDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding NotificationList}">
+            <DataGrid MouseDoubleClick="NotificationDataGrid_MouseDoubleClick" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="notificationDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding NotificationList}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="  From&#x0a;(sender)" Width="*" Binding="{Binding Path=From}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Path=Notification.Title}"></DataGridTextColumn>

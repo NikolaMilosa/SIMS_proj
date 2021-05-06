@@ -29,10 +29,10 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             DataContext = this;
             PatientUsername = username;
-            fillList();
+            FillList();
         }
 
-        private void fillList()
+        private void FillList()
         {
             NotificationList = new ObservableCollection<NotificationView>();
             Model.Resources.OpenPersonNotifications();
@@ -45,7 +45,7 @@ namespace ZdravoHospital.GUI.PatientUI
             }
         }
 
-        private void notificationDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void NotificationDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             NavigationService.Navigate(new NotificationDetailsPage((NotificationView)notificationDataGrid.SelectedItem, PatientUsername));
         }
