@@ -11,7 +11,7 @@
         Background="Transparent"
         AllowsTransparency="True"
         UseLayoutRounding="True">
-    <Border Background="#9be5aa"
+    <Border Background="#2c876b"
             CornerRadius="20">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -21,12 +21,15 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="12.558"/>
+                <RowDefinition Height="7.442"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.Column="2" Background="Beige"></StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  Background="Beige"></StackPanel>
-            <StackPanel Grid.Column="2" Height="40" VerticalAlignment="Top" Background="#9be5aa"></StackPanel>
+
+
+            <StackPanel Grid.Row="0" Grid.Column="2" Background="#99ddc9"></StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Background="#99ddc9" Grid.RowSpan="2"></StackPanel>
+            <StackPanel Grid.Column="2" Height="40" VerticalAlignment="Top" Background="#2c876b"></StackPanel>
 
             <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -149,7 +152,9 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Background="#9be5aa" Grid.ColumnSpan="2">
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Background="#99ddc9"></StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Background="#2c876b" Grid.ColumnSpan="2">
                     <Image Source="/Images/PatientUI/hospitalIcon.png" Margin="240,5,10,5"></Image>
                     <TextBlock Text="Zdravo Hospital" FontSize="20" FontWeight="Bold" Foreground="White" Margin="0,4,0,0"></TextBlock>
                     <Button  x:Name="surveyButton" Content="Take a survey" FontSize="15" Background="Transparent" BorderBrush="Transparent" Margin="270,0,0,0" Foreground="White" Click="surveyButton_Click">
@@ -166,7 +171,7 @@
                     </Button>
                 </StackPanel>
 
-                <Frame NavigationUIVisibility="Hidden" Name="myFrame" Grid.Row="1" Grid.ColumnSpan="2" Background="Beige"/>
+                <Frame NavigationUIVisibility="Hidden" Margin="20,20,0,0"  Name="myFrame" Grid.Row="1" Grid.ColumnSpan="2" Background="#99ddc9"/>
             </Grid>
 
 
