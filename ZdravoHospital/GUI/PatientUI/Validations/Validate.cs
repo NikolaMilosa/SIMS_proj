@@ -16,7 +16,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public static void ShowOkDialog(string title, string content)
         {
-            customOkDialog customOkDialog = new customOkDialog(title, content);
+            CustomOkDialog customOkDialog = new CustomOkDialog(title, content);
             customOkDialog.ShowDialog();
         }
         public static bool TrollDetected()

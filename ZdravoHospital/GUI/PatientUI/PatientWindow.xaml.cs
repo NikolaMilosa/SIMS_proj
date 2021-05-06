@@ -44,34 +44,32 @@ namespace ZdravoHospital.GUI.PatientUI
         public PatientWindow(string username)
         {
             InitializeComponent();
+            SetWindowParameters(username);
+            LoadPatient(username);
+            CheckSurveys(username);
+            StartThreads();
+        }
+
+        public void CheckSurveys(string username)
+        {
+            SurveyAvailable = Validate.IsSurveyAvailable(username);
+        }
+
+        public void LoadPatient(string username)
+        {
+            Model.Resources.OpenPatients();
+            Patient = Model.Resources.patients[username];
+        }
+
+        public void SetWindowParameters(string username)
+        {
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             WelcomeMessage = "Welcome " + username;
-            Model.Resources.OpenPatients();
-            Patient = Model.Resources.patients[username];
-            SurveyAvailable = Validate.IsSurveyAvailable(username);
-            //obrisi-----------------------------------------------------
-            //Medicine medicine = new Medicine("Brufen");
-            //Therapy therapy = new Therapy();
-            //therapy.StartHours = DateTime.Now.AddMinutes(2);//DateTime.Today.AddHours(8);
-            //therapy.EndDate = therapy.StartHours.AddDays(4);
-            //therapy.Medicine = medicine;
-            //therapy.TimesPerDay = 2;
-            //therapy.PauseInDays = 1;
-            //Model.Resources.OpenPeriods();
-            //foreach(Period period in Model.Resources.periods)
-            //{
-            //    if (period.PatientUsername.Equals(username))
-            //    {
-            //        period.Prescription = new Prescription();
-            //        period.Prescription.TherapyList = new List<Therapy>();
-            //        period.Prescription.TherapyList.Add(therapy);
-            //        break;
-            //    }
+        }
 
-            //}
-            //Model.Resources.SavePeriods();
-            //----------------------------------------------------------------------------
+        public void StartThreads()
+        {
             StartNotificationThread();
             StartTrollThread();
         }

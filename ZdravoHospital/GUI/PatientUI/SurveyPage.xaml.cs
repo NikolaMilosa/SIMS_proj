@@ -40,12 +40,12 @@ namespace ZdravoHospital.GUI.PatientUI
                 || !(thirdRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)) || !(fourthRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true))
                 )
             {
-                customOkDialog customOkDialog = new customOkDialog("Warning", "Please fill out the survey!");
+                CustomOkDialog customOkDialog = new CustomOkDialog("Warning", "Please fill out the survey!");
                 customOkDialog.ShowDialog();
                 return;
             }
             serializeSurvey();
-            customOkDialog customOkDialog1 = new customOkDialog("Survey", "Thank you for completing survey!");
+            CustomOkDialog customOkDialog1 = new CustomOkDialog("Survey", "Thank you for completing survey!");
             customOkDialog1.ShowDialog();
             PatientWindow.SurveyAvailable = false;
             NavigationService.Navigate(new AppointmentPage(PatientWindow.Patient.Username));

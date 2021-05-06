@@ -15,16 +15,21 @@ namespace ZdravoHospital.GUI.PatientUI
     /// <summary>
     /// Interaction logic for customOkDialog.xaml
     /// </summary>
-    public partial class customOkDialog : Window
+    public partial class CustomOkDialog : Window
     {
         public string DialogTitle { get; set; }
 
         public string DialogContent { get; set; }
 
-        public customOkDialog(string title,string content)
+        public CustomOkDialog(string title,string content)
         {
             InitializeComponent();
             DataContext = this;
+            SetWindowsParameters(title, content);
+        }
+
+        public void SetWindowsParameters(string title, string content)
+        {
             DialogTitle = title;
             DialogContent = content;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -32,7 +37,7 @@ namespace ZdravoHospital.GUI.PatientUI
             Focus();
         }
 
-        private void okButton_Click(object sender, RoutedEventArgs e)
+        private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
