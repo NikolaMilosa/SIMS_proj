@@ -25,17 +25,23 @@ namespace ZdravoHospital.GUI.PatientUI
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)//yes button
+        private void YesButton_Click(object sender, RoutedEventArgs e)//yes button
         {
             MainWindow mainWindow = new MainWindow();
-            patientWindow.Patient.RecentActions = PatientWindow.RecentActionsNum;
-            Model.Resources.SavePatients();
+            SerializePatient();
             mainWindow.Show();
             Close();
             patientWindow.Close();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)//no button
+        private void SerializePatient()
+        {
+            patientWindow.Patient.RecentActions = PatientWindow.RecentActionsNum;
+            patientWindow.Patient.LastLogoutTime = DateTime.Now;
+            Model.Resources.SavePatients();
+        }
+
+        private void NoButton_Click(object sender, RoutedEventArgs e)//no button
         {
             Close();
         }

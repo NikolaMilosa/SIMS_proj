@@ -44,34 +44,49 @@ namespace ZdravoHospital.GUI.PatientUI
         public PatientWindow(string username)
         {
             InitializeComponent();
+            SetWindowParameters(username);
+            LoadPatient(username);
+            CheckSurveys(username);
+            StartThreads();
+        }
+
+        public void CheckSurveys(string username)
+        {
+            SurveyAvailable = Validate.IsSurveyAvailable(username);
+        }
+
+        public void LoadPatient(string username)
+        {
+            Model.Resources.OpenPatients();
+            Patient = Model.Resources.patients[username];
+        }
+
+        public void SetWindowParameters(string username)
+        {
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             WelcomeMessage = "Welcome " + username;
-            Model.Resources.OpenPatients();
-            Patient = Model.Resources.patients[username];
-            SurveyAvailable = Validate.IsSurveyAvailable(username);
-            RecentActionsNum = Patient.RecentActions;
-            //obrisi-----------------------------------------------------
-            //Prescription prescription = new Prescription();
-            //prescription.TherapyList = new List<Therapy>();
-            //Medicine medicine = new Medicine("Brufen");
-            //Therapy therapy = new Therapy();
-            //therapy.StartHours = DateTime.Now.AddMinutes(2);//DateTime.Today.AddHours(8);
-            //therapy.EndDate = therapy.StartHours.AddDays(4);
-            //therapy.Medicine = medicine;
-            //therapy.TimesPerDay = 2;
-            //therapy.PauseInDays = 1;
-            //prescription.TherapyList.Add(therapy);
-            //Patient.Prescriptions = new List<Prescription>();
-            //Patient.Prescriptions.Add(prescription); 
-            //----------------------------------------------------------------------------
-            Thread thread = new Thread(new ParameterizedThreadStart(Validate.therapyNotification));
-
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start(username);
-
         }
 
+        public void StartThreads()
+        {
+            StartNotificationThread();
+            StartTrollThread();
+        }
+
+        private void StartNotificationThread()
+        {
+            Thread notificationThread= new Thread(new ParameterizedThreadStart(Validate.TherapyNotification));
+            notificationThread.SetApartmentState(ApartmentState.STA);
+            notificationThread.Start(Patient.Username);
+        }
+
+        private void StartTrollThread()
+        {
+            Thread trollThread = new Thread(new ParameterizedThreadStart(Validate.ResetActionsNum));
+            trollThread.SetApartmentState(ApartmentState.STA);
+            trollThread.Start(Patient);
+        }
 
         protected void OnPropertyChanged(string name)
         {
@@ -109,21 +124,5 @@ namespace ZdravoHospital.GUI.PatientUI
             myFrame.Navigate(new SurveyPage(this));
         }
 
-        private void ForEachExample()
-        {
-            List<string> listaStringova = new List<string>();
-            listaStringova.Add("Uros");
-            listaStringova.Add("Nikola");
-           
-            foreach(string string1 in listaStringova)
-           {
-
-           }
-                //isto kao i
-            for(int i = 0; i < listaStringova.Count; ++i)
-            {
-                string string1 = listaStringova[i];
-            }
-        }
     }
 }

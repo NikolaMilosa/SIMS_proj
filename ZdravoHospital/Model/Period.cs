@@ -32,6 +32,14 @@ namespace Model
             DoctorUsername = doctorUsername;
             RoomId = roomId;
         }
+       
+        public bool HasPassed()
+        {
+            if (StartTime.AddMinutes(Duration) < DateTime.Now)
+                return true;
+
+            return false;
+        }
 
         public override string ToString()
         {

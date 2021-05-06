@@ -34,5 +34,13 @@ namespace Model
         {
             return Id + " | " + Name;
         }
+
+        public bool IsAppointmentRoom()
+        {
+            if (RoomType == RoomType.APPOINTMENT_ROOM)
+                return true;
+
+            return false;
+        }
     }
 }

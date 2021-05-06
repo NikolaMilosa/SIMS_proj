@@ -13,6 +13,13 @@ namespace Model
       public int Recommendation{get; set;}
       public int Hygiene{get; set;}
       public string Comment{get; set;}
-   
+    
+      public bool IsWithin2WeeksFromNow()
+        {
+             if (CreationDate >= DateTime.Now.AddDays(-14))
+                return true;
+
+            return false;
+        }
    }
 }

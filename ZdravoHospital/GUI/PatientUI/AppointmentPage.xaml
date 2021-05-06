@@ -38,7 +38,7 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button  BorderBrush="Transparent" Background="Transparent" Name="editButton" Content="Edit" FontWeight="Bold" Click="editButton_Click" />
+                                <Button  BorderBrush="Transparent" Background="Transparent" Name="editButton" Content="Edit" FontWeight="Bold" Click="EditButton_Click" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -46,7 +46,7 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button BorderBrush="Transparent" Background="Transparent" Name="removeButton" Content="Remove" FontWeight="Bold" Click="removeButton_Click" />
+                                <Button BorderBrush="Transparent" Background="Transparent" Name="removeButton" Content="Remove" FontWeight="Bold" Click="RemoveButton_Click" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

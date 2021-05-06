@@ -23,24 +23,34 @@ namespace ZdravoHospital.GUI.PatientUI
         public NotificationView NotificationView { get; set; }
 
         public string PatientUsername { get; set; }
-        public NotificationDetailsPage(NotificationView notificationView,string username)
+        public NotificationDetailsPage(NotificationView notificationView, string username)
         {
             InitializeComponent();
+            SetProperties(notificationView, username);
+            SerializeReadNotification();
+            DataContext = this;
+        }
+
+        private void SetProperties(NotificationView notificationView, string username)
+        {
             PatientUsername = username;
             NotificationView = notificationView;
-           foreach(PersonNotification personNotification in Model.Resources.personNotifications)
+        }
+
+        private void SerializeReadNotification()
+        {
+            foreach (PersonNotification personNotification in Model.Resources.personNotifications)
             {
-                if (personNotification.NotificationId.Equals(NotificationView.Notification.NotificationId) && personNotification.Username.Equals(username))
-                {
+                if (personNotification.NotificationId.Equals(NotificationView.Notification.NotificationId) && personNotification.Username.Equals(PatientUsername))
+                { 
                     personNotification.IsRead = true;
                     break;
                 }
             }
             Model.Resources.SavePersonNotifications();
-            DataContext = this;
         }
 
-        private void backButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new NotificationsPage(PatientUsername));
         }

@@ -28,11 +28,11 @@ namespace ZdravoHospital.GUI.PatientUI
         public AppointmentPage(string username)
         {
             InitializeComponent();
-            fillList(username);
+            FillList(username);
             DataContext = this;
         }
 
-        private void fillList(string username)
+        private void FillList(string username)
         {
             Model.Resources.OpenPeriods();
             AppointmentList = new ObservableCollection<AppointmentView>();
@@ -45,31 +45,35 @@ namespace ZdravoHospital.GUI.PatientUI
             }
         }
 
-        private void removeButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveAppointmentDialog(AppointmentView appointmentView)
+        {
+            RemoveAppointmentDialog removeAppointmentDialog = new RemoveAppointmentDialog();
+            removeAppointmentDialog.ShowDialog();
+            if (PatientUI.RemoveAppointmentDialog.YesPressed)
+                RemoveAppointment(appointmentView);
+        }
+
+        private void RemoveAppointment(AppointmentView appointmentView)
+        {
+            ++PatientWindow.RecentActionsNum;
+            AppointmentList.Remove(appointmentView);
+            Model.Resources.periods.Remove(appointmentView.Period);
+            Model.Resources.SavePeriods();
+        }
+
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             if (Validations.Validate.TrollDetected())
                 return;
-            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
-            if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2)) 
-            {
-                Validations.Validate.ShowOkDialog("Warning", "You can't cancel period within 2 days from it's start!");
-            }
-            else 
-            {
-                RemoveAppointmentDialog removeAppointmentDialog = new RemoveAppointmentDialog();
-                removeAppointmentDialog.ShowDialog();
-                if(RemoveAppointmentDialog.YesPressed)
-                {
-                    ++PatientWindow.RecentActionsNum;
-                    AppointmentList.Remove(appointmentView);
-                    Model.Resources.periods.Remove(appointmentView.Period);
-                    Model.Resources.SavePeriods();
-                }
-            }
 
+            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
+            if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2))
+                Validations.Validate.ShowOkDialog("Warning", "You can't cancel period within 2 days from it's start!");
+            else
+                RemoveAppointmentDialog(appointmentView);
         }
 
-        private void editButton_Click(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
             if (Validations.Validate.TrollDetected())

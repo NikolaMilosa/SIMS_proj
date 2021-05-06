@@ -48,7 +48,7 @@
                     <TextBlock Margin="10,10,10,10" TextWrapping="Wrap" FontSize="14" Text="{Binding NotificationView.Notification.Text}"></TextBlock>
                 </Border>
 
-                <Button x:Name="backButton" Grid.Row="2" Width="150" Background="Transparent" BorderBrush="Transparent" Click="backButton_Click" HorizontalAlignment="Right"> 
+                <Button x:Name="backButton" Grid.Row="2" Width="150" Background="Transparent" BorderBrush="Transparent" Click="BackButton_Click" HorizontalAlignment="Right"> 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Image Source="/Images/PatientUI/backIconBlack.png"  Height="30"></Image>
                         <TextBlock Text="Back" FontSize="22" Margin="20,0,0,0" FontWeight="Bold"></TextBlock>

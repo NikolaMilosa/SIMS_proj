@@ -18,156 +18,59 @@ using ZdravoHospital.GUI.PatientUI.ViewModel;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
-    /// <summary>
-    /// Interaction logic for AddAppointmentPage.xaml
-    /// </summary>
     public partial class AddAppointmentPage : Page
     {
 
         public ObservableCollection<DoctorView> DoctorList { get; set; }
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
         public Period Period { get; set; }
-
-        public List<TimeSpan> TimeList { get; set; }
-
-       bool Mode { get; set; }//true=add,false=edit
+        AddAppointmentValidations Validations { get; set; }
+        public  bool Mode { get; set; }//true=add,false=edit
 
         public AddAppointmentPage(Period period,bool mode,string username)
-        {
-            
+        {  
             InitializeComponent();
+            Validations = new AddAppointmentValidations(this);
             DataContext = this;
             Mode = mode;
             PeriodList = new ObservableCollection<TimeSpan>();
-            Validate.generateObesrvableTimes(PeriodList);
-            fillList();
-            if(mode)
-            {
-                Period = new Period();
-                Period.PatientUsername =username;
-                Period.Duration = 30;
-            }
-           else
-            {
-                Period = period;
-                selectDate.SelectedDate = Period.StartTime;
-                selectDoctor.SelectedItem = getDoctor(Period.DoctorUsername);
-                selectTime.SelectedItem = Period.StartTime.TimeOfDay;
-            }
-           selectDate.DisplayDateStart = DateTime.Today.AddDays(3);
+
+            Validate.GenerateObesrvableTimes(PeriodList);
+            Validations.FillDoctorList();
+            Validations.GeneratePeriod(period, username);
         }
 
-        public DoctorView getDoctor(string username)
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-           
-            
-            foreach(DoctorView doctor in DoctorList)
-            {
-                if (doctor.Username.Equals(username))
-                    return doctor;
-            }
-
-            return null;
-        }
-
-        public void fillList() 
-        {
-            Model.Resources.DeserializeDoctors();
-
-            if (DoctorList == null)
-                DoctorList = new ObservableCollection<DoctorView>();
-            else
-                DoctorList.Clear();
-
-            foreach (Doctor doctor in Model.Resources.doctors.Values) 
-            {
-                if(doctor.SpecialistType.SpecializationName.Equals("Doctor"))
-                     DoctorList.Add(new DoctorView(doctor));
-            }
-        }
-
-        private void confirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Validations.Validate.TrollDetected())
+            if (!Validations.CheckPeriodAvailibility())
                 return;
-            if (selectTime.SelectedItem == null || selectDate.SelectedDate == null || selectDoctor.SelectedItem == null)
-            {
-                customOkDialog customOkDialog = new customOkDialog("Warning", "Please select doctor, date and time when you want to schedule appointment.!");
-                customOkDialog.ShowDialog();
-            }
-            else
-            {
-                Period.StartTime=Period.StartTime.Date+ (TimeSpan)selectTime.SelectedItem; 
-                Period.DoctorUsername=((DoctorView)selectDoctor.SelectedItem).Username;
-                
-                Period.RoomId = Validate.getFreeRoom(Period);
-                if (Validate.checkPeriod(Period,true) && Period.RoomId!=-1)
-                {
-                    customOkDialog customOkDialog = null;
-                    if (Mode)
-                    {
-                        Model.Resources.OpenPeriods();
-                        Model.Resources.periods.Add(Period);
-                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully added!");
-                    }
-                    else
-                    {
-                        customOkDialog = new customOkDialog("Appointment", "Appointment is succesfully edited!");
-                    }
-                    ++PatientWindow.RecentActionsNum;
-                    Model.Resources.SavePeriods();
-                    customOkDialog.ShowDialog();
-                    NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
-                }
-            }
+   
+            Validations.SerializePeriod();
+
+            ++PatientWindow.RecentActionsNum;
+            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
         }
 
        
 
-        private void suggestButton_Click(object sender, RoutedEventArgs e)
+        private void SuggestButton_Click(object sender, RoutedEventArgs e)
         {
-            Period period = new Period();
-            period.PatientUsername = Period.PatientUsername;
-            period.Duration = 30;
+  
+            SuggestAppointmentValidations suggestValidations = new SuggestAppointmentValidations(this);
 
-            if (selectDoctor.SelectedItem != null && selectDate.SelectedDate == null && selectTime.SelectedItem == null) //suggest time based on doctor
+            if (suggestValidations.IsOnlyDoctorSelected()) //suggest time based on doctor
+                suggestValidations.SuggestTime();
+            else if (suggestValidations.IsOnlyTimeSelected())//suggest doctor based on time
             {
-                period.DoctorUsername = ((DoctorView)selectDoctor.SelectedItem).Username;
-                Validate.suggestTime(period, PeriodList);
-                selectDate.SelectedDate = period.StartTime;
-                selectTime.Focus();
-                selectTime.IsDropDownOpen = true;
-            }
-            else if(selectDoctor.SelectedItem == null && selectDate.SelectedDate != null && selectTime.SelectedItem != null)//suggest doctor based on time
-            {
-
-                period.StartTime = (DateTime)selectDate.SelectedDate;
-                period.StartTime += (TimeSpan)selectTime.SelectedItem;
-                if (!Validate.checkPeriod(period, true))
-                    return;
-
-                fillList();
-                Validate.suggestDoctor(period, DoctorList);
-                if (DoctorList.Count <= 0)
-                {
-                    customOkDialog customOkDialog = new customOkDialog("Warning", "There is no available doctor at the selected time!");
-                    customOkDialog.ShowDialog();
-                }
-                else
-                {
-                    customOkDialog customOkDialog = new customOkDialog("Suggested doctor", "Doctor list is updated to suggested doctors!");
-                    customOkDialog.ShowDialog();
-                    selectDoctor.IsDropDownOpen = true;
-                }
+                Validations.FillDoctorList();
+                suggestValidations.SuggestDoctors();
             }
             else
-            {
-                customOkDialog customOkDialog = new customOkDialog("Warning", "Please choose doctor or time so the system could suggest you  periods!");
-                customOkDialog.ShowDialog();
-            }
+                Validate.ShowOkDialog("Warning", "Please choose doctor or time so the system could suggest you  periods!");
+            
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
         }

@@ -11,6 +11,7 @@ namespace Model
         public List<string> MedicineAllergens { get; set; }
         public List<string> IngredientAllergens { get; set; }
         public int RecentActions { get; set; }
+        public DateTime LastLogoutTime { get; set; }
 
         public Patient(string healthCardNum, string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID, BloodType bloodType)
         {
@@ -49,5 +50,6 @@ namespace Model
         {
             return Username + " | " + Name + " " + Surname;
         }
+
     }
 }

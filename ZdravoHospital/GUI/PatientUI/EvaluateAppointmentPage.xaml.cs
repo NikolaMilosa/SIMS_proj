@@ -27,6 +27,12 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             DataContext = this;
             AppointmentView = appointmentView;
+            GeneratePeriodMark(appointmentView);
+            SetMark();
+        }
+
+        public void GeneratePeriodMark(AppointmentView appointmentView)
+        {
             if (appointmentView.Period.PeriodMark == null)
             {
                 appointmentView.Period.PeriodMark = new PeriodMark();
@@ -34,53 +40,62 @@ namespace ZdravoHospital.GUI.PatientUI
             }
 
             PeriodMark = appointmentView.Period.PeriodMark;
-            setMark();
-
         }
 
-        private void setMark()
+        private void SetMark()
         {
             switch (PeriodMark.Mark)
             {
                 case 1:
-                    buttonStar1_Click(null, null);
+                    ButtonStar1_Click(null, null);
                     break;
                 case 2:
-                    buttonStar2_Click(null, null);
+                    ButtonStar2_Click(null, null);
                     break;
                 case 3:
-                    buttonStar3_Click(null, null);
+                    ButtonStar3_Click(null, null);
                     break;
                 case 4:
-                    buttonStar4_Click(null, null);
+                    ButtonStar4_Click(null, null);
                     break;
                 case 5:
-                    buttonStar5_Click(null, null);
+                    ButtonStar5_Click(null, null);
                     break;
             }
         }
 
-        private void confirmButton_Click(object sender, RoutedEventArgs e)
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            customOkDialog customOkDialog = null;
-            if (PeriodMark.Mark == -1)
-            {
-                customOkDialog = new customOkDialog("Warning", "Please enter your mark for the period!");
-                customOkDialog.ShowDialog();
+            if (!IsPeriodRated())
                 return;
-            }
-            customOkDialog = new customOkDialog("Rated", "Period successfully rated!");
-            customOkDialog.ShowDialog();
-            Model.Resources.SavePeriods();
+
+            PeriodSuccessfulyRated();
             NavigationService.Navigate(new AppointmentHistoryPage(AppointmentView.Period.PatientUsername));
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        private void PeriodSuccessfulyRated()
+        {
+            Validations.Validate.ShowOkDialog("Rated", "Period successfully rated!");
+            Model.Resources.SavePeriods();
+        }
+
+        private bool IsPeriodRated()
+        {
+            bool rated = true;
+            if(PeriodMark.Mark==-1)
+            {
+                Validations.Validate.ShowOkDialog("Warning", "Please enter your mark for the period!");
+                rated = false;
+            }
+            return rated;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AppointmentHistoryPage(AppointmentView.Period.PatientUsername));
         }
 
-        private void buttonStar1_Click(object sender, RoutedEventArgs e)
+        private void ButtonStar1_Click(object sender, RoutedEventArgs e)
         {
             PeriodMark.Mark = 1;
             firstImage.Source = (ImageSource)FindResource(resourceKey: "FullStar");
@@ -90,7 +105,7 @@ namespace ZdravoHospital.GUI.PatientUI
             fifthImage.Source=(ImageSource)FindResource(resourceKey: "EmptyStar");
         }
 
-        private void buttonStar2_Click(object sender, RoutedEventArgs e)
+        private void ButtonStar2_Click(object sender, RoutedEventArgs e)
         {
             PeriodMark.Mark = 2;
             firstImage.Source = (ImageSource)FindResource(resourceKey: "FullStar");
@@ -100,7 +115,7 @@ namespace ZdravoHospital.GUI.PatientUI
             fifthImage.Source = (ImageSource)FindResource(resourceKey: "EmptyStar");
         }
 
-        private void buttonStar3_Click(object sender, RoutedEventArgs e)
+        private void ButtonStar3_Click(object sender, RoutedEventArgs e)
         {
             PeriodMark.Mark = 3;
             firstImage.Source = (ImageSource)FindResource(resourceKey: "FullStar");
@@ -110,7 +125,7 @@ namespace ZdravoHospital.GUI.PatientUI
             fifthImage.Source = (ImageSource)FindResource(resourceKey: "EmptyStar");
         }
 
-        private void buttonStar4_Click(object sender, RoutedEventArgs e)
+        private void ButtonStar4_Click(object sender, RoutedEventArgs e)
         {
             PeriodMark.Mark = 4;
             firstImage.Source = (ImageSource)FindResource(resourceKey: "FullStar");
@@ -120,7 +135,7 @@ namespace ZdravoHospital.GUI.PatientUI
             fifthImage.Source = (ImageSource)FindResource(resourceKey: "EmptyStar");
         }
 
-        private void buttonStar5_Click(object sender, RoutedEventArgs e)
+        private void ButtonStar5_Click(object sender, RoutedEventArgs e)
         {
             PeriodMark.Mark = 5;
             firstImage.Source = (ImageSource)FindResource(resourceKey: "FullStar");

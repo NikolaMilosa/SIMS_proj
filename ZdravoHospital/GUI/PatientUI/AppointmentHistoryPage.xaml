@@ -38,7 +38,7 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button  BorderBrush="Transparent" Background="Transparent" Name="anamnesisButton" Content="Anamnesis" FontWeight="Bold" Click="anamnesisButton_Click" />
+                                <Button  BorderBrush="Transparent" Background="Transparent" Name="anamnesisButton" Content="Anamnesis" FontWeight="Bold" Click="AnamnesisButton_Click" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -46,7 +46,7 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button  BorderBrush="Transparent" Background="Transparent" Name="rateButton" Content="Rate" FontWeight="Bold" Click="rateButton_Click" />
+                                <Button  BorderBrush="Transparent" Background="Transparent" Name="rateButton" Content="Rate" FontWeight="Bold" Click="RateButton_Click" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

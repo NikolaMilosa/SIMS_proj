@@ -25,11 +25,11 @@ namespace ZdravoHospital.GUI.PatientUI
         public AppointmentHistoryPage(string username)
         {
             InitializeComponent();
-            fillList(username);
+            FillList(username);
             DataContext = this;
         }
 
-        private void fillList(string username)
+        private void FillList(string username)
         {
             Model.Resources.OpenPeriods();
             AppointmentList = new ObservableCollection<AppointmentView>();
@@ -42,7 +42,7 @@ namespace ZdravoHospital.GUI.PatientUI
             }
         }
 
-        private void anamnesisButton_Click(object sender, RoutedEventArgs e)
+        private void AnamnesisButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
             if(appointmentView.Period.Details==null)
@@ -52,7 +52,7 @@ namespace ZdravoHospital.GUI.PatientUI
             NavigationService.Navigate(new AnamnesisPage(appointmentView.Period.Details, appointmentView.Period.PatientUsername));
         }
 
-        private void rateButton_Click(object sender, RoutedEventArgs e)
+        private void RateButton_Click(object sender, RoutedEventArgs e)
         {
             AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
             NavigationService.Navigate(new EvaluateAppointmentPage(appointmentView));
