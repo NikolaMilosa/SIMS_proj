@@ -98,9 +98,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
         {
             GetInventoryMutex().WaitOne();
-
             var roomInventoryFunctions = new RoomInventoryFunctions();
-
             int difference;
 
             var roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(room.Id, inventory.Id);
@@ -142,10 +140,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
             
             ManagerWindow.Inventory.Insert(index, inventory);
-            
             Model.Resources.SerializeInventory();
-
             GetInventoryMutex().ReleaseMutex();
+
+            if (inventory.Quantity == 0)
+                DeleteInventory(inventory);
         }
     }
 }

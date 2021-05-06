@@ -81,6 +81,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.SaveMedicines();
 
+            if (Model.Resources.medicineRecensions.Remove(FindMedicineRecension(medicine)))
+            {
+                Model.Resources.SerializeMedicineRecension();
+            }
+
             GetMedicineMutex().ReleaseMutex();
 
             return true;
