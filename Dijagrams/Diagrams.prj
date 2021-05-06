@@ -508,7 +508,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>B72ADBF6-53E8-4130-B2E0-8C360FC7AA3D</a:CustomPictureID>
+<a:CustomPictureID>BED115EC-2CBE-4E2A-A0EE-0473D43F2473</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -530,7 +530,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>B72ADBF6-53E8-4130-B2E0-8C360FC7AA3D</a:CustomPictureID>
+<a:CustomPictureID>BED115EC-2CBE-4E2A-A0EE-0473D43F2473</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -552,7 +552,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>B72ADBF6-53E8-4130-B2E0-8C360FC7AA3D</a:CustomPictureID>
+<a:CustomPictureID>BED115EC-2CBE-4E2A-A0EE-0473D43F2473</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -574,7 +574,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>B72ADBF6-53E8-4130-B2E0-8C360FC7AA3D</a:CustomPictureID>
+<a:CustomPictureID>BED115EC-2CBE-4E2A-A0EE-0473D43F2473</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -659,7 +659,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>RoomRenovationSchedulingActivityDiagram</a:Code>
 <a:CreationDate>1619972913</a:CreationDate>
 <a:Creator>Nikola</a:Creator>
-<a:ModificationDate>1619982639</a:ModificationDate>
+<a:ModificationDate>1619982752</a:ModificationDate>
 <a:Modifier>Nikola</a:Modifier>
 <a:Location>file:///%[PRJ_ROOT_DIR]%/Activity/RoomRenovationSchedulingActivityDiagram.oom</a:Location>
 <a:Extension>oom</a:Extension>
