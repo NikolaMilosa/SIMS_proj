@@ -88,9 +88,9 @@
             </StackPanel>
 
             <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Name="submitmButton" Content="Submit" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="submitmButton_Click">
+                <Button Name="submitmButton" Content="Submit" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="SubmitmButton_Click">
                 </Button>
-                <Button Name="cancelButton" Content="Cancel" Width="150" Margin="100,0,0,0" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="cancelButton_Click"></Button>
+                <Button Name="cancelButton" Content="Cancel" Width="150" Margin="100,0,0,0" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="CancelButton_Click"></Button>
             </StackPanel>
 
         </Grid>

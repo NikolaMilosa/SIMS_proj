@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.Validations;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -33,30 +34,41 @@ namespace ZdravoHospital.GUI.PatientUI
             
         }
 
-        private void submitmButton_Click(object sender, RoutedEventArgs e)
+        private void SubmitmButton_Click(object sender, RoutedEventArgs e)
         {
            
-            if (!(firstRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)) || !(secondRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)) 
-                || !(thirdRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)) || !(fourthRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true))
-                )
-            {
-                CustomOkDialog customOkDialog = new CustomOkDialog("Warning", "Please fill out the survey!");
-                customOkDialog.ShowDialog();
+            if (!AreRadioButtonsFilled())
                 return;
-            }
-            serializeSurvey();
-            CustomOkDialog customOkDialog1 = new CustomOkDialog("Survey", "Thank you for completing survey!");
-            customOkDialog1.ShowDialog();
-            PatientWindow.SurveyAvailable = false;
+
+            SurveySuccesfullyCompleted();
+            SerializeSurvey();
             NavigationService.Navigate(new AppointmentPage(PatientWindow.Patient.Username));
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        private void SurveySuccesfullyCompleted()
+        {
+            PatientWindow.SurveyAvailable = false;
+            Validate.ShowOkDialog("Survey", "Thank you for completing survey!");
+        }
+
+        private bool AreRadioButtonsFilled()
+        {
+            bool filled = true;
+            if (!(firstRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)) || !(secondRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)) || !(thirdRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)) || !(fourthRadioButtonPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true)))
+            {
+                filled = false;
+                Validate.ShowOkDialog("Warning", "Please fill out the survey!");
+            }
+           
+           return filled;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AppointmentPage(PatientWindow.Patient.Username));
         }
 
-        public void serializeSurvey()
+        public void SerializeSurvey()
         {
             Survey.CreationDate = DateTime.Now;
             Survey.PatientUsername = PatientWindow.Patient.Username;

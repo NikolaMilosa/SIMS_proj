@@ -27,6 +27,12 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             DataContext = this;
             AppointmentView = appointmentView;
+            GeneratePeriodMark(appointmentView);
+            SetMark();
+        }
+
+        public void GeneratePeriodMark(AppointmentView appointmentView)
+        {
             if (appointmentView.Period.PeriodMark == null)
             {
                 appointmentView.Period.PeriodMark = new PeriodMark();
@@ -34,8 +40,6 @@ namespace ZdravoHospital.GUI.PatientUI
             }
 
             PeriodMark = appointmentView.Period.PeriodMark;
-            SetMark();
-
         }
 
         private void SetMark()
@@ -62,23 +66,28 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            CustomOkDialog customOkDialog = null;
-            if (PeriodMark.Mark == -1)
-            {
-                Validations.Validate.ShowOkDialog("Warning", "Please enter your mark for the period!")
+            if (!IsPeriodRated())
                 return;
-            }
-            customOkDialog = new CustomOkDialog("Rated", "Period successfully rated!");
-            customOkDialog.ShowDialog();
-            Model.Resources.SavePeriods();
+
+            PeriodSuccessfulyRated();
             NavigationService.Navigate(new AppointmentHistoryPage(AppointmentView.Period.PatientUsername));
+        }
+
+        private void PeriodSuccessfulyRated()
+        {
+            Validations.Validate.ShowOkDialog("Rated", "Period successfully rated!");
+            Model.Resources.SavePeriods();
         }
 
         private bool IsPeriodRated()
         {
-            bool unrated = false;
-
-            return unrated;
+            bool rated = true;
+            if(PeriodMark.Mark==-1)
+            {
+                Validations.Validate.ShowOkDialog("Warning", "Please enter your mark for the period!");
+                rated = false;
+            }
+            return rated;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
