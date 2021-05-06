@@ -28,16 +28,25 @@ namespace ZdravoHospital.GUI.PatientUI
         public  bool Mode { get; set; }//true=add,false=edit
 
         public AddAppointmentPage(Period period,bool mode,string username)
-        {  
+        {
             InitializeComponent();
-            Validations = new AddAppointmentValidations(this);
             DataContext = this;
-            Mode = mode;
-            PeriodList = new ObservableCollection<TimeSpan>();
+            SetProperties(mode);
+            GenerateComboBoxes(period,username);
+        }
 
+        private void GenerateComboBoxes(Period period, string username)
+        {
             Validate.GenerateObesrvableTimes(PeriodList);
             Validations.FillDoctorList();
             Validations.GeneratePeriod(period, username);
+        }
+
+        private void SetProperties(bool mode)
+        {
+            Validations = new AddAppointmentValidations(this);
+            Mode = mode;
+            PeriodList = new ObservableCollection<TimeSpan>();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
