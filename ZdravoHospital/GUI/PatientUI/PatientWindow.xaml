@@ -12,7 +12,7 @@
         AllowsTransparency="True"
         UseLayoutRounding="True">
     <Border Background="#2c876b"
-            CornerRadius="20">
+          >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>

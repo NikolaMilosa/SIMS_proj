@@ -11,7 +11,7 @@
         Background="Transparent"
         AllowsTransparency="True">
 
-    <Border Background="#9be5aa" CornerRadius="40" BorderBrush="Black" BorderThickness="1">
+    <Border Background="#2c876b" CornerRadius="40" BorderBrush="Black" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
