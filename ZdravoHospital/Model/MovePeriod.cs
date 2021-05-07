@@ -10,18 +10,21 @@ namespace Model
         public int RoomId { get; set; }
         public DateTime InitialStartTime { get; set; }
         public DateTime MovedStartTime { get; set; }
+        public int Duration { get; set; }
 
         public MovePeriod()
         {
 
         }
-        public MovePeriod(string doctorUsername, string patientUsername, int roomId, DateTime initialStartTime, DateTime movedStartTime)
+        public MovePeriod(string doctorUsername, string patientUsername, int roomId, DateTime initialStartTime, DateTime movedStartTime, int duration)
         {
             DoctorUsername = doctorUsername;
             PatientUsername = patientUsername;
             RoomId = roomId;
             InitialStartTime = initialStartTime;
             MovedStartTime = movedStartTime;
+            Duration = duration;
         }
+
     }
 }

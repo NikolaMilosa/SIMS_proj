@@ -112,12 +112,15 @@ namespace ZdravoHospital.GUI.Secretary
                     List<Period> tryoutPeriods = this.findTryoutPeriods(periodsWithinRange);
                     this.setMovePeriods(tryoutPeriods, periodsWithinRange);
                     foreach(var tryout in tryoutPeriods){
-                        periods.Add(tryout);
+                        if(tryout.MovePeriods.Count != 0)
+                            periods.Add(tryout);
                     }
                 }
 
-
-                NavigationService.Navigate(new PeriodsToMovePage(periods));
+                if(periods.Count == 0)
+                    MessageBox.Show("Sorry, no doctors available.");
+                else
+                    NavigationService.Navigate(new PeriodsToMovePage(periods));
             }
             else
             {
@@ -127,7 +130,7 @@ namespace ZdravoHospital.GUI.Secretary
 
                 Model.Resources.periods.Add(bestPeriod);
                 Model.Resources.SavePeriods();
-                MessageBox.Show(bestPeriod.DoctorUsername + " | " + bestPeriod.StartTime.ToString());
+                NavigationService.Navigate(new UrgentPeriodSummaryPage(bestPeriod));
             }
             
         }
@@ -159,34 +162,6 @@ namespace ZdravoHospital.GUI.Secretary
             return freePeriods;
         }
 
-        /*private List<Period> findPeriodsBySpecialization(Specialization specialization)
-        {
-            List<Period> periods = new List<Period>();
-            int duration = Int32.Parse(Duration);
-            Model.Resources.OpenPeriods();
-            foreach(var period in Model.Resources.periods)
-            {
-                if(this.findSpecializationByDoctorUsername(period.DoctorUsername) != null)
-                {
-                    if (this.findSpecializationByDoctorUsername(period.DoctorUsername).SpecializationName == specialization.SpecializationName)
-                        periods.Add(period);
-                }
-            }
-            return periods;
-        }
-
-        private Specialization findSpecializationByDoctorUsername(string username)
-        {
-            Model.Resources.DeserializeDoctors();
-            foreach (KeyValuePair<string, Doctor> item in Model.Resources.doctors)
-            {
-                if (item.Key.Equals(username))
-                {
-                    return item.Value.SpecialistType;
-                }
-            }
-            return null;
-        }*/
 
         private List<Doctor> findDoctorsBySpecialization(Specialization specialization)
         {
@@ -284,9 +259,24 @@ namespace ZdravoHospital.GUI.Secretary
             foreach(var tp in timePoints)
             {
                 Period tryPeriod = new Period(tp, Int32.Parse(Duration), Patient.Username, doctorUsername, true);
-                tryoutPeriods.Add(tryPeriod);
+                //check if tryperiod overlaps urgent period
+                List<Period> urgentPeriods = this.findUrgentPeriods(periodsWithinRange);
+                int periodsOverlappingUrgent = this.findPeriodsWithinRange(urgentPeriods, tryPeriod.StartTime, tryPeriod.Duration).Count;
+                if(periodsOverlappingUrgent == 0)
+                    tryoutPeriods.Add(tryPeriod);
             }
             return tryoutPeriods;
+        }
+
+        private List<Period> findUrgentPeriods(List<Period> periods)
+        {
+            List<Period> urgentPeriods = new List<Period>();
+            foreach (var period in periods)
+            {
+                if (period.IsUrgent)
+                    urgentPeriods.Add(period);
+            }
+            return urgentPeriods;
         }
 
         private bool isTimePointWithinPeriod(DateTime point, Period period)
@@ -318,17 +308,20 @@ namespace ZdravoHospital.GUI.Secretary
                 foreach(var overlap in overlappingPeriods)
                 {
                     DateTime initialStartTime = overlap.StartTime;
-                    DateTime newStartTime = findFreeStartTime(overlap);
-                    MovePeriod movePeriod = new MovePeriod(periodsWithinRange[0].DoctorUsername, overlap.PatientUsername, 0, initialStartTime, newStartTime);
+                    DateTime newStartTime = findFreeStartTime(overlap, tryPeriod.MovePeriods, tryPeriod.StartTime.AddMinutes(tryPeriod.Duration), overlappingPeriods);
+                    MovePeriod movePeriod = new MovePeriod(overlap.DoctorUsername, overlap.PatientUsername, overlap.RoomId, initialStartTime, newStartTime, overlap.Duration);
                     tryPeriod.MovePeriods.Add(movePeriod);
                 }
             }
         }
 
-        private DateTime findFreeStartTime(Period period)
+        private DateTime findFreeStartTime(Period period, ObservableCollection<MovePeriod> movePeriods, DateTime urgentEndTime, List<Period> overlappingPeriods)
         {
+            List<Period> overlappingPeriodsFinal = this.cloneListOfPeriods(overlappingPeriods);
             DateTime initialStartTime = period.StartTime;
-            while (!IsPeriodAvailable(period))
+            period.StartTime = urgentEndTime;
+            
+            while (!IsPeriodAvailableIncludingMovePeriods(period, movePeriods, overlappingPeriodsFinal))
             {
                 period.StartTime = period.StartTime.AddMinutes(1);
             }
@@ -336,6 +329,61 @@ namespace ZdravoHospital.GUI.Secretary
             period.StartTime = initialStartTime;
 
             return newStartTime;
+        }
+
+        private bool IsPeriodAvailableIncludingMovePeriods(Period period, ObservableCollection<MovePeriod> movePeriods, List<Period> overlappingPeriods)
+        {
+
+            DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
+            Model.Resources.OpenPeriods();
+
+            foreach (Period existingPeriod in Model.Resources.periods)
+            {
+                bool isOverlaping = false;
+                foreach(var overlap in overlappingPeriods)
+                {
+                    if (existingPeriod.StartTime == overlap.StartTime && existingPeriod.RoomId == overlap.RoomId)
+                        isOverlaping = true;
+                }
+
+                if (isOverlaping)
+                    continue;
+
+                DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
+
+                if (period.DoctorUsername == existingPeriod.DoctorUsername)
+                {
+                    if (period.StartTime < existingPeriodEndTime && periodEndtime > existingPeriod.StartTime)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            foreach(MovePeriod mp in movePeriods)
+            {
+                DateTime existingMovePeriodEndTime = mp.MovedStartTime.AddMinutes(mp.Duration);
+                if (period.StartTime < existingMovePeriodEndTime && periodEndtime > mp.MovedStartTime)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private List<Period> cloneListOfPeriods(List<Period> periods)
+        {
+            List<Period> newList = new List<Period>();
+            foreach(var period in periods)
+            {
+                Period newPeriod = new Period();
+                newPeriod.StartTime = period.StartTime;
+                newPeriod.RoomId = period.RoomId;
+                newPeriod.Duration = period.Duration;
+                newList.Add(newPeriod);
+            }
+            return newList;
         }
     }
 }

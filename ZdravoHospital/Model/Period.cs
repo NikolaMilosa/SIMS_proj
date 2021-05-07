@@ -65,5 +65,15 @@ namespace Model
             
             return builder.ToString();
         }
+
+        public int findSumOfMovePeriods()
+        {
+            int ret = 0;
+            foreach(var movePeriod in MovePeriods)
+            {
+                ret += (int)movePeriod.MovedStartTime.Subtract(movePeriod.InitialStartTime).TotalMinutes;
+            }
+            return ret;
+        }
     }
 }
