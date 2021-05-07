@@ -1,4 +1,6 @@
+using Newtonsoft.Json;
 using System;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Model
@@ -16,6 +18,9 @@ namespace Model
         public PeriodMark PeriodMark { get; set; }
         public bool IsUrgent { get; set; }
         public Referral Referral { get; set; }
+
+        [JsonIgnore]
+        public ObservableCollection<Model.MovePeriod> MovePeriods { get; set; }
         
 
         public Period() 
@@ -41,6 +46,17 @@ namespace Model
             return false;
         }
 
+        // for urgent periods
+        public Period(DateTime startTime, int duration, string patientUsername, string doctorUsername, bool isUrgent)
+        {
+            StartTime = startTime;
+            Duration = duration;
+            PatientUsername = patientUsername;
+            DoctorUsername = doctorUsername;
+            IsUrgent = isUrgent;
+            MovePeriods = new ObservableCollection<MovePeriod>();
+        }
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -56,6 +72,16 @@ namespace Model
             builder.Append(RoomId);
             
             return builder.ToString();
+        }
+
+        public int findSumOfMovePeriods()
+        {
+            int ret = 0;
+            foreach(var movePeriod in MovePeriods)
+            {
+                ret += (int)movePeriod.MovedStartTime.Subtract(movePeriod.InitialStartTime).TotalMinutes;
+            }
+            return ret;
         }
     }
 }

@@ -1,1 +1,106 @@
-{"pantela":{"SpecialistType":{"SpecializationName":"Doctor"},"Name":"Marko","Surname":"Pantelic","Email":null,"DateOfBirth":"0001-01-01T00:00:00","PhoneNumber":null,"Username":"pantela","ParentsName":null,"MaritalStatus":0,"Gender":0,"CitizenId":null,"Address":{"StreetName":null,"Number":null,"City":{"PostalCode":0,"Name":null,"Country":{"Name":null}}}},"zigara":{"SpecialistType":{"SpecializationName":"Cardio surgent"},"Name":"Nikola","Surname":"Zigic","Email":null,"DateOfBirth":"0001-01-01T00:00:00","PhoneNumber":null,"Username":"zigara","ParentsName":null,"MaritalStatus":0,"Gender":0,"CitizenId":null,"Address":{"StreetName":null,"Number":null,"City":{"PostalCode":0,"Name":null,"Country":{"Name":null}}}}}
+{
+  "pantela": {
+    "SpecialistType": {
+      "SpecializationName": "Doctor"
+    },
+    "Name": "Marko",
+    "Surname": "Pantelic",
+    "Email": null,
+    "DateOfBirth": "0001-01-01T00:00:00",
+    "PhoneNumber": null,
+    "Username": "pantela",
+    "ParentsName": null,
+    "MaritalStatus": 0,
+    "Gender": 0,
+    "CitizenId": null,
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  },
+  "zigara": {
+    "SpecialistType": {
+      "SpecializationName": "Cardio surgent"
+    },
+    "Name": "Nikola",
+    "Surname": "Zigic",
+    "Email": null,
+    "DateOfBirth": "0001-01-01T00:00:00",
+    "PhoneNumber": null,
+    "Username": "zigara",
+    "ParentsName": null,
+    "MaritalStatus": 0,
+    "Gender": 0,
+    "CitizenId": null,
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  },
+  "krasic": {
+    "SpecialistType": {
+      "SpecializationName": "Neurology"
+    },
+    "Name": "Milos",
+    "Surname": "Krasic",
+    "Email": null,
+    "DateOfBirth": "0001-01-01T00:00:00",
+    "PhoneNumber": null,
+    "Username": "krasic",
+    "ParentsName": null,
+    "MaritalStatus": 0,
+    "Gender": 0,
+    "CitizenId": null,
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  },
+  "stankovic": {
+    "SpecialistType": {
+      "SpecializationName": "Neurology"
+    },
+    "Name": "Dejan",
+    "Surname": "Stankovic",
+    "Email": null,
+    "DateOfBirth": "0001-01-01T00:00:00",
+    "PhoneNumber": null,
+    "Username": "stankovic",
+    "ParentsName": null,
+    "MaritalStatus": 0,
+    "Gender": 0,
+    "CitizenId": null,
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  }
+}
