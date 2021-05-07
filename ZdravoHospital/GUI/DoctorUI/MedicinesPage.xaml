@@ -1,14 +1,129 @@
 ﻿<Page x:Class="ZdravoHospital.GUI.DoctorUI.MedicinesPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="MedicinesPage">
+      d:DesignHeight="450" d:DesignWidth="880"
+      Title="MedicinesPage"
+      SizeChanged="PageSizeChanged">
+    <Grid Background="{StaticResource DarkGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Background="Black">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.18*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.18*"/>
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Row="1" Grid.Column="1">
+                <WrapPanel Orientation="Horizontal"
+                           DockPanel.Dock="Left"
+                           VerticalAlignment="Center">
+                    <TextBlock Text="Show:"
+                               FontSize="25"
+                               Margin="0, 0, 15, 0"
+                               Foreground="White"
+                               TextAlignment="Center"
+                               Name="ShowTextBlock"/>
+                    <ComboBox Name="StatusComboBox"
+                              Width="150"
+                              FontSize="23" 
+                              Style="{StaticResource DarkComboBox}"
+                              SelectionChanged="StatusComboBox_SelectionChanged"/>
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal" 
+                           DockPanel.Dock="Right"
+                           VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
+                    <TextBlock
+                            Text="Search by name:"
+                           FontSize="25"
+                            Margin="15, 0, 0, 0"
+                           Foreground="White"
+                            Name="SearchTextBlock"
+                        TextAlignment="Center"/>
+                    <TextBox Name="SearchTextBox"
+                             Width="400"
+                             FontSize="25"
+                            Margin="15, 0, 0, 0"
+                             Background="{StaticResource DarkGray}"
+                             Foreground="White"
+                             KeyUp="SearchTextBox_KeyUp"/>
+                </WrapPanel>
+            </DockPanel>
+        </Grid>
 
-    <Grid>
-        
+        <ListView Grid.Row="1"
+                      x:Name="MedicinesListView"
+                      HorizontalContentAlignment="Stretch"
+                      Background="{StaticResource DarkGray}"
+                      BorderThickness="0"
+                      Padding="{Binding ListViewPadding}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <ContentPresenter/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="Black" 
+                              Margin="8"
+                              Focusable="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                       DockPanel.Dock="Left"
+                                       Text="{Binding Path=MedicineName}"
+                                       Margin="30, 10"
+                                       Foreground="White" 
+                                       FontSize="21" 
+                                       VerticalAlignment="Center"
+                                       TextAlignment="Center"/>
+                        <StackPanel Grid.Column="2"
+                                       DockPanel.Dock="Right" 
+                                    Orientation="Horizontal"
+                                   HorizontalAlignment="Right">
+                            <TextBlock x:Name="StatusTextBlock" 
+                                            Text="{Binding Path=Status}" 
+                                            Height="40"
+                                            Padding="10"
+                                       FontSize="21" 
+                                       Foreground="White" 
+                                            Margin="30, 10, 15, 17"
+                                            Width="130"
+                                       TextAlignment="Center"/>
+                            <Button x:Name="DetailsButton" 
+                                            Content="Details" 
+                                            Height="40"
+                                            Padding="10"
+                                    FontSize="21"
+                                            Margin="15"
+                                            Width="100"
+                                            Style="{StaticResource BlueButton}"
+                                            Click="DetailsButton_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

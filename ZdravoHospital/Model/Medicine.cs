@@ -9,7 +9,7 @@ namespace Model
         public string Supplier { get; set; }
         public MedicineStatus Status { get; set; }
         public string Note { get; set; }
-        public List<string> ReplacementMedication { get; set; }
+        public List<string> Replacements { get; set; }
         
 
         public List<Ingredient> Ingredients { get; set; }
@@ -18,13 +18,13 @@ namespace Model
         {
             MedicineName = name;
             Ingredients = new List<Ingredient>();
-            ReplacementMedication = new List<string>();
+            Replacements = new List<string>();
         }
 
         public Medicine()
         {
             Ingredients = new List<Ingredient>();
-            ReplacementMedication = new List<string>();
+            Replacements = new List<string>();
         }
 
         //public Medicine(string name, string supplier)

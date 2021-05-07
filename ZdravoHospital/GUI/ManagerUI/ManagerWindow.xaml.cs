@@ -60,7 +60,7 @@ namespace ZdravoHospital.GUI.ManagerUI
             Model.Resources.OpenMedicines();
             Model.Resources.OpenPeriods();
             Model.Resources.OpenRoomSchedule();
-            Model.Resources.OpenMedicineRecension();
+            Model.Resources.OpenMedicineRecensions();
             Model.Resources.DeserializeDoctors();
 
             /* Handling visuals */

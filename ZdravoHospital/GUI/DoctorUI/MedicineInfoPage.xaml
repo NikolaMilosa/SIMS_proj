@@ -1,0 +1,431 @@
+﻿<Page x:Class="ZdravoHospital.GUI.DoctorUI.MedicineInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MedicineInfoPage"
+      SizeChanged="PageSizeChanged">
+
+    <Grid Background="{StaticResource DarkGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0" 
+                   Width="{Binding ActualWidth}"
+                   Background="Black">
+            <Button Grid.Row="1" Grid.Column="1"
+                        Margin="{Binding TopSectionsMargin}"
+                            Content="Back"
+                            Padding="10"
+                            Height="45"
+                            Width="100"
+                            Style="{StaticResource BlueButton}"
+                            Name="BackButton"
+                            Click="BackButton_Click"
+                            HorizontalAlignment="Right"/>
+            <StackPanel Grid.Row="1" Grid.Column="3"
+                     Width="{Binding NameSupplierWidth}"
+                           VerticalAlignment="Center"
+                      Margin="0, 0, 0, 10">
+                <TextBlock FontSize="25"
+                               Foreground="White"
+                           Padding="10, 0"
+                           VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Name="NameTextBlock"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}">
+                                <Binding Path="Medicine.MedicineName"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock FontSize="25"
+                               Foreground="{StaticResource LightGray}"
+                           VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Name="SupplierTextBlock"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}">
+                                <Binding Path="Medicine.Supplier"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            <Grid Grid.Row="1" 
+                  Grid.Column="5"
+                  VerticalAlignment="Center"
+                  Margin="{Binding TopSectionsMargin}"
+                  Width="250"
+                  x:Name="StatusGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                               FontSize="25"
+                               Foreground="White"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               Name="StatusTextBlock">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Status: {0}">
+                            <Binding Path="Medicine.Status"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <DockPanel Grid.Row="2">
+                    <Button
+                        DockPanel.Dock="Left"
+                            Content="Reject"
+                            Padding="10"
+                            Height="45"
+                            Width="120"
+                            Style="{StaticResource BlueButton}"
+                            Name="RejectButton"
+                        Click="RejectButton_Click"
+                            HorizontalAlignment="Right"/>
+                    <Button
+                        DockPanel.Dock="Right"
+                            Content="Approve"
+                            Padding="10"
+                            Height="45"
+                            Width="120"
+                            Style="{StaticResource BlueButton}"
+                            Name="ApproveButton"
+                        Click="ApproveButton_Click"
+                            HorizontalAlignment="Right"/>
+                </DockPanel>
+            </Grid>
+        </WrapPanel>
+        <ScrollViewer Grid.Row="2" 
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0, 0, 0, 20">
+                <Button Content="Edit information"
+                        Padding="10"
+                        Height="45"
+                        Width="200"
+                        Margin="0, 30, 70, 10"
+                        Style="{StaticResource BlueButton}"
+                        Name="EditButton"
+                        Click="EditButton_Click"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"/>
+                <Button Content="Confirm changes"
+                        Padding="10"
+                        Height="45"
+                        Width="200"
+                        Visibility="Collapsed"
+                        Click="ConfirmChangesButton_Click"
+                        Margin="0, 30, 70, 10"
+                        Style="{StaticResource BlueButton}"
+                        Name="ConfirmChangesButton"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"/>
+                <WrapPanel>
+                    <Grid Margin="50, 0, 0, 0"
+                          x:Name="IngredientsGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Ingredients:"
+                                   Grid.Row="0"
+                                   FontSize="25"
+                                   Foreground="White"
+                                   Margin="20, 0, 0, 20"/>
+                        <ListBox x:Name="IngredientsListBox"
+                                 Grid.Row="1"
+                                 SelectionMode="Multiple"
+                                 FontSize="21"
+                                 ItemsSource="{Binding Ingredients}"
+                                 Width="400"
+                         MinHeight="600"
+                             Background="Black"
+                             Foreground="White"/>
+                        <DockPanel Margin="15"
+                                   Grid.Row="2">
+                            <Button
+                            DockPanel.Dock="Left"
+                            Content="Remove selection"
+                            Padding="10"
+                            Height="45"
+                            Width="200"
+                            Style="{StaticResource BlueButton}"
+                            Name="RemoveIngredientsButton"
+                                Click="RemoveIngredientsButton_Click"/>
+                            <Button
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Content="Add"
+                            Padding="10"
+                            Height="45"
+                            Width="60"
+                            Style="{StaticResource BlueButton}"
+                            Name="AddIngredientsButton"
+                                Click="AddIngredientsButton_Click"/>
+                        </DockPanel>
+                    </Grid>
+                    <Grid  Margin="50, 0, 0, 0" 
+                           x:Name="ReplacementsGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Replacements:"
+                                   Grid.Row="0"
+                               FontSize="25"
+                               Foreground="White"
+                           Margin="20, 0, 0, 20"/>
+                        <ListBox x:Name="ReplacementsListBox"
+                                   Grid.Row="1"
+                                 SelectionMode="Multiple"
+                                 ItemsSource="{Binding Replacements}" 
+                                 Width="400"
+                                 MinHeight="600"
+                                 FontSize="20"
+                                 Background="Black"
+                                 Foreground="White"/>
+                        <DockPanel Margin="15"
+                                   Grid.Row="2">
+                            <Button
+                            DockPanel.Dock="Left"
+                            Content="Remove selection"
+                            Padding="10"
+                            Height="45"
+                            Width="200"
+                            Style="{StaticResource BlueButton}"
+                            Name="RemoveReplacementsButton"
+                                Click="RemoveReplacementsButton_Click"/>
+                            <Button
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Content="Add"
+                            Padding="10"
+                            Height="45"
+                            Width="60"
+                            Style="{StaticResource BlueButton}"
+                            Name="AddReplacmentsButton"
+                                Click="AddReplacmentsButton_Click"/>
+                        </DockPanel>
+                    </Grid>
+                    <Grid Margin="50, 40, 50, 0" 
+                           MinHeight="650"
+                          x:Name="NotesGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Medicine:"
+                               FontSize="25"
+                               Foreground="White"
+                                Margin="20, 0, 0, 20"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" 
+                                     Name="MedicineNameTextBox"
+                                     Background="{StaticResource DarkGray}"
+                                     MaxWidth="750"
+                               FontSize="25"
+                               Foreground="White"
+                                Margin="20, 0, 0, 20"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Supplier:"
+                               FontSize="25"
+                               Foreground="White"
+                                Margin="20, 0, 0, 0"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" 
+                                     Name="SupplierTextBox" 
+                                     Background="{StaticResource DarkGray}"
+                               FontSize="25"
+                                     MaxWidth="750"
+                               Foreground="White"
+                                Margin="20, 0, 0, 20"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Notes:"
+                               FontSize="25"
+                               Foreground="White"
+                           Margin="20, 0, 0, 20"/>
+                            <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <TextBox x:Name="NotesTextBox" Width="900" TextWrapping="Wrap"
+                                 Padding="8, 5"
+                             Background="Black"
+                             Foreground="White"
+                             FontSize="23"/>
+                            </ScrollViewer>
+                        </Grid>
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Name="IngredientsPopUp"
+                   Background="Transparent"
+              Visibility="Collapsed">
+            <DockPanel Background="Black"
+                       Opacity="0.95">
+            </DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Background="#222222"
+                        Margin="0, 0, 0, 0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <TextBlock Margin="30, 10, 0, 0"
+                            Foreground="White"
+                            FontSize="21"
+                        DockPanel.Dock="Left"
+                            Text="Ingredient name:"
+                            Padding="10"
+                            Height="45"/>
+                    <TextBox Name="IngredientTextBox" 
+                                     Background="{StaticResource DarkGray}"
+                               FontSize="25"
+                               Foreground="White"
+                                Margin="30, 0, 30, 20"/>
+                    <Button Margin="30, 0, 30, 0"
+                        DockPanel.Dock="Right"
+                            Content="Add ingredient"
+                            Padding="10"
+                            Height="45"
+                            Width="240"
+                            Style="{StaticResource BlueButton}"
+                            HorizontalAlignment="Right"
+                            x:Name="AddNewIngredientButton"
+                            Click="AddNewIngredientButton_Click"/>
+                    <ListBox x:Name="AvailableIngredientsListBox"
+                         Height="400"
+                         Margin="30"
+                         SelectionMode="Multiple"
+                                 Width="400"
+                                 FontSize="20"
+                                 Background="Black"
+                                 Foreground="White"/>
+                    <DockPanel Margin="30, 0, 30, 30">
+                        <Button
+                        DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Height="45"
+                            Width="120"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelIngredientsPopUpButton"
+                            Click="CancelIngredientsPopUpButton_Click"
+                            HorizontalAlignment="Right"/>
+                        <Button
+                        DockPanel.Dock="Right"
+                            Content="Add selection"
+                            Padding="10"
+                            Height="45"
+                            Width="170"
+                            Style="{StaticResource BlueButton}"
+                            Name="AddSelectedIngredientsButton"
+                            Click="AddSelectedIngredientsButton_Click"
+                            HorizontalAlignment="Right"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Name="ReplacementsPopUp"
+                   Background="Transparent"
+              Visibility="Collapsed">
+            <DockPanel Background="Black"
+                       Opacity="0.95">
+            </DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Background="#222222"
+                        Margin="0, 0, 0, 0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <ListBox x:Name="AvailableReplacementsListBox"
+                         Height="500"
+                         Margin="30"
+                         SelectionMode="Multiple"
+                                 Width="400"
+                                 FontSize="20"
+                                 Background="Black"
+                                 Foreground="White"/>
+                    <DockPanel Margin="30, 0, 30, 30">
+                        <Button
+                        DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Height="45"
+                            Width="120"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelReplacementsPopUpButton"
+                            Click="CancelReplacementsPopUpButton_Click"
+                            HorizontalAlignment="Right"/>
+                        <Button
+                        DockPanel.Dock="Right"
+                            Content="Add selection"
+                            Padding="10"
+                            Height="45"
+                            Width="170"
+                            Style="{StaticResource BlueButton}"
+                            Name="AddSelectedReplacementsButton"
+                            Click="AddSelectedReplacementsButton_Click"
+                            HorizontalAlignment="Right"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Name="RejectionPopUp"
+                   Background="Transparent"
+              Visibility="Collapsed">
+            <DockPanel Background="Black"
+                       Opacity="0.95">
+            </DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel Width="700" Background="{StaticResource DarkGray}" Height="680">
+                    <TextBlock Text="Why are you rejecting this medicine?"
+                               Foreground="White"
+                               Margin="50, 20, 0, 20"
+                               FontSize="25"/>
+                    <TextBox Height="500"
+                             Width="600"
+                             Background="Black"
+                             Foreground="White"
+                             FontSize="23"
+                             TextWrapping="Wrap"
+                             Padding="8, 5"
+                             HorizontalAlignment="Center"
+                             Name="RecensionNoteTextBox"/>
+                    <DockPanel Margin="50, 25"
+                                   Grid.Row="2">
+                        <Button
+                            DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Height="45"
+                            Width="110"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelRejectionButton"
+                            Click="CancelRejectionButton_Click"/>
+                        <Button
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Content="Confirm rejection"
+                            Padding="10"
+                            Height="45"
+                            Width="200"
+                            Style="{StaticResource BlueButton}"
+                            Name="ConfirmRejectionButton"
+                            Click="ConfirmRejectionButton_Click"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

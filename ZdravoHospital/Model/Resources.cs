@@ -254,14 +254,14 @@ namespace Model
             File.WriteAllText(@"..\..\..\Resources\roomSchedule.json", JsonConvert.SerializeObject(roomSchedule, Formatting.Indented));
         }
 
-        public static void SerializeMedicineRecension()
+        public static void SerializeMedicineRecensions()
         {
-            File.WriteAllText(@"..\..\..\Resources\medicineRecension.json", JsonConvert.SerializeObject(medicineRecensions, Formatting.Indented));
+            File.WriteAllText(@"..\..\..\Resources\medicineRecensions.json", JsonConvert.SerializeObject(medicineRecensions, Formatting.Indented));
         }
 
-        public static void OpenMedicineRecension()
+        public static void OpenMedicineRecensions()
         {
-            medicineRecensions = JsonConvert.DeserializeObject<List<MedicineRecension>>(File.ReadAllText(@"..\..\..\Resources\medicineRecension.json"));
+            medicineRecensions = JsonConvert.DeserializeObject<List<MedicineRecension>>(File.ReadAllText(@"..\..\..\Resources\medicineRecensions.json"));
             if (medicineRecensions == null)
                 medicineRecensions = new List<MedicineRecension>();
         }
