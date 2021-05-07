@@ -381,5 +381,51 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Name="RejectionPopUp"
+                   Background="Transparent"
+              Visibility="Collapsed">
+            <DockPanel Background="Black"
+                       Opacity="0.95">
+            </DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel Width="700" Background="{StaticResource DarkGray}" Height="680">
+                    <TextBlock Text="Why are you rejecting this medicine?"
+                               Foreground="White"
+                               Margin="50, 20, 0, 20"
+                               FontSize="25"/>
+                    <TextBox Height="500"
+                             Width="600"
+                             Background="Black"
+                             Foreground="White"
+                             FontSize="23"
+                             TextWrapping="Wrap"
+                             Padding="8, 5"
+                             HorizontalAlignment="Center"
+                             Name="RecensionNoteTextBox"/>
+                    <DockPanel Margin="50, 25"
+                                   Grid.Row="2">
+                        <Button
+                            DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Height="45"
+                            Width="110"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelRejectionButton"
+                            Click="CancelRejectionButton_Click"/>
+                        <Button
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Content="Confirm rejection"
+                            Padding="10"
+                            Height="45"
+                            Width="200"
+                            Style="{StaticResource BlueButton}"
+                            Name="ConfirmRejectionButton"
+                            Click="ConfirmRejectionButton_Click"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

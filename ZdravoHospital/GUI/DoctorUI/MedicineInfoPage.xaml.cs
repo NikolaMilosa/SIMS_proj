@@ -103,11 +103,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void RejectButton_Click(object sender, RoutedEventArgs e)
         {
-            Medicine.Status = MedicineStatus.REJECTED;
-            OnPropertyChanged("Medicine");
-            RejectButton.IsEnabled = false;
-            ApproveButton.IsEnabled = true;
-            Model.Resources.SaveMedicines();
+            StatusGrid.Visibility = Visibility.Collapsed;
+            RejectionPopUp.Visibility = Visibility.Visible;
         }
 
         private void ApproveButton_Click(object sender, RoutedEventArgs e)
@@ -117,6 +114,9 @@ namespace ZdravoHospital.GUI.DoctorUI
             ApproveButton.IsEnabled = false;
             RejectButton.IsEnabled = true;
             Model.Resources.SaveMedicines();
+
+            Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = "";
+            Model.Resources.SerializeMedicineRecensions();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -283,6 +283,27 @@ namespace ZdravoHospital.GUI.DoctorUI
             }
 
             ReplacementsPopUp.Visibility = Visibility.Collapsed;
+        }
+
+        private void CancelRejectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            RejectionPopUp.Visibility = Visibility.Collapsed;
+            StatusGrid.Visibility = Visibility.Visible;
+        }
+
+        private void ConfirmRejectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            RejectionPopUp.Visibility = Visibility.Collapsed;
+            StatusGrid.Visibility = Visibility.Visible;
+
+            Medicine.Status = MedicineStatus.REJECTED;
+            OnPropertyChanged("Medicine");
+            RejectButton.IsEnabled = false;
+            ApproveButton.IsEnabled = true;
+            Model.Resources.SaveMedicines();
+
+            Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = RecensionNoteTextBox.Text;
+            Model.Resources.SerializeMedicineRecensions();
         }
     }
 }
