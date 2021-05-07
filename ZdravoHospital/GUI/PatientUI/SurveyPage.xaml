@@ -26,7 +26,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="170"/>
                 <RowDefinition Height="60"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
@@ -45,7 +45,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" Margin="0,10,0,0">
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" Margin="0,5,0,0">
                 <TextBlock Text="How would you rate the  care you received from our clinic?" FontSize="28"></TextBlock>
                 <StackPanel  x:Name="secondRadioButtonPanel" Orientation="Horizontal" Margin="10,20,0,0">
                     <RadioButton IsChecked="{Binding Path=Survey.Care,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=1}" Content="Very poor" Margin="40,0,0,0" FontSize="17"></RadioButton>
@@ -56,7 +56,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical" Margin="0,10,0,0">
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical" Margin="0,5,0,0">
                 <TextBlock Text="How likely are you to recommend our facility?" FontSize="28"></TextBlock>
                 <StackPanel  x:Name="thirdRadioButtonPanel" Orientation="Horizontal" Margin="10,20,0,0">
                     <RadioButton IsChecked="{Binding Path=Survey.Recommendation,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=1}" Content="Very unlikely" Margin="40,0,0,0" FontSize="17"></RadioButton>
@@ -67,7 +67,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical" Margin="0,10,0,0">
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical" Margin="0,5,0,0">
                 <TextBlock Text="Do you satisfy with our hygiene maintenance of clinic?" FontSize="28"></TextBlock>
                 <StackPanel  x:Name="fourthRadioButtonPanel" Orientation="Horizontal" Margin="10,20,0,0">
                     <RadioButton IsChecked="{Binding Path=Survey.Hygiene,Mode=OneWayToSource,Converter={StaticResource converter}, ConverterParameter=1}" Content="Very unsatisfied" Margin="40,0,0,0" FontSize="17"></RadioButton>
