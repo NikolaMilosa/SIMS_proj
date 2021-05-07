@@ -66,6 +66,7 @@ namespace ZdravoHospital.GUI.PatientUI
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             WelcomeMessage = "Welcome " + username;
+            myFrame.Navigate(new AppointmentPage(username));
         }
 
         public void StartThreads()
