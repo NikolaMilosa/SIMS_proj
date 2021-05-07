@@ -54,7 +54,7 @@ namespace ZdravoHospital.GUI.Secretary
             Periods = new ObservableCollection<Period>(Model.Resources.periods);
 
             if (Model.Resources.doctors == null)
-                Model.Resources.DeserializeDoctors();
+                Model.Resources.OpenDoctors();
             if (Model.Resources.patients == null)
                 Model.Resources.OpenPatients();
             Doctors = new ObservableCollection<Doctor>(Model.Resources.doctors.Values);

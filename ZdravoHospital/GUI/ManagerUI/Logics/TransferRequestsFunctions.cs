@@ -50,7 +50,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetTransferRequestMutex().WaitOne();
 
             Model.Resources.transferRequests.Add(transferRequest);
-            Model.Resources.SerializeTransferRequests();
+            Model.Resources.SaveTransferRequests();
 
             GetTransferRequestMutex().ReleaseMutex();
 
@@ -100,7 +100,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             /* Serialize */
             if (Model.Resources.transferRequests.Remove(transferRequest))
-                Model.Resources.SerializeTransferRequests();
+                Model.Resources.SaveTransferRequests();
 
             if(ManagerWindow.dialog != null)
             {

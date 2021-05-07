@@ -116,7 +116,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             Model.Resources.SaveMedicines();
 
             Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = "";
-            Model.Resources.SerializeMedicineRecensions();
+            Model.Resources.SaveMedicineRecensions();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -171,7 +171,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             OnPropertyChanged("Medicine");
 
             Model.Resources.SaveMedicines();
-            Model.Resources.SerializeMedicineRecensions();
+            Model.Resources.SaveMedicineRecensions();
         }
 
         private void RemoveIngredientsButton_Click(object sender, RoutedEventArgs e)
@@ -303,7 +303,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             Model.Resources.SaveMedicines();
 
             Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = RecensionNoteTextBox.Text;
-            Model.Resources.SerializeMedicineRecensions();
+            Model.Resources.SaveMedicineRecensions();
         }
     }
 }

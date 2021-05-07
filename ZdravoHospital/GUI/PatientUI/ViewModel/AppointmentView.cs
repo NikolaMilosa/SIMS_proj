@@ -13,7 +13,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
       
         public AppointmentView(Period period)
         {
-            Model.Resources.DeserializeDoctors();
+            Model.Resources.OpenDoctors();
             Period = period;
             DoctorName = Resources.doctors[period.DoctorUsername].Name;
             DoctorSurname= Resources.doctors[period.DoctorUsername].Surname;

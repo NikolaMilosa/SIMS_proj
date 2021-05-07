@@ -30,7 +30,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             ManagerWindow.Inventory.Remove(someInventory);
 
             Model.Resources.inventory.Remove(someInventory.Id);
-            Model.Resources.SerializeInventory();
+            Model.Resources.SaveInventory();
 
             GetInventoryMutex().ReleaseMutex();
             return true;
@@ -62,7 +62,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             /* Found a room to put some inventory in */
             
             Model.Resources.inventory[newInventory.Id] = newInventory;
-            Model.Resources.SerializeInventory();
+            Model.Resources.SaveInventory();
             ManagerWindow.Inventory.Add(Model.Resources.inventory[newInventory.Id]);
 
             GetInventoryMutex().ReleaseMutex();
@@ -90,7 +90,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.inventory[oldInventory.Id] = newInventory;
             ManagerWindow.Inventory.Insert(index, newInventory);
-            Model.Resources.SerializeInventory();
+            Model.Resources.SaveInventory();
 
             GetInventoryMutex().ReleaseMutex();
         }
@@ -140,7 +140,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
             
             ManagerWindow.Inventory.Insert(index, inventory);
-            Model.Resources.SerializeInventory();
+            Model.Resources.SaveInventory();
             GetInventoryMutex().ReleaseMutex();
 
             if (inventory.Quantity == 0)

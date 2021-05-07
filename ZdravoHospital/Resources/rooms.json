@@ -21,7 +21,7 @@
     "RoomType": 0,
     "Id": 201,
     "Name": "Appointment room 1",
-    "Available": false
+    "Available": true
   },
   "106": {
     "RoomType": 3,

@@ -91,7 +91,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
             Model.Resources.rooms.Remove(room.Id);
             
-            Model.Resources.SerializeRooms();
+            Model.Resources.SaveRooms();
 
             GetRoomMutex().ReleaseMutex();
 
@@ -107,7 +107,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.rooms[room.Id] = room;
             ManagerWindow.Rooms.Add(Model.Resources.rooms[room.Id]);
-            Model.Resources.SerializeRooms();
+            Model.Resources.SaveRooms();
 
             GetRoomMutex().ReleaseMutex();
         }
@@ -122,7 +122,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             room.Name = room.Name.Trim();
 
             Model.Resources.rooms[room.Id] = room;
-            Model.Resources.SerializeRooms();
+            Model.Resources.SaveRooms();
 
             ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[room.Id]);
             GetRoomMutex().ReleaseMutex();
@@ -137,7 +137,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 () => ManagerWindow.Rooms.Remove(Model.Resources.rooms[roomId])));
 
             Model.Resources.rooms[roomId].Available = newValue;
-            Model.Resources.SerializeRooms();
+            Model.Resources.SaveRooms();
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
                 { ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[roomId]); }));

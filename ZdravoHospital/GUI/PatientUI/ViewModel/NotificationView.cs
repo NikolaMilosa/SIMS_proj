@@ -29,7 +29,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
             switch(role)
             {
                 case RoleType.DOCTOR:
-                    Resources.DeserializeDoctors();
+                    Resources.OpenDoctors();
                     From = role.ToString() + " " + Resources.doctors[Notification.UsernameSender].Name + " " + Resources.doctors[Notification.UsernameSender].Surname;
                     break;
 

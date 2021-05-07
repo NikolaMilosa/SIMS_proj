@@ -32,6 +32,7 @@ namespace ZdravoHospital.GUI.Secretary
         private Patient _patient;
         private Room _room;
         public PeriodAvailability PeriodAvailable { get; set; }
+        public const int MIN_MINUTES_DIFFERENCE = 15;
 
         public enum PeriodAvailability
         {
@@ -123,17 +124,17 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             this.DataContext = this;
 
+            openResources();
+            initializeListsForBinding();
+            setSearchFilters();
+        }
 
-            Model.Resources.DeserializeDoctors();
-
+        private void openResources()
+        {
+            Model.Resources.OpenDoctors();
             Model.Resources.OpenPatients();
-
             Model.Resources.OpenRooms();
             Model.Resources.OpenPeriods();
-
-            initializeListsForBinding();
-
-            setSearchFilters();
         }
 
         private void initializeListsForBinding()
@@ -224,7 +225,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void checkTimeAvailabilityForPeriod(Period period)
         {
-            if (period.StartTime < DateTime.Now.AddMinutes(15))
+            if (period.StartTime < DateTime.Now.AddMinutes(MIN_MINUTES_DIFFERENCE))
             {
                 this.PeriodAvailable = PeriodAvailability.TIME_UNACCEPTABLE;
             }
