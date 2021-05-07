@@ -31,6 +31,12 @@
       },
       {
         "IngredientName": "tester three"
+      },
+      {
+        "IngredientName": "magnesium"
+      },
+      {
+        "IngredientName": "some new ingr"
       }
     ]
   },

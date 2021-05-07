@@ -20,7 +20,9 @@ namespace ZdravoHospital.GUI.DoctorUI
         public double NameSupplierWidth { get; set; }
         public Thickness TopSectionsMargin { get; set; }
         public ObservableCollection<Ingredient> Ingredients { get; set; }
+        public ObservableCollection<Ingredient> AvailableIngredients { get; set; }
         public ObservableCollection<string> Replacements { get; set; }
+        public ObservableCollection<string> AvailableReplacements { get; set; }
 
         public MedicineInfoPage(Medicine medicine)
         {
@@ -40,22 +42,26 @@ namespace ZdravoHospital.GUI.DoctorUI
                 ApproveButton.IsEnabled = false;
 
             Model.Resources.OpenIngredients();
-            AvailableIngredientsListBox.ItemsSource = new List<Ingredient>();
+            AvailableIngredients = new ObservableCollection<Ingredient>();
 
             foreach (Ingredient i in Model.Resources.ingredients)
                 if (Medicine.Ingredients.Find(ing => ing.IngredientName.Equals(i.IngredientName)) == null)
-                    (AvailableIngredientsListBox.ItemsSource as List<Ingredient>).Add(i);
+                    AvailableIngredients.Add(i);
+
+            AvailableIngredientsListBox.ItemsSource = AvailableIngredients;
 
             Ingredients = new ObservableCollection<Ingredient>();
 
             foreach (Ingredient ingredient in medicine.Ingredients)
                 Ingredients.Add(ingredient);
 
-            AvailableReplacementsListBox.ItemsSource = new List<string>();
+            AvailableReplacements = new ObservableCollection<string>();
 
             foreach (Medicine m in Model.Resources.medicines)
                 if (!m.MedicineName.Equals(medicine.MedicineName) && Medicine.Replacements.Find(medicineName => medicineName.Equals(m.MedicineName)) == null)
-                    (AvailableReplacementsListBox.ItemsSource as List<string>).Add(m.MedicineName);
+                    AvailableReplacements.Add(m.MedicineName);
+
+            AvailableReplacementsListBox.ItemsSource = AvailableReplacements;
 
             Replacements = new ObservableCollection<string>();
 
@@ -178,7 +184,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (Ingredient ingredient in selection)
             {
                 Ingredients.Remove(ingredient);
-                (AvailableIngredientsListBox.ItemsSource as List<Ingredient>).Add(ingredient);
+                AvailableIngredients.Add(ingredient);
             }
         }
 
@@ -197,13 +203,41 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (string replacement in selection)
             {
                 Replacements.Remove(replacement);
-                (AvailableReplacementsListBox.ItemsSource as List<string>).Add(replacement);
+                AvailableReplacements.Add(replacement);
             }
         }
 
         private void AddReplacmentsButton_Click(object sender, RoutedEventArgs e)
         {
             ReplacementsPopUp.Visibility = Visibility.Visible;
+        }
+
+        private void AddNewIngredientButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            string ingredientName = IngredientTextBox.Text;
+
+            if (ingredientName.Equals(""))
+                return;
+            
+            if (Ingredients.ToList().Find(ing => ing.IngredientName.Equals(ingredientName)) != null)
+            {
+                MessageBox.Show("Already contained");
+                return;
+            }    
+
+            Ingredients.Add(new Ingredient(IngredientTextBox.Text));
+            IngredientTextBox.Text = "";
+
+            Ingredient availableIngredient = AvailableIngredients.ToList().Find(ing => ing.IngredientName.Equals(ingredientName));
+            if (availableIngredient != null)
+                AvailableIngredients.Remove(availableIngredient);
+
+            if (Model.Resources.ingredients.Find(ing => ing.IngredientName.Equals(ingredientName)) != null)
+                return;
+
+            Model.Resources.ingredients.Add(new Ingredient(ingredientName));
+            Model.Resources.SaveIngredients();
         }
 
         private void CancelIngredientsPopUpButton_Click(object sender, RoutedEventArgs e)
@@ -222,7 +256,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (Ingredient ingredient in selection)
             {
                 Ingredients.Add(ingredient);
-                (AvailableIngredientsListBox.ItemsSource as List<Ingredient>).Remove(ingredient);
+                AvailableIngredients.Remove(ingredient);
             }
 
             AvailableIngredientsListBox.Items.Refresh();
@@ -245,10 +279,9 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (string replacement in selection)
             {
                 Replacements.Add(replacement);
-                (AvailableReplacementsListBox.ItemsSource as List<string>).Remove(replacement);
+                AvailableReplacements.Remove(replacement);
             }
 
-            AvailableReplacementsListBox.Items.Refresh();
             ReplacementsPopUp.Visibility = Visibility.Collapsed;
         }
     }
