@@ -31,6 +31,17 @@ namespace ZdravoHospital.GUI.Secretary
         private Doctor _doctor;
         private Patient _patient;
         private Room _room;
+        public PeriodAvailability PeriodAvailable { get; set; }
+        public const int MIN_MINUTES_DIFFERENCE = 15;
+
+        public enum PeriodAvailability
+        {
+            AVAILABLE,
+            DOCTOR_UNAVAILABLE,
+            PATIENT_UNAVAILABLE,
+            ROOM_UNAVAILABLE,
+            TIME_UNACCEPTABLE
+        }
 
         public Room Room
         {
@@ -113,31 +124,53 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             this.DataContext = this;
 
-            if(Model.Resources.doctors == null)
-                Model.Resources.DeserializeDoctors();
-            if(Model.Resources.patients == null)
-                Model.Resources.OpenPatients();
-            if(Model.Resources.rooms == null)
-                Model.Resources.OpenRooms();
+            openResources();
+            initializeListsForBinding();
+            setSearchFilters();
+        }
 
+        private void openResources()
+        {
+            Model.Resources.OpenDoctors();
+            Model.Resources.OpenPatients();
+            Model.Resources.OpenRooms();
+            Model.Resources.OpenPeriods();
+        }
+
+        private void initializeListsForBinding()
+        {
             Doctors = new ObservableCollection<Doctor>(Model.Resources.doctors.Values);
             Patients = new ObservableCollection<Patient>(Model.Resources.patients.Values);
             Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
+        }
 
+        private void setDoctorFilter()
+        {
             ICollectionView viewDoctors = (ICollectionView)CollectionViewSource.GetDefaultView(Doctors);
+            viewDoctors.Filter = DoctorsFilter;
+        }
+        private void setPatientFilter()
+        {
             ICollectionView viewPatients = (ICollectionView)CollectionViewSource.GetDefaultView(Patients);
+            viewPatients.Filter = PatientsFilter;
+        }
+        private void setRoomFilter()
+        {
             ICollectionView viewRooms = (ICollectionView)CollectionViewSource.GetDefaultView(Rooms);
-
-            viewDoctors.Filter = UserFilterDoctors;
-            viewPatients.Filter = UserFilterPatients;
-            viewRooms.Filter = UserFilterRooms;
+            viewRooms.Filter = RoomsFilter;
+        }
+        private void setSearchFilters()
+        {
+            setDoctorFilter();
+            setPatientFilter();
+            setRoomFilter();
         }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
 
-        private bool UserFilterDoctors(object item)
+        private bool DoctorsFilter(object item)
         {
             if (String.IsNullOrEmpty(DoctorTextBox.Text))
                 return true;
@@ -145,7 +178,7 @@ namespace ZdravoHospital.GUI.Secretary
                 return ((item.ToString()).IndexOf(DoctorTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
-        private bool UserFilterPatients(object item)
+        private bool PatientsFilter(object item)
         {
             if (String.IsNullOrEmpty(PatientTextBox.Text))
                 return true;
@@ -153,7 +186,7 @@ namespace ZdravoHospital.GUI.Secretary
                 return ((item.ToString()).IndexOf(PatientTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
-        private bool UserFilterRooms(object item)
+        private bool RoomsFilter(object item)
         {
             if (String.IsNullOrEmpty(RoomTextBox.Text))
                 return true;
@@ -176,85 +209,147 @@ namespace ZdravoHospital.GUI.Secretary
             CollectionViewSource.GetDefaultView(PatientsListBox.ItemsSource).Refresh();
         }
 
-        private int IsPeriodAvailable(Period period) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
+        private void checkPeriodAvailability(Period period)
         {
-            if (period.StartTime < DateTime.Now.AddMinutes(15))
-            {
-                return 4;
-            }
-            DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
+            setInitialPeriodAvailability();
+            checkTimeAvailabilityForPeriod(period);
+            checkDoctorAvailabilityForPeriod(period);
+            checkPatientAvailabilityForPeriod(period);
+            checkRoomAvailabilityForPeriod(period);
+        }
 
+        private void setInitialPeriodAvailability()
+        {
+            this.PeriodAvailable = PeriodAvailability.AVAILABLE;
+        }
+
+        private void checkTimeAvailabilityForPeriod(Period period)
+        {
+            if (period.StartTime < DateTime.Now.AddMinutes(MIN_MINUTES_DIFFERENCE))
+            {
+                this.PeriodAvailable = PeriodAvailability.TIME_UNACCEPTABLE;
+            }
+        }
+
+        private void checkDoctorAvailabilityForPeriod(Period period)
+        {
             foreach (Period existingPeriod in Model.Resources.periods)
             {
-                DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
-
-                if (period.DoctorUsername == existingPeriod.DoctorUsername)
+                if (periodsHaveSameDoctors(period, existingPeriod) && periodsOverlap(period, existingPeriod))
                 {
-                    if(period.StartTime < existingPeriodEndTime && periodEndtime > existingPeriod.StartTime)
-                    {
-                        return 1;
-                    }
+                    this.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
                 }
-
-                if (period.PatientUsername == existingPeriod.PatientUsername)
-                {
-                    if (period.StartTime < existingPeriodEndTime && periodEndtime > existingPeriod.StartTime)
-                    {
-                        return 2;
-                    }
-                }
-
-                if (period.RoomId == existingPeriod.RoomId)
-                {
-                    if (period.StartTime < existingPeriodEndTime && periodEndtime > existingPeriod.StartTime)
-                    {
-                        return 3;
-                    }
-                }
-
             }
+        }
+        private void checkPatientAvailabilityForPeriod(Period period)
+        {
+            foreach (Period existingPeriod in Model.Resources.periods)
+            {
+                if (periodsHaveSamePatients(period, existingPeriod) && periodsOverlap(period, existingPeriod))
+                {
+                    this.PeriodAvailable = PeriodAvailability.PATIENT_UNAVAILABLE;
+                }
+            }
+        }
 
-            return 0;
+        private void checkRoomAvailabilityForPeriod(Period period)
+        {
+            foreach (Period existingPeriod in Model.Resources.periods)
+            {
+                if (periodsHaveSameRooms(period, existingPeriod) && periodsOverlap(period, existingPeriod))
+                {
+                    this.PeriodAvailable = PeriodAvailability.ROOM_UNAVAILABLE;
+                }
+            }
+        }
+
+        private bool periodsOverlap(Period newPeriod, Period existingPeriod)
+        {
+            DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
+            DateTime newPeriodEndtime = newPeriod.StartTime.AddMinutes(newPeriod.Duration);
+            if (newPeriod.StartTime < existingPeriodEndTime && newPeriodEndtime > existingPeriod.StartTime)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool periodsHaveSameDoctors(Period newPeriod, Period existingPeriod)
+        {
+            if (newPeriod.DoctorUsername == existingPeriod.DoctorUsername)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool periodsHaveSamePatients(Period newPeriod, Period existingPeriod)
+        {
+            if (newPeriod.PatientUsername == existingPeriod.PatientUsername)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool periodsHaveSameRooms(Period newPeriod, Period existingPeriod)
+        {
+            if (newPeriod.RoomId == existingPeriod.RoomId)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private Period createPeriodWithInputFields()
+        {
+            string[] hoursAndMinutes = Time.Split(":");
+            DateTime periodStartTime = new DateTime(Date.Year, Date.Month, Date.Day, Int32.Parse(hoursAndMinutes[0]), Int32.Parse(hoursAndMinutes[1]), 0);
+            Period newPeriod = new Period(periodStartTime, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id);
+            return newPeriod;
+        }
+
+        private void savePeriod(Period period)
+        {
+            Model.Resources.OpenPeriods();
+            Model.Resources.periods.Add(period);
+            Model.Resources.SavePeriods();
+        }
+
+        private bool isPeriodAvailable()
+        {
+            if (this.PeriodAvailable == PeriodAvailability.AVAILABLE)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void giveAvailabilityFeedbackMessage()
+        {
+            if (this.PeriodAvailable == PeriodAvailability.DOCTOR_UNAVAILABLE)
+                MessageBox.Show("Selected doctor is unavailable in selected period.", "Doctor unavailable");
+            else if (this.PeriodAvailable == PeriodAvailability.PATIENT_UNAVAILABLE)
+                MessageBox.Show("Selected patient is unavailable in selected period.", "Patient unavailable");
+            else if (this.PeriodAvailable == PeriodAvailability.ROOM_UNAVAILABLE)
+                MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
+            else
+                MessageBox.Show("Selected time is not acceptable.", "Time unacceptable");
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Patient == null || this.Doctor == null || this.PeriodTypeIndex == -1 || this.Room == null || this.Date == null)
+            Period period = createPeriodWithInputFields();
+            checkPeriodAvailability(period);
+
+            if (isPeriodAvailable())
             {
-                MessageBox.Show("Please fill all the fields.", "Fill all the fields");
-                return;
-            }
-            string[] splits = Time.Split(":");
-            DateTime date = new DateTime(Date.Year, Date.Month, Date.Day, Int32.Parse(splits[0]), Int32.Parse(splits[1]), 0);
-            Period period = new Period(date, Int32.Parse(Duration), (PeriodType)PeriodTypeIndex, Patient.Username, Doctor.Username, Room.Id);
-            int available = IsPeriodAvailable(period);
-
-            if (available == 0)
-            {
-                Model.Resources.OpenPeriods();
-                if (Model.Resources.periods == null)
-                    Model.Resources.periods = new List<Model.Period>();
-
-                Model.Resources.periods.Add(period);
-                Model.Resources.SavePeriods();
-
+                savePeriod(period);
                 NavigationService.Navigate(new SecretaryPeriodsPage());
-            }
-            else if (available == 1)
-            {
-                MessageBox.Show("Selected doctor is unavailable in selected period.", "Doctor unavailable");
-            }
-            else if (available == 2)
-            {
-                MessageBox.Show("Selected patient is unavailable in selected period.", "Patient unavailable");
-            }
-            else if (available == 3)
-            {
-                MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
             }
             else
             {
-                MessageBox.Show("Selected time is not acceptable.", "Time unacceptable");
+                giveAvailabilityFeedbackMessage();
             }
         }
     }

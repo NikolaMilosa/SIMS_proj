@@ -90,7 +90,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                                                             r.RoomId == roomSchedule.RoomId &&
                                                             r.ScheduleType == roomSchedule.ScheduleType) > 0)
             {
-                Model.Resources.SerializeRoomSchedule();
+                Model.Resources.SaveRoomSchedule();
             }
 
             GetRoomScheduleMutex().ReleaseMutex();
@@ -110,7 +110,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
                 /* If the target room for this room schedule doesn't exist delete all other room schedules for this room.*/
                 Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
-                Model.Resources.SerializeRoomSchedule();
+                Model.Resources.SaveRoomSchedule();
 
                 GetRoomScheduleMutex().ReleaseMutex();
                 return false;
@@ -142,7 +142,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (!CheckIfExists(roomSchedule))
             {
                 Model.Resources.roomSchedule.Add(roomSchedule);
-                Model.Resources.SerializeRoomSchedule();
+                Model.Resources.SaveRoomSchedule();
                 ScheduleRenovationStart(roomSchedule);
             }
 

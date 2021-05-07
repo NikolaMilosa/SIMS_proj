@@ -68,7 +68,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void FillDoctorList()
         {
-            Resources.DeserializeDoctors();
+            Resources.OpenDoctors();
             RestartDoctorList();
 
             foreach (Doctor doctor in Resources.doctors.Values)

@@ -166,7 +166,7 @@ namespace ZdravoHospital.GUI.Secretary
         private List<Doctor> findDoctorsBySpecialization(Specialization specialization)
         {
             List<Doctor> doctors = new List<Doctor>();
-            Model.Resources.DeserializeDoctors();
+            Model.Resources.OpenDoctors();
             foreach (KeyValuePair<string, Doctor> item in Model.Resources.doctors)
             {
                 if (item.Value.SpecialistType.SpecializationName.Equals(specialization.SpecializationName))
