@@ -9,6 +9,14 @@
       Title="AppointmentPage">
 
     <StackPanel HorizontalAlignment="Center">
+
+        <Button Name="SeeReferralButton"
+                Visibility="Collapsed"
+                    Content="See referral"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10" 
+                Click="SeeReferralButton_Click"/>
         <StackPanel Orientation="Horizontal">
             <Label Content="Doctor:" 
                    FontSize="25"

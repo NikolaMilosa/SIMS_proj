@@ -22,6 +22,8 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class OperationPage : Page
     {
+        private Referral referral;
+
         public Doctor Doctor { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
@@ -72,6 +74,23 @@ namespace ZdravoHospital.GUI.DoctorUI
                 OperationReportButton.IsEnabled = false;
                 PrescriptionButton.IsEnabled = false;
             }
+
+            if (period.ReferringReferralId != -1)
+            {
+                if (Model.Resources.referrals == null)
+                    Model.Resources.OpenReferrals();
+
+                foreach (Referral r in Model.Resources.referrals)
+                    if (r.ReferralId == period.ReferringReferralId)
+                    {
+                        referral = r;
+                        break;
+                    }
+
+                SeeReferralButton.Visibility = Visibility.Visible;
+                PatientsComboBox.IsHitTestVisible = false;
+                PatientsComboBox.IsTabStop = false;
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -92,15 +111,29 @@ namespace ZdravoHospital.GUI.DoctorUI
                                     AppointmentDatePicker.SelectedDate.Value.Day,
                                     hours, minutes, 0);
 
-            Period editedPeriod = new Period(dateTime, Int32.Parse(DurationTextBox.Text), PeriodType.OPERATION,
-                                       (PatientsComboBox.SelectedItem as Patient).Username,
-                                       Doctor.Username,
-                                       (RoomsComboBox.SelectedItem as Room).Id);
+            Period editedPeriod = new Period()
+            {
+                StartTime = dateTime,
+                Duration = Int32.Parse(DurationTextBox.Text),
+                PeriodType = PeriodType.APPOINTMENT,
+                PatientUsername = (PatientsComboBox.SelectedItem as Patient).Username,
+                DoctorUsername = Doctor.Username,
+                RoomId = (RoomsComboBox.SelectedItem as Room).Id,
+                ReferringReferralId = period.ReferringReferralId,
+                ReferredReferralId = period.ReferredReferralId
+            };
 
             int available = IsPeriodAvailable(editedPeriod, this.period);
 
             if (available == 0)
             {
+                if (referral != null)
+                {
+                    referral.Period = editedPeriod;
+                    referral.IsUsed = true;
+                    Model.Resources.SaveReferrals();
+                }
+
                 foreach (Period existingPeriod in Model.Resources.periods)
                 {
                     if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
@@ -238,6 +271,13 @@ namespace ZdravoHospital.GUI.DoctorUI
                                                       "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
+                if (period.ReferringReferralId != -1)
+                {
+                    referral.Period = null;
+                    referral.IsUsed = false;
+                    Model.Resources.SaveReferrals();
+                }
+
                 foreach (Period existingPeriod in Model.Resources.periods)
                 {
                     if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
@@ -271,7 +311,13 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void ReferralButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new ReferralPage(this.period.Referral));
+            Patient patient = PatientsComboBox.SelectedItem as Patient;
+            NavigationService.Navigate(new ReferralPage(Doctor, patient, period));
+        }
+
+        private void SeeReferralButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

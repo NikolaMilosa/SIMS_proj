@@ -22,6 +22,8 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class AppointmentPage : Page
     {
+        private Referral referral;
+
         public ObservableCollection<Doctor> Doctors { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
@@ -64,6 +66,25 @@ namespace ZdravoHospital.GUI.DoctorUI
                 AnamnesisButton.IsEnabled = false;
                 PrescriptionButton.IsEnabled = false;
             }
+
+            if (period.ReferringReferralId != -1)
+            {
+                if (Model.Resources.referrals == null)
+                    Model.Resources.OpenReferrals();
+
+                foreach (Referral r in Model.Resources.referrals)
+                    if (r.ReferralId == period.ReferringReferralId)
+                    { 
+                        referral = r;
+                        break;
+                    }
+
+                SeeReferralButton.Visibility = Visibility.Visible;
+                DoctorsComboBox.IsHitTestVisible = false;
+                DoctorsComboBox.IsTabStop = false;
+                PatientsComboBox.IsHitTestVisible = false;
+                PatientsComboBox.IsTabStop = false;
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -92,13 +113,22 @@ namespace ZdravoHospital.GUI.DoctorUI
                 PeriodType = PeriodType.APPOINTMENT,
                 PatientUsername = (PatientsComboBox.SelectedItem as Patient).Username,
                 DoctorUsername = (DoctorsComboBox.SelectedItem as Doctor).Username,
-                RoomId = (RoomsComboBox.SelectedItem as Room).Id
+                RoomId = (RoomsComboBox.SelectedItem as Room).Id,
+                ReferringReferralId = period.ReferringReferralId,
+                ReferredReferralId = period.ReferredReferralId
             };
 
             int available = IsPeriodAvailable(editedPeriod, this.period);
 
             if (available == 0)
             {
+                if (referral != null)
+                {
+                    referral.Period = editedPeriod;
+                    referral.IsUsed = true;
+                    Model.Resources.SaveReferrals();
+                }
+
                 foreach (Period existingPeriod in Model.Resources.periods)
                 {
                     if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
@@ -236,6 +266,13 @@ namespace ZdravoHospital.GUI.DoctorUI
                                                       "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
+                if (period.ReferringReferralId != -1)
+                {
+                    referral.Period = null;
+                    referral.IsUsed = false;
+                    Model.Resources.SaveReferrals();
+                }
+
                 foreach (Period existingPeriod in Model.Resources.periods)
                 {
                     if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
@@ -269,7 +306,15 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void ReferralButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new ReferralPage(this.period.Referral));
+            Model.Resources.OpenReferrals();
+            Doctor referringDoctor = DoctorsComboBox.SelectedItem as Doctor;
+            Patient patient = PatientsComboBox.SelectedItem as Patient;
+            NavigationService.Navigate(new ReferralPage(referringDoctor, patient, period));
+        }
+
+        private void SeeReferralButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

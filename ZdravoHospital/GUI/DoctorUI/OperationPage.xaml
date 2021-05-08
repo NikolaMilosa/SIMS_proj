@@ -9,6 +9,13 @@
       Title="OperationPage">
 
     <StackPanel HorizontalAlignment="Center">
+        <Button Name="SeeReferralButton"
+                Visibility="Collapsed"
+                    Content="See referral"
+                    FontSize="25"
+                    Margin="25"
+                    Padding="10" 
+                Click="SeeReferralButton_Click"/>
         <TextBlock FontSize="25"
                        Margin="10"
                    TextAlignment="Center">
