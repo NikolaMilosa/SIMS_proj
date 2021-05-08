@@ -75,9 +75,12 @@ namespace ZdravoHospital.GUI.Secretary
                         }
                     }
                 }
-
+                List<Room> availableEmergencyRooms = findAvailableEmergencyRooms(SelectedPeriod);
+                if (availableEmergencyRooms.Count != 0)
+                    SelectedPeriod.RoomId = availableEmergencyRooms[0].Id;
                 Model.Resources.periods.Add(SelectedPeriod);
                 Model.Resources.SavePeriods();
+                
 
                 sendDoctorNotification(SelectedPeriod);
 
@@ -85,6 +88,41 @@ namespace ZdravoHospital.GUI.Secretary
             }
         }
 
+        private List<Model.Room> findAvailableEmergencyRooms(Period newPeriod)
+        {
+            Model.Resources.OpenRooms();
+            List<Model.Room> availableRooms = new List<Room>();
+            foreach(KeyValuePair<int, Model.Room> item in Model.Resources.rooms)
+            {
+                if(item.Value.RoomType == RoomType.EMERGENCY_ROOM)
+                {
+                    bool available = true;
+                    foreach (Period existingPeriod in Model.Resources.periods)
+                    {
+                        if (periodsOverlap(newPeriod, existingPeriod))
+                        {
+                            if (item.Key == existingPeriod.RoomId)
+                                available = false;
+                        }
+                    }
+                    if (available)
+                        availableRooms.Add(item.Value);
+                }
+                
+            }
+            return availableRooms;
+        }
+
+        private bool periodsOverlap(Period newPeriod, Period existingPeriod)
+        {
+            DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
+            DateTime newPeriodEndtime = newPeriod.StartTime.AddMinutes(newPeriod.Duration);
+            if (newPeriod.StartTime < existingPeriodEndTime && newPeriodEndtime > existingPeriod.StartTime)
+            {
+                return true;
+            }
+            return false;
+        }
 
         private string createDoctorNotificationText(Period urgentPeriod)
         {

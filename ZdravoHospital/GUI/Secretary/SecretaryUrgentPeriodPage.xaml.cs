@@ -127,6 +127,10 @@ namespace ZdravoHospital.GUI.Secretary
                 Period bestPeriod = this.findBestPeriod(freePeriods);
                 Model.Resources.OpenPeriods();
 
+                //set room
+                List<Room> availableEmergencyRooms = findAvailableEmergencyRooms(bestPeriod);
+                if (availableEmergencyRooms.Count != 0)
+                    bestPeriod.RoomId = availableEmergencyRooms[0].Id;
 
                 Model.Resources.periods.Add(bestPeriod);
                 Model.Resources.SavePeriods();
@@ -384,6 +388,42 @@ namespace ZdravoHospital.GUI.Secretary
                 newList.Add(newPeriod);
             }
             return newList;
+        }
+
+        private List<Model.Room> findAvailableEmergencyRooms(Period newPeriod)
+        {
+            Model.Resources.OpenRooms();
+            List<Model.Room> availableRooms = new List<Room>();
+            foreach (KeyValuePair<int, Model.Room> item in Model.Resources.rooms)
+            {
+                if (item.Value.RoomType == RoomType.EMERGENCY_ROOM)
+                {
+                    bool available = true;
+                    foreach (Period existingPeriod in Model.Resources.periods)
+                    {
+                        if (periodsOverlap(newPeriod, existingPeriod))
+                        {
+                            if (item.Key == existingPeriod.RoomId)
+                                available = false;
+                        }
+                    }
+                    if (available)
+                        availableRooms.Add(item.Value);
+                }
+
+            }
+            return availableRooms;
+        }
+
+        private bool periodsOverlap(Period newPeriod, Period existingPeriod)
+        {
+            DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
+            DateTime newPeriodEndtime = newPeriod.StartTime.AddMinutes(newPeriod.Duration);
+            if (newPeriod.StartTime < existingPeriodEndTime && newPeriodEndtime > existingPeriod.StartTime)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
