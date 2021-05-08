@@ -37,7 +37,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         }
 
-        private void SeePatientsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        /*private void SeePatientsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
@@ -45,7 +45,7 @@ namespace ZdravoHospital.GUI.Secretary
                 SecretaryMainFrame.Content = new PatientsView();
                 CloseMenu_BeginStoryboard.Storyboard.Begin();
             }
-        }
+        }*/
 
         private void GuestItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -68,7 +68,7 @@ namespace ZdravoHospital.GUI.Secretary
             }
         }
 
-        private void PeriodsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        /*private void PeriodsItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
@@ -76,7 +76,7 @@ namespace ZdravoHospital.GUI.Secretary
                 SecretaryMainFrame.Content = new SecretaryPeriodsPage();
                 CloseMenu_BeginStoryboard.Storyboard.Begin();
             }
-        }
+        }*/
 
         private void UrgentPeriodItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
