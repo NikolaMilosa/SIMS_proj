@@ -24,6 +24,7 @@ namespace Model
         public static List<Survey> surveys;
         public static List<RoomSchedule> roomSchedule;
         public static List<MedicineRecension> medicineRecensions;
+        public static List<Referral> referrals;
 
         public static void OpenAccounts()
         {
@@ -66,7 +67,7 @@ namespace Model
                 rooms = new Dictionary<int, Room>();
         }
 
-        public static void SerializeRooms()
+        public static void SaveRooms()
         {
             File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms, Formatting.Indented));
         }
@@ -78,7 +79,7 @@ namespace Model
                 inventory = new Dictionary<string, Inventory>();
         }
 
-        public static void SerializeInventory()
+        public static void SaveInventory()
         {
             File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory, Formatting.Indented));
         }
@@ -98,12 +99,12 @@ namespace Model
             }
         }
 
-        public static void SerializeDoctors()
+        public static void SaveDoctors()
         {
             File.WriteAllText(@"..\..\..\Resources\doctors.json", JsonConvert.SerializeObject(doctors));
         }
 
-        public static void DeserializeDoctors()
+        public static void OpenDoctors()
         {
             doctors = JsonConvert.DeserializeObject<Dictionary<string, Doctor>>(File.ReadAllText(@"..\..\..\Resources\doctors.json"));
 
@@ -210,7 +211,7 @@ namespace Model
                 roomInventory = new List<RoomInventory>();
         }
 
-        public static void SerializeRoomInventory()
+        public static void SaveRoomInventory()
         {
             File.WriteAllText(@"..\..\..\Resources\roomInventory.json", JsonConvert.SerializeObject(roomInventory, Formatting.Indented));
 
@@ -223,7 +224,7 @@ namespace Model
                 transferRequests = new List<TransferRequest>();
         }
 
-        public static void SerializeTransferRequests()
+        public static void SaveTransferRequests()
         {
             File.WriteAllText(@"..\..\..\Resources\transferRequests.json", JsonConvert.SerializeObject(transferRequests, Formatting.Indented));
         }
@@ -249,12 +250,12 @@ namespace Model
                 roomSchedule = new List<RoomSchedule>();
         }
 
-        public static void SerializeRoomSchedule()
+        public static void SaveRoomSchedule()
         {
             File.WriteAllText(@"..\..\..\Resources\roomSchedule.json", JsonConvert.SerializeObject(roomSchedule, Formatting.Indented));
         }
 
-        public static void SerializeMedicineRecensions()
+        public static void SaveMedicineRecensions()
         {
             File.WriteAllText(@"..\..\..\Resources\medicineRecensions.json", JsonConvert.SerializeObject(medicineRecensions, Formatting.Indented));
         }
@@ -264,6 +265,18 @@ namespace Model
             medicineRecensions = JsonConvert.DeserializeObject<List<MedicineRecension>>(File.ReadAllText(@"..\..\..\Resources\medicineRecensions.json"));
             if (medicineRecensions == null)
                 medicineRecensions = new List<MedicineRecension>();
+        }
+
+        public static void SaveReferrals()
+        {
+            File.WriteAllText(@"..\..\..\Resources\referrals.json", JsonConvert.SerializeObject(referrals, Formatting.Indented));
+        }
+
+        public static void OpenReferrals()
+        {
+            referrals = JsonConvert.DeserializeObject<List<Referral>>(File.ReadAllText(@"..\..\..\Resources\referrals.json"));
+            if (referrals == null)
+                referrals = new List<Referral>();
         }
     }
 }

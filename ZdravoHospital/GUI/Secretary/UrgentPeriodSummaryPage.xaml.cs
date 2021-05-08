@@ -73,7 +73,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private Doctor findDoctorByUsername(string username)
         {
-            Model.Resources.DeserializeDoctors();
+            Model.Resources.OpenDoctors();
             foreach (KeyValuePair<string, Doctor> item in Model.Resources.doctors)
             {
                 if (item.Key.Equals(username))

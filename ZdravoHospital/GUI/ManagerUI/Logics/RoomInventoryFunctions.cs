@@ -49,7 +49,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetRoomInventoryMutex().WaitOne();
             
             Model.Resources.roomInventory.RemoveAll(ri => ri.InventoryId.Equals(iid));
-            Model.Resources.SerializeRoomInventory();
+            Model.Resources.SaveRoomInventory();
             
             GetRoomInventoryMutex().ReleaseMutex();
         }
@@ -59,7 +59,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetRoomInventoryMutex().WaitOne();
             
             Model.Resources.roomInventory.Remove(ri);
-            Model.Resources.SerializeRoomInventory();
+            Model.Resources.SaveRoomInventory();
 
             GetRoomInventoryMutex().ReleaseMutex();
         }
@@ -69,7 +69,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetRoomInventoryMutex().WaitOne();
             
             Model.Resources.roomInventory.Add(ri);
-            Model.Resources.SerializeRoomInventory();
+            Model.Resources.SaveRoomInventory();
             
             GetRoomInventoryMutex().ReleaseMutex();
         }
@@ -79,7 +79,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetRoomInventoryMutex().WaitOne();
             
             roomInventory.Quantity = newQuantity;
-            Model.Resources.SerializeRoomInventory();
+            Model.Resources.SaveRoomInventory();
             
             GetRoomInventoryMutex().ReleaseMutex();
         }

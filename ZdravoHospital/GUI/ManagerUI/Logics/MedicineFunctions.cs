@@ -83,7 +83,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             if (Model.Resources.medicineRecensions.Remove(FindMedicineRecension(medicine)))
             {
-                Model.Resources.SerializeMedicineRecensions();
+                Model.Resources.SaveMedicineRecensions();
             }
 
             GetMedicineMutex().ReleaseMutex();
@@ -121,7 +121,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             Model.Resources.medicineRecensions.RemoveAll(mr => mr.MedicineName.Equals(medicine.MedicineName));
             Model.Resources.medicineRecensions.Add(medicineRecension);
-            Model.Resources.SerializeMedicineRecensions();
+            Model.Resources.SaveMedicineRecensions();
 
             int index = ManagerWindow.Medicines.IndexOf(medicine);
             ManagerWindow.Medicines.Remove(medicine);

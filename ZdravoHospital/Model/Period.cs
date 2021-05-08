@@ -17,7 +17,8 @@ namespace Model
         public Prescription Prescription { get; set; }
         public PeriodMark PeriodMark { get; set; }
         public bool IsUrgent { get; set; }
-        public Referral Referral { get; set; }
+        public int ReferringReferralId { get; set; }
+        public int ReferredReferralId { get; set; }
 
         [JsonIgnore]
         public ObservableCollection<Model.MovePeriod> MovePeriods { get; set; }
@@ -36,6 +37,8 @@ namespace Model
             PatientUsername = patientUsername;
             DoctorUsername = doctorUsername;
             RoomId = roomId;
+            ReferredReferralId = -1;
+            ReferringReferralId = -1;
         }
        
         public bool HasPassed()
@@ -55,6 +58,8 @@ namespace Model
             DoctorUsername = doctorUsername;
             IsUrgent = isUrgent;
             MovePeriods = new ObservableCollection<MovePeriod>();
+            ReferredReferralId = -1;
+            ReferringReferralId = -1;   
         }
 
         public override string ToString()

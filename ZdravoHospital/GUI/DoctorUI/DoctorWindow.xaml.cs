@@ -16,7 +16,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             InitializeComponent();
 
-            Model.Resources.DeserializeDoctors();
+            Model.Resources.OpenDoctors();
             Doctor doctor = Model.Resources.doctors[App.currentUser];
             UserTextBlock.Text = doctor.Name + " " + doctor.Surname;
         }
