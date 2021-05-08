@@ -24,6 +24,7 @@ namespace Model
         public static List<Survey> surveys;
         public static List<RoomSchedule> roomSchedule;
         public static List<MedicineRecension> medicineRecensions;
+        public static List<Referral> referrals;
 
         public static void OpenAccounts()
         {
@@ -264,6 +265,18 @@ namespace Model
             medicineRecensions = JsonConvert.DeserializeObject<List<MedicineRecension>>(File.ReadAllText(@"..\..\..\Resources\medicineRecensions.json"));
             if (medicineRecensions == null)
                 medicineRecensions = new List<MedicineRecension>();
+        }
+
+        public static void SaveReferrals()
+        {
+            File.WriteAllText(@"..\..\..\Resources\referrals.json", JsonConvert.SerializeObject(referrals, Formatting.Indented));
+        }
+
+        public static void OpenReferrals()
+        {
+            referrals = JsonConvert.DeserializeObject<List<Referral>>(File.ReadAllText(@"..\..\..\Resources\referrals.json"));
+            if (referrals == null)
+                referrals = new List<Referral>();
         }
     }
 }

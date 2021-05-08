@@ -1,1 +1,156 @@
-[{"StartTime":"2021-04-21T22:00:00","Duration":30,"PeriodType":0,"PatientUsername":"saki","DoctorUsername":"pantela","RoomId":101,"Details":null,"Prescription":null,"PeriodMark":null,"IsUrgent":false,"Referral":null},{"StartTime":"2021-04-21T22:15:00","Duration":30,"PeriodType":1,"PatientUsername":"ljuba","DoctorUsername":"zigara","RoomId":100,"Details":null,"Prescription":{"Id":0,"DoctorUsername":null,"TherapyList":[{"Medicine":{"MedicineName":"Brufen","Supplier":null,"Status":0,"Note":null,"Replacements":[],"Ingredients":[]},"StartHours":"2021-04-30T12:19:28.0167692+02:00","TimesPerDay":2,"PauseInDays":1,"EndDate":"2021-05-04T12:19:28.0167692+02:00","Instructions":null}]},"PeriodMark":{"Comment":"I'm pleased with the appointment!","Mark":5},"IsUrgent":false,"Referral":null},{"StartTime":"2021-04-29T08:00:00+02:00","Duration":30,"PeriodType":0,"PatientUsername":"ljuba","DoctorUsername":"pantela","RoomId":201,"Details":null,"Prescription":null,"PeriodMark":{"Comment":"sda","Mark":3},"IsUrgent":false,"Referral":null},{"StartTime":"2021-04-26T20:28:00","Duration":2,"PeriodType":0,"PatientUsername":"ljuba","DoctorUsername":"pantela","RoomId":201,"Details":null,"Prescription":null,"PeriodMark":null,"IsUrgent":false,"Referral":null},{"StartTime":"2021-04-26T20:30:00","Duration":3,"PeriodType":0,"PatientUsername":"ljuba","DoctorUsername":"pantela","RoomId":201,"Details":null,"Prescription":null,"PeriodMark":null,"IsUrgent":false,"Referral":null},{"StartTime":"2021-04-30T08:00:00","Duration":30,"PeriodType":0,"PatientUsername":"ljuba","DoctorUsername":"pantela","RoomId":201,"Details":null,"Prescription":null,"PeriodMark":null,"IsUrgent":false,"Referral":null},{"StartTime":"2021-05-01T08:00:00","Duration":30,"PeriodType":0,"PatientUsername":"saki","DoctorUsername":"pantela","RoomId":201,"Details":null,"Prescription":null,"PeriodMark":null,"IsUrgent":false,"Referral":null},{"StartTime":"2021-05-09T08:30:00+02:00","Duration":30,"PeriodType":0,"PatientUsername":"saki","DoctorUsername":"pantela","RoomId":201,"Details":null,"Prescription":null,"PeriodMark":null,"IsUrgent":false,"Referral":null},{"StartTime":"2021-05-09T10:00:00","Duration":30,"PeriodType":0,"PatientUsername":"ljuba","DoctorUsername":"pantela","RoomId":201,"Details":null,"Prescription":null,"PeriodMark":null,"IsUrgent":false,"Referral":null}]
+[
+  {
+    "StartTime": "2021-04-21T22:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-04-21T22:15:00",
+    "Duration": 30,
+    "PeriodType": 1,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "zigara",
+    "RoomId": 100,
+    "Details": null,
+    "Prescription": {
+      "Id": 0,
+      "DoctorUsername": null,
+      "TherapyList": [
+        {
+          "Medicine": {
+            "MedicineName": "Brufen",
+            "Supplier": null,
+            "Status": 0,
+            "Note": null,
+            "Replacements": [
+            ],
+            "Ingredients": [
+            ]
+          },
+          "StartHours": "2021-04-30T12:19:28.0167692+02:00",
+          "TimesPerDay": 2,
+          "PauseInDays": 1,
+          "EndDate": "2021-05-04T12:19:28.0167692+02:00",
+          "Instructions": null
+        }
+      ]
+    },
+    "PeriodMark": {
+      "Comment": "I'm pleased with the appointment!",
+      "Mark": 5
+    },
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-04-29T08:00:00+02:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": {
+      "Comment": "sda",
+      "Mark": 3
+    },
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-04-26T20:28:00",
+    "Duration": 2,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-04-26T20:30:00",
+    "Duration": 3,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-04-30T08:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-05-01T08:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-05-09T08:30:00+02:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  },
+  {
+    "StartTime": "2021-05-09T10:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferredReferralId": -1,
+    "ReferringReferralId": -1
+  }
+]
