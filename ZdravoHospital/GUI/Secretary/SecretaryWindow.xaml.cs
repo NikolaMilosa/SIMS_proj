@@ -103,5 +103,9 @@ namespace ZdravoHospital.GUI.Secretary
             SecretaryMainFrame.Content = new SecretaryPeriodsPage();
         }
 
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
