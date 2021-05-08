@@ -266,5 +266,10 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             NavigationService.Navigate(new PrescriptionPage(this.period));
         }
+
+        private void ReferralButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ReferralPage(this.period.Referral));
+        }
     }
 }
