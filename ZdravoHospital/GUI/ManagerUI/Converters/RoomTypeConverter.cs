@@ -22,6 +22,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Converters
                     return "BEDROOM";
                 case RoomType.OPERATING_ROOM:
                     return "OPERATING";
+                case RoomType.EMERGENCY_ROOM:
+                    return "EMERGENCY";
                 default:
                     return "STORAGE";
             }
@@ -38,6 +40,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Converters
                     return RoomType.BREAK_ROOM;
                 case "STORAGE":
                     return RoomType.STORAGE_ROOM;
+                case "EMERGENCY":
+                    return RoomType.EMERGENCY_ROOM;
                 default:
                     return RoomType.OPERATING_ROOM;
             }

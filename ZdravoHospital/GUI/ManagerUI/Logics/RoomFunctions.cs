@@ -60,6 +60,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (someRoom == null)
                 someRoom = FindRoomByType(RoomType.OPERATING_ROOM, notThisRoom);
 
+            if (someRoom == null)
+                someRoom = FindRoomByType(RoomType.EMERGENCY_ROOM, notThisRoom);
+
             return someRoom;
         }
 
