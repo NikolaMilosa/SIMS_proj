@@ -317,7 +317,10 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void SeeReferralButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Model.Resources.OpenReferrals();
+            Referral referral = Model.Resources.referrals.Find(r => r.ReferralId == period.ReferringReferralId);
+            Patient patient = PatientsComboBox.SelectedItem as Patient;
+            NavigationService.Navigate(new ReferralPage(referral, patient));
         }
     }
 }

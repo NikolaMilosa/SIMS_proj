@@ -21,6 +21,8 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class ReferralPage : Page
     {
+        private bool readonlyMode;
+
         public Referral Referral { get; set; }
         public Doctor ReferringDoctor { get; set; }
         public Patient Patient { get; set; }
@@ -75,9 +77,28 @@ namespace ZdravoHospital.GUI.DoctorUI
                 ConfirmButton.Visibility = Visibility.Visible;
         }
 
+        public ReferralPage(Referral referral, Patient patient)
+        {
+            InitializeComponent();
+
+            DataContext = this;
+
+            readonlyMode = true; 
+            ReferringDoctor = Model.Resources.doctors[referral.ReferringDoctorUsername];
+            Doctors = new ObservableCollection<Doctor>(Model.Resources.doctors.Values);
+            DoctorsComboBox.SelectedItem = Model.Resources.doctors[referral.ReferredDoctorUsername];
+            Patient = patient;
+            NoteTextBox.Text = referral.Note;
+            DaysToUseTextBox.Text = referral.DaysToUse.ToString();
+            DoctorsComboBox.IsHitTestVisible = false;
+            DoctorsComboBox.IsTabStop = false;
+            NoteTextBox.IsReadOnly = true;
+            DaysToUseTextBox.IsReadOnly = true;
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Referral == null)
+            if (Referral == null || readonlyMode)
                 return;
             
             if (Referral.IsUsed)
