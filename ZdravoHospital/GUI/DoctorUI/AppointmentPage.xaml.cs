@@ -50,6 +50,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             StartTimeTextBox.Text = period.StartTime.ToString("HH:mm");
             DurationTextBox.Text = period.Duration.ToString();
             RoomsComboBox.SelectedItem = Model.Resources.rooms[period.RoomId];
+            IsUrgentCheckBox.IsChecked = period.IsUrgent;
 
             if (DateTime.Now >= period.StartTime)
             {
@@ -115,7 +116,8 @@ namespace ZdravoHospital.GUI.DoctorUI
                 DoctorUsername = (DoctorsComboBox.SelectedItem as Doctor).Username,
                 RoomId = (RoomsComboBox.SelectedItem as Room).Id,
                 ReferringReferralId = period.ReferringReferralId,
-                ReferredReferralId = period.ReferredReferralId
+                ReferredReferralId = period.ReferredReferralId,
+                IsUrgent = (bool)IsUrgentCheckBox.IsChecked
             };
 
             int available = IsPeriodAvailable(editedPeriod, this.period);

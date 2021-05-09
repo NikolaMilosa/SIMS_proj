@@ -92,6 +92,7 @@ namespace ZdravoHospital.GUI.DoctorUI
                                        (PatientsComboBox.SelectedItem as Patient).Username,
                                        (DoctorsComboBox.SelectedItem as Doctor).Username,
                                        (RoomsComboBox.SelectedItem as Room).Id);
+            period.IsUrgent = (bool)IsUrgentCheckBox.IsChecked;
 
             int available = IsPeriodAvailable(period);
 

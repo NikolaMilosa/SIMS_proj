@@ -13,7 +13,7 @@
                 Visibility="Collapsed"
                     Content="See referral"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                 Click="SeeReferralButton_Click"/>
         <TextBlock FontSize="25"
@@ -57,7 +57,7 @@
         <Button Name="PatientInfoButton"
                     Content="Patient info"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                 Click="PatientInfoButton_Click"/>
 
@@ -105,17 +105,24 @@
                       Height="40"/>
         </StackPanel>
 
+        <CheckBox x:Name="IsUrgentCheckBox"
+                  Content="Urgent"
+                  FontSize="25"
+                  Margin="10"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"/>
+
         <Button Name="CancelOperationButton"
                     Content="Cancel operation"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                 Click="CancelOperationButton_Click"/>
 
         <Button Name="OperationReportButton"
                     Content="Operation report"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                     Click="OperationReportButton_Click"/>
         
@@ -123,13 +130,13 @@
             <Button Name="PrescriptionButton"
                     Content="Prescription"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                     Click="PrescriptionButton_Click"/>
             <Button Name="ReferralButton"
-                    Content="Referral"
+                    Content="Write referral"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                     Click="ReferralButton_Click"/>
         </StackPanel>
@@ -139,13 +146,13 @@
             <Button Name="BackButton"
                     Content="Cancel"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                     Click="BackButton_Click"/>
             <Button Name="ConfirmButton"
                     Content="Confirm"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                     Click="ConfirmButton_Click"/>
         </StackPanel>
