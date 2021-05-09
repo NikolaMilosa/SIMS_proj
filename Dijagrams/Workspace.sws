@@ -14,7 +14,9 @@
 		<Model Expanded="Yes" ID="{1EC82E9F-A61B-46E2-BEFE-EA154A1404DB}" Loaded="No" Name="UrgentPeriodActivityDiagram" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="Activity/UrgentPeriodActivityDiagram.oom"/>
 		<Model Expanded="Yes" ID="{AE36B16C-9B7B-4887-B7CB-C9DE3C5B4EDD}" Loaded="No" Name="Diagrams" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Diagrams.prj"/>
 		<Model Expanded="Yes" ID="{AE36B16C-9B7B-4887-B7CB-C9DE3C5B4EDD}" Loaded="No" Name="Diagrams" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Diagrams.prj"/>
-		<Model Expanded="Yes" ID="{3E50604E-6332-4896-BED2-EC9985811F07}" Name="ZdravoHospital" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="Class/ZdravoHospital.oom"/>
+		<Model Expanded="Yes" ID="{3E50604E-6332-4896-BED2-EC9985811F07}" Loaded="No" Name="ZdravoHospital" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="Class/ZdravoHospital.oom"/>
+		<Model Expanded="Yes" ID="{792C6C9D-099E-480B-9DD0-EB4F00923136}" Loaded="No" Name="PrescriptionActivityDiagram" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="Activity/PrescriptionActivityDiagram.oom"/>
+		<Model Expanded="Yes" ID="{AE36B16C-9B7B-4887-B7CB-C9DE3C5B4EDD}" Name="Diagrams" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Diagrams.prj"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
