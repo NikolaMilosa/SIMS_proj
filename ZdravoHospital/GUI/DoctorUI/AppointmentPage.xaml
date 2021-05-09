@@ -9,6 +9,14 @@
       Title="AppointmentPage">
 
     <StackPanel HorizontalAlignment="Center">
+
+        <Button Name="SeeReferralButton"
+                Visibility="Collapsed"
+                    Content="See referral"
+                    FontSize="25"
+                    Margin="10"
+                    Padding="10" 
+                Click="SeeReferralButton_Click"/>
         <StackPanel Orientation="Horizontal">
             <Label Content="Doctor:" 
                    FontSize="25"
@@ -63,7 +71,7 @@
         <Button Name="PatientInfoButton"
                     Content="Patient info"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                 Click="PatientInfoButton_Click"/>
 
@@ -110,39 +118,55 @@
                       Width="120"
                       Height="40"/>
         </StackPanel>
+
+        <CheckBox x:Name="IsUrgentCheckBox"
+                  Content="Urgent"
+                  FontSize="25"
+                  Margin="10"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"/>
         
         <Button Name="CancelAppointmentButton"
                     Content="Cancel appointment"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                 Click="CancelAppointmentButton_Click"/>
 
         <Button Name="AnamnesisButton"
                     Content="Anamnesis"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                     Click="AnamnesisButton_Click"/>
 
-        <Button Name="PrescriptionButton"
+        <StackPanel Orientation="Horizontal">
+            <Button Name="PrescriptionButton"
                     Content="Prescription"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" 
                     Click="PrescriptionButton_Click"/>
+
+            <Button Name="ReferralButton"
+                    Content="Write referral"
+                    FontSize="25"
+                    Margin="10"
+                    Padding="10" 
+                    Click="ReferralButton_Click"/>
+        </StackPanel>
         
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <Button Name="BackButton"
                     Content="Back"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" Click="BackButton_Click"/>
             <Button Name="ConfirmButton"
                     Content="Confirm"
                     FontSize="25"
-                    Margin="25"
+                    Margin="10"
                     Padding="10" Click="ConfirmButton_Click"/>
         </StackPanel>
     </StackPanel>

@@ -22,6 +22,8 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class NewOperationPage : Page
     {
+        private Referral referral;
+
         public Doctor Doctor { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
@@ -40,6 +42,27 @@ namespace ZdravoHospital.GUI.DoctorUI
             AppointmentDatePicker.SelectedDate = startTime.Date;
             StartTimeTextBox.Text = startTime.ToString("HH:mm");
             DurationTextBox.Text = duration.ToString();
+        }
+
+        public NewOperationPage(Referral referral, Patient patient)
+        {
+            InitializeComponent();
+
+            this.DataContext = this;
+            this.referral = referral;
+            Doctor = Model.Resources.doctors[referral.ReferredDoctorUsername];
+
+            Patients = new ObservableCollection<Patient>(Model.Resources.patients.Values);
+            Model.Resources.OpenRooms();
+            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values.Where(room => room.RoomType == RoomType.OPERATING_ROOM));
+
+            PatientsComboBox.SelectedItem = patient;
+            AppointmentDatePicker.SelectedDate = DateTime.Today;
+            StartTimeTextBox.Text = "00:00";
+            DurationTextBox.Text = "0";
+
+            PatientsComboBox.IsHitTestVisible = false;
+            PatientsComboBox.IsTabStop = false;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -64,11 +87,20 @@ namespace ZdravoHospital.GUI.DoctorUI
                                        (PatientsComboBox.SelectedItem as Patient).Username,
                                        Doctor.Username,
                                        (RoomsComboBox.SelectedItem as Room).Id);
+            period.IsUrgent = (bool)IsUrgentCheckBox.IsChecked;
 
             int available = IsPeriodAvailable(period);
 
             if (available == 0)
             {
+                if (referral != null)
+                {
+                    period.ReferringReferralId = referral.ReferralId;
+                    referral.Period = period;
+                    referral.IsUsed = true;
+                    Model.Resources.SaveReferrals();
+                }
+
                 Model.Resources.periods.Add(period);
                 Model.Resources.SavePeriods();
 

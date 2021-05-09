@@ -19,7 +19,7 @@
   {
     "MedicineName": "test medication",
     "Supplier": "Jankovic",
-    "Status": 2,
+    "Status": 1,
     "Note": "",
     "Replacements": [],
     "Ingredients": [

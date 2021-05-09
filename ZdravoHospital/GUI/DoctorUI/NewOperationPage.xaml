@@ -98,6 +98,13 @@
                       Height="40"/>
         </StackPanel>
 
+        <CheckBox x:Name="IsUrgentCheckBox"
+                  Content="Urgent"
+                  FontSize="25"
+                  Margin="10"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"/>
+
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <Button Name="CancelButton"
