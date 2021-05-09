@@ -121,6 +121,10 @@ namespace ZdravoHospital.GUI.DoctorUI
                 ReferredAppointmentButton.Visibility = Visibility.Collapsed;
                 ReferredAppointmentButton.Visibility = Visibility.Collapsed;
                 UseStackPanel.Visibility = Visibility.Visible;
+                if ((DoctorsComboBox.SelectedItem as Doctor).SpecialistType.SpecializationName.Equals("Doctor"))
+                    UseReferralOperationButton.Visibility = Visibility.Collapsed;
+                else
+                    UseReferralOperationButton.Visibility = Visibility.Visible;
                 DoctorsComboBox.IsHitTestVisible = true;
                 DoctorsComboBox.IsTabStop = true;
                 NoteTextBox.IsReadOnly = false;
@@ -192,6 +196,17 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             bool readonlyMode = !Referral.ReferringDoctorUsername.Equals(App.currentUser);
             NavigationService.Navigate(new OperationPage(Referral.Period, readonlyMode));
+        }
+
+        private void DoctorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (UseStackPanel.Visibility != Visibility.Visible)
+                return;
+
+            if ((DoctorsComboBox.SelectedItem as Doctor).SpecialistType.SpecializationName.Equals("Doctor"))
+                UseReferralOperationButton.Visibility = Visibility.Collapsed;
+            else
+                UseReferralOperationButton.Visibility = Visibility.Visible;
         }
     }
 }

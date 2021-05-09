@@ -49,21 +49,8 @@
     "ReferredDoctorUsername": "pantela",
     "DaysToUse": 3,
     "Note": "asdsad",
-    "IsUsed": true,
-    "Period": {
-      "StartTime": "2021-05-09T04:00:00",
-      "Duration": 50,
-      "PeriodType": 0,
-      "PatientUsername": "saki",
-      "DoctorUsername": "pantela",
-      "RoomId": 201,
-      "Details": null,
-      "Prescription": null,
-      "PeriodMark": null,
-      "IsUrgent": true,
-      "ReferringReferralId": 2,
-      "ReferredReferralId": -1
-    }
+    "IsUsed": false,
+    "Period": null
   },
   {
     "ReferralId": 3,

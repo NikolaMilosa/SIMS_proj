@@ -68,7 +68,8 @@
                 <ComboBox Name="DoctorsComboBox"
                       ItemsSource="{Binding Path=Doctors}"
                       Width="350"
-                      Height="40">
+                      Height="40"
+                          SelectionChanged="DoctorsComboBox_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
