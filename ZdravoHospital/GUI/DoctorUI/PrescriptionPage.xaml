@@ -108,7 +108,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid Name="NewTherapyPopup"
+        <Grid Name="TherapyPopup"
                    Background="Transparent"
                             Visibility="Hidden">
             <Grid Background="Black"

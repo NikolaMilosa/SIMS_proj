@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using ZdravoHospital.GUI.DoctorUI.Logics;
+using ZdravoHospital.GUI.DoctorUI.Validations;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -16,34 +17,36 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class PrescriptionPage : Page, INotifyPropertyChanged
     {
+        private readonly PrescriptionLogic _prescriptionLogic;
+        private readonly Period _period;
+        private readonly Patient _patient;
+        private Therapy _therapy;
+        private bool _editingTherapy;
+
+        public ObservableCollection<Therapy> Therapies { get; set; }
         public Thickness TopPanelMargin { get; set; }
         public Thickness ListViewMargin { get; set; }
         public double ListItemWidth { get; set; }
-        public ObservableCollection<Therapy> Therapies { get; set; }
-        public Prescription Prescription { get; set; }
-        private Period period;
-        private Patient patient;
-        private Therapy therapy;
-        private bool editing;
 
         public PrescriptionPage(Period period)
         {
             InitializeComponent();
 
-            this.DataContext = this;
+            DataContext = this;
+            
+            // fields initialization
+            _prescriptionLogic = new PrescriptionLogic();
+            _period = period;
 
-            this.period = period;
-            this.patient = Model.Resources.patients[period.PatientUsername];
-            this.editing = false;
+            if (_period.Prescription == null)
+                _period.Prescription = new Prescription();
 
-            if (period.Prescription == null)
-                Prescription = new Prescription();
-            else
-                Prescription = period.Prescription;
+            _patient = Model.Resources.patients[_period.PatientUsername];
+            _editingTherapy = false;
 
+            // TherapiesListView setup
             Therapies = new ObservableCollection<Therapy>();
-
-            foreach (Therapy therapy in Prescription.TherapyList)
+            foreach (Therapy therapy in _period.Prescription.TherapyList)
             {
                 Therapy t = new Therapy()
                 {
@@ -56,8 +59,9 @@ namespace ZdravoHospital.GUI.DoctorUI
                 };
                 Therapies.Add(t);
             }
-
             TherapiesListView.ItemsSource = Therapies;
+            
+            // MedicinesComboBox setup
             Model.Resources.OpenMedicines();
             MedicinesComboBox.ItemsSource = Model.Resources.medicines;
         }
@@ -86,36 +90,30 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void AddTherapyButton_Click(object sender, RoutedEventArgs e)
         {
+            // Setup TherapyPopup for new therapy and visualize it
             MedicinesComboBox.Text = "";
+            MedicinesComboBox.ItemsSource = Model.Resources.medicines;
             MedicinesComboBox.SelectedIndex = -1;
             StartHoursTextBox.Text = "00:00";
             TimesPerDayTextBox.Text = "0";
             PauseInDaysTextBox.Text = "0";
             EndDatePicker.SelectedDate = DateTime.Now.Date;
             InstructionsTextBox.Text = "";
-            NewTherapyPopup.Visibility = Visibility.Visible;
+            TherapyPopup.Visibility = Visibility.Visible;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            Prescription.TherapyList = new List<Therapy>();
-
-            foreach (Therapy t in Therapies)
-                Prescription.TherapyList.Add(t);
-
-            period.Prescription = Prescription;
-
-            Model.Resources.SavePeriods();
-
+            _prescriptionLogic.GenerateTherapies(_period.Prescription, Therapies);
+            _prescriptionLogic.SaveChanges();
             MessageBox.Show("Prescription successfully saved.", "Success");
-
             NavigationService.GoBack();
         }
 
         private void CancelTherapyButton_Click(object sender, RoutedEventArgs e)
         {
-            NewTherapyPopup.Visibility = Visibility.Hidden;
-            editing = false;
+            TherapyPopup.Visibility = Visibility.Hidden;
+            _editingTherapy = false;
         }
 
         private void ConfirmTherapyButton_Click(object sender, RoutedEventArgs e)
@@ -132,14 +130,14 @@ namespace ZdravoHospital.GUI.DoctorUI
                                     EndDatePicker.SelectedDate.Value.Month,
                                     EndDatePicker.SelectedDate.Value.Day);
 
-            if (editing)
+            if (_editingTherapy)
             {
-                therapy.Medicine = MedicinesComboBox.SelectedItem as Medicine;
-                therapy.StartHours = start;
-                therapy.TimesPerDay = Int32.Parse(TimesPerDayTextBox.Text);
-                therapy.PauseInDays = Int32.Parse(PauseInDaysTextBox.Text);
-                therapy.EndDate = end;
-                therapy.Instructions = InstructionsTextBox.Text;
+                _therapy.Medicine = MedicinesComboBox.SelectedItem as Medicine;
+                _therapy.StartHours = start;
+                _therapy.TimesPerDay = Int32.Parse(TimesPerDayTextBox.Text);
+                _therapy.PauseInDays = Int32.Parse(PauseInDaysTextBox.Text);
+                _therapy.EndDate = end;
+                _therapy.Instructions = InstructionsTextBox.Text;
 
                 TherapiesListView.Items.Refresh();
             }
@@ -160,8 +158,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             OnPropertyChanged("Therapies");
             
-            NewTherapyPopup.Visibility = Visibility.Hidden;
-            editing = false;
+            TherapyPopup.Visibility = Visibility.Hidden;
+            _editingTherapy = false;
         }
 
         private bool IsInputValid()
@@ -172,23 +170,25 @@ namespace ZdravoHospital.GUI.DoctorUI
                 return false;
             }
 
-            Regex regex = new Regex(@"^\d{2}:\d{2}$");
-
-            if (!regex.IsMatch(StartHoursTextBox.Text))
+            if (!BasicValidation.IsTimeFromTextFormatValid(StartHoursTextBox.Text))
             {
                 MessageBox.Show("Please enter start hours parameter in correct format (HH:mm).", "Invalid input");
                 return false;
             }
 
-            regex = new Regex(@"^\d+$");
+            if (!BasicValidation.IsTimeFromTextValueValid(StartHoursTextBox.Text))
+            {
+                MessageBox.Show("Please enter valid start hours.", "Invalid input");
+                return false;
+            }
 
-            if (!regex.IsMatch(TimesPerDayTextBox.Text))
+            if (!BasicValidation.IsIntegerFromTextValid(TimesPerDayTextBox.Text))
             {
                 MessageBox.Show("Please enter times per day parameter in correct format (numbers only).", "Invalid input");
                 return false;
             }
 
-            if (!regex.IsMatch(PauseInDaysTextBox.Text))
+            if (!BasicValidation.IsIntegerFromTextValid(PauseInDaysTextBox.Text))
             {
                 MessageBox.Show("Please enter pause in days parameter in correct format (numbers only).", "Invalid input");
                 return false;
@@ -204,42 +204,42 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             Medicine medicine = MedicinesComboBox.SelectedItem as Medicine;
 
-            foreach (string medicineAllergen in patient.MedicineAllergens)
-                if (medicine.MedicineName.Equals(medicineAllergen))
-                {
-                    MessageBox.Show("Patient is allergic to selected medicine (" + medicine.MedicineName + ")", "Allergy detected");
-                    MedicinesComboBox.SelectedIndex = -1;
-                    return;
-                }
+            // checking medicine allergens
+            if (_prescriptionLogic.IsPatientAllergicToMedicine(_patient, medicine))
+            {
+                MessageBox.Show("Patient is allergic to selected medicine (" + medicine.MedicineName + ")", "Allergen detected");
+                MedicinesComboBox.SelectedIndex = -1;
+                return;
+            }
 
-            foreach (string ingredientAllergen in patient.IngredientAllergens)
-                foreach (Ingredient ingredient in medicine.Ingredients)
-                    if (ingredient.IngredientName.Equals(ingredientAllergen))
-                    {
-                        MessageBox.Show("Patient is allergic to an ingredient in selected medicine (" + ingredient.IngredientName + ")", "Allergy detected");
-                        MedicinesComboBox.SelectedIndex = -1;
-                        return;
-                    }
+            // checking ingredient allergens
+            Ingredient ingredientAllergen = _prescriptionLogic.DetectIngredientAllegren(_patient, medicine);
+            if (ingredientAllergen != null)
+            {
+                MessageBox.Show("Patient is allergic to an ingredient in selected medicine (" + ingredientAllergen.IngredientName + ")", "Allergen detected");
+                MedicinesComboBox.SelectedIndex = -1;
+                return;
+            }
         }
 
         private void EditTherapyButton_Click(object sender, RoutedEventArgs e)
         {
-            editing = true;
-            therapy = (sender as Button).DataContext as Therapy;
+            _editingTherapy = true;
+            _therapy = (sender as Button).DataContext as Therapy;
 
             foreach (Medicine medicine in MedicinesComboBox.Items)
-                if (medicine.MedicineName.Equals(therapy.Medicine.MedicineName))
+                if (medicine.MedicineName.Equals(_therapy.Medicine.MedicineName))
                 {
                     MedicinesComboBox.SelectedItem = medicine;
                     break;
                 }
-            StartHoursTextBox.Text = therapy.StartHours.ToString("HH:mm");
-            TimesPerDayTextBox.Text = therapy.TimesPerDay.ToString();
-            PauseInDaysTextBox.Text = therapy.PauseInDays.ToString();
-            EndDatePicker.SelectedDate = therapy.EndDate;
-            InstructionsTextBox.Text = therapy.Instructions;
+            StartHoursTextBox.Text = _therapy.StartHours.ToString("HH:mm");
+            TimesPerDayTextBox.Text = _therapy.TimesPerDay.ToString();
+            PauseInDaysTextBox.Text = _therapy.PauseInDays.ToString();
+            EndDatePicker.SelectedDate = _therapy.EndDate;
+            InstructionsTextBox.Text = _therapy.Instructions;
 
-            NewTherapyPopup.Visibility = Visibility.Visible;
+            TherapyPopup.Visibility = Visibility.Visible;
         }
 
         private void RemoveTherapyButton_Click(object sender, RoutedEventArgs e)
