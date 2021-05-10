@@ -71,6 +71,9 @@
                                         <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Image.Style>
@@ -94,6 +97,9 @@
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding ElementName=SubMenuStaff, Path=Visibility}" Value="Visible">
                                             <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -119,6 +125,9 @@
                                         <DataTrigger Binding="{Binding ElementName=SubMenuInventory, Path=Visibility}" Value="Visible">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Image.Style>
@@ -140,6 +149,9 @@
                                         <DataTrigger Binding="{Binding ElementName=NotificationsButton, Path=IsFocused}" Value="True">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Image.Style>
@@ -147,6 +159,12 @@
                     </StackPanel>
                 </Button>
             </Grid>
+
+            <Button x:Name="Help" Grid.Row="2" Background="#bec4c2" Margin="100,35" BorderThickness="0">
+                <TextBlock TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Height="Auto" FontSize="18" FontWeight="DemiBold">Help</TextBlock>
+            </Button>
+            
         </Grid>
 
         <!-- Submenus -->
@@ -186,6 +204,9 @@
                             <DataTrigger Binding="{Binding ElementName=RoomsButton, Path=IsFocused}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
@@ -204,8 +225,8 @@
 
                 <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Click="ShowInventoryButton_Click"/>
                 <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1" Click="AddInventoryButton_Click"/>
-                <Button Grid.Row="4" x:Name="ShowMedicineButton" FontSize="18" Background="#bec4c2" Content="Show medicne" BorderThickness="1,0,0,1" Click="ShowMedicineButton_Click"/>
-                <Button Grid.Row="5" x:Name="AddMedicineButton" FontSize="18" Background="#bec4c2" Content="Add medicne" BorderThickness="1,0,0,1" Click="AddMedicineButton_Click"/>
+                <Button Grid.Row="4" x:Name="ShowMedicineButton" FontSize="18" Background="#bec4c2" Content="Show medicine" BorderThickness="1,0,0,1" Click="ShowMedicineButton_Click"/>
+                <Button Grid.Row="5" x:Name="AddMedicineButton" FontSize="18" Background="#bec4c2" Content="Add medicine" BorderThickness="1,0,0,1" Click="AddMedicineButton_Click"/>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Visible"/>
@@ -221,6 +242,9 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=InventoryButton, Path=IsFocused}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -294,6 +318,7 @@
                     <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected inventory</Label>
                     <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected inventory</Label>
                     <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">F - filter inventory</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">+ - add or subtract inventory</Label>
                 </StackPanel>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
