@@ -11,12 +11,13 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
-    <Grid Background="Beige" Height="720" Width="1280">
+    <Grid Background="Beige" Height="720" Width="1600">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="320"/>
         </Grid.ColumnDefinitions>
 
         <!-- Main menu-->
@@ -259,6 +260,73 @@
                 <DataGridTextColumn Header="Supplier" Width="*" Binding="{Binding Supplier}"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <!-- Shortcuts -->
+        <Grid Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Controls :" FontSize="20" FontWeight="SemiBold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <!-- shortcuts for rooms table -->
+            <Grid Grid.Row="1" Margin="10,20">
+                <StackPanel Orientation="Vertical">
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected room</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected room</Label>
+                </StackPanel>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=RoomsTable, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+
+            <!-- shortcuts for inventory table -->
+            <Grid Grid.Row="1" Margin="10,20">
+                <StackPanel Orientation="Vertical">
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected inventory</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected inventory</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">F - filter inventory</Label>
+                </StackPanel>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=InventoryTable, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+
+            <!-- shortcuts for medicine table -->
+            <Grid Grid.Row="1" Margin="10,20">
+                <StackPanel Orientation="Vertical">
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected medicine</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected medicine</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">S - send medicine on recension</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">R- review medicine's rejection note</Label>
+                </StackPanel>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=MedicineTable, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+        </Grid>
         
     </Grid>
 </Window>

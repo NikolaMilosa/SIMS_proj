@@ -57,5 +57,17 @@
         "IngredientName": "natrium"
       }
     ]
+  },
+  {
+    "MedicineName": "pure test",
+    "Supplier": "Jankovic",
+    "Status": 3,
+    "Note": "",
+    "Replacements": [],
+    "Ingredients": [
+      {
+        "IngredientName": "zink"
+      }
+    ]
   }
 ]
