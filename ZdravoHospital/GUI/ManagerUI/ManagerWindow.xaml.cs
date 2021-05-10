@@ -121,8 +121,13 @@ namespace ZdravoHospital.GUI.ManagerUI
         {
             if (dataGrid.Items.Count > 0)
             {
-                dataGrid.SelectedIndex = 0;
-                dataGrid.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                try
+                {
+                    dataGrid.SelectedIndex = 0;
+                    dataGrid.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                }
+                catch { }
+                
             }
         }
 

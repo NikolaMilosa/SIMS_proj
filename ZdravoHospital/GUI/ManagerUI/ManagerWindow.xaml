@@ -67,6 +67,9 @@
                                         <DataTrigger Binding="{Binding ElementName=RoomsButton, Path=IsFocused}" Value="True">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Image.Style>
@@ -88,6 +91,9 @@
                                         <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=SubMenuStaff, Path=Visibility}" Value="Visible">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Image.Style>
@@ -107,6 +113,9 @@
                                     <Setter Property="Visibility" Value="Hidden"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=InventoryButton, Path=IsFocused}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=SubMenuInventory, Path=Visibility}" Value="Visible">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                     </Style.Triggers>
