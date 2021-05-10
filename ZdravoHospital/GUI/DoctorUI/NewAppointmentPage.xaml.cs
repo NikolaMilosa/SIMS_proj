@@ -23,6 +23,7 @@ namespace ZdravoHospital.GUI.DoctorUI
     public partial class NewAppointmentPage : Page
     {
         private Referral referral;
+        public Thickness TopPanelMargin { get; set; }
 
         public ObservableCollection<Doctor> Doctors { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
@@ -67,6 +68,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             DoctorsComboBox.IsTabStop = false;
             PatientsComboBox.IsHitTestVisible = false;
             PatientsComboBox.IsTabStop = false;
+        }
+
+        private void PageSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            TopDockPanel.Margin = new Thickness(this.ActualWidth * 0.1, 0, this.ActualWidth * 0.1, 15);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -230,6 +236,102 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             if (patient != null)
                 NavigationService.Navigate(new PatientInfoPage(patient));
+        }
+
+        private void DoctorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DoctorsComboBox.SelectedIndex == -1)
+                return;
+        }
+
+        private void DoctorsComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Down || e.Key == Key.Up)
+                return;
+
+            string text = DoctorsComboBox.Text;
+            DoctorsComboBox.SelectedIndex = -1;
+            DoctorsComboBox.Text = text;
+            TextBox textBox = DoctorsComboBox.Template.FindName("PART_EditableTextBox", DoctorsComboBox) as TextBox;
+            textBox.CaretIndex = text.Length;
+            DoctorsComboBox.ItemsSource =
+                Model.Resources.doctors.Values.Where(d => d.Name.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase)
+                                                    || d.Surname.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase)
+                                                    || d.SpecialistType.SpecializationName.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase))
+                                                    .ToList();
+
+            if (DoctorsComboBox.Items.Count > 0)
+                DoctorsComboBox.IsDropDownOpen = true;
+            else
+                DoctorsComboBox.IsDropDownOpen = false;
+        }
+
+        private void DoctorsComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DoctorsComboBox.IsDropDownOpen = true;
+        }
+
+        private void PatientsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PatientsComboBox.SelectedIndex == -1)
+                return;
+        }
+
+        private void PatientsComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Down || e.Key == Key.Up)
+                return;
+
+            string text = PatientsComboBox.Text;
+            PatientsComboBox.SelectedIndex = -1;
+            PatientsComboBox.Text = text;
+            TextBox textBox = PatientsComboBox.Template.FindName("PART_EditableTextBox", PatientsComboBox) as TextBox;
+            textBox.CaretIndex = text.Length;
+            PatientsComboBox.ItemsSource =
+                Model.Resources.patients.Values.Where(p => p.Name.Contains(PatientsComboBox.Text, StringComparison.OrdinalIgnoreCase)
+                                                        || p.Surname.Contains(PatientsComboBox.Text, StringComparison.OrdinalIgnoreCase))
+                                                        .ToList();
+
+            if (PatientsComboBox.Items.Count > 0)
+                PatientsComboBox.IsDropDownOpen = true;
+            else
+                PatientsComboBox.IsDropDownOpen = false;
+        }
+
+        private void PatientsComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PatientsComboBox.IsDropDownOpen = true;
+        }
+
+        private void RoomsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RoomsComboBox.SelectedIndex == -1)
+                return;
+        }
+
+        private void RoomsComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Down || e.Key == Key.Up)
+                return;
+
+            string text = RoomsComboBox.Text;
+            RoomsComboBox.SelectedIndex = -1;
+            RoomsComboBox.Text = text;
+            TextBox textBox = RoomsComboBox.Template.FindName("PART_EditableTextBox", RoomsComboBox) as TextBox;
+            textBox.CaretIndex = text.Length;
+            RoomsComboBox.ItemsSource =
+                Model.Resources.rooms.Values.Where(r => r.Id.ToString().Contains(RoomsComboBox.Text, StringComparison.OrdinalIgnoreCase)
+                                                     && r.RoomType == RoomType.APPOINTMENT_ROOM).ToList();
+
+            if (RoomsComboBox.Items.Count > 0)
+                RoomsComboBox.IsDropDownOpen = true;
+            else
+                RoomsComboBox.IsDropDownOpen = false;
+        }
+
+        private void RoomsComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            RoomsComboBox.IsDropDownOpen = true;
         }
     }
 }

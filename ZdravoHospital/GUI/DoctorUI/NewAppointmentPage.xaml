@@ -6,130 +6,209 @@
       xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="NewAppointmentPage">
+      Title="NewAppointmentPage"
+      SizeChanged="PageSizeChanged">
+    
+    <Grid>
+        <Grid Background="{StaticResource DarkGray}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" 
+                        Background="Black">
+                <DockPanel x:Name="TopDockPanel">
+                    <Button DockPanel.Dock="Left"
+                            Content="Cancel"
+                            Padding="10"
+                            Height="45"
+                            Width="100"
+                            Style="{StaticResource BlueButton}"
+                            Name="CancelButton"
+                            Click="CancelButton_Click"/>
+                    <Button Content="Confirm"
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                                Padding="10" 
+                                Width="120"
+                                Height="45"
+                                Style="{StaticResource BlueButton}"
+                                Name="ConfirmButton"
+                                Click="ConfirmButton_Click"/>
+                </DockPanel>
+            </StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto"
+                    Grid.Row="1">
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-    <StackPanel HorizontalAlignment="Center">
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Doctor:" 
+
+                    <CheckBox x:Name="IsUrgentCheckBox"
+                          Grid.Row="0"
+                          Grid.ColumnSpan="2"
+                           Foreground="White"
+                  Content="Urgent"
+                  FontSize="12.5"
+                  Margin="10"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+
+                    <TextBlock Text="Doctor:" 
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Foreground="White"
                    FontSize="25"
                    Margin="10"/>
-            <ComboBox Name="DoctorsComboBox"
+                    <ComboBox Name="DoctorsComboBox"
+                           Grid.Row="1"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left"
                       ItemsSource="{Binding Path=Doctors}"
-                      Width="350"
-                      Height="40">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="Name"/>
-                                        <Binding Path="Surname"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </StackPanel>
+                              Width="450"
+                      Height="40"
+                              Style="{StaticResource DarkComboBox}"
+                              KeyUp="DoctorsComboBox_KeyUp"
+                              GotFocus="DoctorsComboBox_GotFocus"
+                              IsTextSearchEnabled="False"
+                              StaysOpenOnEdit="True"
+                              IsEditable="True"
+                              FontSize="23"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              SelectionChanged="DoctorsComboBox_SelectionChanged"
+                              DisplayMemberPath="NameSurnameSpecialization"/>
 
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Patient:" 
+                    <TextBlock Text="Patient:"
+                           Foreground="White"
+                           Grid.Row="2"
+                           Grid.Column="0"
                    FontSize="25"
                    Margin="10"/>
-            <ComboBox Name="PatientsComboBox"
+                    <ComboBox Name="PatientsComboBox"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left"
                       ItemsSource="{Binding Path=Patients}"
-                      Width="350"
-                      Height="40">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} {1} ({2})">
-                                        <Binding Path="Name"/>
-                                        <Binding Path="Surname"/>
-                                        <Binding Path="HealthCardNumber"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </StackPanel>
+                      Width="450"
+                      Height="40"
+                              Style="{StaticResource DarkComboBox}"
+                              KeyUp="PatientsComboBox_KeyUp"
+                              GotFocus="PatientsComboBox_GotFocus"
+                              IsTextSearchEnabled="False"
+                              StaysOpenOnEdit="True"
+                              IsEditable="True"
+                              FontSize="23"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              SelectionChanged="PatientsComboBox_SelectionChanged"
+                              DisplayMemberPath="NameSurname"/>
 
-        <Button Name="PatientInfoButton"
+
+                    <Button Name="PatientInfoButton"
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
                     Content="Patient info"
-                    FontSize="25"
-                    Margin="25"
-                    Padding="10" 
+                        Height="45"
+                        Width="200"
+                        HorizontalAlignment="Right"
+                    Padding="10"
+                        Style="{StaticResource BlueButton}"
                 Click="PatientInfoButton_Click"/>
 
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Date:"
+                    <TextBlock Text="Date:"
+                           Grid.Row="4"
+                           Foreground="White"
+                           Grid.Column="0"
                    FontSize="25"
                    Margin="10"/>
-            <Viewbox Width="200">
-                <DatePicker Name="AppointmentDatePicker"
-                            FontSize="15"
-                            Margin="5"/>
-            </Viewbox>
-        </StackPanel>
+                    <Viewbox Width="200"
+                           Grid.Row="4"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left">
+                        <DatePicker Name="AppointmentDatePicker"
+                                Style="{StaticResource DarkDatePicker}" 
+                            FontSize="15"/>
+                    </Viewbox>
 
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Start time:" 
+                    <TextBlock Text="Start time:" 
                    FontSize="25"
-                   Margin="10"/>
-            <TextBox x:Name="StartTimeTextBox"
+                   Margin="10"
+                           Foreground="White"
+                           Grid.Row="5"
+                           Grid.Column="0"/>
+                    <TextBox x:Name="StartTimeTextBox"
+                           Grid.Row="5"
+                           Grid.Column="1"
+                              Background="Black"
+                              Foreground="White"
+                         HorizontalAlignment="Left"
                      Width="100"
                      Height="40"
                      FontSize="25"
                      TextAlignment="Center"/>
-        </StackPanel>
 
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Duration (in minutes):" 
+                    <TextBlock Text="Duration (in minutes):" 
                    FontSize="25"
-                   Margin="10"/>
-            <TextBox x:Name="DurationTextBox"
+                   Margin="10"
+                           Foreground="White"
+                           Grid.Row="6"
+                           Grid.Column="0"/>
+                    <TextBox x:Name="DurationTextBox"
+                         Grid.Row="6"
+                         Grid.Column="1"
+                              Background="Black"
+                              Foreground="White"
+                         HorizontalAlignment="Left"
                      Width="100"
                      Height="40"
                      FontSize="25"
                      TextAlignment="Center"/>
-        </StackPanel>
 
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Appointment room:"
+                    <TextBlock Text="Appointment room:"
+                           Grid.Row="7"
+                           Grid.Column="0"
+                           Foreground="White"
                    FontSize="25"
                    Margin="10"/>
-            <ComboBox Name="RoomsComboBox"
+                    <ComboBox Name="RoomsComboBox"
+                           Grid.Row="7"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left"
                       ItemsSource="{Binding Path=Rooms}"
                       DisplayMemberPath="Id"
                       Width="120"
-                      Height="40"/>
-        </StackPanel>
-
-        <CheckBox x:Name="IsUrgentCheckBox"
-                  Content="Urgent"
-                  FontSize="25"
-                  Margin="10"
-                  VerticalAlignment="Center"
-                  VerticalContentAlignment="Center"/>
-
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button Name="CancelButton"
-                    Content="Cancel"
-                    FontSize="25"
-                    Margin="25"
-                    Padding="10" Click="CancelButton_Click"/>
-            <Button Name="ConfirmButton"
-                    Content="Confirm"
-                    FontSize="25"
-                    Margin="25"
-                    Padding="10" Click="ConfirmButton_Click"/>
-        </StackPanel>
-    </StackPanel>
+                      Height="40"
+                          Style="{StaticResource DarkComboBox}"
+                              KeyUp="RoomsComboBox_KeyUp"
+                              GotFocus="RoomsComboBox_GotFocus"
+                              IsTextSearchEnabled="False"
+                              StaysOpenOnEdit="True"
+                              IsEditable="True"
+                              FontSize="23"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              SelectionChanged="RoomsComboBox_SelectionChanged"
+                              />
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
 </Page>

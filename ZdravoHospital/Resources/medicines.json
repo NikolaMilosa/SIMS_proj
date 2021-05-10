@@ -57,5 +57,17 @@
         "IngredientName": "natrium"
       }
     ]
+  },
+  {
+    "MedicineName": "some medicine",
+    "Supplier": "Some supplier",
+    "Status": 0,
+    "Note": "",
+    "Replacements": [],
+    "Ingredients": [
+      {
+        "IngredientName": "some ingrdsdax"
+      }
+    ]
   }
 ]

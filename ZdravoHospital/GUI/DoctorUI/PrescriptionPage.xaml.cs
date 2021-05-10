@@ -75,7 +75,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void PageSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            TopPanelMargin = new Thickness(this.ActualWidth * 0.1, 0, this.ActualWidth * 0.1, 0);
+            TopPanelMargin = new Thickness(this.ActualWidth * 0.075, 0, this.ActualWidth * 0.075, 0);
             OnPropertyChanged("TopPanelMargin");
             ListViewMargin = new Thickness(this.ActualWidth * 0.17, 0, this.ActualWidth * 0.17, 0);
             OnPropertyChanged("ListViewMargin");

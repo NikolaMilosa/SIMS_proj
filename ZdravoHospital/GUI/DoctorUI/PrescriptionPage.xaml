@@ -22,7 +22,7 @@
                             Padding="10"
                             Margin="20, 10, 20, 20"
                             Height="50"
-                            Width="100"
+                            Width="110"
                             Style="{StaticResource BlueButton}"
                             Name="CancelButton"
                             Click="CancelButton_Click"/>
@@ -30,7 +30,7 @@
                                FlowDirection="RightToLeft">
                         <Button Content="Confirm prescription"
                                 Padding="10" 
-                                Width="220"
+                                Width="240"
                                 Height="50"
                                 Margin="10, 10, 10, 20"
                                 Style="{StaticResource BlueButton}"
@@ -215,7 +215,7 @@
                                Grid.Column="2" 
                   HorizontalAlignment="Left"
                               Width="200">
-                    <DatePicker Style="{DynamicResource DarkDatePicker}" Name="EndDatePicker"
+                    <DatePicker Style="{StaticResource DarkDatePicker}" Name="EndDatePicker"
                             FontSize="15"/>
                 </Viewbox>
 

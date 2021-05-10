@@ -8,5 +8,10 @@
     "MedicineName": "bromazepam",
     "DoctorUsername": "zigara",
     "RecensionNote": ""
+  },
+  {
+    "MedicineName": "some medicine",
+    "DoctorUsername": "pantela",
+    "RecensionNote": ""
   }
 ]
