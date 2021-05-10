@@ -22,8 +22,9 @@ namespace ZdravoHospital.GUI.DoctorUI
     public partial class SchedulePage : Page, INotifyPropertyChanged
     {
         public DateTime[] DaysDates { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public Thickness WeekWrapPanelMargin { get; set; }
+        public Thickness DoctorWrapPanelMargin { get; set; }
+        public double WeekWrapPanelWidth { get; set; }
 
         private StackPanel[] stackPanels;
         private EmptyPeriodButton[] lastEmptyPeriodButtons;
@@ -71,9 +72,36 @@ namespace ZdravoHospital.GUI.DoctorUI
             DoctorsComboBox.SelectedItem = Model.Resources.doctors[App.currentUser]; // Triger poziva prvo popunjavanje kalendara
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private void PageSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            DoctorWrapPanelMargin = new Thickness(this.ActualWidth * 0.06, 0, 0, 15);
+            OnPropertyChanged("DoctorWrapPanelMargin");
+            WeekWrapPanelMargin = new Thickness(this.ActualWidth * 0.06, 0, this.ActualWidth * 0.06, 15);
+            OnPropertyChanged("WeekWrapPanelMargin");
+
+            if (this.ActualWidth > 700)
+                DoctorWrapPanel.Width = 630;
+            else
+                DoctorWrapPanel.Width = 500;
+
+            double calculatedWidth = this.ActualWidth - this.ActualWidth * 0.06 * 3 - DoctorWrapPanel.Width;
+
+            if (calculatedWidth > 510)
+                WeekWrapPanelWidth = calculatedWidth;
+            else
+                WeekWrapPanelWidth = 510;
+
+            if (this.ActualWidth <= 600)
+                WeekWrapPanelWidth = 350;
+
+            OnPropertyChanged("WeekWrapPanelWidth");
         }
 
         private void PreviousWeekButton_Click(object sender, RoutedEventArgs e)
@@ -98,6 +126,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void DoctorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (DoctorsComboBox.SelectedIndex == -1)
+                return;
+
             PopulateCalendar();
         }
 
@@ -313,6 +344,33 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NewPeriodPopUp.Visibility = Visibility.Hidden;
+        }
+
+        private void DoctorsComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Down || e.Key == Key.Up)
+                return;
+
+            string text = DoctorsComboBox.Text;
+            DoctorsComboBox.SelectedIndex = -1;
+            DoctorsComboBox.Text = text;
+            TextBox textBox = DoctorsComboBox.Template.FindName("PART_EditableTextBox", DoctorsComboBox) as TextBox;
+            textBox.CaretIndex = text.Length;
+            DoctorsComboBox.ItemsSource =
+                Model.Resources.doctors.Values.Where(d => d.Name.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase)
+                                                    || d.Surname.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase)
+                                                    || d.SpecialistType.SpecializationName.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase))
+                                                    .ToList();
+
+            if (DoctorsComboBox.Items.Count > 0)
+                DoctorsComboBox.IsDropDownOpen = true;
+            else
+                DoctorsComboBox.IsDropDownOpen = false;
+        }
+
+        private void DoctorsComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DoctorsComboBox.IsDropDownOpen = true;
         }
     }
 }
