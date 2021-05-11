@@ -279,7 +279,7 @@
         <DataGrid x:Name="MedicineTable" KeyboardNavigation.TabNavigation="Local" Visibility="Hidden" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Medicines, Mode=TwoWay}" SelectionMode="Single" GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding MedicineName}" Width="2*"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Path=Status, Converter={converters:MedicineStatusConverter}}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Path=Status, Converter={converters:MedicineStatusConverter}}" Width="*"/>
                 <DataGridTextColumn Header="Number of ingredients" Binding="{Binding Ingredients.Count}"/>
                 <DataGridTextColumn Header="Supplier" Width="*" Binding="{Binding Supplier}"/>
             </DataGrid.Columns>
@@ -338,7 +338,7 @@
                     <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected medicine</Label>
                     <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected medicine</Label>
                     <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">S - send medicine on recension</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">R- review medicine's rejection note</Label>
+                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">R - review medicine's rejection note</Label>
                 </StackPanel>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
