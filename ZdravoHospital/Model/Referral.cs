@@ -11,5 +11,6 @@ namespace Model
         public string Note { get; set; }
         public bool IsUsed { get; set; }
         public Period Period { get; set; }
+        //todo: change to periodID
     }
 }

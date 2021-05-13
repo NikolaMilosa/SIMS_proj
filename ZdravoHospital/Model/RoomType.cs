@@ -9,7 +9,7 @@ namespace Model
     {
         APPOINTMENT_ROOM,
         OPERATING_ROOM,
-        BREAK_ROOM,
+        BED_ROOM,
         STORAGE_ROOM,
         EMERGENCY_ROOM
     }

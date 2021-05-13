@@ -508,7 +508,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>5DA14943-07C6-40D7-85E1-D96ACAD6D846</a:CustomPictureID>
+<a:CustomPictureID>3B4A15A6-B1C9-43BF-AB1A-F396E02F2CC5</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -530,7 +530,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>5DA14943-07C6-40D7-85E1-D96ACAD6D846</a:CustomPictureID>
+<a:CustomPictureID>3B4A15A6-B1C9-43BF-AB1A-F396E02F2CC5</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -552,7 +552,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>5DA14943-07C6-40D7-85E1-D96ACAD6D846</a:CustomPictureID>
+<a:CustomPictureID>3B4A15A6-B1C9-43BF-AB1A-F396E02F2CC5</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -574,7 +574,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>5DA14943-07C6-40D7-85E1-D96ACAD6D846</a:CustomPictureID>
+<a:CustomPictureID>3B4A15A6-B1C9-43BF-AB1A-F396E02F2CC5</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -596,7 +596,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>5DA14943-07C6-40D7-85E1-D96ACAD6D846</a:CustomPictureID>
+<a:CustomPictureID>3B4A15A6-B1C9-43BF-AB1A-F396E02F2CC5</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -607,7 +607,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:ModificationDate>1620421585</a:ModificationDate>
 <a:IconMode>2</a:IconMode>
 <a:EmptyAreaSize>(1200, 1200)</a:EmptyAreaSize>
-<a:Rect>((6519,9469), (8919,11869))</a:Rect>
+<a:Rect>((6517,9467), (8917,11867))</a:Rect>
 <a:LineColor>12034707</a:LineColor>
 <a:FillColor>16437422</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -618,7 +618,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:GradientFillMode>65</a:GradientFillMode>
 <a:CustomPictureType>4</a:CustomPictureType>
 <a:CustomTextMode>1</a:CustomTextMode>
-<a:CustomPictureID>5DA14943-07C6-40D7-85E1-D96ACAD6D846</a:CustomPictureID>
+<a:CustomPictureID>3B4A15A6-B1C9-43BF-AB1A-F396E02F2CC5</a:CustomPictureID>
 <a:GradientEndColor>16777215</a:GradientEndColor>
 <a:KeepAspect>1</a:KeepAspect>
 <c:Object>
@@ -639,7 +639,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:CreationDate>1618209314</a:CreationDate>
 <a:Creator>Nikola</a:Creator>
 <a:ModificationDate>1620218759</a:ModificationDate>
-<a:Modifier>Acer Aspire 5</a:Modifier>
+<a:Modifier>Nikola</a:Modifier>
 <a:Location>file:///%[PRJ_ROOT_DIR]%/Class/ZdravoHospital.oom</a:Location>
 <a:Extension>oom</a:Extension>
 <a:ModelDocument.ModelID>3E50604E-6332-4896-BED2-EC9985811F07</a:ModelDocument.ModelID>
