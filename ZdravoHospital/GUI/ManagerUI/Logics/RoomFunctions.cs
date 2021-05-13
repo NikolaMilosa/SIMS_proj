@@ -52,7 +52,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             var someRoom = FindRoomByType(RoomType.STORAGE_ROOM, notThisRoom);
 
             if (someRoom == null)
-                someRoom = FindRoomByType(RoomType.BREAK_ROOM, notThisRoom);
+                someRoom = FindRoomByType(RoomType.BED_ROOM, notThisRoom);
 
             if (someRoom == null)
                 someRoom = FindRoomByType(RoomType.APPOINTMENT_ROOM, notThisRoom);
