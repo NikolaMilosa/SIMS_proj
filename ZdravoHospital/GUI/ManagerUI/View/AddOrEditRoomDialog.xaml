@@ -8,7 +8,7 @@
         xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="" 
+        Title="{Binding Path=Title}"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">

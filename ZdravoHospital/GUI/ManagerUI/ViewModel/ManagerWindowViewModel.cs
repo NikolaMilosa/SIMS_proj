@@ -24,6 +24,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         #region Mutex
 
         private static Mutex _roomMutex;
+        private static Mutex _inventoryMutex;
 
         #endregion
 
@@ -140,6 +141,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand ShowInventoryCommand { get; set; }
         public MyICommand ShowMedicineCommand { get; set; }
         public MyICommand AddRoomCommand { get; set; }
+        public MyICommand AddInventoryCommand { get; set; }
 
         #endregion
 
@@ -159,8 +161,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             ShowInventoryCommand = new MyICommand(OnShowInventory);
             ShowMedicineCommand = new MyICommand(OnShowMedicine);
             AddRoomCommand = new MyICommand(OnAddRoom);
+            AddInventoryCommand = new MyICommand(OnAddInventory);
 
             _roomMutex = new Mutex();
+            _inventoryMutex = new Mutex();
         }
 
         #region Private functions
@@ -234,6 +238,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             dialog.ShowDialog();
         }
 
+        //Add inventory button
+        private void OnAddInventory()
+        {
+            dialog = new AddOrEditInventoryDialog(null);
+            dialog.ShowDialog();
+        }
+
         #endregion
 
         #region Complex Button Handling
@@ -245,8 +256,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedRoom != null)
                     dialog = new AddOrEditRoomDialog(SelectedRoom);
             }
+            else if (InventoryTableVisibility == Visibility.Visible)
+            {
+                if (SelectedInventory != null)
+                    dialog = new AddOrEditInventoryDialog(SelectedInventory);
+            }
 
-            dialog.ShowDialog();
+            if (dialog != null)
+                dialog.ShowDialog();
         }
 
         public void HandleDeleteClick()
@@ -256,8 +273,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedRoom != null)
                     dialog = new WarningDialog(SelectedRoom);
             }
+            else if (InventoryTableVisibility == Visibility.Visible)
+            {
+                if (SelectedInventory != null)
+                    dialog = new WarningDialog(SelectedInventory);
+                
+            }
 
-            dialog.ShowDialog();
+            if (dialog != null)
+                dialog.ShowDialog();
         }
         #endregion
 
@@ -273,6 +297,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomMutex.ReleaseMutex();
         }
 
+        public void OnInventoryChanged(object sender, EventArgs e)
+        {
+            _inventoryMutex.WaitOne();
+
+            Inventory = new ObservableCollection<Inventory>(Resources.inventory.Values);
+            OnPropertyChanged("Inventory");
+
+            _inventoryMutex.ReleaseMutex();
+        }
         #endregion
     }
 }

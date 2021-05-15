@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
@@ -18,7 +19,25 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return _inventoryMutex;
         }
 
-        public InventoryFunctions() { }
+        #region Event Things
+
+        public delegate void InventoryChangedEventHandler(object sender, EventArgs e);
+
+        public event InventoryChangedEventHandler InventoryChanged;
+
+        protected virtual void OnInventoryChanged()
+        {
+            if (InventoryChanged != null)
+            {
+                InventoryChanged(this, EventArgs.Empty);
+            }
+        }
+        #endregion
+
+        public InventoryFunctions()
+        {
+            InventoryChanged += ManagerWindowViewModel.GetDashboard().OnInventoryChanged;
+        }
 
         public bool DeleteInventory(Inventory someInventory)
         {
@@ -26,13 +45,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             roomInventoryService.DeleteByInventoryId(someInventory.Id);
 
             GetInventoryMutex().WaitOne();
-            /* Visual */
-            //ManagerWindow.Inventory.Remove(someInventory);
 
             Model.Resources.inventory.Remove(someInventory.Id);
             Model.Resources.SaveInventory();
 
             GetInventoryMutex().ReleaseMutex();
+
+            OnInventoryChanged();
             return true;
         }
 
@@ -63,20 +82,18 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             
             Model.Resources.inventory[newInventory.Id] = newInventory;
             Model.Resources.SaveInventory();
-            //ManagerWindow.Inventory.Add(Model.Resources.inventory[newInventory.Id]);
 
             GetInventoryMutex().ReleaseMutex();
             roomInventoryFunctions.AddNewReference(new RoomInventory(newInventory.Id, someRoom.Id, newInventory.Quantity));
+
+            OnInventoryChanged();
             return true;
         }
 
-        public void EditInventory(Inventory oldInventory, Inventory newInventory)
+        public void EditInventory(Inventory newInventory)
         {
             GetInventoryMutex().WaitOne();
-
-            //var index = ManagerWindow.Inventory.IndexOf(oldInventory);
-            //ManagerWindow.Inventory.Remove(oldInventory);
-
+            
             /* Clean input */
             newInventory.Name = Regex.Replace(newInventory.Name, @"\s+", " ");
             newInventory.Name = newInventory.Name.Trim().ToLower();
@@ -88,11 +105,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = Regex.Replace(newInventory.Id, @"\s+", " ");
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
-            Model.Resources.inventory[oldInventory.Id] = newInventory;
-            //ManagerWindow.Inventory.Insert(index, newInventory);
+            Model.Resources.inventory[newInventory.Id] = newInventory;
             Model.Resources.SaveInventory();
 
             GetInventoryMutex().ReleaseMutex();
+            OnInventoryChanged();
         }
 
         public void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
@@ -124,9 +141,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 }
             }
 
-            //var index = ManagerWindow.Inventory.IndexOf(inventory);
-            //ManagerWindow.Inventory.Remove(inventory);
-
             if (difference < 0)
             {
                 difference = (-1) * difference;
@@ -138,13 +152,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             {
                 Model.Resources.inventory[inventory.Id].Quantity += difference;
             }
-            
-            //ManagerWindow.Inventory.Insert(index, inventory);
             Model.Resources.SaveInventory();
             GetInventoryMutex().ReleaseMutex();
 
             if (inventory.Quantity == 0)
                 DeleteInventory(inventory);
+
+            OnInventoryChanged();
         }
     }
 }

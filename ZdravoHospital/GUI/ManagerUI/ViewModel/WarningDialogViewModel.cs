@@ -17,9 +17,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private string _warningElement;
 
         private RoomFunctions _roomFunctions;
+        private InventoryFunctions _inventoryFunctions;
 
         private object _someObject;
         private object[] _otherParams;
+
+        private bool _isConfirmable;
 
         #endregion
 
@@ -55,6 +58,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public bool IsConfirmable
+        {
+            get => _isConfirmable;
+            set
+            {
+                _isConfirmable = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Commands
@@ -67,6 +79,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             _someObject = someObject;
             _otherParams = otherParams;
+
+            IsConfirmable = true;
 
             DisplayText();
 
@@ -82,6 +96,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     WarningText = "You are about to delete a room! If you wish to continue press \"Confirm\"";
                     WarningElement = "Room Id : " + ((Room)_someObject).Id;
                     break;
+                case nameof(Inventory):
+                    WarningTitle = "Warning! Deleting inventory";
+                    WarningText = "You are about to delete some inventory! If you wish to continue press \"Confirm\"";
+                    WarningElement = "Inventory Id : " + ((Inventory)_someObject).Id;
+                    break;
+                case nameof(AddOrEditInventoryDialogViewModel):
+                    WarningTitle = "Warning! No available rooms";
+                    WarningText = "There are no rooms where inventory would be stored...";
+                    IsConfirmable = false;
+                    break;
             }
         }
 
@@ -96,6 +120,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                         MessageBox.Show(
                             "Cannot delete the room since there aren't any available rooms to store the inventory");
                     }
+                    break;
+                case nameof(Inventory):
+                    _inventoryFunctions = new InventoryFunctions();
+                    _inventoryFunctions.DeleteInventory((Inventory) _someObject);
                     break;
             }
         }

@@ -35,7 +35,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" Grid.Column="0" FontSize="18" Content="Confirm" Background="#bec4c2" Height="52" Width="90" Command="{Binding ConfirmCommand}">
+            <Button x:Name="ConfirmButton" Grid.Column="0" IsEnabled="{Binding Path=IsConfirmable}" FontSize="18" Content="Confirm" Background="#bec4c2" Height="52" Width="90" Command="{Binding ConfirmCommand}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:CallMethodAction MethodName="Close"

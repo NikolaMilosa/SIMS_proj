@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.View;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
-    class AddOrEditRoomDialogViewModel : ViewModel
+    class AddOrEditInventoryDialogViewModel : ViewModel
     {
         #region Fields
 
         private string _title;
-        private Room _room;
+        private Inventory _inventory;
         private bool _isAdder;
-        private bool _available;
-        private RoomFunctions _roomFunctions;
+
+        private Window _dialog;
+
+        private InventoryFunctions _inventoryFunctions;
 
         #endregion
-        
+
         #region Properties
 
         public string Title
@@ -31,14 +35,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
-        public Room Room
+        public Inventory Inventory
         {
-            get => _room;
+            get => _inventory;
             set
             {
-                _room = value;
+                _inventory = value;
                 OnPropertyChanged();
-                OnPropertyChanged("Available");
             }
         }
 
@@ -52,56 +55,47 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
-        public string Available
-        {
-            get
-            {
-                if (_available == true)
-                    return "YES";
-                return "NO";
-            }
-        }
+        #endregion
+
+        #region Commands
+
+        public MyICommand ConfirmCommand { get; set; }
 
         #endregion
-        
-        #region Commands
-        
-        public MyICommand ConfirmCommand { get; set; }
-        
-        #endregion
-        
-        public AddOrEditRoomDialogViewModel(Room? room)
+
+        public AddOrEditInventoryDialogViewModel(Inventory? inventory)
         {
-            if (room == null)
+            if (inventory == null)
             {
-                Room = new Room(RoomType.APPOINTMENT_ROOM, 0, "", true);
-                _available = true;
+                Inventory = new Inventory();
+                Title = "Inventory adding";
                 IsAdder = true;
-                Title = "Room adding";
             }
             else
             {
-                Room = new Room(room.RoomType, room.Id, room.Name, room.Available);
-                _available = Room.Available;
+                Inventory = new Inventory(inventory);
+                Title = "Inventory editing";
                 IsAdder = false;
-                Title = "Room editing";
             }
 
-            _roomFunctions = new RoomFunctions();
-
             ConfirmCommand = new MyICommand(OnConfirm);
+
+            _inventoryFunctions = new InventoryFunctions();
         }
 
-        //Confirm command function 
         private void OnConfirm()
         {
             if (IsAdder)
             {
-                _roomFunctions.AddRoom(Room);
+                if (!_inventoryFunctions.AddInventory(Inventory))
+                {
+                    _dialog = new WarningDialog(this);
+                    _dialog.ShowDialog();
+                }
             }
             else
             {
-                _roomFunctions.EditRoom(Room);
+                _inventoryFunctions.EditInventory(Inventory);
             }
         }
     }
