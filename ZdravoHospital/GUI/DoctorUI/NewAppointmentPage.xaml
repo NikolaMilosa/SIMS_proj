@@ -63,7 +63,7 @@
                            Foreground="White"
                   Content="Urgent"
                   FontSize="12.5"
-                  Margin="10"
+                  Margin="20"
                   VerticalAlignment="Center"
                   VerticalContentAlignment="Center">
                         <CheckBox.LayoutTransform>
@@ -76,7 +76,7 @@
                            Grid.Column="0"
                            Foreground="White"
                    FontSize="25"
-                   Margin="10"/>
+                   Margin="20"/>
                     <ComboBox Name="DoctorsComboBox"
                            Grid.Row="1"
                            Grid.Column="1"
@@ -101,7 +101,7 @@
                            Grid.Row="2"
                            Grid.Column="0"
                    FontSize="25"
-                   Margin="10"/>
+                   Margin="20"/>
                     <ComboBox Name="PatientsComboBox"
                            Grid.Row="2"
                            Grid.Column="1"
@@ -130,6 +130,7 @@
                         Width="200"
                         HorizontalAlignment="Right"
                     Padding="10"
+                            Margin="20"
                         Style="{StaticResource BlueButton}"
                 Click="PatientInfoButton_Click"/>
 
@@ -138,7 +139,7 @@
                            Foreground="White"
                            Grid.Column="0"
                    FontSize="25"
-                   Margin="10"/>
+                   Margin="20"/>
                     <Viewbox Width="200"
                            Grid.Row="4"
                            Grid.Column="1"
@@ -150,7 +151,7 @@
 
                     <TextBlock Text="Start time:" 
                    FontSize="25"
-                   Margin="10"
+                   Margin="20"
                            Foreground="White"
                            Grid.Row="5"
                            Grid.Column="0"/>
