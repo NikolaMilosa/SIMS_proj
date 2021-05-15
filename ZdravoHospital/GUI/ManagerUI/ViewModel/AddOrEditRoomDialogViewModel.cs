@@ -9,13 +9,17 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
     class AddOrEditRoomDialogViewModel : ViewModel
     {
-        //Fields:
+        #region Fields
+
         private Room _room;
         private bool _isAdder;
         private bool _available;
         private RoomFunctions _roomFunctions;
 
-        //Properties:
+        #endregion
+        
+        #region Properties
+
         public Room Room
         {
             get => _room;
@@ -47,22 +51,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
-        //Event things:
-        public delegate void ConfirmButtonEventHandler(object source, ChangedRoomEventArgs e);
-
-        public event ConfirmButtonEventHandler RoomAddedOrEdited;
-
-        protected virtual void OnConfirmDone()
-        {
-            if (RoomAddedOrEdited != null)
-            {
-                RoomAddedOrEdited(this, new ChangedRoomEventArgs(Room));
-            }
-        }
-
-        //Commands 
+        #endregion
+        
+        #region Commands
+        
         public MyICommand ConfirmCommand { get; set; }
-
+        
+        #endregion
+        
         public AddOrEditRoomDialogViewModel(Room? room)
         {
             if (room == null)
@@ -81,11 +77,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomFunctions = new RoomFunctions();
 
             ConfirmCommand = new MyICommand(OnConfirm);
-
-            RoomAddedOrEdited += ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
         }
 
-        //Confirm command 
+        //Confirm command function 
         private void OnConfirm()
         {
             if (IsAdder)
@@ -96,18 +90,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 _roomFunctions.EditRoom(Room);
             }
-
-            OnConfirmDone();
-        }
-    }
-
-    public class ChangedRoomEventArgs : EventArgs
-    {
-        public Room ChangedRoom { get; set; }
-
-        public ChangedRoomEventArgs(Room room)
-        {
-            ChangedRoom = room;
         }
     }
 }

@@ -60,9 +60,15 @@
     "Available": true
   },
   "24": {
-    "RoomType": 2,
+    "RoomType": 1,
     "Id": 24,
-    "Name": "one more add",
+    "Name": "one more",
+    "Available": true
+  },
+  "515": {
+    "RoomType": 2,
+    "Id": 515,
+    "Name": "tester",
     "Available": true
   }
 }

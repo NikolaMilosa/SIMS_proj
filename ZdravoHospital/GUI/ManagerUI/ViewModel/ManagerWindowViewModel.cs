@@ -249,7 +249,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #region Events
 
-        public void OnRoomsChanged(object sender, ChangedRoomEventArgs e)
+        public void OnRoomsChanged(object sender, EventArgs e)
         {
             _roomMutex.WaitOne();
 
