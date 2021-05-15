@@ -170,6 +170,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             Resources.OpenRooms();
             Resources.OpenInventory();
             Resources.OpenMedicines();
+            Resources.OpenRoomInventory();
+            Resources.OpenRoomSchedule();
+            Resources.OpenTransferRequests();
+            Resources.OpenPeriods();
         }
 
         private void SetObservables()
@@ -232,7 +236,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        #region DialogCreation
+        #region Complex Button Handling
 
         public void HandleEnterClick()
         {
@@ -245,6 +249,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             dialog.ShowDialog();
         }
 
+        public void HandleDeleteClick()
+        {
+            if (RoomTableVisibility == Visibility.Visible)
+            {
+                if (SelectedRoom != null)
+                    dialog = new WarningDialog(SelectedRoom);
+            }
+
+            dialog.ShowDialog();
+        }
         #endregion
 
         #region Events

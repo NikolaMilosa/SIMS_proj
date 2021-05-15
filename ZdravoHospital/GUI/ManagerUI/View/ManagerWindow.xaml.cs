@@ -96,6 +96,11 @@ namespace ZdravoHospital.GUI.ManagerUI.View
                 currentViewModel.HandleEnterClick();
                 e.Handled = true;
             }
+            else if (e.Key == Key.Delete)
+            {
+                currentViewModel.HandleDeleteClick();
+                e.Handled = true;
+            }
         }
 
         private void SubMenuButtonHandler(object sender, KeyEventArgs e)
