@@ -226,7 +226,7 @@
                 <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Command="{Binding Path=ShowInventoryCommand}"/>
                 <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1" Command="{Binding Path=AddInventoryCommand}"/>
                 <Button Grid.Row="4" x:Name="ShowMedicineButton" FontSize="18" Background="#bec4c2" Content="Show medicine" BorderThickness="1,0,0,1" Command="{Binding Path=ShowMedicineCommand}"/>
-                <Button Grid.Row="5" x:Name="AddMedicineButton" FontSize="18" Background="#bec4c2" Content="Add medicine" BorderThickness="1,0,0,1" />
+                <Button Grid.Row="5" x:Name="AddMedicineButton" FontSize="18" Background="#bec4c2" Content="Add medicine" BorderThickness="1,0,0,1" Command="{Binding Path=AddMedicineCommand}"/>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Visible"/>

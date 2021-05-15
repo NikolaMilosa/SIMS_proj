@@ -59,14 +59,17 @@
     ]
   },
   {
-    "MedicineName": "pure test",
-    "Supplier": "Jankovic",
-    "Status": 3,
-    "Note": "",
+    "MedicineName": "tester",
+    "Supplier": "Tester",
+    "Status": 0,
+    "Note": null,
     "Replacements": [],
     "Ingredients": [
       {
-        "IngredientName": "zink"
+        "IngredientName": "tester"
+      },
+      {
+        "IngredientName": "some tester"
       }
     ]
   }

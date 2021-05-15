@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace ZdravoHospital.GUI.ManagerUI.Commands
 {
-    class MyICommand : ICommand
+    public class MyICommand : ICommand
     {
         private Action _TargetExecuteMethod;
         private Func<bool> _TargetCanExecuteMethod;

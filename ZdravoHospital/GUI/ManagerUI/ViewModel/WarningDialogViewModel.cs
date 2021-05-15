@@ -18,6 +18,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private RoomFunctions _roomFunctions;
         private InventoryFunctions _inventoryFunctions;
+        private MedicineFunctions _medicineFunctions;
 
         private object _someObject;
         private object[] _otherParams;
@@ -106,6 +107,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     WarningText = "There are no rooms where inventory would be stored...";
                     IsConfirmable = false;
                     break;
+                case nameof(Ingredient):
+                    WarningTitle = "Warning! Deleting ingredient";
+                    WarningText = "You are about to delete some ingredients from medicine, but it won't be permanent just yet!";
+                    WarningElement = "Ingredient name : " + ((Ingredient)_someObject).IngredientName;
+                    break;
+                case nameof(Medicine):
+                    WarningTitle = "Warning! Deleting medicine";
+                    WarningText = "You are about to delete some medicine! If you wish to continue press \"Confirm\"";
+                    WarningElement = "Medicine name : " + ((Medicine)_someObject).MedicineName;
+                    break;
             }
         }
 
@@ -124,6 +135,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 case nameof(Inventory):
                     _inventoryFunctions = new InventoryFunctions();
                     _inventoryFunctions.DeleteInventory((Inventory) _someObject);
+                    break;
+                case nameof(Ingredient):
+                    _medicineFunctions = new MedicineFunctions((AddOrEditMedicineDialogViewModel) _otherParams[0]);
+                    _medicineFunctions.DeleteIngredientFromMedicine((Ingredient) _someObject, (Medicine) _otherParams[1]);
+                    break;
+                case nameof(Medicine):
+                    _medicineFunctions = new MedicineFunctions(null);
+                    _medicineFunctions.DeleteMedicine((Medicine) _someObject);
                     break;
             }
         }

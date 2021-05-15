@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
-    class ViewModel : INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;

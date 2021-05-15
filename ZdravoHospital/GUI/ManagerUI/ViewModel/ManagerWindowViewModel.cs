@@ -38,10 +38,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _selectedRoom;
         private Inventory _selectedInventory;
         private Medicine _selectedMedicine;
-        #endregion
-        
-        //Dialog
+
+
         private Window dialog;
+        #endregion
 
         #region Observable collections
         public ObservableCollection<Room> Rooms { get; set; }
@@ -142,6 +142,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand ShowMedicineCommand { get; set; }
         public MyICommand AddRoomCommand { get; set; }
         public MyICommand AddInventoryCommand { get; set; }
+        public MyICommand AddMedicineCommand { get; set; }
 
         #endregion
 
@@ -162,6 +163,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             ShowMedicineCommand = new MyICommand(OnShowMedicine);
             AddRoomCommand = new MyICommand(OnAddRoom);
             AddInventoryCommand = new MyICommand(OnAddInventory);
+            AddMedicineCommand = new MyICommand(OnAddMedicine);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
@@ -178,6 +180,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             Resources.OpenRoomSchedule();
             Resources.OpenTransferRequests();
             Resources.OpenPeriods();
+            Resources.OpenMedicineRecensions();
         }
 
         private void SetObservables()
@@ -208,7 +211,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
         
-        #region ButtonFunctions
+        #region Button Functions
 
         //Show rooms button
         private void OnShowRooms()
@@ -245,6 +248,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             dialog.ShowDialog();
         }
 
+        //Add medicine button
+        private void OnAddMedicine()
+        {
+            dialog = new AddOrEditMedicineDialog(null);
+            dialog.ShowDialog();
+        }
         #endregion
 
         #region Complex Button Handling
@@ -260,6 +269,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 if (SelectedInventory != null)
                     dialog = new AddOrEditInventoryDialog(SelectedInventory);
+            }
+            else if (MedicineTableVisibility == Visibility.Visible)
+            {
+                if (SelectedMedicine != null)
+                    dialog = new AddOrEditMedicineDialog(SelectedMedicine);
             }
 
             if (dialog != null)
@@ -278,6 +292,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedInventory != null)
                     dialog = new WarningDialog(SelectedInventory);
                 
+            }
+            else if (MedicineTableVisibility == Visibility.Visible)
+            {
+                if (SelectedMedicine != null)
+                    dialog = new WarningDialog(SelectedMedicine);
             }
 
             if (dialog != null)
@@ -305,6 +324,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             OnPropertyChanged("Inventory");
 
             _inventoryMutex.ReleaseMutex();
+        }
+
+        public void OnMedicineChanged(object sender, EventArgs e)
+        {
+            Medicines = new ObservableCollection<Medicine>(Resources.medicines);
+            OnPropertyChanged("Medicines");
         }
         #endregion
     }

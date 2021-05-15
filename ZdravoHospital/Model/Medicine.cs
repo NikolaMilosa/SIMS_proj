@@ -21,12 +21,22 @@ namespace Model
             Replacements = new List<string>();
         }
 
+        public Medicine(Medicine medicine)
+        {
+            this.MedicineName = medicine.MedicineName;
+            this.Supplier = medicine.Supplier;
+            this.Status = medicine.Status;
+            this.Note = medicine.Note;
+            this.Replacements = new List<string>(medicine.Replacements);
+            this.Ingredients = new List<Ingredient>(medicine.Ingredients);
+        }
+
         public Medicine()
         {
             Ingredients = new List<Ingredient>();
             Replacements = new List<string>();
         }
-
+        
         //public Medicine(string name, string supplier)
         //{
         //    MedicineName = name;
