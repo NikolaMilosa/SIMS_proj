@@ -5,11 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
-      xmlns:cvt="clr-namespace:ZdravoHospital"
+      xmlns:cvt="clr-namespace:ZdravoHospital.GUI.Secretary.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="PatientsView"
       Background="#FFF3F2FC">
+    <Page.Resources>
+        <cvt:IconConverter x:Key="IconConverter" />
+        <cvt:UnblockVisibilityConverter x:Key="UnblockVisibilityConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -41,10 +45,11 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <materialDesign:PackIcon Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Kind="Person" Width="60" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"></materialDesign:PackIcon>
+                        <materialDesign:PackIcon x:Name="UserIcon" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Kind="{Binding RecentActions, Converter={StaticResource IconConverter}}" Width="60" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"></materialDesign:PackIcon>
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                             <TextBlock Text="{Binding Name}" Margin="0,0,5,0" FontSize="16" FontFamily="Yu Gothic" FontWeight="SemiBold"></TextBlock>
                             <TextBlock Text="{Binding Surname}" FontSize="16" FontFamily="Yu Gothic" FontWeight="SemiBold"></TextBlock>
+                            <Button x:Name="UnblockButton" Click="UnblockButton_Click" FontFamily="Yu Gothic" FontSize="14" Foreground="Green" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Center" Visibility="{Binding RecentActions, Converter={StaticResource UnblockVisibilityConverter}}"> (unblock) </Button>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
