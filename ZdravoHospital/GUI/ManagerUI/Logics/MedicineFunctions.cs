@@ -33,7 +33,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetMedicineMutex().WaitOne();
 
             Model.Resources.medicines.Add(newMedicine);
-            ManagerWindow.Medicines.Add(newMedicine);
+            //ManagerWindow.Medicines.Add(newMedicine);
 
             Model.Resources.SaveMedicines();
 
@@ -55,9 +55,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.medicines.Remove(oldMedicine);
             Model.Resources.medicines.Insert(index, newMedicine);
 
-            index = ManagerWindow.Medicines.IndexOf(oldMedicine);
-            ManagerWindow.Medicines.Remove(oldMedicine);
-            ManagerWindow.Medicines.Insert(index, newMedicine);
+            //index = ManagerWindow.Medicines.IndexOf(oldMedicine);
+            //ManagerWindow.Medicines.Remove(oldMedicine);
+            //ManagerWindow.Medicines.Insert(index, newMedicine);
 
             Model.Resources.SaveMedicines();
 
@@ -77,7 +77,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetMedicineMutex().WaitOne();
 
             Model.Resources.medicines.Remove(medicine);
-            ManagerWindow.Medicines.Remove(medicine);
+            //ManagerWindow.Medicines.Remove(medicine);
 
             Model.Resources.SaveMedicines();
 
@@ -123,11 +123,11 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.medicineRecensions.Add(medicineRecension);
             Model.Resources.SaveMedicineRecensions();
 
-            int index = ManagerWindow.Medicines.IndexOf(medicine);
-            ManagerWindow.Medicines.Remove(medicine);
+            //int index = ManagerWindow.Medicines.IndexOf(medicine);
+            //ManagerWindow.Medicines.Remove(medicine);
             medicine.Status = MedicineStatus.PENDING;
 
-            ManagerWindow.Medicines.Insert(index, medicine);
+            //ManagerWindow.Medicines.Insert(index, medicine);
 
             Model.Resources.SaveMedicines();
 

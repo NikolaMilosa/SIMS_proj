@@ -27,7 +27,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             GetInventoryMutex().WaitOne();
             /* Visual */
-            ManagerWindow.Inventory.Remove(someInventory);
+            //ManagerWindow.Inventory.Remove(someInventory);
 
             Model.Resources.inventory.Remove(someInventory.Id);
             Model.Resources.SaveInventory();
@@ -63,7 +63,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             
             Model.Resources.inventory[newInventory.Id] = newInventory;
             Model.Resources.SaveInventory();
-            ManagerWindow.Inventory.Add(Model.Resources.inventory[newInventory.Id]);
+            //ManagerWindow.Inventory.Add(Model.Resources.inventory[newInventory.Id]);
 
             GetInventoryMutex().ReleaseMutex();
             roomInventoryFunctions.AddNewReference(new RoomInventory(newInventory.Id, someRoom.Id, newInventory.Quantity));
@@ -74,8 +74,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             GetInventoryMutex().WaitOne();
 
-            var index = ManagerWindow.Inventory.IndexOf(oldInventory);
-            ManagerWindow.Inventory.Remove(oldInventory);
+            //var index = ManagerWindow.Inventory.IndexOf(oldInventory);
+            //ManagerWindow.Inventory.Remove(oldInventory);
 
             /* Clean input */
             newInventory.Name = Regex.Replace(newInventory.Name, @"\s+", " ");
@@ -89,7 +89,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
             Model.Resources.inventory[oldInventory.Id] = newInventory;
-            ManagerWindow.Inventory.Insert(index, newInventory);
+            //ManagerWindow.Inventory.Insert(index, newInventory);
             Model.Resources.SaveInventory();
 
             GetInventoryMutex().ReleaseMutex();
@@ -124,8 +124,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 }
             }
 
-            var index = ManagerWindow.Inventory.IndexOf(inventory);
-            ManagerWindow.Inventory.Remove(inventory);
+            //var index = ManagerWindow.Inventory.IndexOf(inventory);
+            //ManagerWindow.Inventory.Remove(inventory);
 
             if (difference < 0)
             {
@@ -139,7 +139,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 Model.Resources.inventory[inventory.Id].Quantity += difference;
             }
             
-            ManagerWindow.Inventory.Insert(index, inventory);
+            //ManagerWindow.Inventory.Insert(index, inventory);
             Model.Resources.SaveInventory();
             GetInventoryMutex().ReleaseMutex();
 

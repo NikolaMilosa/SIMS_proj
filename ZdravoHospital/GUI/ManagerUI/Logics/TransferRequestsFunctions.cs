@@ -101,18 +101,19 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             /* Serialize */
             if (Model.Resources.transferRequests.Remove(transferRequest))
                 Model.Resources.SaveTransferRequests();
-
+            /*
             if(ManagerWindow.dialog != null)
             {
                 if (ManagerWindow.dialog.GetType().Name.Equals(nameof(InventoryManagementWindow)))
                 {
                     InventoryManagementWindow activeWindow = (InventoryManagementWindow)ManagerWindow.dialog;
-                    /* Update the visuals */
+                     Update the visuals 
 
                     activeWindow.FirstRoom = activeWindow.FirstRoom;
                     activeWindow.SecondRoom = activeWindow.SecondRoom;
                 }
             }
+            */
             GetTransferRequestMutex().ReleaseMutex();
         }
 
