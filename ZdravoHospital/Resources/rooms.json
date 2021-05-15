@@ -46,5 +46,23 @@
     "Id": 602,
     "Name": "Emergency room 2",
     "Available": true
+  },
+  "105": {
+    "RoomType": 4,
+    "Id": 105,
+    "Name": "testing Room",
+    "Available": true
+  },
+  "107": {
+    "RoomType": 3,
+    "Id": 107,
+    "Name": "other tester room",
+    "Available": true
+  },
+  "24": {
+    "RoomType": 2,
+    "Id": 24,
+    "Name": "one more add",
+    "Available": true
   }
 }

@@ -27,6 +27,7 @@ namespace ZdravoHospital.GUI.ManagerUI.View
             InitializeComponent();
             currentViewModel = new ManagerWindowViewModel(au);
             this.DataContext = currentViewModel;
+            RoomsButton.Focus();
         }
 
         private void TableGotFocus(object sender, RoutedEventArgs e)
@@ -88,6 +89,11 @@ namespace ZdravoHospital.GUI.ManagerUI.View
                     dataGrid.SelectedIndex = dataGrid.Items.Count - 1;
                 }
 
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Enter)
+            {
+                currentViewModel.HandleEnterClick();
                 e.Handled = true;
             }
         }

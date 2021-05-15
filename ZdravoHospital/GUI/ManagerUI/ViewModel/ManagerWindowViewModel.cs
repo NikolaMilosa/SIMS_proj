@@ -2,29 +2,62 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.View;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
     class ManagerWindowViewModel : ViewModel
     {
-        //Fields :
+        /*Singleton*/
+        private static ManagerWindowViewModel dashboard;
+
+        public static ManagerWindowViewModel GetDashboard()
+        {
+            return dashboard;
+        }
+
+        #region Mutex
+
+        private static Mutex _roomMutex;
+
+        #endregion
+
+        #region Fields
+
         private string activeManager;
         private Visibility _roomTableVisibility;
         private Visibility _inventoryTableVisibility;
         private Visibility _medicineTableVisibility;
 
+        private Room _selectedRoom;
+        private Inventory _selectedInventory;
+        private Medicine _selectedMedicine;
+        #endregion
+        
+        //Dialog
+        private Window dialog;
+
+        #region Observable collections
         public ObservableCollection<Room> Rooms { get; set; }
         public ObservableCollection<Inventory> Inventory { get; set; }
         public ObservableCollection<Medicine> Medicines { get; set; }
 
+        #endregion
+
+        #region Functions and services
+
         private Logics.TransferRequestsFunctions transferRequestFunctions;
         private Logics.RoomScheduleFunctions roomScheduleFunctions;
 
-        //Table visibility
+        #endregion
+
+        #region Table visibility properties
+
         public Visibility RoomTableVisibility
         {
             get => _roomTableVisibility;
@@ -55,7 +88,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
-        //Properties :
+        #endregion
+        
+        #region Properties
+
         public string ActiveManager
         {
             get => activeManager;
@@ -66,14 +102,53 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
-        //Commands :
+        public Room SelectedRoom
+        {
+            get => _selectedRoom;
+            set
+            {
+                _selectedRoom = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Inventory SelectedInventory
+        {
+            get => _selectedInventory;
+            set
+            {
+                _selectedInventory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Medicine SelectedMedicine
+        {
+            get => _selectedMedicine;
+            set
+            {
+                _selectedMedicine = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
         public MyICommand ShowRoomCommand { get; set; }
         public MyICommand ShowInventoryCommand { get; set; }
         public MyICommand ShowMedicineCommand { get; set; }
+        public MyICommand AddRoomCommand { get; set; }
+
+        #endregion
+
 
         public ManagerWindowViewModel(string au)
         {
-            Employee currManager = Model.Resources.findManager(au);
+            dashboard = this;
+
+            Employee currManager = Resources.findManager(au);
             ActiveManager = currManager.Name;
 
             OpenDataBase();
@@ -83,20 +158,25 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             ShowRoomCommand = new MyICommand(OnShowRooms);
             ShowInventoryCommand = new MyICommand(OnShowInventory);
             ShowMedicineCommand = new MyICommand(OnShowMedicine);
+            AddRoomCommand = new MyICommand(OnAddRoom);
+
+            _roomMutex = new Mutex();
         }
+
+        #region Private functions
 
         private void OpenDataBase()
         {
-            Model.Resources.OpenRooms();
-            Model.Resources.OpenInventory();
-            Model.Resources.OpenMedicines();
+            Resources.OpenRooms();
+            Resources.OpenInventory();
+            Resources.OpenMedicines();
         }
 
         private void SetObservables()
         {
-            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values);
-            Inventory = new ObservableCollection<Inventory>(Model.Resources.inventory.Values);
-            Medicines = new ObservableCollection<Medicine>(Model.Resources.medicines);
+            Rooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            Inventory = new ObservableCollection<Inventory>(Resources.inventory.Values);
+            Medicines = new ObservableCollection<Medicine>(Resources.medicines);
         }
 
         private void TurnOffTables()
@@ -118,8 +198,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 return "initialTable";
         }
 
-        #region ButtonFunctions
+        #endregion
         
+        #region ButtonFunctions
+
         //Show rooms button
         private void OnShowRooms()
         {
@@ -139,6 +221,42 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             MedicineTableVisibility = Visibility.Visible;
+        }
+
+        //Add room button
+        private void OnAddRoom()
+        {
+            dialog = new AddOrEditRoomDialog(null);
+            dialog.ShowDialog();
+        }
+
+        #endregion
+
+        #region DialogCreation
+
+        public void HandleEnterClick()
+        {
+            if (RoomTableVisibility == Visibility.Visible)
+            {
+                if (SelectedRoom != null)
+                    dialog = new AddOrEditRoomDialog(SelectedRoom);
+            }
+
+            dialog.ShowDialog();
+        }
+
+        #endregion
+
+        #region Events
+
+        public void OnRoomsChanged(object sender, ChangedRoomEventArgs e)
+        {
+            _roomMutex.WaitOne();
+
+            Rooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            OnPropertyChanged("Rooms");
+
+            _roomMutex.ReleaseMutex();
         }
 
         #endregion

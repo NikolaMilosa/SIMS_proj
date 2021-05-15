@@ -184,7 +184,7 @@
                 </Grid.RowDefinitions>
 
                 <Button Grid.Row="0" x:Name="ShowRoomsButton" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Show rooms" Command="{Binding ShowRoomCommand}"/>
-                <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Add room"/>
+                <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Add room" Command="{Binding AddRoomCommand}"/>
                 <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Manage inventory" />
                 <Button Grid.Row="3" x:Name="PlanRenovation" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,1" Content="Plan renovation" />
 
@@ -259,7 +259,8 @@
                   Visibility="{Binding Path=RoomTableVisibility}" HeadersVisibility="Column" AlternatingRowBackground="LightBlue" 
                   RowBackground="LightYellow" Grid.Column="2" FontSize="20" IsReadOnly="True" AutoGenerateColumns="False" 
                   ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="20,20,20,20" SelectionMode="Single" 
-                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles"
+                  SelectedItem ="{Binding Path=SelectedRoom}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Path=RoomType, Converter={converters:RoomTypeConverter}}"/>
@@ -272,7 +273,8 @@
                   HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Inventory, Mode=TwoWay}" SelectionMode="Single" 
-                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles"
+                  SelectedItem="{Binding Path=SelectedInventory}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
@@ -288,7 +290,8 @@
                   Visibility="{Binding Path=MedicineTableVisibility}" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Medicines, Mode=TwoWay}" SelectionMode="Single" 
-                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles">
+                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles"
+                  SelectedItem="{Binding SelectedMedicine}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding MedicineName}" Width="2*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Path=Status, Converter={converters:MedicineStatusConverter}}" Width="*"/>
