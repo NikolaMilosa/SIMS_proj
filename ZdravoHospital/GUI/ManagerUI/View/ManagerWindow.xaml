@@ -185,7 +185,7 @@
 
                 <Button Grid.Row="0" x:Name="ShowRoomsButton" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Show rooms" Command="{Binding ShowRoomCommand}"/>
                 <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Add room" Command="{Binding AddRoomCommand}"/>
-                <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Manage inventory" />
+                <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Manage inventory" Command="{Binding ManageInventoryCommand}"/>
                 <Button Grid.Row="3" x:Name="PlanRenovation" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,1" Content="Plan renovation" />
 
                 <Grid.Style>

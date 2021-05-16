@@ -25,6 +25,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private static Mutex _roomMutex;
         private static Mutex _inventoryMutex;
+        private static Mutex _transferMutex;
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Inventory _selectedInventory;
         private Medicine _selectedMedicine;
 
+        private InventoryManagementDialogViewModel _inventoryManagementDialogViewModel;
 
         private Window dialog;
         #endregion
@@ -143,6 +145,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand AddRoomCommand { get; set; }
         public MyICommand AddInventoryCommand { get; set; }
         public MyICommand AddMedicineCommand { get; set; }
+        public MyICommand ManageInventoryCommand { get; set; }
 
         #endregion
 
@@ -152,7 +155,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             dashboard = this;
 
             Employee currManager = Resources.findManager(au);
-            ActiveManager = currManager.Name;
+            ActiveManager = "Welcome, " + currManager.Name;
 
             OpenDataBase();
             SetObservables();
@@ -164,9 +167,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             AddRoomCommand = new MyICommand(OnAddRoom);
             AddInventoryCommand = new MyICommand(OnAddInventory);
             AddMedicineCommand = new MyICommand(OnAddMedicine);
+            ManageInventoryCommand = new MyICommand(OnManageInventory);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
+            _transferMutex = new Mutex();
+
+            _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel();
         }
 
         #region Private functions
@@ -254,9 +261,20 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             dialog = new AddOrEditMedicineDialog(null);
             dialog.ShowDialog();
         }
+
+        //Manage inventory button
+        private void OnManageInventory()
+        {
+            _inventoryManagementDialogViewModel.SenderRooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            _inventoryManagementDialogViewModel.SenderRoom = null;
+            _inventoryManagementDialogViewModel.ReceiverRoom = null;
+            dialog = new InventoryManagementDialog(_inventoryManagementDialogViewModel);
+            dialog.ShowDialog();
+        }
+
         #endregion
 
-        #region Complex Button Handling
+        #region Complex Key Handling
 
         public void HandleEnterClick()
         {
@@ -331,6 +349,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             Medicines = new ObservableCollection<Medicine>(Resources.medicines);
             OnPropertyChanged("Medicines");
         }
+
+        public void OnTransferExecute(object sender, EventArgs e)
+        {
+            _transferMutex.WaitOne();
+            _inventoryManagementDialogViewModel.OnShoudRefresh();
+            _transferMutex.ReleaseMutex();
+        }
+
         #endregion
     }
 }

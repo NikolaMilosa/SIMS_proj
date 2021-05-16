@@ -20,6 +20,27 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return transferRequestMutex;
         }
 
+        #region Event things
+
+        public delegate void TransferExecutedEventHandler(object sender, EventArgs e);
+
+        public event TransferExecutedEventHandler TransferExecuted;
+
+        protected virtual void OnTransferExecuted()
+        {
+            if (TransferExecuted != null)
+            {
+                TransferExecuted(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
+        public TransferRequestsFunctions()
+        {
+            TransferExecuted += ViewModel.ManagerWindowViewModel.GetDashboard().OnTransferExecute;
+        }
+
         public void RunOrExecute()
         {
             if (Model.Resources.transferRequests.Count != 0)
@@ -57,7 +78,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             StartTransfer(transferRequest);
 
             /* Create a roomSchedule for this transfer */
-            
+            //TODO: when you finish room renovation handle this
+            /*
             RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
             
             RoomSchedule roomScheduleSender = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution, EndTime = transferRequest.TimeOfExecution.AddMinutes(2), RoomId = transferRequest.SenderRoom, ScheduleType = ReservationType.TRANSFER };
@@ -65,7 +87,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             RoomSchedule roomScheduleReceiver = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution.AddMinutes(2), EndTime = transferRequest.TimeOfExecution.AddMinutes(4), RoomId = transferRequest.RecipientRoom, ScheduleType = ReservationType.TRANSFER };
             roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleReceiver);
-            
+            */
         }
 
         public void ExecuteRequest(TransferRequest transferRequest)
@@ -101,20 +123,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             /* Serialize */
             if (Model.Resources.transferRequests.Remove(transferRequest))
                 Model.Resources.SaveTransferRequests();
-            /*
-            if(ManagerWindow.dialog != null)
-            {
-                if (ManagerWindow.dialog.GetType().Name.Equals(nameof(InventoryManagementWindow)))
-                {
-                    InventoryManagementWindow activeWindow = (InventoryManagementWindow)ManagerWindow.dialog;
-                     Update the visuals 
 
-                    activeWindow.FirstRoom = activeWindow.FirstRoom;
-                    activeWindow.SecondRoom = activeWindow.SecondRoom;
-                }
-            }
-            */
             GetTransferRequestMutex().ReleaseMutex();
+            OnTransferExecuted();
         }
 
         public int GetScheduledInventoryForRoom(Inventory inventory, Room room)
