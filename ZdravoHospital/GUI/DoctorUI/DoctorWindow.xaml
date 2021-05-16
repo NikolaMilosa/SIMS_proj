@@ -8,7 +8,8 @@
         Title="DoctorWindow" Height="700" Width="1500"
         MinWidth="500"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized">
+        WindowState="Maximized"
+        SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <Style x:Key="TabButton" 
                TargetType="{x:Type Button}">
@@ -28,28 +29,31 @@
         </Style>
     </Window.Resources>
     <DockPanel Background="Black">
-        <Grid DockPanel.Dock="Top"
-                    Height="66"
-                    Background="Black"
-              Margin="0, 2, 0, 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center">
+        <WrapPanel DockPanel.Dock="Top"
+                   Width="{Binding ActualWidth}">
+            <Grid HorizontalAlignment="Center"
+                  Width="{Binding TabPanelWidth}"
+                  Margin="{Binding TopPanelMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Button x:Name="ScheduleTabButton"
+                        Grid.Column="1"
                         Click="ScheduleTabButton_Click"
                         MouseEnter="ScheduleTabButton_MouseEnter"
                         MouseLeave="ScheduleTabButton_MouseLeave"
                         Style="{StaticResource TabButton}"
-                        Margin="0, 0, 60, 0">
+                        Margin="0, 0, 30, 0">
                     <StackPanel Orientation="Horizontal">
                         <Image Name="ScheduleTabImage"
                                Source="../../Images/Doctor/schedule_blue.png"
-                           Height="38"
-                           Width="38"/>
+                               Height="38"
+                               Width="38"/>
                         <TextBlock Name="ScheduleTabTextBlock"
                                    Text="Schedule"
                                    Foreground="{StaticResource Blue}"
@@ -59,16 +63,17 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="PatientsTabButton"
+                        Grid.Column="2"
                     Click="PatientsTabButton_Click"
                         MouseEnter="PatientsTabButton_MouseEnter"
                         MouseLeave="PatientsTabButton_MouseLeave"
                         Style="{StaticResource TabButton}"
-                        Margin="0, 0, 60, 0">
+                        Margin="0, 0, 30, 0">
                     <StackPanel Orientation="Horizontal">
                         <Image Name="PatientsTabImage"
                                Source="../../Images/Doctor/patients_light_gray.png"
-                           Height="38"
-                           Width="38"/>
+                               Height="38"
+                               Width="38"/>
                         <TextBlock Name="PatientsTabTextBlock"
                                    Text="Patients"
                                    Foreground="{StaticResource LightGray}"
@@ -78,16 +83,17 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="MedicinesTabButton"
-                    Click="MedicinesTabButton_Click"
+                        Grid.Column="3"
+                        Click="MedicinesTabButton_Click"
                         MouseEnter="MedicinesTabButton_MouseEnter"
                         MouseLeave="MedicinesTabButton_MouseLeave"
                         Style="{StaticResource TabButton}"
-                        Margin="0, 0, 60, 0">
+                        Margin="0, 0, 30, 0">
                     <StackPanel Orientation="Horizontal">
                         <Image Name="MedicinesTabImage"
                                Source="../../Images/Doctor/medicines_light_gray.png"
-                           Height="38"
-                           Width="38"/>
+                               Height="38"
+                               Width="38"/>
                         <TextBlock x:Name="MedicinesTabTextBlock"
                                    Text="Medicines"
                                    Foreground="{StaticResource LightGray}"
@@ -97,16 +103,16 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="NotificationsTabButton"
-                    Click="NotificationsTabButton_Click"
+                        Grid.Column="4"
+                        Click="NotificationsTabButton_Click"
                         MouseEnter="NotificationsTabButton_MouseEnter"
                         MouseLeave="NotificationsTabButton_MouseLeave"
-                        Style="{StaticResource TabButton}"
-                        Margin="0, 0, 60, 0">
+                        Style="{StaticResource TabButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Name="NotificationsTabImage"
                                Source="../../Images/Doctor/notifications_light_gray.png"
-                           Height="38"
-                           Width="38"/>
+                               Height="38"
+                               Width="38"/>
                         <TextBlock x:Name="NotificationsTabTextBlock"
                                    Text="Notifications"
                                    Foreground="{StaticResource LightGray}"
@@ -115,29 +121,28 @@
                                    Margin="8, 0, 0, 0"/>
                     </StackPanel>
                 </Button>
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Orientation="Horizontal"
-                        FlowDirection="RightToLeft">
+            </Grid>
+            <StackPanel Orientation="Horizontal"
+                        FlowDirection="RightToLeft"
+                        Margin="{Binding TopPanelMargin}">
                 <Button x:Name="UserButton"
                         Background="Transparent"
                         Style="{StaticResource TabButton}"
-                        Margin="60, 0, 60, 0">
+                        Width="320">
                     <StackPanel Orientation="Horizontal">
                         <Image Name="UserImage"
                                Source="../../Images/Doctor/user_blue.png"
-                           Height="38"
-                           Width="38"
+                               Height="38"
+                               Width="38"
                                Margin="0, 0, 8, 0"/>
                         <TextBlock x:Name="UserTextBlock"
-                                   Text="Elena Milivojevic"
                                    Foreground="{StaticResource Blue}"
                                    FontSize="24"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
-        </Grid>
+        </WrapPanel>
         <TabControl x:Name="TabControl"
                     TabStripPlacement="Top"
                     Padding="-1">
