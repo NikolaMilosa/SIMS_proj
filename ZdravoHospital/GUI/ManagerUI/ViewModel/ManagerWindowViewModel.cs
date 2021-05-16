@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.ValidationRules;
 using ZdravoHospital.GUI.ManagerUI.View;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
@@ -44,6 +46,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private InventoryManagementDialogViewModel _inventoryManagementDialogViewModel;
 
         private Window dialog;
+
+        private FilteringEventArgs _passedArgs;
         #endregion
 
         #region Observable collections
@@ -218,6 +222,27 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             roomScheduleFunctions.RunOrExecute();
         }
 
+        private bool InventoryFilter(object item)
+        {
+            var inventory = item as Inventory;
+
+            if (inventory.Id.Contains(_passedArgs.Id) &&
+                inventory.Name.Contains(_passedArgs.InventoryName) &&
+                inventory.Supplier.Contains(_passedArgs.Supplier) &&
+                inventory.Quantity <= _passedArgs.Quantity &&
+                ((_passedArgs.Type.Equals("STATIC") && inventory.InventoryType == InventoryType.STATIC_INVENTORY) ||
+                 (_passedArgs.Type.Equals("DYNAMIC") && inventory.InventoryType == InventoryType.DYNAMIC_INVENTORY) ||
+                 (_passedArgs.Type.Equals("BOTH"))))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         #endregion
 
         #region Public functions
@@ -345,6 +370,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             if (dialog != null)
                 dialog.ShowDialog();
         }
+
+        public void HandleFClick()
+        {
+            if (InventoryTableVisibility == Visibility.Visible)
+            {
+                dialog = new InventoryFilteringDialog();
+                dialog.ShowDialog();
+            }
+        }
         #endregion
 
         #region Events
@@ -358,7 +392,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _roomMutex.ReleaseMutex();
 
-            OnRefreshRenovationDialog(sender, e);
+            OnRefreshTransferDialog(sender, e);
         }
 
         public void OnInventoryChanged(object sender, EventArgs e)
@@ -377,13 +411,23 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             OnPropertyChanged("Medicines");
         }
 
-        public void OnRefreshRenovationDialog(object sender, EventArgs e)
+        public void OnRefreshTransferDialog(object sender, EventArgs e)
         {
             _transferMutex.WaitOne();
             _inventoryManagementDialogViewModel.OnShoudRefresh();
             _transferMutex.ReleaseMutex();
         }
 
+        public void OnFilteringRequested(object sender, FilteringEventArgs e)
+        {
+            _inventoryMutex.WaitOne();
+            var itemsVisual = CollectionViewSource.GetDefaultView(Inventory);
+
+            _passedArgs = e;
+
+            itemsVisual.Filter = InventoryFilter;
+            _inventoryMutex.ReleaseMutex();
+        }
         #endregion
     }
 }

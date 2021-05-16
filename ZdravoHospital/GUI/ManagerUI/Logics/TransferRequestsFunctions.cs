@@ -38,7 +38,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public TransferRequestsFunctions()
         {
-            TransferExecuted += ViewModel.ManagerWindowViewModel.GetDashboard().OnRefreshRenovationDialog;
+            TransferExecuted += ViewModel.ManagerWindowViewModel.GetDashboard().OnRefreshTransferDialog;
         }
 
         public void RunOrExecute()
