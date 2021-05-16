@@ -156,19 +156,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             Model.Resources.rooms[roomId].Available = newValue;
             Model.Resources.SaveRooms();
            
-            OnRoomChanged();
-
             GetRoomMutex().ReleaseMutex();
-        }
-    }
 
-    public class ChangedRoomEventArgs : EventArgs
-    {
-        public Room ChangedRoom { get; set; }
-
-        public ChangedRoomEventArgs(Room room)
-        {
-            ChangedRoom = room;
+            OnRoomChanged();
         }
     }
 }

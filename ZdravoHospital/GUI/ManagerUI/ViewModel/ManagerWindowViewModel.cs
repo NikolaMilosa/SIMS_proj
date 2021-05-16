@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.View;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
@@ -146,6 +147,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand AddInventoryCommand { get; set; }
         public MyICommand AddMedicineCommand { get; set; }
         public MyICommand ManageInventoryCommand { get; set; }
+        public MyICommand PlanRenovationCommand { get; set; }
 
         #endregion
 
@@ -168,12 +170,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             AddInventoryCommand = new MyICommand(OnAddInventory);
             AddMedicineCommand = new MyICommand(OnAddMedicine);
             ManageInventoryCommand = new MyICommand(OnManageInventory);
+            PlanRenovationCommand = new MyICommand(OnPlanRenovation);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
             _transferMutex = new Mutex();
 
             _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel();
+
+            RunAllTasks();
         }
 
         #region Private functions
@@ -203,6 +208,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             InventoryTableVisibility = Visibility.Hidden;
             MedicineTableVisibility = Visibility.Hidden;
         }
+        
+        private void RunAllTasks()
+        {
+            var transferFunctions = new TransferRequestsFunctions();
+            transferFunctions.RunOrExecute();
+
+            var roomScheduleFunctions = new RoomScheduleFunctions();
+            roomScheduleFunctions.RunOrExecute();
+        }
+
+        #endregion
+
+        #region Public functions
 
         public string FindVisibleDataGrid()
         {
@@ -217,7 +235,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         }
 
         #endregion
-        
+
         #region Button Functions
 
         //Show rooms button
@@ -269,6 +287,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _inventoryManagementDialogViewModel.SenderRoom = null;
             _inventoryManagementDialogViewModel.ReceiverRoom = null;
             dialog = new InventoryManagementDialog(_inventoryManagementDialogViewModel);
+            dialog.ShowDialog();
+        }
+
+        //Plan renovation button
+        private void OnPlanRenovation()
+        {
+            dialog = new RenovationPlaningDialog();
             dialog.ShowDialog();
         }
 
@@ -332,6 +357,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             OnPropertyChanged("Rooms");
 
             _roomMutex.ReleaseMutex();
+
+            OnRefreshRenovationDialog(sender, e);
         }
 
         public void OnInventoryChanged(object sender, EventArgs e)
@@ -350,7 +377,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             OnPropertyChanged("Medicines");
         }
 
-        public void OnTransferExecute(object sender, EventArgs e)
+        public void OnRefreshRenovationDialog(object sender, EventArgs e)
         {
             _transferMutex.WaitOne();
             _inventoryManagementDialogViewModel.OnShoudRefresh();

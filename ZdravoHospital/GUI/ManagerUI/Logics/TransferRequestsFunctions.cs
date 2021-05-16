@@ -38,7 +38,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public TransferRequestsFunctions()
         {
-            TransferExecuted += ViewModel.ManagerWindowViewModel.GetDashboard().OnTransferExecute;
+            TransferExecuted += ViewModel.ManagerWindowViewModel.GetDashboard().OnRefreshRenovationDialog;
         }
 
         public void RunOrExecute()
@@ -78,8 +78,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             StartTransfer(transferRequest);
 
             /* Create a roomSchedule for this transfer */
-            //TODO: when you finish room renovation handle this
-            /*
+            
             RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
             
             RoomSchedule roomScheduleSender = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution, EndTime = transferRequest.TimeOfExecution.AddMinutes(2), RoomId = transferRequest.SenderRoom, ScheduleType = ReservationType.TRANSFER };
@@ -87,7 +86,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             RoomSchedule roomScheduleReceiver = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution.AddMinutes(2), EndTime = transferRequest.TimeOfExecution.AddMinutes(4), RoomId = transferRequest.RecipientRoom, ScheduleType = ReservationType.TRANSFER };
             roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleReceiver);
-            */
         }
 
         public void ExecuteRequest(TransferRequest transferRequest)
