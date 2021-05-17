@@ -379,6 +379,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 dialog.ShowDialog();
             }
         }
+
+        public void HandleAddClick()
+        {
+            if (InventoryTableVisibility == Visibility.Visible)
+            {
+                dialog = new InventoryAdderSubtractor(SelectedInventory);
+                dialog.ShowDialog();
+            }
+        }
+
         #endregion
 
         #region Events
