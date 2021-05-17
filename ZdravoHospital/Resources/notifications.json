@@ -1,1 +1,16 @@
-[{"Text":"Hello saki welcome to the house.","CreateDate":"2021-04-21T18:52:50.5228455+02:00","UsernameSender":"suki","Title":"Saki's notification","NotificationId":2},{"Text":"Please drink 8 cups of water a day.","CreateDate":"2021-05-04T20:22:40.7598254+02:00","UsernameSender":"suki","Title":"Notification for all","NotificationId":3}]
+[
+  {
+    "Text": "Hello saki welcome to the house.",
+    "CreateDate": "2021-04-21T18:52:50.5228455+02:00",
+    "UsernameSender": "suki",
+    "Title": "Saki's notification",
+    "NotificationId": 2
+  },
+  {
+    "Text": "Please drink 8 cups of water a day.",
+    "CreateDate": "2021-05-04T20:22:40.7598254+02:00",
+    "UsernameSender": "suki",
+    "Title": "Notification for all",
+    "NotificationId": 3
+  }
+]
