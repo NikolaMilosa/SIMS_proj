@@ -393,7 +393,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public void HandleSClick()
         {
             if (MedicineTableVisibility == Visibility.Visible &&
-                (SelectedMedicine.Status != MedicineStatus.PENDING ||
+                (SelectedMedicine.Status != MedicineStatus.PENDING &&
                  SelectedMedicine.Status != MedicineStatus.APPROVED))
             {
                 dialog = new ValidationRequestDialog(SelectedMedicine);
@@ -403,7 +403,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public void HandleRClick()
         {
-            //todo: add when recension dialog is finished
+            if (MedicineTableVisibility == Visibility.Visible && SelectedMedicine.Status == MedicineStatus.REJECTED)
+            {
+                dialog = new RejectionNoteDialog(SelectedMedicine);
+                dialog.ShowDialog();
+            }
         }
 
         #endregion

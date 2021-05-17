@@ -69,5 +69,17 @@
         "IngredientName": "ingredient"
       }
     ]
+  },
+  {
+    "MedicineName": "new medicine",
+    "Supplier": "New supplier",
+    "Status": 0,
+    "Note": null,
+    "Replacements": [],
+    "Ingredients": [
+      {
+        "IngredientName": "new ing"
+      }
+    ]
   }
 ]
