@@ -13,6 +13,16 @@ namespace Model
         public int RecentActions { get; set; }
         public DateTime LastLogoutTime { get; set; }
 
+        public List<PatientNote> PatientNotes 
+        {
+            get {
+                if (PatientNotes == null)
+                    PatientNotes = new List<PatientNote>();
+                return PatientNotes;
+                    }
+            set { }
+        }
+
         public Patient(string healthCardNum, string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID, BloodType bloodType)
         {
             Name = name;

@@ -9,7 +9,7 @@ namespace Model
         public string Content { get; set; }
         public DateTime NotifyTime { get; set; }
 
-        PatientNote() 
+        public PatientNote() 
         { 
         }
     }

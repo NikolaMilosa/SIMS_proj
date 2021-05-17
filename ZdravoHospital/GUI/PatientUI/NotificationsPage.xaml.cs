@@ -49,5 +49,10 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             NavigationService.Navigate(new NotificationDetailsPage((NotificationView)notificationDataGrid.SelectedItem, PatientUsername));
         }
+
+        private void NoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new CreateNotePage(PatientUsername));
+        }
     }
 }
