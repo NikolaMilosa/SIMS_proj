@@ -66,10 +66,7 @@
     "Replacements": [],
     "Ingredients": [
       {
-        "IngredientName": "tester"
-      },
-      {
-        "IngredientName": "some tester"
+        "IngredientName": "ingredient"
       }
     ]
   }

@@ -20,7 +20,6 @@ namespace ZdravoHospital.GUI.ManagerUI.View
     public partial class ManagerWindow : Window
     {
         private ManagerWindowViewModel currentViewModel;
-        private Window dialog;
 
         public ManagerWindow(string au)
         {
@@ -109,6 +108,16 @@ namespace ZdravoHospital.GUI.ManagerUI.View
             else if (e.Key == Key.Add)
             {
                 currentViewModel.HandleAddClick();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.S)
+            {
+                currentViewModel.HandleSClick();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.R)
+            {
+                currentViewModel.HandleRClick();
                 e.Handled = true;
             }
         }

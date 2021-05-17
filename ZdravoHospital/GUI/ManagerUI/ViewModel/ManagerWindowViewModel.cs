@@ -197,6 +197,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             Resources.OpenTransferRequests();
             Resources.OpenPeriods();
             Resources.OpenMedicineRecensions();
+            Resources.OpenDoctors();
         }
 
         private void SetObservables()
@@ -387,6 +388,22 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 dialog = new InventoryAdderSubtractor(SelectedInventory);
                 dialog.ShowDialog();
             }
+        }
+
+        public void HandleSClick()
+        {
+            if (MedicineTableVisibility == Visibility.Visible &&
+                (SelectedMedicine.Status != MedicineStatus.PENDING ||
+                 SelectedMedicine.Status != MedicineStatus.APPROVED))
+            {
+                dialog = new ValidationRequestDialog(SelectedMedicine);
+                dialog.ShowDialog();
+            }
+        }
+
+        public void HandleRClick()
+        {
+            //todo: add when recension dialog is finished
         }
 
         #endregion

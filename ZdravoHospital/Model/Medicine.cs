@@ -33,6 +33,7 @@ namespace Model
 
         public Medicine()
         {
+            Status = MedicineStatus.STAGED;
             Ingredients = new List<Ingredient>();
             Replacements = new List<string>();
         }
