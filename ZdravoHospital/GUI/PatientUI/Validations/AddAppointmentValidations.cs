@@ -1,9 +1,11 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
+using System.Linq;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
@@ -101,6 +103,16 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             Page.Period = new Period();
             Page.Period.PatientUsername = username;
             Page.Period.Duration = 30;
+            Page.Period.PeriodId =GeneratePeriodId();
+        }
+
+        private int GeneratePeriodId()
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            if (periodRepository.GetValues().Count == 0)
+                return 0;
+
+            return periodRepository.GetValues().Last().PeriodId+1;//vrati vrednost za jedan vecu od poslednjeg id-a iz liste
         }
 
         public void GenerateOldPeriod(Period period)
