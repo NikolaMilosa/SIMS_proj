@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Model
 {
@@ -47,7 +48,8 @@ namespace Model
 
         public static void SavePatients()
         {
-            string json = JsonConvert.SerializeObject(patients);
+            List<Patient> patientsList = patients.Values.ToList();
+            string json = JsonConvert.SerializeObject(patientsList);
             File.WriteAllText(@"..\..\..\Resources\patients.json", json);
         }
 

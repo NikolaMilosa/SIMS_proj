@@ -33,7 +33,7 @@
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
                 <TextBlock Text="Content:" Margin="100,0,0,0" FontSize="28"></TextBlock>
                 <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="1,1,2,1">
-                    <TextBox Margin="8,8,8,8" Height="290" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
+                    <TextBox x:Name="ContentTextBox" Margin="8,8,8,8" Height="290" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
                              Text="{Binding Path=PatientNote.Content}">
                     </TextBox>
                 </Border>

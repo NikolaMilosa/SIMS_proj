@@ -8,6 +8,7 @@ namespace Model
     {
         public string Content { get; set; }
         public DateTime NotifyTime { get; set; }
+        public string Title { get; set; }
 
         public PatientNote() 
         { 

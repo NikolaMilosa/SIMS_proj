@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,8 +58,10 @@ namespace ZdravoHospital.GUI.PatientUI
 
         public void LoadPatient(string username)
         {
-            Model.Resources.OpenPatients();
-            Patient = Model.Resources.patients[username];
+           
+            //Patient = Model.Resources.patients[username];
+            PatientRepository patientRepository = new PatientRepository();
+            Patient=patientRepository.GetById(username);
         }
 
         public void SetWindowParameters(string username)
@@ -94,36 +97,40 @@ namespace ZdravoHospital.GUI.PatientUI
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private void logOutButton_Click(object sender, RoutedEventArgs e)
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             LogOutDialog logOutDialog = new LogOutDialog(this);
             logOutDialog.ShowDialog();
         }
 
-        private void addAppointmentButton_Click(object sender, RoutedEventArgs e)
+        private void AddAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new AddAppointmentPage(null, true, Patient.Username));
         }
 
-        private void appointmentsButton_Click(object sender, RoutedEventArgs e)
+        private void AppointmentsButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new AppointmentPage(Patient.Username));
         }
 
-        private void notificationsButton_Click(object sender, RoutedEventArgs e)
+        private void NotificationsButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new NotificationsPage(Patient.Username));
         }
 
-        private void appointmentHistoryButton_Click(object sender, RoutedEventArgs e)
+        private void AppointmentHistoryButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new AppointmentHistoryPage(Patient.Username));
         }
 
-        private void surveyButton_Click(object sender, RoutedEventArgs e)
+        private void SurveyButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new SurveyPage(this));
         }
 
+        private void NoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(new NotesPage(Patient.Username));
+        }
     }
 }

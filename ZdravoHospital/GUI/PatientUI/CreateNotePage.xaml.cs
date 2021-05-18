@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.Validations;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -37,14 +39,35 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new NotificationsPage(PatientUsername));
+            NavigationService.Navigate(new NotesPage(PatientUsername));
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(PatientNote.NotifyTime.ToString()+" razmak"+PatientNote.Content);
-            //Model.Resources.patients[PatientUsername].PatientNotes.Add(PatientNote);
+            //MessageBox.Show(PatientNote.NotifyTime.ToString()+" razmak"+PatientNote.Content);
+            if (!IsFormFilled())
+                return;
 
+            AddNoteToPatient();
+            NavigationService.Navigate(new NotesPage(PatientUsername));
+        }
+
+        private void AddNoteToPatient()
+        {
+            PatientRepository patientRepository = new PatientRepository();
+            patientRepository.GetById(PatientUsername).PatientNotes.Add(PatientNote);
+            patientRepository.Update(null);
+        }
+
+        private bool IsFormFilled()
+        {
+            if (ContentTextBox.Text == null || PatientNote.NotifyTime < DateTime.Now)
+            {
+                Validate.ShowOkDialog("Warning","Fill out the form!");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Model.Repository
 {
@@ -12,7 +13,12 @@ namespace Model.Repository
 
         public override Patient GetById(string id)
         {
-            throw new NotImplementedException();
+            List<Patient> patients = GetValues();
+            foreach(Patient patient in patients)
+                if (patient.Username.Equals(id))
+                    return patient;
+
+            return null;
         }
 
         public override void DeleteById(string id)
@@ -22,7 +28,7 @@ namespace Model.Repository
 
         public override void Update(Patient newValue)
         {
-            throw new NotImplementedException();
+            Save();
         }
     }
 }
