@@ -26,7 +26,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             {
                 Patient patient = LoadPatient((string)username);
                 GenerateNoteNotificationDialogs(patient.PatientNotes);
-                Sleep(5);
+                Sleep(1);
             }
         }
 
@@ -34,7 +34,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             foreach (PatientNote note in patientNotes)
             {
-                if (IsWithin5Minutes(note.NotifyTime))
+                if (IsWithinGivenMinutes(note.NotifyTime,1))
                     ShowOkDialog(note.Title,note.Content);
 
             }
@@ -145,16 +145,16 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
 
             foreach (DateTime dateTime in notifications)
-                if (IsWithin5Minutes(dateTime))
+                if (IsWithinGivenMinutes(dateTime,5))
                     ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));
 
             return notifications;
         }
 
-        public static bool IsWithin5Minutes(DateTime dateTime)
+        public static bool IsWithinGivenMinutes(DateTime dateTime,int minutes)
         {
             bool itIs = false;
-            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(5))
+            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes))
                 itIs = true;
 
             return itIs;
