@@ -100,10 +100,12 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void GenerateNewPeriod(string username)
         {
-            Page.Period = new Period();
-            Page.Period.PatientUsername = username;
-            Page.Period.Duration = 30;
-            Page.Period.PeriodId =GeneratePeriodId();
+            Page.Period = new Period
+            {
+                PatientUsername = username,
+                Duration = 30,
+                PeriodId = GeneratePeriodId()
+            };
         }
 
         private int GeneratePeriodId()
