@@ -41,15 +41,16 @@
                             >
                 <StackPanel Orientation="Horizontal" Height="50">
                     <Image Source="/Images/PatientUI/notebookIconBlack.png" Margin="0,0,0,0" Width="32" Height="32"></Image>
-                    <TextBlock Text="Write self note" Foreground="Black" FontWeight="Bold"  FontSize="20" Margin="0,10,0,0"></TextBlock>
+                    <TextBlock Text="Write note" Foreground="Black" FontWeight="Bold"  FontSize="20" Margin="0,10,0,0"></TextBlock>
                 </StackPanel>
             </Button>
 
             <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True"
                       x:Name="NotesDataGrid" Grid.Row="1" Grid.Column="1"  
-                      ItemsSource="{Binding Notes}" 
+                      ItemsSource="{Binding ObservableNotes}" 
                       ScrollViewer.CanContentScroll="True" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      MouseDoubleClick="NotesDataGrid_MouseDoubleClick"
                       >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Path=Title}"></DataGridTextColumn>

@@ -19,27 +19,37 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="350"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="250"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <TextBlock Text="Title:" Margin="100,0,0,0" FontSize="28"></TextBlock>
+            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="1,1,2,1">
+                <TextBox x:Name="TitleTextBox" Margin="8,8,8,8" Height="30" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
+                             Text="{Binding Path=PatientNote.Title}">
+                </TextBox>
+            </Border>
+            </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
                 <Image Source="/Images/PatientUI/notebookIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
                 <TextBlock Text="Write note" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                 <TextBlock Text="Content:" Margin="100,0,0,0" FontSize="28"></TextBlock>
                 <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="1,1,2,1">
-                    <TextBox x:Name="ContentTextBox" Margin="8,8,8,8" Height="290" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
+                    <TextBox x:Name="ContentTextBox" Margin="8,8,8,8" Height="180" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
                              Text="{Binding Path=PatientNote.Content}">
                     </TextBox>
                 </Border>
              </StackPanel>
             
-            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
                 <TextBlock Text="Select time when to be notified:" Margin="100,10,0,20" FontSize="28"/>
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -58,7 +68,7 @@
                
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center">
                 <Button Name="ConfirmButton" Content="Confirm" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="ConfirmButton_Click" Margin="0,0,150,0"></Button>
                 <Button Name="CancelButton" Content="Cancel" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="CancelButton_Click"></Button>
             </StackPanel>

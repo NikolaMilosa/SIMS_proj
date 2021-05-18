@@ -44,7 +44,6 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(PatientNote.NotifyTime.ToString()+" razmak"+PatientNote.Content);
             if (!IsFormFilled())
                 return;
 
@@ -61,7 +60,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private bool IsFormFilled()
         {
-            if (ContentTextBox.Text == null || PatientNote.NotifyTime < DateTime.Now)
+            if (ContentTextBox.Text == null || PatientNote.NotifyTime < DateTime.Now || TitleTextBox.Text==null)
             {
                 Validate.ShowOkDialog("Warning","Fill out the form!");
                 return false;

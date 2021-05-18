@@ -76,6 +76,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             StartNotificationThread();
             StartTrollThread();
+            StartNoteThread();
         }
 
         private void StartNotificationThread()
@@ -83,6 +84,13 @@ namespace ZdravoHospital.GUI.PatientUI
             Thread notificationThread= new Thread(new ParameterizedThreadStart(Validate.TherapyNotification));
             notificationThread.SetApartmentState(ApartmentState.STA);
             notificationThread.Start(Patient.Username);
+        }
+
+        private void StartNoteThread()
+        {
+            Thread notificationNoteThread = new Thread(new ParameterizedThreadStart(Validate.NoteNotification));
+            notificationNoteThread.SetApartmentState(ApartmentState.STA);
+            notificationNoteThread.Start(Patient.Username);
         }
 
         private void StartTrollThread()

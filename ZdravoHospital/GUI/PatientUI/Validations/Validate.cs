@@ -8,11 +8,37 @@ using System.Windows;
 using System.Windows.Controls;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
 using System.Threading;
+using Model.Repository;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public static class Validate
     {
+        public static Patient LoadPatient(string username)
+        {
+            PatientRepository repository = new PatientRepository();
+            return repository.GetById(username);
+        }
+
+        public static void NoteNotification(object username)
+        {
+            while(true)
+            {
+                Patient patient = LoadPatient((string)username);
+                GenerateNoteNotificationDialogs(patient.PatientNotes);
+                Sleep(5);
+            }
+        }
+
+        private static void GenerateNoteNotificationDialogs(List<PatientNote> patientNotes)
+        {
+            foreach (PatientNote note in patientNotes)
+            {
+                if (IsWithin5Minutes(note.NotifyTime))
+                    ShowOkDialog(note.Title,note.Content);
+
+            }
+        }
 
         public static void ShowOkDialog(string title, string content)
         {
@@ -25,7 +51,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             if (PatientWindow.RecentActionsNum >= 5)
             {
                 detected = true;
-                ShowOkDialog("Troll detected", "Too much recent actions have been detected! Please wait couple of minutes then try again!");
+                ShowOkDialog("Troll detected", "Too much recent actions have been detected! Please contact our support!");
             }
             return detected;
         }
@@ -91,7 +117,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             Patient user = (Patient)patient;
             while (true)
             {
-                if (user.LastLogoutTime.AddMinutes(5) <= DateTime.Now)
+                if (user.LastLogoutTime.AddMinutes(5) <= DateTime.Now && user.RecentActions<5)
                     PatientWindow.RecentActionsNum = 0;
                 else
                     PatientWindow.RecentActionsNum = user.RecentActions;
