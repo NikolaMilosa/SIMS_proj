@@ -51,7 +51,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             else
                 Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
 
-            Resources.SavePeriods();
+            //Resources.SavePeriods();
         }
 
         public void SerializeNewPeriod()
