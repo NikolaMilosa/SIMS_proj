@@ -12,7 +12,7 @@ namespace Model.Repository
 
         public Repository(string path)
         {
-            this.path = path;
+            path = this.path;
             values = JsonConvert.DeserializeObject<List<TValue>>(File.ReadAllText(path));
         }
 

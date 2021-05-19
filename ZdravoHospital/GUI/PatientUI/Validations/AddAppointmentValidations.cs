@@ -56,8 +56,10 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void SerializeNewPeriod()
         {
-            Resources.OpenPeriods();
-            Resources.periods.Add(Page.Period);
+            //Resources.OpenPeriods();
+            //Resources.periods.Add(Page.Period);
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Create(Page.Period);
             Validate.ShowOkDialog("Appointment", "Appointment is succesfully added!");
         }
 

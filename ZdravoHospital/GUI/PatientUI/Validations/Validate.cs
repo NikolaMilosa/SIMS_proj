@@ -58,7 +58,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static bool IsSurveyAvailable(string username)
         {
             bool availability = false;
-            Resources.OpenPeriods();
+            //Resources.OpenPeriods();
             int numOfPeriods = GetCompletedPeriodsNum(username);
             if (numOfPeriods >= 3 && !AnyRecentSurveys(username))
                 availability = true;
@@ -68,7 +68,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static int GetCompletedPeriodsNum(string username)
         {
             int periodNum = 0;
-            foreach (Period period in Model.Resources.periods)
+            PeriodRepository periodRepository = new PeriodRepository();
+            //foreach (Period period in Model.Resources.periods)
+            foreach (Period period in periodRepository.GetValues())
             {
                 if (period.PatientUsername.Equals(username) && period.HasPassed())
                 {
@@ -96,12 +98,13 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static void TherapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
-            Resources.OpenPeriods();
-
+            //Resources.OpenPeriods();
+            PeriodRepository periodRepository = new PeriodRepository();
             while (true)
             {
 
-                foreach (Period period in Resources.periods)
+                //foreach (Period period in Resources.periods)
+                foreach (Period period in periodRepository.GetValues())
                 {
                     if (period.PatientUsername.Equals(username) && period.Prescription != null)
                     {
