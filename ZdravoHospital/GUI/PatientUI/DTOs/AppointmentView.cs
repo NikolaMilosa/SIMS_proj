@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,10 +14,11 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
       
         public AppointmentView(Period period)
         {
-            Model.Resources.OpenDoctors();
+            DoctorRepository doctorRepository = new DoctorRepository();
             Period = period;
-            DoctorName = Resources.doctors[period.DoctorUsername].Name;
-            DoctorSurname= Resources.doctors[period.DoctorUsername].Surname;
+            Doctor doctor = doctorRepository.GetById(period.DoctorUsername);
+            DoctorName = doctor.Name;
+            DoctorSurname= doctor.Surname;
         }
     }
 }

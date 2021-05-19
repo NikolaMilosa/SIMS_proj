@@ -64,9 +64,9 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public  int GetFreeRoom(Period checkedPeriod)//vraca prvi slobodan Appointment room za zadati termin
         {
             int roomId = -1;
-            Model.Resources.OpenRooms();
-            
-            foreach (Room room in Model.Resources.rooms.Values)
+            RoomRepository roomRepository = new RoomRepository();
+            List<Room> rooms = roomRepository.GetValues();
+            foreach (Room room in rooms)
                 if (GetFreeRoomId(room, checkedPeriod) != -1)
                     return room.Id;
 

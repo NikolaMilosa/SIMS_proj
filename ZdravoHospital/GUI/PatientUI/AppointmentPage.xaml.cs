@@ -59,9 +59,9 @@ namespace ZdravoHospital.GUI.PatientUI
         private void RemoveAppointment(AppointmentView appointmentView)
         {
             ++PatientWindow.RecentActionsNum;
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.DeleteById(appointmentView.Period.PeriodId);
             AppointmentList.Remove(appointmentView);
-            Model.Resources.periods.Remove(appointmentView.Period);
-            Model.Resources.SavePeriods();
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)

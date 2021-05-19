@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -75,8 +76,9 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void PeriodSuccessfulyRated()
         {
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Update(AppointmentView.Period);
             Validations.Validate.ShowOkDialog("Rated", "Period successfully rated!");
-            Model.Resources.SavePeriods();
         }
 
         private bool IsPeriodRated()

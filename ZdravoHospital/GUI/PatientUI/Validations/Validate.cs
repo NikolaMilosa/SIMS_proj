@@ -62,8 +62,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static bool AnyRecentSurveys(string username)
         {
             bool recentSurvey = false;
-            Model.Resources.OpenSurveys();
-            foreach (Survey survey in Resources.surveys)
+            SurveyRepository surveyRepository = new SurveyRepository();
+            List<Survey> surveys = surveyRepository.GetValues();
+            foreach (Survey survey in surveys)
             {
                 if (survey.PatientUsername.Equals(username) && survey.IsWithin2WeeksFromNow())
                 {

@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,19 +36,28 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             PatientUsername = username;
             NotificationView = notificationView;
+            NotificationView.Seen = true;
         }
 
         private void SerializeReadNotification()
         {
-            foreach (PersonNotification personNotification in Model.Resources.personNotifications)
+
+            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
+            personNotificationRepository.Update(GetPersonNotification());
+        }
+
+        private PersonNotification GetPersonNotification()
+        {
+            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
+            List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
+            foreach (PersonNotification personNotification in personNotifications)
             {
-                if (personNotification.NotificationId.Equals(NotificationView.Notification.NotificationId) && personNotification.Username.Equals(PatientUsername))
-                { 
-                    personNotification.IsRead = true;
-                    break;
+                if (personNotification.NotificationId.Equals(NotificationView.Notification.NotificationId))
+                {
+                    return personNotification; 
                 }
             }
-            Model.Resources.SavePersonNotifications();
+            return null;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

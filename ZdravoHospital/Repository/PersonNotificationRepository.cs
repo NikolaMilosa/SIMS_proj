@@ -22,7 +22,9 @@ namespace Model.Repository
 
         public override void Update(PersonNotification newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values[values.FindIndex(val => val.Username.Equals(newValue.Username) && val.NotificationId.Equals(newValue.NotificationId))] = newValue;
+            Save(values);
         }
     }
 }

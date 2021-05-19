@@ -73,10 +73,11 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void FillDoctorList()
         {
-            Resources.OpenDoctors();
+           
             RestartDoctorList();
-
-            foreach (Doctor doctor in Resources.doctors.Values)
+            DoctorRepository doctorRepository = new DoctorRepository();
+            List<Doctor> doctors = doctorRepository.GetValues();
+            foreach (Doctor doctor in doctors)
             {
                 if (doctor.SpecialistType.SpecializationName.Equals("Doctor"))
                     Page.DoctorList.Add(new DoctorView(doctor));

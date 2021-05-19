@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,8 +15,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
 
         public NotificationView(PersonNotification personNotification,string username)
         {
-            Resources.OpenNotifications();
-            foreach(Notification notification in Resources.notifications)
+            NotificationRepository notificationRepository = new NotificationRepository();
+            
+            foreach(Notification notification in notificationRepository.GetValues())
             {
                 if (notification.NotificationId == personNotification.NotificationId)
                 {
@@ -24,13 +26,12 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
                 }
             }
             Seen = personNotification.IsRead;
-            Model.Resources.OpenAccounts();
-            Model.RoleType role = Resources.accounts[Notification.UsernameSender].Role;
+            RoleType role = GetRoleType(username);
             switch(role)
             {
                 case RoleType.DOCTOR:
-                    Resources.OpenDoctors();
-                    From = role.ToString() + " " + Resources.doctors[Notification.UsernameSender].Name + " " + Resources.doctors[Notification.UsernameSender].Surname;
+                    Doctor doctor = GetDoctor(username);
+                    From = role.ToString() + " " + doctor.Name + " " + doctor.Surname;
                     break;
 
                 case RoleType.SECERATRY:
@@ -40,6 +41,17 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModel
                     From = "Manager Nikola Milosavljevic";
                     break;
             }
+        }
+
+        private RoleType GetRoleType(string username)
+        {
+            AccountRepository accountRepository = new AccountRepository();
+            return accountRepository.GetById(username).Role;
+        }
+        private Doctor GetDoctor(string username)
+        {
+            DoctorRepository doctorRepository = new DoctorRepository();
+            return doctorRepository.GetById(username);
         }
 
     }

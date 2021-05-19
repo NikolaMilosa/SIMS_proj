@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,6 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             Survey = new Survey();
             DataContext = this;
-            Model.Resources.OpenSurveys();
             PatientWindow = patientWindow;
 
             
@@ -72,8 +72,8 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             Survey.CreationDate = DateTime.Now;
             Survey.PatientUsername = PatientWindow.PatientUsername;
-            Model.Resources.surveys.Add(Survey);
-            Model.Resources.SaveSurveys();
+            SurveyRepository surveyRepository = new SurveyRepository();
+            surveyRepository.Create(Survey);
         }
     }
 }

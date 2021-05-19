@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,8 +36,9 @@ namespace ZdravoHospital.GUI.PatientUI
         private void FillList()
         {
             NotificationList = new ObservableCollection<NotificationView>();
-            Model.Resources.OpenPersonNotifications();
-            foreach(PersonNotification personNotification in Model.Resources.personNotifications)
+            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
+            List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
+            foreach(PersonNotification personNotification in personNotifications)
             {
                 if (personNotification.Username.Equals(PatientUsername))
                 {

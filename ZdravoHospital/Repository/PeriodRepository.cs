@@ -13,22 +13,22 @@ namespace Model.Repository
 
         public override Period GetById(int id)
         {
-            List<Period> periods = GetValues();
-            foreach (Period period in periods)
-                if (period.PeriodId == id)
-                    return period;
-
-            return null;
+            var values = GetValues();
+            return values.Find(value => value.PeriodId.Equals(id));
         }
 
         public override void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values.RemoveAll(value => value.PeriodId.Equals(id));
+            Save(values);
         }
 
         public override void Update(Period newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values[values.FindIndex(val => val.PeriodId.Equals(newValue.PeriodId))] = newValue;
+            Save(values);
         }
     }
 }

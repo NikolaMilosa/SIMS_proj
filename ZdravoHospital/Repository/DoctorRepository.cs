@@ -12,7 +12,8 @@ namespace Model.Repository
 
         public override Doctor GetById(string id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            return values.Find(value => value.Username.Equals(id));
         }
 
         public override void DeleteById(string id)
