@@ -5,7 +5,17 @@
     "RecensionNote": ""
   },
   {
+    "MedicineName": "tester",
+    "DoctorUsername": "zigara",
+    "RecensionNote": ""
+  },
+  {
     "MedicineName": "bromazepam",
+    "DoctorUsername": "zigara",
+    "RecensionNote": ""
+  },
+  {
+    "MedicineName": "new medicine",
     "DoctorUsername": "zigara",
     "RecensionNote": ""
   }

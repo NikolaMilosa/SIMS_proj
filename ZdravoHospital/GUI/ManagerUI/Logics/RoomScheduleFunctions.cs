@@ -8,6 +8,7 @@ using System.Windows;
 using Model;
 
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
@@ -23,7 +24,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return _roomScheduleMutex;
         }
 
-        public RoomScheduleFunctions() { }
+        public RoomScheduleFunctions(){ }
 
         public void RunOrExecute()
         {
