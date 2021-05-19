@@ -9,7 +9,6 @@ namespace Model.Repository
 
         public RoomRepository() : base(path)
         {
-
         }
 
         public Room FindRoomByPrio(RoomType roomType)
@@ -44,12 +43,16 @@ namespace Model.Repository
 
         public override void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values.RemoveAll(val => val.Id.Equals(id));
+            Save(values);
         }
 
         public override void Update(Room newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values[values.FindIndex(val => val.Id.Equals(newValue.Id))] = newValue;
+            Save(values);
         }
     }
 }
