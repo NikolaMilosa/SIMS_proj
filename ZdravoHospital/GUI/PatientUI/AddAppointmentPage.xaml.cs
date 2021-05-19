@@ -31,7 +31,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             InitializeComponent();
             DataContext = this;
-            SetProperties(mode);
+            SetProperties(mode,username);
             GenerateComboBoxes(period,username);
         }
 
@@ -42,9 +42,9 @@ namespace ZdravoHospital.GUI.PatientUI
             Validations.GeneratePeriod(period, username);
         }
 
-        private void SetProperties(bool mode)
+        private void SetProperties(bool mode,string username)
         {
-            Validations = new AddAppointmentValidations(this);
+            Validations = new AddAppointmentValidations(this,username);
             Mode = mode;
             PeriodList = new ObservableCollection<TimeSpan>();
         }

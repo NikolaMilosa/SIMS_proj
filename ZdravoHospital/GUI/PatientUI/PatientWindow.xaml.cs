@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Validations;
 
 namespace ZdravoHospital.GUI.PatientUI
@@ -25,7 +26,7 @@ namespace ZdravoHospital.GUI.PatientUI
         public event PropertyChangedEventHandler PropertyChanged;
         public string WelcomeMessage { get; set; }
 
-        public string PatientUsername { get; set; }
+        public  string PatientUsername { get; set; }
 
         private bool _SurveyAvailable { get; set; }
         public bool SurveyAvailable {
@@ -78,21 +79,21 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void StartNotificationThread()
         {
-            Thread notificationThread= new Thread(new ParameterizedThreadStart(Validate.TherapyNotification));
+            Thread notificationThread= new Thread(new ParameterizedThreadStart(ThreadTherapyFunctions.TherapyNotification));
             notificationThread.SetApartmentState(ApartmentState.STA);
             notificationThread.Start(PatientUsername);
         }
 
         private void StartNoteThread()
         {
-            Thread notificationNoteThread = new Thread(new ParameterizedThreadStart(Validate.NoteNotification));
+            Thread notificationNoteThread = new Thread(new ParameterizedThreadStart(ThreadNoteFunctions.NoteNotification));
             notificationNoteThread.SetApartmentState(ApartmentState.STA);
             notificationNoteThread.Start(PatientUsername);
         }
 
         private void StartTrollThread()
         {
-            Thread trollThread = new Thread(new ParameterizedThreadStart(Validate.ResetActionsNum));
+            Thread trollThread = new Thread(new ParameterizedThreadStart(ThreadTrollFunctions.ResetActionsNum));
             trollThread.SetApartmentState(ApartmentState.STA);
             trollThread.Start(PatientUsername);
         }

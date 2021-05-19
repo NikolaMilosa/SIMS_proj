@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
@@ -10,10 +11,12 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
     public class SuggestAppointmentValidations
     {
         public AddAppointmentPage Page { get; set; }
+
+        public PeriodFunctions PeriodFunctions { get; set; }
         public SuggestAppointmentValidations(AddAppointmentPage addAppointmentPage)
         {
             Page = addAppointmentPage;
-
+            PeriodFunctions = new PeriodFunctions(Page.Period.PatientUsername);
         }
 
         public bool IsOnlyTimeSelected()
@@ -64,7 +67,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
                 {
                     Page.Period.StartTime = DateTime.Today.AddDays(daysFromToday);
                     Page.Period.StartTime += timeSpan;
-                    if (Validate.CheckPeriodAvailability(Page.Period, false))
+                    if (PeriodFunctions.CheckPeriodAvailability(Page.Period, false))
                         Page.PeriodList.Add(timeSpan);
                 }
         }
@@ -73,7 +76,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             Page.Period.StartTime = (DateTime)Page.selectDate.SelectedDate;
             Page.Period.StartTime += (TimeSpan)Page.selectTime.SelectedItem;
-            if (!Validate.CheckPeriodAvailability(Page.Period, true))
+            if (!PeriodFunctions.CheckPeriodAvailability(Page.Period, true))
                 return;
 
             AddDoctorsToList();
@@ -81,7 +84,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void AddDoctorsToList()//if they are free at selected time
         {
-            Validate.SuggestDoctor(Page.Period, Page.DoctorList);
+            PeriodFunctions.SuggestDoctor(Page.Period, Page.DoctorList);
             if (Page.DoctorList.Count == 0)
                 Validate.ShowOkDialog("Warning", "There is no available doctor at the selected time!");
             else

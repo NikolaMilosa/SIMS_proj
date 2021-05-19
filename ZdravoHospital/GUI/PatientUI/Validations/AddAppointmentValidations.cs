@@ -6,16 +6,18 @@ using System.Collections.ObjectModel;
 using System.Text;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
 using System.Linq;
+using ZdravoHospital.GUI.PatientUI.Logics;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public class AddAppointmentValidations
     {
         public AddAppointmentPage Page { get; set; }
-
-        public AddAppointmentValidations(AddAppointmentPage addAppointmentPage)
+        public PeriodFunctions PeriodFunctions { get; set; }
+        public AddAppointmentValidations(AddAppointmentPage addAppointmentPage,string username)
         {
             Page = addAppointmentPage;
+            PeriodFunctions = new PeriodFunctions(username);
         }
 
         public bool CheckPeriodAvailibility()
@@ -27,7 +29,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
             FillOutPeriod();
 
-            if (!Validate.CheckPeriodAvailability(Page.Period, true) || Page.Period.RoomId == -1)
+            if (!PeriodFunctions.CheckPeriodAvailability(Page.Period, true) || Page.Period.RoomId == -1)
                 available = false;
 
             return available;
@@ -51,7 +53,6 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             else
                 Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
 
-            //Resources.SavePeriods();
         }
 
         public void SerializeNewPeriod()
@@ -67,7 +68,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             Page.Period.StartTime = Page.Period.StartTime.Date + (TimeSpan)Page.selectTime.SelectedItem;
             Page.Period.DoctorUsername = ((DoctorView)Page.selectDoctor.SelectedItem).Username;
-            Page.Period.RoomId = Validate.GetFreeRoom(Page.Period);
+            Page.Period.RoomId = PeriodFunctions.GetFreeRoom(Page.Period);
         }
 
         public void FillDoctorList()
