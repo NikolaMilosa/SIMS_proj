@@ -8,11 +8,37 @@ using System.Windows;
 using System.Windows.Controls;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
 using System.Threading;
+using Model.Repository;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public static class Validate
     {
+        public static Patient LoadPatient(string username)
+        {
+            PatientRepository repository = new PatientRepository();
+            return repository.GetById(username);
+        }
+
+        public static void NoteNotification(object username)
+        {
+            while(true)
+            {
+                Patient patient = LoadPatient((string)username);
+                GenerateNoteNotificationDialogs(patient.PatientNotes);
+                Sleep(1);
+            }
+        }
+
+        private static void GenerateNoteNotificationDialogs(List<PatientNote> patientNotes)
+        {
+            foreach (PatientNote note in patientNotes)
+            {
+                if (IsWithinGivenMinutes(note.NotifyTime,1))
+                    ShowOkDialog(note.Title,note.Content);
+
+            }
+        }
 
         public static void ShowOkDialog(string title, string content)
         {
@@ -25,14 +51,14 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             if (PatientWindow.RecentActionsNum >= 5)
             {
                 detected = true;
-                ShowOkDialog("Troll detected", "Too much recent actions have been detected! Please wait couple of minutes then try again!");
+                ShowOkDialog("Troll detected", "Too much recent actions have been detected! Please contact our support!");
             }
             return detected;
         }
         public static bool IsSurveyAvailable(string username)
         {
             bool availability = false;
-            Resources.OpenPeriods();
+            //Resources.OpenPeriods();
             int numOfPeriods = GetCompletedPeriodsNum(username);
             if (numOfPeriods >= 3 && !AnyRecentSurveys(username))
                 availability = true;
@@ -42,7 +68,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static int GetCompletedPeriodsNum(string username)
         {
             int periodNum = 0;
-            foreach (Period period in Model.Resources.periods)
+            PeriodRepository periodRepository = new PeriodRepository();
+            //foreach (Period period in Model.Resources.periods)
+            foreach (Period period in periodRepository.GetValues())
             {
                 if (period.PatientUsername.Equals(username) && period.HasPassed())
                 {
@@ -70,12 +98,13 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public static void TherapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
-            Resources.OpenPeriods();
-
+            //Resources.OpenPeriods();
+            PeriodRepository periodRepository = new PeriodRepository();
             while (true)
             {
 
-                foreach (Period period in Resources.periods)
+                //foreach (Period period in Resources.periods)
+                foreach (Period period in periodRepository.GetValues())
                 {
                     if (period.PatientUsername.Equals(username) && period.Prescription != null)
                     {
@@ -91,7 +120,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             Patient user = (Patient)patient;
             while (true)
             {
-                if (user.LastLogoutTime.AddMinutes(5) <= DateTime.Now)
+                if (user.LastLogoutTime.AddMinutes(5) <= DateTime.Now && user.RecentActions<5)
                     PatientWindow.RecentActionsNum = 0;
                 else
                     PatientWindow.RecentActionsNum = user.RecentActions;
@@ -119,16 +148,16 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
 
             foreach (DateTime dateTime in notifications)
-                if (IsWithin5Minutes(dateTime))
+                if (IsWithinGivenMinutes(dateTime,5))
                     ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));
 
             return notifications;
         }
 
-        public static bool IsWithin5Minutes(DateTime dateTime)
+        public static bool IsWithinGivenMinutes(DateTime dateTime,int minutes)
         {
             bool itIs = false;
-            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(5))
+            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes))
                 itIs = true;
 
             return itIs;

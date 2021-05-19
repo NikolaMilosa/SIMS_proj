@@ -1,1 +1,74 @@
-{"ljuba":{"IsGuest":false,"HealthCardNumber":"123","BloodType":2,"MedicineAllergens":["Brufen"],"IngredientAllergens":["tester two"],"RecentActions":0,"LastLogoutTime":"2021-05-07T00:57:28.4357233+02:00","Name":"Stefan","Surname":"Ljubovic","Email":"ljuba@gmail.com","DateOfBirth":"1999-04-23T00:00:00","PhoneNumber":"060123456","Username":"ljuba","ParentsName":"Milojko","MaritalStatus":3,"Gender":0,"CitizenId":"789","Address":{"StreetName":null,"Number":null,"City":{"PostalCode":0,"Name":null,"Country":{"Name":null}}}},"saki":{"IsGuest":false,"HealthCardNumber":"456","BloodType":5,"MedicineAllergens":[],"IngredientAllergens":[],"RecentActions":0,"LastLogoutTime":"2021-05-14T22:17:19.0113427+02:00","Name":"Nikolaj","Surname":"Satara","Email":"saki@gmail.com","DateOfBirth":"1963-05-17T00:00:00","PhoneNumber":"066987654","Username":"saki","ParentsName":"Milojko","MaritalStatus":1,"Gender":0,"CitizenId":"624","Address":{"StreetName":null,"Number":null,"City":{"PostalCode":0,"Name":null,"Country":{"Name":null}}}}}
+[
+  {
+    "IsGuest": false,
+    "HealthCardNumber": "123",
+    "BloodType": 2,
+    "MedicineAllergens": [
+      "Brufen"
+    ],
+    "IngredientAllergens": [
+      "tester two"
+    ],
+    "RecentActions": 0,
+    "LastLogoutTime": "2021-05-18T17:45:43.7669194+02:00",
+    "PatientNotes": [
+      {
+        "Content": "sadasda",
+        "NotifyTime": "2021-05-19T00:52:09.729+02:00",
+        "Title": "Notifikuj"
+      }
+    ],
+    "Name": "Stefan",
+    "Surname": "Ljubovic",
+    "Email": "ljuba@gmail.com",
+    "DateOfBirth": "1999-04-23T00:00:00",
+    "PhoneNumber": "060123456",
+    "Username": "ljuba",
+    "ParentsName": "Milojko",
+    "MaritalStatus": 3,
+    "Gender": 0,
+    "CitizenId": "789",
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  },
+  {
+    "IsGuest": false,
+    "HealthCardNumber": "456",
+    "BloodType": 5,
+    "MedicineAllergens": [],
+    "IngredientAllergens": [],
+    "RecentActions": 0,
+    "LastLogoutTime": "2021-05-18T17:30:44.6450586+02:00",
+    "PatientNotes": [],
+    "Name": "Nikolaj",
+    "Surname": "Satara",
+    "Email": "saki@gmail.com",
+    "DateOfBirth": "1963-05-17T00:00:00",
+    "PhoneNumber": "066987654",
+    "Username": "saki",
+    "ParentsName": "Milojko",
+    "MaritalStatus": 1,
+    "Gender": 0,
+    "CitizenId": "624",
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  }
+]

@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,9 +35,11 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void FillList(string username)
         {
-            Model.Resources.OpenPeriods();
+            PeriodRepository periodRepository = new PeriodRepository();
+            //Model.Resources.OpenPeriods();
             AppointmentList = new ObservableCollection<AppointmentView>();
-            foreach (Period period in Model.Resources.periods)
+            //foreach (Period period in Model.Resources.periods)
+            foreach (Period period in periodRepository.GetValues())
             {
                 if (period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration)>DateTime.Now) 
                 {

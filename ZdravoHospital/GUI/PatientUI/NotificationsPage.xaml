@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
+              
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
@@ -39,6 +40,8 @@
                         <Setter Property="FontSize" Value="20"></Setter>
                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                         <Setter Property="Height" Value="75"></Setter>
+                        <Setter Property="ScrollViewer.CanContentScroll" Value="True"></Setter>
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"></Setter>
                     </Style>
                 </DataGrid.Resources>
 
@@ -71,7 +74,9 @@
                 </DataGrid.CellStyle>
 
             </DataGrid>
-            
+
+          
+
         </Grid>
         </Border>
 </Page>

@@ -1,9 +1,11 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using ZdravoHospital.GUI.PatientUI.ViewModel;
+using System.Linq;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
@@ -49,13 +51,15 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             else
                 Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
 
-            Resources.SavePeriods();
+            //Resources.SavePeriods();
         }
 
         public void SerializeNewPeriod()
         {
-            Resources.OpenPeriods();
-            Resources.periods.Add(Page.Period);
+            //Resources.OpenPeriods();
+            //Resources.periods.Add(Page.Period);
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Create(Page.Period);
             Validate.ShowOkDialog("Appointment", "Appointment is succesfully added!");
         }
 
@@ -98,9 +102,21 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void GenerateNewPeriod(string username)
         {
-            Page.Period = new Period();
-            Page.Period.PatientUsername = username;
-            Page.Period.Duration = 30;
+            Page.Period = new Period
+            {
+                PatientUsername = username,
+                Duration = 30,
+                PeriodId = GeneratePeriodId()
+            };
+        }
+
+        private int GeneratePeriodId()
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            if (periodRepository.GetValues().Count == 0)
+                return 0;
+
+            return periodRepository.GetValues().Last().PeriodId+1;//vrati vrednost za jedan vecu od poslednjeg id-a iz liste
         }
 
         public void GenerateOldPeriod(Period period)
