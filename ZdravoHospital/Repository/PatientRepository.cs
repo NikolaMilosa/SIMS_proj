@@ -28,7 +28,7 @@ namespace Model.Repository
 
         public override void Update(Patient newValue)
         {
-            Save();
+            //Save();
         }
     }
 }

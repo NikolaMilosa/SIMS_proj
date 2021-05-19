@@ -79,6 +79,9 @@
     "Ingredients": [
       {
         "IngredientName": "new ing"
+      },
+      {
+        "IngredientName": "other ing"
       }
     ]
   }

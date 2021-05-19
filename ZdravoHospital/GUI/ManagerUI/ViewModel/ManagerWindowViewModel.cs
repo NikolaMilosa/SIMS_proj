@@ -339,7 +339,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedInventory != null)
                     dialog = new AddOrEditInventoryDialog(SelectedInventory);
             }
-            else if (MedicineTableVisibility == Visibility.Visible)
+            else if (MedicineTableVisibility == Visibility.Visible && 
+                     (SelectedMedicine.Status != MedicineStatus.PENDING &&
+                      SelectedMedicine.Status != MedicineStatus.APPROVED))
             {
                 if (SelectedMedicine != null)
                     dialog = new AddOrEditMedicineDialog(SelectedMedicine);
