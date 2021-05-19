@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Model;
+using Newtonsoft.Json;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.ValidationRules;
@@ -159,12 +161,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public ManagerWindowViewModel(string activeUser)
         {
             dashboard = this;
-
+            //TODO: namesti da se ispisuje ko se loguje
             var currManager = "";
             ActiveManager = "Welcome, " + currManager;
 
-            //OpenDataBase();
-            //SetObservables();
+            OpenDataBase();
+            SetObservables();
             TurnOffTables();
 
             ShowRoomCommand = new MyICommand(OnShowRooms);
@@ -182,22 +184,40 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel();
 
-            //RunAllTasks();
+            RunAllTasks();
         }
 
         #region Private functions
 
         private void OpenDataBase()
         {
-            Resources.OpenRooms();
-            Resources.OpenInventory();
+            var listRoom = JsonConvert.DeserializeObject<List<Room>>(File.ReadAllText(@"..\..\..\Resources\rooms.json"));
+            Resources.rooms = new Dictionary<int, Room>();
+            foreach (var room in listRoom)
+            {
+                Resources.rooms[room.Id] = room;
+            }
+
+            var listInventory = JsonConvert.DeserializeObject<List<Inventory>>(File.ReadAllText(@"..\..\..\Resources\inventory.json"));
+            Resources.inventory = new Dictionary<string, Inventory>();
+            foreach (var inv in listInventory)
+            {
+                Resources.inventory[inv.Id] = inv;
+            }
+            
             Resources.OpenMedicines();
             Resources.OpenRoomInventory();
             Resources.OpenRoomSchedule();
             Resources.OpenTransferRequests();
             Resources.OpenPeriods();
             Resources.OpenMedicineRecensions();
-            Resources.OpenDoctors();
+
+            var doctorList = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText(@"..\..\..\Resources\doctors.json"));
+            Resources.doctors = new Dictionary<string, Doctor>();
+            foreach (var doc in doctorList)
+            {
+                Resources.doctors[doc.Username] = doc;
+            }
         }
 
         private void SetObservables()
