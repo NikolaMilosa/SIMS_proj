@@ -9,13 +9,13 @@
     "IngredientAllergens": [
       "tester two"
     ],
-    "RecentActions": 0,
-    "LastLogoutTime": "2021-05-19T12:23:05.2325121+02:00",
+    "RecentActions": 2,
+    "LastLogoutTime": "2021-05-19T12:33:51.9184678+02:00",
     "PatientNotes": [
       {
-        "Content": "sadasda",
-        "NotifyTime": "2021-05-19T00:52:09.729+02:00",
-        "Title": "Notifikuj"
+        "Content": "sadrzaj titla",
+        "NotifyTime": "2021-05-19T12:34:30.983+02:00",
+        "Title": "Titl neki"
       }
     ],
     "Name": "Stefan",
