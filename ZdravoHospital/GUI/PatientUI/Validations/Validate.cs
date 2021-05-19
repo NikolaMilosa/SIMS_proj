@@ -115,9 +115,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             }
         }
 
-        public static void ResetActionsNum(object patient)
+        public static void ResetActionsNum(object patientUsername)
         {
-            Patient user = (Patient)patient;
+            Patient user = LoadPatient((string)patientUsername);
             while (true)
             {
                 if (user.LastLogoutTime.AddMinutes(5) <= DateTime.Now && user.RecentActions<5)

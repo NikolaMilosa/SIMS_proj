@@ -25,7 +25,7 @@ namespace ZdravoHospital.GUI.PatientUI
         public event PropertyChangedEventHandler PropertyChanged;
         public string WelcomeMessage { get; set; }
 
-        public Patient Patient { get; set; }
+        public string PatientUsername { get; set; }
 
         private bool _SurveyAvailable { get; set; }
         public bool SurveyAvailable {
@@ -46,7 +46,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             InitializeComponent();
             SetWindowParameters(username);
-            LoadPatient(username);
+            SetProperties(username);
             CheckSurveys(username);
             StartThreads();
         }
@@ -56,19 +56,16 @@ namespace ZdravoHospital.GUI.PatientUI
             SurveyAvailable = Validate.IsSurveyAvailable(username);
         }
 
-        public void LoadPatient(string username)
+        private void SetProperties(string username)
         {
-           
-            //Patient = Model.Resources.patients[username];
-            PatientRepository patientRepository = new PatientRepository();
-            Patient=patientRepository.GetById(username);
+            PatientUsername = username;
+            WelcomeMessage = "Welcome " + username;
         }
 
         public void SetWindowParameters(string username)
         {
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            WelcomeMessage = "Welcome " + username;
             myFrame.Navigate(new AppointmentPage(username));
         }
 
@@ -83,21 +80,21 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             Thread notificationThread= new Thread(new ParameterizedThreadStart(Validate.TherapyNotification));
             notificationThread.SetApartmentState(ApartmentState.STA);
-            notificationThread.Start(Patient.Username);
+            notificationThread.Start(PatientUsername);
         }
 
         private void StartNoteThread()
         {
             Thread notificationNoteThread = new Thread(new ParameterizedThreadStart(Validate.NoteNotification));
             notificationNoteThread.SetApartmentState(ApartmentState.STA);
-            notificationNoteThread.Start(Patient.Username);
+            notificationNoteThread.Start(PatientUsername);
         }
 
         private void StartTrollThread()
         {
             Thread trollThread = new Thread(new ParameterizedThreadStart(Validate.ResetActionsNum));
             trollThread.SetApartmentState(ApartmentState.STA);
-            trollThread.Start(Patient);
+            trollThread.Start(PatientUsername);
         }
 
         protected void OnPropertyChanged(string name)
@@ -113,22 +110,22 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void AddAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AddAppointmentPage(null, true, Patient.Username));
+            myFrame.Navigate(new AddAppointmentPage(null, true, PatientUsername));
         }
 
         private void AppointmentsButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AppointmentPage(Patient.Username));
+            myFrame.Navigate(new AppointmentPage(PatientUsername));
         }
 
         private void NotificationsButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new NotificationsPage(Patient.Username));
+            myFrame.Navigate(new NotificationsPage(PatientUsername));
         }
 
         private void AppointmentHistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AppointmentHistoryPage(Patient.Username));
+            myFrame.Navigate(new AppointmentHistoryPage(PatientUsername));
         }
 
         private void SurveyButton_Click(object sender, RoutedEventArgs e)
@@ -138,7 +135,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void NoteButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new NotesPage(Patient.Username));
+            myFrame.Navigate(new NotesPage(PatientUsername));
         }
     }
 }
