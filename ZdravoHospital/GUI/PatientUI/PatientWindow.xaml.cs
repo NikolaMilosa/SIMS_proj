@@ -45,15 +45,15 @@ namespace ZdravoHospital.GUI.PatientUI
         public PatientWindow(string username)
         {
             InitializeComponent();
-            SetWindowParameters(username);
             SetProperties(username);
-            CheckSurveys(username);
+            SetWindowParameters();
+            CheckSurveys();
             StartThreads();
         }
 
-        public void CheckSurveys(string username)
+        public void CheckSurveys()
         {
-            SurveyAvailable = Validate.IsSurveyAvailable(username);
+            SurveyAvailable = Validate.IsSurveyAvailable(PatientUsername);
         }
 
         private void SetProperties(string username)
@@ -62,11 +62,11 @@ namespace ZdravoHospital.GUI.PatientUI
             WelcomeMessage = "Welcome " + username;
         }
 
-        public void SetWindowParameters(string username)
+        public void SetWindowParameters()
         {
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            myFrame.Navigate(new AppointmentPage(username));
+            myFrame.Navigate(new AppointmentPage(PatientUsername));
         }
 
         public void StartThreads()
