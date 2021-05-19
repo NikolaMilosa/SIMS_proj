@@ -33,6 +33,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private RoomRepository _roomRepository;
 
+        private RoomInventoryRepository _roomInventoryRepository;
+
         #endregion
 
         #region Properties
@@ -134,6 +136,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public InventoryManagementDialogViewModel()
         {
             _roomRepository = new RoomRepository();
+            _roomInventoryRepository = new RoomInventoryRepository();
             SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
         }
 
@@ -143,7 +146,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             var result = new ObservableCollection<InventoryDTO>();
 
-            foreach (var roomInventory in Resources.roomInventory)
+            foreach (var roomInventory in _roomInventoryRepository.GetValues())
             {
                 if (roomInventory.RoomId == room.Id)
                 {

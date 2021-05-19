@@ -205,7 +205,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
             
             Resources.OpenMedicines();
-            Resources.OpenRoomInventory();
             Resources.OpenRoomSchedule();
             Resources.OpenTransferRequests();
             Resources.OpenPeriods();

@@ -4,27 +4,32 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomInventoryFunctions
     {
-        private static Mutex _roomInventoryMutex;
+        private RoomInventoryRepository _roomInventoryRepository;
 
-        public static Mutex GetRoomInventoryMutex()
+        private static Mutex mutex;
+
+        private Mutex GetMutex()
         {
-            if (_roomInventoryMutex == null)
-                _roomInventoryMutex = new Mutex();
-
-            return _roomInventoryMutex;
+            if (mutex == null)
+                mutex = new Mutex();
+            return mutex;
         }
 
-        public RoomInventoryFunctions() { }
+        public RoomInventoryFunctions()
+        {
+            _roomInventoryRepository = new RoomInventoryRepository();
+        }
 
         public RoomInventory FindRoomInventoryByRoomAndInventory(int roomId, string inventoryId)
         {
-            foreach (RoomInventory ri in Model.Resources.roomInventory)
+            foreach (RoomInventory ri in _roomInventoryRepository.GetValues())
             {
                 if (ri.RoomId == roomId && ri.InventoryId.Equals(inventoryId))
                     return ri;
@@ -37,7 +42,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             var ret = new List<RoomInventory>();
 
-            foreach (var ri in Model.Resources.roomInventory)
+            foreach (var ri in _roomInventoryRepository.GetValues())
                 if (ri.RoomId == roomId)
                     ret.Add(ri);
 
@@ -46,48 +51,28 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void DeleteByInventoryId(string iid)
         {
-            GetRoomInventoryMutex().WaitOne();
-            
-            Model.Resources.roomInventory.RemoveAll(ri => ri.InventoryId.Equals(iid));
-            Model.Resources.SaveRoomInventory();
-            
-            GetRoomInventoryMutex().ReleaseMutex();
+            _roomInventoryRepository.DeleteByInventoryId(iid);
         }
 
         public void DeleteByReference(RoomInventory ri)
         {
-            GetRoomInventoryMutex().WaitOne();
-            
-            Model.Resources.roomInventory.Remove(ri);
-            Model.Resources.SaveRoomInventory();
-
-            GetRoomInventoryMutex().ReleaseMutex();
+            _roomInventoryRepository.DeleteByEquality(ri);
         }
 
         public void AddNewReference(RoomInventory ri)
         {
-            GetRoomInventoryMutex().WaitOne();
-            
-            Model.Resources.roomInventory.Add(ri);
-            Model.Resources.SaveRoomInventory();
-            
-            GetRoomInventoryMutex().ReleaseMutex();
+            _roomInventoryRepository.Create(ri);
         }
 
         public void SetNewQuantity(RoomInventory roomInventory, int newQuantity)
-        {
-            GetRoomInventoryMutex().WaitOne();
-            
+        {   
             roomInventory.Quantity = newQuantity;
-            Model.Resources.SaveRoomInventory();
-            
-            GetRoomInventoryMutex().ReleaseMutex();
+            _roomInventoryRepository.Update(roomInventory);
         }
 
         public void TransportRoomInventory(Room firstRoom, Room secondRoom)
         {
-            GetRoomInventoryMutex().WaitOne();
-
+            GetMutex().WaitOne();
             var firstRoomInventory = FindAllInventoryInRoom(firstRoom.Id);
             var secondRoomInventory = FindAllInventoryInRoom(secondRoom.Id);
 
@@ -109,8 +94,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 /* delete the reference */
                 DeleteByReference(roomInventory);
             }
-
-            GetRoomInventoryMutex().ReleaseMutex();
+            GetMutex().ReleaseMutex();
         }
     }
 }
