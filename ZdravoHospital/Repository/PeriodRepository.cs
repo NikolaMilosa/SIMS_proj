@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Model.Repository
 {
@@ -12,7 +13,12 @@ namespace Model.Repository
 
         public override Period GetById(int id)
         {
-            throw new NotImplementedException();
+            List<Period> periods = GetValues();
+            foreach (Period period in periods)
+                if (period.PeriodId == id)
+                    return period;
+
+            return null;
         }
 
         public override void DeleteById(int id)
