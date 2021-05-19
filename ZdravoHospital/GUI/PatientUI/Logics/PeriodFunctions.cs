@@ -37,75 +37,26 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         }
 
         #region Methods
-        //doctor related functions
-        public  void SuggestDoctor(Period checkedPeriod, ObservableCollection<DoctorView> doctorList)
-        {
-            foreach (DoctorView doctor in doctorList.ToList())
-            {
-                RemoveUnavailableDoctorFromCollection(doctor, checkedPeriod, doctorList);
-            }
-        }
-
-        public  void RemoveUnavailableDoctorFromCollection(DoctorView doctor, Period checkedPeriod, ObservableCollection<DoctorView> doctorList)
-        {
-            List<Period> periods = PeriodRepository.GetValues();
-            foreach (Period period in periods)
-            {
-                if (period.DoctorUsername.Equals(doctor.Username) && DoPeriodsOverlap(period, checkedPeriod))
-                {
-                    doctorList.Remove(doctor);
-                    break;
-                }
-            }
-        }
-
-
-        //Room related functions
-        public  int GetFreeRoom(Period checkedPeriod)//vraca prvi slobodan Appointment room za zadati termin
-        {
-            int roomId = -1;
-            RoomRepository roomRepository = new RoomRepository();
-            List<Room> rooms = roomRepository.GetValues();
-            foreach (Room room in rooms)
-                if (GetFreeRoomId(room, checkedPeriod) != -1)
-                    return room.Id;
-
-            Validate.ShowOkDialog("Warning", "There is no free rooms at selected time!");
-            return roomId;
-        }
-
-        public  int GetFreeRoomId(Room room, Period checkedPeriod)
-        {
-            int roomId = -1;
-
-            if (room.IsAppointmentRoom() && room.Available)//IZMENA OVOG TREBA KAD SE URADI ROOM SCHEDULER
-                if (!PeriodAlreadyExistsInRoom(room, checkedPeriod))
-                    return room.Id;
-
-            return roomId;
-        }
-
-        public  bool PeriodAlreadyExistsInRoom(Room room, Period checkedPeriod)
-        {
-            bool exists = false;
-            List<Period> periods = PeriodRepository.GetValues();
-            foreach (Period period in periods)
-                if (period.RoomId == room.Id && DoPeriodsOverlap(period, checkedPeriod))
-                    return true;
-
-            return exists;
-        }
         //
+        public  bool IsPeriodWithinGivenMinutes(DateTime dateTime, int minutes)
+        {
+            bool itIs = false;
+            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes))
+                itIs = true;
 
+            return itIs;
+        }
+
+
+        //
         public bool CheckPeriodAvailability(Period checkedPeriod, bool writeWarnings)
         {
-            bool available = true;
             List<Period> periods = PeriodRepository.GetValues();
             foreach (Period period in periods)
                 if (!IsPeriodAvailable(period, checkedPeriod, writeWarnings))
                     return false;
 
-            return available;
+            return true;
         }
 
         private bool IsPeriodAvailable(Period period, Period checkedPeriod, bool writeWarnings)

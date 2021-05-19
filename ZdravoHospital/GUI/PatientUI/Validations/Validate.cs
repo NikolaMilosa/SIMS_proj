@@ -30,62 +30,14 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             if (PatientWindow.RecentActionsNum >= 5)
             {
                 detected = true;
-                ShowOkDialog("Troll detected", "Too much recent actions have been detected! Please contact our support!");
+                ShowOkDialog("Account blocked", "Too much recent actions have been detected! Please contact our support!");
             }
             return detected;
         }
-        public static bool IsSurveyAvailable(string username)
-        {
-            bool availability = false;
-            //Resources.OpenPeriods();
-            int numOfPeriods = GetCompletedPeriodsNum(username);
-            if (numOfPeriods >= 3 && !AnyRecentSurveys(username))
-                availability = true;
-            return availability;
-        }
-
-        public static int GetCompletedPeriodsNum(string username)
-        {
-            int periodNum = 0;
-            PeriodRepository periodRepository = new PeriodRepository();
-            //foreach (Period period in Model.Resources.periods)
-            foreach (Period period in periodRepository.GetValues())
-            {
-                if (period.PatientUsername.Equals(username) && period.HasPassed())
-                {
-                    periodNum++;
-                }
-            }
-            return periodNum;
-        }
-
-        public static bool AnyRecentSurveys(string username)
-        {
-            bool recentSurvey = false;
-            SurveyRepository surveyRepository = new SurveyRepository();
-            List<Survey> surveys = surveyRepository.GetValues();
-            foreach (Survey survey in surveys)
-            {
-                if (survey.PatientUsername.Equals(username) && survey.IsWithin2WeeksFromNow())
-                {
-                    recentSurvey = true;
-                    break;
-                }
-            }
-            return recentSurvey;
-        }
+     
         public static void SleepForGivenMinutes(int minutes)
         {
             Thread.Sleep(TimeSpan.FromMinutes(minutes));
-        }
-
-        public static bool IsPeriodWithinGivenMinutes(DateTime dateTime,int minutes)
-        {
-            bool itIs = false;
-            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes))
-                itIs = true;
-
-            return itIs;
         }
 
         public static void GenerateTimeSpan(List<TimeSpan> timeList)

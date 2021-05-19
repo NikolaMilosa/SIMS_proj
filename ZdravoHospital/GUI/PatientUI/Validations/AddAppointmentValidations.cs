@@ -14,10 +14,13 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
     {
         public AddAppointmentPage Page { get; set; }
         public PeriodFunctions PeriodFunctions { get; set; }
+
+        public RoomSheduleFunctions RoomFunctions {get;set;}
         public AddAppointmentValidations(AddAppointmentPage addAppointmentPage,string username)
         {
             Page = addAppointmentPage;
             PeriodFunctions = new PeriodFunctions(username);
+            RoomFunctions = new RoomSheduleFunctions(username);
         }
 
         public bool CheckPeriodAvailibility()
@@ -73,7 +76,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             Page.Period.StartTime = Page.Period.StartTime.Date + (TimeSpan)Page.selectTime.SelectedItem;
             Page.Period.DoctorUsername = ((DoctorView)Page.selectDoctor.SelectedItem).Username;
-            Page.Period.RoomId = PeriodFunctions.GetFreeRoom(Page.Period);
+            Page.Period.RoomId = RoomFunctions.GetFreeRoom(Page.Period);
         }
 
         public void FillDoctorList()

@@ -14,5 +14,53 @@
     "ReferringReferralId": 0,
     "ReferredReferralId": 0,
     "Treatment": null
+  },
+  {
+    "PeriodId": 1,
+    "StartTime": "2021-06-01T09:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 2,
+    "StartTime": "2021-05-31T08:30:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 3,
+    "StartTime": "2021-05-24T08:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
   }
 ]

@@ -54,7 +54,8 @@ namespace ZdravoHospital.GUI.PatientUI
 
         public void CheckSurveys()
         {
-            SurveyAvailable = Validate.IsSurveyAvailable(PatientUsername);
+            SurveyFunctions surveyFunctions = new SurveyFunctions();
+            SurveyAvailable = surveyFunctions.IsSurveyAvailable(PatientUsername);
         }
 
         private void SetProperties(string username)

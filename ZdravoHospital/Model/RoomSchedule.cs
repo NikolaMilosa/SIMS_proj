@@ -14,6 +14,7 @@ namespace Model
         public int RoomId { get; set; }
         public ReservationType ScheduleType { get; set; }
 
+
         public void WaitStartRenovation()
         {
             TimeSpan ts = StartTime.Subtract(DateTime.Now);

@@ -13,6 +13,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public static void TherapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
+            
             PeriodRepository periodRepository = new PeriodRepository();
             while (true)
             {
@@ -20,27 +21,27 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                 {
                     if (period.PatientUsername.Equals(username) && period.Prescription != null)
                     {
-                        GeneratePrescriptionTimes(period.Prescription);
+                        GeneratePrescriptionTimes(period.Prescription, username);
                     }
                 }
                 Validate.SleepForGivenMinutes(5);
             }
         }
 
-        private static void GeneratePrescriptionTimes(Prescription prescription)
+        private static void GeneratePrescriptionTimes(Prescription prescription,string username)
         {
             foreach (Therapy therapy in prescription.TherapyList)
-                GenerateTimes(therapy);
+                GenerateTimes(therapy, username);
 
         }
 
-        private static List<DateTime> GenerateTimes(Therapy therapy)
+        private static List<DateTime> GenerateTimes(Therapy therapy,string username)
         {
             List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
-
+            PeriodFunctions periodFunctions = new PeriodFunctions(username);
             foreach (DateTime dateTime in notifications)
-            if (Validate.IsPeriodWithinGivenMinutes(dateTime, 5))
-                Validate.ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));
+                if (periodFunctions.IsPeriodWithinGivenMinutes(dateTime, 5))
+                    Validate.ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));
 
             return notifications;
         }

@@ -13,16 +13,17 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             while (true)
             {
                 Patient patient = Validate.LoadPatient((string)username);
-                GenerateNoteNotificationDialogs(patient.PatientNotes);
+                GenerateNoteNotificationDialogs(patient.PatientNotes,(string)username);
                 Validate.SleepForGivenMinutes(1);
             }
         }
 
-        private static void GenerateNoteNotificationDialogs(List<PatientNote> patientNotes)
+        private static void GenerateNoteNotificationDialogs(List<PatientNote> patientNotes,string username)
         {
+            PeriodFunctions periodFunctions = new PeriodFunctions(username);
             foreach (PatientNote note in patientNotes)
             {
-                if (Validate.IsPeriodWithinGivenMinutes(note.NotifyTime, 1))
+                if (periodFunctions.IsPeriodWithinGivenMinutes(note.NotifyTime, 1))
                     Validate.ShowOkDialog(note.Title, note.Content);
 
             }
