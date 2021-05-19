@@ -51,14 +51,19 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             if (Page.Mode)
                 SerializeNewPeriod();
             else
-                Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
+                UpdatePeriod();
 
+        }
+
+        private void UpdatePeriod()
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Update(Page.Period);
+            Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
         }
 
         public void SerializeNewPeriod()
         {
-            //Resources.OpenPeriods();
-            //Resources.periods.Add(Page.Period);
             PeriodRepository periodRepository = new PeriodRepository();
             periodRepository.Create(Page.Period);
             Validate.ShowOkDialog("Appointment", "Appointment is succesfully added!");
