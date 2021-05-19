@@ -57,5 +57,32 @@
         "IngredientName": "natrium"
       }
     ]
+  },
+  {
+    "MedicineName": "tester",
+    "Supplier": "Tester",
+    "Status": 0,
+    "Note": null,
+    "Replacements": [],
+    "Ingredients": [
+      {
+        "IngredientName": "ingredient"
+      }
+    ]
+  },
+  {
+    "MedicineName": "new medicine",
+    "Supplier": "New supplier",
+    "Status": 0,
+    "Note": null,
+    "Replacements": [],
+    "Ingredients": [
+      {
+        "IngredientName": "new ing"
+      },
+      {
+        "IngredientName": "other ing"
+      }
+    ]
   }
 ]

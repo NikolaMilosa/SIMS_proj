@@ -22,9 +22,27 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return _roomMutex;
         }
 
-        public RoomFunctions() { }
+        #region Event Things
 
-        public Room FindRoomByType(RoomType rt, Room room)
+        public delegate void RoomChangedEventHandler(object sender, EventArgs e);
+
+        public event RoomChangedEventHandler RoomChanged;
+
+        protected virtual void OnRoomChanged()
+        {
+            if (RoomChanged != null)
+            {
+                RoomChanged(this, EventArgs.Empty);
+            }
+        }
+        #endregion
+
+        public RoomFunctions()
+        {
+            RoomChanged += ViewModel.ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
+        }
+
+        private Room FindRoomByType(RoomType rt, Room room)
         {
             if (room != null)
             {
@@ -90,13 +108,13 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 roomInventoryService.TransportRoomInventory(room, transportRoom);
             }
             
-            /* Delete from dataBase and visual */
-            ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
             Model.Resources.rooms.Remove(room.Id);
             
             Model.Resources.SaveRooms();
 
             GetRoomMutex().ReleaseMutex();
+
+            OnRoomChanged();
 
             return true;
         }
@@ -109,55 +127,38 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             GetRoomMutex().WaitOne();
 
             Model.Resources.rooms[room.Id] = room;
-            ManagerWindow.Rooms.Add(Model.Resources.rooms[room.Id]);
             Model.Resources.SaveRooms();
 
             GetRoomMutex().ReleaseMutex();
+
+            OnRoomChanged();
         }
 
         public void EditRoom(Room room)
         {
             GetRoomMutex().WaitOne();
-            var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[room.Id]);
-            ManagerWindow.Rooms.Remove(Model.Resources.rooms[room.Id]);
 
             room.Name = Regex.Replace(room.Name, @"\s+", " ");
             room.Name = room.Name.Trim();
 
             Model.Resources.rooms[room.Id] = room;
             Model.Resources.SaveRooms();
-
-            ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[room.Id]);
+            
             GetRoomMutex().ReleaseMutex();
+
+            OnRoomChanged();
         }
 
         public void ChangeRoomAvailability(int roomId, bool newValue)
         {
             GetRoomMutex().WaitOne();
-            /* Handle visuals */
-            var index = ManagerWindow.Rooms.IndexOf(Model.Resources.rooms[roomId]);
-            Application.Current.Dispatcher.BeginInvoke(new Func<bool>(
-                () => ManagerWindow.Rooms.Remove(Model.Resources.rooms[roomId])));
-
+            
             Model.Resources.rooms[roomId].Available = newValue;
             Model.Resources.SaveRooms();
-
-            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
-                { ManagerWindow.Rooms.Insert(index, Model.Resources.rooms[roomId]); }));
-
-            /* If a room is show in manage inventory it should update */
-            if (ManagerWindow.dialog != null)
-            {
-                if (ManagerWindow.dialog.GetType().Name.Equals(nameof(InventoryManagementWindow)))
-                {
-                    InventoryManagementWindow activeWindow = (InventoryManagementWindow)ManagerWindow.dialog;
-                    /* Update the visuals */
-
-                    activeWindow.FirstRoom = activeWindow.FirstRoom;
-                    activeWindow.SecondRoom = activeWindow.SecondRoom;
-                }
-            }
+           
             GetRoomMutex().ReleaseMutex();
+
+            OnRoomChanged();
         }
     }
 }
