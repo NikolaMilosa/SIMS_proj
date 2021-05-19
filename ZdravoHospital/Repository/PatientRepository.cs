@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Model.Repository
 {
@@ -28,7 +29,9 @@ namespace Model.Repository
 
         public override void Update(Patient newValue)
         {
-            Save();
+            List<Patient> patients = GetValues();
+            patients[patients.FindIndex(patient => patient.Username.Equals(newValue.Username))] = newValue;
+            Save(patients);
         }
     }
 }

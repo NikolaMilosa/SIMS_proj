@@ -23,9 +23,8 @@ namespace ZdravoHospital.GUI.PatientUI
     public partial class NotesPage : Page
     {
         public ObservableCollection<PatientNote> ObservableNotes { get; set; }
-        public string PatientUsername { get; set; }
 
-        public List<PatientNote> PatientNotes { get; set; }
+        public Patient Patient{ get; set; }
 
         public PatientRepository PatientRepository { get; set; }
 
@@ -39,34 +38,38 @@ namespace ZdravoHospital.GUI.PatientUI
         
         private void FillProperties(string username)
         {
-            PatientUsername = username;
+            
             PatientRepository = new PatientRepository();
-            PatientNotes = PatientRepository.GetById(username).PatientNotes;
-            ObservableNotes = new ObservableCollection<PatientNote>(PatientNotes);
+            Patient = PatientRepository.GetById(username);
+            ObservableNotes = new ObservableCollection<PatientNote>(Patient.PatientNotes);
         }
 
         private void NoteButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new CreateNotePage(PatientUsername));
+            NavigationService.Navigate(new CreateNotePage(Patient.Username));
         }
 
         private void RemoveNote()
         {
             PatientNote note = (PatientNote)NotesDataGrid.SelectedItem;
-            PatientNotes.Remove(note);
+            Patient.PatientNotes.Remove(note);
+            SerializePatient();
             ObservableNotes.Remove(note);
         }
 
+        private void SerializePatient()
+        {
+            PatientRepository.Update(Patient);
+        }
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             RemoveNote();
-            PatientRepository.Update(null);
             Validate.ShowOkDialog("Removed","Note succesffuly removed!");
         }
 
         private void NotesDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.Navigate(new NoteDetailsPage((PatientNote)NotesDataGrid.SelectedItem, PatientUsername));
+            NavigationService.Navigate(new NoteDetailsPage((PatientNote)NotesDataGrid.SelectedItem, Patient.Username));
         }
     }
 }

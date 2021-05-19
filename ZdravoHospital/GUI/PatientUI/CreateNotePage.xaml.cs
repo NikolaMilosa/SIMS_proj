@@ -54,8 +54,9 @@ namespace ZdravoHospital.GUI.PatientUI
         private void AddNoteToPatient()
         {
             PatientRepository patientRepository = new PatientRepository();
-            patientRepository.GetById(PatientUsername).PatientNotes.Add(PatientNote);
-            patientRepository.Update(null);
+            Patient patient = patientRepository.GetById(PatientUsername);
+            patient.PatientNotes.Add(PatientNote);
+            patientRepository.Update(patient);
         }
 
         private bool IsFormFilled()

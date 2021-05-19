@@ -41,7 +41,7 @@ namespace ZdravoHospital.GUI.PatientUI
             patientWindow.Patient.LastLogoutTime = DateTime.Now;
             //Model.Resources.SavePatients();
             PatientRepository patientRepository = new PatientRepository();
-            patientRepository.Update(null);
+            patientRepository.Update(patientWindow.Patient);
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)//no button
