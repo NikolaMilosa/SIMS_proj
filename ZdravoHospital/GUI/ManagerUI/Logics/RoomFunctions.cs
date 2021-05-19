@@ -6,22 +6,15 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomFunctions
     {
-        private static Mutex _roomMutex;
-
-        public static Mutex GetRoomMutex()
-        {
-            if (_roomMutex == null)
-                _roomMutex = new Mutex();
-
-            return _roomMutex;
-        }
-
+        private RoomRepository _roomRepository;
+        
         #region Event Things
 
         public delegate void RoomChangedEventHandler(object sender, EventArgs e);
@@ -40,13 +33,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public RoomFunctions()
         {
             RoomChanged += ViewModel.ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
+            _roomRepository = new RoomRepository();
         }
 
         private Room FindRoomByType(RoomType rt, Room room)
         {
             if (room != null)
             {
-                foreach (var r in Model.Resources.rooms.Values)
+                foreach (var r in _roomRepository.GetValues())
                 {
                     if (r.Available == true && r.RoomType == rt && r.Id != room.Id)
                         return r;
@@ -54,7 +48,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
             else
             {
-                foreach (var r in Model.Resources.rooms.Values)
+                foreach (var r in _roomRepository.GetValues())
                 {
                     if (r.Available == true && r.RoomType == rt)
                         return r;
@@ -86,8 +80,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public bool DeleteRoom(Room room)
         {
-            GetRoomMutex().WaitOne();
-
             /* First handle its inventory */
             var roomInventoryService = new RoomInventoryFunctions();
             var roomsInventory = roomInventoryService.FindAllInventoryInRoom(room.Id);
@@ -108,12 +100,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 roomInventoryService.TransportRoomInventory(room, transportRoom);
             }
             
-            Model.Resources.rooms.Remove(room.Id);
+            _roomRepository.DeleteById(room.Id);
             
-            Model.Resources.SaveRooms();
-
-            GetRoomMutex().ReleaseMutex();
-
             OnRoomChanged();
 
             return true;
@@ -124,40 +112,28 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             room.Name = Regex.Replace(room.Name, @"\s+", " ");
             room.Name = room.Name.Trim();
 
-            GetRoomMutex().WaitOne();
-
-            Model.Resources.rooms[room.Id] = room;
-            Model.Resources.SaveRooms();
-
-            GetRoomMutex().ReleaseMutex();
-
+            _roomRepository.Create(room);
+            
             OnRoomChanged();
         }
 
         public void EditRoom(Room room)
         {
-            GetRoomMutex().WaitOne();
-
             room.Name = Regex.Replace(room.Name, @"\s+", " ");
             room.Name = room.Name.Trim();
 
-            Model.Resources.rooms[room.Id] = room;
-            Model.Resources.SaveRooms();
+            _roomRepository.Update(room);
             
-            GetRoomMutex().ReleaseMutex();
-
             OnRoomChanged();
         }
 
         public void ChangeRoomAvailability(int roomId, bool newValue)
         {
-            GetRoomMutex().WaitOne();
-            
-            Model.Resources.rooms[roomId].Available = newValue;
-            Model.Resources.SaveRooms();
+            var room = _roomRepository.GetById(roomId);
+            room.Available = newValue;
            
-            GetRoomMutex().ReleaseMutex();
-
+            _roomRepository.Update(room);
+            
             OnRoomChanged();
         }
     }

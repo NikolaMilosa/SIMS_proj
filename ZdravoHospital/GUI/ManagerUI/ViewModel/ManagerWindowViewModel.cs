@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Model;
+using Model.Repository;
 using Newtonsoft.Json;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.Logics;
@@ -50,6 +51,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Window dialog;
 
         private FilteringEventArgs _passedArgs;
+
+        private RoomRepository _roomRepository;
+
         #endregion
 
         #region Observable collections
@@ -191,12 +195,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void OpenDataBase()
         {
-            var listRoom = JsonConvert.DeserializeObject<List<Room>>(File.ReadAllText(@"..\..\..\Resources\rooms.json"));
-            Resources.rooms = new Dictionary<int, Room>();
-            foreach (var room in listRoom)
-            {
-                Resources.rooms[room.Id] = room;
-            }
+            _roomRepository = new RoomRepository();
 
             var listInventory = JsonConvert.DeserializeObject<List<Inventory>>(File.ReadAllText(@"..\..\..\Resources\inventory.json"));
             Resources.inventory = new Dictionary<string, Inventory>();
@@ -222,7 +221,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void SetObservables()
         {
-            Rooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             Inventory = new ObservableCollection<Inventory>(Resources.inventory.Values);
             Medicines = new ObservableCollection<Medicine>(Resources.medicines);
         }
@@ -329,7 +328,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         //Manage inventory button
         private void OnManageInventory()
         {
-            _inventoryManagementDialogViewModel.SenderRooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            _inventoryManagementDialogViewModel.SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             _inventoryManagementDialogViewModel.SenderRoom = null;
             _inventoryManagementDialogViewModel.ReceiverRoom = null;
             dialog = new InventoryManagementDialog(_inventoryManagementDialogViewModel);
@@ -352,7 +351,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             if (RoomTableVisibility == Visibility.Visible)
             {
                 if (SelectedRoom != null)
+                {
+                    var room = _roomRepository.GetById(SelectedRoom.Id);
                     dialog = new AddOrEditRoomDialog(SelectedRoom);
+                }
             }
             else if (InventoryTableVisibility == Visibility.Visible)
             {
@@ -376,7 +378,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             if (RoomTableVisibility == Visibility.Visible)
             {
                 if (SelectedRoom != null)
+                {
+                    var room = _roomRepository.GetById(SelectedRoom.Id);
                     dialog = new WarningDialog(SelectedRoom);
+                }
             }
             else if (InventoryTableVisibility == Visibility.Visible)
             {
@@ -440,7 +445,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             _roomMutex.WaitOne();
 
-            Rooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             OnPropertyChanged("Rooms");
 
             _roomMutex.ReleaseMutex();

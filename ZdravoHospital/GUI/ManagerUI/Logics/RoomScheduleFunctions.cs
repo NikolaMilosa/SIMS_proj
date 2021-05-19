@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Model;
-
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
@@ -14,6 +14,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomScheduleFunctions
     {
+        private RoomRepository _roomRepository;
+
         private static Mutex _roomScheduleMutex;
 
         public static Mutex GetRoomScheduleMutex()
@@ -24,7 +26,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return _roomScheduleMutex;
         }
 
-        public RoomScheduleFunctions(){ }
+        public RoomScheduleFunctions()
+        {
+            _roomRepository = new RoomRepository();
+        }
 
         public void RunOrExecute()
         {
@@ -63,7 +68,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (!CheckIfStillValid(roomSchedule))
                 return;
 
-            if (Model.Resources.rooms[roomSchedule.RoomId].Available)
+            var room = _roomRepository.GetById(roomSchedule.RoomId);
+
+            if (room.Available)
             {
                 var roomFunctions = new RoomFunctions();
                 roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, false);
@@ -78,7 +85,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (!CheckIfStillValid(roomSchedule))
                 return;
 
-            if (!Model.Resources.rooms[roomSchedule.RoomId].Available && !IsInsideRenovation(roomSchedule))
+            var room = _roomRepository.GetById(roomSchedule.RoomId);
+
+            if (!room.Available && !IsInsideRenovation(roomSchedule))
             {
                 var roomFunctions = new RoomFunctions();
                 roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, true);
@@ -105,7 +114,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 return false;
             }
 
-            if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
+            
+            if (_roomRepository.GetById(roomSchedule.RoomId) == null)
             {
                 GetRoomScheduleMutex().WaitOne();
 

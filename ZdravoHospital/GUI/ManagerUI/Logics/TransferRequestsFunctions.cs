@@ -4,12 +4,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class TransferRequestsFunctions
     {
+        private RoomRepository _roomRepository;
+
         private static Mutex transferRequestMutex;
 
         public static Mutex GetTransferRequestMutex()
@@ -39,6 +42,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public TransferRequestsFunctions()
         {
             TransferExecuted += ViewModel.ManagerWindowViewModel.GetDashboard().OnRefreshTransferDialog;
+
+            _roomRepository = new RoomRepository();
         }
 
         public void RunOrExecute()
@@ -92,7 +97,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             GetTransferRequestMutex().WaitOne();
 
-            if (Model.Resources.rooms.ContainsKey(transferRequest.SenderRoom) && Model.Resources.rooms.ContainsKey(transferRequest.RecipientRoom) && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
+            var roomSender = _roomRepository.GetById(transferRequest.SenderRoom);
+            var roomReceiver = _roomRepository.GetById(transferRequest.RecipientRoom);
+
+            if (roomSender != null && roomReceiver != null && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
             {
                 var roomInventoryService = new RoomInventoryFunctions();
                 /* Handle database transfer */

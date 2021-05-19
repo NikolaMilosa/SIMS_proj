@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.Logics;
@@ -22,6 +23,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private DateTime _endDate;
 
         private RoomScheduleFunctions _roomScheduleFunctions;
+
+        private RoomRepository _roomRepository;
 
         #endregion
 
@@ -112,7 +115,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public RenovationPlanningDialogViewModel()
         {
             _roomScheduleFunctions = new RoomScheduleFunctions();
-            Rooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            _roomRepository = new RoomRepository();
+            Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             StartDate = DateTime.Today;
 
             ConfirmCommand = new MyICommand(OnConfirm);

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.View;
@@ -17,6 +18,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _senderRoom;
         private Room _receiverRoom;
 
+        private int _senderIndex;
+        private int _receiverIndex;
+
         private ObservableCollection<Room> _senderRooms;
         private ObservableCollection<Room> _receiverRooms;
 
@@ -26,6 +30,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private InventoryDTO _selectedInventory;
 
         private Window _dialog;
+
+        private RoomRepository _roomRepository;
 
         #endregion
 
@@ -72,13 +78,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        
         public ObservableCollection<Room> SenderRooms
         {
             get => _senderRooms;
             set
             {
                 _senderRooms = value;
+
                 OnPropertyChanged();
             }
         }
@@ -126,7 +133,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public InventoryManagementDialogViewModel()
         {
-            //SenderRooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            _roomRepository = new RoomRepository();
+            SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
         }
 
         #region Private functions
@@ -163,8 +171,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public void OnShoudRefresh()
         {
-            SenderRoom = SenderRoom;
-            ReceiverRoom = ReceiverRoom;
+            var tempRoomSender = SenderRoom;
+            var tempRoomReceiver = ReceiverRoom;
+
+            SenderRoom = null;
+            ReceiverRoom = null;
+
+            var rooms = _roomRepository.GetValues();
+            SenderRooms = new ObservableCollection<Room>(rooms);
+
+            if (tempRoomSender != null)
+                SenderRoom = rooms.Find(r => r.Id == tempRoomSender.Id);
+            if (tempRoomReceiver != null)
+                ReceiverRoom = rooms.Find(r => r.Id == tempRoomReceiver.Id);
         }
 
         #endregion
