@@ -156,15 +156,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         #endregion
 
 
-        public ManagerWindowViewModel(string au)
+        public ManagerWindowViewModel(string activeUser)
         {
             dashboard = this;
 
-            Employee currManager = Resources.findManager(au);
-            ActiveManager = "Welcome, " + currManager.Name;
+            var currManager = "";
+            ActiveManager = "Welcome, " + currManager;
 
-            OpenDataBase();
-            SetObservables();
+            //OpenDataBase();
+            //SetObservables();
             TurnOffTables();
 
             ShowRoomCommand = new MyICommand(OnShowRooms);
@@ -182,7 +182,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel();
 
-            RunAllTasks();
+            //RunAllTasks();
         }
 
         #region Private functions

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Model;
+using Model.Repository;
+using Newtonsoft.Json;
 using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI;
 using ZdravoHospital.GUI.ManagerUI.View;
@@ -30,8 +33,7 @@ namespace ZdravoHospital
         public MainWindow()
         {
             InitializeComponent();
-            Model.Resources.OpenAccounts();
-
+           
             //Specialization s1 = new Specialization("Doctor");
             //Specialization s2 = new Specialization("Cardio surgent");
             //Model.Resources.OpenSpecializations();
@@ -114,17 +116,20 @@ namespace ZdravoHospital
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            String username = UsernameTextBox.Text;
-            String password = PasswordTextBox.Password;
+            string username = UsernameTextBox.Text;
+            string password = PasswordTextBox.Password;
+
+            var accountRepo = new AccountRepository();
+            var account = accountRepo.GetById(username);
 
             try
             {
-                if (Model.Resources.accounts[username].Password.Equals(password))
+                if (account.Password.Equals(password))
                 {
                     App.currentUser = username;
                     Window window = null;
 
-                    switch (Model.Resources.accounts[username].Role)
+                    switch (account.Role)
                     {
                         case RoleType.MANAGER:
                             window = new ManagerWindow(username);

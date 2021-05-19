@@ -1,5 +1,5 @@
-{
-  "pantela": {
+[
+  {
     "SpecialistType": {
       "SpecializationName": "Doctor"
     },
@@ -25,7 +25,7 @@
       }
     }
   },
-  "zigara": {
+  {
     "SpecialistType": {
       "SpecializationName": "Cardio surgent"
     },
@@ -51,7 +51,7 @@
       }
     }
   },
-  "krasic": {
+  {
     "SpecialistType": {
       "SpecializationName": "Neurology"
     },
@@ -77,7 +77,7 @@
       }
     }
   },
-  "stankovic": {
+  {
     "SpecialistType": {
       "SpecializationName": "Neurology"
     },
@@ -103,4 +103,4 @@
       }
     }
   }
-}
+]

@@ -126,7 +126,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public InventoryManagementDialogViewModel()
         {
-            SenderRooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            //SenderRooms = new ObservableCollection<Room>(Resources.rooms.Values);
         }
 
         #region Private functions
