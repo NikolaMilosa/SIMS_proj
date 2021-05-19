@@ -1,44 +1,50 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Model.Repository
 {
     public abstract class Repository<TKey, TValue>
     {
-        private List<TValue> values;
         private string path;
 
         public Repository(string path)
         {
             this.path = path;
-            values = JsonConvert.DeserializeObject<List<TValue>>(File.ReadAllText(path));
         }
 
-        protected virtual void Save()
+        protected virtual void Save(List<TValue> values)
         {
-            File.WriteAllText(path,JsonConvert.SerializeObject(values,Formatting.Indented));
+            File.WriteAllText(path,JsonConvert.SerializeObject(values, Formatting.Indented));
         }
 
-        public virtual List<TValue> GetValues() => values;
+        public virtual List<TValue> GetValues()
+        {
+            var values = JsonConvert.DeserializeObject<List<TValue>>(File.ReadAllText(path));
+
+            if (values == null)
+            {
+                values = new List<TValue>();
+            }
+
+            return values;
+        }
 
         public abstract TValue GetById(TKey id);
-
-        public virtual void Delete(TValue value)
-        {
-            values.Remove(value);
-            Save();
-        }
-
+        
         public abstract void DeleteById(TKey id);
 
         public abstract void Update(TValue newValue);
 
         public virtual void Create(TValue newValue)
         {
+            var values = GetValues();
+
             values.Add(newValue);
-            Save();
+
+            Save(values);
         }
 
     }
