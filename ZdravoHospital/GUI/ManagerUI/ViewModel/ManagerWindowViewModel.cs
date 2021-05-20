@@ -201,7 +201,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _inventoryRepository = new InventoryRepository();
             _medicineRepository = new MedicineRepository();
             
-            Resources.OpenTransferRequests();
             Resources.OpenPeriods();
             Resources.OpenMedicineRecensions();
 

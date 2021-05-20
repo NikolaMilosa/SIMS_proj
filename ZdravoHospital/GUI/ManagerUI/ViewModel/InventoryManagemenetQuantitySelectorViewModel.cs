@@ -27,6 +27,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private InventoryDTO _processedItem;
 
         private InventoryRepository _inventoryRepository;
+        private TransferRequestRepository _transferRequestRepository;
 
         #endregion
 
@@ -124,6 +125,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _transferRequestsFunctions = new TransferRequestsFunctions();
 
             _inventoryRepository = new InventoryRepository();
+            _transferRequestRepository = new TransferRequestRepository();
 
             SenderRoom = sender;
             ReceiverRoom = receiver;
@@ -144,7 +146,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             MaxInventory = _processedItem.Quantity;
 
-            foreach (var transferRequest in Resources.transferRequests)
+            foreach (var transferRequest in _transferRequestRepository.GetValues())
             {
                 if (transferRequest.SenderRoom == SenderRoom.Id &&
                     transferRequest.InventoryId.Equals(_processedItem.Id))
