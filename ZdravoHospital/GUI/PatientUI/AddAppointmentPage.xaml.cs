@@ -58,7 +58,7 @@ namespace ZdravoHospital.GUI.PatientUI
             Validations.SerializePeriod();
 
             ++PatientWindow.RecentActionsNum;
-            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
+            NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
         }
 
        
@@ -82,7 +82,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
+            NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
         }
     }
 }

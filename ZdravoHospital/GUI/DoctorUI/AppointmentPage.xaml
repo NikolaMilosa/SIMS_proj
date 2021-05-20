@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AppointmentPage">
+      Title="PeriodPage">
 
     <StackPanel HorizontalAlignment="Center">
 

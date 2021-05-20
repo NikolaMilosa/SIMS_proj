@@ -68,7 +68,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            myFrame.Navigate(new AppointmentPage(PatientUsername));
+            myFrame.Navigate(new PeriodPage(PatientUsername));
         }
 
         public void StartThreads()
@@ -117,7 +117,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void AppointmentsButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AppointmentPage(PatientUsername));
+            myFrame.Navigate(new PeriodPage(PatientUsername));
         }
 
         private void NotificationsButton_Click(object sender, RoutedEventArgs e)

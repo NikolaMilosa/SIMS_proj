@@ -20,16 +20,16 @@ using PeriodDTO = ZdravoHospital.GUI.PatientUI.DTOs.PeriodDTO;
 namespace ZdravoHospital.GUI.PatientUI
 {
     /// <summary>
-    /// Interaction logic for AppointmentPage.xaml
+    /// Interaction logic for PeriodPage.xaml
     /// </summary>
     /// 
    
-    public partial class AppointmentPage : Page
+    public partial class PeriodPage : Page
     {
         public ObservableCollection<PeriodDTO> PeriodDTOs { get; set; }
         public Period SelectedPeriod { get; set; }
 
-        public AppointmentPage(string username)
+        public PeriodPage(string username)
         {
             InitializeComponent();
             FillList(username);
@@ -53,7 +53,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void SetSelectedPeriod()
         {
-            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            PeriodDTO period = (PeriodDTO)AppointmentDataGrid.SelectedItem;
             PeriodConverter periodConverter = new PeriodConverter();
             SelectedPeriod = periodConverter.GetPeriod(period);
         }
@@ -78,7 +78,7 @@ namespace ZdravoHospital.GUI.PatientUI
             if (Validations.Validate.TrollDetected())
                 return;
 
-            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            PeriodDTO period = (PeriodDTO)AppointmentDataGrid.SelectedItem;
             if (period.Date < DateTime.Now.AddDays(2))
                 Validations.Validate.ShowOkDialog("Warning", "You can't cancel period within 2 days from it's start!");
             else
@@ -87,7 +87,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            PeriodDTO period = (PeriodDTO)AppointmentDataGrid.SelectedItem;
             SetSelectedPeriod();
             if (Validations.Validate.TrollDetected())
                 return;
