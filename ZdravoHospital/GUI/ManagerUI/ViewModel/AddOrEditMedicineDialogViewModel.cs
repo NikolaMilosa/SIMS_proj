@@ -102,7 +102,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
                 CanEdit = true;
 
-                if (medicine.Status == MedicineStatus.STAGED || medicine.Status == MedicineStatus.APPROVED)
+                if (medicine.Status == MedicineStatus.PENDING || medicine.Status == MedicineStatus.APPROVED)
                     CanEdit = false;
             }
 

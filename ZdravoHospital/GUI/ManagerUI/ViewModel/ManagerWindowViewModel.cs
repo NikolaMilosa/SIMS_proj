@@ -349,6 +349,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 {
                     var room = _roomRepository.GetById(SelectedRoom.Id);
                     dialog = new AddOrEditRoomDialog(room);
+                    dialog.ShowDialog();
                 }
             }
             else if (InventoryTableVisibility == Visibility.Visible)
@@ -357,6 +358,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 {
                     var inventory = _inventoryRepository.GetById(SelectedInventory.Id);
                     dialog = new AddOrEditInventoryDialog(inventory);
+                    dialog.ShowDialog();
                 }
             }
             else if (MedicineTableVisibility == Visibility.Visible && 
@@ -367,11 +369,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 {
                     var medicine = _medicineRepository.GetById(SelectedMedicine.MedicineName);
                     dialog = new AddOrEditMedicineDialog(medicine);
+                    dialog.ShowDialog();
                 }
             }
-
-            if (dialog != null)
-                dialog.ShowDialog();
         }
 
         public void HandleDeleteClick()

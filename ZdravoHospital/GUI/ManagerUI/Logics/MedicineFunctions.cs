@@ -129,8 +129,6 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newIngedient.IngredientName = Regex.Replace(newIngedient.IngredientName, @"\s+", " ");
             
             medicine.Ingredients.Insert(index,newIngedient);
-            
-            _medicineRepository.Update(medicine);
 
             OnIngredientChanged();
         }

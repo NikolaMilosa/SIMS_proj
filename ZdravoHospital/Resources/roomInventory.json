@@ -17,7 +17,7 @@
   {
     "InventoryId": "333FF",
     "RoomId": 201,
-    "Quantity": 3
+    "Quantity": 5
   },
   {
     "InventoryId": "123FD",
@@ -47,7 +47,7 @@
   {
     "InventoryId": "444DD",
     "RoomId": 201,
-    "Quantity": 6
+    "Quantity": 3
   },
   {
     "InventoryId": "444DD",
@@ -122,12 +122,12 @@
   {
     "InventoryId": "444DD",
     "RoomId": 104,
-    "Quantity": 4
+    "Quantity": 7
   },
   {
     "InventoryId": "333FF",
     "RoomId": 601,
-    "Quantity": 3
+    "Quantity": 1
   },
   {
     "InventoryId": "OLM22",

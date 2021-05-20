@@ -59,7 +59,7 @@ namespace Model.Repository
         {
             GetMutex().WaitOne();
             var values = base.GetValues();
-            values.RemoveAll(val => val.Equals(id));
+            values.RemoveAll(val => val.MedicineName.Equals(id));
             Save(values);
             GetMutex().ReleaseMutex();
         }
