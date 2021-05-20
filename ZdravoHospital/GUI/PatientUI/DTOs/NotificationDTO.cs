@@ -1,19 +1,16 @@
 ﻿using Model;
 using Model.Repository;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ZdravoHospital.GUI.PatientUI.ViewModel
+namespace ZdravoHospital.GUI.PatientUI.DTOs
 {
-    public class NotificationView
+    public class NotificationDTO
     {
         public Notification Notification { get; set; }
         public string From { get; set; }//Role Name Surname
 
         public bool Seen { get; set; }
 
-        public NotificationView(PersonNotification personNotification,string username)
+        public NotificationDTO(PersonNotification personNotification,string username)
         {
             NotificationRepository notificationRepository = new NotificationRepository();
             

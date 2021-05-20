@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
 using System.Linq;
+using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
+using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
@@ -75,7 +76,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public void FillOutPeriod()
         {
             Page.Period.StartTime = Page.Period.StartTime.Date + (TimeSpan)Page.selectTime.SelectedItem;
-            Page.Period.DoctorUsername = ((DoctorView)Page.selectDoctor.SelectedItem).Username;
+            Page.Period.DoctorUsername = ((DoctorDTO)Page.selectDoctor.SelectedItem).Username;
             Page.Period.RoomId = RoomFunctions.GetFreeRoom(Page.Period);
         }
 
@@ -88,14 +89,14 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             foreach (Doctor doctor in doctors)
             {
                 if (doctor.SpecialistType.SpecializationName.Equals("Doctor"))
-                    Page.DoctorList.Add(new DoctorView(doctor));
+                    Page.DoctorList.Add(new DoctorDTO(doctor));
             }
         }
 
         public void RestartDoctorList()
         {
             if (Page.DoctorList == null)
-                Page.DoctorList = new ObservableCollection<DoctorView>();
+                Page.DoctorList = new ObservableCollection<DoctorDTO>();
             else
                 Page.DoctorList.Clear();
         }
@@ -137,9 +138,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             Page.selectTime.SelectedItem = Page.Period.StartTime.TimeOfDay;
         }
 
-        public DoctorView GetDoctor(string username)
+        public DoctorDTO GetDoctor(string username)
         {
-            foreach (DoctorView doctor in Page.DoctorList)
+            foreach (DoctorDTO doctor in Page.DoctorList)
             {
                 if (doctor.Username.Equals(username))
                     return doctor;

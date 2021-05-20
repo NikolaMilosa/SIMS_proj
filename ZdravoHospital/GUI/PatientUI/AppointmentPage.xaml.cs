@@ -13,7 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using ZdravoHospital.GUI.PatientUI.Converters;
+using ZdravoHospital.GUI.PatientUI.DTOs;
+using PeriodDTO = ZdravoHospital.GUI.PatientUI.DTOs.PeriodDTO;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -24,7 +26,8 @@ namespace ZdravoHospital.GUI.PatientUI
    
     public partial class AppointmentPage : Page
     {
-        public ObservableCollection<AppointmentView> AppointmentList { get; set; }
+        public ObservableCollection<PeriodDTO> PeriodDTOs { get; set; }
+        public Period SelectedPeriod { get; set; }
 
         public AppointmentPage(string username)
         {
@@ -36,19 +39,25 @@ namespace ZdravoHospital.GUI.PatientUI
         private void FillList(string username)
         {
             PeriodRepository periodRepository = new PeriodRepository();
-            //Model.Resources.OpenPeriods();
-            AppointmentList = new ObservableCollection<AppointmentView>();
-            //foreach (Period period in Model.Resources.periods)
-            foreach (Period period in periodRepository.GetValues())
+            PeriodDTOs = new ObservableCollection<PeriodDTO>();
+            PeriodConverter periodConverter = new PeriodConverter();
+
+            foreach (Model.Period period in periodRepository.GetValues())
             {
                 if (period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration)>DateTime.Now) 
                 {
-                    AppointmentList.Add(new AppointmentView(period));
+                    PeriodDTOs.Add(periodConverter.GetPeriodDTO(period));
                 }
             }
         }
 
-        private void RemoveAppointmentDialog(AppointmentView appointmentView)
+        private void SetSelectedPeriod()
+        {
+            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            PeriodConverter periodConverter = new PeriodConverter();
+            SelectedPeriod = periodConverter.GetPeriod(period);
+        }
+        private void RemoveAppointmentDialog(PeriodDTO appointmentView)
         {
             RemoveAppointmentDialog removeAppointmentDialog = new RemoveAppointmentDialog();
             removeAppointmentDialog.ShowDialog();
@@ -56,12 +65,12 @@ namespace ZdravoHospital.GUI.PatientUI
                 RemoveAppointment(appointmentView);
         }
 
-        private void RemoveAppointment(AppointmentView appointmentView)
+        private void RemoveAppointment(PeriodDTO appointmentView)
         {
             ++PatientWindow.RecentActionsNum;
             PeriodRepository periodRepository = new PeriodRepository();
-            periodRepository.DeleteById(appointmentView.Period.PeriodId);
-            AppointmentList.Remove(appointmentView);
+            periodRepository.DeleteById(appointmentView.PeriodId);
+            PeriodDTOs.Remove(appointmentView);
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
@@ -69,23 +78,24 @@ namespace ZdravoHospital.GUI.PatientUI
             if (Validations.Validate.TrollDetected())
                 return;
 
-            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
-            if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2))
+            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            if (period.Date < DateTime.Now.AddDays(2))
                 Validations.Validate.ShowOkDialog("Warning", "You can't cancel period within 2 days from it's start!");
             else
-                RemoveAppointmentDialog(appointmentView);
+                RemoveAppointmentDialog(period);
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
+            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            SetSelectedPeriod();
             if (Validations.Validate.TrollDetected())
                 return;
 
-            if (appointmentView.Period.StartTime < DateTime.Now.AddDays(2))
+            if (period.Date < DateTime.Now.AddDays(2))
                Validations.Validate.ShowOkDialog("Warning", "You can't edit period within 2 days from it's start!");
             else
-                NavigationService.Navigate(new AddAppointmentPage(appointmentView.Period, false, null));
+                NavigationService.Navigate(new AddAppointmentPage(SelectedPeriod, false, null));
         }
     }
 }

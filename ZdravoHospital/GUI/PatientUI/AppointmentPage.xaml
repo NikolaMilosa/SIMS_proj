@@ -26,14 +26,14 @@
                 <TextBlock Text="My appointments" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
-            <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="appointmentDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding AppointmentList}" >
+            <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="appointmentDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding PeriodDTOs}" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Path=Period.StartTime, StringFormat=d}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Time" Width="*" Binding="{Binding Path=Period.StartTime, StringFormat=t}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Time" Width="*" Binding="{Binding Path=Date, StringFormat=t}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Doctor's&#x0a; name" Width="120" Binding="{Binding Path=DoctorName}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Doctor's&#x0a;surname" Width="120" Binding="{Binding Path=DoctorSurname}"></DataGridTextColumn>
-                    <DataGridTextColumn Header=" Room&#x0a;number" Width="*" Binding="{Binding Path=Period.RoomId}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Type" Width="100" Binding="{Binding Path=Period.PeriodType}"></DataGridTextColumn>
+                    <DataGridTextColumn Header=" Room&#x0a;number" Width="*" Binding="{Binding Path=RoomNumber}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Type" Width="100" Binding="{Binding Path=PeriodType}"></DataGridTextColumn>
                     
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>

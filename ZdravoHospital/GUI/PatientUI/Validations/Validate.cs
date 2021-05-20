@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
 using System.Threading;
 using Model.Repository;
 

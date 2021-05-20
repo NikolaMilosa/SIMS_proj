@@ -13,15 +13,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Validations;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
     public partial class AddAppointmentPage : Page
     {
 
-        public ObservableCollection<DoctorView> DoctorList { get; set; }
+        public ObservableCollection<DoctorDTO> DoctorList { get; set; }
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
         public Period Period { get; set; }
         AddAppointmentValidations Validations { get; set; }

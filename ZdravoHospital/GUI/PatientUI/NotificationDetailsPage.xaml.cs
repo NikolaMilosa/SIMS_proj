@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using ZdravoHospital.GUI.PatientUI.DTOs;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -21,10 +21,10 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class NotificationDetailsPage : Page
     {
-        public NotificationView NotificationView { get; set; }
+        public NotificationDTO NotificationView { get; set; }
 
         public string PatientUsername { get; set; }
-        public NotificationDetailsPage(NotificationView notificationView, string username)
+        public NotificationDetailsPage(NotificationDTO notificationView, string username)
         {
             InitializeComponent();
             SetProperties(notificationView, username);
@@ -32,7 +32,7 @@ namespace ZdravoHospital.GUI.PatientUI
             DataContext = this;
         }
 
-        private void SetProperties(NotificationView notificationView, string username)
+        private void SetProperties(NotificationDTO notificationView, string username)
         {
             PatientUsername = username;
             NotificationView = notificationView;

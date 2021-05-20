@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using ZdravoHospital.GUI.PatientUI.DTOs;
+using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
@@ -19,15 +20,15 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             PeriodFunctions = new PeriodFunctions(username);
         }
 
-        public void SuggestDoctor(Period checkedPeriod, ObservableCollection<DoctorView> doctorList)
+        public void SuggestDoctor(Period checkedPeriod, ObservableCollection<DoctorDTO> doctorList)
         {
-            foreach (DoctorView doctor in doctorList.ToList())
+            foreach (DoctorDTO doctor in doctorList.ToList())
             {
                 RemoveUnavailableDoctorFromCollection(doctor, checkedPeriod, doctorList);
             }
         }
 
-        private void RemoveUnavailableDoctorFromCollection(DoctorView doctor, Period checkedPeriod, ObservableCollection<DoctorView> doctorList)
+        private void RemoveUnavailableDoctorFromCollection(DoctorDTO doctor, Period checkedPeriod, ObservableCollection<DoctorDTO> doctorList)
         { 
             List<Period> periods = PeriodRepository.GetValues();
             foreach (Period period in periods)
