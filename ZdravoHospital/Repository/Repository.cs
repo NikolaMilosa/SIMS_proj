@@ -25,7 +25,8 @@ namespace Model.Repository
 
         public virtual List<TValue> GetValues()
         {
-            GetMutex().WaitOne();
+            var mutex = GetMutex();
+            mutex.WaitOne();
             var values = JsonConvert.DeserializeObject<List<TValue>>(File.ReadAllText(path));
 
             if (values == null)
@@ -33,7 +34,7 @@ namespace Model.Repository
                 values = new List<TValue>();
             }
 
-            GetMutex().ReleaseMutex();
+            mutex.ReleaseMutex();
             return values;
         }
 
@@ -45,13 +46,14 @@ namespace Model.Repository
 
         public virtual void Create(TValue newValue)
         {
-            GetMutex().WaitOne();
+            var mutex = GetMutex();
+            mutex.WaitOne();
             var values = GetValues();
 
             values.Add(newValue);
 
             Save(values);
-            GetMutex().ReleaseMutex();
+            mutex.ReleaseMutex();
         }
 
     }
