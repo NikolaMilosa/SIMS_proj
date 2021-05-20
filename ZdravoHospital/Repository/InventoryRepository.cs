@@ -14,6 +14,7 @@ namespace Model.Repository
         {
             if (mutex == null)
                 mutex = new Mutex();
+
             return mutex;
         }
 
@@ -24,7 +25,7 @@ namespace Model.Repository
         public override List<Inventory> GetValues()
         {
             GetMutex().WaitOne();
-            var values = GetValues();
+            var values = base.GetValues();
             GetMutex().ReleaseMutex();
             return values;
         }

@@ -27,7 +27,7 @@
     "RoomType": 3,
     "Id": 106,
     "Name": "BIG storage",
-    "Available": true
+    "Available": false
   },
   {
     "RoomType": 2,
