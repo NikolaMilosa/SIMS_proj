@@ -202,7 +202,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _medicineRepository = new MedicineRepository();
             
             Resources.OpenPeriods();
-            Resources.OpenMedicineRecensions();
 
             var doctorList = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText(@"..\..\..\Resources\doctors.json"));
             Resources.doctors = new Dictionary<string, Doctor>();

@@ -14,6 +14,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
     public class MedicineFunctions
     {
         private MedicineRepository _medicineRepository;
+        private MedicineRecensionRepository _medicineRecensionRepository;
 
         private static Mutex _medicineMutex;
 
@@ -59,6 +60,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 IngredientChanged += activeDialog.OnIngredientChanged;
 
             _medicineRepository = new MedicineRepository();
+            _medicineRecensionRepository = new MedicineRecensionRepository();
         }
 
         public void AddNewMedicine(Medicine newMedicine)
@@ -98,16 +100,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public bool DeleteMedicine(Medicine medicine)
         {
-            GetMedicineMutex().WaitOne();
-
             _medicineRepository.DeleteById(medicine.MedicineName);
 
-            if (Model.Resources.medicineRecensions.Remove(FindMedicineRecension(medicine)))
-            {
-                Model.Resources.SaveMedicineRecensions();
-            }
-
-            GetMedicineMutex().ReleaseMutex();
+            _medicineRecensionRepository.DeleteById(medicine.MedicineName);
 
             OnMedicineChanged();
 
@@ -135,27 +130,26 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void SendMedicineOnRecension(Medicine medicine, Doctor doctor)
         {
-            GetMedicineMutex().WaitOne();
+            var medicineRecension = new MedicineRecension()
+            {
+                DoctorUsername = doctor.Username, 
+                MedicineName = medicine.MedicineName, 
+                RecensionNote = ""
+            };
             
-            var medicineRecension = new MedicineRecension(){DoctorUsername = doctor.Username, MedicineName = medicine.MedicineName, RecensionNote = ""};
-
-
-            Model.Resources.medicineRecensions.RemoveAll(mr => mr.MedicineName.Equals(medicine.MedicineName));
-            Model.Resources.medicineRecensions.Add(medicineRecension);
-            Model.Resources.SaveMedicineRecensions();
+            _medicineRecensionRepository.DeleteById(medicine.MedicineName);
+            _medicineRecensionRepository.Create(medicineRecension);
             
             medicine.Status = MedicineStatus.PENDING;
 
             _medicineRepository.Update(medicine);
-
-            GetMedicineMutex().ReleaseMutex();
-
+            
             OnMedicineChanged();
         }
 
         public MedicineRecension FindMedicineRecension(Medicine medicine)
         {
-            return Model.Resources.medicineRecensions.Find(m => m.MedicineName.Equals(medicine.MedicineName));
+            return _medicineRecensionRepository.GetById(medicine.MedicineName);
         }
     }
 }
