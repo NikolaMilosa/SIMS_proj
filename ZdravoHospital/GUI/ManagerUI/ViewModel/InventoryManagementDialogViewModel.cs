@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.View;
@@ -17,6 +18,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _senderRoom;
         private Room _receiverRoom;
 
+        private int _senderIndex;
+        private int _receiverIndex;
+
         private ObservableCollection<Room> _senderRooms;
         private ObservableCollection<Room> _receiverRooms;
 
@@ -26,6 +30,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private InventoryDTO _selectedInventory;
 
         private Window _dialog;
+
+        private RoomRepository _roomRepository;
+
+        private RoomInventoryRepository _roomInventoryRepository;
+        private InventoryRepository _inventoryRepository;
 
         #endregion
 
@@ -72,13 +81,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        
         public ObservableCollection<Room> SenderRooms
         {
             get => _senderRooms;
             set
             {
                 _senderRooms = value;
+
                 OnPropertyChanged();
             }
         }
@@ -126,7 +136,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public InventoryManagementDialogViewModel()
         {
-            //SenderRooms = new ObservableCollection<Room>(Resources.rooms.Values);
+            _roomRepository = new RoomRepository();
+            _roomInventoryRepository = new RoomInventoryRepository();
+            _inventoryRepository = new InventoryRepository();
+            SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
         }
 
         #region Private functions
@@ -135,12 +148,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             var result = new ObservableCollection<InventoryDTO>();
 
-            foreach (var roomInventory in Resources.roomInventory)
+            foreach (var roomInventory in _roomInventoryRepository.GetValues())
             {
                 if (roomInventory.RoomId == room.Id)
                 {
-                    result.Add(new InventoryDTO(Resources.inventory[roomInventory.InventoryId].Name, roomInventory.Quantity,
-                        roomInventory.InventoryId, Resources.inventory[roomInventory.InventoryId].InventoryType));
+                    var inventory = _inventoryRepository.GetById(roomInventory.InventoryId);
+                    result.Add(new InventoryDTO(inventory.Name, roomInventory.Quantity,
+                        roomInventory.InventoryId, inventory.InventoryType));
                 }
             }
 
@@ -163,8 +177,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public void OnShoudRefresh()
         {
-            SenderRoom = SenderRoom;
-            ReceiverRoom = ReceiverRoom;
+            var tempRoomSender = SenderRoom;
+            var tempRoomReceiver = ReceiverRoom;
+
+            SenderRoom = null;
+            ReceiverRoom = null;
+
+            var rooms = _roomRepository.GetValues();
+            SenderRooms = new ObservableCollection<Room>(rooms);
+
+            if (tempRoomSender != null)
+                SenderRoom = rooms.Find(r => r.Id == tempRoomSender.Id);
+            if (tempRoomReceiver != null)
+                ReceiverRoom = rooms.Find(r => r.Id == tempRoomReceiver.Id);
         }
 
         #endregion

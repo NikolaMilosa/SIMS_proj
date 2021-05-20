@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Threading;
 
 namespace Model.Repository
 {
-    public class RoomRepository : Repository<int, Room>
+    public class InventoryRepository : Repository<string, Inventory>
     {
-        private static string path = @"../../../Resources/rooms.json";
+        private static string path = @"..\..\..\Resources\inventory.json";
         private static Mutex mutex;
-        
-        public RoomRepository() : base(path)
+
+        public InventoryRepository() : base(path)
         {
         }
 
@@ -21,24 +22,32 @@ namespace Model.Repository
             return mutex;
         }
 
-        public override Room GetById(int id)
+        public override List<Inventory> GetValues()
         {
-            List<Room> allRooms = base.GetValues();
-
             GetMutex().WaitOne();
-            foreach (Room room in allRooms)
+            var values = base.GetValues();
+            GetMutex().ReleaseMutex();
+            return values;
+        }
+
+        public override Inventory GetById(string id)
+        {
+            var values = base.GetValues();
+            GetMutex().WaitOne();
+            foreach (var inv in values)
             {
-                if (room.Id == id)
+                if (inv.Id.Equals(id))
                 {
-                    mutex.ReleaseMutex();
-                    return room;
+                    GetMutex().ReleaseMutex();
+                    return inv;
                 }
             }
+
             GetMutex().ReleaseMutex();
             return null;
         }
 
-        public override void DeleteById(int id)
+        public override void DeleteById(string id)
         {
             var values = base.GetValues();
             GetMutex().WaitOne();
@@ -47,7 +56,7 @@ namespace Model.Repository
             GetMutex().ReleaseMutex();
         }
 
-        public override void Update(Room newValue)
+        public override void Update(Inventory newValue)
         {
             var values = base.GetValues();
             GetMutex().WaitOne();

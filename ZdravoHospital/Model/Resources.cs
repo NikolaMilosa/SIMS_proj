@@ -53,15 +53,6 @@ namespace Model
             File.WriteAllText(@"..\..\..\Resources\patients.json", json);
         }
 
-        public static Employee findManager(string username)
-        {
-            employees = JsonConvert.DeserializeObject<Dictionary<string, Employee>>(File.ReadAllText(@"..\..\..\Resources\employees.json"));
-            Employee sol = employees[username];
-            employees.Clear();
-            employees = null;
-            return sol;
-        }
-
         public static void OpenRooms()
         {
             rooms = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(@"..\..\..\Resources\rooms.json"));
@@ -71,7 +62,7 @@ namespace Model
 
         public static void SaveRooms()
         {
-            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms, Formatting.Indented));
+            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms.Values.ToList(), Formatting.Indented));
         }
 
         public static void OpenInventory()
@@ -83,7 +74,7 @@ namespace Model
 
         public static void SaveInventory()
         {
-            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory, Formatting.Indented));
+            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory.Values.ToList(), Formatting.Indented));
         }
 
         internal static void CloseAllManager()

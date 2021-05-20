@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.Logics;
@@ -24,6 +25,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _senderRoom;
         private Room _receiverRoom;
         private InventoryDTO _processedItem;
+
+        private InventoryRepository _inventoryRepository;
+        private TransferRequestRepository _transferRequestRepository;
 
         #endregion
 
@@ -120,6 +124,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             _transferRequestsFunctions = new TransferRequestsFunctions();
 
+            _inventoryRepository = new InventoryRepository();
+            _transferRequestRepository = new TransferRequestRepository();
+
             SenderRoom = sender;
             ReceiverRoom = receiver;
             IsStatic = (processed.InventoryType == InventoryType.STATIC_INVENTORY);
@@ -139,7 +146,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             MaxInventory = _processedItem.Quantity;
 
-            foreach (var transferRequest in Resources.transferRequests)
+            foreach (var transferRequest in _transferRequestRepository.GetValues())
             {
                 if (transferRequest.SenderRoom == SenderRoom.Id &&
                     transferRequest.InventoryId.Equals(_processedItem.Id))
@@ -149,7 +156,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void SetDefinitionText()
         {
-            DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + Model.Resources.inventory[_processedItem.Id].Name
+            var inventory = _inventoryRepository.GetById(_processedItem.Id);
+
+            DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + inventory.Name
                              + "' would you like to transfer?";
 
             if (MaxInventory != _processedItem.Quantity)

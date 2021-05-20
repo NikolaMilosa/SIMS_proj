@@ -4,12 +4,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class TransferRequestsFunctions
     {
+        private InventoryRepository _inventoryRepository;
+        private RoomRepository _roomRepository;
+        private TransferRequestRepository _transferRequestRepository;
+
         private static Mutex transferRequestMutex;
 
         public static Mutex GetTransferRequestMutex()
@@ -39,13 +44,18 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public TransferRequestsFunctions()
         {
             TransferExecuted += ViewModel.ManagerWindowViewModel.GetDashboard().OnRefreshTransferDialog;
+
+            _roomRepository = new RoomRepository();
+            _inventoryRepository = new InventoryRepository();
+            _transferRequestRepository = new TransferRequestRepository();
         }
 
         public void RunOrExecute()
         {
-            if (Model.Resources.transferRequests.Count != 0)
+            var values = _transferRequestRepository.GetValues();
+            if (values.Count != 0)
             {
-                List<TransferRequest> loaded = new List<TransferRequest>(Model.Resources.transferRequests);
+                List<TransferRequest> loaded = new List<TransferRequest>(values);
                 foreach(TransferRequest tr in loaded)
                 {
                     if (tr.TimeOfExecution < DateTime.Now)
@@ -68,12 +78,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void CreateAndStartTransfer(TransferRequest transferRequest)
         {
-            GetTransferRequestMutex().WaitOne();
-
-            Model.Resources.transferRequests.Add(transferRequest);
-            Model.Resources.SaveTransferRequests();
-
-            GetTransferRequestMutex().ReleaseMutex();
+            _transferRequestRepository.Create(transferRequest);
 
             StartTransfer(transferRequest);
 
@@ -81,10 +86,22 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             
             RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
             
-            RoomSchedule roomScheduleSender = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution, EndTime = transferRequest.TimeOfExecution.AddMinutes(2), RoomId = transferRequest.SenderRoom, ScheduleType = ReservationType.TRANSFER };
+            RoomSchedule roomScheduleSender = new RoomSchedule()
+            {
+                StartTime = transferRequest.TimeOfExecution, 
+                EndTime = transferRequest.TimeOfExecution.AddMinutes(2), 
+                RoomId = transferRequest.SenderRoom, 
+                ScheduleType = ReservationType.TRANSFER
+            };
             roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleSender);
 
-            RoomSchedule roomScheduleReceiver = new RoomSchedule() { StartTime = transferRequest.TimeOfExecution.AddMinutes(2), EndTime = transferRequest.TimeOfExecution.AddMinutes(4), RoomId = transferRequest.RecipientRoom, ScheduleType = ReservationType.TRANSFER };
+            RoomSchedule roomScheduleReceiver = new RoomSchedule()
+            {
+                StartTime = transferRequest.TimeOfExecution.AddMinutes(2), 
+                EndTime = transferRequest.TimeOfExecution.AddMinutes(4), 
+                RoomId = transferRequest.RecipientRoom, 
+                ScheduleType = ReservationType.TRANSFER
+            };
             roomScheduleFunctions.CreateAndScheduleRenovationStart(roomScheduleReceiver);
         }
 
@@ -92,7 +109,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             GetTransferRequestMutex().WaitOne();
 
-            if (Model.Resources.rooms.ContainsKey(transferRequest.SenderRoom) && Model.Resources.rooms.ContainsKey(transferRequest.RecipientRoom) && Model.Resources.inventory.ContainsKey(transferRequest.InventoryId))
+            var roomSender = _roomRepository.GetById(transferRequest.SenderRoom);
+            var roomReceiver = _roomRepository.GetById(transferRequest.RecipientRoom);
+
+            if (roomSender != null && roomReceiver != null && _inventoryRepository.GetById(transferRequest.InventoryId) != null)
             {
                 var roomInventoryService = new RoomInventoryFunctions();
                 /* Handle database transfer */
@@ -119,8 +139,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             }
 
             /* Serialize */
-            if (Model.Resources.transferRequests.Remove(transferRequest))
-                Model.Resources.SaveTransferRequests();
+            _transferRequestRepository.DeleteByEquality(transferRequest);
 
             GetTransferRequestMutex().ReleaseMutex();
             OnTransferExecuted();
@@ -130,7 +149,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             int scheduledInventory = 0;
 
-            Model.Resources.transferRequests.ForEach(tr =>
+            _transferRequestRepository.GetValues().ForEach(tr =>
             {
                 if (tr.SenderRoom == room.Id && tr.InventoryId.Equals(inventory.Id))
                 {

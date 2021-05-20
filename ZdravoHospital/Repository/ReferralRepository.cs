@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace Model.Repository
 {
@@ -8,6 +9,11 @@ namespace Model.Repository
 
         public ReferralRepository() : base(path)
         {
+        }
+
+        public override Mutex GetMutex()
+        {
+            return new Mutex();
         }
 
         public override Referral GetById(int id)

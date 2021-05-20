@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Windows.Controls;
+using Model.Repository;
+
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
     class RoomIdValidationRule : ValidationRule
@@ -11,12 +13,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             try
             {
-                if (value.ToString().Trim().Equals(String.Empty))
+                if (value.ToString().Trim().Equals(string.Empty))
                     return new ValidationResult(false, "'Id' field cannot be empty...");
 
                 var id = int.Parse(value.ToString());
 
-                if (Model.Resources.rooms.ContainsKey(id))
+                RoomRepository roomRepo = new RoomRepository();
+
+                if (roomRepo.GetById(id) != null)
                     return new ValidationResult(false, "Room with that Id already exists...");
 
                 return new ValidationResult(true, null);

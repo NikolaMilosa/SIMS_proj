@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 using Model;
+using Model.Repository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
@@ -13,6 +14,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
+            var medicineInventory = new MedicineRepository();
+
             var input = value as string;
 
             input = Regex.Replace(input, @"\s+", " ");
@@ -28,7 +31,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 return new ValidationResult(false, "In 'Name' you have entered an unsupported character...");
             }
 
-            var doesExist = Model.Resources.medicines.Find(m => m.MedicineName.ToLower().Equals(input));
+            var doesExist = medicineInventory.GetValues().Find(m => m.MedicineName.ToLower().Equals(input));
 
             if (doesExist == null)
             {

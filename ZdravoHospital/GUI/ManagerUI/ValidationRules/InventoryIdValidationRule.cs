@@ -4,12 +4,15 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using Model.Repository;
+
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
     class InventoryIdValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
+            var inventoryRepository = new InventoryRepository();
             try
             {
                 var id = value.ToString();
@@ -22,7 +25,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 if (!Regex.IsMatch(id, regex))
                     return new ValidationResult(false, "In id you have entered an unsupported character...");
 
-                if (Model.Resources.inventory.ContainsKey(id))
+                if (inventoryRepository.GetById(id) != null)
                     return new ValidationResult(false, "Inventory with that Id already exists...");
 
                 return new ValidationResult(true, null);

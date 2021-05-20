@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Model.Repository
 {
@@ -9,6 +10,11 @@ namespace Model.Repository
 
         public PeriodRepository() : base(path)
         {
+        }
+
+        public override Mutex GetMutex()
+        {
+            return new Mutex();
         }
 
         public override Period GetById(int id)

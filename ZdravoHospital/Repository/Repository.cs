@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace Model.Repository
@@ -15,6 +16,8 @@ namespace Model.Repository
             this.path = path;
         }
 
+        public abstract Mutex GetMutex();
+
         protected virtual void Save(List<TValue> values)
         {
             File.WriteAllText(path,JsonConvert.SerializeObject(values, Formatting.Indented));
@@ -22,6 +25,7 @@ namespace Model.Repository
 
         public virtual List<TValue> GetValues()
         {
+            GetMutex().WaitOne();
             var values = JsonConvert.DeserializeObject<List<TValue>>(File.ReadAllText(path));
 
             if (values == null)
@@ -29,6 +33,7 @@ namespace Model.Repository
                 values = new List<TValue>();
             }
 
+            GetMutex().ReleaseMutex();
             return values;
         }
 
@@ -40,11 +45,13 @@ namespace Model.Repository
 
         public virtual void Create(TValue newValue)
         {
+            GetMutex().WaitOne();
             var values = GetValues();
 
             values.Add(newValue);
 
             Save(values);
+            GetMutex().ReleaseMutex();
         }
 
     }

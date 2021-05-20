@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using Model;
+using Model.Repository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
@@ -18,7 +19,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             var input = value.ToString().Trim();
 
-            if (input.Equals(String.Empty))
+            if (input.Equals(string.Empty))
                 return new ValidationResult(false, "'Time' cannot be left empty...");
 
             if(input.IndexOf("-") != -1 || input.IndexOf(".") != -1 || input.IndexOf(":") == -1)
@@ -36,18 +37,18 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 {
                     /* Checking for renovation */
                     var answer = CheckIntersectPeriods(timeOfDay,Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
-                    if (!answer.Equals(String.Empty))
+                    if (!answer.Equals(string.Empty))
                         return new ValidationResult(false, "There is a medical intervention planned at that time... " + answer);
 
                     answer = CheckIntersectRenovations(timeOfDay, Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
-                    if (!answer.Equals(String.Empty))
+                    if (!answer.Equals(string.Empty))
                         return new ValidationResult(false, "There is a renovation already planned at that time... " + answer);
                 }
                 else
                 {
                     /* Checking for inventory transport */
                     var answer = CheckIntersectPeriods(timeOfDay, Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
-                    if (!answer.Equals(String.Empty))
+                    if (!answer.Equals(string.Empty))
                         return new ValidationResult(false, "There is a medical intervention planned at that time..." + answer);
                 }
 
@@ -90,7 +91,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public string CheckIntersectRenovations(DateTime passedTime, Room firstRoom, Room secondRoom)
         {
-            foreach (var r in Model.Resources.roomSchedule)
+            var RoomScheduleRepository = new RoomScheduleRepository();
+            foreach (var r in RoomScheduleRepository.GetValues())
             {
                 if (r.ScheduleType == ReservationType.TRANSFER)
                     continue;

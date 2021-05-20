@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace Model.Repository
 {
@@ -6,8 +7,18 @@ namespace Model.Repository
     {
         private static string path = @"..\..\..\Resources\accounts.json";
 
+        private static Mutex mutex;
+
         public AccountRepository() : base(path)
         {
+        }
+
+        public override Mutex GetMutex()
+        {
+            if (mutex == null)
+                mutex = new Mutex();
+
+            return mutex;
         }
 
         public override Credentials GetById(string id)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.Logics;
 
@@ -21,6 +22,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private TransferRequestsFunctions _transferRequestsFunctions;
         private RoomInventoryFunctions _roomInventoryFunctions;
         private InventoryFunctions _inventoryFunctions;
+
+        private RoomRepository _roomRepository;
 
         #endregion
 
@@ -131,7 +134,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomInventoryFunctions = new RoomInventoryFunctions();
             _inventoryFunctions = new InventoryFunctions();
 
-            Rooms = new List<Room>(Resources.rooms.Values);
+            _roomRepository = new RoomRepository();
+
+            Rooms = new List<Room>(_roomRepository.GetValues());
             SelectedInventory = ((new StringBuilder()).Append(PassedInventory.Id).Append(" - ").Append(PassedInventory.Name)).ToString();
 
             ConfirmCommand = new MyICommand(OnConfirm);
