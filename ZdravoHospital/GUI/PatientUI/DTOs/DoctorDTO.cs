@@ -1,16 +1,13 @@
 ﻿using Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ZdravoHospital.GUI.PatientUI.ViewModel
+namespace ZdravoHospital.GUI.PatientUI.DTOs
 {
-    public class DoctorView
+    public class DoctorDTO
     {
         public string Fullname { get; set; }
         public string Username { get; set; }
 
-        public DoctorView(Doctor doctor) 
+        public DoctorDTO(Doctor doctor) 
         {
             Fullname = doctor.Name + " " + doctor.Surname;
             Username = doctor.Username;

@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using ZdravoHospital.GUI.PatientUI.DTOs;
+using PeriodDTO = ZdravoHospital.GUI.PatientUI.DTOs.PeriodDTO;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -21,26 +22,26 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class EvaluateAppointmentPage : Page
     {
-        public AppointmentView AppointmentView { get; set; }
+        public Period Period { get; set; }
         public PeriodMark PeriodMark { get; set; }
-        public EvaluateAppointmentPage(AppointmentView appointmentView)
+        public EvaluateAppointmentPage(Period period)
         {
             InitializeComponent();
             DataContext = this;
-            AppointmentView = appointmentView;
-            GeneratePeriodMark(appointmentView);
+            Period = period;
+            GeneratePeriodMark(period);
             SetMark();
         }
 
-        public void GeneratePeriodMark(AppointmentView appointmentView)
+        public void GeneratePeriodMark(Period period)
         {
-            if (appointmentView.Period.PeriodMark == null)
+            if (period.PeriodMark == null)
             {
-                appointmentView.Period.PeriodMark = new PeriodMark();
-                appointmentView.Period.PeriodMark.Mark = -1;
+                period.PeriodMark = new PeriodMark();
+                period.PeriodMark.Mark = -1;
             }
 
-            PeriodMark = appointmentView.Period.PeriodMark;
+            PeriodMark = period.PeriodMark;
         }
 
         private void SetMark()
@@ -71,13 +72,13 @@ namespace ZdravoHospital.GUI.PatientUI
                 return;
 
             PeriodSuccessfulyRated();
-            NavigationService.Navigate(new AppointmentHistoryPage(AppointmentView.Period.PatientUsername));
+            NavigationService.Navigate(new AppointmentHistoryPage(Period.PatientUsername));
         }
 
         private void PeriodSuccessfulyRated()
         {
             PeriodRepository periodRepository = new PeriodRepository();
-            periodRepository.Update(AppointmentView.Period);
+            periodRepository.Update(Period);
             Validations.Validate.ShowOkDialog("Rated", "Period successfully rated!");
         }
 
@@ -94,7 +95,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AppointmentHistoryPage(AppointmentView.Period.PatientUsername));
+            NavigationService.Navigate(new AppointmentHistoryPage(Period.PatientUsername));
         }
 
         private void ButtonStar1_Click(object sender, RoutedEventArgs e)

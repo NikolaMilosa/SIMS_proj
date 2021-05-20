@@ -42,7 +42,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
             SurveySuccesfullyCompleted();
             SerializeSurvey();
-            NavigationService.Navigate(new AppointmentPage(PatientWindow.PatientUsername));
+            NavigationService.Navigate(new PeriodPage(PatientWindow.PatientUsername));
         }
 
         private void SurveySuccesfullyCompleted()
@@ -65,7 +65,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AppointmentPage(PatientWindow.PatientUsername));
+            NavigationService.Navigate(new PeriodPage(PatientWindow.PatientUsername));
         }
 
         public void SerializeSurvey()

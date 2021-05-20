@@ -13,7 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using ZdravoHospital.GUI.PatientUI.Converters;
+using ZdravoHospital.GUI.PatientUI.DTOs;
+using PeriodDTO = ZdravoHospital.GUI.PatientUI.DTOs.PeriodDTO;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -22,7 +24,8 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class AppointmentHistoryPage : Page
     {
-        public ObservableCollection<AppointmentView> AppointmentList { get; set; }
+        public ObservableCollection<PeriodDTO> Periods { get; set; }
+        public Model.Period SelectedPeriod { get; set; }
         public AppointmentHistoryPage(string username)
         {
             InitializeComponent();
@@ -33,32 +36,39 @@ namespace ZdravoHospital.GUI.PatientUI
         private void FillList(string username)
         {
             PeriodRepository periodRepository = new PeriodRepository();
-            //Model.Resources.OpenPeriods();
-            AppointmentList = new ObservableCollection<AppointmentView>();
-            //foreach (Period period in Model.Resources.periods)
-            foreach (Period period in periodRepository.GetValues())
+            Periods = new ObservableCollection<PeriodDTO>();
+            PeriodConverter periodConverter = new PeriodConverter();
+            foreach (Model.Period period in periodRepository.GetValues())
             {
                 if (period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration) < DateTime.Now)
                 {
-                    AppointmentList.Add(new AppointmentView(period));
+                    Periods.Add(periodConverter.GetPeriodDTO(period));
                 }
             }
         }
 
+        private void SetSelectedPeriod()
+        {
+            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            PeriodConverter periodConverter = new PeriodConverter();
+            SelectedPeriod = periodConverter.GetPeriod(period);
+        }
+
         private void AnamnesisButton_Click(object sender, RoutedEventArgs e)
         {
-            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
-            if(appointmentView.Period.Details==null)
+            SetSelectedPeriod();
+            if(SelectedPeriod.Details==null)
             {
-                appointmentView.Period.Details = "No available anamnesis for selected appointment!";
+                SelectedPeriod.Details = "No available anamnesis for selected appointment!";
             }
-            NavigationService.Navigate(new AnamnesisPage(appointmentView.Period.Details, appointmentView.Period.PatientUsername));
+            NavigationService.Navigate(new AnamnesisPage(SelectedPeriod.Details, SelectedPeriod.PatientUsername));
         }
 
         private void RateButton_Click(object sender, RoutedEventArgs e)
         {
-            AppointmentView appointmentView = (AppointmentView)appointmentDataGrid.SelectedItem;
-            NavigationService.Navigate(new EvaluateAppointmentPage(appointmentView));
+            SetSelectedPeriod();
+            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
+            NavigationService.Navigate(new EvaluateAppointmentPage(SelectedPeriod));
         }
     }
 }

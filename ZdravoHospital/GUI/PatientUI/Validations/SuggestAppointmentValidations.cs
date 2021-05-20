@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
@@ -41,7 +41,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void SuggestTime()
         {
-            Page.Period.DoctorUsername = ((DoctorView)Page.selectDoctor.SelectedItem).Username;
+            Page.Period.DoctorUsername = ((DoctorDTO)Page.selectDoctor.SelectedItem).Username;
             ShowSuggestedTimes();
             Validate.ShowOkDialog("Suggested time", "Time list is updated to suggested times!");
             Page.selectDate.SelectedDate = Page.Period.StartTime;

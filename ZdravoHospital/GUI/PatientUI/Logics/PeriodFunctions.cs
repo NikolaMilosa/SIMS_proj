@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ZdravoHospital.GUI.PatientUI.Validations;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {

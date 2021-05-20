@@ -4,11 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI" xmlns:local1="clr-namespace:ZdravoHospital.GUI.PatientUI.Validations"
+      xmlns:converters="clr-namespace:ZdravoHospital.GUI.PatientUI.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="708" d:DesignWidth="804"
       Title="SurveyPage">
     <Page.Resources>
-        <local1:RadioBtnToIntConverter x:Key="converter"></local1:RadioBtnToIntConverter>
+        <converters:RadioBtnToIntConverter x:Key="converter"></converters:RadioBtnToIntConverter>
     </Page.Resources>
     <Border Background="White" CornerRadius="20">
         <Grid>

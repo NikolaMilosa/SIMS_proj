@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using ZdravoHospital.GUI.PatientUI.Converters;
+using ZdravoHospital.GUI.PatientUI.DTOs;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -22,7 +23,7 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class NotificationsPage : Page
     {
-        public ObservableCollection<NotificationView> NotificationList { get; set; }
+        public ObservableCollection<NotificationDTO> Notifications { get; set; }
         
         public string PatientUsername { get; set; }
         public NotificationsPage(string username)
@@ -35,21 +36,21 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void FillList()
         {
-            NotificationList = new ObservableCollection<NotificationView>();
+            Notifications = new ObservableCollection<NotificationDTO>();
             PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
-            List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
-            foreach(PersonNotification personNotification in personNotifications)
+            NotificationConverter notificationConverter = new NotificationConverter();
+            foreach(PersonNotification personNotification in personNotificationRepository.GetValues())
             {
                 if (personNotification.Username.Equals(PatientUsername))
                 {
-                    NotificationList.Add(new NotificationView(personNotification, PatientUsername));
+                    Notifications.Add(notificationConverter.GetNotifcationDTO(personNotification));
                 }
             }
         }
 
         private void NotificationDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.Navigate(new NotificationDetailsPage((NotificationView)notificationDataGrid.SelectedItem, PatientUsername));
+            NavigationService.Navigate(new NotificationDetailsPage((NotificationDTO)notificationDataGrid.SelectedItem, PatientUsername));
         }
 
         private void NoteButton_Click(object sender, RoutedEventArgs e)
