@@ -63,7 +63,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public string CheckIntersectPeriods(DateTime passedTime, Room firstRoom, Room secondRoom)
         {
-            foreach (var p in Model.Resources.periods)
+            var periodRepository = new PeriodRepository();
+
+            foreach (var p in periodRepository.GetValues())
             {
                 var endTime = p.StartTime.AddMinutes(p.Duration);
                 if (passedTime >= p.StartTime && passedTime <= endTime && firstRoom.Id == p.RoomId)

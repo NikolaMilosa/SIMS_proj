@@ -18,17 +18,30 @@ namespace Model.Repository
 
         public override Employee GetById(string id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            foreach (var val in values)
+            {
+                if (val.Username.Equals(id))
+                {
+                    return val;
+                }
+            }
+
+            return null;
         }
 
         public override void DeleteById(string id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values.RemoveAll(val => val.Username.Equals(id));
+            Save(values);
         }
 
         public override void Update(Employee newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values[values.FindIndex(val => val.Username.Equals(newValue.Username))] = newValue;
+            Save(values);
         }
     }
 }

@@ -55,6 +55,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private RoomRepository _roomRepository;
         private InventoryRepository _inventoryRepository;
         private MedicineRepository _medicineRepository;
+        private EmployeeRepository _employeeRepository;
 
         #endregion
 
@@ -167,9 +168,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public ManagerWindowViewModel(string activeUser)
         {
             dashboard = this;
-            //TODO: namesti da se ispisuje ko se loguje
-            var currManager = "";
-            ActiveManager = "Welcome, " + currManager;
+            _employeeRepository = new EmployeeRepository();
+            var currManager = _employeeRepository.GetById(activeUser);
+            ActiveManager = "Welcome, " + currManager.Name;
 
             OpenDataBase();
             SetObservables();

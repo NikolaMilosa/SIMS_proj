@@ -16,6 +16,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
     {
         private RoomScheduleRepository _roomScheduleRepository;
         private RoomRepository _roomRepository;
+        private PeriodRepository _periodRepository;
 
         private static Mutex _roomScheduleMutex;
 
@@ -31,6 +32,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             _roomRepository = new RoomRepository();
             _roomScheduleRepository = new RoomScheduleRepository();
+            _periodRepository = new PeriodRepository();
         }
 
         public void RunOrExecute()
@@ -186,7 +188,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             var reservations = new ObservableCollection<ReservationDTO>();
 
             var end = day.AddDays(1);
-            Model.Resources.periods.ForEach(p =>
+            _periodRepository.GetValues().ForEach(p =>
             {
                 if (p.StartTime >= day && p.StartTime < end && p.RoomId == room.Id)
                 {
