@@ -10,16 +10,16 @@ namespace Model.Repository
         private static string path = @"..\..\..\Resources\inventory.json";
         private static Mutex mutex;
 
-        private Mutex GetMutex()
+        public InventoryRepository() : base(path)
+        {
+        }
+
+        public override Mutex GetMutex()
         {
             if (mutex == null)
                 mutex = new Mutex();
 
             return mutex;
-        }
-
-        public InventoryRepository() : base(path)
-        {
         }
 
         public override List<Inventory> GetValues()
@@ -32,8 +32,8 @@ namespace Model.Repository
 
         public override Inventory GetById(string id)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             foreach (var inv in values)
             {
                 if (inv.Id.Equals(id))
@@ -49,8 +49,8 @@ namespace Model.Repository
 
         public override void DeleteById(string id)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values.RemoveAll(val => val.Id.Equals(id));
             Save(values);
             GetMutex().ReleaseMutex();
@@ -58,17 +58,10 @@ namespace Model.Repository
 
         public override void Update(Inventory newValue)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values[values.FindIndex(val => val.Id.Equals(newValue.Id))] = newValue;
             Save(values);
-            GetMutex().ReleaseMutex();
-        }
-
-        public override void Create(Inventory newValue)
-        {
-            GetMutex().WaitOne();
-            base.Create(newValue);
             GetMutex().ReleaseMutex();
         }
     }

@@ -11,7 +11,11 @@ namespace Model.Repository
 
         private static Mutex mutex;
 
-        private Mutex GetMutex()
+        public MedicineRepository() : base(path)
+        {
+        }
+
+        public override Mutex GetMutex()
         {
             if (mutex == null)
                 mutex = new Mutex();
@@ -19,29 +23,10 @@ namespace Model.Repository
             return mutex;
         }
 
-        public MedicineRepository() : base(path)
-        {
-        }
-
-        public override List<Medicine> GetValues()
-        {
-            GetMutex().WaitOne();
-            var values = base.GetValues();
-            GetMutex().ReleaseMutex();
-            return values;
-        }
-
-        public override void Create(Medicine newValue)
-        {
-            GetMutex().WaitOne();
-            base.Create(newValue);
-            GetMutex().ReleaseMutex();
-        }
-
         public override Medicine GetById(string id)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             foreach (var val in values)
             {
                 if (val.MedicineName.Equals(id))
@@ -57,8 +42,8 @@ namespace Model.Repository
 
         public override void DeleteById(string id)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values.RemoveAll(val => val.MedicineName.Equals(id));
             Save(values);
             GetMutex().ReleaseMutex();
@@ -66,8 +51,8 @@ namespace Model.Repository
 
         public override void Update(Medicine newValue)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values[values.FindIndex(val => val.MedicineName.Equals(newValue.MedicineName))] = newValue;
             Save(values);
             GetMutex().ReleaseMutex();

@@ -8,8 +8,12 @@ namespace Model.Repository
     {
         private static string path = @"../../../Resources/rooms.json";
         private static Mutex mutex;
+        
+        public RoomRepository() : base(path)
+        {
+        }
 
-        private Mutex GetMutex()
+        public override Mutex GetMutex()
         {
             if (mutex == null)
                 mutex = new Mutex();
@@ -17,24 +21,11 @@ namespace Model.Repository
             return mutex;
         }
 
-        public RoomRepository() : base(path)
-        {
-        }
-
-        public override List<Room> GetValues()
-        {
-            GetMutex().WaitOne();
-            var values = base.GetValues();
-            GetMutex().ReleaseMutex();
-            return values;
-        }
-
         public override Room GetById(int id)
         {
-            GetMutex().WaitOne();
-
             List<Room> allRooms = base.GetValues();
 
+            GetMutex().WaitOne();
             foreach (Room room in allRooms)
             {
                 if (room.Id == id)
@@ -49,8 +40,8 @@ namespace Model.Repository
 
         public override void DeleteById(int id)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values.RemoveAll(val => val.Id.Equals(id));
             Save(values);
             GetMutex().ReleaseMutex();
@@ -58,17 +49,10 @@ namespace Model.Repository
 
         public override void Update(Room newValue)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values[values.FindIndex(val => val.Id.Equals(newValue.Id))] = newValue;
             Save(values);
-            GetMutex().ReleaseMutex();
-        }
-
-        public override void Create(Room newValue)
-        {
-            GetMutex().WaitOne();
-            base.Create(newValue);
             GetMutex().ReleaseMutex();
         }
     }

@@ -8,14 +8,7 @@ namespace Model.Repository
     {
         private static string path = @"..\..\..\Resources\roomInventory.json";
         private static Mutex mutex;
-
-        private Mutex GetMutex()
-        {
-            if (mutex == null)
-                mutex = new Mutex();
-            return mutex;
-        }
-
+        
         public RoomInventoryRepository() : base(path)
         {
         }
@@ -40,25 +33,18 @@ namespace Model.Repository
             GetMutex().ReleaseMutex();
         }
 
-        public override List<RoomInventory> GetValues()
+        public override Mutex GetMutex()
         {
-            GetMutex().WaitOne();
-            var values = base.GetValues();
-            GetMutex().ReleaseMutex();
-            return values;
-        }
+            if (mutex == null)
+                mutex = new Mutex();
 
-        public override void Create(RoomInventory newValue)
-        {
-            GetMutex().WaitOne();
-            base.Create(newValue);
-            GetMutex().ReleaseMutex();
+            return mutex;
         }
-
+        
         public RoomInventory FindByBothIds(int roomId, string inventoryId)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             foreach (var ri in values)
             {
                 if (ri.RoomId == roomId && inventoryId.Equals(ri.InventoryId))
@@ -74,8 +60,8 @@ namespace Model.Repository
 
         public void DeleteByEquality(RoomInventory roomInventory)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values.RemoveAll(
                 ri => ri.RoomId == roomInventory.RoomId && ri.InventoryId.Equals(roomInventory.InventoryId));
             Save(values);
@@ -84,8 +70,8 @@ namespace Model.Repository
 
         public void DeleteByInventoryId(string inventoryId)
         {
-            GetMutex().WaitOne();
             var values = base.GetValues();
+            GetMutex().WaitOne();
             values.RemoveAll(ri => ri.InventoryId.Equals(inventoryId));
             Save(values);
             GetMutex().ReleaseMutex();
