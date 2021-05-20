@@ -122,6 +122,8 @@ namespace ZdravoHospital
             var accountRepo = new AccountRepository();
             var account = accountRepo.GetById(username);
 
+            //TODO: izbaciti try catch
+
             try
             {
                 if (account.Password.Equals(password))
