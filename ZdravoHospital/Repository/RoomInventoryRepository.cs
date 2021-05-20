@@ -32,7 +32,12 @@ namespace Model.Repository
 
         public override void Update(RoomInventory newValue)
         {
-            throw new NotImplementedException();
+            GetMutex().WaitOne();
+            var values = base.GetValues();
+            values[
+                values.FindIndex(val => val.RoomId == newValue.RoomId && newValue.InventoryId.Equals(val.InventoryId))] = newValue;
+            Save(values);
+            GetMutex().ReleaseMutex();
         }
 
         public override List<RoomInventory> GetValues()
