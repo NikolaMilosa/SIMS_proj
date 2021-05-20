@@ -1,53 +1,52 @@
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Threading;
 
 namespace Model.Repository
 {
-    public class RoomRepository : Repository<int, Room>
+    public class InventoryRepository : Repository<string, Inventory>
     {
-        private static string path = @"../../../Resources/rooms.json";
+        private static string path = @"..\..\..\Resources\inventory.json";
         private static Mutex mutex;
 
         private Mutex GetMutex()
         {
             if (mutex == null)
                 mutex = new Mutex();
-
             return mutex;
         }
 
-        public RoomRepository() : base(path)
+        public InventoryRepository() : base(path)
         {
         }
 
-        public override List<Room> GetValues()
+        public override List<Inventory> GetValues()
         {
             GetMutex().WaitOne();
-            var values = base.GetValues();
+            var values = GetValues();
             GetMutex().ReleaseMutex();
             return values;
         }
 
-        public override Room GetById(int id)
+        public override Inventory GetById(string id)
         {
             GetMutex().WaitOne();
-
-            List<Room> allRooms = base.GetValues();
-
-            foreach (Room room in allRooms)
+            var values = base.GetValues();
+            foreach (var inv in values)
             {
-                if (room.Id == id)
+                if (inv.Id.Equals(id))
                 {
-                    mutex.ReleaseMutex();
-                    return room;
+                    GetMutex().ReleaseMutex();
+                    return inv;
                 }
             }
+
             GetMutex().ReleaseMutex();
             return null;
         }
 
-        public override void DeleteById(int id)
+        public override void DeleteById(string id)
         {
             GetMutex().WaitOne();
             var values = base.GetValues();
@@ -56,7 +55,7 @@ namespace Model.Repository
             GetMutex().ReleaseMutex();
         }
 
-        public override void Update(Room newValue)
+        public override void Update(Inventory newValue)
         {
             GetMutex().WaitOne();
             var values = base.GetValues();
@@ -65,7 +64,7 @@ namespace Model.Repository
             GetMutex().ReleaseMutex();
         }
 
-        public override void Create(Room newValue)
+        public override void Create(Inventory newValue)
         {
             GetMutex().WaitOne();
             base.Create(newValue);

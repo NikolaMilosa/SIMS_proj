@@ -53,6 +53,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private FilteringEventArgs _passedArgs;
 
         private RoomRepository _roomRepository;
+        private InventoryRepository _inventoryRepository;
 
         #endregion
 
@@ -196,13 +197,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private void OpenDataBase()
         {
             _roomRepository = new RoomRepository();
-
-            var listInventory = JsonConvert.DeserializeObject<List<Inventory>>(File.ReadAllText(@"..\..\..\Resources\inventory.json"));
-            Resources.inventory = new Dictionary<string, Inventory>();
-            foreach (var inv in listInventory)
-            {
-                Resources.inventory[inv.Id] = inv;
-            }
+            _inventoryRepository = new InventoryRepository();
             
             Resources.OpenMedicines();
             Resources.OpenRoomSchedule();
@@ -221,7 +216,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private void SetObservables()
         {
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
-            Inventory = new ObservableCollection<Inventory>(Resources.inventory.Values);
+            Inventory = new ObservableCollection<Inventory>(_inventoryRepository.GetValues());
             Medicines = new ObservableCollection<Medicine>(Resources.medicines);
         }
 
@@ -456,7 +451,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             _inventoryMutex.WaitOne();
 
-            Inventory = new ObservableCollection<Inventory>(Resources.inventory.Values);
+            Inventory = new ObservableCollection<Inventory>(_inventoryRepository.GetValues());
             OnPropertyChanged("Inventory");
 
             _inventoryMutex.ReleaseMutex();

@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class InventoryFunctions
     {
+        private InventoryRepository _inventoryRepository;
+
         private static Mutex _inventoryMutex;
 
         public static Mutex GetInventoryMutex()
@@ -37,6 +40,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         public InventoryFunctions()
         {
             InventoryChanged += ManagerWindowViewModel.GetDashboard().OnInventoryChanged;
+
+            _inventoryRepository = new InventoryRepository();
         }
 
         public bool DeleteInventory(Inventory someInventory)
@@ -44,12 +49,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             var roomInventoryService = new RoomInventoryFunctions();
             roomInventoryService.DeleteByInventoryId(someInventory.Id);
 
-            GetInventoryMutex().WaitOne();
-
-            Model.Resources.inventory.Remove(someInventory.Id);
-            Model.Resources.SaveInventory();
-
-            GetInventoryMutex().ReleaseMutex();
+            _inventoryRepository.DeleteById(someInventory.Id);
 
             OnInventoryChanged();
             return true;
@@ -65,6 +65,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             if (someRoom == null)
             {
+                GetInventoryMutex().ReleaseMutex();
                 return false;
             }
             /* Clean input */
@@ -79,9 +80,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
             /* Found a room to put some inventory in */
-            
-            Model.Resources.inventory[newInventory.Id] = newInventory;
-            Model.Resources.SaveInventory();
+            _inventoryRepository.Create(newInventory);
 
             GetInventoryMutex().ReleaseMutex();
             roomInventoryFunctions.AddNewReference(new RoomInventory(newInventory.Id, someRoom.Id, newInventory.Quantity));
@@ -105,8 +104,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             newInventory.Id = Regex.Replace(newInventory.Id, @"\s+", " ");
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
-            Model.Resources.inventory[newInventory.Id] = newInventory;
-            Model.Resources.SaveInventory();
+            _inventoryRepository.Update(newInventory);
 
             GetInventoryMutex().ReleaseMutex();
             OnInventoryChanged();
@@ -140,23 +138,27 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     roomInventoryFunctions.SetNewQuantity(roomInventory, newQuantity);
                 }
             }
-
+            
             if (difference < 0)
             {
                 difference = (-1) * difference;
-                Model.Resources.inventory[inventory.Id].Quantity -= difference;
-                if (Model.Resources.inventory[inventory.Id].Quantity == 0)
-                    Model.Resources.inventory.Remove(inventory.Id);
+                inventory.Quantity -= difference;
             }
             else
             {
-                Model.Resources.inventory[inventory.Id].Quantity += difference;
+                inventory.Quantity += difference;
             }
-            Model.Resources.SaveInventory();
+
             GetInventoryMutex().ReleaseMutex();
 
             if (inventory.Quantity == 0)
+            {
                 DeleteInventory(inventory);
+            }
+            else
+            {
+                _inventoryRepository.Update(inventory);
+            }
 
             OnInventoryChanged();
         }

@@ -26,6 +26,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _receiverRoom;
         private InventoryDTO _processedItem;
 
+        private InventoryRepository _inventoryRepository;
+
         #endregion
 
         #region Properties
@@ -121,6 +123,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             _transferRequestsFunctions = new TransferRequestsFunctions();
 
+            _inventoryRepository = new InventoryRepository();
+
             SenderRoom = sender;
             ReceiverRoom = receiver;
             IsStatic = (processed.InventoryType == InventoryType.STATIC_INVENTORY);
@@ -150,7 +154,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void SetDefinitionText()
         {
-            DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + Model.Resources.inventory[_processedItem.Id].Name
+            var inventory = _inventoryRepository.GetById(_processedItem.Id);
+
+            DefinitionText = "Out of '" + MaxInventory + "' possible how many '" + inventory.Name
                              + "' would you like to transfer?";
 
             if (MaxInventory != _processedItem.Quantity)
