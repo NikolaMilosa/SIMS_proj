@@ -46,11 +46,6 @@
   },
   {
     "InventoryId": "444DD",
-    "RoomId": 201,
-    "Quantity": 1
-  },
-  {
-    "InventoryId": "444DD",
     "RoomId": 505,
     "Quantity": 3
   },
@@ -77,7 +72,7 @@
   {
     "InventoryId": "OLM22",
     "RoomId": 104,
-    "Quantity": 5
+    "Quantity": 7
   },
   {
     "InventoryId": "333FF",
@@ -97,7 +92,7 @@
   {
     "InventoryId": "OLM22",
     "RoomId": 201,
-    "Quantity": 3
+    "Quantity": 1
   },
   {
     "InventoryId": "444DD",
@@ -122,7 +117,7 @@
   {
     "InventoryId": "444DD",
     "RoomId": 104,
-    "Quantity": 7
+    "Quantity": 8
   },
   {
     "InventoryId": "333FF",
