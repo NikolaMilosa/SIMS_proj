@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Model.Repository
 {
@@ -9,6 +10,11 @@ namespace Model.Repository
 
        public TransferRequestRepository() : base(path)
        {
+       }
+
+       public override Mutex GetMutex()
+       {
+           return new Mutex();
        }
 
        public override TransferRequest GetById(int id)

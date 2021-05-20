@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Model.Repository
 {
@@ -10,6 +11,11 @@ namespace Model.Repository
 
         public PatientRepository() : base(path)
         {
+        }
+
+        public override Mutex GetMutex()
+        {
+            return new Mutex();
         }
 
         public override Patient GetById(string id)
