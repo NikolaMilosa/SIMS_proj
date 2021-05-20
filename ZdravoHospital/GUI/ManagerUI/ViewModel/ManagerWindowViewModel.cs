@@ -54,6 +54,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private RoomRepository _roomRepository;
         private InventoryRepository _inventoryRepository;
+        private MedicineRepository _medicineRepository;
 
         #endregion
 
@@ -198,8 +199,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             _roomRepository = new RoomRepository();
             _inventoryRepository = new InventoryRepository();
+            _medicineRepository = new MedicineRepository();
             
-            Resources.OpenMedicines();
             Resources.OpenRoomSchedule();
             Resources.OpenTransferRequests();
             Resources.OpenPeriods();
@@ -217,7 +218,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             Inventory = new ObservableCollection<Inventory>(_inventoryRepository.GetValues());
-            Medicines = new ObservableCollection<Medicine>(Resources.medicines);
+            Medicines = new ObservableCollection<Medicine>(_medicineRepository.GetValues());
         }
 
         private void TurnOffTables()
@@ -347,20 +348,26 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedRoom != null)
                 {
                     var room = _roomRepository.GetById(SelectedRoom.Id);
-                    dialog = new AddOrEditRoomDialog(SelectedRoom);
+                    dialog = new AddOrEditRoomDialog(room);
                 }
             }
             else if (InventoryTableVisibility == Visibility.Visible)
             {
                 if (SelectedInventory != null)
-                    dialog = new AddOrEditInventoryDialog(SelectedInventory);
+                {
+                    var inventory = _inventoryRepository.GetById(SelectedInventory.Id);
+                    dialog = new AddOrEditInventoryDialog(inventory);
+                }
             }
             else if (MedicineTableVisibility == Visibility.Visible && 
                      (SelectedMedicine.Status != MedicineStatus.PENDING &&
                       SelectedMedicine.Status != MedicineStatus.APPROVED))
             {
                 if (SelectedMedicine != null)
-                    dialog = new AddOrEditMedicineDialog(SelectedMedicine);
+                {
+                    var medicine = _medicineRepository.GetById(SelectedMedicine.MedicineName);
+                    dialog = new AddOrEditMedicineDialog(medicine);
+                }
             }
 
             if (dialog != null)
@@ -459,7 +466,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public void OnMedicineChanged(object sender, EventArgs e)
         {
-            Medicines = new ObservableCollection<Medicine>(Resources.medicines);
+            Medicines = new ObservableCollection<Medicine>(_medicineRepository.GetValues());
             OnPropertyChanged("Medicines");
         }
 
