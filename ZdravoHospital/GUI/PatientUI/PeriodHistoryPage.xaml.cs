@@ -68,7 +68,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             SetSelectedPeriod();
             PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
-            NavigationService.Navigate(SelectedPeriod);
+            NavigationService.Navigate(new EvaluateAppointmentPage(SelectedPeriod));
         }
     }
 }

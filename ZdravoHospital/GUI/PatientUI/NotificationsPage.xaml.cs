@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 
 namespace ZdravoHospital.GUI.PatientUI
@@ -22,7 +23,7 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class NotificationsPage : Page
     {
-        public ObservableCollection<NotificationDTO> NotificationList { get; set; }
+        public ObservableCollection<NotificationDTO> Notifications { get; set; }
         
         public string PatientUsername { get; set; }
         public NotificationsPage(string username)
@@ -35,14 +36,14 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void FillList()
         {
-            NotificationList = new ObservableCollection<NotificationDTO>();
+            Notifications = new ObservableCollection<NotificationDTO>();
             PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
-            List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
-            foreach(PersonNotification personNotification in personNotifications)
+            NotificationConverter notificationConverter = new NotificationConverter();
+            foreach(PersonNotification personNotification in personNotificationRepository.GetValues())
             {
                 if (personNotification.Username.Equals(PatientUsername))
                 {
-                    NotificationList.Add(new NotificationDTO(personNotification, PatientUsername));
+                    Notifications.Add(notificationConverter.GetNotifcationDTO(personNotification));
                 }
             }
         }

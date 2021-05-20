@@ -21,7 +21,7 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class NotificationDetailsPage : Page
     {
-        public NotificationDTO NotificationView { get; set; }
+        public NotificationDTO NotificationDTO { get; set; }
 
         public string PatientUsername { get; set; }
         public NotificationDetailsPage(NotificationDTO notificationView, string username)
@@ -35,8 +35,8 @@ namespace ZdravoHospital.GUI.PatientUI
         private void SetProperties(NotificationDTO notificationView, string username)
         {
             PatientUsername = username;
-            NotificationView = notificationView;
-            NotificationView.Seen = true;
+            NotificationDTO = notificationView;
+            NotificationDTO.Seen = true;
         }
 
         private void SerializeReadNotification()
@@ -52,7 +52,7 @@ namespace ZdravoHospital.GUI.PatientUI
             List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
             foreach (PersonNotification personNotification in personNotifications)
             {
-                if (personNotification.NotificationId.Equals(NotificationView.Notification.NotificationId))
+                if (personNotification.NotificationId.Equals(NotificationDTO.Id))
                 {
                     return personNotification; 
                 }
