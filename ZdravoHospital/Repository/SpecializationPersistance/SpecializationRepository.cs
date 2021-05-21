@@ -26,7 +26,7 @@ namespace Repository.SpecializationPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<Specialization> values)
         {
             throw new NotImplementedException();
         }

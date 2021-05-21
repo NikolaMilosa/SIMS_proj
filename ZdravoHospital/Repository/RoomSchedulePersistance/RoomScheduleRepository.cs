@@ -26,7 +26,7 @@ namespace Repository.RoomSchedulePersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<RoomSchedule> values)
         {
             throw new NotImplementedException();
         }

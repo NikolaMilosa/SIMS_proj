@@ -26,7 +26,7 @@ namespace Repository.SurveyPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<Survey> values)
         {
             throw new NotImplementedException();
         }

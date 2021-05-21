@@ -26,7 +26,7 @@ namespace Repository.PeriodPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<Period> values)
         {
             throw new NotImplementedException();
         }

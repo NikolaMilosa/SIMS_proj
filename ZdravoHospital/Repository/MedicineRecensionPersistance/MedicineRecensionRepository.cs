@@ -26,7 +26,7 @@ namespace Repository.MedicineRecensionPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<MedicineRecension> values)
         {
             throw new NotImplementedException();
         }

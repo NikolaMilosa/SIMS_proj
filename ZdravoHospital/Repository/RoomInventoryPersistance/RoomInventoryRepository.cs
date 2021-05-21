@@ -26,7 +26,7 @@ namespace Repository.RoomInventoryPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<RoomInventory> values)
         {
             throw new NotImplementedException();
         }

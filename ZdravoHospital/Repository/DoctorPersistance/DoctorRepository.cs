@@ -26,7 +26,7 @@ namespace Repository.DoctorPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<Doctor> values)
         {
             throw new NotImplementedException();
         }

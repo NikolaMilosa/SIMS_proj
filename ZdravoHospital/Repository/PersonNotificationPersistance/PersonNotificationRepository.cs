@@ -26,7 +26,7 @@ namespace Repository.PersonNotificationPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<PersonNotification> values)
         {
             throw new NotImplementedException();
         }

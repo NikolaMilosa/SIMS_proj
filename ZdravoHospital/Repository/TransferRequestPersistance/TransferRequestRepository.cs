@@ -26,7 +26,7 @@ namespace Repository.TransferRequestPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<TransferRequest> values)
         {
             throw new NotImplementedException();
         }

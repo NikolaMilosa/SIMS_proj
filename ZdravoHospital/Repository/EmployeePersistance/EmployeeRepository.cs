@@ -26,7 +26,7 @@ namespace Repository.EmployeePersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<Employee> values)
         {
             throw new NotImplementedException();
         }

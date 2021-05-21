@@ -5,7 +5,7 @@ namespace Repository
 {
     public interface IRepository<TKey, TValue>
     {
-        void Save();
+        void Save(List<TValue> values);
 
         TValue GetById(TKey id);
 

@@ -26,7 +26,7 @@ namespace Repository.NotificationsPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<Notification> values)
         {
             throw new NotImplementedException();
         }

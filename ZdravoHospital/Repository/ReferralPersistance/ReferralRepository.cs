@@ -26,7 +26,7 @@ namespace Repository.ReferralPersistance
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void Save(List<Referral> values)
         {
             throw new NotImplementedException();
         }
