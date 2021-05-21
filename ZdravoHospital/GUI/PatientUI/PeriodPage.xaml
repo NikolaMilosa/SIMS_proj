@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+      xmlns:model="clr-namespace:ZdravoHospital.GUI.PatientUI.DTOs"
       mc:Ignorable="d" 
       d:DesignHeight="708" d:DesignWidth="804"
       Title="PeriodPage"
@@ -26,7 +27,10 @@
                 <TextBlock Text="My appointments" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
-            <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="AppointmentDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding PeriodDTOs}" >
+            <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True"
+                      x:Name="AppointmentDataGrid" Grid.Row="1" Grid.Column="1" 
+                      ItemsSource="{Binding PeriodDTOs}"
+                      SelectedItem="{Binding SelectedPeriodDTO,Mode=OneWayToSource}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Time" Width="*" Binding="{Binding Path=Date, StringFormat=t}"></DataGridTextColumn>
@@ -37,8 +41,13 @@
                     
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button  BorderBrush="Transparent" Background="Transparent" Name="editButton" Content="Edit" FontWeight="Bold" Click="EditButton_Click" />
+                            <DataTemplate >
+                                <Button
+                                      
+                                    Command="{Binding DataContext.EditPeriodCommand, ElementName=AppointmentDataGrid}"
+                                        BorderBrush="Transparent" Background="Transparent"
+                                        Name="editButton" Content="Edit" FontWeight="Bold"
+                                         />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -46,7 +55,9 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button BorderBrush="Transparent" Background="Transparent" Name="removeButton" Content="Remove" FontWeight="Bold" Click="RemoveButton_Click" />
+                                <Button 
+                                    Command="{Binding DataContext.RemovePeriodCommand, ElementName=AppointmentDataGrid}"  BorderBrush="Transparent" Background="Transparent"
+                                        Name="removeButton" Content="Remove" FontWeight="Bold"  />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

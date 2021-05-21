@@ -29,7 +29,6 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             if (PatientWindow.RecentActionsNum >= 5)
             {
                 detected = true;
-                ShowOkDialog("Account blocked", "Too much recent actions have been detected! Please contact our support!");
             }
             return detected;
         }

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 using PeriodDTO = ZdravoHospital.GUI.PatientUI.DTOs.PeriodDTO;
 
 namespace ZdravoHospital.GUI.PatientUI
@@ -32,8 +33,9 @@ namespace ZdravoHospital.GUI.PatientUI
         public PeriodPage(string username)
         {
             InitializeComponent();
-            FillList(username);
-            DataContext = this;
+            //FillList(username);
+            DataContext = new PeriodPageVM(username);
+            //DataContext = this;
         }
 
         private void FillList(string username)

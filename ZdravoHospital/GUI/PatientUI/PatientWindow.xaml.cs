@@ -28,6 +28,8 @@ namespace ZdravoHospital.GUI.PatientUI
 
         public  string PatientUsername { get; set; }
 
+        public static Frame Frame { get; private set; }
+
         private bool _SurveyAvailable { get; set; }
         public bool SurveyAvailable {
             get
@@ -41,7 +43,21 @@ namespace ZdravoHospital.GUI.PatientUI
             }
         }
 
-        public static int RecentActionsNum { get; set; }
+        private static int recentActions;
+
+        public static int RecentActionsNum
+        {
+            get
+            {
+                return recentActions;
+            }
+            set
+            {
+                recentActions = value;
+                if(recentActions==5)
+                    Validate.ShowOkDialog("Warning","Account blocked! Contact our support!");
+            }
+        }
 
         public PatientWindow(string username)
         {
@@ -62,13 +78,14 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             PatientUsername = username;
             WelcomeMessage = "Welcome " + username;
+            Frame = myFrame;
         }
 
         public void SetWindowParameters()
         {
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            myFrame.Navigate(new PeriodPage(PatientUsername));
+            //myFrame.Navigate(new PeriodPage(PatientUsername));
         }
 
         public void StartThreads()

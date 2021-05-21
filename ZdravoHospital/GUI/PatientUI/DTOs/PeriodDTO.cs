@@ -2,16 +2,23 @@
 using Model;
 using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Converters;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.DTOs
 {
-    public class PeriodDTO 
+    public class PeriodDTO : ViewModel
     { 
         public string DoctorName { get; set; }
         public string DoctorSurname { get; set; }
-        public DateTime Date { get; set; }
+        private DateTime dateTime;
+        public DateTime Date
+        {
+            get { return dateTime; }
+            set { dateTime = value; OnPropertyChanged(); }
+        }
         public int RoomNumber { get; set; }
         public PeriodType PeriodType { get; set; }
+
         public int PeriodId { get; set; }
         //
         public PeriodDTO(string doctorName, string doctorSurname, DateTime date, int roomNumber, PeriodType periodType, int periodId)
