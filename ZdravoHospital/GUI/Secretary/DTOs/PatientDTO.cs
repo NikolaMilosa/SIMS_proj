@@ -46,7 +46,7 @@ namespace ZdravoHospital.GUI.Secretary.DTO
             set
             {
                 _name = value;
-                OnPropertyChanged("PName");
+                //OnPropertyChanged("PName");
             }
         }
         public string Surname
@@ -55,7 +55,7 @@ namespace ZdravoHospital.GUI.Secretary.DTO
             set
             {
                 _surname = value;
-                OnPropertyChanged("Surname");
+                //OnPropertyChanged("Surname");
             }
         }
         public string Username
@@ -64,7 +64,7 @@ namespace ZdravoHospital.GUI.Secretary.DTO
             set
             {
                 _username = value;
-                OnPropertyChanged("Username");
+                //OnPropertyChanged("Username");
             }
         }
         public string Password
@@ -200,6 +200,7 @@ namespace ZdravoHospital.GUI.Secretary.DTO
         {
 
         }
+
         public PatientDTO(BloodType bloodType, string pName, string surname, string username, string password, string phoneNumber, string email, string streetName, string streetNum, DateTime dateOfBirth, string citizenId, string country, string city, int postalCode, string healthCardNumber, string parentsName, MaritalStatus maritalStatus, Gender gender, Credentials credentials)
         {
             BloodType = bloodType;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.CredentialsPersistance;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -54,12 +55,12 @@ namespace ZdravoHospital.GUI.Secretary
         }
         private void initPassword()
         {
-            Model.Resources.OpenAccounts();
-            foreach (KeyValuePair<string, Model.Credentials> item in Model.Resources.accounts)
+            CredentialsRepository credentialsRepository = new CredentialsRepository();
+            foreach (var item in credentialsRepository.GetValues())
             {
-                if (item.Key.Equals(Patient.Username))
+                if (item.Username.Equals(Patient.Username))
                 {
-                    Password = item.Value.Password;
+                    Password = item.Password;
                     break;
                 }
             }

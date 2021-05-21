@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 
 namespace Repository.CredentialsPersistance
 {
@@ -27,6 +28,21 @@ namespace Repository.CredentialsPersistance
 
             Save(values);
             _mutex.ReleaseMutex();
+        }
+
+        public bool CreateIfUnique(Credentials newValue)
+        {
+            var values = GetValues();
+            Credentials existingAccount = values.Find(value => value.Username.Equals(newValue.Username));
+            if (existingAccount == null)
+            {
+                values.Add(newValue);
+                Save(values);
+                return true;
+            }  
+
+            MessageBox.Show("Username already exists.");
+            return false;
         }
 
         public void DeleteById(string id)

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -23,61 +24,29 @@ namespace ZdravoHospital.GUI.Secretary
     {
         private ObservableCollection<Patient> _patientsForTable;
         public ObservableCollection<Patient> PatientsForTable { get => _patientsForTable; set => _patientsForTable = value; }
-        public ObservableCollection<Patient> dictionaryToList(Dictionary<String, Patient> Patients)
-        {
-            ObservableCollection<Patient> ret = new ObservableCollection<Patient>();
-            foreach (KeyValuePair<string, Patient> pair in Patients)
-            {
-                ret.Add(pair.Value);
-            }
-            return ret;
-        }
+        public PatientGeneralService PatientService { get; set; }
+        public Patient SelectedPatient { get; set; }
+
         public PatientsView()
         {
             InitializeComponent();
             this.DataContext = this;
-            Model.Resources.OpenPatients();
-            PatientsForTable = dictionaryToList(Model.Resources.patients);
+            PatientService = new PatientGeneralService();
+            PatientsForTable = new ObservableCollection<Patient>(PatientService.GetAll());
         }
 
         private void DeletePatientButton_Click(object sender, RoutedEventArgs e)
         {
-            //this.PatientsListView.ItemsSource = PatientsForTable;
-
-            var selectedPatient = ((Patient)PatientsListView.SelectedItem);
-            if (selectedPatient == null)
-            {
-                
-            }
-            else
-            {
-                if (selectedPatient.IsGuest)
-                {
-                    PatientsForTable.Remove(selectedPatient);
-                    Model.Resources.patients.Remove("guest_" + selectedPatient.HealthCardNumber);
-                    Model.Resources.SavePatients();
-                    return;
-                }
-                else
-                {
-                    ///////     DELETE FROM TABLE AND LIST OF PATIENTS      //////
-                    PatientsForTable.Remove(selectedPatient);
-                    Model.Resources.patients.Remove(selectedPatient.Username);
-                    Model.Resources.SavePatients();
-
-                    ///////     DELETE FROM ACCOUNTS    ////////
-                    Model.Resources.OpenAccounts();
-                    Model.Resources.accounts.Remove(selectedPatient.Username);
-                    Model.Resources.SaveAccounts();
-                }
-
-            }
+            PatientService.ProcessPatientDeletion(SelectedPatient);
+            //delete from view
+            if (SelectedPatient != null)
+                PatientsForTable.Remove(SelectedPatient);
         }
 
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
-            var selectedPatient = (sender as Button).DataContext as Patient;
-            NavigationService.Navigate(new PatientDetailsPage(selectedPatient));
+            var chosenPatient = (sender as Button).DataContext as Patient;
+            NavigationService.Navigate(new PatientDetailsPage(chosenPatient));
         }
 
         private void PatientsSearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -87,17 +56,9 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void UnblockButton_Click(object sender, RoutedEventArgs e)
         {
-            var selectedPatient = (sender as Button).DataContext as Patient;
-            selectedPatient.RecentActions = 0;
+            var patientToUnblock = (sender as Button).DataContext as Patient;
+            PatientService.ProcessPatientUnblock(patientToUnblock);
             CollectionViewSource.GetDefaultView(PatientsListView.ItemsSource).Refresh();
-            foreach(KeyValuePair<string, Patient> item in Model.Resources.patients)
-            {
-                if (item.Key.Equals(selectedPatient.Username))
-                {
-                    item.Value.RecentActions = 0;
-                }
-            }
-            Model.Resources.SavePatients();
         }
     }
 }
