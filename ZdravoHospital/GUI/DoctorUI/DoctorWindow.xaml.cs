@@ -1,8 +1,7 @@
 ﻿using Model;
+using Model.Repository;
 using System;
-using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -12,57 +11,14 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// <summary>
     /// Interaction logic for DoctorWindow.xaml
     /// </summary>
-    public partial class DoctorWindow : Window, INotifyPropertyChanged
+    public partial class DoctorWindow : Window
     {
-        public Thickness TopPanelMargin { get; set; }
-        public double TabPanelWidth { get; set; }
-
         public DoctorWindow()
         {
             InitializeComponent();
 
-            DataContext = this;
-
-            Model.Resources.OpenDoctors();
-            Doctor doctor = Model.Resources.doctors[App.currentUser];
+            Doctor doctor = (new DoctorRepository()).GetById(App.currentUser);
             UserTextBlock.Text = doctor.Name + " " + doctor.Surname;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            TopPanelMargin = new Thickness(this.ActualWidth * 0.04, 15, this.ActualWidth * 0.04, 15);
-            OnPropertyChanged("TopPanelMargin");
-
-            if (ActualWidth > 605 + 3 * 30 + ActualWidth * 0.04 * 2)
-            {
-                (ScheduleTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Visible;
-                (PatientsTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Visible;
-                (MedicinesTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Visible;
-                (NotificationsTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Visible;
-                double calculatedWidth = this.ActualWidth * 0.84 - 320;
-
-                if (calculatedWidth > 720)
-                    TabPanelWidth = calculatedWidth;
-                else
-                    TabPanelWidth = 720;
-
-                OnPropertyChanged("TabPanelWidth");
-            }
-            else
-            {
-                TabPanelWidth = ActualWidth - ActualWidth * 0.04 * 2;
-                (ScheduleTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Collapsed;
-                (PatientsTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Collapsed;
-                (MedicinesTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Collapsed;
-                (NotificationsTabButton.Content as StackPanel).Children[1].Visibility = Visibility.Collapsed;
-            }
         }
 
         private void ScheduleTabButton_Click(object sender, RoutedEventArgs e)

@@ -120,4 +120,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="GUI\DoctorUI\Commands\" />
+    <Folder Include="GUI\DoctorUI\ViewModel\" />
+    <Folder Include="GUI\DoctorUI\View\" />
+  </ItemGroup>
+
 </Project>
