@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Model;
 using Repository.InventoryPersistance;
@@ -17,6 +18,8 @@ namespace ZdravoHospital.Services.Manager
 {
     public class TransferRequestService
     {
+        private static Mutex _mutex;
+
         #region Repos
 
         private IInventoryRepository _inventoryRepository;
@@ -50,6 +53,14 @@ namespace ZdravoHospital.Services.Manager
             _inventoryRepository = new InventoryRepository();
             _transferRequestRepository = new TransferRequestRepository();
             _roomInventoryRepository = new RoomInventoryRepository();
+        }
+
+        private Mutex GetMutex()
+        {
+            if (_mutex == null)
+                _mutex = new Mutex();
+
+            return _mutex;
         }
 
         public void RunOrExecute()
@@ -109,6 +120,7 @@ namespace ZdravoHospital.Services.Manager
 
         public void ExecuteRequest(TransferRequest transferRequest)
         {
+            GetMutex().WaitOne();
             var roomSender = _roomRepository.GetById(transferRequest.SenderRoom);
             var roomReceiver = _roomRepository.GetById(transferRequest.RecipientRoom);
 
@@ -139,6 +151,7 @@ namespace ZdravoHospital.Services.Manager
 
             /* Serialize */
             _transferRequestRepository.DeleteByEquality(transferRequest);
+            GetMutex().ReleaseMutex();
             
             OnTransferExecuted();
         }
