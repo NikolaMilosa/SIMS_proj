@@ -8,6 +8,7 @@ using Repository.PeriodPersistance;
 using Repository.RoomPersistance;
 using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.Services.Manager
 {
@@ -39,6 +40,8 @@ namespace ZdravoHospital.Services.Manager
 
         public RoomScheduleService()
         {
+            RoomChanged += ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
+
             _roomRepository = new RoomRepository();
             _roomScheduleRepository = new RoomScheduleRepository();
             _periodRepository = new PeriodRepository();
