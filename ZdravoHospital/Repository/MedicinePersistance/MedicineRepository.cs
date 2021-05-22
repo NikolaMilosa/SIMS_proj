@@ -12,6 +12,10 @@ namespace Repository.MedicinePersistance
         private static string _path = @"..\..\..\Resources\medicines.json";
         private static Mutex _mutex;
 
+        public MedicineRepository()
+        {
+        }
+
         public void Create(Medicine newValue)
         {
             var values = GetValues();

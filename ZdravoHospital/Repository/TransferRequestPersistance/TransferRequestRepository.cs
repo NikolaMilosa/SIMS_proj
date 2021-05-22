@@ -35,12 +35,12 @@ namespace Repository.TransferRequestPersistance
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public TransferRequest GetById(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public List<TransferRequest> GetValues()

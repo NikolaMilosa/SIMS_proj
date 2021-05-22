@@ -38,6 +38,7 @@ namespace Repository.EmployeePersistance
             var values = GetValues();
             GetMutex().WaitOne();
             values.RemoveAll(val => val.Username.Equals(id));
+            Save(values);
             GetMutex().ReleaseMutex();
         }
 

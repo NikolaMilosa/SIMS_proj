@@ -35,17 +35,24 @@ namespace Repository.RoomSchedulePersistance
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public RoomSchedule GetById(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public List<RoomSchedule> GetValues()
         {
-            throw new NotImplementedException();
+            GetMutex().WaitOne();
+            var values = JsonConvert.DeserializeObject<List<RoomSchedule>>(File.ReadAllText(_path));
+            if (values == null)
+            {
+                values = new List<RoomSchedule>();
+            }
+            GetMutex().ReleaseMutex();
+            return values;
         }
 
         public void Save(List<RoomSchedule> values)

@@ -37,12 +37,12 @@ namespace Repository.RoomInventoryPersistance
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public RoomInventory GetById(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public List<RoomInventory> GetValues()
