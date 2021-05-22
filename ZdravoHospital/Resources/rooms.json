@@ -9,7 +9,7 @@
     "RoomType": 1,
     "Id": 101,
     "Name": "Operating room 2",
-    "Available": true
+    "Available": false
   },
   {
     "RoomType": 2,
