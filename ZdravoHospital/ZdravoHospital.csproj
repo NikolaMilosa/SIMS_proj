@@ -54,6 +54,8 @@
     <None Remove="Images\PatientUI\historyIconBlack.png" />
     <None Remove="Images\PatientUI\hospitalIcon.png" />
     <None Remove="Images\PatientUI\logoutIcon.png" />
+    <None Remove="Images\PatientUI\notebookIcon.png" />
+    <None Remove="Images\PatientUI\notebookIconBlack.png" />
     <None Remove="Images\PatientUI\notificationIcon.png" />
     <None Remove="Images\PatientUI\notificationIconBlack.png" />
     <None Remove="Images\PatientUI\profileIcon.png" />
@@ -61,7 +63,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.2" />
     <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
@@ -102,6 +106,8 @@
     <Resource Include="Images\PatientUI\historyIconBlack.png" />
     <Resource Include="Images\PatientUI\hospitalIcon.png" />
     <Resource Include="Images\PatientUI\logoutIcon.png" />
+    <Resource Include="Images\PatientUI\notebookIcon.png" />
+    <Resource Include="Images\PatientUI\notebookIconBlack.png" />
     <Resource Include="Images\PatientUI\notificationIcon.png" />
     <Resource Include="Images\PatientUI\notificationIconBlack.png" />
     <Resource Include="Images\PatientUI\profileIcon.png" />

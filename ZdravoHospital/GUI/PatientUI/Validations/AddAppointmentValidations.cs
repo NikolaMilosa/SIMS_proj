@@ -1,19 +1,27 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using System.Linq;
+using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
+using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI.Validations
 {
     public class AddAppointmentValidations
     {
         public AddAppointmentPage Page { get; set; }
+        public PeriodFunctions PeriodFunctions { get; set; }
 
-        public AddAppointmentValidations(AddAppointmentPage addAppointmentPage)
+        public RoomSheduleFunctions RoomFunctions {get;set;}
+        public AddAppointmentValidations(AddAppointmentPage addAppointmentPage,string username)
         {
             Page = addAppointmentPage;
+            PeriodFunctions = new PeriodFunctions(username);
+            RoomFunctions = new RoomSheduleFunctions(username);
         }
 
         public bool CheckPeriodAvailibility()
@@ -25,7 +33,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
             FillOutPeriod();
 
-            if (!Validate.CheckPeriodAvailability(Page.Period, true) || Page.Period.RoomId == -1)
+            if (!PeriodFunctions.CheckPeriodAvailability(Page.Period, true) || Page.Period.RoomId == -1)
                 available = false;
 
             return available;
@@ -47,41 +55,48 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             if (Page.Mode)
                 SerializeNewPeriod();
             else
-                Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
+                UpdatePeriod();
 
-            Resources.SavePeriods();
+        }
+
+        private void UpdatePeriod()
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Update(Page.Period);
+            Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
         }
 
         public void SerializeNewPeriod()
         {
-            Resources.OpenPeriods();
-            Resources.periods.Add(Page.Period);
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Create(Page.Period);
             Validate.ShowOkDialog("Appointment", "Appointment is succesfully added!");
         }
 
         public void FillOutPeriod()
         {
             Page.Period.StartTime = Page.Period.StartTime.Date + (TimeSpan)Page.selectTime.SelectedItem;
-            Page.Period.DoctorUsername = ((DoctorView)Page.selectDoctor.SelectedItem).Username;
-            Page.Period.RoomId = Validate.GetFreeRoom(Page.Period);
+            Page.Period.DoctorUsername = ((DoctorDTO)Page.selectDoctor.SelectedItem).Username;
+            Page.Period.RoomId = RoomFunctions.GetFreeRoom(Page.Period);
         }
 
         public void FillDoctorList()
         {
-            Resources.OpenDoctors();
+           
             RestartDoctorList();
-
-            foreach (Doctor doctor in Resources.doctors.Values)
+            DoctorRepository doctorRepository = new DoctorRepository();
+            List<Doctor> doctors = doctorRepository.GetValues();
+            foreach (Doctor doctor in doctors)
             {
                 if (doctor.SpecialistType.SpecializationName.Equals("Doctor"))
-                    Page.DoctorList.Add(new DoctorView(doctor));
+                    Page.DoctorList.Add(new DoctorDTO(doctor));
             }
         }
 
         public void RestartDoctorList()
         {
             if (Page.DoctorList == null)
-                Page.DoctorList = new ObservableCollection<DoctorView>();
+                Page.DoctorList = new ObservableCollection<DoctorDTO>();
             else
                 Page.DoctorList.Clear();
         }
@@ -98,9 +113,21 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void GenerateNewPeriod(string username)
         {
-            Page.Period = new Period();
-            Page.Period.PatientUsername = username;
-            Page.Period.Duration = 30;
+            Page.Period = new Period
+            {
+                PatientUsername = username,
+                Duration = 30,
+                PeriodId = GeneratePeriodId()
+            };
+        }
+
+        private int GeneratePeriodId()
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            if (periodRepository.GetValues().Count == 0)
+                return 0;
+
+            return periodRepository.GetValues().Last().PeriodId+1;//vrati vrednost za jedan vecu od poslednjeg id-a iz liste
         }
 
         public void GenerateOldPeriod(Period period)
@@ -111,9 +138,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             Page.selectTime.SelectedItem = Page.Period.StartTime.TimeOfDay;
         }
 
-        public DoctorView GetDoctor(string username)
+        public DoctorDTO GetDoctor(string username)
         {
-            foreach (DoctorView doctor in Page.DoctorList)
+            foreach (DoctorDTO doctor in Page.DoctorList)
             {
                 if (doctor.Username.Equals(username))
                     return doctor;

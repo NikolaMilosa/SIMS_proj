@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,6 @@ namespace ZdravoHospital.GUI.PatientUI
             InitializeComponent();
             Survey = new Survey();
             DataContext = this;
-            Model.Resources.OpenSurveys();
             PatientWindow = patientWindow;
 
             
@@ -42,7 +42,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
             SurveySuccesfullyCompleted();
             SerializeSurvey();
-            NavigationService.Navigate(new AppointmentPage(PatientWindow.Patient.Username));
+            NavigationService.Navigate(new PeriodPage(PatientWindow.PatientUsername));
         }
 
         private void SurveySuccesfullyCompleted()
@@ -65,15 +65,15 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AppointmentPage(PatientWindow.Patient.Username));
+            NavigationService.Navigate(new PeriodPage(PatientWindow.PatientUsername));
         }
 
         public void SerializeSurvey()
         {
             Survey.CreationDate = DateTime.Now;
-            Survey.PatientUsername = PatientWindow.Patient.Username;
-            Model.Resources.surveys.Add(Survey);
-            Model.Resources.SaveSurveys();
+            Survey.PatientUsername = PatientWindow.PatientUsername;
+            SurveyRepository surveyRepository = new SurveyRepository();
+            surveyRepository.Create(Survey);
         }
     }
 }

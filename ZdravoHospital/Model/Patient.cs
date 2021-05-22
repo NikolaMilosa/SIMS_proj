@@ -17,6 +17,17 @@ namespace Model
             get { return Name + " " + Surname; }
         }
 
+        private List<PatientNote> _patientNotes;
+        public List<PatientNote> PatientNotes 
+        {
+            get {
+                if (_patientNotes == null)
+                    _patientNotes = new List<PatientNote>();
+                return _patientNotes;
+                    }
+            set { _patientNotes = value; }
+        }
+
         public Patient(string healthCardNum, string name, string surname, string email, DateTime dateOfBirth, string phoneNumber, string username, string parentsName, MaritalStatus maritalStatus, Gender gender, string personID, BloodType bloodType)
         {
             Name = name;

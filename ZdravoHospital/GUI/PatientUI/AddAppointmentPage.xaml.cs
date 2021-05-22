@@ -13,15 +13,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Validations;
-using ZdravoHospital.GUI.PatientUI.ViewModel;
+using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
     public partial class AddAppointmentPage : Page
     {
 
-        public ObservableCollection<DoctorView> DoctorList { get; set; }
+        public ObservableCollection<DoctorDTO> DoctorList { get; set; }
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
         public Period Period { get; set; }
         AddAppointmentValidations Validations { get; set; }
@@ -31,7 +32,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             InitializeComponent();
             DataContext = this;
-            SetProperties(mode);
+            SetProperties(mode,username);
             GenerateComboBoxes(period,username);
         }
 
@@ -42,9 +43,9 @@ namespace ZdravoHospital.GUI.PatientUI
             Validations.GeneratePeriod(period, username);
         }
 
-        private void SetProperties(bool mode)
+        private void SetProperties(bool mode,string username)
         {
-            Validations = new AddAppointmentValidations(this);
+            Validations = new AddAppointmentValidations(this,username);
             Mode = mode;
             PeriodList = new ObservableCollection<TimeSpan>();
         }
@@ -57,7 +58,7 @@ namespace ZdravoHospital.GUI.PatientUI
             Validations.SerializePeriod();
 
             ++PatientWindow.RecentActionsNum;
-            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
+            NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
         }
 
        
@@ -81,7 +82,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AppointmentPage(Period.PatientUsername));
+            NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
         }
     }
 }

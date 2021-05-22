@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -91,6 +94,7 @@ namespace ZdravoHospital.GUI.Secretary
             }
         }
         public List<string> Recipients { get; set; }
+        public ObservableCollection<string> CustomRecipients { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -107,6 +111,7 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             this.DataContext = this;
             Recipients = new List<string>();
+            CustomRecipients = new ObservableCollection<string>();
         }
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -118,8 +123,6 @@ namespace ZdravoHospital.GUI.Secretary
             if(Model.Resources.accounts != null)
                 Model.Resources.OpenAccounts();
 
-            bool customRecipientExists = false;
-
             foreach (KeyValuePair<string, Model.Credentials> entry in Model.Resources.accounts)
             {
                 if ((entry.Value.Role.Equals(Model.RoleType.MANAGER) && ManagerChecked)
@@ -127,17 +130,21 @@ namespace ZdravoHospital.GUI.Secretary
                     || (entry.Value.Role.Equals(Model.RoleType.DOCTOR) && DoctorChecked)
                     || (entry.Value.Role.Equals(Model.RoleType.PATIENT) && PatientChecked))
                 {
-                    if(!entry.Key.Equals(CustomRecipient))
-                        Recipients.Add(entry.Key);
+                    Recipients.Add(entry.Key);
                 }
-                if (entry.Key.Equals(CustomRecipient))
-                    customRecipientExists = true;
             }
-            if(CustomRecipient != null && customRecipientExists)
+            addCustomRecipients();
+        }
+
+        private void addCustomRecipients()
+        {
+            foreach(string username in CustomRecipients)
             {
-                Recipients.Add(CustomRecipient);
+                if(!Recipients.Contains(username))
+                    Recipients.Add(username);
             }
         }
+
         private int calculateNotificationId(List<Model.Notification> notifications)
         {
             if (notifications.Count == 0)
@@ -168,6 +175,66 @@ namespace ZdravoHospital.GUI.Secretary
             Model.Resources.SavePersonNotifications();
 
             NavigationService.Navigate(new SecretaryNotificationsPage());
+        }
+
+        private void CustomRecipientTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                CustomRecipient = CustomRecipient.Trim();
+                if (isPatientRegistered(CustomRecipient))
+                {
+                    if (!CustomRecipients.Contains(CustomRecipient))
+                    {
+                        CustomRecipients.Add(CustomRecipient);
+                        CustomRecipientTextBox.Text = "";
+                    }
+                }
+                else
+                {
+                    new Thread(changeLabel).Start();
+
+                }
+                
+                
+            }
+            // add feedback message
+        }
+
+        private void changeLabel()
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                HintLabel.Text = "Patient not registered. ";
+                HintLabel.Foreground = Brushes.Red;
+                
+            }));
+            Thread.Sleep(2000);
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                HintLabel.Text = "Press enter to add new recipient. ";
+                HintLabel.Foreground = Brushes.Black;
+
+            }));
+        }
+
+        private bool isPatientRegistered(string username)
+        {
+            Model.Resources.OpenAccounts();
+            foreach(KeyValuePair<string, Model.Credentials> entry in Model.Resources.accounts)
+            {
+                if(entry.Key.Equals(username) && entry.Value.Role == Model.RoleType.PATIENT)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void RemoveCustomRecipient_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedRecipient = (sender as Button).DataContext as string;
+            CustomRecipients.Remove(selectedRecipient);
         }
     }
 }

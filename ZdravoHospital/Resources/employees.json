@@ -1,5 +1,5 @@
-{
-  "mili": {
+[
+  {
     "Name": "Nikola",
     "Surname": "Milosavljevic",
     "Email": "milosavljevic.ra5.2018@uns.ac.rs",
@@ -16,8 +16,10 @@
       "City": {
         "PostalCode": 21000,
         "Name": "Novi Sad",
-        "Country": { "Name": "Serbia" }
+        "Country": {
+          "Name": "Serbia"
+        }
       }
     }
   }
-}
+]

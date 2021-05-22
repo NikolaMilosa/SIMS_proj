@@ -40,7 +40,6 @@ namespace ZdravoHospital.GUI.Secretary
             PatientsForTable = dictionaryToList(Model.Resources.patients);
         }
 
-
         private void DeletePatientButton_Click(object sender, RoutedEventArgs e)
         {
             //this.PatientsListView.ItemsSource = PatientsForTable;
@@ -78,7 +77,6 @@ namespace ZdravoHospital.GUI.Secretary
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
             var selectedPatient = (sender as Button).DataContext as Patient;
-            string name = selectedPatient.Name;
             NavigationService.Navigate(new PatientDetailsPage(selectedPatient));
         }
 
@@ -87,5 +85,19 @@ namespace ZdravoHospital.GUI.Secretary
 
         }
 
+        private void UnblockButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPatient = (sender as Button).DataContext as Patient;
+            selectedPatient.RecentActions = 0;
+            CollectionViewSource.GetDefaultView(PatientsListView.ItemsSource).Refresh();
+            foreach(KeyValuePair<string, Patient> item in Model.Resources.patients)
+            {
+                if (item.Key.Equals(selectedPatient.Username))
+                {
+                    item.Value.RecentActions = 0;
+                }
+            }
+            Model.Resources.SavePatients();
+        }
     }
 }

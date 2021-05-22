@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Model
 {
@@ -47,17 +48,9 @@ namespace Model
 
         public static void SavePatients()
         {
-            string json = JsonConvert.SerializeObject(patients);
+            List<Patient> patientsList = patients.Values.ToList();
+            string json = JsonConvert.SerializeObject(patientsList);
             File.WriteAllText(@"..\..\..\Resources\patients.json", json);
-        }
-
-        public static Employee findManager(string username)
-        {
-            employees = JsonConvert.DeserializeObject<Dictionary<string, Employee>>(File.ReadAllText(@"..\..\..\Resources\employees.json"));
-            Employee sol = employees[username];
-            employees.Clear();
-            employees = null;
-            return sol;
         }
 
         public static void OpenRooms()
@@ -69,7 +62,7 @@ namespace Model
 
         public static void SaveRooms()
         {
-            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms, Formatting.Indented));
+            File.WriteAllText(@"..\..\..\Resources\rooms.json", JsonConvert.SerializeObject(rooms.Values.ToList(), Formatting.Indented));
         }
 
         public static void OpenInventory()
@@ -81,7 +74,7 @@ namespace Model
 
         public static void SaveInventory()
         {
-            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory, Formatting.Indented));
+            File.WriteAllText(@"..\..\..\Resources\inventory.json", JsonConvert.SerializeObject(inventory.Values.ToList(), Formatting.Indented));
         }
 
         internal static void CloseAllManager()

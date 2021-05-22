@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Validations;
 
 namespace ZdravoHospital.GUI.PatientUI
@@ -24,7 +26,7 @@ namespace ZdravoHospital.GUI.PatientUI
         public event PropertyChangedEventHandler PropertyChanged;
         public string WelcomeMessage { get; set; }
 
-        public Patient Patient { get; set; }
+        public  string PatientUsername { get; set; }
 
         private bool _SurveyAvailable { get; set; }
         public bool SurveyAvailable {
@@ -44,49 +46,57 @@ namespace ZdravoHospital.GUI.PatientUI
         public PatientWindow(string username)
         {
             InitializeComponent();
-            SetWindowParameters(username);
-            LoadPatient(username);
-            CheckSurveys(username);
+            SetProperties(username);
+            SetWindowParameters();
+            CheckSurveys();
             StartThreads();
         }
 
-        public void CheckSurveys(string username)
+        public void CheckSurveys()
         {
-            SurveyAvailable = Validate.IsSurveyAvailable(username);
+            SurveyFunctions surveyFunctions = new SurveyFunctions();
+            SurveyAvailable = surveyFunctions.IsSurveyAvailable(PatientUsername);
         }
 
-        public void LoadPatient(string username)
+        private void SetProperties(string username)
         {
-            Model.Resources.OpenPatients();
-            Patient = Model.Resources.patients[username];
+            PatientUsername = username;
+            WelcomeMessage = "Welcome " + username;
         }
 
-        public void SetWindowParameters(string username)
+        public void SetWindowParameters()
         {
             DataContext = this;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            WelcomeMessage = "Welcome " + username;
-            myFrame.Navigate(new AppointmentPage(username));
+            myFrame.Navigate(new PeriodPage(PatientUsername));
         }
 
         public void StartThreads()
         {
             StartNotificationThread();
             StartTrollThread();
+            StartNoteThread();
         }
 
         private void StartNotificationThread()
         {
-            Thread notificationThread= new Thread(new ParameterizedThreadStart(Validate.TherapyNotification));
+            Thread notificationThread= new Thread(new ParameterizedThreadStart(ThreadTherapyFunctions.TherapyNotification));
             notificationThread.SetApartmentState(ApartmentState.STA);
-            notificationThread.Start(Patient.Username);
+            notificationThread.Start(PatientUsername);
+        }
+
+        private void StartNoteThread()
+        {
+            Thread notificationNoteThread = new Thread(new ParameterizedThreadStart(ThreadNoteFunctions.NoteNotification));
+            notificationNoteThread.SetApartmentState(ApartmentState.STA);
+            notificationNoteThread.Start(PatientUsername);
         }
 
         private void StartTrollThread()
         {
-            Thread trollThread = new Thread(new ParameterizedThreadStart(Validate.ResetActionsNum));
+            Thread trollThread = new Thread(new ParameterizedThreadStart(ThreadTrollFunctions.ResetActionsNum));
             trollThread.SetApartmentState(ApartmentState.STA);
-            trollThread.Start(Patient);
+            trollThread.Start(PatientUsername);
         }
 
         protected void OnPropertyChanged(string name)
@@ -94,36 +104,40 @@ namespace ZdravoHospital.GUI.PatientUI
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private void logOutButton_Click(object sender, RoutedEventArgs e)
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             LogOutDialog logOutDialog = new LogOutDialog(this);
             logOutDialog.ShowDialog();
         }
 
-        private void addAppointmentButton_Click(object sender, RoutedEventArgs e)
+        private void AddAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AddAppointmentPage(null, true, Patient.Username));
+            myFrame.Navigate(new AddAppointmentPage(null, true, PatientUsername));
         }
 
-        private void appointmentsButton_Click(object sender, RoutedEventArgs e)
+        private void AppointmentsButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AppointmentPage(Patient.Username));
+            myFrame.Navigate(new PeriodPage(PatientUsername));
         }
 
-        private void notificationsButton_Click(object sender, RoutedEventArgs e)
+        private void NotificationsButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new NotificationsPage(Patient.Username));
+            myFrame.Navigate(new NotificationsPage(PatientUsername));
         }
 
-        private void appointmentHistoryButton_Click(object sender, RoutedEventArgs e)
+        private void AppointmentHistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new AppointmentHistoryPage(Patient.Username));
+            myFrame.Navigate(new AppointmentHistoryPage(PatientUsername));
         }
 
-        private void surveyButton_Click(object sender, RoutedEventArgs e)
+        private void SurveyButton_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(new SurveyPage(this));
         }
 
+        private void NoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(new NotesPage(PatientUsername));
+        }
     }
 }

@@ -1,5 +1,5 @@
-{
-  "ljuba": {
+[
+  {
     "IsGuest": false,
     "HealthCardNumber": "123",
     "BloodType": 2,
@@ -10,7 +10,14 @@
       "tester two"
     ],
     "RecentActions": 0,
-    "LastLogoutTime": "2021-05-07T00:57:28.4357233+02:00",
+    "LastLogoutTime": "2021-05-20T17:43:27.4281893+02:00",
+    "PatientNotes": [
+      {
+        "Content": "asdasdada",
+        "NotifyTime": "2021-05-20T17:43:50.677+02:00",
+        "Title": "sadasd"
+      }
+    ],
     "Name": "Stefan",
     "Surname": "Ljubovic",
     "Email": "ljuba@gmail.com",
@@ -33,16 +40,15 @@
       }
     }
   },
-  "saki": {
+  {
     "IsGuest": false,
     "HealthCardNumber": "456",
     "BloodType": 5,
-    "MedicineAllergens": [
-    ],
-    "IngredientAllergens": [
-    ],
+    "MedicineAllergens": [],
+    "IngredientAllergens": [],
     "RecentActions": 0,
-    "LastLogoutTime": "2021-05-08T00:14:24.6101915+02:00",
+    "LastLogoutTime": "2021-05-20T00:52:38.3075165+02:00",
+    "PatientNotes": [],
     "Name": "Nikolaj",
     "Surname": "Satara",
     "Email": "saki@gmail.com",
@@ -65,4 +71,4 @@
       }
     }
   }
-}
+]

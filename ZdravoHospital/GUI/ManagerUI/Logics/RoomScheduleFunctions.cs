@@ -6,13 +6,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Model;
-
+using Model.Repository;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.Logics
 {
     public class RoomScheduleFunctions
     {
+        private RoomScheduleRepository _roomScheduleRepository;
+        private RoomRepository _roomRepository;
+        private PeriodRepository _periodRepository;
+
         private static Mutex _roomScheduleMutex;
 
         public static Mutex GetRoomScheduleMutex()
@@ -23,13 +28,19 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return _roomScheduleMutex;
         }
 
-        public RoomScheduleFunctions() { }
+        public RoomScheduleFunctions()
+        {
+            _roomRepository = new RoomRepository();
+            _roomScheduleRepository = new RoomScheduleRepository();
+            _periodRepository = new PeriodRepository();
+        }
 
         public void RunOrExecute()
         {
-            if (Model.Resources.roomSchedule.Count != 0)
+            var values = _roomScheduleRepository.GetValues();
+            if (values.Count != 0)
             {
-                List<RoomSchedule> loaded = new List<RoomSchedule>(Model.Resources.roomSchedule);
+                List<RoomSchedule> loaded = new List<RoomSchedule>(values);
                 foreach(RoomSchedule rs in loaded)
                 {
                     if (DateTime.Now < rs.StartTime)
@@ -62,7 +73,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (!CheckIfStillValid(roomSchedule))
                 return;
 
-            if (Model.Resources.rooms[roomSchedule.RoomId].Available)
+            var room = _roomRepository.GetById(roomSchedule.RoomId);
+
+            if (room.Available)
             {
                 var roomFunctions = new RoomFunctions();
                 roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, false);
@@ -77,42 +90,29 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (!CheckIfStillValid(roomSchedule))
                 return;
 
-            if (!Model.Resources.rooms[roomSchedule.RoomId].Available && !IsInsideRenovation(roomSchedule))
+            var room = _roomRepository.GetById(roomSchedule.RoomId);
+
+            if (!room.Available && !IsInsideRenovation(roomSchedule))
             {
                 var roomFunctions = new RoomFunctions();
                 roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, true);
             }
 
-            GetRoomScheduleMutex().WaitOne();
-
-            if (Model.Resources.roomSchedule.RemoveAll(r => r.StartTime == roomSchedule.StartTime && 
-                                                            r.EndTime == roomSchedule.EndTime &&
-                                                            r.RoomId == roomSchedule.RoomId &&
-                                                            r.ScheduleType == roomSchedule.ScheduleType) > 0)
-            {
-                Model.Resources.SaveRoomSchedule();
-            }
-
-            GetRoomScheduleMutex().ReleaseMutex();
+            _roomScheduleRepository.DeleteByEquality(roomSchedule);
         }
 
         public bool CheckIfStillValid(RoomSchedule roomSchedule)
         {
-            if (!Model.Resources.roomSchedule.Contains(roomSchedule))
+            if (!_roomScheduleRepository.ExistsInDataBase(roomSchedule))
             {
                 /* if this reference was not found in the list make it not valid */
                 return false;
             }
 
-            if (!Model.Resources.rooms.ContainsKey(roomSchedule.RoomId))
+            
+            if (_roomRepository.GetById(roomSchedule.RoomId) == null)
             {
-                GetRoomScheduleMutex().WaitOne();
-
-                /* If the target room for this room schedule doesn't exist delete all other room schedules for this room.*/
-                Model.Resources.roomSchedule.RemoveAll(rs => rs.RoomId == roomSchedule.RoomId);
-                Model.Resources.SaveRoomSchedule();
-
-                GetRoomScheduleMutex().ReleaseMutex();
+                _roomScheduleRepository.DeleteByRoomId(roomSchedule.RoomId);
                 return false;
             }
 
@@ -124,7 +124,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (roomSchedule.ScheduleType != ReservationType.TRANSFER)
                 return false;
 
-            foreach (var rs in Model.Resources.roomSchedule)
+            foreach (var rs in _roomScheduleRepository.GetValues())
             {
                 if (rs.RoomId == roomSchedule.RoomId && rs.StartTime == roomSchedule.StartTime && rs.EndTime == roomSchedule.EndTime && rs.ScheduleType == roomSchedule.ScheduleType)
                     continue;
@@ -141,8 +141,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             if (!CheckIfExists(roomSchedule))
             {
-                Model.Resources.roomSchedule.Add(roomSchedule);
-                Model.Resources.SaveRoomSchedule();
+                _roomScheduleRepository.Create(roomSchedule);
                 ScheduleRenovationStart(roomSchedule);
             }
 
@@ -155,7 +154,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
              exact same room schedule. Therefore, do not include its duplicate.*/
             var exists = false;
 
-            Model.Resources.roomSchedule.ForEach(rs =>
+            _roomScheduleRepository.GetValues().ForEach(rs =>
             {
                 if (rs.RoomId == roomSchedule.RoomId && rs.StartTime == roomSchedule.StartTime &&
                     rs.EndTime == roomSchedule.EndTime)
@@ -189,7 +188,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             var reservations = new ObservableCollection<ReservationDTO>();
 
             var end = day.AddDays(1);
-            Model.Resources.periods.ForEach(p =>
+            _periodRepository.GetValues().ForEach(p =>
             {
                 if (p.StartTime >= day && p.StartTime < end && p.RoomId == room.Id)
                 {
@@ -206,7 +205,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 }
             });
 
-            Model.Resources.roomSchedule.ForEach(r =>
+            _roomScheduleRepository.GetValues().ForEach(r =>
             {
                 if (r.RoomId == room.Id)
                 {

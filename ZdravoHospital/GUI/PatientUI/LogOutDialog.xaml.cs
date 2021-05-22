@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Model;
+using Model.Repository;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -36,9 +38,11 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void SerializePatient()
         {
-            patientWindow.Patient.RecentActions = PatientWindow.RecentActionsNum;
-            patientWindow.Patient.LastLogoutTime = DateTime.Now;
-            Model.Resources.SavePatients();
+            PatientRepository patientRepository = new PatientRepository();
+            Patient patient = patientRepository.GetById(patientWindow.PatientUsername);
+            patient.RecentActions = PatientWindow.RecentActionsNum;
+            patient.LastLogoutTime = DateTime.Now;
+            patientRepository.Update(patient);
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)//no button

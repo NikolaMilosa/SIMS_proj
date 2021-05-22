@@ -18,7 +18,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Converters
             {
                 case RoomType.APPOINTMENT_ROOM:
                     return "APPOINTMENT";
-                case RoomType.BREAK_ROOM:
+                case RoomType.BED_ROOM:
                     return "BEDROOM";
                 case RoomType.OPERATING_ROOM:
                     return "OPERATING";
@@ -37,7 +37,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Converters
                 case "APPOINTMENT":
                     return RoomType.APPOINTMENT_ROOM;
                 case "BEDROOM":
-                    return RoomType.BREAK_ROOM;
+                    return RoomType.BED_ROOM;
                 case "STORAGE":
                     return RoomType.STORAGE_ROOM;
                 case "EMERGENCY":

@@ -59,14 +59,29 @@
     ]
   },
   {
-    "MedicineName": "some medicine",
-    "Supplier": "Some supplier",
+    "MedicineName": "tester",
+    "Supplier": "Tester",
     "Status": 0,
-    "Note": "",
+    "Note": null,
     "Replacements": [],
     "Ingredients": [
       {
-        "IngredientName": "some ingrdsdax"
+        "IngredientName": "ingredient"
+      }
+    ]
+  },
+  {
+    "MedicineName": "new medicine",
+    "Supplier": "New supplier",
+    "Status": 0,
+    "Note": null,
+    "Replacements": [],
+    "Ingredients": [
+      {
+        "IngredientName": "new ing"
+      },
+      {
+        "IngredientName": "other ing"
       }
     ]
   }

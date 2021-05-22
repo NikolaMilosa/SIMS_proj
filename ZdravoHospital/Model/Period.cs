@@ -7,6 +7,7 @@ namespace Model
 {
     public class Period
     {
+        public int PeriodId { get; set; }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
         public PeriodType PeriodType { get; set; }
@@ -19,6 +20,7 @@ namespace Model
         public bool IsUrgent { get; set; }
         public int ReferringReferralId { get; set; }
         public int ReferredReferralId { get; set; }
+        public Treatment Treatment { get; set; }
 
         [JsonIgnore]
         public ObservableCollection<Model.MovePeriod> MovePeriods { get; set; }

@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
+              
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
@@ -26,11 +27,11 @@
             </StackPanel>
 
 
-            <DataGrid MouseDoubleClick="NotificationDataGrid_MouseDoubleClick" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="notificationDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding NotificationList}">
+            <DataGrid MouseDoubleClick="NotificationDataGrid_MouseDoubleClick" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="notificationDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding Notifications}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="  From&#x0a;(sender)" Width="*" Binding="{Binding Path=From}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Path=Notification.Title}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Date of sending" Width="*" Binding="{Binding Path=Notification.CreateDate,StringFormat=d}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Path=Title}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Date of sending" Width="*" Binding="{Binding Path=Date,StringFormat=d}"></DataGridTextColumn>
                 </DataGrid.Columns>
 
                 <DataGrid.Resources>
@@ -39,6 +40,8 @@
                         <Setter Property="FontSize" Value="20"></Setter>
                         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                         <Setter Property="Height" Value="75"></Setter>
+                        <Setter Property="ScrollViewer.CanContentScroll" Value="True"></Setter>
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"></Setter>
                     </Style>
                 </DataGrid.Resources>
 
@@ -71,7 +74,9 @@
                 </DataGrid.CellStyle>
 
             </DataGrid>
-            
+
+          
+
         </Grid>
         </Border>
 </Page>
