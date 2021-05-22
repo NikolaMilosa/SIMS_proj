@@ -104,5 +104,26 @@ namespace Repository.RoomInventoryPersistance
             Save(values);
             GetMutex().ReleaseMutex();
         }
+
+        public List<RoomInventory> FindAllInventoryInRoom(int roomId)
+        {
+            var values = GetValues();
+            var ret = new List<RoomInventory>();
+            foreach (var val in values)
+            {
+                if (val.RoomId == roomId)
+                {
+                    ret.Add(val);
+                }
+            }
+
+            return ret;
+        }
+
+        public void SetNewQuantity(RoomInventory roomInventory, int newQuantity)
+        {
+            roomInventory.Quantity = newQuantity;
+            Update(roomInventory);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using Model;
 using System;
+using System.Collections.Generic;
 
 namespace Repository.RoomInventoryPersistance
 {
@@ -10,5 +11,9 @@ namespace Repository.RoomInventoryPersistance
        void DeleteByEquality(RoomInventory roomInventory);
 
        void DeleteByInventoryId(string inventoryId);
+
+       List<RoomInventory> FindAllInventoryInRoom(int roomId);
+
+       void SetNewQuantity(RoomInventory roomInventory, int newQuantity);
    }
 }

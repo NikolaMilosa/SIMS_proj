@@ -1,39 +1,64 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Repository.PeriodPersistance
 {
     public class PeriodRepository : IPeriodRepository
     {
+        private static string _path = @"..\..\..\Resources\periods.json";
+
         public void Create(Period newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values.Add(newValue);
+            Save(values);
         }
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values.RemoveAll(val => val.PeriodId == id);
+            Save(values);
         }
 
         public Period GetById(int id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            foreach (var val in values)
+            {
+                if (val.PeriodId == id)
+                {
+                    return val;
+                }
+            }
+
+            return null;
         }
 
         public List<Period> GetValues()
         {
-            throw new NotImplementedException();
+            var values = JsonConvert.DeserializeObject<List<Period>>(File.ReadAllText(_path));
+            if (values == null)
+            {
+                values = new List<Period>();
+            }
+
+            return values;
         }
 
         public void Save(List<Period> values)
         {
-            throw new NotImplementedException();
+            File.WriteAllText(_path, JsonConvert.SerializeObject(values, Formatting.Indented));
         }
 
         public void Update(Period newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            values[values.FindIndex(val => val.PeriodId == newValue.PeriodId)] = newValue;
+            Save(values);
         }
     }
 }

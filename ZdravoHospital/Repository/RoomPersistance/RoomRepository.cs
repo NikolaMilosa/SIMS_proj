@@ -34,6 +34,48 @@ namespace Repository.RoomPersistance
             GetMutex().ReleaseMutex();
         }
 
+        public Room FindRoomByPrio(Room notThisRoom)
+        {
+            var someRoom = FindRoomByType(RoomType.STORAGE_ROOM, notThisRoom);
+
+            if (someRoom == null)
+                someRoom = FindRoomByType(RoomType.BED_ROOM, notThisRoom);
+
+            if (someRoom == null)
+                someRoom = FindRoomByType(RoomType.APPOINTMENT_ROOM, notThisRoom);
+
+            if (someRoom == null)
+                someRoom = FindRoomByType(RoomType.OPERATING_ROOM, notThisRoom);
+
+            if (someRoom == null)
+                someRoom = FindRoomByType(RoomType.EMERGENCY_ROOM, notThisRoom);
+
+            return someRoom;
+        }
+
+        private Room FindRoomByType(RoomType rt, Room room)
+        {
+            if (room != null)
+            {
+                foreach (var r in GetValues())
+                {
+                    if (r.Available == true && r.RoomType == rt && r.Id != room.Id)
+                        return r;
+                }
+            }
+            else
+            {
+                foreach (var r in GetValues())
+                {
+                    if (r.Available == true && r.RoomType == rt)
+                        return r;
+                }
+            }
+
+
+            return null;
+        }
+
         public void DeleteById(int id)
         {
             var values = GetValues();
