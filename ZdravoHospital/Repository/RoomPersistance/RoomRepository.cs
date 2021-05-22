@@ -1,39 +1,86 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
+using System.Threading;
+using Newtonsoft.Json;
 
 namespace Repository.RoomPersistance
 {
     public class RoomRepository : IRoomRepository
     {
+        private static string _path = @"../../../Resources/rooms.json";
+        private static Mutex _mutex;
+
+        public RoomRepository()
+        {
+        }
+
+        private Mutex GetMutex()
+        {
+            if (_mutex == null)
+                _mutex = new Mutex();
+
+            return _mutex;
+        }
+
         public void Create(Room newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            GetMutex().WaitOne();
+            values.Add(newValue);
+            Save(values);
+            GetMutex().ReleaseMutex();
         }
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            GetMutex().WaitOne();
+            values.RemoveAll(val => val.Id == id);
+            Save(values);
+            GetMutex().ReleaseMutex();
         }
 
         public Room GetById(int id)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            foreach (var val in values)
+            {
+                if (val.Id == id)
+                {
+                    return val;
+                }
+            }
+
+            return null;
         }
 
         public List<Room> GetValues()
         {
-            throw new NotImplementedException();
+            GetMutex().WaitOne();
+            var values = JsonConvert.DeserializeObject<List<Room>>(File.ReadAllText(_path));
+            if (values == null)
+            {
+                values = new List<Room>();
+            }
+            GetMutex().ReleaseMutex();
+            return values;
         }
 
         public void Save(List<Room> values)
         {
-            throw new NotImplementedException();
+            File.WriteAllText(_path,JsonConvert.SerializeObject(values, Formatting.Indented));
         }
 
         public void Update(Room newValue)
         {
-            throw new NotImplementedException();
+            var values = GetValues();
+            GetMutex().WaitOne();
+            values[values.FindIndex(val => val.Id == newValue.Id)] = newValue;
+            Save(values);
+            GetMutex().ReleaseMutex();
         }
     }
 }

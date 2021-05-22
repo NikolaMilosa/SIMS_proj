@@ -27,9 +27,11 @@ namespace ZdravoHospital
             var credentialsRepository = new CredentialsRepository();
             var credentials = credentialsRepository.GetById(username);
 
-            //TODO: izbaciti try catch
-
-            try
+            if (credentials == null)
+            {
+                MessageBox.Show("Username not registered...");
+            }
+            else
             {
                 if (credentials.Password.Equals(password))
                 {
@@ -54,15 +56,11 @@ namespace ZdravoHospital
 
                     window.Show();
                     this.Close();
-                } 
+                }
                 else
                 {
                     MessageBox.Show("Wrong password...");
                 }
-            } 
-            catch
-            {
-                MessageBox.Show("Username not registered...");
             }
         }
     }
