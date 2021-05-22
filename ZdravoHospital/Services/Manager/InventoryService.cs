@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Model;
-using Repository.InventoryRepository;
+using Repository.InventoryPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.Services.Manager

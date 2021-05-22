@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.View;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private bool _isAdder;
 
         private Window _dialog;
-        private MedicineFunctions _medicineFunctions;
+        private MedicineService _medicineService;
         private Medicine _passedMedicine;
 
         private bool _canEdit;
@@ -110,7 +110,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             AddIngredientCommand = new MyICommand(OnAddIngredient, CanAddIngredient);
             ConfirmCommand = new MyICommand(OnConfirm, CanConfirm);
 
-            _medicineFunctions = new MedicineFunctions(null);
+            _medicineService = new MedicineService(null);
         }
 
         #region Command functions
@@ -131,11 +131,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (IsAdder)
             {
-                _medicineFunctions.AddNewMedicine(Medicine);
+                _medicineService.AddNewMedicine(Medicine);
             }
             else
             {
-                _medicineFunctions.EditMedicine(_passedMedicine,Medicine);
+                _medicineService.EditMedicine(_passedMedicine,Medicine);
             }
         }
 

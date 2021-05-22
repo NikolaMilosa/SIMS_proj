@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
-
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.Services.Manager;
 
 namespace Model
 {
@@ -59,9 +58,9 @@ namespace Model
             if (ts > new TimeSpan(0,0,0))
                 Thread.Sleep(ts);
 
-            TransferRequestsFunctions transferRequestsFunctions = new TransferRequestsFunctions();
+            TransferRequestService transferRequestService = new TransferRequestService();
 
-            transferRequestsFunctions.ExecuteRequest(this);
+            transferRequestService.ExecuteRequest(this);
         }
     }
 }

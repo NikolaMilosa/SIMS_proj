@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -13,7 +13,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Medicine _medicine;
         private string _rejectionReason;
 
-        private MedicineFunctions _medicineFunctions;
+        private MedicineService _medicineService;
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 _medicine = value;
 
-                RejectionReason = _medicineFunctions.FindMedicineRecension(Medicine).RecensionNote;
+                RejectionReason = _medicineService.FindMedicineRecension(Medicine).RecensionNote;
 
                 OnPropertyChanged();
             }
@@ -46,7 +46,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public RejectionNoteDialogViewModel(Medicine medicine)
         {
-            _medicineFunctions = new MedicineFunctions(null);
+            _medicineService = new MedicineService(null);
             Medicine = medicine;
         }
 

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
-using Model.Repository;
+using Repository.InventoryPersistance;
+using Repository.TransferRequestPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.Services.Manager;
+using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
+using TransferRequestRepository = Repository.TransferRequestPersistance.TransferRequestRepository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -20,14 +23,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private string _inputTime;
         private bool _isStatic;
 
-        private TransferRequestsFunctions _transferRequestsFunctions;
+        private TransferRequestService _transferRequestsService;
 
         private Room _senderRoom;
         private Room _receiverRoom;
         private InventoryDTO _processedItem;
 
-        private InventoryRepository _inventoryRepository;
-        private TransferRequestRepository _transferRequestRepository;
+        private IInventoryRepository _inventoryRepository;
+        private ITransferRequestRepository _transferRequestRepository;
 
         #endregion
 
@@ -122,7 +125,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public InventoryManagemenetQuantitySelectorViewModel(Room sender, Room receiver, InventoryDTO processed)
         {
-            _transferRequestsFunctions = new TransferRequestsFunctions();
+            _transferRequestsService = new TransferRequestService();
 
             _inventoryRepository = new InventoryRepository();
             _transferRequestRepository = new TransferRequestRepository();
@@ -197,12 +200,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             TransferRequest newRequest = new TransferRequest(SenderRoom.Id, ReceiverRoom.Id, _processedItem.Id,
                 EnteredQuantity, ChosenDate);
 
-            _transferRequestsFunctions.CreateAndStartTransfer(newRequest);
+            _transferRequestsService.CreateAndStartTransfer(newRequest);
         }
 
         private void MoveDynamic()
         {
-            _transferRequestsFunctions.ExecuteRequest(new TransferRequest(SenderRoom.Id, ReceiverRoom.Id, _processedItem.Id, 
+            _transferRequestsService.ExecuteRequest(new TransferRequest(SenderRoom.Id, ReceiverRoom.Id, _processedItem.Id, 
                                                     EnteredQuantity, DateTime.Now));
         }
 

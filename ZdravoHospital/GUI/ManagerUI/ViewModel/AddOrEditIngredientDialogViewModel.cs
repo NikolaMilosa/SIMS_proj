@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private bool _isAdder;
 
-        private MedicineFunctions _medicineFunctions;
+        private MedicineService _medicineService;
 
         #endregion
 
@@ -82,18 +82,18 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             ConfirmCommand = new MyICommand(OnConfirm);
 
-            _medicineFunctions = new MedicineFunctions(activeDialog);
+            _medicineService = new MedicineService(activeDialog);
         }
 
         public void OnConfirm()
         {
             if (_isAdder)
             {
-                _medicineFunctions.AddIngredientToMedicine(_ingredient, _medicine);
+                _medicineService.AddIngredientToMedicine(_ingredient, _medicine);
             }
             else
             {
-                _medicineFunctions.EditIngredientInMedicine(_passedIngredient, _ingredient, _medicine);
+                _medicineService.EditIngredientInMedicine(_passedIngredient, _ingredient, _medicine);
             }
         }
     }

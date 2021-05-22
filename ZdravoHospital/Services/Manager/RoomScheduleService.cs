@@ -8,7 +8,6 @@ using Repository.PeriodPersistance;
 using Repository.RoomPersistance;
 using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 
 namespace ZdravoHospital.Services.Manager
 {

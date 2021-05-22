@@ -5,7 +5,7 @@ using System.Threading;
 using Model;
 using Newtonsoft.Json;
 
-namespace Repository.InventoryRepository
+namespace Repository.InventoryPersistance
 {
     public class InventoryRepository : IInventoryRepository
     {

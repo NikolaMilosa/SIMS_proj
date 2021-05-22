@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
-using Repository.InventoryRepository;
+using Repository.InventoryPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
 using Repository.TransferRequestPersistance;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
+using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
+using RoomInventoryRepository = Repository.RoomInventoryPersistance.RoomInventoryRepository;
+using RoomRepository = Repository.RoomPersistance.RoomRepository;
+using TransferRequestRepository = Repository.TransferRequestPersistance.TransferRequestRepository;
 
 namespace ZdravoHospital.Services.Manager
 {

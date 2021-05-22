@@ -8,12 +8,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Model;
-using Model.Repository;
 using Newtonsoft.Json;
+using Repository.EmployeePersistance;
+using Repository.InventoryPersistance;
+using Repository.MedicinePersistance;
+using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.ValidationRules;
 using ZdravoHospital.GUI.ManagerUI.View;
+using ZdravoHospital.Services.Manager;
+using EmployeeRepository = Repository.EmployeePersistance.EmployeeRepository;
+using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
+using MedicineRepository = Repository.MedicinePersistance.MedicineRepository;
+using RoomRepository = Repository.RoomPersistance.RoomRepository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -52,10 +59,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private FilteringEventArgs _passedArgs;
 
-        private RoomRepository _roomRepository;
-        private InventoryRepository _inventoryRepository;
-        private MedicineRepository _medicineRepository;
-        private EmployeeRepository _employeeRepository;
+        private IRoomRepository _roomRepository;
+        private IInventoryRepository _inventoryRepository;
+        private IMedicineRepository _medicineRepository;
+        private IEmployeeRepository _employeeRepository;
 
         #endregion
 
@@ -68,8 +75,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #region Functions and services
 
-        private Logics.TransferRequestsFunctions transferRequestFunctions;
-        private Logics.RoomScheduleFunctions roomScheduleFunctions;
+        private TransferRequestService transferRequestService;
+        private RoomScheduleService roomScheduleService;
 
         #endregion
 
@@ -201,15 +208,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomRepository = new RoomRepository();
             _inventoryRepository = new InventoryRepository();
             _medicineRepository = new MedicineRepository();
-            
-            Resources.OpenPeriods();
-
-            var doctorList = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText(@"..\..\..\Resources\doctors.json"));
-            Resources.doctors = new Dictionary<string, Doctor>();
-            foreach (var doc in doctorList)
-            {
-                Resources.doctors[doc.Username] = doc;
-            }
         }
 
         private void SetObservables()
@@ -228,10 +226,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         
         private void RunAllTasks()
         {
-            var transferFunctions = new TransferRequestsFunctions();
+            var transferFunctions = new TransferRequestService();
             transferFunctions.RunOrExecute();
 
-            var roomScheduleFunctions = new RoomScheduleFunctions();
+            var roomScheduleFunctions = new RoomScheduleService();
             roomScheduleFunctions.RunOrExecute();
         }
 

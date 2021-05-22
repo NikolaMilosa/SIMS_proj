@@ -1,7 +1,7 @@
 using System;
 using Model;
 
-namespace Repository.InventoryRepository
+namespace Repository.InventoryPersistance
 {
    public interface IInventoryRepository : IRepository<string,Inventory>
    {

@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using Model;
 using Repository.MedicinePersistance;
 using Repository.MedicineRecensionPersistance;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.Services.Manager
@@ -47,9 +46,13 @@ namespace ZdravoHospital.Services.Manager
 
         #endregion
 
-        public MedicineService()
+        public MedicineService(AddOrEditMedicineDialogViewModel activeDialog)
         {
             MedicineChanged += ManagerWindowViewModel.GetDashboard().OnMedicineChanged;
+            if (activeDialog != null)
+            {
+                IngredientChanged += activeDialog.OnIngredientChanged;
+            }
             //TODO: add injector
             _medicineRecensionRepository = new MedicineRecensionRepository();
             _medicineRepository = new MedicineRepository();

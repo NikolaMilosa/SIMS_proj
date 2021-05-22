@@ -1,8 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
-
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.Services.Manager;
 
 namespace Model
 {
@@ -22,8 +21,8 @@ namespace Model
                 Thread.Sleep(ts);
 
             /* schedule waiting for end of renovation */
-            RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
-            roomScheduleFunctions.ScheduleRenovationEnd(this);
+            RoomScheduleService roomScheduleService = new RoomScheduleService();
+            roomScheduleService.ScheduleRenovationEnd(this);
         }
 
         public void WaitEndRenovation()
@@ -33,8 +32,8 @@ namespace Model
                 Thread.Sleep(ts);
 
             /* end room renovation */
-            RoomScheduleFunctions roomScheduleFunctions = new RoomScheduleFunctions();
-            roomScheduleFunctions.FinishRenovation(this);
+            RoomScheduleService roomScheduleService = new RoomScheduleService();
+            roomScheduleService.FinishRenovation(this);
         }
     }
 }

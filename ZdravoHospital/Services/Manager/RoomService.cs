@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using Model;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.Services.Manager

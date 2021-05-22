@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -16,9 +16,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private string _warningText;
         private string _warningElement;
 
-        private RoomFunctions _roomFunctions;
-        private InventoryFunctions _inventoryFunctions;
-        private MedicineFunctions _medicineFunctions;
+        private RoomService _roomService;
+        private InventoryService _inventoryService;
+        private MedicineService _medicineService;
 
         private object _someObject;
         private object[] _otherParams;
@@ -125,24 +125,24 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             switch (_someObject.GetType().Name)
             {
                 case nameof(Room):
-                    _roomFunctions = new RoomFunctions();
-                    if (!_roomFunctions.DeleteRoom((Room) _someObject))
+                    _roomService = new RoomService();
+                    if (!_roomService.DeleteRoom((Room) _someObject))
                     {
                         MessageBox.Show(
                             "Cannot delete the room since there aren't any available rooms to store the inventory");
                     }
                     break;
                 case nameof(Inventory):
-                    _inventoryFunctions = new InventoryFunctions();
-                    _inventoryFunctions.DeleteInventory((Inventory) _someObject);
+                    _inventoryService = new InventoryService();
+                    _inventoryService.DeleteInventory((Inventory) _someObject);
                     break;
                 case nameof(Ingredient):
-                    _medicineFunctions = new MedicineFunctions((AddOrEditMedicineDialogViewModel) _otherParams[0]);
-                    _medicineFunctions.DeleteIngredientFromMedicine((Ingredient) _someObject, (Medicine) _otherParams[1]);
+                    _medicineService = new MedicineService((AddOrEditMedicineDialogViewModel) _otherParams[0]);
+                    _medicineService.DeleteIngredientFromMedicine((Ingredient) _someObject, (Medicine) _otherParams[1]);
                     break;
                 case nameof(Medicine):
-                    _medicineFunctions = new MedicineFunctions(null);
-                    _medicineFunctions.DeleteMedicine((Medicine) _someObject);
+                    _medicineService = new MedicineService(null);
+                    _medicineService.DeleteMedicine((Medicine) _someObject);
                     break;
             }
         }

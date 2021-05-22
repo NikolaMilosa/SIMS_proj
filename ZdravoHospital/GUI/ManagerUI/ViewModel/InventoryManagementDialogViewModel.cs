@@ -5,9 +5,12 @@ using System.Text;
 using System.Windows;
 using Model;
 using Model.Repository;
+using Repository.InventoryPersistance;
+using Repository.RoomInventoryPersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.ManagerUI.View;
+using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
+using RoomInventoryRepository = Repository.RoomInventoryPersistance.RoomInventoryRepository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -33,8 +36,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private RoomRepository _roomRepository;
 
-        private RoomInventoryRepository _roomInventoryRepository;
-        private InventoryRepository _inventoryRepository;
+        private IRoomInventoryRepository _roomInventoryRepository;
+        private IInventoryRepository _inventoryRepository;
 
         #endregion
 
