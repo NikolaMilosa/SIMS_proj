@@ -136,6 +136,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _inventoryService = new InventoryService();
 
             _roomRepository = new RoomRepository();
+            _roomInventoryRepository = new RoomInventoryRepository();
 
             Rooms = new List<Room>(_roomRepository.GetValues());
             SelectedInventory = ((new StringBuilder()).Append(PassedInventory.Id).Append(" - ").Append(PassedInventory.Name)).ToString();

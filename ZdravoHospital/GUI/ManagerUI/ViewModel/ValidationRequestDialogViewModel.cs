@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Model;
+using Repository.DoctorPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.Services.Manager;
 
@@ -17,6 +18,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private ObservableCollection<Doctor> _listOfDoctors;
 
         private MedicineService _medicineService;
+
+        private IDoctorRepository _doctorRepository;
 
         #endregion
 
@@ -63,7 +66,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public ValidationRequestDialogViewModel(Medicine medicine)
         {
             ObservedMedicine = medicine;
-            ListOfDoctors = new ObservableCollection<Doctor>(Resources.doctors.Values);
+            _doctorRepository = new DoctorRepository();
+            ListOfDoctors = new ObservableCollection<Doctor>(_doctorRepository.GetValues());
 
             _medicineService = new MedicineService(null);
 
