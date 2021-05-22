@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Repository;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -16,8 +17,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             InitializeComponent();
 
-            Model.Resources.OpenDoctors();
-            Doctor doctor = Model.Resources.doctors[App.currentUser];
+            Doctor doctor = (new DoctorRepository()).GetById(App.currentUser);
             UserTextBlock.Text = doctor.Name + " " + doctor.Surname;
         }
 

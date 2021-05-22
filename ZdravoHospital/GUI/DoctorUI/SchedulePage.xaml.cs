@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Model;
+using Model.Repository;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -28,6 +29,10 @@ namespace ZdravoHospital.GUI.DoctorUI
         private StackPanel[] stackPanels;
         private EmptyPeriodButton[] lastEmptyPeriodButtons;
         private EmptyPeriodButton selectedEmptyPeriodButton;
+
+        private DoctorRepository doctorRepository;
+        private PatientRepository patientRepository;
+        private PeriodRepository periodRepository;
         
         public SchedulePage()
         {
@@ -67,8 +72,13 @@ namespace ZdravoHospital.GUI.DoctorUI
             lastEmptyPeriodButtons[5] = SaturdayLastEmptyPeriodButton;
             lastEmptyPeriodButtons[6] = SundayLastEmptyPeriodButton;
 
-            DoctorsComboBox.ItemsSource = Model.Resources.doctors.Values;
-            DoctorsComboBox.SelectedItem = Model.Resources.doctors[App.currentUser]; // Triger poziva prvo popunjavanje kalendara
+            doctorRepository = new DoctorRepository();
+            patientRepository = new PatientRepository();
+            periodRepository = new PeriodRepository();
+
+            List<Doctor> doctors = doctorRepository.GetValues();
+            DoctorsComboBox.ItemsSource = doctors;
+            DoctorsComboBox.SelectedItem = doctors.Find(d => d.Username.Equals(App.currentUser)); // Triger poziva prvo popunjavanje kalendara
         }
 
         protected void OnPropertyChanged(string name)
@@ -104,10 +114,6 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void PopulateCalendar()
         {
             string selectedDoctorsUsername = (DoctorsComboBox.SelectedItem as Doctor).Username;
-
-            Model.Resources.OpenPeriods();
-            Model.Resources.OpenPatients();
-
             List<Period> periods = null;
 
             for (int i = 0; i < stackPanels.Length; i++)
@@ -130,7 +136,7 @@ namespace ZdravoHospital.GUI.DoctorUI
                     if (endTime.Date == DaysDates[i].Date)
                     {
                         durationAfterMidnight = endTime.Hour * 60 + endTime.Minute;
-                        Patient patient = Model.Resources.patients[previousDayLastPeriod.PatientUsername];
+                        Patient patient = patientRepository.GetById(previousDayLastPeriod.PatientUsername);
 
                         PeriodButton periodButton = new PeriodButton
                         {
@@ -147,7 +153,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
                 periods = new List<Period>();
 
-                foreach (Period period in Model.Resources.periods)
+                foreach (Period period in periodRepository.GetValues())
                     if (period.StartTime.Date == DaysDates[i].Date && period.DoctorUsername.Equals(selectedDoctorsUsername))
                         periods.Add(period);
 
@@ -189,7 +195,7 @@ namespace ZdravoHospital.GUI.DoctorUI
                     else
                         emptyPeriodButton.Height = ((periods[j].StartTime - periods[j - 1].StartTime).TotalMinutes - periods[j - 1].Duration) * 4;
 
-                    Patient patient = Model.Resources.patients[periods[j].PatientUsername];
+                    Patient patient = patientRepository.GetById(periods[j].PatientUsername);
 
                     int height = 0;
 
@@ -241,7 +247,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         private Period GetPreviousDaysLastPeriod(DateTime previousDay, string selectedDoctorsUsername)
         {
             List<Period> previousDaysPeriods = 
-                Model.Resources.periods.Where(p => p.StartTime.Date == previousDay.Date && p.DoctorUsername.Equals(selectedDoctorsUsername)).ToList();
+                periodRepository.GetValues().Where(p => p.StartTime.Date == previousDay.Date && p.DoctorUsername.Equals(selectedDoctorsUsername)).ToList();
 
             if (previousDaysPeriods.Count > 0)
             {

@@ -1,19 +1,13 @@
 ﻿using Model;
+using Model.Repository;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ZdravoHospital.GUI.DoctorUI.Validations;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -28,21 +22,32 @@ namespace ZdravoHospital.GUI.DoctorUI
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
 
+        private DoctorRepository doctorRepository;
+        private PatientRepository patientRepository;
+        private PeriodRepository periodRepository;
+        private RoomRepository roomRepository;
+        private PeriodValidation periodValidation;
+
         public NewAppointmentPage(Doctor doctor, DateTime startTime, int duration)
         {
             InitializeComponent();
 
             this.DataContext = this;
+            doctorRepository = new DoctorRepository();
+            patientRepository = new PatientRepository();
+            periodRepository = new PeriodRepository();
+            roomRepository = new RoomRepository();
 
-            Doctors = new ObservableCollection<Doctor>(Model.Resources.doctors.Values);
-            Patients = new ObservableCollection<Patient>(Model.Resources.patients.Values);
-            Model.Resources.OpenRooms();
-            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values.Where(room => room.RoomType == RoomType.APPOINTMENT_ROOM));
+            Doctors = new ObservableCollection<Doctor>(doctorRepository.GetValues());
+            Patients = new ObservableCollection<Patient>(patientRepository.GetValues());
+            Rooms = new ObservableCollection<Room>(roomRepository.GetValues().Where(room => room.RoomType == RoomType.APPOINTMENT_ROOM));
 
-            DoctorsComboBox.SelectedItem = doctor;
+            DoctorsComboBox.SelectedItem = Doctors.ToList().Find(d => d.Username.Equals(doctor.Username));
             AppointmentDatePicker.SelectedDate = startTime.Date;
             StartTimeTextBox.Text = startTime.ToString("HH:mm");
             DurationTextBox.Text = duration.ToString();
+
+            periodValidation = new PeriodValidation();
         }
 
         public NewAppointmentPage(Referral referral, Patient patient)
@@ -51,13 +56,16 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             this.DataContext = this;
             this.referral = referral;
+            doctorRepository = new DoctorRepository();
+            patientRepository = new PatientRepository();
+            periodRepository = new PeriodRepository();
+            roomRepository = new RoomRepository();
 
-            Doctors = new ObservableCollection<Doctor>(Model.Resources.doctors.Values);
-            Patients = new ObservableCollection<Patient>(Model.Resources.patients.Values);
-            Model.Resources.OpenRooms();
-            Rooms = new ObservableCollection<Room>(Model.Resources.rooms.Values.Where(room => room.RoomType == RoomType.APPOINTMENT_ROOM));
+            Doctors = new ObservableCollection<Doctor>(doctorRepository.GetValues());
+            Patients = new ObservableCollection<Patient>(patientRepository.GetValues());
+            Rooms = new ObservableCollection<Room>(roomRepository.GetValues().Where(room => room.RoomType == RoomType.APPOINTMENT_ROOM));
 
-            DoctorsComboBox.SelectedItem = Model.Resources.doctors[referral.ReferredDoctorUsername];
+            DoctorsComboBox.SelectedItem = Doctors.ToList().Find(d => d.Username.Equals(referral.ReferredDoctorUsername));
             PatientsComboBox.SelectedItem = patient;
             AppointmentDatePicker.SelectedDate = DateTime.Today;
             StartTimeTextBox.Text = "00:00";
@@ -67,6 +75,8 @@ namespace ZdravoHospital.GUI.DoctorUI
             DoctorsComboBox.IsTabStop = false;
             PatientsComboBox.IsHitTestVisible = false;
             PatientsComboBox.IsTabStop = false;
+
+            periodValidation = new PeriodValidation();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -94,7 +104,7 @@ namespace ZdravoHospital.GUI.DoctorUI
                                        (RoomsComboBox.SelectedItem as Room).Id);
             period.IsUrgent = (bool)IsUrgentCheckBox.IsChecked;
 
-            int available = IsPeriodAvailable(period);
+            int available = periodValidation.IsPeriodAvailable(period);
 
             if (available == 0)
             {
@@ -106,8 +116,7 @@ namespace ZdravoHospital.GUI.DoctorUI
                     Model.Resources.SaveReferrals();
                 }
 
-                Model.Resources.periods.Add(period);
-                Model.Resources.SavePeriods();
+                periodRepository.Create(period);
 
                 MessageBox.Show("Appointment created successfully.", "Success");
                 NavigationService.GoBack();
@@ -171,57 +180,6 @@ namespace ZdravoHospital.GUI.DoctorUI
             }
 
             return true;
-        }
-
-        private int IsPeriodAvailable(Period period) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
-        {
-            if (period.StartTime < DateTime.Now)
-                return -1;
-
-            DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
-
-            foreach (Period existingPeriod in Model.Resources.periods)
-            {
-                DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
-
-                if (period.RoomId == existingPeriod.RoomId)
-                {
-                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 1;
-
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 1;
-
-                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
-                        return 1;
-                }
-
-                if (period.DoctorUsername == existingPeriod.DoctorUsername)
-                {
-                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 2;
-
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 2;
-
-                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
-                        return 2;
-                }
-
-                if (period.PatientUsername == existingPeriod.PatientUsername)
-                {
-                    if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 3;
-
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 3;
-
-                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
-                        return 3;
-                }
-            }
-
-            return 0;
         }
 
         private void PatientInfoButton_Click(object sender, RoutedEventArgs e)
