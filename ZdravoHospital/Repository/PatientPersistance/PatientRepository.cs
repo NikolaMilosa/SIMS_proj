@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Windows;
 
 namespace Repository.PatientPersistance
 {
@@ -14,6 +15,43 @@ namespace Repository.PatientPersistance
         {
 
         }
+
+        public bool AddIngredientAllergenIfUnique(Patient patient, string newAllergen)
+        {
+            if (patient.IngredientAllergens == null) 
+                patient.IngredientAllergens = new List<string>();
+            var ingredient = patient.IngredientAllergens.Find(value => value.Equals(newAllergen));
+            if (ingredient == null)
+            {
+                patient.IngredientAllergens.Add(newAllergen);
+                Update(patient);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Ingredient already exists.");
+                return false;
+            } 
+        }
+
+        public bool AddMedicineAllergenIfUnique(Patient patient, string newAllergen)
+        {
+            if (patient.MedicineAllergens == null)
+                patient.MedicineAllergens = new List<string>();
+            var medicine = patient.MedicineAllergens.Find(value => value.Equals(newAllergen));
+            if (medicine == null)
+            {
+                patient.MedicineAllergens.Add(newAllergen);
+                Update(patient);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Medicine already exists.");
+                return false;
+            }
+        }
+
         public void Create(Patient newValue)
         {
             var values = GetValues();
@@ -48,6 +86,22 @@ namespace Repository.PatientPersistance
             }
 
             return values;
+        }
+
+        public bool RemoveIngredientAllergen(Patient patient, string allergen)
+        {
+            bool success = patient.IngredientAllergens.Remove(allergen);
+            if(success)
+                Update(patient);
+            return success;
+        }
+
+        public bool RemoveMedicineAllergen(Patient patient, string allergen)
+        {
+            bool success = patient.MedicineAllergens.Remove(allergen);
+            if(success)
+                Update(patient);
+            return success;
         }
 
         public void Save(List<Patient> values)

@@ -1,4 +1,6 @@
 ﻿using Model;
+using Repository.CredentialsPersistance;
+using Repository.PatientPersistance;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,12 +11,12 @@ namespace ZdravoHospital.GUI.Secretary.Service
 {
     public class PatientRegistrationService
     {
-        private Repository.CredentialsPersistance.CredentialsRepository _credentialsRepository;
-        private Repository.PatientPersistance.PatientRepository _patientsRepository;
+        private ICredentialsRepository _credentialsRepository;
+        private IPatientRepository _patientsRepository;
         public PatientRegistrationService()
         {
-            _credentialsRepository = new Repository.CredentialsPersistance.CredentialsRepository();
-            _patientsRepository = new Repository.PatientPersistance.PatientRepository();
+            _credentialsRepository = new CredentialsRepository();
+            _patientsRepository = new PatientRepository();
         }
 
         public void processPatientRegistration(PatientDTO patientDTO)

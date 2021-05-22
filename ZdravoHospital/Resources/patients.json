@@ -3,8 +3,10 @@
     "IsGuest": false,
     "HealthCardNumber": "123",
     "BloodType": 2,
-    "MedicineAllergens": null,
-    "IngredientAllergens": null,
+    "MedicineAllergens": [
+      "Brufen"
+    ],
+    "IngredientAllergens": [],
     "RecentActions": 0,
     "LastLogoutTime": "0001-01-01T00:00:00",
     "PatientNotes": [],
@@ -34,8 +36,15 @@
     "IsGuest": false,
     "HealthCardNumber": "456",
     "BloodType": 5,
-    "MedicineAllergens": [],
-    "IngredientAllergens": [],
+    "MedicineAllergens": [
+      "test medication",
+      "bromazepam",
+      "Goat milk"
+    ],
+    "IngredientAllergens": [
+      "natrium",
+      "Kiflice"
+    ],
     "RecentActions": 0,
     "LastLogoutTime": "2021-05-20T00:52:38.3075165+02:00",
     "PatientNotes": [],

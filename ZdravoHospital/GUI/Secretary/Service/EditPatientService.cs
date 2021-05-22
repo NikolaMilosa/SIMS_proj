@@ -11,8 +11,8 @@ namespace ZdravoHospital.GUI.Secretary.Service
 {
     public class EditPatientService
     {
-        PatientRepository _patientsRepository;
-        CredentialsRepository _credentialsRepository;
+        IPatientRepository _patientsRepository;
+        ICredentialsRepository _credentialsRepository;
         public EditPatientService()
         {
             _patientsRepository = new PatientRepository();

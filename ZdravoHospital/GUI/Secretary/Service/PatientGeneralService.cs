@@ -10,8 +10,8 @@ namespace ZdravoHospital.GUI.Secretary.Service
 {
     public class PatientGeneralService
     {
-        private PatientRepository _patientRepository;
-        private CredentialsRepository _credentialsRepository;
+        private IPatientRepository _patientRepository;
+        private ICredentialsRepository _credentialsRepository;
         public PatientGeneralService()
         {
             _patientRepository = new PatientRepository();
