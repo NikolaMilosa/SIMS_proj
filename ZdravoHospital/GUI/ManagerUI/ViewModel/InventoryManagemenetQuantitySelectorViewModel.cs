@@ -123,12 +123,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public InventoryManagemenetQuantitySelectorViewModel(Room sender, Room receiver, InventoryDTO processed)
+        public InventoryManagemenetQuantitySelectorViewModel(Room sender, Room receiver, InventoryDTO processed, InjectorDTO injector)
         {
-            _transferRequestsService = new TransferRequestService();
+            _transferRequestsService = new TransferRequestService(injector);
 
-            _inventoryRepository = new InventoryRepository();
-            _transferRequestRepository = new TransferRequestRepository();
+            _inventoryRepository = injector.InventoryRepository;
+            _transferRequestRepository = injector.TransferRepository;
 
             SenderRoom = sender;
             ReceiverRoom = receiver;

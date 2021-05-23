@@ -8,6 +8,7 @@ using Repository.InventoryPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
 using Repository.TransferRequestPersistance;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
 using RoomInventoryRepository = Repository.RoomInventoryPersistance.RoomInventoryRepository;
@@ -19,6 +20,8 @@ namespace ZdravoHospital.Services.Manager
     public class TransferRequestService
     {
         private static Mutex _mutex;
+
+        private InjectorDTO _injector;
 
         #region Repos
 
@@ -45,14 +48,16 @@ namespace ZdravoHospital.Services.Manager
 
         #endregion
 
-        public TransferRequestService()
+        public TransferRequestService(InjectorDTO injector)
         {
             TransferExecuted += ManagerWindowViewModel.GetDashboard().OnRefreshTransferDialog;
 
-            _roomRepository = new RoomRepository();
-            _inventoryRepository = new InventoryRepository();
-            _transferRequestRepository = new TransferRequestRepository();
-            _roomInventoryRepository = new RoomInventoryRepository();
+            _injector = injector;
+
+            _roomRepository = injector.RoomRepository;
+            _inventoryRepository = injector.InventoryRepository;
+            _transferRequestRepository = injector.TransferRepository;
+            _roomInventoryRepository = injector.RoomInventoryRepository;
         }
 
         private Mutex GetMutex()
@@ -85,7 +90,7 @@ namespace ZdravoHospital.Services.Manager
 
         private void StartTransfer(TransferRequest transferRequest)
         {
-            Task t = new Task(() => transferRequest.DoWork());
+            Task t = new Task(() => transferRequest.DoWork(_injector));
             t.Start();
         }
 
@@ -97,7 +102,7 @@ namespace ZdravoHospital.Services.Manager
 
             /* Create a roomSchedule for this transfer */
 
-            RoomScheduleService roomScheduleService = new RoomScheduleService();
+            RoomScheduleService roomScheduleService = new RoomScheduleService(_injector);
 
             RoomSchedule roomScheduleSender = new RoomSchedule()
             {

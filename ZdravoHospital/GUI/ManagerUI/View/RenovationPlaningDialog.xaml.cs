@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.View
@@ -20,10 +21,10 @@ namespace ZdravoHospital.GUI.ManagerUI.View
     {
         private RenovationPlanningDialogViewModel currentViewModel;
 
-        public RenovationPlaningDialog()
+        public RenovationPlaningDialog(InjectorDTO injector)
         {
             InitializeComponent();
-            currentViewModel = new RenovationPlanningDialogViewModel();
+            currentViewModel = new RenovationPlanningDialogViewModel(injector);
             this.DataContext = currentViewModel;
         }
 

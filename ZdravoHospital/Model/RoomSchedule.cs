@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.Services.Manager;
 
 namespace Model
@@ -14,25 +15,25 @@ namespace Model
         public ReservationType ScheduleType { get; set; }
 
 
-        public void WaitStartRenovation()
+        public void WaitStartRenovation(InjectorDTO injector)
         {
             TimeSpan ts = StartTime.Subtract(DateTime.Now);
             if (ts > new TimeSpan(0, 0, 0))
                 Thread.Sleep(ts);
 
             /* schedule waiting for end of renovation */
-            RoomScheduleService roomScheduleService = new RoomScheduleService();
+            RoomScheduleService roomScheduleService = new RoomScheduleService(injector);
             roomScheduleService.ScheduleRenovationEnd(this);
         }
 
-        public void WaitEndRenovation()
+        public void WaitEndRenovation(InjectorDTO injector)
         {
             TimeSpan ts = EndTime.Subtract(DateTime.Now);
             if (ts > new TimeSpan(0, 0, 0))
                 Thread.Sleep(ts);
 
             /* end room renovation */
-            RoomScheduleService roomScheduleService = new RoomScheduleService();
+            RoomScheduleService roomScheduleService = new RoomScheduleService(injector);
             roomScheduleService.FinishRenovation(this);
         }
     }

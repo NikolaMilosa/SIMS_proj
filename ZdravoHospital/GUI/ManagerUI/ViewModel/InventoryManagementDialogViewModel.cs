@@ -7,6 +7,7 @@ using Model;
 using Model.Repository;
 using Repository.InventoryPersistance;
 using Repository.RoomInventoryPersistance;
+using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.View;
 using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
@@ -34,10 +35,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private Window _dialog;
 
-        private RoomRepository _roomRepository;
+        private IRoomRepository _roomRepository;
 
         private IRoomInventoryRepository _roomInventoryRepository;
         private IInventoryRepository _inventoryRepository;
+
+        private InjectorDTO _injector;
 
         #endregion
 
@@ -137,12 +140,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         }
         #endregion
 
-        public InventoryManagementDialogViewModel()
+        public InventoryManagementDialogViewModel(InjectorDTO injector)
         {
-            _roomRepository = new RoomRepository();
-            _roomInventoryRepository = new RoomInventoryRepository();
-            _inventoryRepository = new InventoryRepository();
+            _roomRepository = injector.RoomRepository;
+            _roomInventoryRepository = injector.RoomInventoryRepository;
+            _inventoryRepository = injector.InventoryRepository;
             SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
+
+            _injector = injector;
         }
 
         #region Private functions
@@ -170,7 +175,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public void HandleEnter()
         {
-            _dialog = new InventoryManagementQuantitySelector(SenderRoom, ReceiverRoom, SelectedInventory);
+            _dialog = new InventoryManagementQuantitySelector(SenderRoom, ReceiverRoom, SelectedInventory, _injector);
             _dialog.ShowDialog();
         }
 

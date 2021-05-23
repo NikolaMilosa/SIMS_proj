@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.Services.Manager;
 
@@ -26,6 +27,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Medicine _passedMedicine;
 
         private bool _canEdit;
+
+        private InjectorDTO _injector;
         
         #endregion
 
@@ -83,7 +86,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public AddOrEditMedicineDialogViewModel(Medicine? medicine)
+        public AddOrEditMedicineDialogViewModel(Medicine? medicine, InjectorDTO injector)
         {
             if (medicine == null)
             {
@@ -107,10 +110,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     CanEdit = false;
             }
 
+            _injector = injector;
+
             AddIngredientCommand = new MyICommand(OnAddIngredient, CanAddIngredient);
             ConfirmCommand = new MyICommand(OnConfirm, CanConfirm);
 
-            _medicineService = new MedicineService(null);
+            _medicineService = new MedicineService(null, injector);
         }
 
         #region Command functions
@@ -118,7 +123,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private void OnAddIngredient()
         {
             Medicine.Ingredients = new List<Ingredient>(Ingredients);
-            _dialog = new AddOrEditIngredientDialog(Medicine, null, this);
+            _dialog = new AddOrEditIngredientDialog(Medicine, null, this, _injector);
             _dialog.ShowDialog();
         }
 
@@ -157,7 +162,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (Ingredient != null)
             {
-                _dialog = new AddOrEditIngredientDialog(Medicine, Ingredient, this);
+                _dialog = new AddOrEditIngredientDialog(Medicine, Ingredient, this, _injector);
                 _dialog.ShowDialog();
             }
         }
@@ -166,7 +171,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (Ingredient != null)
             {
-                _dialog = new WarningDialog(Ingredient, this, Medicine);
+                _dialog = new WarningDialog(_injector, Ingredient, this, Medicine);
                 _dialog.ShowDialog();
             }
         }

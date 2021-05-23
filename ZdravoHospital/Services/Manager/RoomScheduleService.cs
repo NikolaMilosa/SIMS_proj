@@ -14,6 +14,8 @@ namespace ZdravoHospital.Services.Manager
 {
     public class RoomScheduleService
     {
+        private InjectorDTO _injector;
+
         #region Repos
 
         private IRoomScheduleRepository _roomScheduleRepository;
@@ -38,13 +40,15 @@ namespace ZdravoHospital.Services.Manager
 
         #endregion
 
-        public RoomScheduleService()
+        public RoomScheduleService(InjectorDTO injector)
         {
             RoomChanged += ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
 
-            _roomRepository = new RoomRepository();
-            _roomScheduleRepository = new RoomScheduleRepository();
-            _periodRepository = new PeriodRepository();
+            _injector = injector;
+
+            _roomRepository = injector.RoomRepository;
+            _roomScheduleRepository = injector.RoomScheduleRepository;
+            _periodRepository = injector.PeriodRepository;
         }
 
         public void RunOrExecute()
@@ -76,7 +80,7 @@ namespace ZdravoHospital.Services.Manager
 
         public void ScheduleRenovationStart(RoomSchedule roomSchedule)
         {
-            var t = new Task(roomSchedule.WaitStartRenovation);
+            var t = new Task(() => roomSchedule.WaitStartRenovation(_injector));
             t.Start();
         }
 
@@ -92,7 +96,7 @@ namespace ZdravoHospital.Services.Manager
                 ChangeRoomAvailability(roomSchedule.RoomId, false);
             }
 
-            Task t = new Task(roomSchedule.WaitEndRenovation);
+            Task t = new Task(() => roomSchedule.WaitEndRenovation(_injector));
             t.Start();
         }
 

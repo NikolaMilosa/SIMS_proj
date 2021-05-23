@@ -5,6 +5,7 @@ using Model;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.Services.Manager;
 using RoomRepository = Repository.RoomPersistance.RoomRepository;
 
@@ -128,15 +129,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public InventoryAdderSubtractorViewModel(Inventory inventory)
+        public InventoryAdderSubtractorViewModel(Inventory inventory, InjectorDTO injector)
         {
             PassedInventory = inventory;
 
-            _transferRequestsService = new TransferRequestService();
-            _inventoryService = new InventoryService();
+            _transferRequestsService = new TransferRequestService(injector);
+            _inventoryService = new InventoryService(injector);
 
-            _roomRepository = new RoomRepository();
-            _roomInventoryRepository = new RoomInventoryRepository();
+            _roomRepository = injector.RoomRepository;
+            _roomInventoryRepository = injector.RoomInventoryRepository;
 
             Rooms = new List<Room>(_roomRepository.GetValues());
             SelectedInventory = ((new StringBuilder()).Append(PassedInventory.Id).Append(" - ").Append(PassedInventory.Name)).ToString();

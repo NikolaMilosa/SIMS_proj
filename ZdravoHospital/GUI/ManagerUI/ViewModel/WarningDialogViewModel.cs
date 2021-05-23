@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
@@ -24,6 +25,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private object[] _otherParams;
 
         private bool _isConfirmable;
+
+        private InjectorDTO _injector;
 
         #endregion
 
@@ -76,10 +79,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public WarningDialogViewModel(object someObject, params object[] otherParams)
+        public WarningDialogViewModel(InjectorDTO injector,object someObject, params object[] otherParams)
         {
             _someObject = someObject;
             _otherParams = otherParams;
+
+            _injector = injector;
 
             IsConfirmable = true;
 
@@ -125,7 +130,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             switch (_someObject.GetType().Name)
             {
                 case nameof(Room):
-                    _roomService = new RoomService();
+                    _roomService = new RoomService(_injector);
                     if (!_roomService.DeleteRoom((Room) _someObject))
                     {
                         MessageBox.Show(
@@ -133,15 +138,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     }
                     break;
                 case nameof(Inventory):
-                    _inventoryService = new InventoryService();
+                    _inventoryService = new InventoryService(_injector);
                     _inventoryService.DeleteInventory((Inventory) _someObject);
                     break;
                 case nameof(Ingredient):
-                    _medicineService = new MedicineService((AddOrEditMedicineDialogViewModel) _otherParams[0]);
+                    _medicineService = new MedicineService((AddOrEditMedicineDialogViewModel) _otherParams[0], _injector);
                     _medicineService.DeleteIngredientFromMedicine((Ingredient) _someObject, (Medicine) _otherParams[1]);
                     break;
                 case nameof(Medicine):
-                    _medicineService = new MedicineService(null);
+                    _medicineService = new MedicineService(null, _injector);
                     _medicineService.DeleteMedicine((Medicine) _someObject);
                     break;
             }

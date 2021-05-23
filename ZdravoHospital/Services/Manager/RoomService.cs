@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Model;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.Services.Manager
@@ -34,12 +35,12 @@ namespace ZdravoHospital.Services.Manager
 
         #endregion
 
-        public RoomService()
+        public RoomService(InjectorDTO injector)
         {
             RoomChanged += ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
             //TODO: dodati injector.
-            _roomRepository = new RoomRepository();
-            _roomInventoryRepository = new RoomInventoryRepository();
+            _roomRepository = injector.RoomRepository;
+            _roomInventoryRepository = injector.RoomInventoryRepository;
         }
 
         public bool DeleteRoom(Room room)

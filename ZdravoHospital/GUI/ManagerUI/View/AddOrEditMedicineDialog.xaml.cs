@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Model;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.View
@@ -20,10 +21,10 @@ namespace ZdravoHospital.GUI.ManagerUI.View
     public partial class AddOrEditMedicineDialog : Window
     {
         private AddOrEditMedicineDialogViewModel currentViewModel;
-        public AddOrEditMedicineDialog(Medicine medicine)
+        public AddOrEditMedicineDialog(Medicine medicine, InjectorDTO injector)
         {
             InitializeComponent();
-            currentViewModel = new AddOrEditMedicineDialogViewModel(medicine);
+            currentViewModel = new AddOrEditMedicineDialogViewModel(medicine, injector);
             this.DataContext = currentViewModel;
         }
 

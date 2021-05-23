@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
@@ -70,7 +71,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         
         #endregion
         
-        public AddOrEditRoomDialogViewModel(Room? room)
+        public AddOrEditRoomDialogViewModel(Room? room, InjectorDTO injector)
         {
             if (room == null)
             {
@@ -87,7 +88,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 Title = "Room editing";
             }
 
-            _roomService = new RoomService();
+            _roomService = new RoomService(injector);
 
             ConfirmCommand = new MyICommand(OnConfirm);
         }

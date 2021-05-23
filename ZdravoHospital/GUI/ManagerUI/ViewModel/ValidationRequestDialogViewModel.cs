@@ -5,6 +5,7 @@ using System.Text;
 using Model;
 using Repository.DoctorPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
@@ -63,13 +64,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public ValidationRequestDialogViewModel(Medicine medicine)
+        public ValidationRequestDialogViewModel(Medicine medicine, InjectorDTO injector)
         {
             ObservedMedicine = medicine;
-            _doctorRepository = new DoctorRepository();
+            _doctorRepository = injector.DoctorRepository;
             ListOfDoctors = new ObservableCollection<Doctor>(_doctorRepository.GetValues());
 
-            _medicineService = new MedicineService(null);
+            _medicineService = new MedicineService(null, injector);
 
             ConfirmCommand = new MyICommand(OnConfirm);
         }

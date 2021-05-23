@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
@@ -61,7 +62,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public AddOrEditIngredientDialogViewModel(Medicine medicine, Ingredient passedIngredient, AddOrEditMedicineDialogViewModel activeDialog)
+        public AddOrEditIngredientDialogViewModel(Medicine medicine, Ingredient passedIngredient, AddOrEditMedicineDialogViewModel activeDialog, InjectorDTO injector)
         {
             _medicine = medicine;
             _activeDialog = activeDialog;
@@ -82,7 +83,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             ConfirmCommand = new MyICommand(OnConfirm);
 
-            _medicineService = new MedicineService(activeDialog);
+            _medicineService = new MedicineService(activeDialog, injector);
         }
 
         public void OnConfirm()

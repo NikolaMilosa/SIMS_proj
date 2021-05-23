@@ -113,10 +113,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public RenovationPlanningDialogViewModel()
+        public RenovationPlanningDialogViewModel(InjectorDTO injector)
         {
-            _roomScheduleService = new RoomScheduleService();
-            _roomRepository = new RoomRepository();
+            _roomScheduleService = new RoomScheduleService(injector);
+            _roomRepository = injector.RoomRepository;
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             StartDate = DateTime.Today;
 

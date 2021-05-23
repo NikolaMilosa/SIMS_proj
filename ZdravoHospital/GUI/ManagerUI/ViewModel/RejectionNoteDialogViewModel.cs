@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
@@ -44,9 +45,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public RejectionNoteDialogViewModel(Medicine medicine)
+        public RejectionNoteDialogViewModel(Medicine medicine, InjectorDTO injector)
         {
-            _medicineService = new MedicineService(null);
+            _medicineService = new MedicineService(null, injector);
             Medicine = medicine;
         }
 
