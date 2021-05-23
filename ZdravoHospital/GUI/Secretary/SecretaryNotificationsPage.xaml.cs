@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Model;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -21,13 +22,15 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class SecretaryNotificationsPage : Page
     {
+        public NotificationService NotificationService { get; set; }
         public ObservableCollection<Model.Notification> Notifications { get; set; }
+        public Notification SelectedNotification { get; set; }
         public SecretaryNotificationsPage()
         {
             InitializeComponent();
             this.DataContext = this;
-            Model.Resources.OpenNotifications();
-            Notifications = new ObservableCollection<Notification>(Model.Resources.notifications);
+            NotificationService = new NotificationService();
+            Notifications = new ObservableCollection<Notification>(NotificationService.GetAllNotifications());
         }
 
         private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
@@ -42,9 +45,9 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void EditNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            if(NotificationsListView.SelectedItem != null)
+            if(SelectedNotification != null)
             {
-                NavigationService.Navigate(new EditNotificationPage((Model.Notification)NotificationsListView.SelectedItem));
+                NavigationService.Navigate(new EditNotificationPage(SelectedNotification));
             }
         }
         private void removePersonNotifications(int id)
@@ -56,16 +59,10 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void DeleteNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            if(NotificationsListView.SelectedItem != null)
+            if(SelectedNotification != null)
             {
-                Notification notification = (Notification)NotificationsListView.SelectedItem;
-                Notifications.Remove(notification);
-                Model.Resources.notifications.Remove(notification);
-
-                this.removePersonNotifications(notification.NotificationId);
-
-                Model.Resources.SaveNotifications();
-                CollectionViewSource.GetDefaultView(NotificationsListView.ItemsSource).Refresh();
+                NotificationService.RemoveNotification(SelectedNotification.NotificationId);
+                Notifications.Remove(SelectedNotification);
             }
             
         }

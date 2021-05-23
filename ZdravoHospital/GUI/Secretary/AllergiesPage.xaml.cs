@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -22,10 +23,15 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class AllergiesPage : Page
     {
+        public AllergiesService AllergiesService { get; set; }
         public ObservableCollection<string> MedicalAllergens { get; set; }
         public ObservableCollection<string> IngredientAllergens { get; set; }
         public Patient SelectedPatient { get; set; }
+        public string SelectedMedicalAllergen { get; set; }
+        public string SelectedIngredientAllergen { get; set; }
         public string CustomAllergen { get; set; }
+        public bool IsCustomAllergenMedicine { get; set; }
+        public bool IsCustomAllergenIngredient { get; set; }
         public ObservableCollection<string> AddedMedicalAllergens { get; set; }
         public ObservableCollection<string> AddedIngredientAllergens { get; set; }
         public ObservableCollection<string> AddedCustomAllergens { get; set; }
@@ -35,23 +41,14 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             this.DataContext = this;
             SelectedPatient = selectedPatient;
-            Model.Resources.OpenMedicines();
-            Model.Resources.OpenIngredients();
-            AddedMedicalAllergens = new ObservableCollection<string>();
-            AddedIngredientAllergens = new ObservableCollection<string>();
+
+            AllergiesService = new AllergiesService();
             AddedCustomAllergens = new ObservableCollection<string>();
 
             initAddedIngredientAllergens();
             initAddedMedicalAllergens();
-
-            //var logFileMedical = File.ReadAllLines(@"..\..\..\Resources\drugs.txt");
-            //MedicalAllergens = new ObservableCollection<string>(logFileMedical);
-            //var logFileIngredient = File.ReadAllLines(@"..\..\..\Resources\ingredients.txt");
-            //IngredientAllergens = new ObservableCollection<string>(logFileIngredient);
-            //MedicalAllergens = new ObservableCollection<Model.Medicine>(Model.Resources.medicines);
-            //IngredientAllergens = new ObservableCollection<Model.Ingredient>(Model.Resources.ingredients);
-            medicineListToStringList(Model.Resources.medicines);
-            ingredientListToStringList(Model.Resources.ingredients);
+            medicineListToStringList(AllergiesService.GetAllMedicines());
+            ingredientListToStringList(AllergiesService.GetAllIngredients());
 
             ICollectionView viewMedical = (ICollectionView)CollectionViewSource.GetDefaultView(MedicalAllergens);
             ICollectionView viewIngredient = (ICollectionView)CollectionViewSource.GetDefaultView(IngredientAllergens);
@@ -62,7 +59,8 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void initAddedMedicalAllergens()
         {
-            if(SelectedPatient.MedicineAllergens != null)
+            AddedMedicalAllergens = new ObservableCollection<string>();
+            if (SelectedPatient.MedicineAllergens != null)
             {
                 foreach(var allergen in SelectedPatient.MedicineAllergens)
                 {
@@ -72,6 +70,7 @@ namespace ZdravoHospital.GUI.Secretary
         }
         private void initAddedIngredientAllergens()
         {
+            AddedIngredientAllergens = new ObservableCollection<string>();
             if (SelectedPatient.IngredientAllergens != null)
             {
                 foreach (var allergen in SelectedPatient.IngredientAllergens)
@@ -123,193 +122,39 @@ namespace ZdravoHospital.GUI.Secretary
             CollectionViewSource.GetDefaultView(IngredientAllergensListBox.ItemsSource).Refresh();
         }
 
-        private bool isMedicineAllergenUnique(List<string> allergens, Medicine newAllergen)
-        {
-            foreach(var allergen in allergens)
-            {
-                if (allergen.Equals(newAllergen.MedicineName))
-                    return false;
-            }
-            return true;
-        }
-        private bool isIngredientAllergenUnique(List<string> allergens, Ingredient newAllergen)
-        {
-            foreach (var allergen in allergens)
-            {
-                if (allergen.Equals(newAllergen.IngredientName))
-                    return false;
-            }
-            return true;
-        }
-
         private void AddMedicalAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MedicalAllergensListBox.SelectedItem != null)
+            if(SelectedMedicalAllergen != null)
             {
-                var selectedAllergenName = (MedicalAllergensListBox.SelectedItem) as string;
-                Medicine medicalAllergen = null;
-                foreach (var med in Model.Resources.medicines)
-                {
-                    if (med.MedicineName.Equals(selectedAllergenName))
-                        medicalAllergen = med;
-                }
-                
-
-                if (SelectedPatient.MedicineAllergens == null)
-                {
-                    SelectedPatient.MedicineAllergens = new List<string>();
-                }
-
-                if (isMedicineAllergenUnique(SelectedPatient.MedicineAllergens, medicalAllergen))
-                {
-                    SelectedPatient.MedicineAllergens.Add(medicalAllergen.MedicineName);
-                    AddedMedicalAllergens.Add(medicalAllergen.MedicineName);
-
-                    ///////////// UPDATING THE RESOURCES ////////////////
-                    if (File.Exists(@"..\..\..\Resources\patients.json"))
-                    {
-                        Model.Resources.OpenPatients();
-                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                        {
-                            if (item.Key.Equals(SelectedPatient.Username))
-                            {
-                                Model.Resources.patients[item.Key] = SelectedPatient;
-                                break;
-                            }
-                        }
-                        Model.Resources.SavePatients();
-
-                        //////////// FEEDBACK MESSAGE //////////////////////////
-
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Medical allergen already added.");
-                }
-                
+                bool success = AllergiesService.AddMedicalAllergen(SelectedPatient, SelectedMedicalAllergen);
+                if(success)
+                    AddedMedicalAllergens.Add(SelectedMedicalAllergen);
             }
         }
 
         private void AddIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            if (IngredientAllergensListBox.SelectedItem != null)
+            if (SelectedIngredientAllergen != null)
             {
-                var selectedAllergen = (IngredientAllergensListBox.SelectedItem) as string;
-                Ingredient ingredientAllergen = new Ingredient(selectedAllergen);
-
-                if (SelectedPatient.IngredientAllergens == null)
-                {
-                    SelectedPatient.IngredientAllergens = new List<string>();
-                }
-
-              
-                if(isIngredientAllergenUnique(SelectedPatient.IngredientAllergens, ingredientAllergen))
-                {
-                    SelectedPatient.IngredientAllergens.Add(ingredientAllergen.IngredientName);
-                    AddedIngredientAllergens.Add(ingredientAllergen.IngredientName);
-
-                    ///////////// UPDATING THE RESOURCES ////////////////
-                    if (File.Exists(@"..\..\..\Resources\patients.json"))
-                    {
-                        Model.Resources.OpenPatients();
-                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                        {
-                            if (item.Key.Equals(SelectedPatient.Username))
-                            {
-                                Model.Resources.patients[item.Key] = SelectedPatient;
-                                break;
-                            }
-                        }
-                        Model.Resources.SavePatients();
-
-                        //////////// FEEDBACK MESSAGE //////////////////////////
-
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Ingredient allergen already added.");
-                }
-                
+                bool success = AllergiesService.AddIngredientAllergen(SelectedPatient, SelectedIngredientAllergen);
+                if (success)
+                    AddedIngredientAllergens.Add(SelectedIngredientAllergen);
             }
         }
 
         private void AddCustomAllergenButton_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)MedicalRadioButton.IsChecked && CustomAllergenTextBox.Text != String.Empty)
+            if (IsCustomAllergenMedicine && CustomAllergen != String.Empty)
             {
-                Medicine medicalAllergen = new Medicine(CustomAllergenTextBox.Text);
-
-                if (SelectedPatient.MedicineAllergens == null)
-                {
-                    SelectedPatient.MedicineAllergens = new List<string>();
-                }
-
-                if (isMedicineAllergenUnique(SelectedPatient.MedicineAllergens, medicalAllergen))
-                {
-                    SelectedPatient.MedicineAllergens.Add(medicalAllergen.MedicineName);
-                    AddedCustomAllergens.Add(medicalAllergen.MedicineName);
-
-                    ///////////// UPDATING THE RESOURCES ////////////////
-                    if (File.Exists(@"..\..\..\Resources\patients.json"))
-                    {
-                        Model.Resources.OpenPatients();
-                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                        {
-                            if (item.Key.Equals(SelectedPatient.Username))
-                            {
-                                Model.Resources.patients[item.Key] = SelectedPatient;
-                                break;
-                            }
-                        }
-                        Model.Resources.SavePatients();
-
-                        //////////// FEEDBACK MESSAGE //////////////////////////
-
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Medical allergen already added.");
-                }
+                bool success = AllergiesService.AddMedicalAllergen(SelectedPatient, CustomAllergen);
+                if (success)
+                    AddedCustomAllergens.Add(CustomAllergen);
             }
-            else if ((bool)IngredientRadioButton.IsChecked && CustomAllergenTextBox.Text != String.Empty)
+            else if (IsCustomAllergenIngredient && CustomAllergen != String.Empty)
             {
-                Ingredient ingredientAllergen = new Ingredient(CustomAllergenTextBox.Text);
-
-                if (SelectedPatient.IngredientAllergens == null)
-                {
-                    SelectedPatient.IngredientAllergens = new List<string>();
-                }
-
-                if(isIngredientAllergenUnique(SelectedPatient.IngredientAllergens, ingredientAllergen))
-                {
-                    SelectedPatient.IngredientAllergens.Add(ingredientAllergen.IngredientName);
-                    AddedCustomAllergens.Add(ingredientAllergen.IngredientName);
-
-                    ///////////// UPDATING THE RESOURCES ////////////////
-                    if (File.Exists(@"..\..\..\Resources\patients.json"))
-                    {
-                        Model.Resources.OpenPatients();
-                        foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                        {
-                            if (item.Key.Equals(SelectedPatient.Username))
-                            {
-                                Model.Resources.patients[item.Key] = SelectedPatient;
-                                break;
-                            }
-                        }
-                        Model.Resources.SavePatients();
-
-                        //////////// FEEDBACK MESSAGE //////////////////////////
-
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Ingredient allergen already added.");
-                }
+                bool success = AllergiesService.AddIngredientAllergen(SelectedPatient, CustomAllergen);
+                if (success)
+                    AddedCustomAllergens.Add(CustomAllergen);
             }
         }
 
@@ -322,24 +167,11 @@ namespace ZdravoHospital.GUI.Secretary
         {
             if (AddedMedicalAllergensListBox.SelectedItem != null)
             {
-                SelectedPatient.MedicineAllergens.Remove((string)AddedMedicalAllergensListBox.SelectedItem);
-                AddedMedicalAllergens.Remove((string)AddedMedicalAllergensListBox.SelectedItem);
-                if (File.Exists(@"..\..\..\Resources\patients.json"))
-                {
-                    Model.Resources.OpenPatients();
-                    foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                    {
-                        if (item.Key.Equals(SelectedPatient.Username))
-                        {
-                            Model.Resources.patients[item.Key] = SelectedPatient;
-                            break;
-                        }
-                    }
-                    Model.Resources.SavePatients();
-
-                    if (CollectionViewSource.GetDefaultView(AddedMedicalAllergensListBox.ItemsSource) != null)
-                        CollectionViewSource.GetDefaultView(AddedMedicalAllergensListBox.ItemsSource).Refresh();
-                }
+                string selectedAllergen = AddedMedicalAllergensListBox.SelectedItem as string;
+                bool success = AllergiesService.RemoveMedicineAllergen(SelectedPatient, selectedAllergen);
+                if(success)
+                    AddedMedicalAllergens.Remove(selectedAllergen);
+                
             }
         }
 
@@ -347,23 +179,10 @@ namespace ZdravoHospital.GUI.Secretary
         {
             if (AddedIngredientAllergensListBox.SelectedItem != null)
             {
-                SelectedPatient.IngredientAllergens.Remove((string)AddedIngredientAllergensListBox.SelectedItem);
-                AddedIngredientAllergens.Remove((string)AddedIngredientAllergensListBox.SelectedItem);
-                if (File.Exists(@"..\..\..\Resources\patients.json"))
-                {
-                    Model.Resources.OpenPatients();
-                    foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                    {
-                        if (item.Key.Equals(SelectedPatient.Username))
-                        {
-                            Model.Resources.patients[item.Key] = SelectedPatient;
-                            break;
-                        }
-                    }
-                    Model.Resources.SavePatients();
-                    if (CollectionViewSource.GetDefaultView(AddedIngredientAllergensListBox.ItemsSource) != null)
-                        CollectionViewSource.GetDefaultView(AddedIngredientAllergensListBox.ItemsSource).Refresh();
-                }
+                string selectedAllergen = AddedIngredientAllergensListBox.SelectedItem as string;
+                bool success = AllergiesService.RemoveIngredientAllergen(SelectedPatient, selectedAllergen);
+                if (success)
+                    AddedIngredientAllergens.Remove(selectedAllergen);
             }
         }
 
@@ -371,24 +190,14 @@ namespace ZdravoHospital.GUI.Secretary
         {
             if (AddedCustomAllergensListBox.SelectedItem != null)
             {
-                SelectedPatient.IngredientAllergens.Remove((string)AddedCustomAllergensListBox.SelectedItem);
-                SelectedPatient.MedicineAllergens.Remove((string)AddedCustomAllergensListBox.SelectedItem);
-                AddedCustomAllergens.Remove((string)AddedCustomAllergensListBox.SelectedItem);
-                if (File.Exists(@"..\..\..\Resources\patients.json"))
-                {
-                    Model.Resources.OpenPatients();
-                    foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                    {
-                        if (item.Key.Equals(SelectedPatient.Username))
-                        {
-                            Model.Resources.patients[item.Key] = SelectedPatient;
-                            break;
-                        }
-                    }
-                    Model.Resources.SavePatients();
-                    if (CollectionViewSource.GetDefaultView(AddedCustomAllergensListBox.ItemsSource) != null)
-                        CollectionViewSource.GetDefaultView(AddedCustomAllergensListBox.ItemsSource).Refresh();
-                }
+                string selectedAllergen = AddedCustomAllergensListBox.SelectedItem as string;
+                bool isAllergenMedicine = AllergiesService.IsAllergenMedicine(SelectedPatient, selectedAllergen);
+                if (isAllergenMedicine)
+                    AllergiesService.RemoveMedicineAllergen(SelectedPatient, selectedAllergen);
+                else
+                    AllergiesService.RemoveIngredientAllergen(SelectedPatient, selectedAllergen);
+
+                AddedCustomAllergens.Remove(selectedAllergen);
             }
         }
     }

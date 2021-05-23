@@ -6,36 +6,28 @@
     "MedicineAllergens": [
       "Brufen"
     ],
-    "IngredientAllergens": [
-      "tester two"
-    ],
+    "IngredientAllergens": [],
     "RecentActions": 0,
-    "LastLogoutTime": "2021-05-20T17:43:27.4281893+02:00",
-    "PatientNotes": [
-      {
-        "Content": "asdasdada",
-        "NotifyTime": "2021-05-20T17:43:50.677+02:00",
-        "Title": "sadasd"
-      }
-    ],
+    "LastLogoutTime": "0001-01-01T00:00:00",
+    "PatientNotes": [],
     "Name": "Stefan",
     "Surname": "Ljubovic",
-    "Email": "ljuba@gmail.com",
+    "Email": "ljubac@gmail.com",
     "DateOfBirth": "1999-04-23T00:00:00",
     "PhoneNumber": "060123456",
     "Username": "ljuba",
-    "ParentsName": "Milojko",
-    "MaritalStatus": 3,
-    "Gender": 0,
+    "ParentsName": "Jusufo",
+    "MaritalStatus": 0,
+    "Gender": 1,
     "CitizenId": "789",
     "Address": {
-      "StreetName": null,
-      "Number": null,
+      "StreetName": "Sarajevska",
+      "Number": "48",
       "City": {
-        "PostalCode": 0,
-        "Name": null,
+        "PostalCode": 21000,
+        "Name": "Zrenjanin",
         "Country": {
-          "Name": null
+          "Name": "Serbia"
         }
       }
     }
@@ -44,8 +36,15 @@
     "IsGuest": false,
     "HealthCardNumber": "456",
     "BloodType": 5,
-    "MedicineAllergens": [],
-    "IngredientAllergens": [],
+    "MedicineAllergens": [
+      "test medication",
+      "bromazepam",
+      "Goat milk"
+    ],
+    "IngredientAllergens": [
+      "natrium",
+      "Kiflice"
+    ],
     "RecentActions": 0,
     "LastLogoutTime": "2021-05-20T00:52:38.3075165+02:00",
     "PatientNotes": [],

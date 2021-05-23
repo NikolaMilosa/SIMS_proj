@@ -32,7 +32,7 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <ListBox x:Name="MedicalAllergensListBox" Margin="0,0,10,10" Height="60" Width="330" HorizontalAlignment="Left" ItemsSource="{Binding MedicalAllergens}" ItemContainerStyle="{StaticResource SimpleListBoxItem}"></ListBox>
+                            <ListBox x:Name="MedicalAllergensListBox" Margin="0,0,10,10" Height="60" Width="330" HorizontalAlignment="Left" ItemsSource="{Binding MedicalAllergens}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" SelectedItem="{Binding SelectedMedicalAllergen}"></ListBox>
                             <Button x:Name="AddMedicalAllergenButton" Width="50" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="Black" Background="#00000000" Click="AddMedicalAllergenButton_Click" Margin="0,0,0,10"> Add </Button>
                         </StackPanel>
                         <TextBlock Grid.Row="0" FontFamily="Yu Gothic" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120"> Added </TextBlock>
@@ -53,7 +53,7 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <ListBox x:Name="IngredientAllergensListBox" Grid.Row="6" Grid.RowSpan="2" Margin="0,0,10,10" Height="60" Width="330" HorizontalAlignment="Left" ItemsSource="{Binding IngredientAllergens}" ItemContainerStyle="{StaticResource SimpleListBoxItem}"></ListBox>
+                            <ListBox x:Name="IngredientAllergensListBox" Grid.Row="6" Grid.RowSpan="2" Margin="0,0,10,10" Height="60" Width="330" HorizontalAlignment="Left" ItemsSource="{Binding IngredientAllergens}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" SelectedItem="{Binding SelectedIngredientAllergen}"></ListBox>
                             <Button x:Name="AddIngredientAllergenButton" Width="50" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="Black" Background="#00000000" Click="AddIngredientAllergenButton_Click" Margin="0,0,0,10">Add</Button>
                         </StackPanel>
                         <TextBlock Grid.Row="0" FontFamily="Yu Gothic" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120"> Added</TextBlock>
@@ -78,8 +78,8 @@
                                 </TextBox.Text>
                             </TextBox>
                             <WrapPanel VerticalAlignment="Center">
-                                <RadioButton GroupName="AllergenType" Name="MedicalRadioButton" Margin="5,0,10,0" VerticalAlignment="Bottom">Medical</RadioButton>
-                                <RadioButton GroupName="AllergenType" Name="IngredientRadioButton">Ingredient</RadioButton>
+                                <RadioButton GroupName="AllergenType" Name="MedicalRadioButton" Margin="5,0,10,0" VerticalAlignment="Bottom" IsChecked="{Binding IsCustomAllergenMedicine}">Medical</RadioButton>
+                                <RadioButton GroupName="AllergenType" Name="IngredientRadioButton" IsChecked="{Binding IsCustomAllergenIngredient}">Ingredient</RadioButton>
                             </WrapPanel>
                         </StackPanel>
                         <Button x:Name="AddCustomAllergenButton" Width="50" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="Black" Background="#00000000" Click="AddCustomAllergenButton_Click" Margin="0,0,20,10">Add</Button>
