@@ -64,7 +64,6 @@ namespace ZdravoHospital.GUI.Secretary
                 NotificationService.RemoveNotification(SelectedNotification.NotificationId);
                 Notifications.Remove(SelectedNotification);
             }
-            
         }
     }
 }
