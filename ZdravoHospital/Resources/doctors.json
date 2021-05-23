@@ -3,6 +3,13 @@
     "SpecialistType": {
       "SpecializationName": "Doctor"
     },
+    "ShiftRule": {
+      "VacationStartTime": "2021-05-24T00:00:00+02:00",
+      "NumberOfFreeDays": 3,
+      "ScheduledShift": 2,
+      "ShiftStart": "2021-05-24T00:00:00+02:00",
+      "CurrentShift": 2
+    },
     "Name": "Marko",
     "Surname": "Pantelic",
     "Email": null,
@@ -28,6 +35,13 @@
   {
     "SpecialistType": {
       "SpecializationName": "Cardio surgent"
+    },
+    "ShiftRule": {
+      "VacationStartTime": "2021-05-25T00:00:00",
+      "NumberOfFreeDays": 1,
+      "ScheduledShift": 3,
+      "ShiftStart": "2021-05-26T00:00:00",
+      "CurrentShift": 2
     },
     "Name": "Nikola",
     "Surname": "Zigic",
@@ -55,6 +69,13 @@
     "SpecialistType": {
       "SpecializationName": "Neurology"
     },
+    "ShiftRule": {
+      "VacationStartTime": "2021-05-25T00:00:00",
+      "NumberOfFreeDays": 0,
+      "ScheduledShift": 2,
+      "ShiftStart": "2021-05-24T00:00:00+02:00",
+      "CurrentShift": 2
+    },
     "Name": "Milos",
     "Surname": "Krasic",
     "Email": null,
@@ -80,6 +101,13 @@
   {
     "SpecialistType": {
       "SpecializationName": "Neurology"
+    },
+    "ShiftRule": {
+      "VacationStartTime": "2021-05-23T00:00:00+02:00",
+      "NumberOfFreeDays": 0,
+      "ScheduledShift": 3,
+      "ShiftStart": "2021-05-23T00:00:00+02:00",
+      "CurrentShift": 0
     },
     "Name": "Dejan",
     "Surname": "Stankovic",

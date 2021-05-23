@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 
 using Model;
 using Repository.CredentialsPersistance;
@@ -6,6 +8,7 @@ using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.GUI.PatientUI;
 using ZdravoHospital.GUI.Secretary;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital
 {
@@ -17,6 +20,7 @@ namespace ZdravoHospital
         public MainWindow()
         {
             InitializeComponent();
+            loadDoctorWorkSchedule();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -61,6 +65,15 @@ namespace ZdravoHospital
                 {
                     MessageBox.Show("Wrong password...");
                 }
+            }
+        }
+        private void loadDoctorWorkSchedule()
+        {
+            WorkTimeService workService = new WorkTimeService();
+            List<Doctor> doctors = workService.GetAllDoctors();
+            foreach(Doctor doctor in doctors)
+            {
+                workService.ProcessDoctorsShiftRule(doctor);
             }
         }
     }

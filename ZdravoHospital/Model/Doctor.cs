@@ -5,6 +5,7 @@ namespace Model
     public class Doctor : Person
     {
         public Specialization SpecialistType { get; set; }
+        public ShiftRule ShiftRule { get; set; }
 
         public Doctor(string name, string surname, string username, Specialization specialistType)
         {

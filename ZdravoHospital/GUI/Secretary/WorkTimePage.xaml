@@ -27,11 +27,11 @@
                 </StackPanel>
             </StackPanel>
 
-            <ListBox x:Name="DoctorsListBox" Height="80" Margin="10" ItemsSource="{Binding Doctors}" SelectionChanged="DoctorsListBox_SelectionChanged" ItemContainerStyle="{StaticResource SimpleListBoxItem}"></ListBox>
+            <ListBox x:Name="DoctorsListBox" Height="80" Margin="10" ItemsSource="{Binding Doctors}" ItemContainerStyle="{StaticResource SimpleListBoxItem}" SelectedItem="{Binding SelectedDoctor}"></ListBox>
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" Margin="10,0,80,2" Width="120"> Shift </TextBlock>
-                <ComboBox Width="195" Margin="0,5,5,5" Height="30">
+                <ComboBox Name="ShiftComboBox" Width="195" Margin="0,5,5,5" Height="30" SelectedIndex="{Binding SelectedShift}">
                     <ComboBoxItem> FREE </ComboBoxItem>
                     <ComboBoxItem> FIRST </ComboBoxItem>
                     <ComboBoxItem> SECOND </ComboBoxItem>
@@ -39,15 +39,21 @@
                 </ComboBox>
             </StackPanel>
             <TextBlock FontFamily="Yu Gothic" FontSize="10" Margin="10 0 0 10" Foreground="Green"> Shift will automatically change every day unless manually edited.</TextBlock>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Shift starts at</TextBlock>
+                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding ShiftStart}" ></DatePicker>
+            </StackPanel>
+
             <Border BorderBrush="Black" BorderThickness="0 1 0 0" Margin="10"></Border>
             <TextBlock FontFamily="Yu Gothic" FontWeight="SemiBold" FontSize="24" Margin="10"> Holidays </TextBlock>
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Day off starts at </TextBlock>
-                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0"></DatePicker>
+                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding VacationStart}"></DatePicker>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Number of days</TextBlock>
-                <TextBox Width="195" VerticalAlignment="Center" Height="30" Margin="30 0 0 0"></TextBox>
+                <TextBox Width="195" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" Text="{Binding NumberOfDays}"></TextBox>
             </StackPanel>
             <Border BorderBrush="Black" BorderThickness="0 1 0 0" Margin="10"></Border>
             <Button x:Name="FinishButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="160" Height="30" Click="FinishButton_Click" VerticalAlignment="Top" Margin="0,10,20,0" HorizontalAlignment="Right">
