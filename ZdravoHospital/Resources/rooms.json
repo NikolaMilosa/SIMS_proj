@@ -27,24 +27,24 @@
     "RoomType": 3,
     "Id": 106,
     "Name": "BIG storage",
-    "Available": true
+    "Available": false
   },
   {
     "RoomType": 2,
     "Id": 505,
     "Name": "Bedroom 3",
-    "Available": true
+    "Available": false
   },
   {
     "RoomType": 4,
     "Id": 601,
     "Name": "Emergency room 1",
-    "Available": true
+    "Available": false
   },
   {
     "RoomType": 4,
     "Id": 602,
     "Name": "Emergency room 2",
-    "Available": true
+    "Available": false
   }
 ]
