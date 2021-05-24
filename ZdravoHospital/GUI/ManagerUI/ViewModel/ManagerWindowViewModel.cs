@@ -361,8 +361,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private void OnManageInventory()
         {
             _inventoryManagementDialogViewModel.SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
-            _inventoryManagementDialogViewModel.SenderRoom = null;
-            _inventoryManagementDialogViewModel.ReceiverRoom = null;
+            _inventoryManagementDialogViewModel.SenderIndex = -1;
+            _inventoryManagementDialogViewModel.ReceiverIndex = -1;
             dialog = new InventoryManagementDialog(_inventoryManagementDialogViewModel);
             dialog.ShowDialog();
         }

@@ -18,6 +18,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private bool _available;
         private RoomService _roomService;
 
+        private bool _isDropDownOpen;
+        private int _selectedIndex;
+
         #endregion
         
         #region Properties
@@ -63,11 +66,32 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public bool IsDropDownOpen
+        {
+            get => _isDropDownOpen;
+            set
+            {
+                _isDropDownOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
         
         #region Commands
         
         public MyICommand ConfirmCommand { get; set; }
+        public MyICommand<string> ComboBoxCommand { get; set; }
         
         #endregion
         
@@ -91,9 +115,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomService = new RoomService(injector);
 
             ConfirmCommand = new MyICommand(OnConfirm);
+            ComboBoxCommand = new MyICommand<string>(OnComboBox);
         }
 
-        //Confirm command function 
+        #region Button functions
+
         private void OnConfirm()
         {
             if (IsAdder)
@@ -105,5 +131,30 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 _roomService.EditRoom(Room);
             }
         }
+
+        private void OnComboBox(string key)
+        {
+            if (key.Equals("Enter"))
+            {
+                IsDropDownOpen = (IsDropDownOpen == false) ? true : false;
+            }
+            else if (key.Equals("Down"))
+            {
+                if (SelectedIndex < Enum.GetValues(typeof(RoomType)).Length - 1 && IsDropDownOpen)
+                {
+                    SelectedIndex += 1;
+                }
+            }
+            else if (key.Equals("Up"))
+            {
+                if (SelectedIndex > 0 && IsDropDownOpen)
+                {
+                    SelectedIndex -= 1;
+                }
+            }
+        }
+
+        #endregion
+
     }
 }

@@ -18,6 +18,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private int _selectedInd;
 
+        private bool _isDropDownOpen;
+
         #endregion
 
         #region Properties
@@ -81,11 +83,23 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public bool IsDropDownOpen
+        {
+            get => _isDropDownOpen;
+            set
+            {
+                _isDropDownOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
 
         public MyICommand ConfirmCommand { get; set; }
+        public MyICommand<string> ComboBoxCommand { get; set; }
 
         #endregion
 
@@ -119,13 +133,36 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             FilteringRequest += ManagerWindowViewModel.GetDashboard().OnFilteringRequested;
 
             ConfirmCommand = new MyICommand(OnConfirm);
+            ComboBoxCommand = new MyICommand<string>(OnComboBox);
         }
 
         #region Button functions
 
-        public void OnConfirm()
+        private void OnConfirm()
         {
             OnFilteringRequested();
+        }
+
+        private void OnComboBox(string key)
+        {
+            if (key.Equals("Enter"))
+            {
+                IsDropDownOpen = (IsDropDownOpen == false) ? true : false;
+            }
+            else if (key.Equals("Up"))
+            {
+                if (IsDropDownOpen && SelectedInd > 0)
+                {
+                    SelectedInd -= 1;
+                }
+            }
+            else if (key.Equals("Down"))
+            {
+                if (IsDropDownOpen && SelectedInd < 2)
+                {
+                    SelectedInd += 1;
+                }
+            }
         }
 
         #endregion

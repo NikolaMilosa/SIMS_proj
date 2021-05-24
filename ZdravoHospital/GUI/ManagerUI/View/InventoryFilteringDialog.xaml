@@ -74,11 +74,16 @@
         <ComboBox x:Name="TypeComboBox" Grid.Column="1" Grid.Row="5" FontSize="18" 
                   Margin="10,0,0,0" Height="30" VerticalAlignment="Top" 
                   HorizontalAlignment="Left" Width="200" SelectedItem="{Binding Type, Mode=TwoWay}" 
-                  SelectedIndex="{Binding SelectedInd}"
-                  PreviewKeyDown="TypeComboBox_PreviewKeyDown">
+                  SelectedIndex="{Binding SelectedInd, Mode=TwoWay}"
+                  IsDropDownOpen="{Binding IsDropDownOpen}">
             <ComboBoxItem>BOTH</ComboBoxItem>
             <ComboBoxItem>STATIC</ComboBoxItem>
             <ComboBoxItem>DYNAMIC</ComboBoxItem>
+            <ComboBox.InputBindings>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Enter" CommandParameter="Enter"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Up" CommandParameter="Up"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Down" CommandParameter="Down"/>
+            </ComboBox.InputBindings>
         </ComboBox>
 
 

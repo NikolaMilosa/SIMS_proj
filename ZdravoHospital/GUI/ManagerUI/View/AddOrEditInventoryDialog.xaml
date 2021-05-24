@@ -172,9 +172,18 @@
             </TextBox.Style>
         </TextBox>
 
-        <ComboBox x:Name="TypeComboBox" Grid.Row="5" Grid.Column="1" FontSize="18" Width="230" Text="{Binding Path=Inventory.InventoryType, Converter={converters:InventoryTypeConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ComboBox x:Name="TypeComboBox" Grid.Row="5" Grid.Column="1" FontSize="18" Width="230" 
+                  Text="{Binding Path=Inventory.InventoryType, Converter={converters:InventoryTypeConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                  Height="35" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                  IsDropDownOpen="{Binding IsDropDownOpen}">
             <ComboBoxItem>STATIC</ComboBoxItem>
             <ComboBoxItem>DYNAMIC</ComboBoxItem>
+            <ComboBox.InputBindings>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Enter" CommandParameter="Enter"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Down" CommandParameter="Down"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Up" CommandParameter="Up"/>
+            </ComboBox.InputBindings>
         </ComboBox>
 
         <!-- Buttons -->

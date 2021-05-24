@@ -25,35 +25,5 @@ namespace ZdravoHospital.GUI.ManagerUI.View
             currentViewModel = new InventoryFilteringDialogViewModel();
             this.DataContext = currentViewModel;
         }
-
-        private void TypeComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                if (TypeComboBox.IsDropDownOpen == false)
-                    TypeComboBox.IsDropDownOpen = true;
-                else
-                    TypeComboBox.IsDropDownOpen = false;
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Down)
-            {
-                if (TypeComboBox.IsDropDownOpen == true)
-                {
-                    if (TypeComboBox.SelectedIndex + 1 < TypeComboBox.Items.Count)
-                        TypeComboBox.SelectedIndex += 1;
-                }
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Up)
-            {
-                if (TypeComboBox.IsDropDownOpen == true)
-                {
-                    if (TypeComboBox.SelectedIndex - 1 >= 0)
-                        TypeComboBox.SelectedIndex -= 1;
-                }
-                e.Handled = true;
-            }
-        }
     }
 }
