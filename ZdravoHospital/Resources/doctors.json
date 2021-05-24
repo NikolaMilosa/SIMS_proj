@@ -10,6 +10,7 @@
       "ShiftStart": "2021-05-24T00:00:00+02:00",
       "CurrentShift": 2
     },
+    "NameSurnameSpecialization": "Marko Pantelic (Doctor)",
     "Name": "Marko",
     "Surname": "Pantelic",
     "Email": null,
@@ -43,6 +44,7 @@
       "ShiftStart": "2021-05-26T00:00:00",
       "CurrentShift": 2
     },
+    "NameSurnameSpecialization": "Nikola Zigic (Cardio surgent)",
     "Name": "Nikola",
     "Surname": "Zigic",
     "Email": null,
@@ -76,6 +78,7 @@
       "ShiftStart": "2021-05-24T00:00:00+02:00",
       "CurrentShift": 2
     },
+    "NameSurnameSpecialization": "Milos Krasic (Neurology)",
     "Name": "Milos",
     "Surname": "Krasic",
     "Email": null,
@@ -109,6 +112,7 @@
       "ShiftStart": "2021-05-23T00:00:00+02:00",
       "CurrentShift": 0
     },
+    "NameSurnameSpecialization": "Dejan Stankovic (Neurology)",
     "Name": "Dejan",
     "Surname": "Stankovic",
     "Email": null,
