@@ -22,48 +22,13 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class NotificationDetailsPage : Page
     {
-        public NotificationDTO NotificationDTO { get; set; }
-
-        public string PatientUsername { get; set; }
         public NotificationDetailsPage(NotificationDTO notificationView)
         {
             InitializeComponent();
-            SetProperties(notificationView);
-            SerializeReadNotification();
-            DataContext = this;
+
+            DataContext = new NotificationDetailsPageVM(notificationView);
         }
 
-        private void SetProperties(NotificationDTO notificationView)
-        {
-            PatientUsername = PatientWindowVM.PatientUsername;
-            NotificationDTO = notificationView;
-            NotificationDTO.Seen = true;
-        }
-
-        private void SerializeReadNotification()
-        {
-
-            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
-            personNotificationRepository.Update(GetPersonNotification());
-        }
-
-        private PersonNotification GetPersonNotification()
-        {
-            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
-            List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
-            foreach (PersonNotification personNotification in personNotifications)
-            {
-                if (personNotification.NotificationId.Equals(NotificationDTO.Id))
-                {
-                    return personNotification; 
-                }
-            }
-            return null;
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new NotificationsPage(PatientUsername));
-        }
+        
     }
 }

@@ -24,35 +24,14 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class NotificationsPage : Page
     {
-        public ObservableCollection<NotificationDTO> Notifications { get; set; }
-        
-        public string PatientUsername { get; set; }
+
         public NotificationsPage(string username)
         {
             InitializeComponent();
             DataContext = new NotificationsPageVM();
-            //PatientUsername = username;
-            //FillList();
         }
 
-        private void FillList()
-        {
-            Notifications = new ObservableCollection<NotificationDTO>();
-            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
-            NotificationConverter notificationConverter = new NotificationConverter();
-            foreach(PersonNotification personNotification in personNotificationRepository.GetValues())
-            {
-                if (personNotification.Username.Equals(PatientUsername))
-                {
-                    Notifications.Add(notificationConverter.GetNotifcationDTO(personNotification));
-                }
-            }
-        }
-
-        private void NotificationDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            //NavigationService.Navigate(new NotificationDetailsPage((NotificationDTO)notificationDataGrid.SelectedItem, PatientUsername));
-        }
+     
 
     }
 }
