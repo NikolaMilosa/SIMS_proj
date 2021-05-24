@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace ZdravoHospital.GUI.DoctorUI.Commands
+namespace ZdravoHospital.GUI.ManagerUI.Commands
 {
     public class MyICommand : ICommand
     {

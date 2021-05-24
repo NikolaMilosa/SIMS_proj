@@ -8,8 +8,7 @@
         Title="DoctorWindow" Height="700" Width="1500"
         MinWidth="500"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized"
-        SizeChanged="Window_SizeChanged">
+        WindowState="Maximized">
     <Window.Resources>
         <Style x:Key="TabButton" 
                TargetType="{x:Type Button}">

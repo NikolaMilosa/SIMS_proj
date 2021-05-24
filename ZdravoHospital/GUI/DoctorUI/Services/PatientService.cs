@@ -1,0 +1,21 @@
+﻿using Model;
+using Model.Repository;
+using System.Collections.Generic;
+
+namespace ZdravoHospital.GUI.DoctorUI.Services
+{
+    public class PatientService
+    {
+        private PatientRepository _patientRepository;
+
+        public PatientService()
+        {
+            _patientRepository = new PatientRepository();
+        }
+
+        public  List<Patient> GetPatients()
+        {
+            return _patientRepository.GetValues();
+        }
+    }
+}

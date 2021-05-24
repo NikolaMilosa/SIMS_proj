@@ -3,6 +3,7 @@ using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ZdravoHospital.GUI.DoctorUI.Exceptions;
 
 namespace ZdravoHospital.GUI.DoctorUI.Validations
 {
@@ -15,55 +16,77 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
             periodRepository = new PeriodRepository();
         }
 
-        public int IsPeriodAvailable(Period period) // vraca 0 ako je termin ok, 1 ako je soba zauzeta, 2 ako je doktor zauzet, 3 ako je pacijent zauzet
+        public void ValidatePeriod(Period period)
         {
             if (period.StartTime < DateTime.Now)
-                return -1;
+                throw new PeriodInPastException();
 
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
+            List<Period> periods = periodRepository.GetValues();
 
-            foreach (Period existingPeriod in periodRepository.GetValues())
+            ValidateRoomAvailability(period, periodEndtime, periods);
+            ValidateDoctorAvailability(period, periodEndtime, periods);
+            ValidatePatientAvailability(period, periodEndtime, periods);
+        }
+
+        private void ValidateRoomAvailability(Period period, DateTime periodEndTime, List<Period> periods)
+        {
+            foreach (Period existingPeriod in periods)
             {
                 DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
 
                 if (period.RoomId == existingPeriod.RoomId)
                 {
                     if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 1;
+                        throw new RoomUnavailableException();
 
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 1;
+                    if (periodEndTime > existingPeriod.StartTime && periodEndTime < existingPeriodEndTime)
+                        throw new RoomUnavailableException();
 
-                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
-                        return 1;
+                    if (period.StartTime < existingPeriod.StartTime && periodEndTime > existingPeriodEndTime)
+                        throw new RoomUnavailableException();
                 }
+            }
+        }
+
+        private void ValidateDoctorAvailability(Period period, DateTime periodEndTime, List<Period> periods)
+        {
+            foreach (Period existingPeriod in periods)
+            {
+                DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
 
                 if (period.DoctorUsername == existingPeriod.DoctorUsername)
                 {
                     if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 2;
+                        throw new DoctorUnavailableException();
 
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 2;
+                    if (periodEndTime > existingPeriod.StartTime && periodEndTime < existingPeriodEndTime)
+                        throw new DoctorUnavailableException();
 
-                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
-                        return 2;
+                    if (period.StartTime < existingPeriod.StartTime && periodEndTime > existingPeriodEndTime)
+                        throw new DoctorUnavailableException();
                 }
+            }
+        }
+
+        private void ValidatePatientAvailability(Period period, DateTime periodEndTime, List<Period> periods)
+        {
+            foreach (Period existingPeriod in periods)
+            {
+                DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
 
                 if (period.PatientUsername == existingPeriod.PatientUsername)
                 {
                     if (period.StartTime >= existingPeriod.StartTime && period.StartTime < existingPeriodEndTime)
-                        return 3;
+                        throw new PatientUnavailableException();
 
-                    if (periodEndtime > existingPeriod.StartTime && periodEndtime < existingPeriodEndTime)
-                        return 3;
+                    if (periodEndTime > existingPeriod.StartTime && periodEndTime < existingPeriodEndTime)
+                        throw new PatientUnavailableException();
 
-                    if (period.StartTime < existingPeriod.StartTime && periodEndtime > existingPeriodEndTime)
-                        return 3;
+                    if (period.StartTime < existingPeriod.StartTime && periodEndTime > existingPeriodEndTime)
+                        throw new PatientUnavailableException();
                 }
             }
-
-            return 0;
         }
     }
 }
