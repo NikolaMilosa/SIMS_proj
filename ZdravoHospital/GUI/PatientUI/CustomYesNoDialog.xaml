@@ -36,6 +36,7 @@
                     Text="{Binding Path= DContent}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                        TextWrapping="Wrap"
                         FontSize="16"
                     >
                 </TextBlock>

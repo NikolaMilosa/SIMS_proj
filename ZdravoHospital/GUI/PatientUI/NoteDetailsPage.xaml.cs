@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -23,17 +24,17 @@ namespace ZdravoHospital.GUI.PatientUI
 
        public  string PatientUsername { get; set; }
 
-        public NoteDetailsPage(PatientNote patientNote, string username)
+        public NoteDetailsPage(PatientNote patientNote)
         {
             InitializeComponent();
-            SetProperties(patientNote, username);
+            SetProperties(patientNote);
             DataContext = this;
         }
 
-        private void SetProperties(PatientNote patientNote, string username)
+        private void SetProperties(PatientNote patientNote)
         {
             PatientNote = patientNote;
-            PatientUsername = username;
+            PatientUsername = PatientWindowVM.PatientUsername;
         }
 
 

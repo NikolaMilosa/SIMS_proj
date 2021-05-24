@@ -36,7 +36,7 @@
                         Width="200"
                         Height="50"
                         BorderBrush="Transparent"
-                        Click="NoteButton_Click"
+                        Command="{Binding Path=AddNoteCommand}"
                         Grid.Row="2" Grid.Column="1"
                             >
                 <StackPanel Orientation="Horizontal" Height="50">
@@ -50,8 +50,12 @@
                       ItemsSource="{Binding ObservableNotes}" 
                       ScrollViewer.CanContentScroll="True" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      MouseDoubleClick="NotesDataGrid_MouseDoubleClick"
+                      SelectedItem="{Binding Path=PatientNote}"
                       >
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}"/>
+                </DataGrid.InputBindings>
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Path=Title}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Notify date" Width="*" Binding="{Binding Path=NotifyTime, StringFormat=d}"></DataGridTextColumn>
@@ -60,7 +64,8 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button  BorderBrush="Transparent" Background="Transparent" Name="RemoveButton" Content="Remove" FontWeight="Bold" Click="RemoveButton_Click" />
+                                <Button  BorderBrush="Transparent" Background="Transparent" Name="RemoveButton" Content="Remove" FontWeight="Bold" 
+                                         Command="{Binding DataContext.RemoveCommand, ElementName=NotesDataGrid}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

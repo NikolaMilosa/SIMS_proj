@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -23,16 +24,16 @@ namespace ZdravoHospital.GUI.PatientUI
     {
         public string PatientUsername { get; set; }
         public PatientNote PatientNote { get; set; }
-        public CreateNotePage(string username)
+        public CreateNotePage()
         {
             InitializeComponent();
             DataContext = this;
-            FillProperties(username);
+            FillProperties();
             
         }
-        private void FillProperties(string username)
+        private void FillProperties()
         {
-            PatientUsername = username;
+            PatientUsername = PatientWindowVM.PatientUsername;
             PatientNote = new PatientNote();
             PatientNote.NotifyTime = DateTime.Now;
         }

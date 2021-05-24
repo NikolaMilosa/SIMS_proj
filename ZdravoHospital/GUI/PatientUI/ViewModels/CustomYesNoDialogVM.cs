@@ -33,7 +33,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void NoExecuted(object parameter)
         {
-            YesPressed = true;
+            YesPressed = false;
             Dialog.Close();
         }
     }
