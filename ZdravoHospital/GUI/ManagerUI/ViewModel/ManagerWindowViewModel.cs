@@ -80,6 +80,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private InjectorDTO _injector;
 
+        private string _tableName;
+
         #endregion
 
         #region Observable collections
@@ -168,6 +170,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             set
             {
                 _selectedMedicine = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string TableName
+        {
+            get => _tableName;
+            set
+            {
+                _tableName = value;
                 OnPropertyChanged();
             }
         }
@@ -320,6 +332,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             RoomTableVisibility = Visibility.Visible;
+            TableName = "Room table >";
         }
 
         //Show inventory button
@@ -327,6 +340,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             InventoryTableVisibility = Visibility.Visible;
+            TableName = "Inventory table >";
         }
 
         //Show medicine button
@@ -334,6 +348,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             MedicineTableVisibility = Visibility.Visible;
+            TableName = "Medicine table >";
         }
 
         //Add room button

@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI.View"
         xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
         xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:wi="clr-namespace:ZdravoHospital.GUI.ManagerUI.Commands"
         mc:Ignorable="d"
         Title="Manager panel"
         ResizeMode="NoResize"
@@ -174,6 +176,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            <Label HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Content="{Binding TableName}"/>
+
             <!-- Submenu for rooms -->
             <Grid x:Name="SubMenuRooms" Grid.Row="1" Height="320" VerticalAlignment="Top" PreviewKeyDown="SubMenuButtonHandler">
                 <Grid.RowDefinitions>
@@ -261,7 +265,7 @@
                   Visibility="{Binding Path=RoomTableVisibility}" HeadersVisibility="Column" AlternatingRowBackground="LightBlue" 
                   RowBackground="LightYellow" Grid.Column="2" FontSize="20" IsReadOnly="True" AutoGenerateColumns="False" 
                   ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="20,20,20,20" SelectionMode="Single" 
-                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles"
+                  PreviewKeyDown="TableKeyHandles"
                   SelectedItem ="{Binding Path=SelectedRoom}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
@@ -269,6 +273,9 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Available" Binding="{Binding Path=Available, Converter={converters:AvailabilityConverter}}"/>
             </DataGrid.Columns>
+            <i:Interaction.Behaviors>
+                <wi:MyBehavior/>
+            </i:Interaction.Behaviors>
         </DataGrid>
 
         <DataGrid x:Name="InventoryTable" KeyboardNavigation.TabNavigation="Local" Visibility="{Binding Path=InventoryTableVisibility}" 
@@ -276,7 +283,7 @@
                   HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Inventory, Mode=TwoWay}" SelectionMode="Single" 
-                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles"
+                  PreviewKeyDown="TableKeyHandles"
                   SelectedItem="{Binding Path=SelectedInventory}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
@@ -285,6 +292,9 @@
                 <DataGridTextColumn Header="Type" Binding="{Binding Path=InventoryType, Converter={converters:InventoryTypeConverter}}"/>
                 <DataGridTextColumn Header="Supplier" Binding="{Binding Supplier}" Width="*"/>
             </DataGrid.Columns>
+            <i:Interaction.Behaviors>
+                <wi:MyBehavior/>
+            </i:Interaction.Behaviors>
         </DataGrid>
 
         <DataGrid x:Name="StaffTable" Visibility="Hidden" Background="Transparent" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20"/>
@@ -294,7 +304,7 @@
                   Visibility="{Binding Path=MedicineTableVisibility}" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Medicines, Mode=TwoWay}" SelectionMode="Single" 
-                  GotFocus="TableGotFocus" PreviewKeyDown="TableKeyHandles"
+                  PreviewKeyDown="TableKeyHandles"
                   SelectedItem="{Binding SelectedMedicine}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding MedicineName}" Width="2*"/>
@@ -302,6 +312,9 @@
                 <DataGridTextColumn Header="Number of ingredients" Binding="{Binding Ingredients.Count}"/>
                 <DataGridTextColumn Header="Supplier" Width="*" Binding="{Binding Supplier}"/>
             </DataGrid.Columns>
+            <i:Interaction.Behaviors>
+                <wi:MyBehavior/>
+            </i:Interaction.Behaviors>
         </DataGrid>
 
         <!-- Shortcuts -->
