@@ -383,6 +383,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             RoomTableVisibility = Visibility.Visible;
+            SelectedRoomIndex = -1;
             TableName = "Room table >";
         }
 
@@ -391,6 +392,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             InventoryTableVisibility = Visibility.Visible;
+            SelectedInventoryIndex = -1;
             TableName = "Inventory table >";
         }
 
@@ -399,6 +401,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             MedicineTableVisibility = Visibility.Visible;
+            SelectedMedicineIndex = -1;
             TableName = "Medicine table >";
         }
 
@@ -489,6 +492,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                         SelectedMedicineIndex -= 1;
                     }
                 }
+            }
+            else if (e.Key == Key.Tab)
+            {
+                e.Handled = true;
             }
             else if (e.Key == Key.Right)
             {

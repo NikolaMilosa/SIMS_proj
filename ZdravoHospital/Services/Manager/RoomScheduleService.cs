@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Model;
 using Repository.PeriodPersistance;
@@ -15,6 +16,16 @@ namespace ZdravoHospital.Services.Manager
     public class RoomScheduleService
     {
         private InjectorDTO _injector;
+
+        private static Mutex _mutex;
+
+        private Mutex GetMutex()
+        {
+            if (_mutex == null)
+                _mutex = new Mutex();
+
+            return _mutex;
+        }
 
         #region Repos
 
@@ -86,8 +97,12 @@ namespace ZdravoHospital.Services.Manager
 
         public void ScheduleRenovationEnd(RoomSchedule roomSchedule)
         {
+            GetMutex().WaitOne();
             if (!CheckIfStillValid(roomSchedule))
+            {
+                GetMutex().ReleaseMutex();
                 return;
+            }
 
             var room = _roomRepository.GetById(roomSchedule.RoomId);
 
@@ -95,15 +110,20 @@ namespace ZdravoHospital.Services.Manager
             {
                 ChangeRoomAvailability(roomSchedule.RoomId, false);
             }
-
+            
+            GetMutex().ReleaseMutex();
             Task t = new Task(() => roomSchedule.WaitEndRenovation(_injector));
             t.Start();
         }
 
         public void FinishRenovation(RoomSchedule roomSchedule)
         {
+            GetMutex().WaitOne();
             if (!CheckIfStillValid(roomSchedule))
+            {
+                GetMutex().ReleaseMutex();
                 return;
+            }
 
             var room = _roomRepository.GetById(roomSchedule.RoomId);
 
@@ -111,7 +131,7 @@ namespace ZdravoHospital.Services.Manager
             {
                 ChangeRoomAvailability(roomSchedule.RoomId, true);
             }
-
+            GetMutex().ReleaseMutex();
             _roomScheduleRepository.DeleteByEquality(roomSchedule);
         }
 
