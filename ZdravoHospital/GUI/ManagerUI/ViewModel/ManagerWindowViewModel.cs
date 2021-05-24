@@ -408,7 +408,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         //Add room button
         private void OnAddRoom()
         {
-            dialog = new AddOrEditRoomDialog(null, _injector);
+            dialog = new AddOrEditRoomDialog(null, _injector, false);
             dialog.ShowDialog();
         }
 
@@ -555,7 +555,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedRoom != null)
                 {
                     var room = _roomRepository.GetById(SelectedRoom.Id);
-                    dialog = new AddOrEditRoomDialog(room, _injector);
+                    dialog = new AddOrEditRoomDialog(room, _injector,false);
                     dialog.ShowDialog();
                 }
             }

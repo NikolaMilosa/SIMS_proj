@@ -20,6 +20,11 @@ namespace Model
             this.Available = a;
         }
 
+        public Room()
+        {
+
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnNotifyPropertyChanged(string property)

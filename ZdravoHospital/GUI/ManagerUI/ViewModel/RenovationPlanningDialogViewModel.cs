@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using Model;
 using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.Services.Manager;
 using RoomRepository = Repository.RoomPersistance.RoomRepository;
 
@@ -33,6 +35,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private bool _isDropDownOpenStartPicker;
         private bool _isDropDownOpenEndPicker;
+
+        private Room _splitCreatedRoom;
+        private string _roomButtonContent;
+
+        private InjectorDTO _injector;
+
+        private string _labelText;
+
+        private MyICommand _splitCommand;
 
         #endregion
 
@@ -153,6 +164,36 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public Room SplitCreatedRoom
+        {
+            get => _splitCreatedRoom;
+            set
+            {
+                _splitCreatedRoom = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string RoomButtonContent
+        {
+            get => _roomButtonContent;
+            set
+            {
+                _roomButtonContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string LabelText
+        {
+            get => _labelText;
+            set
+            {
+                _labelText = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -162,10 +203,25 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand<KeyEventArgs> StartDateCommand { get; set; }
         public MyICommand<KeyEventArgs> EndDateCommand { get; set; }
 
+        public MyICommand SplitRoomCommand
+        {
+            get => _splitCommand;
+            set
+            {
+                _splitCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         public RenovationPlanningDialogViewModel(InjectorDTO injector)
         {
+            _injector = injector;
+            
+            LabelText = "";
+            RoomButtonContent = "New room";
+
             _roomScheduleService = new RoomScheduleService(injector);
             _roomRepository = injector.RoomRepository;
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
@@ -175,9 +231,25 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             ComboBoxCommand = new MyICommand<KeyEventArgs>(OnComboBox);
             StartDateCommand = new MyICommand<KeyEventArgs>(OnStartCommand);
             EndDateCommand = new MyICommand<KeyEventArgs>(OnEndCommand);
+            SplitRoomCommand = new MyICommand(OnSplitButtonCreate);
         }
 
         #region Button functions
+
+        private void OnSplitButtonCreate()
+        {
+            AddOrEditRoomDialog dialog = new AddOrEditRoomDialog(SplitCreatedRoom, _injector, true);
+            ((AddOrEditRoomDialogViewModel)dialog.DataContext).RoomSplit += OnRoomSplit;
+            dialog.Show();
+        }
+
+        private void OnSplitButtonDestroy()
+        {
+            LabelText = "";
+            RoomButtonContent = "New room";
+            SplitCreatedRoom = null;
+            SplitRoomCommand = new MyICommand(OnSplitButtonCreate);
+        }
 
         private void OnConfirm()
         {
@@ -193,6 +265,21 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             };
 
             _roomScheduleService.CreateAndScheduleRenovationStart(roomSchedule);
+
+            if (SplitCreatedRoom != null)
+            {
+                _roomRepository.Create(SplitCreatedRoom);
+
+                var roomScheduleForSplitRoom = new RoomSchedule()
+                {
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    RoomId = SelectedRoom.Id,
+                    ScheduleType = ReservationType.RENOVATION
+                };
+
+                _roomScheduleService.CreateAndScheduleRenovationStart(roomScheduleForSplitRoom);
+            }
         }
 
         private void OnComboBox(KeyEventArgs e)
@@ -257,7 +344,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 e.Handled = true;
             }
         }
-        
+
+        #endregion
+
+        #region Event handler
+
+        private void OnRoomSplit(object sender, RoomSplitEventArgs e)
+        {
+            SplitCreatedRoom = e.Room;
+            LabelText = "Added! (" + SplitCreatedRoom.Id + ")";
+            RoomButtonContent = "Clear room";
+            SplitRoomCommand = new MyICommand(OnSplitButtonDestroy);
+        }
+
         #endregion
     }
 }

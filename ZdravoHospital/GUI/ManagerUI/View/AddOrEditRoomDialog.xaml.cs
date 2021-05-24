@@ -21,10 +21,10 @@ namespace ZdravoHospital.GUI.ManagerUI.View
     public partial class AddOrEditRoomDialog : Window
     {
         private AddOrEditRoomDialogViewModel currentViewModel;
-        public AddOrEditRoomDialog(Room? room, InjectorDTO injector)
+        public AddOrEditRoomDialog(Room? room, InjectorDTO injector, bool splitter)
         {
             InitializeComponent();
-            currentViewModel = new AddOrEditRoomDialogViewModel(room, injector);
+            currentViewModel = new AddOrEditRoomDialogViewModel(room, injector, splitter);
             this.DataContext = currentViewModel;
         }
     }

@@ -92,10 +92,26 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         
         public MyICommand ConfirmCommand { get; set; }
         public MyICommand<string> ComboBoxCommand { get; set; }
-        
+
         #endregion
-        
-        public AddOrEditRoomDialogViewModel(Room? room, InjectorDTO injector)
+
+        #region Event Things
+
+        public delegate void RoomSplitEventHandler(object sender, RoomSplitEventArgs e);
+
+        public event RoomSplitEventHandler RoomSplit;
+
+        protected virtual void OnRoomSplit()
+        {
+            if (RoomSplit != null)
+            {
+                RoomSplit(this,  new RoomSplitEventArgs() {Room = Room});
+            }
+        }
+
+        #endregion
+
+        public AddOrEditRoomDialogViewModel(Room? room, InjectorDTO injector, bool roomSplitter)
         {
             if (room == null)
             {
@@ -114,7 +130,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _roomService = new RoomService(injector);
 
-            ConfirmCommand = new MyICommand(OnConfirm);
+            if (!roomSplitter)
+                ConfirmCommand = new MyICommand(OnConfirm);
+            else
+            {
+                Room.Available = false;
+                ConfirmCommand = new MyICommand(OnConfirmSplit);
+            }
+
             ComboBoxCommand = new MyICommand<string>(OnComboBox);
         }
 
@@ -130,6 +153,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 _roomService.EditRoom(Room);
             }
+        }
+
+        private void OnConfirmSplit()
+        {
+            OnRoomSplit();
         }
 
         private void OnComboBox(string key)
@@ -155,6 +183,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         }
 
         #endregion
+    }
 
+    public class RoomSplitEventArgs : EventArgs
+    {
+        public Room Room { get; set; }
     }
 }
