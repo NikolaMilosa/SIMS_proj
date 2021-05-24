@@ -9,31 +9,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
     /// <summary>
-    /// Interaction logic for RemoveAppointmentDialog.xaml
+    /// Interaction logic for CustomYesNoDialog.xaml
     /// </summary>
-    public partial class RemoveAppointmentDialog : Window
+    public partial class CustomYesNoDialog : Window
     {
-        public static bool YesPressed { get; set; }
-        public RemoveAppointmentDialog()
+       
+        public CustomYesNoDialog(string title,string content)
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            DataContext = new CustomYesNoDialogVM(title, content, this);
         }
 
-        private void yesButton_Click(object sender, RoutedEventArgs e)
-        {
-            YesPressed = true;
-            Close();
-        }
-
-        private void noButton_Click(object sender, RoutedEventArgs e)
-        {
-            YesPressed = false;
-            Close();
-        }
     }
 }

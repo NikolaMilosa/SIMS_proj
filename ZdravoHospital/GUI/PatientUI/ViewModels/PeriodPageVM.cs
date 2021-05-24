@@ -77,9 +77,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
 
-            RemoveAppointmentDialog removeAppointmentDialog = new RemoveAppointmentDialog();
-            removeAppointmentDialog.ShowDialog();
-            if (RemoveAppointmentDialog.YesPressed)
+            CustomYesNoDialog customYesNoDialog = new CustomYesNoDialog("Remove appointment", "Are you sure you want to remove appointment?");
+            customYesNoDialog.ShowDialog();
+            if (CustomYesNoDialogVM.YesPressed)
                 RemovePeriod();
         }
 
