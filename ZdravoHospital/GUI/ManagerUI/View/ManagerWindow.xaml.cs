@@ -28,23 +28,7 @@ namespace ZdravoHospital.GUI.ManagerUI.View
             this.DataContext = currentViewModel;
             RoomsButton.Focus();
         }
-
-        private void TableGotFocus(object sender, RoutedEventArgs e)
-        {
-            DataGrid dataGrid = FindDataGrid();
-
-            if (dataGrid.Items.Count > 0)
-            {
-                try
-                {
-                    dataGrid.SelectedIndex = 0;
-                    dataGrid.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-                }
-                catch { }
-
-            }
-        }
-
+        
         private void TableKeyHandles(object sender, KeyEventArgs e)
         {
             DataGrid dataGrid = FindDataGrid();
