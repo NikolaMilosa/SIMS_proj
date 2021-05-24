@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Input;
 using Model;
 using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
@@ -26,6 +27,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private RoomScheduleService _roomScheduleService;
 
         private IRoomRepository _roomRepository;
+
+        private bool _isDropDownOpenCombo;
+        private int _selectedRoomIndex;
 
         #endregion
 
@@ -105,11 +109,32 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public bool IsDropDownOpenCombo
+        {
+            get => _isDropDownOpenCombo;
+            set
+            {
+                _isDropDownOpenCombo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SelectedRoomIndex
+        {
+            get => _selectedRoomIndex;
+            set
+            {
+                _selectedRoomIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
 
         public MyICommand ConfirmCommand { get; set; }
+        public MyICommand<KeyEventArgs> ComboBoxCommand { get; set; }
 
         #endregion
 
@@ -121,6 +146,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             StartDate = DateTime.Today;
 
             ConfirmCommand = new MyICommand(OnConfirm);
+            ComboBoxCommand = new MyICommand<KeyEventArgs>(OnComboBox);
         }
 
         #region Button functions
@@ -141,6 +167,37 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomScheduleService.CreateAndScheduleRenovationStart(roomSchedule);
         }
 
+        private void OnComboBox(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                IsDropDownOpenCombo = (IsDropDownOpenCombo == false) ? true : false;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (SelectedRoomIndex < Rooms.Count - 1 && IsDropDownOpenCombo)
+                {
+                    SelectedRoomIndex += 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (SelectedRoomIndex > 0 && IsDropDownOpenCombo)
+                {
+                    SelectedRoomIndex -= 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                IsDropDownOpenCombo = false;
+            }
+        }
+        
         #endregion
     }
 }

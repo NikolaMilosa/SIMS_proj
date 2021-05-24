@@ -62,7 +62,9 @@
                   Width="250" Height="35"
                   Margin="20,0,0,0"
                   ItemsSource="{Binding Rooms}"
-                  SelectedItem="{Binding SelectedRoom}">
+                  SelectedItem="{Binding SelectedRoom}"
+                  SelectedIndex="{Binding SelectedRoomIndex}"
+                  IsDropDownOpen="{Binding IsDropDownOpenCombo}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -75,6 +77,11 @@
                     </TextBlock>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding ComboBoxCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ComboBox>
 
         <ListView x:Name="RoomScheduleView" Grid.Row="2" Grid.RowSpan="2"
