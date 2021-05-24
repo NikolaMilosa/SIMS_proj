@@ -179,7 +179,7 @@
             <Label HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Content="{Binding TableName}"/>
 
             <!-- Submenu for rooms -->
-            <Grid x:Name="SubMenuRooms" Grid.Row="1" Height="320" VerticalAlignment="Top" PreviewKeyDown="SubMenuButtonHandler">
+            <Grid x:Name="SubMenuRooms" Grid.Row="1" Height="320" VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -214,10 +214,15 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewKeyDown">
+                        <i:InvokeCommandAction Command="{Binding SubMenuCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Grid>
 
             <!-- Submenu for inventory-->
-            <Grid x:Name="SubMenuInventory" Grid.Row="1" Height="480" VerticalAlignment="Top" PreviewKeyDown="SubMenuButtonHandler">
+            <Grid x:Name="SubMenuInventory" Grid.Row="1" Height="480" VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -253,6 +258,11 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewKeyDown">
+                        <i:InvokeCommandAction Command="{Binding SubMenuCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Grid>
         </Grid>
 
@@ -265,8 +275,8 @@
                   Visibility="{Binding Path=RoomTableVisibility}" HeadersVisibility="Column" AlternatingRowBackground="LightBlue" 
                   RowBackground="LightYellow" Grid.Column="2" FontSize="20" IsReadOnly="True" AutoGenerateColumns="False" 
                   ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="20,20,20,20" SelectionMode="Single" 
-                  PreviewKeyDown="TableKeyHandles"
-                  SelectedItem ="{Binding Path=SelectedRoom}">
+                  SelectedItem ="{Binding Path=SelectedRoom}"
+                  SelectedIndex="{Binding  SelectedRoomIndex}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Path=RoomType, Converter={converters:RoomTypeConverter}}"/>
@@ -276,6 +286,26 @@
             <i:Interaction.Behaviors>
                 <wi:MyBehavior/>
             </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding TableCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.Style>
+                <Style>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ShouldFocusTable}" Value="True"/>
+                                <Condition Binding="{Binding ElementName=RoomsTable, Path=Visibility}" Value="Visible"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=RoomsTable}"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Style>
         </DataGrid>
 
         <DataGrid x:Name="InventoryTable" KeyboardNavigation.TabNavigation="Local" Visibility="{Binding Path=InventoryTableVisibility}" 
@@ -283,8 +313,8 @@
                   HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Inventory, Mode=TwoWay}" SelectionMode="Single" 
-                  PreviewKeyDown="TableKeyHandles"
-                  SelectedItem="{Binding Path=SelectedInventory}">
+                  SelectedItem="{Binding Path=SelectedInventory}"
+                  SelectedIndex="{Binding SelectedInventoryIndex}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
@@ -295,6 +325,26 @@
             <i:Interaction.Behaviors>
                 <wi:MyBehavior/>
             </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding TableCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.Style>
+                <Style>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ShouldFocusTable}" Value="True"/>
+                                <Condition Binding="{Binding ElementName=InventoryTable, Path=Visibility}" Value="Visible"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=InventoryTable}"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Style>
         </DataGrid>
 
         <DataGrid x:Name="StaffTable" Visibility="Hidden" Background="Transparent" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20"/>
@@ -304,8 +354,8 @@
                   Visibility="{Binding Path=MedicineTableVisibility}" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Medicines, Mode=TwoWay}" SelectionMode="Single" 
-                  PreviewKeyDown="TableKeyHandles"
-                  SelectedItem="{Binding SelectedMedicine}">
+                  SelectedItem="{Binding SelectedMedicine}"
+                  SelectedIndex="{Binding SelectedMedicineIndex}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding MedicineName}" Width="2*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Path=Status, Converter={converters:MedicineStatusConverter}}" Width="*"/>
@@ -315,6 +365,26 @@
             <i:Interaction.Behaviors>
                 <wi:MyBehavior/>
             </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding TableCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.Style>
+                <Style>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ShouldFocusTable}" Value="True"/>
+                                <Condition Binding="{Binding ElementName=MedicineTable, Path=Visibility}" Value="Visible"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=MedicineTable}"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Style>
         </DataGrid>
 
         <!-- Shortcuts -->
