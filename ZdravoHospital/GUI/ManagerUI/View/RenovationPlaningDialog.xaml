@@ -206,7 +206,14 @@
                     VerticalAlignment="Center"
                     x:Name="FirstPicker"
                     DisplayDateStart="{x:Static sys:DateTime.Today}"
-                    SelectedDate="{Binding StartDate}" PreviewKeyDown="FirstPicker_PreviewKeyDown"/>
+                    SelectedDate="{Binding StartDate}"
+                    IsDropDownOpen="{Binding IsDropDownOpenStartPicker}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding StartDateCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DatePicker>
 
         <TextBox x:Name="StartTimeTextBox" Grid.Row="5" Grid.Column="1"
                  Height="35"
@@ -250,7 +257,14 @@
                     VerticalAlignment="Center"
                     x:Name="SecondPicker"
                     DisplayDateStart="{Binding ElementName=FirstPicker, Path=SelectedDate}"
-                    SelectedDate="{Binding EndDate}" PreviewKeyDown="SecondPicker_PreviewKeyDown"/>
+                    SelectedDate="{Binding EndDate}"
+                    IsDropDownOpen="{Binding IsDropDownOpenEndPicker}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding EndDateCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DatePicker>
 
         <TextBox x:Name="EndTimeTextBox" Grid.Row="7" Grid.Column="1"
                  Height="35"

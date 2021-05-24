@@ -96,6 +96,7 @@
                         <KeyBinding Command="{Binding SenderCombo}" Key="Down" CommandParameter="Down"/>
                         <KeyBinding Command="{Binding SenderCombo}" Key="Tab" CommandParameter="Tab"/>
                         <KeyBinding Command="{Binding SenderCombo}" Key="Right" CommandParameter="Right"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Escape" CommandParameter="Esc"/>
                     </ComboBox.InputBindings>
                     <ComboBox.Style>
                         <Style>
@@ -199,6 +200,7 @@
                         <KeyBinding Command="{Binding ReceiverCombo}" Key="Down" CommandParameter="Down"/>
                         <KeyBinding Command="{Binding ReceiverCombo}" Key="Tab" CommandParameter="Tab"/>
                         <KeyBinding Command="{Binding ReceiverCombo}" Key="Left" CommandParameter="Left"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Escape" CommandParameter="Esc"/>
                     </ComboBox.InputBindings>
                 </ComboBox>
 

@@ -356,6 +356,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 TurnOffFocus();
                 FocusDataGrid = true;
             }
+            else if (key.Equals("Esc"))
+            {
+                TurnOffFocus();
+                FocusFinishButton = true;
+            }
         }
 
         private void OnComboBoxReceiver(string key)
@@ -387,6 +392,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 TurnOffFocus();
                 FocusDataGrid = true;
+            }
+            else if (key.Equals("Esc"))
+            {
+                TurnOffFocus();
+                FocusFinishButton = true;
             }
         }
 

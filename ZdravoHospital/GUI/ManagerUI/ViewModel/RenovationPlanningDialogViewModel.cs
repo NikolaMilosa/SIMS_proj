@@ -31,6 +31,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private bool _isDropDownOpenCombo;
         private int _selectedRoomIndex;
 
+        private bool _isDropDownOpenStartPicker;
+        private bool _isDropDownOpenEndPicker;
+
         #endregion
 
         #region Properties
@@ -73,7 +76,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 _startDate = value;
                 OnPropertyChanged();
-                EndDate = value;
+                if (EndDate <= StartDate)
+                    EndDate = value;
                 StartTime = "";
             }
         }
@@ -129,12 +133,34 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public bool IsDropDownOpenStartPicker
+        {
+            get => _isDropDownOpenStartPicker;
+            set
+            {
+                _isDropDownOpenStartPicker = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsDropDownOpenEndPicker
+        {
+            get => _isDropDownOpenEndPicker;
+            set
+            {
+                _isDropDownOpenEndPicker = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
 
         public MyICommand ConfirmCommand { get; set; }
         public MyICommand<KeyEventArgs> ComboBoxCommand { get; set; }
+        public MyICommand<KeyEventArgs> StartDateCommand { get; set; }
+        public MyICommand<KeyEventArgs> EndDateCommand { get; set; }
 
         #endregion
 
@@ -147,6 +173,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             ConfirmCommand = new MyICommand(OnConfirm);
             ComboBoxCommand = new MyICommand<KeyEventArgs>(OnComboBox);
+            StartDateCommand = new MyICommand<KeyEventArgs>(OnStartCommand);
+            EndDateCommand = new MyICommand<KeyEventArgs>(OnEndCommand);
         }
 
         #region Button functions
@@ -195,6 +223,38 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             else if (e.Key == Key.Tab)
             {
                 IsDropDownOpenCombo = false;
+            }
+        }
+
+        private void OnStartCommand(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                IsDropDownOpenStartPicker = (IsDropDownOpenStartPicker == false) ? true : false;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                IsDropDownOpenStartPicker = false;
+            }
+            else if (!IsDropDownOpenStartPicker)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void OnEndCommand(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                IsDropDownOpenEndPicker = (IsDropDownOpenEndPicker == false) ? true : false;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                IsDropDownOpenEndPicker = false;
+            }
+            else if (!IsDropDownOpenEndPicker)
+            {
+                e.Handled = true;
             }
         }
         
