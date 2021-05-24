@@ -52,7 +52,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             PatientWindowVM.SurveyAvailable = false;
             SerializeSurvey();
             ViewFunctions.ShowOkDialog("Survey", "Thank you for completing the survey!");
-            PatientWindowVM.NavigatonService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
+            PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }
 
         public bool SubmitCanExecute(object parameter)
@@ -65,7 +65,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public void CancelExecute(object parameter)
         {
-            PatientWindowVM.NavigatonService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
+            PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }
 
         #endregion

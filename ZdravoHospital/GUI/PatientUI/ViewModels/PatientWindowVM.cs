@@ -14,7 +14,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public string WelcomeMessage { get; private set; }
         public PatientWindow PatientWindow { get; private set; }
-        public string PatientUsername { get; private set; }
+        public static string PatientUsername { get; private set; }
         private  bool _SurveyAvailable { get; set; }
         public  bool SurveyAvailable
         {
@@ -25,7 +25,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 OnPropertyChanged("SurveyAvailable");
             }
         }
-        public NavigationService NavigatonService { get; private set; }
+        public static NavigationService NavigationService { get; private set; }
 
 
         #endregion
@@ -64,32 +64,32 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void AddAppointmentExecute(object sender)
         {
-            NavigatonService.Navigate(new AddAppointmentPage(null, true, PatientUsername));
+            NavigationService.Navigate(new AddAppointmentPage(null, true, PatientUsername));
         }
 
         private void PeriodsExecute(object sender)
         {
-            NavigatonService.Navigate(new PeriodPage(PatientUsername));
+            NavigationService.Navigate(new PeriodPage(PatientUsername));
         }
 
         private void NotificationsExecute(object sender)
         {
-            NavigatonService.Navigate(new NotificationsPage(PatientUsername));
+            NavigationService.Navigate(new NotificationsPage(PatientUsername));
         }
 
         private void PeriodHistoryExecute(object sender)
         {
-            NavigatonService.Navigate(new AppointmentHistoryPage(PatientUsername));
+            NavigationService.Navigate(new AppointmentHistoryPage(PatientUsername));
         }
 
         private void SurveyExecute(object sender)
         {
-            NavigatonService.Navigate(new SurveyPage(this));
+            NavigationService.Navigate(new SurveyPage(this));
         }
 
         private void NoteExecute(object sender)
         {
-            NavigatonService.Navigate(new NotesPage(PatientUsername));
+            NavigationService.Navigate(new NotesPage(PatientUsername));
         }
 
         #endregion
@@ -115,7 +115,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void SetProperties(string username, PatientWindow patientWindow)
         {
             PatientWindow = patientWindow;
-            NavigatonService = patientWindow.myFrame.NavigationService;
+            NavigationService = patientWindow.myFrame.NavigationService;
             PatientUsername = username;
             WelcomeMessage = "Welcome " + username;
         }

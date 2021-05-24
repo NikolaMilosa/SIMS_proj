@@ -29,6 +29,7 @@
             <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="appointmentDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding Periods}" 
                       ScrollViewer.CanContentScroll="True" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      SelectedItem="{Binding SelectedPeriodDTO,  Mode=OneWayToSource}" 
                       >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
@@ -41,7 +42,10 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button  BorderBrush="Transparent" Background="Transparent" Name="anamnesisButton" Content="Anamnesis" FontWeight="Bold" Click="AnamnesisButton_Click" />
+                                <Button  BorderBrush="Transparent" Background="Transparent" Name="anamnesisButton" Content="Anamnesis" FontWeight="Bold" 
+                                         Command="{Binding Path=DataContext.AnamnesisCommand,       
+ RelativeSource= {RelativeSource FindAncestor,
+  AncestorType={x:Type DataGrid}}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -49,7 +53,9 @@
                     <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button  BorderBrush="Transparent" Background="Transparent" Name="rateButton" Content="Rate" FontWeight="Bold" Click="RateButton_Click" />
+                                <Button  BorderBrush="Transparent" Background="Transparent" Name="rateButton" Content="Rate" FontWeight="Bold" Command="{Binding Path=DataContext.RateCommand,       
+ RelativeSource= {RelativeSource FindAncestor,
+  AncestorType={x:Type DataGrid}}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

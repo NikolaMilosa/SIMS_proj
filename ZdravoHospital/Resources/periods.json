@@ -28,7 +28,10 @@
     "RoomId": 201,
     "Details": null,
     "Prescription": null,
-    "PeriodMark": null,
+    "PeriodMark": {
+      "Comment": "da",
+      "Mark": 3
+    },
     "IsUrgent": false,
     "ReferringReferralId": 0,
     "ReferredReferralId": 0,
@@ -60,7 +63,10 @@
     "RoomId": 201,
     "Details": null,
     "Prescription": null,
-    "PeriodMark": null,
+    "PeriodMark": {
+      "Comment": "sadasd",
+      "Mark": 3
+    },
     "IsUrgent": false,
     "ReferringReferralId": 0,
     "ReferredReferralId": 0,
