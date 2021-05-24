@@ -27,12 +27,17 @@
             </StackPanel>
 
 
-            <DataGrid MouseDoubleClick="NotificationDataGrid_MouseDoubleClick" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="notificationDataGrid" Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding Notifications}">
+            <DataGrid  GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True" x:Name="notificationDataGrid" Grid.Row="1" Grid.Column="1" 
+                      ItemsSource="{Binding Notifications}"
+                      SelectedItem="{Binding Path=SelectedNotification,Mode=OneWayToSource}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="  From&#x0a;(sender)" Width="*" Binding="{Binding Path=From}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Path=Title}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Date of sending" Width="*" Binding="{Binding Path=Date,StringFormat=d}"></DataGridTextColumn>
                 </DataGrid.Columns>
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}"/>
+                </DataGrid.InputBindings>
 
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">

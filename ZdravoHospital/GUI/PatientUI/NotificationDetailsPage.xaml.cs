@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -24,17 +25,17 @@ namespace ZdravoHospital.GUI.PatientUI
         public NotificationDTO NotificationDTO { get; set; }
 
         public string PatientUsername { get; set; }
-        public NotificationDetailsPage(NotificationDTO notificationView, string username)
+        public NotificationDetailsPage(NotificationDTO notificationView)
         {
             InitializeComponent();
-            SetProperties(notificationView, username);
+            SetProperties(notificationView);
             SerializeReadNotification();
             DataContext = this;
         }
 
-        private void SetProperties(NotificationDTO notificationView, string username)
+        private void SetProperties(NotificationDTO notificationView)
         {
-            PatientUsername = username;
+            PatientUsername = PatientWindowVM.PatientUsername;
             NotificationDTO = notificationView;
             NotificationDTO.Seen = true;
         }

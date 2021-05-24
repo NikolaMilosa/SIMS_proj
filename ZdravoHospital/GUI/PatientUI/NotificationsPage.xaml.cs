@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -29,9 +30,9 @@ namespace ZdravoHospital.GUI.PatientUI
         public NotificationsPage(string username)
         {
             InitializeComponent();
-            DataContext = this;
-            PatientUsername = username;
-            FillList();
+            DataContext = new NotificationsPageVM();
+            //PatientUsername = username;
+            //FillList();
         }
 
         private void FillList()
@@ -50,12 +51,8 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void NotificationDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            NavigationService.Navigate(new NotificationDetailsPage((NotificationDTO)notificationDataGrid.SelectedItem, PatientUsername));
+            //NavigationService.Navigate(new NotificationDetailsPage((NotificationDTO)notificationDataGrid.SelectedItem, PatientUsername));
         }
 
-        private void NoteButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new CreateNotePage(PatientUsername));
-        }
     }
 }
