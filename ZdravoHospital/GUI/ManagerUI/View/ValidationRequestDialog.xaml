@@ -50,7 +50,9 @@
                   Margin="20,0,0,0"
                   Width="250"
                   SelectedItem="{Binding SelectedDoctor}"
-                  ItemsSource="{Binding ListOfDoctors}" PreviewKeyDown="ComboBox_PreviewKeyDown"
+                  SelectedIndex="{Binding SelectedIndex}"
+                  ItemsSource="{Binding ListOfDoctors}"
+                  IsDropDownOpen="{Binding IsDropDownOpen}"
                   x:Name ="DoctorComboBox">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -64,6 +66,11 @@
                     </TextBlock>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding ComboBoxCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ComboBox>
 
         <!-- Buttons -->

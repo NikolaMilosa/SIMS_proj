@@ -28,38 +28,5 @@ namespace ZdravoHospital.GUI.ManagerUI.View
             currentViewModel = new ValidationRequestDialogViewModel(medicine, injector);
             this.DataContext = currentViewModel;
         }
-
-        private void ComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                DoctorComboBox.IsDropDownOpen = DoctorComboBox.IsDropDownOpen == false;
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Down)
-            {
-                if (DoctorComboBox.IsDropDownOpen == true)
-                {
-                    if (DoctorComboBox.SelectedIndex + 1 < DoctorComboBox.Items.Count)
-                    {
-                        DoctorComboBox.SelectedIndex += 1;
-                    }
-                }
-
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Up)
-            {
-                if (DoctorComboBox.IsDropDownOpen == true)
-                {
-                    if (DoctorComboBox.SelectedIndex - 1 >= 0)
-                    {
-                        DoctorComboBox.SelectedIndex -= 1;
-                    }
-                }
-
-                e.Handled = true;
-            }
-        }
     }
 }

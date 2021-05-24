@@ -84,5 +84,17 @@
         "IngredientName": "other ing"
       }
     ]
+  },
+  {
+    "MedicineName": "fjahfskj",
+    "Supplier": "Fkjahskjf",
+    "Status": 3,
+    "Note": null,
+    "Replacements": [],
+    "Ingredients": [
+      {
+        "IngredientName": "fjkahkaj"
+      }
+    ]
   }
 ]
