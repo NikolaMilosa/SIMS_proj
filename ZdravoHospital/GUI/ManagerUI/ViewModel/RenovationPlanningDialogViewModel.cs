@@ -274,11 +274,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 {
                     StartTime = startTime,
                     EndTime = endTime,
-                    RoomId = SelectedRoom.Id,
+                    RoomId = SplitCreatedRoom.Id,
                     ScheduleType = ReservationType.RENOVATION
                 };
 
                 _roomScheduleService.CreateAndScheduleRenovationStart(roomScheduleForSplitRoom);
+
+                ManagerWindowViewModel.GetDashboard().OnRoomsChanged(this, EventArgs.Empty);
             }
         }
 

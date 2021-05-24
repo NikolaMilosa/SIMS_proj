@@ -124,17 +124,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 Room = new Room(room.RoomType, room.Id, room.Name, room.Available);
                 _available = Room.Available;
+                SelectedIndex = (int)Room.RoomType;
                 IsAdder = false;
                 Title = "Room editing";
             }
 
             _roomService = new RoomService(injector);
-
+            
             if (!roomSplitter)
                 ConfirmCommand = new MyICommand(OnConfirm);
             else
             {
                 Room.Available = false;
+                _available = false;
                 ConfirmCommand = new MyICommand(OnConfirmSplit);
             }
 

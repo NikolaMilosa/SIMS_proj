@@ -102,6 +102,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 Inventory = new Inventory(inventory);
                 Title = "Inventory editing";
+                SelectedIndex = (int) Inventory.InventoryType;
                 IsAdder = false;
             }
 
