@@ -22,10 +22,10 @@ namespace ZdravoHospital.GUI.ManagerUI.View
     {
         private InventoryManagemenetQuantitySelectorViewModel currentViewModel;
 
-        public InventoryManagementQuantitySelector(Room sender, Room receiver, InventoryDTO processedItem)
+        public InventoryManagementQuantitySelector(Room sender, Room receiver, InventoryDTO processedItem, InjectorDTO injector)
         {
             InitializeComponent();
-            currentViewModel = new InventoryManagemenetQuantitySelectorViewModel(sender, receiver, processedItem);
+            currentViewModel = new InventoryManagemenetQuantitySelectorViewModel(sender, receiver, processedItem, injector);
             this.DataContext = currentViewModel;
         }
 

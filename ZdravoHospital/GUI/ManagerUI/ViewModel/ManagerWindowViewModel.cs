@@ -8,12 +8,33 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Model;
-using Model.Repository;
 using Newtonsoft.Json;
+using Repository.CredentialsPersistance;
+using Repository.DoctorPersistance;
+using Repository.EmployeePersistance;
+using Repository.InventoryPersistance;
+using Repository.MedicinePersistance;
+using Repository.MedicineRecensionPersistance;
+using Repository.NotificationsPersistance;
+using Repository.PatientPersistance;
+using Repository.PeriodPersistance;
+using Repository.PersonNotificationPersistance;
+using Repository.ReferralPersistance;
+using Repository.RoomInventoryPersistance;
+using Repository.RoomPersistance;
+using Repository.RoomSchedulePersistance;
+using Repository.SpecializationPersistance;
+using Repository.SurveyPersistance;
+using Repository.TransferRequestPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ValidationRules;
 using ZdravoHospital.GUI.ManagerUI.View;
+using ZdravoHospital.Services.Manager;
+using EmployeeRepository = Repository.EmployeePersistance.EmployeeRepository;
+using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
+using MedicineRepository = Repository.MedicinePersistance.MedicineRepository;
+using RoomRepository = Repository.RoomPersistance.RoomRepository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -52,10 +73,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private FilteringEventArgs _passedArgs;
 
-        private RoomRepository _roomRepository;
-        private InventoryRepository _inventoryRepository;
-        private MedicineRepository _medicineRepository;
-        private EmployeeRepository _employeeRepository;
+        private IRoomRepository _roomRepository;
+        private IInventoryRepository _inventoryRepository;
+        private IMedicineRepository _medicineRepository;
+        private IEmployeeRepository _employeeRepository;
+
+        private InjectorDTO _injector;
 
         #endregion
 
@@ -68,8 +91,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #region Functions and services
 
-        private Logics.TransferRequestsFunctions transferRequestFunctions;
-        private Logics.RoomScheduleFunctions roomScheduleFunctions;
+        private TransferRequestService transferRequestService;
+        private RoomScheduleService roomScheduleService;
 
         #endregion
 
@@ -172,6 +195,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             var currManager = _employeeRepository.GetById(activeUser);
             ActiveManager = "Welcome, " + currManager.Name;
 
+            InstantiateInjector();
             OpenDataBase();
             SetObservables();
             TurnOffTables();
@@ -189,7 +213,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _inventoryMutex = new Mutex();
             _transferMutex = new Mutex();
 
-            _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel();
+            _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel(_injector);
 
             RunAllTasks();
         }
@@ -198,18 +222,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void OpenDataBase()
         {
-            _roomRepository = new RoomRepository();
-            _inventoryRepository = new InventoryRepository();
-            _medicineRepository = new MedicineRepository();
-            
-            Resources.OpenPeriods();
-
-            var doctorList = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText(@"..\..\..\Resources\doctors.json"));
-            Resources.doctors = new Dictionary<string, Doctor>();
-            foreach (var doc in doctorList)
-            {
-                Resources.doctors[doc.Username] = doc;
-            }
+            _roomRepository = _injector.RoomRepository;
+            _inventoryRepository = _injector.InventoryRepository;
+            _medicineRepository = _injector.MedicineRepository;
         }
 
         private void SetObservables()
@@ -228,10 +243,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         
         private void RunAllTasks()
         {
-            var transferFunctions = new TransferRequestsFunctions();
+            var transferFunctions = new TransferRequestService(_injector);
             transferFunctions.RunOrExecute();
 
-            var roomScheduleFunctions = new RoomScheduleFunctions();
+            var roomScheduleFunctions = new RoomScheduleService(_injector);
             roomScheduleFunctions.RunOrExecute();
         }
 
@@ -254,6 +269,30 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 return false;
             }
 
+        }
+
+        private void InstantiateInjector()
+        {
+            _injector = new InjectorDTO()
+            {
+                CredentialsRepository = new CredentialsRepository(),
+                DoctorRepository = new DoctorRepository(),
+                EmployeeRepository = new EmployeeRepository(),
+                InventoryRepository = new InventoryRepository(),
+                MedicineRecensionRepository = new MedicineRecensionRepository(),
+                MedicineRepository = new MedicineRepository(),
+                NotificationsRepository = new NotificationRepository(),
+                PatientRepository = new PatientRepository(),
+                PeriodRepository = new PeriodRepository(),
+                PersonNotificationRepository = new PersonNotificationRepository(),
+                ReferralRepository = new ReferralRepository(),
+                RoomInventoryRepository = new RoomInventoryRepository(),
+                RoomRepository = new RoomRepository(),
+                RoomScheduleRepository = new RoomScheduleRepository(),
+                SpecializationRepository = new SpecializationRepository(),
+                SurveyRepository = new SurveyRepository(),
+                TransferRepository = new TransferRequestRepository()
+            };
         }
 
         #endregion
@@ -300,21 +339,21 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         //Add room button
         private void OnAddRoom()
         {
-            dialog = new AddOrEditRoomDialog(null);
+            dialog = new AddOrEditRoomDialog(null, _injector);
             dialog.ShowDialog();
         }
 
         //Add inventory button
         private void OnAddInventory()
         {
-            dialog = new AddOrEditInventoryDialog(null);
+            dialog = new AddOrEditInventoryDialog(null, _injector);
             dialog.ShowDialog();
         }
 
         //Add medicine button
         private void OnAddMedicine()
         {
-            dialog = new AddOrEditMedicineDialog(null);
+            dialog = new AddOrEditMedicineDialog(null, _injector);
             dialog.ShowDialog();
         }
 
@@ -331,7 +370,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         //Plan renovation button
         private void OnPlanRenovation()
         {
-            dialog = new RenovationPlaningDialog();
+            dialog = new RenovationPlaningDialog(_injector);
             dialog.ShowDialog();
         }
 
@@ -346,7 +385,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedRoom != null)
                 {
                     var room = _roomRepository.GetById(SelectedRoom.Id);
-                    dialog = new AddOrEditRoomDialog(room);
+                    dialog = new AddOrEditRoomDialog(room, _injector);
                     dialog.ShowDialog();
                 }
             }
@@ -355,7 +394,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedInventory != null)
                 {
                     var inventory = _inventoryRepository.GetById(SelectedInventory.Id);
-                    dialog = new AddOrEditInventoryDialog(inventory);
+                    dialog = new AddOrEditInventoryDialog(inventory, _injector);
                     dialog.ShowDialog();
                 }
             }
@@ -366,7 +405,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedMedicine != null)
                 {
                     var medicine = _medicineRepository.GetById(SelectedMedicine.MedicineName);
-                    dialog = new AddOrEditMedicineDialog(medicine);
+                    dialog = new AddOrEditMedicineDialog(medicine, _injector);
                     dialog.ShowDialog();
                 }
             }
@@ -379,19 +418,19 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedRoom != null)
                 {
                     var room = _roomRepository.GetById(SelectedRoom.Id);
-                    dialog = new WarningDialog(SelectedRoom);
+                    dialog = new WarningDialog(_injector, SelectedRoom);
                 }
             }
             else if (InventoryTableVisibility == Visibility.Visible)
             {
                 if (SelectedInventory != null)
-                    dialog = new WarningDialog(SelectedInventory);
+                    dialog = new WarningDialog(_injector, SelectedInventory);
                 
             }
             else if (MedicineTableVisibility == Visibility.Visible)
             {
                 if (SelectedMedicine != null)
-                    dialog = new WarningDialog(SelectedMedicine);
+                    dialog = new WarningDialog(_injector, SelectedMedicine);
             }
 
             if (dialog != null)
@@ -411,7 +450,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (InventoryTableVisibility == Visibility.Visible)
             {
-                dialog = new InventoryAdderSubtractor(SelectedInventory);
+                dialog = new InventoryAdderSubtractor(SelectedInventory, _injector);
                 dialog.ShowDialog();
             }
         }
@@ -422,7 +461,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 (SelectedMedicine.Status != MedicineStatus.PENDING &&
                  SelectedMedicine.Status != MedicineStatus.APPROVED))
             {
-                dialog = new ValidationRequestDialog(SelectedMedicine);
+                dialog = new ValidationRequestDialog(SelectedMedicine, _injector);
                 dialog.ShowDialog();
             }
         }
@@ -431,7 +470,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (MedicineTableVisibility == Visibility.Visible && SelectedMedicine.Status == MedicineStatus.REJECTED)
             {
-                dialog = new RejectionNoteDialog(SelectedMedicine);
+                dialog = new RejectionNoteDialog(SelectedMedicine, _injector);
                 dialog.ShowDialog();
             }
         }

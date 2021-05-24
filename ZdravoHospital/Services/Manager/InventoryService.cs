@@ -1,28 +1,27 @@
-﻿using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using Model.Repository;
+using Model;
+using Repository.InventoryPersistance;
+using Repository.RoomInventoryPersistance;
+using Repository.RoomPersistance;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
-namespace ZdravoHospital.GUI.ManagerUI.Logics
+namespace ZdravoHospital.Services.Manager
 {
-    public class InventoryFunctions
+    public class InventoryService
     {
-        private InventoryRepository _inventoryRepository;
+        #region Repos
 
-        private static Mutex _inventoryMutex;
+        private IRoomRepository _roomRepository;
+        private IRoomInventoryRepository _roomInventoryRepository;
+        private IInventoryRepository _inventoryRepository;
 
-        public static Mutex GetInventoryMutex()
-        {
-            if (_inventoryMutex == null)
-                _inventoryMutex = new Mutex();
-            return _inventoryMutex;
-        }
+        #endregion
 
-        #region Event Things
+        #region Event things
 
         public delegate void InventoryChangedEventHandler(object sender, EventArgs e);
 
@@ -35,39 +34,38 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 InventoryChanged(this, EventArgs.Empty);
             }
         }
+
         #endregion
 
-        public InventoryFunctions()
+        public InventoryService(InjectorDTO injector)
         {
             InventoryChanged += ManagerWindowViewModel.GetDashboard().OnInventoryChanged;
 
-            _inventoryRepository = new InventoryRepository();
+            //TODO: add injector
+            _roomInventoryRepository = injector.RoomInventoryRepository;
+            _roomRepository = injector.RoomRepository;
+            _inventoryRepository = injector.InventoryRepository;
         }
 
-        public bool DeleteInventory(Inventory someInventory)
+        public bool DeleteInventory(Inventory inventory)
         {
-            var roomInventoryService = new RoomInventoryFunctions();
-            roomInventoryService.DeleteByInventoryId(someInventory.Id);
-
-            _inventoryRepository.DeleteById(someInventory.Id);
+            _roomInventoryRepository.DeleteByInventoryId(inventory.Id);
+            _inventoryRepository.DeleteById(inventory.Id);
 
             OnInventoryChanged();
+
             return true;
         }
 
         public bool AddInventory(Inventory newInventory)
         {
-            GetInventoryMutex().WaitOne();
-            var roomFunctions = new RoomFunctions();
-            var roomInventoryFunctions = new RoomInventoryFunctions();
+            var room = _roomRepository.FindRoomByPrio(null);
 
-            var someRoom = roomFunctions.FindRoomByPrio(null);
-
-            if (someRoom == null)
+            if (room == null)
             {
-                GetInventoryMutex().ReleaseMutex();
                 return false;
             }
+
             /* Clean input */
             newInventory.Name = Regex.Replace(newInventory.Name, @"\s+", " ");
             newInventory.Name = newInventory.Name.Trim().ToLower();
@@ -81,18 +79,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             /* Found a room to put some inventory in */
             _inventoryRepository.Create(newInventory);
-
-            GetInventoryMutex().ReleaseMutex();
-            roomInventoryFunctions.AddNewReference(new RoomInventory(newInventory.Id, someRoom.Id, newInventory.Quantity));
-
+            _roomInventoryRepository.Create(new RoomInventory(newInventory.Id, room.Id, newInventory.Quantity));
             OnInventoryChanged();
+
             return true;
         }
 
         public void EditInventory(Inventory newInventory)
         {
-            GetInventoryMutex().WaitOne();
-            
             /* Clean input */
             newInventory.Name = Regex.Replace(newInventory.Name, @"\s+", " ");
             newInventory.Name = newInventory.Name.Trim().ToLower();
@@ -106,20 +100,17 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             _inventoryRepository.Update(newInventory);
 
-            GetInventoryMutex().ReleaseMutex();
             OnInventoryChanged();
         }
 
         public void EditInventoryAmount(Inventory inventory, int newQuantity, Room room)
         {
-            GetInventoryMutex().WaitOne();
-            var roomInventoryFunctions = new RoomInventoryFunctions();
             int difference;
 
-            var roomInventory = roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(room.Id, inventory.Id);
+            var roomInventory = _roomInventoryRepository.FindByBothIds(room.Id, inventory.Id);
             if (roomInventory == null)
             {
-                roomInventoryFunctions.AddNewReference(new RoomInventory(inventory.Id, room.Id, newQuantity));
+                _roomInventoryRepository.Create(new RoomInventory(inventory.Id, room.Id, newQuantity));
                 difference = newQuantity;
             }
             else
@@ -128,17 +119,16 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                     return;
 
                 difference = newQuantity - roomInventory.Quantity;
-
                 if (newQuantity == 0)
                 {
-                    roomInventoryFunctions.DeleteByReference(roomInventory);
+                    _roomInventoryRepository.DeleteByEquality(roomInventory);
                 }
                 else
                 {
-                    roomInventoryFunctions.SetNewQuantity(roomInventory, newQuantity);
+                    _roomInventoryRepository.SetNewQuantity(roomInventory,newQuantity);
                 }
             }
-            
+
             if (difference < 0)
             {
                 difference = (-1) * difference;
@@ -149,11 +139,9 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 inventory.Quantity += difference;
             }
 
-            GetInventoryMutex().ReleaseMutex();
-
             if (inventory.Quantity == 0)
             {
-                DeleteInventory(inventory);
+                _inventoryRepository.DeleteById(inventory.Id);
             }
             else
             {

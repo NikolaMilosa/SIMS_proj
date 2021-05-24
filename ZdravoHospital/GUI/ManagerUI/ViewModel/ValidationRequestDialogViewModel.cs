@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Model;
+using Repository.DoctorPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -16,7 +18,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Doctor _selectedDoctor;
         private ObservableCollection<Doctor> _listOfDoctors;
 
-        private MedicineFunctions _medicineFunctions;
+        private MedicineService _medicineService;
+
+        private IDoctorRepository _doctorRepository;
 
         #endregion
 
@@ -60,12 +64,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public ValidationRequestDialogViewModel(Medicine medicine)
+        public ValidationRequestDialogViewModel(Medicine medicine, InjectorDTO injector)
         {
             ObservedMedicine = medicine;
-            ListOfDoctors = new ObservableCollection<Doctor>(Resources.doctors.Values);
+            _doctorRepository = injector.DoctorRepository;
+            ListOfDoctors = new ObservableCollection<Doctor>(_doctorRepository.GetValues());
 
-            _medicineFunctions = new MedicineFunctions(null);
+            _medicineService = new MedicineService(null, injector);
 
             ConfirmCommand = new MyICommand(OnConfirm);
         }
@@ -74,7 +79,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void OnConfirm()
         {
-            _medicineFunctions.SendMedicineOnRecension(ObservedMedicine, SelectedDoctor);
+            _medicineService.SendMedicineOnRecension(ObservedMedicine, SelectedDoctor);
         }
 
         #endregion

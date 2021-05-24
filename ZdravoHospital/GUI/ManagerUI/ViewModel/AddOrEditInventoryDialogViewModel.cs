@@ -4,8 +4,9 @@ using System.Text;
 using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.View;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -19,7 +20,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private Window _dialog;
 
-        private InventoryFunctions _inventoryFunctions;
+        private InventoryService _inventoryService;
+
+        private InjectorDTO _injector;
 
         #endregion
 
@@ -63,7 +66,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public AddOrEditInventoryDialogViewModel(Inventory? inventory)
+        public AddOrEditInventoryDialogViewModel(Inventory? inventory, InjectorDTO injector)
         {
             if (inventory == null)
             {
@@ -78,24 +81,26 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 IsAdder = false;
             }
 
+            _injector = injector;
+
             ConfirmCommand = new MyICommand(OnConfirm);
 
-            _inventoryFunctions = new InventoryFunctions();
+            _inventoryService = new InventoryService(injector);
         }
 
         private void OnConfirm()
         {
             if (IsAdder)
             {
-                if (!_inventoryFunctions.AddInventory(Inventory))
+                if (!_inventoryService.AddInventory(Inventory))
                 {
-                    _dialog = new WarningDialog(this);
+                    _dialog = new WarningDialog(_injector, this);
                     _dialog.ShowDialog();
                 }
             }
             else
             {
-                _inventoryFunctions.EditInventory(Inventory);
+                _inventoryService.EditInventory(Inventory);
             }
         }
     }

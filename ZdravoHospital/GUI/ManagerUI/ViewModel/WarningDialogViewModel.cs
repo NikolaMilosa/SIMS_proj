@@ -4,7 +4,8 @@ using System.Text;
 using System.Windows;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -16,14 +17,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private string _warningText;
         private string _warningElement;
 
-        private RoomFunctions _roomFunctions;
-        private InventoryFunctions _inventoryFunctions;
-        private MedicineFunctions _medicineFunctions;
+        private RoomService _roomService;
+        private InventoryService _inventoryService;
+        private MedicineService _medicineService;
 
         private object _someObject;
         private object[] _otherParams;
 
         private bool _isConfirmable;
+
+        private InjectorDTO _injector;
 
         #endregion
 
@@ -76,10 +79,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public WarningDialogViewModel(object someObject, params object[] otherParams)
+        public WarningDialogViewModel(InjectorDTO injector,object someObject, params object[] otherParams)
         {
             _someObject = someObject;
             _otherParams = otherParams;
+
+            _injector = injector;
 
             IsConfirmable = true;
 
@@ -125,24 +130,24 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             switch (_someObject.GetType().Name)
             {
                 case nameof(Room):
-                    _roomFunctions = new RoomFunctions();
-                    if (!_roomFunctions.DeleteRoom((Room) _someObject))
+                    _roomService = new RoomService(_injector);
+                    if (!_roomService.DeleteRoom((Room) _someObject))
                     {
                         MessageBox.Show(
                             "Cannot delete the room since there aren't any available rooms to store the inventory");
                     }
                     break;
                 case nameof(Inventory):
-                    _inventoryFunctions = new InventoryFunctions();
-                    _inventoryFunctions.DeleteInventory((Inventory) _someObject);
+                    _inventoryService = new InventoryService(_injector);
+                    _inventoryService.DeleteInventory((Inventory) _someObject);
                     break;
                 case nameof(Ingredient):
-                    _medicineFunctions = new MedicineFunctions((AddOrEditMedicineDialogViewModel) _otherParams[0]);
-                    _medicineFunctions.DeleteIngredientFromMedicine((Ingredient) _someObject, (Medicine) _otherParams[1]);
+                    _medicineService = new MedicineService((AddOrEditMedicineDialogViewModel) _otherParams[0], _injector);
+                    _medicineService.DeleteIngredientFromMedicine((Ingredient) _someObject, (Medicine) _otherParams[1]);
                     break;
                 case nameof(Medicine):
-                    _medicineFunctions = new MedicineFunctions(null);
-                    _medicineFunctions.DeleteMedicine((Medicine) _someObject);
+                    _medicineService = new MedicineService(null, _injector);
+                    _medicineService.DeleteMedicine((Medicine) _someObject);
                     break;
             }
         }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Model;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.Services.Manager;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -15,7 +16,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _room;
         private bool _isAdder;
         private bool _available;
-        private RoomFunctions _roomFunctions;
+        private RoomService _roomService;
 
         #endregion
         
@@ -70,7 +71,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         
         #endregion
         
-        public AddOrEditRoomDialogViewModel(Room? room)
+        public AddOrEditRoomDialogViewModel(Room? room, InjectorDTO injector)
         {
             if (room == null)
             {
@@ -87,7 +88,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 Title = "Room editing";
             }
 
-            _roomFunctions = new RoomFunctions();
+            _roomService = new RoomService(injector);
 
             ConfirmCommand = new MyICommand(OnConfirm);
         }
@@ -97,11 +98,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (IsAdder)
             {
-                _roomFunctions.AddRoom(Room);
+                _roomService.AddRoom(Room);
             }
             else
             {
-                _roomFunctions.EditRoom(Room);
+                _roomService.EditRoom(Room);
             }
         }
     }

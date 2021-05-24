@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
-using Model.Repository;
+using Repository.RoomInventoryPersistance;
+using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.Services.Manager;
+using RoomRepository = Repository.RoomPersistance.RoomRepository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -19,11 +22,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private int _enteredQuantity;
         private int _minInventory;
 
-        private TransferRequestsFunctions _transferRequestsFunctions;
-        private RoomInventoryFunctions _roomInventoryFunctions;
-        private InventoryFunctions _inventoryFunctions;
+        private TransferRequestService _transferRequestsService;
+        private InventoryService _inventoryService;
 
-        private RoomRepository _roomRepository;
+        private IRoomRepository _roomRepository;
+        private IRoomInventoryRepository _roomInventoryRepository;
 
         #endregion
 
@@ -59,9 +62,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
                 if (_selectedRoom != null)
                 {
-                    MinInventory = _transferRequestsFunctions.GetScheduledInventoryForRoom(PassedInventory, _selectedRoom);
+                    MinInventory = _transferRequestsService.GetScheduledInventoryForRoom(PassedInventory, _selectedRoom);
 
-                    var roomInventory = _roomInventoryFunctions.FindRoomInventoryByRoomAndInventory(_selectedRoom.Id, PassedInventory.Id);
+                    var roomInventory = _roomInventoryRepository.FindByBothIds(_selectedRoom.Id, PassedInventory.Id);
 
                     if (PassedInventory.InventoryType == InventoryType.DYNAMIC_INVENTORY && roomInventory != null)
                     {
@@ -126,15 +129,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public InventoryAdderSubtractorViewModel(Inventory inventory)
+        public InventoryAdderSubtractorViewModel(Inventory inventory, InjectorDTO injector)
         {
             PassedInventory = inventory;
 
-            _transferRequestsFunctions = new TransferRequestsFunctions();
-            _roomInventoryFunctions = new RoomInventoryFunctions();
-            _inventoryFunctions = new InventoryFunctions();
+            _transferRequestsService = new TransferRequestService(injector);
+            _inventoryService = new InventoryService(injector);
 
-            _roomRepository = new RoomRepository();
+            _roomRepository = injector.RoomRepository;
+            _roomInventoryRepository = injector.RoomInventoryRepository;
 
             Rooms = new List<Room>(_roomRepository.GetValues());
             SelectedInventory = ((new StringBuilder()).Append(PassedInventory.Id).Append(" - ").Append(PassedInventory.Name)).ToString();
@@ -146,7 +149,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void OnConfirm()
         {
-            _inventoryFunctions.EditInventoryAmount(PassedInventory, EnteredQuantity, SelectedRoom);
+            _inventoryService.EditInventoryAmount(PassedInventory, EnteredQuantity, SelectedRoom);
         }
 
         #endregion

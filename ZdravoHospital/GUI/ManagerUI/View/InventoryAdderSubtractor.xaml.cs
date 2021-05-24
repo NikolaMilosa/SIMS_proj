@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Model;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.View
@@ -21,10 +22,10 @@ namespace ZdravoHospital.GUI.ManagerUI.View
     {
         private InventoryAdderSubtractorViewModel currentViewModel;
 
-        public InventoryAdderSubtractor(Inventory inventory)
+        public InventoryAdderSubtractor(Inventory inventory, InjectorDTO injector)
         {
             InitializeComponent();
-            currentViewModel = new InventoryAdderSubtractorViewModel(inventory);
+            currentViewModel = new InventoryAdderSubtractorViewModel(inventory, injector);
             this.DataContext = currentViewModel;
         }
 

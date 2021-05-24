@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
-
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.Services.Manager;
 
 namespace Model
 {
@@ -52,16 +52,16 @@ namespace Model
             this.TimeOfExecution = whenToDo;
         }
 
-        public void DoWork()
+        public void DoWork(InjectorDTO injector)
         {
             TimeSpan ts = TimeOfExecution.Subtract(DateTime.Now);
 
             if (ts > new TimeSpan(0,0,0))
                 Thread.Sleep(ts);
 
-            TransferRequestsFunctions transferRequestsFunctions = new TransferRequestsFunctions();
+            TransferRequestService transferRequestService = new TransferRequestService(injector);
 
-            transferRequestsFunctions.ExecuteRequest(this);
+            transferRequestService.ExecuteRequest(this);
         }
     }
 }

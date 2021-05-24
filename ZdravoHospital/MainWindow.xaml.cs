@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 
 using Model;
 using Repository.CredentialsPersistance;
@@ -6,6 +8,7 @@ using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.GUI.PatientUI;
 using ZdravoHospital.GUI.Secretary;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital
 {
@@ -17,6 +20,7 @@ namespace ZdravoHospital
         public MainWindow()
         {
             InitializeComponent();
+            loadDoctorWorkSchedule();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -27,9 +31,11 @@ namespace ZdravoHospital
             var credentialsRepository = new CredentialsRepository();
             var credentials = credentialsRepository.GetById(username);
 
-            //TODO: izbaciti try catch
-
-            try
+            if (credentials == null)
+            {
+                MessageBox.Show("Username not registered...");
+            }
+            else
             {
                 if (credentials.Password.Equals(password))
                 {
@@ -54,15 +60,20 @@ namespace ZdravoHospital
 
                     window.Show();
                     this.Close();
-                } 
+                }
                 else
                 {
                     MessageBox.Show("Wrong password...");
                 }
-            } 
-            catch
+            }
+        }
+        private void loadDoctorWorkSchedule()
+        {
+            WorkTimeService workService = new WorkTimeService();
+            List<Doctor> doctors = workService.GetAllDoctors();
+            foreach(Doctor doctor in doctors)
             {
-                MessageBox.Show("Username not registered...");
+                workService.ProcessDoctorsShiftRule(doctor);
             }
         }
     }

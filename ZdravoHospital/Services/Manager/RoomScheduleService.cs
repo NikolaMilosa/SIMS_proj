@@ -2,37 +2,53 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Model;
-using Model.Repository;
+using Repository.PeriodPersistance;
+using Repository.RoomPersistance;
+using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
-namespace ZdravoHospital.GUI.ManagerUI.Logics
+namespace ZdravoHospital.Services.Manager
 {
-    public class RoomScheduleFunctions
+    public class RoomScheduleService
     {
-        private RoomScheduleRepository _roomScheduleRepository;
-        private RoomRepository _roomRepository;
-        private PeriodRepository _periodRepository;
+        private InjectorDTO _injector;
 
-        private static Mutex _roomScheduleMutex;
+        #region Repos
 
-        public static Mutex GetRoomScheduleMutex()
+        private IRoomScheduleRepository _roomScheduleRepository;
+        private IRoomRepository _roomRepository;
+        private IPeriodRepository _periodRepository;
+
+        #endregion
+
+        #region Event things
+
+        public delegate void RoomChangedEventHandler(object sender, EventArgs e);
+
+        public event RoomChangedEventHandler RoomChanged;
+
+        protected virtual void OnRoomChanged()
         {
-            if (_roomScheduleMutex == null)
-                _roomScheduleMutex = new Mutex();
-
-            return _roomScheduleMutex;
+            if (RoomChanged != null)
+            {
+                RoomChanged(this, EventArgs.Empty);
+            }
         }
 
-        public RoomScheduleFunctions()
+        #endregion
+
+        public RoomScheduleService(InjectorDTO injector)
         {
-            _roomRepository = new RoomRepository();
-            _roomScheduleRepository = new RoomScheduleRepository();
-            _periodRepository = new PeriodRepository();
+            RoomChanged += ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
+
+            _injector = injector;
+
+            _roomRepository = injector.RoomRepository;
+            _roomScheduleRepository = injector.RoomScheduleRepository;
+            _periodRepository = injector.PeriodRepository;
         }
 
         public void RunOrExecute()
@@ -41,7 +57,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             if (values.Count != 0)
             {
                 List<RoomSchedule> loaded = new List<RoomSchedule>(values);
-                foreach(RoomSchedule rs in loaded)
+                foreach (RoomSchedule rs in loaded)
                 {
                     if (DateTime.Now < rs.StartTime)
                     {
@@ -64,7 +80,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void ScheduleRenovationStart(RoomSchedule roomSchedule)
         {
-            var t = new Task(roomSchedule.WaitStartRenovation);
+            var t = new Task(() => roomSchedule.WaitStartRenovation(_injector));
             t.Start();
         }
 
@@ -77,11 +93,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             if (room.Available)
             {
-                var roomFunctions = new RoomFunctions();
-                roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, false);
+                ChangeRoomAvailability(roomSchedule.RoomId, false);
             }
 
-            Task t = new Task(roomSchedule.WaitEndRenovation);
+            Task t = new Task(() => roomSchedule.WaitEndRenovation(_injector));
             t.Start();
         }
 
@@ -94,14 +109,23 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
             if (!room.Available && !IsInsideRenovation(roomSchedule))
             {
-                var roomFunctions = new RoomFunctions();
-                roomFunctions.ChangeRoomAvailability(roomSchedule.RoomId, true);
+                ChangeRoomAvailability(roomSchedule.RoomId, true);
             }
 
             _roomScheduleRepository.DeleteByEquality(roomSchedule);
         }
 
-        public bool CheckIfStillValid(RoomSchedule roomSchedule)
+        private void ChangeRoomAvailability(int roomId, bool newValue)
+        {
+            var room = _roomRepository.GetById(roomId);
+            room.Available = newValue;
+
+            _roomRepository.Update(room);
+
+            OnRoomChanged();
+        }
+
+        private bool CheckIfStillValid(RoomSchedule roomSchedule)
         {
             if (!_roomScheduleRepository.ExistsInDataBase(roomSchedule))
             {
@@ -109,7 +133,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
                 return false;
             }
 
-            
+
             if (_roomRepository.GetById(roomSchedule.RoomId) == null)
             {
                 _roomScheduleRepository.DeleteByRoomId(roomSchedule.RoomId);
@@ -119,14 +143,15 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return true;
         }
 
-        public bool IsInsideRenovation(RoomSchedule roomSchedule)
+        private bool IsInsideRenovation(RoomSchedule roomSchedule)
         {
             if (roomSchedule.ScheduleType != ReservationType.TRANSFER)
                 return false;
 
             foreach (var rs in _roomScheduleRepository.GetValues())
             {
-                if (rs.RoomId == roomSchedule.RoomId && rs.StartTime == roomSchedule.StartTime && rs.EndTime == roomSchedule.EndTime && rs.ScheduleType == roomSchedule.ScheduleType)
+                if (rs.RoomId == roomSchedule.RoomId && rs.StartTime == roomSchedule.StartTime 
+                                                     && rs.EndTime == roomSchedule.EndTime && rs.ScheduleType == roomSchedule.ScheduleType)
                     continue;
                 if (roomSchedule.RoomId == rs.RoomId && rs.StartTime <= roomSchedule.EndTime && roomSchedule.EndTime <= rs.EndTime)
                     return true;
@@ -137,18 +162,14 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         public void CreateAndScheduleRenovationStart(RoomSchedule roomSchedule)
         {
-            GetRoomScheduleMutex().WaitOne();
-
             if (!CheckIfExists(roomSchedule))
             {
                 _roomScheduleRepository.Create(roomSchedule);
                 ScheduleRenovationStart(roomSchedule);
             }
-
-            GetRoomScheduleMutex().ReleaseMutex();
         }
 
-        public bool CheckIfExists(RoomSchedule roomSchedule)
+        private bool CheckIfExists(RoomSchedule roomSchedule)
         {
             /* If two transfer requests are created for the same room as receiver room it is possible that those two rooms will have the
              exact same room schedule. Therefore, do not include its duplicate.*/
@@ -183,7 +204,7 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
             return roomSchedule;
         }
 
-        public ObservableCollection<ReservationDTO> GetReservationsForRoom(Room room, DateTime day)
+        private ObservableCollection<ReservationDTO> GetReservationsForRoom(Room room, DateTime day)
         {
             var reservations = new ObservableCollection<ReservationDTO>();
 

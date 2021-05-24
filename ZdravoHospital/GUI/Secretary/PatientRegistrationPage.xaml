@@ -61,7 +61,7 @@
                     <TextBlock Margin="8,0,0,0">First name</TextBlock>
                     <TextBox x:Name="FirstNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="PName" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.PName" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -79,7 +79,7 @@
                     <TextBlock Margin="8,0,0,0">Parent's name</TextBlock>
                     <TextBox x:Name="ParentsNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="ParentsName" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.ParentsName" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -97,7 +97,7 @@
                     <TextBlock Margin="8,0,0,0">Last name</TextBlock>
                     <TextBox x:Name="LastNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="Surname" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.Surname" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -115,7 +115,7 @@
                     <TextBlock Margin="8,0,0,0">Citizen ID</TextBlock>
                     <TextBox x:Name="CitizenIdTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="CitizenId" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.CitizenId" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -133,7 +133,7 @@
                 <StackPanel Grid.Row="5" Grid.Column="1">
                     <TextBlock Margin="8,0,0,0">Date of birth</TextBlock>
                     <DatePicker Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" VerticalAlignment="Top" Background="White"
-                                SelectedDate="{Binding Path=DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                                SelectedDate="{Binding Path=PatientDTO.DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -146,7 +146,7 @@
                     <TextBlock Margin="8,0,0,0">Health card number</TextBlock>
                     <TextBox x:Name="HealthCardNumberTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="HealthCardNumber" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.HealthCardNumber" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -163,7 +163,7 @@
                 <StackPanel Grid.Row="7" Grid.Column="1">
                     <TextBlock Margin="8,0,0,0">Blood type</TextBlock>
                     <ComboBox Name="BloodTypeComboBox" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42"
-                             Text="{Binding Path=BloodType, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                              SelectedIndex="{Binding PatientDTO.BloodType, Mode=OneWayToSource}">
                         <ComboBox.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -182,8 +182,7 @@
 
                 <StackPanel Grid.Row="8" Grid.Column="1">
                     <TextBlock Margin="8,0,0,0" >Gender</TextBlock>
-                    <ComboBox Name="GenderComboBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42"
-                             Text="{Binding Path=Gender, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox Name="GenderComboBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" SelectedIndex="{Binding PatientDTO.Gender, Mode=OneWayToSource}">
                         <ComboBox.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -197,7 +196,7 @@
                 <StackPanel Grid.Row="9" Grid.Column="1">
                     <TextBlock Margin="8,0,0,0">Marital status</TextBlock>
                     <ComboBox Name ="MaritalStatusComboBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42"
-                             Text="{Binding Path=MaritalStatus, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                              SelectedIndex="{Binding PatientDTO.MaritalStatus, Mode=OneWayToSource}">
                         <ComboBox.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -214,7 +213,7 @@
                     <TextBlock Margin="8,0,0,0">Email address</TextBlock>
                     <TextBox x:Name="EmailTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="Email" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.Email" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:EmailValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -232,7 +231,7 @@
                     <TextBlock Margin="8,0,0,0">Phone number</TextBlock>
                     <TextBox x:Name="PhoneNumberTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="Telephone" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.PhoneNumber" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -259,7 +258,7 @@
                     <TextBlock Margin="8,0,0,0">Username *</TextBlock>
                     <TextBox x:Name="UsernameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="Username" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.Username" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:UsernameValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -277,7 +276,7 @@
                     <TextBlock Margin="8,0,0,0">Password *</TextBlock>
                     <TextBox x:Name="PasswordTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}" >
                         <TextBox.Text>
-                            <Binding Path="Password" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.Password" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:PasswordValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -305,7 +304,7 @@
                     <TextBlock Margin="8,0,0,0">Country</TextBlock>
                     <TextBox x:Name="CountryTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="Country" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.Country" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -324,7 +323,7 @@
                     <TextBlock Margin="8,0,0,0">City</TextBlock>
                     <TextBox x:Name="CityTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                         <TextBox.Text>
-                            <Binding Path="City" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.City" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -342,7 +341,7 @@
                     <TextBlock Margin="8,0,0,0">Postal code</TextBlock>
                     <TextBox x:Name="PostalCodeTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42">
                         <TextBox.Text>
-                            <Binding Path="PostalCode" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding Path="PatientDTO.PostalCode" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                 <Binding.ValidationRules>
                                     <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
                                 </Binding.ValidationRules>
@@ -369,7 +368,7 @@
                         <TextBlock Margin="8,0,0,0">Street name</TextBlock>
                         <TextBox x:Name="StreetNameTextBox" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                             <TextBox.Text>
-                                <Binding Path="StreetName" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                                <Binding Path="PatientDTO.StreetName" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                     <Binding.ValidationRules>
                                         <val:AlphaNumericSpacesDashValidationRule ValidationStep="RawProposedValue"/>
                                     </Binding.ValidationRules>
@@ -386,7 +385,7 @@
                         <TextBlock Margin="8,0,0,0">Street number</TextBlock>
                         <TextBox x:Name="StreetNumberTextBox" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                             <TextBox.Text>
-                                <Binding Path="StreetNum" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                                <Binding Path="PatientDTO.StreetNum" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                                     <Binding.ValidationRules>
                                         <val:AlphaNumericSpacesDashValidationRule ValidationStep="RawProposedValue"/>
                                     </Binding.ValidationRules>

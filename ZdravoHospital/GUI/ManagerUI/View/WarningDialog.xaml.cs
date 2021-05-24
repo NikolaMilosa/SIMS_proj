@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.View
@@ -19,10 +20,10 @@ namespace ZdravoHospital.GUI.ManagerUI.View
     public partial class WarningDialog : Window
     {
         private WarningDialogViewModel currentViewModel;
-        public WarningDialog(object someObject, params object[] otherParams) 
+        public WarningDialog(InjectorDTO injector, object someObject, params object[] otherParams) 
         {
             InitializeComponent();
-            currentViewModel = new WarningDialogViewModel(someObject, otherParams);
+            currentViewModel = new WarningDialogViewModel(injector, someObject, otherParams);
             this.DataContext = currentViewModel;
         }
     }

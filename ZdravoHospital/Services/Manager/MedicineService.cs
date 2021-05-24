@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows.Input;
 using Model;
-using Model.Repository;
+using Repository.MedicinePersistance;
+using Repository.MedicineRecensionPersistance;
+using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
-namespace ZdravoHospital.GUI.ManagerUI.Logics
+namespace ZdravoHospital.Services.Manager
 {
-    public class MedicineFunctions
+    public class MedicineService
     {
-        private MedicineRepository _medicineRepository;
-        private MedicineRecensionRepository _medicineRecensionRepository;
+        #region Repos
 
-        private static Mutex _medicineMutex;
+        private IMedicineRepository _medicineRepository;
+        private IMedicineRecensionRepository _medicineRecensionRepository;
 
-        public static Mutex GetMedicineMutex()
-        {
-            if (_medicineMutex == null)
-                _medicineMutex = new Mutex();
-            return _medicineMutex;
-        }
+        #endregion
 
         #region Event things
 
@@ -53,14 +47,16 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
 
         #endregion
 
-        public MedicineFunctions(AddOrEditMedicineDialogViewModel activeDialog)
+        public MedicineService(AddOrEditMedicineDialogViewModel activeDialog, InjectorDTO injector)
         {
             MedicineChanged += ManagerWindowViewModel.GetDashboard().OnMedicineChanged;
             if (activeDialog != null)
+            {
                 IngredientChanged += activeDialog.OnIngredientChanged;
-
-            _medicineRepository = new MedicineRepository();
-            _medicineRecensionRepository = new MedicineRecensionRepository();
+            }
+            //TODO: add injector
+            _medicineRecensionRepository = injector.MedicineRecensionRepository;
+            _medicineRepository = injector.MedicineRepository;
         }
 
         public void AddNewMedicine(Medicine newMedicine)
@@ -120,10 +116,10 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             var index = medicine.Ingredients.IndexOf(oldIngredient);
             medicine.Ingredients.Remove(oldIngredient);
-            
+
             newIngedient.IngredientName = Regex.Replace(newIngedient.IngredientName, @"\s+", " ");
-            
-            medicine.Ingredients.Insert(index,newIngedient);
+
+            medicine.Ingredients.Insert(index, newIngedient);
 
             OnIngredientChanged();
         }
@@ -132,18 +128,18 @@ namespace ZdravoHospital.GUI.ManagerUI.Logics
         {
             var medicineRecension = new MedicineRecension()
             {
-                DoctorUsername = doctor.Username, 
-                MedicineName = medicine.MedicineName, 
+                DoctorUsername = doctor.Username,
+                MedicineName = medicine.MedicineName,
                 RecensionNote = ""
             };
-            
+
             _medicineRecensionRepository.DeleteById(medicine.MedicineName);
             _medicineRecensionRepository.Create(medicineRecension);
-            
+
             medicine.Status = MedicineStatus.PENDING;
 
             _medicineRepository.Update(medicine);
-            
+
             OnMedicineChanged();
         }
 

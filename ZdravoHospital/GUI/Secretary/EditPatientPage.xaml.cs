@@ -1,4 +1,5 @@
 ﻿using Model;
+using Repository.CredentialsPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.DTO;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -47,6 +50,7 @@ namespace ZdravoHospital.GUI.Secretary
         private string _oldPassword;
 
         public static ObservableCollection<Patient> Patients { get; set; }
+        public EditPatientService PatientService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -240,13 +244,13 @@ namespace ZdravoHospital.GUI.Secretary
             Password = "";
             try
             {
-                Model.Resources.OpenAccounts();
-                foreach (KeyValuePair<string, Credentials> item in Model.Resources.accounts)
+                CredentialsRepository credentialsRepository = new CredentialsRepository();
+                foreach (var item in credentialsRepository.GetValues())
                 {
-                    if (item.Key.Equals(Username))
+                    if (item.Username.Equals(Username))
                     {
-                        Password = item.Value.Password;
-                        OldPassword = item.Value.Password;
+                        Password = item.Password;
+                        OldPassword = item.Password;
                         break;
                     }
                 }
@@ -279,9 +283,10 @@ namespace ZdravoHospital.GUI.Secretary
             ParentsName = SelectedPatient.ParentsName;
             MaritalStatus = SelectedPatient.MaritalStatus;
             Gender = SelectedPatient.Gender;
-            GenderComboBox.SelectedIndex = (int)SelectedPatient.Gender;
-            MaritalStatusComboBox.SelectedIndex = (int)SelectedPatient.MaritalStatus;
-            BloodTypeComboBox.SelectedIndex = (int)SelectedPatient.BloodType;
+            GenderComboBox.SelectedIndex = (int)Gender;
+            MaritalStatusComboBox.SelectedIndex = (int)MaritalStatus;
+            BloodTypeComboBox.SelectedIndex = (int)BloodType;
+            
         }
 
         public Credentials Credentials { get => _credentials; set => _credentials = value; }
@@ -291,61 +296,16 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             SelectedPatient = selectedPatient;
             initializeBindingFields();
+            PatientService = new EditPatientService();
             this.DataContext = this;
         }
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            Patient patient = new Patient(HealthCardNumber, PName, Surname, Email, DateOfBirth, Telephone, Username, ParentsName, (MaritalStatus)MaritalStatusComboBox.SelectedIndex, (Gender)GenderComboBox.SelectedIndex, CitizenId, (BloodType)BloodTypeComboBox.SelectedIndex);
-            
-            patient.Address = new Address(StreetName, StreetNum,
-                new Model.City(PostalCode, this.City, new Model.Country(this.Country)));
-
-            if (Password.Equals(""))
-            {
-                MessageBox.Show("Password is a required field.");
-            }
-            else
-            {
-                ////////////////////////EDITING THE ACCOUNT CREDENTIALS//////////////////////////////////
-                if (!OldPassword.Equals(Password))
-                {
-                    Credentials = new Credentials(Username, Password, RoleType.PATIENT);
-                    Model.Resources.OpenAccounts();
-                    foreach (KeyValuePair<string, Credentials> item in Model.Resources.accounts)
-                    {
-                        if (item.Key.Equals(Username))
-                        {
-                            item.Value.Password = Password;
-                            break;
-                        }
-                    }
-                    Model.Resources.SaveAccounts();
-                }
-
-
-                ////////////////////////EDITING THE PATIENT INFO////////////////////////////////////
-                //Dictionary<string, Patient> patientsForSerialization = new Dictionary<string, Patient>();
-
-                if (File.Exists(@"..\..\..\Resources\patients.json"))
-                {
-                    Model.Resources.OpenPatients();
-                    foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-                    {
-                        if (item.Key.Equals(Username))
-                        {
-                            Model.Resources.patients[item.Key] = patient;
-                            break;
-                        }
-                    }
-                    Model.Resources.SavePatients();
-                    NavigationService.Navigate(new PatientDetailsPage(patient));
-                }
-            }
+            PatientDTO patientDTO = new PatientDTO((BloodType)BloodTypeComboBox.SelectedIndex, PName, Surname, Username, Password, Telephone, Email, StreetName, StreetNum, DateOfBirth, CitizenId, Country, City, PostalCode, HealthCardNumber, ParentsName, (MaritalStatus)MaritalStatusComboBox.SelectedIndex, (Gender)GenderComboBox.SelectedIndex, Credentials);
+            PatientService.ProcessPatientEdit(patientDTO);
+            NavigationService.Navigate(new PatientsView());
         }
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
-}
+
+    }
 }

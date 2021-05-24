@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Model;
-using Model.Repository;
+using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
-using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.Services.Manager;
+using RoomRepository = Repository.RoomPersistance.RoomRepository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -22,9 +23,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private DateTime _startDate;
         private DateTime _endDate;
 
-        private RoomScheduleFunctions _roomScheduleFunctions;
+        private RoomScheduleService _roomScheduleService;
 
-        private RoomRepository _roomRepository;
+        private IRoomRepository _roomRepository;
 
         #endregion
 
@@ -46,7 +47,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             set
             {
                 _selectedRoom = value;
-                RoomSchedule = _roomScheduleFunctions.GetRoomSchedule(_selectedRoom);
+                RoomSchedule = _roomScheduleService.GetRoomSchedule(_selectedRoom);
                 OnPropertyChanged();
             }
         }
@@ -112,10 +113,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #endregion
 
-        public RenovationPlanningDialogViewModel()
+        public RenovationPlanningDialogViewModel(InjectorDTO injector)
         {
-            _roomScheduleFunctions = new RoomScheduleFunctions();
-            _roomRepository = new RoomRepository();
+            _roomScheduleService = new RoomScheduleService(injector);
+            _roomRepository = injector.RoomRepository;
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             StartDate = DateTime.Today;
 
@@ -137,7 +138,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 ScheduleType = ReservationType.RENOVATION
             };
 
-            _roomScheduleFunctions.CreateAndScheduleRenovationStart(roomSchedule);
+            _roomScheduleService.CreateAndScheduleRenovationStart(roomSchedule);
         }
 
         #endregion
