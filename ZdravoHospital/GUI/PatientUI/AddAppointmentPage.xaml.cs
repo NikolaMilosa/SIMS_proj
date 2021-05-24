@@ -59,7 +59,7 @@ namespace ZdravoHospital.GUI.PatientUI
                 return;
    
             Validations.SerializePeriod();
-
+            
             ++PatientWindow.RecentActionsNum;
             NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
         }

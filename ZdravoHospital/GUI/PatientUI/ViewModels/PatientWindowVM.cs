@@ -84,7 +84,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SurveyExecute(object sender)
         {
-            NavigatonService.Navigate(new SurveyPage(PatientWindow));
+            NavigatonService.Navigate(new SurveyPage(this));
         }
 
         private void NoteExecute(object sender)

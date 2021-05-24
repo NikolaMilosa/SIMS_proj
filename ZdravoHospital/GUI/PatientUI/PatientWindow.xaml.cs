@@ -150,7 +150,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void SurveyButton_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(new SurveyPage(this));
+            myFrame.Navigate(new SurveyPage(null));
         }
 
         private void NoteButton_Click(object sender, RoutedEventArgs e)

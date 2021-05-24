@@ -10,6 +10,9 @@
       Title="SurveyPage">
     <Page.Resources>
         <converters:RadioBtnToIntConverter x:Key="converter"></converters:RadioBtnToIntConverter>
+
+      
+
     </Page.Resources>
     <Border Background="White" CornerRadius="20">
         <Grid>
@@ -88,10 +91,30 @@
                 </Border>
             </StackPanel>
 
-            <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Name="submitmButton" Content="Submit" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="SubmitmButton_Click">
+            <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" 
+                        VerticalAlignment="Center">
+
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="LightGray"/>
+                               
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Name="submitmButton" Content="Submit" Width="150" FontSize="20"
+                        Background="Transparent" BorderBrush="Transparent" FontWeight="Bold"
+                        
+                        Command="{Binding Path=SubmitCommand}">
                 </Button>
-                <Button Name="cancelButton" Content="Cancel" Width="150" Margin="100,0,0,0" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="CancelButton_Click"></Button>
+                <Button Name="cancelButton" Content="Cancel" Width="150" Margin="100,0,0,0" 
+                        FontSize="20"  Height="55"
+                        Background="Transparent" BorderBrush="Transparent" FontWeight="Bold"
+                        
+                        Command="{Binding Path=CancelCommand}"></Button>
             </StackPanel>
 
         </Grid>

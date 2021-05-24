@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -24,12 +25,12 @@ namespace ZdravoHospital.GUI.PatientUI
     {
         public Survey Survey { get; set; }
         public PatientWindow PatientWindow { get; set; }
-        public SurveyPage(PatientWindow patientWindow)
+        public SurveyPage(PatientWindowVM patientWindowVm)
         {
             InitializeComponent();
-            Survey = new Survey();
-            DataContext = this;
-            PatientWindow = patientWindow;
+            DataContext = new SurveyPageVM(patientWindowVm);
+            //Survey = new Survey();
+            //PatientWindow = patientWindow;
 
             
         }
