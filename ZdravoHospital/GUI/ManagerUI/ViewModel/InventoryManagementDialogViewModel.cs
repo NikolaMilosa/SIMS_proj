@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -435,7 +436,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 e.Handled = true;
             }
         }
-
+        
         #endregion
     }
 }

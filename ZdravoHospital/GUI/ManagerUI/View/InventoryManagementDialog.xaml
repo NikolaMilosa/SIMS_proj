@@ -7,6 +7,7 @@
         xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
         xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:beh="clr-namespace:ZdravoHospital.GUI.ManagerUI.Commands"
         mc:Ignorable="d"
         Title="Inventory management"
         SizeToContent="WidthAndHeight"
@@ -111,8 +112,9 @@
                           ItemsSource="{Binding SenderRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" 
                           SelectedItem="{Binding SelectedInventory, Mode=TwoWay}"
                           SelectedIndex="{Binding SenderDataIndex, Mode=TwoWay}"
-                          FontSize="18" Margin="20,10,10,10" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" 
-                          GotFocus="FirstRoomDataGrid_GotFocus">
+                          FontSize="18" Margin="20,10,10,10" RowBackground="LightYellow" 
+                          AlternatingRowBackground="LightBlue" 
+                          >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
@@ -141,8 +143,13 @@
                         <i:EventTrigger EventName="PreviewKeyDown">
                             <i:InvokeCommandAction Command="{Binding DataGridCommand}" PassEventArgsToCommand="True"/>
                         </i:EventTrigger>
+                        <i:EventTrigger EventName="GotFocus">
+                            <i:InvokeCommandAction Command="{Binding DataGridFocused}"/>
+                        </i:EventTrigger>
                     </i:Interaction.Triggers>
-
+                    <i:Interaction.Behaviors>
+                        <beh:MyBehavior/>
+                    </i:Interaction.Behaviors>
                 </DataGrid>
             </Grid>
 
