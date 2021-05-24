@@ -253,9 +253,11 @@
         </Grid>
 
         <!-- DataGrids -->
-        <DataGrid x:Name="InitialTable" Grid.Column="2" IsReadOnly="True" Margin="20,20,20,20" Visibility="Visible"/>
+        <DataGrid x:Name="InitialTable" Grid.Column="2" IsReadOnly="True"
+                  Background="Transparent" Margin="20,20,20,20" Visibility="Visible"/>
 
         <DataGrid x:Name="RoomsTable" KeyboardNavigation.TabNavigation="Local" 
+                  Background="Transparent"
                   Visibility="{Binding Path=RoomTableVisibility}" HeadersVisibility="Column" AlternatingRowBackground="LightBlue" 
                   RowBackground="LightYellow" Grid.Column="2" FontSize="20" IsReadOnly="True" AutoGenerateColumns="False" 
                   ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="20,20,20,20" SelectionMode="Single" 
@@ -270,6 +272,7 @@
         </DataGrid>
 
         <DataGrid x:Name="InventoryTable" KeyboardNavigation.TabNavigation="Local" Visibility="{Binding Path=InventoryTableVisibility}" 
+                  Background="Transparent" 
                   HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Inventory, Mode=TwoWay}" SelectionMode="Single" 
@@ -284,9 +287,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid x:Name="StaffTable" Visibility="Hidden" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20"/>
+        <DataGrid x:Name="StaffTable" Visibility="Hidden" Background="Transparent" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20"/>
 
         <DataGrid x:Name="MedicineTable" KeyboardNavigation.TabNavigation="Local" 
+                  Background="Transparent"
                   Visibility="{Binding Path=MedicineTableVisibility}" HeadersVisibility="Column" Grid.Column="2" Margin="20,20,20,20" 
                   AlternatingRowBackground="LightBlue" FontSize="20" RowBackground="LightYellow" IsReadOnly="True" 
                   AutoGenerateColumns="False" ItemsSource="{Binding Medicines, Mode=TwoWay}" SelectionMode="Single" 
@@ -312,8 +316,14 @@
             <!-- shortcuts for rooms table -->
             <Grid Grid.Row="1" Margin="10,20">
                 <StackPanel Orientation="Vertical">
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected room</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected room</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">Enter</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- edit selected room</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">Del</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- delete selected room</Label>
+                    </StackPanel>
                 </StackPanel>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
@@ -330,10 +340,22 @@
             <!-- shortcuts for inventory table -->
             <Grid Grid.Row="1" Margin="10,20">
                 <StackPanel Orientation="Vertical">
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected inventory</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected inventory</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">F - filter inventory</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">+ - add or subtract inventory</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">Enter </Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- edit selected inventory</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">Del</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- delete selected inventory</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">F</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- filter inventory</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">+</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- add or subtract inventory</Label>
+                    </StackPanel>
                 </StackPanel>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
@@ -350,10 +372,22 @@
             <!-- shortcuts for medicine table -->
             <Grid Grid.Row="1" Margin="10,20">
                 <StackPanel Orientation="Vertical">
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Enter - edit selected medicine</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">Del - delete selected medicine</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">S - send medicine on recension</Label>
-                    <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">R - review medicine's rejection note</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">Enter</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- edit selected medicine</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">Del</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- delete selected medicine</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">S</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- send medicine on recension</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Height="Auto" FontSize="18" FontWeight="Bold">R</Label>
+                        <Label Height="Auto" FontSize="18" FontWeight="DemiBold" FontStyle="Italic">- review medicine's rejection note</Label>
+                    </StackPanel>
                 </StackPanel>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
