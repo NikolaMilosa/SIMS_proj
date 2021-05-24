@@ -545,5 +545,23 @@
             </Style.Triggers>
         </Style>
 
+        <ControlTemplate TargetType="{x:Type Button}" x:Key="ManagerButtonTemplate">
+            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                <ContentPresenter Content="{TemplateBinding Content}" 
+                                  ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsFocused" Value="True">
+                    <Setter TargetName="Border" Property="Background" Value="LightBlue" />
+                </Trigger>
+                <Trigger Property="Button.IsEnabled" Value="False">
+                    <Setter TargetName="Border" Property="Background" Value="#f4f4f4"></Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
     </Application.Resources>
 </Application>

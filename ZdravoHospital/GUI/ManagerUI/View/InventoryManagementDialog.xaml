@@ -221,7 +221,7 @@
 
         </Grid>
 
-        <Button x:Name="FinishButton" Grid.Row="2" FontSize="18" Content="Finish" Background="#bec4c2" Height="52" Width="100">
+        <Button x:Name="FinishButton" Grid.Row="2" FontSize="18" Template="{StaticResource ManagerButtonTemplate}" Content="Finish" Background="#bec4c2" Height="52" Width="100">
             <Button.Style>
                 <Style>
                     <Style.Triggers>

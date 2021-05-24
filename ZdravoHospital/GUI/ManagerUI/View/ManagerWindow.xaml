@@ -13,6 +13,9 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        
+    </Window.Resources>
     <Grid Background="Beige" Height="720" Width="1600">
 
         <Grid.ColumnDefinitions>
@@ -56,34 +59,36 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="RoomsButton" Grid.Row="0" Background="#bec4c2" BorderThickness="0,1,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Images/ManagerUI/rooms.png" Width="60" />
-                        <Separator Visibility="Hidden" Width="10"/>
-                        <TextBlock Text="Rooms" Width="100" FontSize="18" VerticalAlignment="Center"/>
-                        <Separator Visibility="Hidden" Width="10"/>
-                        <Image x:Name="RoomsMenuArrow" Source="../../../Images/ManagerUI/arrow.png" Width="25">
-                            <Image.Style>
-                                <Style TargetType="{x:Type Image}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=RoomsButton, Path=IsFocused}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </StackPanel>
+                <Button x:Name="RoomsButton" Grid.Row="0" Background="#bec4c2" BorderThickness="0,1,0,0" Template="{StaticResource ManagerButtonTemplate}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../../Images/ManagerUI/rooms.png" Width="60" />
+                            <Separator Visibility="Hidden" Width="10"/>
+                            <TextBlock Text="Rooms" Width="100" FontSize="18" VerticalAlignment="Center"/>
+                            <Separator Visibility="Hidden" Width="10"/>
+                            <Image x:Name="RoomsMenuArrow" Source="../../../Images/ManagerUI/arrow.png" Width="25">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RoomsButton, Path=IsFocused}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </StackPanel>
+                    </Button.Content>
                 </Button>
 
-                <Button x:Name="StaffButton" Grid.Row="1" Background="#bec4c2" BorderThickness="0,1,0,0">
+                <Button x:Name="StaffButton" Grid.Row="1" Background="#bec4c2" BorderThickness="0,1,0,0" Template="{StaticResource ManagerButtonTemplate}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Images/ManagerUI/staff.png" Width="60" />
                         <Separator Visibility="Hidden" Width="10"/>
@@ -110,7 +115,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="InventoryButton" Grid.Row="2" Background="#bec4c2" BorderThickness="0,1,0,0">
+                <Button x:Name="InventoryButton" Grid.Row="2" Background="#bec4c2" BorderThickness="0,1,0,0" Template="{StaticResource ManagerButtonTemplate}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Images/ManagerUI/inventory.png" Width="60" />
                         <Separator Visibility="Hidden" Width="10"/>
@@ -137,7 +142,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="NotificationsButton" Grid.Row="3" Background="#bec4c2" BorderThickness="0,1,0,1">
+                <Button x:Name="NotificationsButton" Grid.Row="3" Background="#bec4c2" BorderThickness="0,1,0,1" Template="{StaticResource ManagerButtonTemplate}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../../Images/ManagerUI/notifications.png" Width="60" Visibility="Visible"/>
                         <Separator Visibility="Hidden" Width="10"/>
@@ -162,7 +167,7 @@
                 </Button>
             </Grid>
 
-            <Button x:Name="Help" Grid.Row="2" Background="#bec4c2" Margin="100,35" BorderThickness="0">
+            <Button x:Name="Help" Grid.Row="2" Background="#bec4c2" Margin="100,35" BorderThickness="0" Template="{StaticResource ManagerButtonTemplate}">
                 <TextBlock TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Center"
                            Height="Auto" FontSize="18" FontWeight="DemiBold">Help</TextBlock>
             </Button>
@@ -187,10 +192,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" x:Name="ShowRoomsButton" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Show rooms" Command="{Binding ShowRoomCommand}"/>
-                <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Add room" Command="{Binding AddRoomCommand}"/>
-                <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,0" Content="Manage inventory" Command="{Binding ManageInventoryCommand}"/>
-                <Button Grid.Row="3" x:Name="PlanRenovation" FontSize="18"  Background="#bec4c2" BorderThickness="1,1,0,1" Content="Plan renovation" Command="{Binding PlanRenovationCommand}"/>
+                <Button Grid.Row="0" x:Name="ShowRoomsButton" FontSize="18"  Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" BorderThickness="1,1,0,0" Content="Show rooms" Command="{Binding ShowRoomCommand}"/>
+                <Button Grid.Row="1" x:Name="AddRoom" FontSize="18"  Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" BorderThickness="1,1,0,0" Content="Add room" Command="{Binding AddRoomCommand}"/>
+                <Button Grid.Row="2" x:Name="ManageInventory" FontSize="18"  Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" BorderThickness="1,1,0,0" Content="Manage inventory" Command="{Binding ManageInventoryCommand}"/>
+                <Button Grid.Row="3" x:Name="PlanRenovation" FontSize="18"  Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" BorderThickness="1,1,0,1" Content="Plan renovation" Command="{Binding PlanRenovationCommand}"/>
 
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
@@ -232,10 +237,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Content="Show inventory" BorderThickness="1,1,0,0" Command="{Binding Path=ShowInventoryCommand}"/>
-                <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Content="Add inventory" BorderThickness="1,1,0,1" Command="{Binding Path=AddInventoryCommand}"/>
-                <Button Grid.Row="4" x:Name="ShowMedicineButton" FontSize="18" Background="#bec4c2" Content="Show medicine" BorderThickness="1,0,0,1" Command="{Binding Path=ShowMedicineCommand}"/>
-                <Button Grid.Row="5" x:Name="AddMedicineButton" FontSize="18" Background="#bec4c2" Content="Add medicine" BorderThickness="1,0,0,1" Command="{Binding Path=AddMedicineCommand}"/>
+                <Button Grid.Row="2" x:Name="ShowInventoryButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Show inventory" BorderThickness="1,1,0,0" Command="{Binding Path=ShowInventoryCommand}"/>
+                <Button Grid.Row="3" x:Name="AddInventoryButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Add inventory" BorderThickness="1,1,0,1" Command="{Binding Path=AddInventoryCommand}"/>
+                <Button Grid.Row="4" x:Name="ShowMedicineButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Show medicine" BorderThickness="1,0,0,1" Command="{Binding Path=ShowMedicineCommand}"/>
+                <Button Grid.Row="5" x:Name="AddMedicineButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Add medicine" BorderThickness="1,0,0,1" Command="{Binding Path=AddMedicineCommand}"/>
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Visible"/>

@@ -80,7 +80,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="18" Content="Send" Height="52" Width="105" Margin="0,0,20,0" HorizontalAlignment="Right" Command="{Binding ConfirmCommand}">
+            <Button x:Name="ConfirmButton" Grid.Column="0" Template="{StaticResource ManagerButtonTemplate}"
+                    Background="#bec4c2" FontSize="18" Content="Send" Height="52" Width="105" Margin="0,0,20,0" HorizontalAlignment="Right" Command="{Binding ConfirmCommand}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="IsEnabled" Value="True"/>

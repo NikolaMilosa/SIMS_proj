@@ -95,7 +95,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" Grid.Column="0" Width="105" Height="52" Background="#bec4c2" FontSize="18" Content="Apply" Margin="10,0,10,10" Command="{Binding ConfirmCommand}">
+            <Button x:Name="ConfirmButton" Template="{StaticResource ManagerButtonTemplate}" Grid.Column="0" Width="105" Height="52" Background="#bec4c2" FontSize="18" Content="Apply" Margin="10,0,10,10" Command="{Binding ConfirmCommand}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="IsEnabled" Value="True" />

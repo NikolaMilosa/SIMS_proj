@@ -57,7 +57,7 @@
         </TextBox>
 
         <Grid Grid.Row="2" Grid.ColumnSpan="2">
-            <Button x:Name="ConfirmButton" FontSize="18" Content="Confirm" Background="#bec4c2" Height="52" Width="100" HorizontalAlignment="Left" Margin="70,0,0,0" Command="{Binding Path=ConfirmCommand}">
+            <Button x:Name="ConfirmButton" FontSize="18" Content="Confirm" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Height="52" Width="100" HorizontalAlignment="Left" Margin="70,0,0,0" Command="{Binding Path=ConfirmCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="IsEnabled" Value="True"/>
