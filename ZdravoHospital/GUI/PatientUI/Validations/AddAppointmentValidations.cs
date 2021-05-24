@@ -15,6 +15,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
     {
         public AddAppointmentPage Page { get; set; }
         public PeriodFunctions PeriodFunctions { get; set; }
+        public PatientFunctions patientFunctions { get; private set; }
 
         public RoomSheduleFunctions RoomFunctions {get;set;}
         public AddAppointmentValidations(AddAppointmentPage addAppointmentPage,string username)
@@ -22,13 +23,14 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             Page = addAppointmentPage;
             PeriodFunctions = new PeriodFunctions(username);
             RoomFunctions = new RoomSheduleFunctions(username);
+            patientFunctions = new PatientFunctions(username);
         }
 
         public bool CheckPeriodAvailibility()
         {
             bool available = true;
 
-            if (Validate.TrollDetected() || !IsFormFilled())
+            if (patientFunctions.IsTrollDetected() || !IsFormFilled())
                 return false;
 
             FillOutPeriod();

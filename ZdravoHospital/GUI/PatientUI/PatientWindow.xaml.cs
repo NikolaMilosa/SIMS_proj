@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -62,10 +63,11 @@ namespace ZdravoHospital.GUI.PatientUI
         public PatientWindow(string username)
         {
             InitializeComponent();
-            SetProperties(username);
-            SetWindowParameters();
-            CheckSurveys();
-            StartThreads();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            DataContext = new PatientWindowVM(username,this);
+            //SetProperties(username);
+            //CheckSurveys();
+            //StartThreads();
         }
 
         public void CheckSurveys()
@@ -83,8 +85,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         public void SetWindowParameters()
         {
-            DataContext = this;
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+           
             //myFrame.Navigate(new PeriodPage(PatientUsername));
         }
 
@@ -123,7 +124,7 @@ namespace ZdravoHospital.GUI.PatientUI
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            LogOutDialog logOutDialog = new LogOutDialog(this);
+            LogOutDialog logOutDialog = new LogOutDialog(this, "dada");
             logOutDialog.ShowDialog();
         }
 

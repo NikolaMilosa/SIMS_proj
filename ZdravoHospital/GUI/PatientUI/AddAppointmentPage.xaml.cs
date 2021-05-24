@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Validations;
 using Period = Model.Period;
 
@@ -27,11 +28,13 @@ namespace ZdravoHospital.GUI.PatientUI
         public Period Period { get; set; }
         AddAppointmentValidations Validations { get; set; }
         public  bool Mode { get; set; }//true=add,false=edit
+        private PatientFunctions patientFunctions;
 
         public AddAppointmentPage(Period period,bool mode,string username)
         {
             InitializeComponent();
             DataContext = this;
+            patientFunctions = new PatientFunctions(username);
             SetProperties(mode,username);
             GenerateComboBoxes(period,username);
         }

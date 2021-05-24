@@ -15,7 +15,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             SetNumberOfRecentActions(user);
             while (true)
             {
-                Validate.SleepForGivenMinutes(5);
+                ThreadFunctions.SleepForGivenMinutes(5);
                 if (PatientWindow.RecentActionsNum < 5)
                     PatientWindow.RecentActionsNum = 0;
             }

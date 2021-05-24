@@ -10,6 +10,7 @@ using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Validations;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
@@ -19,19 +20,26 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #region Properties
 
         public ObservableCollection<PeriodDTO> PeriodDTOs { get; private set; }
-        public PeriodDTO SelectedPeriodDTO { get;  set; }
+        public PeriodDTO SelectedPeriodDTO { get; set; }
         public PeriodRepository PeriodRepository { get; private set; }
         public PeriodConverter PeriodConventer { get; private set; }
-
-
-
+        
 
         #endregion
 
+        #region Fields
+
+        private ViewFunctions viewFunctions;
+        private NavigationService navigationService;
+        private PatientFunctions patientFunctions;
+        #endregion
+
+
         #region Constructors
 
-        public PeriodPageVM(string username)
+        public PeriodPageVM(string username, NavigationService navigationService)
         {
+            SetFields(username, navigationService);
             SetProperties(username);
             SetCommands();
         }
@@ -49,17 +57,17 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
             Period selectedPeriod = PeriodConventer.GetPeriod(SelectedPeriodDTO);
-            PatientWindow.Frame.Navigate(new AddAppointmentPage(selectedPeriod, false, null));
+            navigationService.Navigate(new AddAppointmentPage(selectedPeriod, false, null));
         }
 
         public bool EditCanExecute(object parameter)
         {
 
-            if (Validations.Validate.TrollDetected())
+            if (patientFunctions.IsTrollDetected())
             {
                 return false;
             }
-                
+
 
             return true;
         }
@@ -79,8 +87,16 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
+        private void SetFields(string username,NavigationService navigationService)
+        {
+            patientFunctions = new PatientFunctions(username);
+            viewFunctions = new ViewFunctions();
+            this.navigationService = navigationService;
+        }
+
         private void RemovePeriod()
         {
+            patientFunctions.ActionTaken();
             PeriodRepository.DeleteById(SelectedPeriodDTO.PeriodId);
             PeriodDTOs.Remove(SelectedPeriodDTO);
         }
@@ -89,7 +105,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             if (SelectedPeriodDTO.Date < DateTime.Now.AddDays(2))
             {
-                Validate.ShowOkDialog("Warning", "You can't manipulate period 2 days from its start!");
+                viewFunctions.ShowOkDialog("Warning", "You can't manipulate period 2 days from its start!");
                 return true;
             }
 

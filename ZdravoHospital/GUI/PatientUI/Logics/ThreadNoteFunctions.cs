@@ -14,7 +14,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             {
                 Patient patient = Validate.LoadPatient((string)username);
                 GenerateNoteNotificationDialogs(patient.PatientNotes,(string)username);
-                Validate.SleepForGivenMinutes(1);
+                ThreadFunctions.SleepForGivenMinutes(1);
             }
         }
 

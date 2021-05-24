@@ -33,10 +33,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             return detected;
         }
      
-        public static void SleepForGivenMinutes(int minutes)
-        {
-            Thread.Sleep(TimeSpan.FromMinutes(minutes));
-        }
+       
 
         public static void GenerateTimeSpan(List<TimeSpan> timeList)
         {

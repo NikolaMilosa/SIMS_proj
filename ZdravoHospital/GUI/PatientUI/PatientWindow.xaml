@@ -56,7 +56,7 @@
                         Width="200"
                         Height="50"
                         BorderBrush="Transparent"
-                        Click="AppointmentsButton_Click"
+                        Command="{Binding Path=PeriodsCommand}"
                             >
                         <StackPanel Orientation="Horizontal" Height="50">
                             <Image Source="/Images/PatientUI/appointmentIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
@@ -70,7 +70,8 @@
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
-                        BorderBrush="Transparent" Click="AddAppointmentButton_Click"
+                        BorderBrush="Transparent" 
+                        Command="{Binding Path=AddAppointmentCommand}"
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
                             <Image Source="/Images/PatientUI/addIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
@@ -84,7 +85,8 @@
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
-                        BorderBrush="Transparent" Click="AppointmentHistoryButton_Click" 
+                        BorderBrush="Transparent" 
+                        Command="{Binding Path=PeriodHistoryCommand}"
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
                             <Image Source="/Images/PatientUI/historyIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
@@ -113,7 +115,8 @@
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
-                        BorderBrush="Transparent" Click="NoteButton_Click"
+                        BorderBrush="Transparent" 
+                        Command="{Binding Path=NoteCommand}"
                         
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
@@ -128,7 +131,8 @@
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
-                        BorderBrush="Transparent" Click="NotificationsButton_Click"
+                        BorderBrush="Transparent" 
+                        Command="{Binding Path=NotificationCommand}"
                         
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
@@ -143,7 +147,8 @@
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
-                        BorderBrush="Transparent" Click="LogOutButton_Click"
+                        BorderBrush="Transparent"
+                            Command="{Binding Path=LogOutCommand}"
                         
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
@@ -172,7 +177,8 @@
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Background="#2c876b" Grid.ColumnSpan="2">
                     <Image Source="/Images/PatientUI/hospitalIcon.png" Margin="240,5,10,5"></Image>
                     <TextBlock Text="Zdravo Hospital" FontSize="20" FontWeight="Bold" Foreground="White" Margin="0,4,0,0"></TextBlock>
-                    <Button  x:Name="surveyButton" Content="Take a survey" FontSize="15" Background="Transparent" BorderBrush="Transparent" Margin="270,0,0,0" Foreground="White" Click="SurveyButton_Click">
+                    <Button  x:Name="surveyButton" Content="Take a survey" FontSize="15" Background="Transparent" BorderBrush="Transparent" Margin="270,0,0,0" Foreground="White" 
+                             Command="{Binding Path=SurveyCommand}">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Visibility" Value="Collapsed"/>

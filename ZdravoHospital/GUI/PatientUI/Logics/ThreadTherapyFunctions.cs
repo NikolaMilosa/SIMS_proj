@@ -24,7 +24,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                         GeneratePrescriptionTimes(period.Prescription, username);
                     }
                 }
-                Validate.SleepForGivenMinutes(5);
+                ThreadFunctions.SleepForGivenMinutes(5);
             }
         }
 

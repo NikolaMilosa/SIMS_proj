@@ -20,11 +20,13 @@ namespace ZdravoHospital.GUI.PatientUI
     public partial class LogOutDialog : Window
     {
         private PatientWindow patientWindow;
-        public LogOutDialog(PatientWindow patientWindow)
+        private string username;
+        public LogOutDialog(PatientWindow patientWindow,string username)
         {
             InitializeComponent();
             this.patientWindow = patientWindow;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.username = username;
         }
 
         private void YesButton_Click(object sender, RoutedEventArgs e)//yes button
@@ -39,8 +41,8 @@ namespace ZdravoHospital.GUI.PatientUI
         private void SerializePatient()
         {
             PatientRepository patientRepository = new PatientRepository();
-            Patient patient = patientRepository.GetById(patientWindow.PatientUsername);
-            patient.RecentActions = PatientWindow.RecentActionsNum;
+            Patient patient = patientRepository.GetById(username);
+            //patient.RecentActions = PatientWindow.RecentActionsNum;
             patient.LastLogoutTime = DateTime.Now;
             patientRepository.Update(patient);
         }

@@ -34,7 +34,7 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             InitializeComponent();
             //FillList(username);
-            DataContext = new PeriodPageVM(username);
+            DataContext = new PeriodPageVM(username,this.NavigationService);
             //DataContext = this;
         }
 
