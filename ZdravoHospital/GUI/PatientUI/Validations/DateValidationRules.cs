@@ -20,10 +20,9 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
             }
             catch
             {
-
+                return new ValidationResult(false, "Please enter an upcoming Date in form: !");
             }
 
-            return new ValidationResult(false, "Please enter Date in form:");
         }
     }
 }
