@@ -99,9 +99,13 @@
     <Resource Include="Images\PatientUI\appointmentIconBlack.png" />
     <Resource Include="Images\PatientUI\backIcon.png" />
     <Resource Include="Images\PatientUI\backIconBlack.png" />
-    <Resource Include="Images\PatientUI\emptyStar.png" />
+    <Resource Include="Images\PatientUI\emptyStar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\PatientUI\evaluateIcon.png" />
-    <Resource Include="Images\PatientUI\fullStar.png" />
+    <Resource Include="Images\PatientUI\fullStar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\PatientUI\historyIcon.png" />
     <Resource Include="Images\PatientUI\historyIconBlack.png" />
     <Resource Include="Images\PatientUI\hospitalIcon.png" />
