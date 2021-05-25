@@ -22,53 +22,10 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class CreateNotePage : Page
     {
-        public string PatientUsername { get; set; }
-        public PatientNote PatientNote { get; set; }
         public CreateNotePage()
         {
             InitializeComponent();
-            DataContext = this;
-            FillProperties();
-            
-        }
-        private void FillProperties()
-        {
-            PatientUsername = PatientWindowVM.PatientUsername;
-            PatientNote = new PatientNote();
-            PatientNote.NotifyTime = DateTime.Now;
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new NotesPage(PatientUsername));
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!IsFormFilled())
-                return;
-
-            AddNoteToPatient();
-            NavigationService.Navigate(new NotesPage(PatientUsername));
-        }
-
-        private void AddNoteToPatient()
-        {
-            PatientRepository patientRepository = new PatientRepository();
-            Patient patient = patientRepository.GetById(PatientUsername);
-            patient.PatientNotes.Add(PatientNote);
-            patientRepository.Update(patient);
-        }
-
-        private bool IsFormFilled()
-        {
-            if (ContentTextBox.Text == null || PatientNote.NotifyTime < DateTime.Now || TitleTextBox.Text==null)
-            {
-                Validate.ShowOkDialog("Warning","Fill out the form!");
-                return false;
-            }
-
-            return true;
+            DataContext = new CreateNotePageVM();
         }
     }
 }

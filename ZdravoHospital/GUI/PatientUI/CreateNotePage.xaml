@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:val="clr-namespace:ZdravoHospital.GUI.PatientUI.Validations"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" d:DataContext="{d:DesignInstance Type=local:PatientWindow}"
       mc:Ignorable="d" 
       d:DesignHeight="708" d:DesignWidth="804"
@@ -30,7 +31,7 @@
             <TextBlock Text="Title:" Margin="100,0,0,0" FontSize="28"></TextBlock>
             <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="1,1,2,1">
                 <TextBox x:Name="TitleTextBox" Margin="8,8,8,8" Height="30" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
-                             Text="{Binding Path=PatientNote.Title}">
+                             Text="{Binding Path=PatientNote.Title,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}">
                 </TextBox>
             </Border>
             </StackPanel>
@@ -44,7 +45,7 @@
                 <TextBlock Text="Content:" Margin="100,0,0,0" FontSize="28"></TextBlock>
                 <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="1,1,2,1">
                     <TextBox x:Name="ContentTextBox" Margin="8,8,8,8" Height="180" BorderBrush="Transparent" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True"
-                             Text="{Binding Path=PatientNote.Content}">
+                             Text="{Binding Path=PatientNote.Content,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
                 </Border>
              </StackPanel>
@@ -62,15 +63,16 @@
                                          
                     Minimum="{x:Static sys:DateTime.Today}"
                     DefaultValue="{x:Static sys:DateTime.Now}"
-                    Value="{Binding Path=PatientNote.NotifyTime,Mode=TwoWay}"
-                    Width="300" Height="30"/>
+                    Value="{Binding Path=PatientNote.NotifyTime,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
+                    Width="300" Height="30"
+                    />
+                    <TextBlock Text="{Binding Path=ErrorMessage}" Foreground="Red" Margin="5,2,0,0"></TextBlock>
                 </StackPanel>
-               
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center">
-                <Button Name="ConfirmButton" Content="Confirm" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="ConfirmButton_Click" Margin="0,0,150,0"></Button>
-                <Button Name="CancelButton" Content="Cancel" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Click="CancelButton_Click"></Button>
+                <Button Name="ConfirmButton" Content="Confirm" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=ConfirmCommand}" Margin="0,0,150,0"></Button>
+                <Button Name="CancelButton" Content="Cancel" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent"  Command="{Binding Path=CancelCommand}"></Button>
             </StackPanel>
         </Grid>
     </Border>
