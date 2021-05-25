@@ -20,6 +20,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public PatientRepository PatientRepository { get; private set; }
 
+        public ViewFunctions ViewFunctions { get; private set; }
+
 
         #endregion
 
@@ -49,8 +51,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (!RemoveDialog())
                 return;
             RemoveNote();
-            ViewFunctions viewFunctions = new ViewFunctions();
-            viewFunctions.ShowOkDialog("Removed", "Note succesffuly removed!");
+            ViewFunctions.ShowOkDialog("Removed", "Note succesffuly removed!");
         }
 
         private void DoubleClickExecute(object sender)
@@ -70,10 +71,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private bool RemoveDialog()
         {
-            CustomYesNoDialog dialog = new CustomYesNoDialog("Remove note",
-               "Are you sure that you want to remove the selected note?");
-            dialog.ShowDialog();
-            if (CustomYesNoDialogVM.YesPressed)
+            ViewFunctions.ShowYesNoDialog("Remove note",
+                "Are you sure that you want to remove the selected note?");
+            if (ViewFunctions.YesPressed)
                 return true;
             return false;
         }
@@ -95,6 +95,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             PatientRepository = new PatientRepository();
             Patient = PatientRepository.GetById(PatientWindowVM.PatientUsername);
             ObservableNotes = new ObservableCollection<PatientNote>(Patient.PatientNotes);
+            ViewFunctions = new ViewFunctions();
         }
 
 
