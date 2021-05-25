@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -17,29 +18,13 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class CustomOkDialog : Window
     {
-        public string DialogTitle { get; set; }
-
-        public string DialogContent { get; set; }
 
         public CustomOkDialog(string title,string content)
         {
             InitializeComponent();
-            DataContext = this;
-            SetWindowsParameters(title, content);
-        }
-
-        public void SetWindowsParameters(string title, string content)
-        {
-            DialogTitle = title;
-            DialogContent = content;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Topmost = true;
-            Focus();
+            DataContext = new CustomOkDialogVM(title, content);
         }
 
-        private void OkButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
 }
