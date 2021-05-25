@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Channels;
 using System.Windows.Navigation;
+using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Logics;
 
@@ -58,8 +61,14 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void LogOutExecute(object sendes)
         {
-            LogOutDialog logOutDialog = new LogOutDialog(PatientWindow, PatientUsername);
-            logOutDialog.ShowDialog();
+            ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowYesNoDialog("Logging out","Are you sure that you want to log out?");
+            if (!viewFunctions.YesPressed)
+                return;
+            SerializePatient();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            PatientWindow.Close();
         }
 
         private void AddAppointmentExecute(object sender)
@@ -125,6 +134,13 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             SurveyAvailable = surveyFunctions.IsSurveyAvailable(PatientUsername);
         }
 
+        private void SerializePatient()
+        {
+            PatientRepository patientRepository = new PatientRepository();
+            Patient patient = patientRepository.GetById(PatientUsername);
+            patient.LastLogoutTime = DateTime.Now;
+            patientRepository.Update(patient);
+        }
 
 
 
