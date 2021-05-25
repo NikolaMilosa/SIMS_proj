@@ -10,8 +10,14 @@
       "tester two"
     ],
     "RecentActions": 2,
-    "LastLogoutTime": "2021-05-24T22:48:03.8052194+02:00",
-    "PatientNotes": [],
+    "LastLogoutTime": "2021-05-25T13:39:40.5571424+02:00",
+    "PatientNotes": [
+      {
+        "Content": "asdad",
+        "NotifyTime": "2021-05-25T13:40:24.265+02:00",
+        "Title": "sdad"
+      }
+    ],
     "Name": "Stefan",
     "Surname": "Ljubovic",
     "Email": "ljuba@gmail.com",

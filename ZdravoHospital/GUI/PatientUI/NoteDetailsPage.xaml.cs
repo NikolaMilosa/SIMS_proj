@@ -20,27 +20,13 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class NoteDetailsPage : Page
     {
-       public PatientNote PatientNote { get; set; }
-
-       public  string PatientUsername { get; set; }
 
         public NoteDetailsPage(PatientNote patientNote)
         {
             InitializeComponent();
-            SetProperties(patientNote);
-            DataContext = this;
+            DataContext = new NoteDetailsPageVM(patientNote);
         }
 
-        private void SetProperties(PatientNote patientNote)
-        {
-            PatientNote = patientNote;
-            PatientUsername = PatientWindowVM.PatientUsername;
-        }
-
-
-        private void BackButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new NotesPage(PatientUsername));
-        }
+     
     }
 }
