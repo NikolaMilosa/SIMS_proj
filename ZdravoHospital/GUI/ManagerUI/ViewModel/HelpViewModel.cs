@@ -6,7 +6,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using ZdravoHospital.GUI.ManagerUI.Commands;
+using ZdravoHospital.GUI.ManagerUI.View.HelpUserControls;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
@@ -16,6 +18,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private ObservableCollection<TreeViewItem> _tree;
         private TreeViewItem _selectedItem;
+        private UserControl _currentControl;
 
         #endregion
 
@@ -35,6 +38,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             get => _selectedItem;
             set => _selectedItem = value;
+        }
+
+        public UserControl CurrentControl
+        {
+            get => _currentControl;
+            set
+            {
+                _currentControl = value;
+                OnPropertyChanged();
+            }
         }
 
         #endregion
@@ -63,6 +76,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private void OnEnterClick()
         {
             SelectedItem.IsExpanded = (SelectedItem.IsExpanded == false) ? true : false;
+            ResolveCurrentControl();
         }
 
         #endregion
@@ -100,7 +114,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             });
             Tree[0].Items.Add(new TreeViewItem()
             {
-                Header = "Add rooms"
+                Header = "Add room"
             });
             Tree[0].Items.Add(new TreeViewItem()
             {
@@ -140,6 +154,41 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 Header = "Medicine controls"
             });
+        }
+
+        private void ResolveCurrentControl()
+        {
+            if (SelectedItem.Header.Equals("Show rooms"))
+            {
+                CurrentControl = new ShowRoomHelp();
+            }
+            else if (SelectedItem.Header.Equals("Add room"))
+            {
+
+            }
+
+            if (SelectedItem.Items.Count == 0)
+            {
+                ClearColors(Tree.ToList());
+                SelectedItem.Background = new SolidColorBrush(Colors.White);
+            }
+        }
+
+        private void ClearColors(List<TreeViewItem> nodes)
+        {
+            foreach (var tvi in nodes)
+            {
+                if (tvi.Items.Count == 0)
+                {
+                    tvi.Background = new SolidColorBrush(Colors.Transparent);
+                }
+                else
+                {
+                    List<TreeViewItem> temp = new List<TreeViewItem>();
+                    temp.AddRange(tvi.Items.OfType<TreeViewItem>().ToList());
+                    ClearColors(temp);
+                }
+            }
         }
 
         #endregion

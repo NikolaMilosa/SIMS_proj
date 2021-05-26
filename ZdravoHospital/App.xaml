@@ -563,5 +563,13 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
+        <Style x:Key="HelpHeading" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="45"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+        </Style>
+
     </Application.Resources>
 </Application>

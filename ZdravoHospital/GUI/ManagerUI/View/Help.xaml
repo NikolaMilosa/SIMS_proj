@@ -45,5 +45,25 @@
                 </TreeView.InputBindings>
             </TreeView>
         </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="700"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ContentControl Grid.Row="0" Content="{Binding CurrentControl}" IsTabStop="False"/>
+
+            <Button x:Name="FinishButton" Grid.Row="1" FontSize="18" Template="{StaticResource ManagerButtonTemplate}" Content="Finish" Background="#bec4c2" Height="52" Width="100">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction MethodName="Close"
+                                            TargetObject="{Binding RelativeSource={RelativeSource
+                                                  Mode=FindAncestor,
+                                                  AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
     </Grid>
 </Window>
