@@ -38,7 +38,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         private static List<DateTime> GenerateTimes(Therapy therapy,string username)
         {
             List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
-            PeriodFunctions periodFunctions = new PeriodFunctions(username);
+            PeriodFunctions periodFunctions = new PeriodFunctions();
             foreach (DateTime dateTime in notifications)
                 if (periodFunctions.IsPeriodWithinGivenMinutes(dateTime, 5))
                     Validate.ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));

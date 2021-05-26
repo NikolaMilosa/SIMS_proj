@@ -14,10 +14,10 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         PeriodFunctions PeriodFunctions { get; set; }
         #endregion
 
-        public RoomSheduleFunctions(string username)
+        public RoomSheduleFunctions()
         {
             SetProperties();
-            PeriodFunctions = new PeriodFunctions(username);
+            PeriodFunctions = new PeriodFunctions();
         }
 
         private void SetProperties()
@@ -36,7 +36,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                 if (GetFreeRoomId(room, checkedPeriod) != -1)
                     return room.Id;
 
-            Validate.ShowOkDialog("Warning", "There is no free rooms at selected time!");
+            //Validate.ShowOkDialog("Warning", "There is no free rooms at selected time!");
             return roomId;
         }
 

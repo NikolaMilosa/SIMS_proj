@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public SuggestAppointmentValidations(AddAppointmentPage addAppointmentPage)
         {
             Page = addAppointmentPage;
-            PeriodFunctions = new PeriodFunctions(Page.Period.PatientUsername);
+            PeriodFunctions = new PeriodFunctions();
             DoctorFunctions = new SuggestDoctorFunctions(Page.Period.PatientUsername);
         }
 

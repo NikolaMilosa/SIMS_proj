@@ -73,7 +73,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void AddAppointmentExecute(object sender)
         {
-            NavigationService.Navigate(new AddAppointmentPage(null, true, PatientUsername));
+            NavigationService.Navigate(new AddAppointmentPage(null));
         }
 
         private void PeriodsExecute(object sender)

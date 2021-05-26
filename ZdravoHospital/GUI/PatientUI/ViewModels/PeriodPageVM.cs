@@ -57,7 +57,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
             Period selectedPeriod = PeriodConventer.GetPeriod(SelectedPeriodDTO);
-            navigationService.Navigate(new AddAppointmentPage(selectedPeriod, false, null));
+            navigationService.Navigate(new AddAppointmentPage(selectedPeriod));
         }
 
         public bool EditCanExecute(object parameter)
@@ -77,6 +77,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
 
+            //patientFunctions.ActionTaken();
             ViewFunctions viewFunctions = new ViewFunctions();
             viewFunctions.ShowYesNoDialog("Remove appointment", "Are you sure you want to remove appointment?");
             if (viewFunctions.YesPressed)

@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public SuggestDoctorFunctions(string username)
         {
             PeriodRepository = new PeriodRepository();
-            PeriodFunctions = new PeriodFunctions(username);
+            PeriodFunctions = new PeriodFunctions();
         }
 
         public void SuggestDoctor(Period checkedPeriod, ObservableCollection<DoctorDTO> doctorList)

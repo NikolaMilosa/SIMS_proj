@@ -20,7 +20,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private static void GenerateNoteNotificationDialogs(List<PatientNote> patientNotes,string username)
         {
-            PeriodFunctions periodFunctions = new PeriodFunctions(username);
+            PeriodFunctions periodFunctions = new PeriodFunctions();
             foreach (PatientNote note in patientNotes)
             {
                 if (periodFunctions.IsPeriodWithinGivenMinutes(note.NotifyTime, 1))

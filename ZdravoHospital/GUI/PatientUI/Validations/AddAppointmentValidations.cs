@@ -21,8 +21,8 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         public AddAppointmentValidations(AddAppointmentPage addAppointmentPage,string username)
         {
             Page = addAppointmentPage;
-            PeriodFunctions = new PeriodFunctions(username);
-            RoomFunctions = new RoomSheduleFunctions(username);
+            PeriodFunctions = new PeriodFunctions();
+            RoomFunctions = new RoomSheduleFunctions();
             patientFunctions = new PatientFunctions(username);
         }
 

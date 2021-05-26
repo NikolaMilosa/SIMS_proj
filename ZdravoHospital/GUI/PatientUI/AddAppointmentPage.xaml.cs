@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI
@@ -27,16 +28,20 @@ namespace ZdravoHospital.GUI.PatientUI
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
         public Period Period { get; set; }
         AddAppointmentValidations Validations { get; set; }
-        public  bool Mode { get; set; }//true=add,false=edit
+        public bool Mode { get; set; }//true=add,false=edit
+
         private PatientFunctions patientFunctions;
 
-        public AddAppointmentPage(Period period,bool mode,string username)
+        public AddAppointmentPage(Period period)
         {
             InitializeComponent();
-            DataContext = this;
-            patientFunctions = new PatientFunctions(username);
-            SetProperties(mode,username);
-            GenerateComboBoxes(period,username);
+            if(period==null)
+                 DataContext = new AddAppointmentPageVM();
+            else
+                DataContext = new AddAppointmentPageVM(period);
+            //patientFunctions = new PatientFunctions(username);
+            //SetProperties(mode,username);
+            //GenerateComboBoxes(period,username);
         }
 
         private void GenerateComboBoxes(Period period, string username)
@@ -46,9 +51,9 @@ namespace ZdravoHospital.GUI.PatientUI
             Validations.GeneratePeriod(period, username);
         }
 
-        private void SetProperties(bool mode,string username)
+        private void SetProperties(bool mode, string username)
         {
-            Validations = new AddAppointmentValidations(this,username);
+            Validations = new AddAppointmentValidations(this, username);
             Mode = mode;
             PeriodList = new ObservableCollection<TimeSpan>();
         }
@@ -57,18 +62,18 @@ namespace ZdravoHospital.GUI.PatientUI
         {
             if (!Validations.CheckPeriodAvailibility())
                 return;
-   
+
             Validations.SerializePeriod();
-            
+
             ++PatientWindow.RecentActionsNum;
             NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
         }
 
-       
+
 
         private void SuggestButton_Click(object sender, RoutedEventArgs e)
         {
-  
+
             SuggestAppointmentValidations suggestValidations = new SuggestAppointmentValidations(this);
 
             if (suggestValidations.IsOnlyDoctorSelected()) //suggest time based on doctor
@@ -80,7 +85,7 @@ namespace ZdravoHospital.GUI.PatientUI
             }
             else
                 Validate.ShowOkDialog("Warning", "Please choose doctor or time so the system could suggest you  periods!");
-            
+
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
@@ -29,24 +30,43 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public string PatientUsername { get; set; }
         #endregion
 
-        public PeriodFunctions(string username)
+        public PeriodFunctions()
         {
             PeriodRepository = new PeriodRepository();
-            PatientUsername = username;
+            PatientUsername = PatientWindowVM.PatientUsername;
         }
 
         #region Methods
+   
+
+        public  void UpdatePeriod(Period period)
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Update(period);
+            Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
+        }
+
+        public  void SerializeNewPeriod(Period period)
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Create(period);
+            Validate.ShowOkDialog("Appointment", "Appointment is succesfully added!");
+        }
         //
         public  bool IsPeriodWithinGivenMinutes(DateTime dateTime, int minutes)
         {
-            bool itIs = false;
-            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes))
-                itIs = true;
+            bool itIs = false || dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes);
 
             return itIs;
         }
 
+        public int GeneratePeriodId()
+        {
+            if (PeriodRepository.GetValues().Count == 0)
+                return 0;
 
+            return PeriodRepository.GetValues().Last().PeriodId + 1;//vrati vrednost za jedan vecu od poslednjeg id-a iz liste
+        }
         //
         public bool CheckPeriodAvailability(Period checkedPeriod, bool writeWarnings)
         {
