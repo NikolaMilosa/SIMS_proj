@@ -87,6 +87,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             Tree = new ObservableCollection<TreeViewItem>();
             
+            //General
             Tree.Add(new TreeViewItem()
             {
                 Header = "Rooms"
@@ -108,6 +109,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 Header = "Controls and navigation"
             });
 
+
+            //Rooms
             Tree[0].Items.Add(new TreeViewItem()
             {
                 Header = "Show rooms"
@@ -125,6 +128,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 Header = "Plan renovation"
             });
 
+
+            //Staff
+            Tree[1].Items.Add(new TreeViewItem()
+            {
+                Header = "Generate report"
+            });
+
+
+            //Inventory
             Tree[2].Items.Add(new TreeViewItem()
             {
                 Header = "Show inventory"
@@ -142,6 +154,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 Header = "Add medicine"
             });
 
+
+            //Controls
             Tree[4].Items.Add(new TreeViewItem()
             {
                 Header = "Room controls"
