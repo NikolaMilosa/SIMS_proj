@@ -30,16 +30,16 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #region Fields
 
         private ViewFunctions viewFunctions;
-        private NavigationService navigationService;
+
         private PatientFunctions patientFunctions;
         #endregion
 
 
         #region Constructors
 
-        public PeriodPageVM(string username, NavigationService navigationService)
+        public PeriodPageVM(string username)
         {
-            SetFields(username, navigationService);
+            SetFields(username);
             SetProperties(username);
             SetCommands();
         }
@@ -57,7 +57,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
             Period selectedPeriod = PeriodConventer.GetPeriod(SelectedPeriodDTO);
-            navigationService.Navigate(new AddAppointmentPage(selectedPeriod));
+            PatientWindowVM.NavigationService.Navigate(new AddAppointmentPage(selectedPeriod));
         }
 
         public bool EditCanExecute(object parameter)
@@ -88,11 +88,11 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
-        private void SetFields(string username,NavigationService navigationService)
+        private void SetFields(string username)
         {
             patientFunctions = new PatientFunctions(username);
             viewFunctions = new ViewFunctions();
-            this.navigationService = navigationService;
+            
         }
 
         private void RemovePeriod()

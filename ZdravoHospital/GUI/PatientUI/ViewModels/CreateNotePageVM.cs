@@ -22,7 +22,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 errorMessage = value;
                 OnPropertyChanged("ErrorMessage");
             }
-
         }
 
         #endregion

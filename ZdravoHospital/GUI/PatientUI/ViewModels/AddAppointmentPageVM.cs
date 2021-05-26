@@ -19,6 +19,20 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #region Properties
         public ObservableCollection<DoctorDTO> DoctorList { get; set; }
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
+
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
+            }
+        }
+        public DateTime DisplayDateStart { get=>DateTime.Now.AddDays(3);
+            set{}
+        }
         private DoctorDTO selectedDoctorDto;
 
         public DoctorDTO SelectedDoctorDTO
@@ -97,9 +111,16 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (PatientFunctions.IsTrollDetected() || !IsFormFilled())
                 return false;
 
-            FillOutPeriod();
+            FillOutPeriod();//pokupi podatke iz forme i kreiraj ostatak perioda na osnovu njih
 
-            return PeriodFunctions.CheckPeriodAvailability(Period, false) && Period.RoomId != -1;
+            if (PeriodFunctions.CheckPeriodAvailability(Period, false) && Period.RoomId != -1)
+            {
+                ErrorMessage = "";
+                return true;
+            }
+            ErrorMessage = PeriodFunctions.ErrorMessage;
+
+            return false;
         }
 
         public void CancelExecute(object parameter)
@@ -159,6 +180,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             {
                 PatientUsername = PatientWindowVM.PatientUsername,
                 Duration = 30,
+                StartTime = DateTime.Now.AddDays(3),
                 PeriodId = PeriodFunctions.GeneratePeriodId()
             };
         }

@@ -28,6 +28,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         }
 
         public string PatientUsername { get; set; }
+        public string ErrorMessage { get; private set; }
         #endregion
 
         public PeriodFunctions()
@@ -98,6 +99,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             {
                 if (writeWarnings)
                     Validate.ShowOkDialog("Warning", "Doctor has an existing appointment at selected time!");
+                ErrorMessage = "Doctor has an existing appointment at selected time!";
 
                 available = false;
             }
@@ -112,7 +114,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             {
                 if (writeWarnings)
                     Validate.ShowOkDialog("Warning", "Patient has an existing appointment at selected time!");
-
+                ErrorMessage = "Patient has an existing appointment at selected time!";
                 available = false;
             }
 
