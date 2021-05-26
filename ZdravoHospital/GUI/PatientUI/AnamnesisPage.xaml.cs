@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI
 {
@@ -18,20 +19,12 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class AnamnesisPage : Page
     {
-        public string AnamnesisContent { get; set; }
-
-        public string Username { get; set; }
-        public AnamnesisPage(string anamnesis,string username)
+        public AnamnesisPage(string anamnesis)
         {
             InitializeComponent();
-            DataContext = this;
-            AnamnesisContent = anamnesis;
-            Username = username;
+            DataContext = new AnamnesisPageVM(anamnesis);
+          
         }
 
-        private void backButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new AppointmentHistoryPage(Username));
-        }
     }
 }

@@ -31,7 +31,7 @@
 
                 </TextBlock>
             </Border>
-            <Button x:Name="backButton" Grid.Row="2" Grid.Column="1" Width="150" Background="Transparent" BorderBrush="Transparent"  HorizontalAlignment="Right" Click="backButton_Click">
+            <Button x:Name="backButton" Grid.Row="2" Grid.Column="1" Width="150" Background="Transparent" BorderBrush="Transparent"  HorizontalAlignment="Right" Command="{Binding Path=BackCommand}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image Source="/Images/PatientUI/backIconBlack.png"  Height="30"></Image>
                     <TextBlock Text="Back" FontSize="22" Margin="20,0,0,0" FontWeight="Bold"></TextBlock>

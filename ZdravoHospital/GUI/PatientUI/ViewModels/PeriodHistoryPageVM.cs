@@ -48,7 +48,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 return;
 
             }
-            PatientWindowVM.NavigationService.Navigate(new AnamnesisPage(selectedPeriod.Details, selectedPeriod.PatientUsername));
+            PatientWindowVM.NavigationService.Navigate(new AnamnesisPage(selectedPeriod.Details));
         }
         public void RateExecuted(object parameter)
         {

@@ -25,51 +25,11 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class AppointmentHistoryPage : Page
     {
-        public ObservableCollection<PeriodDTO> Periods { get; set; }
-        public Period SelectedPeriod { get; set; }
         public AppointmentHistoryPage(string username)
         {
             InitializeComponent();
-            //FillList(username);
             DataContext = new PeriodHistoryPageVM();
         }
 
-        private void FillList(string username)
-        {
-            PeriodRepository periodRepository = new PeriodRepository();
-            Periods = new ObservableCollection<PeriodDTO>();
-            PeriodConverter periodConverter = new PeriodConverter();
-            foreach (Model.Period period in periodRepository.GetValues())
-            {
-                if (period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration) < DateTime.Now)
-                {
-                    Periods.Add(periodConverter.GetPeriodDTO(period));
-                }
-            }
-        }
-
-        private void SetSelectedPeriod()
-        {
-            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
-            PeriodConverter periodConverter = new PeriodConverter();
-            SelectedPeriod = periodConverter.GetPeriod(period);
-        }
-
-        private void AnamnesisButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetSelectedPeriod();
-            if(SelectedPeriod.Details==null)
-            {
-                SelectedPeriod.Details = "No available anamnesis for selected appointment!";
-            }
-            NavigationService.Navigate(new AnamnesisPage(SelectedPeriod.Details, SelectedPeriod.PatientUsername));
-        }
-
-        private void RateButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetSelectedPeriod();
-            PeriodDTO period = (PeriodDTO)appointmentDataGrid.SelectedItem;
-            NavigationService.Navigate(new EvaluateAppointmentPage(SelectedPeriod));
-        }
     }
 }
