@@ -113,14 +113,26 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
             FillOutPeriod();//pokupi podatke iz forme i kreiraj ostatak perioda na osnovu njih
 
-            if (PeriodFunctions.CheckPeriodAvailability(Period, false) && Period.RoomId != -1)
+            if (Period.RoomId == -1)
             {
-                ErrorMessage = "";
-                return true;
+                ErrorMessage = "No free rooms at the selected time.";
+                return false;
             }
-            ErrorMessage = PeriodFunctions.ErrorMessage;
 
-            return false;
+            if (!PeriodFunctions.CheckPeriodAvailability(Period, false))
+            {
+                ErrorMessage = PeriodFunctions.ErrorMessage;
+                return false;
+            }
+
+            ErrorMessage = "";
+
+            return true;
+        }
+
+        public void SuggestExecute(object parameter)
+        {
+            PatientWindowVM.NavigationService.Navigate(new SuggestAppointmentPage());
         }
 
         public void CancelExecute(object parameter)
@@ -136,12 +148,14 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             ConfirmCommand = new RelayCommand(ConfirmExecute, ConfirmCanExecute);
             CancelCommand = new RelayCommand(CancelExecute);
+            SuggestCommand = new RelayCommand(SuggestExecute);
         }
         private void FillOutPeriod()
         {
             Period.StartTime = Period.StartTime.Date + SelectedTimeSpan;
             Period.DoctorUsername = SelectedDoctorDTO.Username;
             Period.RoomId = RoomFunctions.GetFreeRoom(Period);
+            
         }
 
         private  bool IsFormFilled()

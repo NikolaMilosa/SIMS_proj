@@ -1,0 +1,48 @@
+﻿<Page x:Class="ZdravoHospital.GUI.PatientUI.SuggestAppointmentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="708" d:DesignWidth="804"
+      Title="SuggestAppointmentPage">
+
+    <Border CornerRadius="20" Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
+                <Image Source="/Images/PatientUI/addIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
+                <TextBlock Text="Suggest appointment" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Pick your preference:" FontSize="24"></TextBlock>
+                <RadioButton Content="Doctor" Command="{Binding Path=RadioButtonCommand}" CommandParameter="1" FontSize="18" Margin="80,5,0,0"></RadioButton>
+                <RadioButton Content="Date" Command="{Binding Path=RadioButtonCommand}" CommandParameter="2" FontSize="18" Margin="80,5,0,0"></RadioButton>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="2" Visibility="{Binding Path=DoctorPanelVisibility}" Background="Red"></StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="2" Visibility="{Binding Path=DatePanelVisibility}" Background="Aquamarine" ></StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0">
+                <Button Name="confirmButton" Content="Suggest" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=SuggestCommand}"></Button>
+                <Button Name="cancelButton" Content="Cancel" Width="150" FontSize="20" FontWeight="Bold" Height="55" Margin="80,0,0,0"  Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=CancelCommand}"></Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Page>
