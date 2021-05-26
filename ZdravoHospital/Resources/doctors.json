@@ -8,7 +8,7 @@
       "NumberOfFreeDays": 3,
       "ScheduledShift": 2,
       "ShiftStart": "2021-05-24T00:00:00+02:00",
-      "CurrentShift": 2
+      "CurrentShift": 0
     },
     "Name": "Marko",
     "Surname": "Pantelic",
@@ -41,7 +41,7 @@
       "NumberOfFreeDays": 1,
       "ScheduledShift": 3,
       "ShiftStart": "2021-05-26T00:00:00",
-      "CurrentShift": 2
+      "CurrentShift": 3
     },
     "Name": "Nikola",
     "Surname": "Zigic",
@@ -74,7 +74,7 @@
       "NumberOfFreeDays": 0,
       "ScheduledShift": 2,
       "ShiftStart": "2021-05-24T00:00:00+02:00",
-      "CurrentShift": 2
+      "CurrentShift": 0
     },
     "Name": "Milos",
     "Surname": "Krasic",
@@ -107,7 +107,7 @@
       "NumberOfFreeDays": 0,
       "ScheduledShift": 3,
       "ShiftStart": "2021-05-23T00:00:00+02:00",
-      "CurrentShift": 0
+      "CurrentShift": 2
     },
     "Name": "Dejan",
     "Surname": "Stankovic",

@@ -167,7 +167,8 @@
                 </Button>
             </Grid>
 
-            <Button x:Name="Help" Grid.Row="2" Background="#bec4c2" Margin="100,35" BorderThickness="0" Template="{StaticResource ManagerButtonTemplate}">
+            <Button x:Name="Help" Grid.Row="2" Background="#bec4c2" Margin="100,35" BorderThickness="0" Template="{StaticResource ManagerButtonTemplate}"
+                    Command="{Binding ShowHelpCommand}">
                 <TextBlock TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Center"
                            Height="Auto" FontSize="18" FontWeight="DemiBold">Help</TextBlock>
             </Button>
