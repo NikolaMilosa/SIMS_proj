@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.HelpUserControls.ShowRoomHelp"
+﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.HelpUserControls.ManageInventoryHelp"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,22 +27,22 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Style="{StaticResource HelpHeading}" Content="Show rooms"/>
+        <Label Grid.Row="0" Style="{StaticResource HelpHeading}" Content="Manage inventory"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <TextBlock>
-                Displays rooms that exist in the data base. The items will be displayed
-                in a data grid. The button is located in the submenu "Rooms". To navigate
-                to the data grid after pressing the button press the 'right arrow' key.
-            </TextBlock>
-                
-            <TextBlock Width="700">
-                The data grid is consisted of :
+                Displays a dialog that is used for transporting inventory from one room to another. When the dialog opens
+                two rooms have to be chosen from two boxes that drop down choices. As the room's are being chosen, the 
+                data grids bellow each room will fill, displaying rooms inventory in the data base. Keep in mind that the
+                transporting can be done only in one direction (From room marked as "From" to the room marked as "To").
             </TextBlock>
 
-            <Grid Width="500" Margin="10,10,10,10" Height="300">
+            <TextBlock Width="700">
+                The data grids are consisted of :
+            </TextBlock>
+
+            <Grid Width="500" Margin="10,10,10,10" Height="225">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -52,29 +52,33 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="ID"/>
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Name"/>
                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Type"/>
-                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Name"/>
-                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Available"/>
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Quantity"/>
 
                 <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
                 <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
                 <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
-                <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
 
                 <TextBlock Grid.Row="0" Grid.Column="1">
-                    Identification number, also represents the number of the room.
+                    Represents the inventory name from the data base.
                 </TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="1">
-                    Represents what function will the room serve.
+                    Either "STATIC" or "DYNAMIC".
                 </TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="1">
-                    Represents the name of a room.
-                </TextBlock>
-                <TextBlock Grid.Row="3" Grid.Column="1">
-                    Displays the current availability of a room.
+                    Shows how many units of said inventory is there in observed room.
                 </TextBlock>
             </Grid>
+
+            <TextBlock>
+                When both rooms have been chosen, the data grid below the "From" room will become available. To position inside, 
+                from either box with the room press "Tab" key. Once in the data grid with "Arrow" keys choose the inventory for
+                transfer and press "Enter". A new dialog will appear. If you are transfering "STATIC" inventory you will need 
+                to input the quantity, the time and date when will the transfer occur. If the inventory is "DYNAMIC" then just the 
+                quantity is required. While filling the new dialog the errors will be displayed in red and once corrected the
+                confirm button will be clickable.
+            </TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>

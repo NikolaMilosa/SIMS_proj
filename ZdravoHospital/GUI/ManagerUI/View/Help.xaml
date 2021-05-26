@@ -22,9 +22,9 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid Background="Beige" Width="1000" Height="800" FocusManager.FocusedElement="{Binding ElementName=MyTree}">
+    <Grid Background="Beige" Width="1020" Height="820" FocusManager.FocusedElement="{Binding ElementName=MyTree}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -46,9 +46,9 @@
             </TreeView>
         </Grid>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="Transparent">
             <Grid.RowDefinitions>
-                <RowDefinition Height="700"/>
+                <RowDefinition Height="750"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 

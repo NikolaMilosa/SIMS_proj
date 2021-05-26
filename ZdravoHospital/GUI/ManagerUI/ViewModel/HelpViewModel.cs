@@ -178,7 +178,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
             else if (SelectedItem.Header.Equals("Add room"))
             {
-
+                CurrentControl = new AddRoomHelp();
+            }
+            else if (SelectedItem.Header.Equals("Manage inventory"))
+            {
+                CurrentControl = new ManageInventoryHelp();
             }
 
             if (SelectedItem.Items.Count == 0)

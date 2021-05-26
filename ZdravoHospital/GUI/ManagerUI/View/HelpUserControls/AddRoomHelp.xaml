@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.HelpUserControls.ShowRoomHelp"
+﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.HelpUserControls.AddRoomHelp"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,22 +27,22 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Style="{StaticResource HelpHeading}" Content="Show rooms"/>
+        <Label Grid.Row="0" Style="{StaticResource HelpHeading}" Content="Add room"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <TextBlock>
-                Displays rooms that exist in the data base. The items will be displayed
-                in a data grid. The button is located in the submenu "Rooms". To navigate
-                to the data grid after pressing the button press the 'right arrow' key.
-            </TextBlock>
-                
-            <TextBlock Width="700">
-                The data grid is consisted of :
+                Displays a dialog that is used for creating a new room. Each newly created room 
+                is automatically set to be available. While the form is being filled, at the top
+                of the dialog red text will appear which indicate that an error has been made in 
+                a red bordered input area. When the error has been corrected, the text will disappear.
             </TextBlock>
 
-            <Grid Width="500" Margin="10,10,10,10" Height="300">
+            <TextBlock Width="700">
+                The fields that have to be filled :
+            </TextBlock>
+
+            <Grid Width="500" Margin="10,10,10,10" Height="225">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -53,28 +53,29 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="ID"/>
-                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Type"/>
-                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Name"/>
-                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Available"/>
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Name"/>
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Type"/>
 
                 <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
                 <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
                 <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
-                <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
 
                 <TextBlock Grid.Row="0" Grid.Column="1">
                     Identification number, also represents the number of the room.
                 </TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="1">
-                    Represents what function will the room serve.
-                </TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="1">
                     Represents the name of a room.
                 </TextBlock>
-                <TextBlock Grid.Row="3" Grid.Column="1">
-                    Displays the current availability of a room.
+                <TextBlock Grid.Row="2" Grid.Column="1">
+                    Represents what function will the room serve.
                 </TextBlock>
             </Grid>
+
+            <TextBlock>
+                After the form has been correctly filled, the "Confirm" button will become available. When clicked the created
+                room will be added to the data base and the table on the main panel displaying rooms will update. To view the 
+                new state of the data base for rooms press "Show rooms" from the main panel.
+            </TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>
