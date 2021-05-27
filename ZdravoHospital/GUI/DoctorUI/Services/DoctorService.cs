@@ -1,6 +1,7 @@
 ﻿using Model;
 using Model.Repository;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ZdravoHospital.GUI.DoctorUI.Services
 {
@@ -16,6 +17,11 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         public List<Doctor> GetDoctors()
         {
             return _doctorRepository.GetValues();
+        }
+
+        public List<Doctor> GetSpecialists()
+        {
+            return _doctorRepository.GetValues().Where(d => !d.SpecialistType.Equals("Doctor")).ToList();
         }
     }
 }

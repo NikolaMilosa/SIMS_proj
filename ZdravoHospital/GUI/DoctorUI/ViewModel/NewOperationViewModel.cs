@@ -1,16 +1,18 @@
 ﻿using Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
-using ZdravoHospital.GUI.DoctorUI.Validations;
-using ZdravoHospital.GUI.DoctorUI.Commands;
+using System.Text;
 using System.Windows;
+using ZdravoHospital.GUI.DoctorUI.Commands;
+using ZdravoHospital.GUI.DoctorUI.Controllers;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
+using ZdravoHospital.GUI.DoctorUI.Validations;
 
 namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 {
-    public class NewAppointmentViewModel : ViewModel
+    public class NewOperationViewModel : ViewModel
     {
         private Referral _referral;
         private PeriodController _periodController;
@@ -26,7 +28,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public ObservableCollection<Doctor> Doctors { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
-        
+
         #region Commands
 
         public MyICommand ConfirmCommand { get; set; }
@@ -37,16 +39,16 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 return;
 
             Period period = FormPeriod();
-            
+
             try
             {
                 _periodController.CreateNewPeriod(period, _referral);
-                MessageBox.Show("Appointment created successfully.", "Success");
+                MessageBox.Show("Operation created successfully.", "Success");
                 //TODO: navigate back
             }
             catch (PeriodInPastException exception)
             {
-                MessageBox.Show("Cannot create appointment in the past.", "Invalid date and time");
+                MessageBox.Show("Cannot create operation in the past.", "Invalid date and time");
             }
             catch (RoomUnavailableException exception)
             {
@@ -68,8 +70,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         }
 
         #endregion
-        
-        public NewAppointmentViewModel(Doctor doctor, DateTime startTime, int duration)
+
+        public NewOperationViewModel(Doctor doctor, DateTime startTime, int duration)
         {
             InitializeCommands();
 
@@ -77,7 +79,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
             Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
-            Rooms = new ObservableCollection<Room>(new RoomController().GetAppointmentRooms());
+            Rooms = new ObservableCollection<Room>(new RoomController().GetOperationRooms());
 
             Doctor = Doctors.ToList().Find(d => d.Username.Equals(doctor.Username));
             StartDate = startTime.Date;
@@ -86,8 +88,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             DoctorPatientEditable = true; // enable combo boxes
         }
-        
-        public NewAppointmentViewModel(Referral referral, Patient patient)
+
+        public NewOperationViewModel(Referral referral, Patient patient)
         {
             InitializeCommands();
 
@@ -95,7 +97,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
             Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
-            Rooms = new ObservableCollection<Room>(new RoomController().GetAppointmentRooms());
+            Rooms = new ObservableCollection<Room>(new RoomController().GetOperationRooms());
 
             Doctor = Doctors.ToList().Find(d => d.Username.Equals(referral.ReferredDoctorUsername));
             Patient = Patients.ToList().Find(p => p.Username.Equals(patient.Username));
@@ -139,7 +141,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             if (Room == null)
             {
-                MessageBox.Show("Please select appointment room.", "Invalid input");
+                MessageBox.Show("Please select operation room.", "Invalid input");
                 return false;
             }
 
@@ -153,7 +155,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             int minutes = Int32.Parse(parts[1]);
             DateTime dateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, hours, minutes, 0);
 
-            Period period = new Period(dateTime, Int32.Parse(DurationText), PeriodType.APPOINTMENT,
+            Period period = new Period(dateTime, Int32.Parse(DurationText), PeriodType.OPERATION,
                                        Patient.Username, Doctor.Username, Room.Id);
             period.IsUrgent = IsUrgent;
 

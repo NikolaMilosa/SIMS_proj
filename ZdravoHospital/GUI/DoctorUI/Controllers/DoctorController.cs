@@ -17,5 +17,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
         {
             return _doctorService.GetDoctors();
         }
+
+        public List<Doctor> GetSpecialists()
+        {
+            return _doctorService.GetSpecialists();
+        }
     }
 }

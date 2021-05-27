@@ -113,5 +113,21 @@
     "ReferringReferralId": -1,
     "ReferredReferralId": -1,
     "Treatment": null
+  },
+  {
+    "PeriodId": 0,
+    "StartTime": "2021-05-29T01:00:00",
+    "Duration": 65,
+    "PeriodType": 1,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "zigara",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
   }
 ]

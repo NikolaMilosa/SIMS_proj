@@ -20,5 +20,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         {
             return _roomRepository.GetValues().Where(r => r.RoomType == RoomType.APPOINTMENT_ROOM).ToList();
         }
+
+        public List<Room> GetOperationRooms()
+        {
+            return _roomRepository.GetValues().Where(r => r.RoomType == RoomType.OPERATING_ROOM).ToList();
+        }
     }
 }

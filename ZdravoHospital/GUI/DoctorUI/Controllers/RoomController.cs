@@ -17,5 +17,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
         {
             return _rooomService.GetAppointmentRooms();
         }
+
+        public List<Room> GetOperationRooms()
+        {
+            return _rooomService.GetOperationRooms();
+        }
     }
 }
