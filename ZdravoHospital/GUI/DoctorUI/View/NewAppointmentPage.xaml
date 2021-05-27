@@ -165,7 +165,7 @@
 
                     <TextBlock Text="Duration (in minutes):" 
                    FontSize="25"
-                   Margin="10"
+                   Margin="20"
                            Foreground="White"
                            Grid.Row="6"
                            Grid.Column="0"/>
@@ -186,7 +186,7 @@
                            Grid.Column="0"
                            Foreground="White"
                    FontSize="25"
-                   Margin="10"/>
+                   Margin="20"/>
                     <ComboBox Name="RoomsComboBox"
                            Grid.Row="7"
                            Grid.Column="1"
@@ -201,6 +201,40 @@
                               VerticalContentAlignment="Center"
                               SelectedValue="{Binding Room}"
                               />
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <Grid x:Name="MessagePopUp"
+              Background="Transparent"
+              Visibility="{Binding MessagePopUpVisibility}">
+            <Grid Background="Black"
+                  Opacity="0.85">
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+                <Grid Background="{StaticResource DarkGray}"
+                            Width="800"
+                            Height="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                           Text="{Binding MessageText}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           FontSize="25"
+                           Margin="10"/>
+                    <Button Grid.Row="1"
+                        Content="OK"
+                        Padding="10"
+                        Height="45"
+                        Width="100"
+                        Margin="0, 0, 0, 20"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding CloseMessagePopUpCommand}"/>
                 </Grid>
             </ScrollViewer>
         </Grid>

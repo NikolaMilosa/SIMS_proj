@@ -26,7 +26,34 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public ObservableCollection<Doctor> Doctors { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
-        
+
+        private Visibility messagePopUpVisibility;
+        public Visibility MessagePopUpVisibility 
+        {
+            get
+            {
+                return messagePopUpVisibility;
+            }
+            set
+            {
+                messagePopUpVisibility = value;
+                OnPropertyChanged("MessagePopUpVisibility");
+            }
+        }
+        private string messageText;
+        public string MessageText
+        {
+            get
+            {
+                return messageText;
+            }
+            set
+            {
+                messageText = value;
+                OnPropertyChanged("MessageText");
+            }
+        }
+
         #region Commands
 
         public MyICommand ConfirmCommand { get; set; }
@@ -34,35 +61,53 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_ConfirmCommand()
         {
             if (!IsInputValid())
+            {
+                MessagePopUpVisibility = Visibility.Visible;
                 return;
+            }
 
             Period period = FormPeriod();
             
             try
             {
                 _periodController.CreateNewPeriod(period, _referral);
-                MessageBox.Show("Appointment created successfully.", "Success");
+                MessageText = "Appointment created successfully.";
                 //TODO: navigate back
+                return;
             }
             catch (PeriodInPastException exception)
             {
-                MessageBox.Show("Cannot create appointment in the past.", "Invalid date and time");
+                MessageText = "Cannot create appointment in the past.";
             }
             catch (RoomUnavailableException exception)
             {
-                MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
+                MessageText = "Selected room is unavailable in selected period.";
             }
             catch (DoctorUnavailableException exception)
             {
-                MessageBox.Show("Selected doctor is unavailable in selected period.", "Doctor unavailable");
+                MessageText = "Selected doctor is unavailable in selected period.";
             }
             catch (PatientUnavailableException exception)
             {
-                MessageBox.Show("Selected patient is unavailable in selected period.", "Patient unavailable");
+                MessageText = "Selected patient is unavailable in selected period.";
             }
+
+            MessagePopUpVisibility = Visibility.Visible;
         }
 
         public bool CanExecute_ConfirmCommand()
+        {
+            return true;
+        }
+        
+        public MyICommand CloseMessagePopUpCommand { get; set; }
+
+        public void Executed_CloseMessagePopUpCommand()
+        {
+            MessagePopUpVisibility = Visibility.Collapsed;
+        }
+
+        public bool CanExecute_CloseMessagePopUpCommand()
         {
             return true;
         }
@@ -85,6 +130,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             DurationText = duration.ToString();
 
             DoctorPatientEditable = true; // enable combo boxes
+
+            MessagePopUpVisibility = Visibility.Collapsed;
         }
         
         public NewAppointmentViewModel(Referral referral, Patient patient)
@@ -109,37 +156,38 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private void InitializeCommands()
         {
             ConfirmCommand = new MyICommand(Executed_ConfirmCommand, CanExecute_ConfirmCommand);
+            CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
         }
 
         private bool IsInputValid()
         {
             if (Patient == null)
             {
-                MessageBox.Show("Please select patient.", "Invalid input");
+                MessageText = "Please select patient.";
                 return false;
             }
 
             if (!BasicValidation.IsTimeFromTextFormatValid(StartTimeText))
             {
-                MessageBox.Show("Please enter start time in correct format (HH:mm).", "Invalid input");
+                MessageText = "Please enter start time in correct format (HH:mm).";
                 return false;
             }
 
             if (!BasicValidation.IsTimeFromTextValueValid(StartTimeText))
             {
-                MessageBox.Show("Please enter valid start time.", "Invalid input");
+                MessageText = "Please enter valid start time.";
                 return false;
             }
 
             if (!BasicValidation.IsIntegerFromTextValid(DurationText))
             {
-                MessageBox.Show("Please enter duration in correct format (numbers only).", "Invalid input");
+                MessageText = "Please enter duration in correct format (numbers only).";
                 return false;
             }
 
             if (Room == null)
             {
-                MessageBox.Show("Please select appointment room.", "Invalid input");
+                MessageText = "Please select appointment room.";
                 return false;
             }
 
