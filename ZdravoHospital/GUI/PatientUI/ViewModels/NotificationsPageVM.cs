@@ -9,6 +9,7 @@ using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
 {

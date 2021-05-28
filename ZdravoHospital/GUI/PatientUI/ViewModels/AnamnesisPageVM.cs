@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.PatientUI.Commands;
+using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
 {

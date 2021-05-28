@@ -21,6 +21,7 @@ using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.GUI.PatientUI;
+using ZdravoHospital.GUI.PatientUI.View;
 using ZdravoHospital.GUI.Secretary;
 
 namespace ZdravoHospital

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Navigation;
 using Model;
 using ZdravoHospital.GUI.PatientUI.Commands;
+using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
 {
