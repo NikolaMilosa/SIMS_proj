@@ -173,22 +173,22 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             var roomControls = (TreeViewItem) Tree[4].Items[0];
             roomControls.Items.Add(new TreeViewItem()
             {
-                Header = "Edit"
+                Header = "Edit room"
             });
             roomControls.Items.Add(new TreeViewItem()
             {
-                Header = "Delete"
+                Header = "Delete room"
             });
 
             //Controls -> inventory controls
             var inventoryControls = (TreeViewItem) Tree[4].Items[1];
             inventoryControls.Items.Add(new TreeViewItem()
             {
-                Header = "Edit"
+                Header = "Edit inventory"
             });
             inventoryControls.Items.Add(new TreeViewItem()
             {
-                Header = "Delete"
+                Header = "Delete inventory"
             });
             inventoryControls.Items.Add(new TreeViewItem()
             {
@@ -203,11 +203,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             var medicineControls = (TreeViewItem) Tree[4].Items[2];
             medicineControls.Items.Add(new TreeViewItem()
             {
-                Header = "Edit"
+                Header = "Edit medicine"
             });
             medicineControls.Items.Add(new TreeViewItem()
             {
-                Header = "Delete"
+                Header = "Delete medicine"
             });
             medicineControls.Items.Add(new TreeViewItem()
             {
@@ -236,6 +236,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             else if (SelectedItem.Header.Equals("Plan renovation"))
             {
                 CurrentControl = new PlanRenovationHelp();
+            }
+            else if (SelectedItem.Header.Equals("Show inventory"))
+            {
+                CurrentControl = new ShowInventoryHelp();
+            }
+            else if (SelectedItem.Header.Equals("Add inventory"))
+            {
+                CurrentControl = new AddInventoryHelp();
             }
 
             if (SelectedItem.Items.Count == 0)
