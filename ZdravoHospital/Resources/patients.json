@@ -2,11 +2,9 @@
   {
     "IsGuest": false,
     "HealthCardNumber": "123",
-    "BloodType": 2,
-    "MedicineAllergens": [
-      "Brufen"
-    ],
-    "IngredientAllergens": [],
+    "BloodType": 0,
+    "MedicineAllergens": null,
+    "IngredientAllergens": null,
     "RecentActions": 0,
     "LastLogoutTime": "0001-01-01T00:00:00",
     "PatientNotes": [],
@@ -46,7 +44,7 @@
       "Kiflice"
     ],
     "RecentActions": 0,
-    "LastLogoutTime": "2021-05-20T00:52:38.3075165+02:00",
+    "LastLogoutTime": "2021-05-28T20:39:26.6623127+02:00",
     "PatientNotes": [],
     "Name": "Nikolaj",
     "Surname": "Satara",
@@ -58,6 +56,37 @@
     "MaritalStatus": 1,
     "Gender": 0,
     "CitizenId": "624",
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  },
+  {
+    "IsGuest": true,
+    "HealthCardNumber": "7777",
+    "BloodType": null,
+    "MedicineAllergens": null,
+    "IngredientAllergens": null,
+    "RecentActions": 0,
+    "LastLogoutTime": "0001-01-01T00:00:00",
+    "PatientNotes": [],
+    "Name": "Sabina",
+    "Surname": "Sabinic",
+    "Email": null,
+    "DateOfBirth": "0001-01-01T00:00:00",
+    "PhoneNumber": null,
+    "Username": "guest_7777",
+    "ParentsName": null,
+    "MaritalStatus": null,
+    "Gender": null,
+    "CitizenId": "7856",
     "Address": {
       "StreetName": null,
       "Number": null,

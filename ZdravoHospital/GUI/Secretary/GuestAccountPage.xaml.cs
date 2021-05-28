@@ -13,71 +13,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
     /// <summary>
     /// Interaction logic for GuestAccountPage.xaml
     /// </summary>
-    public partial class GuestAccountPage : Page, INotifyPropertyChanged
+    public partial class GuestAccountPage : Page
     {
-        private string _name;
-        private string _surname;
-        private string _citizenId;
-        private string _healthCardNumber;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string name)
+        public GuestDTO Guest { get; set; }
+        public GuestService GuestService {get;set;}
+        public GuestAccountPage(bool urgentlyCreated)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-
-        public string PName
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged("PName");
-            }
-        }
-        public string Surname
-        {
-            get { return _surname; }
-            set
-            {
-                _surname = value;
-                OnPropertyChanged("Surname");
-            }
-        }
-
-        public string CitizenId
-        {
-            get => _citizenId;
-            set
-            {
-                _citizenId = value;
-                OnPropertyChanged("CitizenId");
-            }
-        }
-
-        public string HealthCardNumber
-        {
-            get => _healthCardNumber;
-            set
-            {
-                _healthCardNumber = value;
-                OnPropertyChanged("HealthCardNumber");
-            }
-        }
-        public bool CameFromUrgent { get; set; }
-        public GuestAccountPage(bool cameFromUrgent)
-        {
-            CameFromUrgent = cameFromUrgent;
+            Guest = new GuestDTO(urgentlyCreated);
+            GuestService = new GuestService();
             InitializeComponent();
             this.DataContext = this;
         }
@@ -96,45 +47,18 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            Patient guestPatient = new Patient(PName, Surname, CitizenId, HealthCardNumber);
-            guestPatient.Gender = (Gender)(-1);
-            guestPatient.MaritalStatus = (MaritalStatus)(-1);
-            guestPatient.BloodType = (BloodType)(-1);
-
-            string guestID = "guest_" + HealthCardNumber;
-
-
-            if (File.Exists(@"..\..\..\Resources\patients.json"))
+            bool success = GuestService.ProcessGuestCreation(Guest);
+            if (success)
             {
-                Model.Resources.OpenPatients();
-                if (HealthCardNumber.Equals("") || !isHealthCardUnique(Model.Resources.patients, HealthCardNumber))
-                {
-                    MessageBox.Show("Health card number must be unique.");
-                }
-                else
-                {
-                    Model.Resources.patients.Add(guestID, guestPatient);
-                    Model.Resources.SavePatients();
-                    MessageBox.Show("Added successfully");
-                    if (CameFromUrgent)
-                        NavigationService.Navigate(new SecretaryUrgentPeriodPage());
-                    else
-                        NavigationService.Navigate(new PatientsView());
-                }
-
-            }
-            else
-            {
-                Model.Resources.patients = new Dictionary<string, Patient>();
-                Model.Resources.patients.Add(guestID, guestPatient);
-                Model.Resources.SavePatients();
-                MessageBox.Show("Added successfully");
-                if (CameFromUrgent)
+                if (Guest.UrgentlyCreated)
                     NavigationService.Navigate(new SecretaryUrgentPeriodPage());
                 else
                     NavigationService.Navigate(new PatientsView());
             }
-
+            else
+            {
+                MessageBox.Show("Health card number already exists.");
+            }
 
         }
 
