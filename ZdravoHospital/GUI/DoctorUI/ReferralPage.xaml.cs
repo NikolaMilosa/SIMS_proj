@@ -194,8 +194,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void ReferredOperationButton_Click(object sender, RoutedEventArgs e)
         {
-            bool readonlyMode = !Referral.ReferringDoctorUsername.Equals(App.currentUser);
-            NavigationService.Navigate(new OperationPage(Referral.Period, readonlyMode));
+            bool isReadonlyModeOn = !Referral.ReferringDoctorUsername.Equals(App.currentUser);
+            NavigationService.Navigate(new OperationPage(Referral.Period, isReadonlyModeOn));
         }
 
         private void DoctorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

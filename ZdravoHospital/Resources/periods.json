@@ -177,5 +177,37 @@
     "ReferringReferralId": -1,
     "ReferredReferralId": -1,
     "Treatment": null
+  },
+  {
+    "PeriodId": 11,
+    "StartTime": "2021-05-30T00:20:00",
+    "Duration": 40,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "zigara",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": true,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 12,
+    "StartTime": "2021-05-30T01:20:00",
+    "Duration": 45,
+    "PeriodType": 1,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "zigara",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
   }
 ]

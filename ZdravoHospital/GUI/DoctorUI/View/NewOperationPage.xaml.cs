@@ -12,19 +12,37 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class NewOperationPage : Page
     {
+        private Doctor _doctor;
+        private DateTime _startTime;
+        private int _duration;
+        private Referral _referral;
+        private Patient _patient;
 
         public Thickness TopPanelMargin { get; set; }
 
         public NewOperationPage(Doctor doctor, DateTime startTime, int duration)
         {
             InitializeComponent();
-            DataContext = new NewOperationViewModel(doctor, startTime, duration);
+
+            _doctor = doctor;
+            _startTime = startTime;
+            _duration = duration;
         }
 
         public NewOperationPage(Referral referral, Patient patient)
         {
             InitializeComponent();
-            DataContext = new NewOperationViewModel(referral, patient);
+
+            _referral = referral;
+            _patient = patient;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_referral == null)
+                DataContext = new NewOperationViewModel(NavigationService, _doctor, _startTime, _duration);
+            else
+                DataContext = new NewOperationViewModel(NavigationService, _referral, _patient);
         }
 
         private void PageSizeChanged(object sender, SizeChangedEventArgs e)
@@ -43,11 +61,6 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             if (patient != null)
                 NavigationService.Navigate(new PatientInfoPage(patient));
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

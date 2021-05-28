@@ -1,0 +1,343 @@
+﻿<Page x:Class="ZdravoHospital.GUI.DoctorUI.OperationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.DoctorUI"
+      xmlns:converters="clr-namespace:ZdravoHospital.GUI.DoctorUI.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OperationPage"
+      SizeChanged="PageSizeChanged"
+      Loaded="Page_Loaded">
+    <Page.Resources>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"></converters:InverseBooleanConverter>
+    </Page.Resources>
+    <Grid>
+        <Grid Background="{StaticResource DarkGray}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" 
+                        Background="Black">
+                <DockPanel x:Name="TopDockPanel">
+                    <Button DockPanel.Dock="Left"
+                            Content="Back"
+                            Padding="10"
+                            Height="45"
+                            Width="100"
+                            Style="{StaticResource BlueButton}"
+                            Name="BackButton"
+                            Command="{Binding BackCommand}"/>
+                    <Button Content="Edit"
+                            Visibility="{Binding EditButtonVisibility}"
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                                Padding="10" 
+                                Width="120"
+                                Height="45"
+                                Style="{StaticResource BlueButton}"
+                                Name="EditButton"
+                            Command="{Binding EditCommand}"/>
+                    <Button Content="Confirm"
+                            Visibility="{Binding ConfirmButtonVisibility}"
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                                Padding="10" 
+                                Width="120"
+                                Height="45"
+                                Style="{StaticResource BlueButton}"
+                                Name="ConfirmButton"
+                            Command="{Binding ConfirmCommand}"/>
+                </DockPanel>
+            </StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto"
+                    Grid.Row="1">
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="230"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <CheckBox x:Name="IsUrgentCheckBox"
+                          Grid.Row="0"
+                          Grid.ColumnSpan="2"
+                           Foreground="White"
+                  Content="Urgent"
+                  FontSize="12.5"
+                  Margin="20, 100, 20, 20"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"
+                              IsChecked="{Binding IsUrgent}"
+                              IsEnabled="{Binding IsEditModeOn}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+
+                    <TextBlock Text="Doctor:" 
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Foreground="White"
+                   FontSize="25"
+                   Margin="20"/>
+                    <ComboBox Name="DoctorsComboBox"
+                           Grid.Row="1"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left"
+                      ItemsSource="{Binding Path=Doctors}"
+                              Width="450"
+                      Height="40"
+                              Style="{StaticResource DarkComboBox}"
+                              FontSize="23"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              DisplayMemberPath="NameSurnameSpecialization"
+                              SelectedItem="{Binding Doctor}"
+                              IsHitTestVisible="False"
+                              IsTabStop="False"/>
+                    <TextBlock Text="Patient:"
+                           Foreground="White"
+                           Grid.Row="2"
+                           Grid.Column="0"
+                   FontSize="25"
+                   Margin="20"/>
+                    <ComboBox Name="PatientsComboBox"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left"
+                      ItemsSource="{Binding Path=Patients}"
+                      Width="450"
+                      Height="40"
+                              Style="{StaticResource DarkComboBox}"
+                              FontSize="23"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              DisplayMemberPath="NameSurname"
+                              SelectedItem="{Binding Patient}"
+                              IsHitTestVisible="{Binding DoctorPatientEditable}"
+                              IsTabStop="{Binding DoctorPatientEditable}"/>
+
+
+                    <Button Name="PatientInfoButton"
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                    Content="Patient info"
+                        Height="45"
+                        Width="200"
+                        HorizontalAlignment="Right"
+                    Padding="10"
+                            Margin="20"
+                        Style="{StaticResource BlueButton}"/>
+
+                    <TextBlock Text="Date:"
+                           Grid.Row="4"
+                           Foreground="White"
+                           Grid.Column="0"
+                   FontSize="25"
+                   Margin="20"/>
+                    <Viewbox Width="200"
+                           Grid.Row="4"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left">
+                        <DatePicker Name="AppointmentDatePicker"
+                                    IsEnabled="{Binding IsEditModeOn}"
+                                Style="{StaticResource DarkDatePicker}"
+                                    SelectedDate="{Binding StartDate}"
+                            FontSize="15"/>
+                    </Viewbox>
+
+                    <TextBlock Text="Start time:" 
+                   FontSize="25"
+                   Margin="20"
+                           Foreground="White"
+                           Grid.Row="5"
+                           Grid.Column="0"/>
+                    <TextBox x:Name="StartTimeTextBox"
+                           Grid.Row="5"
+                                    IsReadOnly="{Binding Path=IsEditModeOn, Converter={StaticResource InverseBooleanConverter}}"
+                           Grid.Column="1"
+                              Background="Black"
+                              Foreground="White"
+                         HorizontalAlignment="Left"
+                     Width="100"
+                     Height="40"
+                     FontSize="25"
+                     TextAlignment="Center"
+                             Text="{Binding StartTimeText}"/>
+
+                    <TextBlock Text="Duration (in minutes):" 
+                   FontSize="25"
+                   Margin="20"
+                           Foreground="White"
+                           Grid.Row="6"
+                           Grid.Column="0"/>
+                    <TextBox x:Name="DurationTextBox"
+                         Grid.Row="6"
+                         Grid.Column="1"
+                                    IsReadOnly="{Binding Path=IsEditModeOn, Converter={StaticResource InverseBooleanConverter}}"
+                              Background="Black"
+                              Foreground="White"
+                         HorizontalAlignment="Left"
+                     Width="100"
+                     Height="40"
+                     FontSize="25"
+                     TextAlignment="Center"
+                             Text="{Binding DurationText}"/>
+
+                    <TextBlock Text="Appointment room:"
+                           Grid.Row="7"
+                           Grid.Column="0"
+                           Foreground="White"
+                   FontSize="25"
+                   Margin="20"/>
+                    <ComboBox Name="RoomsComboBox"
+                           Grid.Row="7"
+                           Grid.Column="1"
+                         HorizontalAlignment="Left"
+                      ItemsSource="{Binding Path=Rooms}"
+                      DisplayMemberPath="Id"
+                      Width="120"
+                      Height="40"
+                          Style="{StaticResource DarkComboBox}"
+                              FontSize="23"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              SelectedValue="{Binding Room}"
+                              IsTabStop="{Binding IsEditModeOn}"
+                              IsHitTestVisible="{Binding IsEditModeOn}"
+                              />
+                    <StackPanel Grid.Column="4" Grid.Row="1" Grid.RowSpan="8" Width="300">
+                        <Button Name="CancelAppointmentButton"
+                    Content="Cancel appointment"
+                    Margin="20, 20, 20, 0"
+                        Style="{StaticResource BlueButton}"
+                        Visibility="{Binding CancelButtonVisibility}"
+                                Command="{Binding CancelCommand}"/>
+
+                        <Button Name="AnamnesisButton"
+                    Content="Write anamnesis"
+                    Margin="20, 20, 20, 0"
+                        Style="{StaticResource BlueButton}"
+                                Command="{Binding WritePeriodDetailsCommand}"
+                        Visibility="{Binding PeriodEventButtonsVisibility}"/>
+                        <Button Name="PrescriptionButton"
+                    Content="Write prescription"
+                    Margin="20, 20, 20, 0"
+                        Style="{StaticResource BlueButton}"
+                                Command="{Binding WritePrescriptionCommand}"
+                        Visibility="{Binding PeriodEventButtonsVisibility}"/>
+
+                        <Button Name="ReferralButton"
+                    Content="Write referral"
+                    Margin="20, 20, 20, 0"
+                        Style="{StaticResource BlueButton}"
+                        Visibility="{Binding PeriodEventButtonsVisibility}"
+                                Command="{Binding WriteReferralCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <Grid x:Name="CancelDialog"
+              Background="Transparent"
+              Visibility="{Binding CancelDialogVisibility}">
+            <Grid Background="Black"
+                  Opacity="0.85">
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+                <Grid Background="{StaticResource DarkGray}"
+                            Width="800"
+                            Height="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                           Text="Are you sure you want to cancel this appointment?
+                               This action cannot be undone."
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                               TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           FontSize="25"
+                           Margin="10"/>
+                    <Button Grid.Row="1"
+                            Grid.Column="0"
+                        Content="Yes"
+                        Padding="10"
+                        Height="45"
+                        Width="100"
+                        Margin="0, 0, -50, 20"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding YesCancelCommand}"/>
+                    <Button Grid.Row="1"
+                            Grid.Column="1"
+                        Content="No"
+                        Padding="10"
+                        Height="45"
+                        Width="100"
+                        Margin="-50, 0, 0, 20"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding NoCancelCommand}"/>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <Grid x:Name="MessagePopUp"
+              Background="Transparent"
+              Visibility="{Binding MessagePopUpVisibility}">
+            <Grid Background="Black"
+                  Opacity="0.85">
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+                <Grid Background="{StaticResource DarkGray}"
+                            Width="800"
+                            Height="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                           Text="{Binding MessageText}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           FontSize="25"
+                           Margin="10"/>
+                    <Button Grid.Row="1"
+                        Content="OK"
+                        Padding="10"
+                        Height="45"
+                        Width="100"
+                        Margin="0, 0, 0, 20"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding CloseMessagePopUpCommand}"/>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

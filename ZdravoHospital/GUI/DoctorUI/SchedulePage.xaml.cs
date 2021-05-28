@@ -307,7 +307,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             if (period.PeriodType == PeriodType.APPOINTMENT)
                 NavigationService.Navigate(new AppointmentPage(period));
-            else if ((DoctorsComboBox.SelectedItem as Doctor).Username == App.currentUser)
+            else if ((DoctorsComboBox.SelectedItem as Doctor).Username.Equals(App.currentUser))
                 NavigationService.Navigate(new OperationPage(period, false));
             else
                 NavigationService.Navigate(new OperationPage(period, true));
