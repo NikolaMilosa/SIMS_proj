@@ -67,7 +67,7 @@
     "Treatment": null
   },
   {
-    "PeriodId": 0,
+    "PeriodId": 4,
     "StartTime": "2021-05-23T01:00:00",
     "Duration": 35,
     "PeriodType": 0,
@@ -83,7 +83,7 @@
     "Treatment": null
   },
   {
-    "PeriodId": 0,
+    "PeriodId": 5,
     "StartTime": "2021-05-28T01:00:00",
     "Duration": 30,
     "PeriodType": 0,
@@ -99,7 +99,7 @@
     "Treatment": null
   },
   {
-    "PeriodId": 0,
+    "PeriodId": 6,
     "StartTime": "2021-05-24T17:00:00",
     "Duration": 120,
     "PeriodType": 0,
@@ -115,7 +115,7 @@
     "Treatment": null
   },
   {
-    "PeriodId": 0,
+    "PeriodId": 7,
     "StartTime": "2021-05-29T01:00:00",
     "Duration": 65,
     "PeriodType": 1,
@@ -126,6 +126,22 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 8,
+    "StartTime": "2021-05-30T00:00:00",
+    "Duration": 20,
+    "PeriodType": 0,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": true,
     "ReferringReferralId": -1,
     "ReferredReferralId": -1,
     "Treatment": null

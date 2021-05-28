@@ -2,6 +2,7 @@
 using Model.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
 
@@ -16,14 +17,19 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
             periodRepository = new PeriodRepository();
         }
 
-        public void ValidatePeriod(Period period)
+        public void ValidatePeriod(Period period, bool updating = false)
         {
             if (period.StartTime < DateTime.Now)
                 throw new PeriodInPastException();
 
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
-            List<Period> periods = periodRepository.GetValues();
-
+            List<Period> periods;
+            
+            if (!updating)
+                periods = periodRepository.GetValues();
+            else
+                periods = periodRepository.GetValues().Where(p => !p.PeriodId.Equals(period.PeriodId)).ToList();
+            
             ValidateRoomAvailability(period, periodEndtime, periods);
             ValidateDoctorAvailability(period, periodEndtime, periods);
             ValidatePatientAvailability(period, periodEndtime, periods);

@@ -19,5 +19,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
         {
             _periodService.CreateNewPeriod(period, referral);
         }
+
+        public void UpdatePeriod(Period period)
+        {
+            _periodService.UpdatePeriod(period);
+        }
     }
 }

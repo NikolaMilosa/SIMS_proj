@@ -72,6 +72,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             {
                 _periodController.CreateNewPeriod(period, _referral);
                 MessageText = "Appointment created successfully.";
+                MessagePopUpVisibility = Visibility.Visible;
                 //TODO: navigate back
                 return;
             }

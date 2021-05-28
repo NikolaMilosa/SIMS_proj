@@ -13,6 +13,7 @@ namespace Repository.PeriodPersistance
         public void Create(Period newValue)
         {
             var values = GetValues();
+            newValue.PeriodId = values[values.Count - 1].PeriodId + 1;
             values.Add(newValue);
             Save(values);
         }
