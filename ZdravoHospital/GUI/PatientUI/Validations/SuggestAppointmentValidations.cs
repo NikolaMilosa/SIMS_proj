@@ -18,7 +18,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
         {
             Page = addAppointmentPage;
             PeriodFunctions = new PeriodFunctions();
-            DoctorFunctions = new SuggestDoctorFunctions(Page.Period.PatientUsername);
+            //DoctorFunctions = new SuggestDoctorFunctions();
         }
 
         public bool IsOnlyTimeSelected()
@@ -86,7 +86,7 @@ namespace ZdravoHospital.GUI.PatientUI.Validations
 
         public void AddDoctorsToList()//if they are free at selected time
         {
-            DoctorFunctions.SuggestDoctor(Page.Period, Page.DoctorList);
+           // DoctorFunctions.SuggestDoctor(Page.Period, Page.DoctorList);
             if (Page.DoctorList.Count == 0)
                 Validate.ShowOkDialog("Warning", "There is no available doctor at the selected time!");
             else

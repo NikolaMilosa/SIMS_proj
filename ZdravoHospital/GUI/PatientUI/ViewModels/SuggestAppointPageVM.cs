@@ -132,10 +132,17 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SuggestExecute(object parameter)
         {
+            PeriodDTOs.Clear();
             if (DoctorPanelVisibility == Visibility.Visible)
             {
                 SuggestTimeFunctions timeFunctions = new SuggestTimeFunctions(PeriodDTOs, SelectedDoctorDTO);
                 timeFunctions.GetSuggestedPeriods();
+            }
+            else
+            {
+                SuggestDoctorFunctions doctorFunctions =
+                    new SuggestDoctorFunctions(SelectedDate, SelectedTimeSpan, PeriodDTOs);
+                doctorFunctions.GetSuggestedPeriods();
             }
         }
 
@@ -189,7 +196,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void GenerateComboBoxes()
         {
             Injection.GenerateObesrvableTimes(PeriodList);
-            Injection.FillDoctorList(DoctorList);
+            Injection.FillObservableDoctorCollection(DoctorList);
         }
         #endregion
     }

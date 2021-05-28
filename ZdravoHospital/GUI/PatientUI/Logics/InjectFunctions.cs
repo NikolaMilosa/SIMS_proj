@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using Model;
 using Model.Repository;
@@ -10,17 +11,22 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 {
     public class InjectFunctions
     {
-        public void FillDoctorList(ObservableCollection<DoctorDTO> DoctorList)
+        public void FillObservableDoctorCollection(ObservableCollection<DoctorDTO> Doctors)
         {
             DoctorRepository doctorRepository = new DoctorRepository();
             List<Doctor> doctors = doctorRepository.GetValues();
-            foreach (Doctor doctor in doctors)
-                if (doctor.SpecialistType.SpecializationName.Equals("Doctor"))
-                    DoctorList.Add(new DoctorDTO(doctor));
+            foreach (var doctor in doctors.Where(doctor => doctor.SpecialistType.SpecializationName.Equals("Doctor")))
+                Doctors.Add(new DoctorDTO(doctor));
             
         }
 
-      
+        public void FillDoctorCollection(List<DoctorDTO> Doctors)
+        {
+            DoctorRepository doctorRepository = new DoctorRepository();
+            List<Doctor> doctors = doctorRepository.GetValues();
+            Doctors.AddRange(from doctor in doctors where doctor.SpecialistType.SpecializationName.Equals("Doctor") select new DoctorDTO(doctor));
+        }
+
         public  void GenerateTimeSpan(List<TimeSpan> timeList)
         {
             timeList.Add(new TimeSpan(8, 0, 0));
