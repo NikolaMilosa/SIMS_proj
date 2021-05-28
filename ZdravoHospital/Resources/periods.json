@@ -154,5 +154,21 @@
     "ReferringReferralId": 0,
     "ReferredReferralId": 0,
     "Treatment": null
+  },
+  {
+    "PeriodId": 9,
+    "StartTime": "2021-05-31T08:00:00+02:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
   }
 ]

@@ -1,24 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Controls;
+using Model;
+using ZdravoHospital.GUI.ManagerUI.Logics;
+using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
     public class SuggestTimeFunctions
     {
-        public List<PeriodDTO> SuggestedPeriods { get; private set; }
+        public ObservableCollection<PeriodDTO> SuggestedPeriods { get; private set; }
         public DoctorDTO Doctor { get; private set; }
         public InjectFunctions Injection { get; private set; }
-
-        public SuggestTimeFunctions(List<PeriodDTO> suggestedPeriods, DoctorDTO doctor)
+        public PeriodFunctions PeriodFunctions { get; private set; }
+        public PeriodConverter PeriodConverter { get; private set; }
+        public RoomSheduleFunctions RoomFunctions { get; private set; }
+        public SuggestTimeFunctions(ObservableCollection<PeriodDTO> suggestedPeriods, DoctorDTO doctor)
         {
             SuggestedPeriods = suggestedPeriods;
             Doctor = doctor;
             Injection = new InjectFunctions();
-            GetSuggestedPeriods();
+            PeriodFunctions = new PeriodFunctions();
+            PeriodConverter = new PeriodConverter();
+            RoomFunctions = new RoomSheduleFunctions();
         }
 
         public void GetSuggestedPeriods()
@@ -30,37 +39,29 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                 AddFreeTimes(daysFromToday);
                 daysFromToday++;
             }
-            //Page.Period.DoctorUsername = ((DoctorDTO)Page.selectDoctor.SelectedItem).Username;
-            //ShowSuggestedTimes();
-            //Validate.ShowOkDialog("Suggested time", "Time list is updated to suggested times!");
-            //Page.selectDate.SelectedDate = Page.Period.StartTime;
-            //Page.selectTime.IsDropDownOpen = true;
         }
 
-        private void ShowSuggestedTimes()
+
+        private void AddFreeTimes(int daysFromToday)
         {
-            //Page.PeriodList.Clear();
-            //int daysFromToday = 3;
-            //while (Page.PeriodList.Count < 2)
-            //{
-            //    Page.PeriodList.Clear();
-            //    AddFreeTimes(daysFromToday);
-            //    daysFromToday++;
-            //}
+            List<TimeSpan> timeList = new List<TimeSpan>();
+            Injection.GenerateTimeSpan(timeList);
+
+            foreach (TimeSpan timeSpan in timeList) if (SuggestedPeriods.Count < 4)
+            {
+                Period period = GeneratePeriod(timeSpan, daysFromToday);
+                    if (PeriodFunctions.CheckPeriodAvailability(period, false))
+                        SuggestedPeriods.Add(PeriodConverter.GetPeriodDTO(period));
+                }
         }
 
-        private void AddFreeTimes(int daysFromToday)//adding free times to timeList on the date which is passed as parameter
+        private Period GeneratePeriod(TimeSpan timeSpan,int daysFromToday)
         {
-            //List<TimeSpan> timeList = new List<TimeSpan>();
-            //Validate.GenerateTimeSpan(timeList);
-
-            //foreach (TimeSpan timeSpan in timeList) if (Page.PeriodList.Count < 4)
-            //{
-            //    Page.Period.StartTime = DateTime.Today.AddDays(daysFromToday);
-            //    Page.Period.StartTime += timeSpan;
-            //    if (PeriodFunctions.CheckPeriodAvailability(Page.Period, false))
-            //        Page.PeriodList.Add(timeSpan);
-            //}
+            Period period = new Period(DateTime.Today.AddDays(daysFromToday), 30, PeriodType.APPOINTMENT,
+                PatientWindowVM.PatientUsername, Doctor.Username, false, PeriodFunctions.GeneratePeriodId());
+            period.StartTime += timeSpan;
+            period.RoomId = RoomFunctions.GetFreeRoom(period);
+            return period;
         }
     }
 }

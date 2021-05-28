@@ -31,6 +31,14 @@ namespace ZdravoHospital.GUI.PatientUI.DTOs
             PeriodId = periodId;
         }
 
+        public PeriodDTO(DateTime date, TimeSpan time, string doctorName, string doctorSurname)
+        {
+            Date = date;
+            Date += time;
+            DoctorName = doctorName;
+            DoctorSurname = doctorSurname;
+        }
+
         public PeriodDTO()
         {
             

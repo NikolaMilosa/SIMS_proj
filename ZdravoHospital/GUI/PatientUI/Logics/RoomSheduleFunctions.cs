@@ -44,7 +44,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         {
             int roomId = -1;
             
-            if (room.IsAppointmentRoom() && IsRoomAvailableForGivenPeriod(room, checkedPeriod))//IZMENA OVOG TREBA KAD SE URADI ROOM SCHEDULER
+            if (room.IsAppointmentRoom() && IsRoomAvailableForGivenPeriod(room, checkedPeriod))
                 if (!PeriodAlreadyExistsInRoom(room, checkedPeriod))
                     return room.Id;
 

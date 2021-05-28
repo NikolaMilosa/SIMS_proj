@@ -127,12 +127,16 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 DoctorPanelVisibility = Visibility.Collapsed;
                 DatePanelVisibility = Visibility.Visible;
             }
-
+            PeriodDTOs.Clear();
         }
 
         private void SuggestExecute(object parameter)
         {
-            
+            if (DoctorPanelVisibility == Visibility.Visible)
+            {
+                SuggestTimeFunctions timeFunctions = new SuggestTimeFunctions(PeriodDTOs, SelectedDoctorDTO);
+                timeFunctions.GetSuggestedPeriods();
+            }
         }
 
         private bool SuggestCanExecute(object parameter)

@@ -17,8 +17,8 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="150"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="120"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="20"/>
@@ -79,9 +79,9 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Time" Width="*" Binding="{Binding Path=Date, StringFormat=t}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Doctor's&#x0a; name" Width="120" Binding="{Binding Path=DoctorName}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Doctor's&#x0a;surname" Width="120" Binding="{Binding Path=DoctorSurname}"></DataGridTextColumn>
-                    <DataGridTextColumn Header=" Room&#x0a;number" Width="*" Binding="{Binding Path=RoomNumber}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Doctor's&#x0a; name" Width="*" Binding="{Binding Path=DoctorName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Doctor's&#x0a;surname" Width="*" Binding="{Binding Path=DoctorSurname}"></DataGridTextColumn>
+                    
                   
 
                     <DataGridTemplateColumn Width="*">

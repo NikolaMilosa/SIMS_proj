@@ -42,7 +42,20 @@ namespace Model
             ReferredReferralId = -1;
             ReferringReferralId = -1;
         }
-       
+
+        public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, bool isUrgent,int periodId)
+        {
+            StartTime = startTime;
+            Duration = duration;
+            PeriodType = periodType;
+            PatientUsername = patientUsername;
+            DoctorUsername = doctorUsername;
+            IsUrgent = isUrgent;
+            PeriodId = periodId;
+            ReferredReferralId = -1;
+            ReferringReferralId = -1;
+        }
+
         public bool HasPassed()
         {
             if (StartTime.AddMinutes(Duration) < DateTime.Now)
