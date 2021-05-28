@@ -8,7 +8,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PeriodPage"
-      SizeChanged="PageSizeChanged">
+      SizeChanged="PageSizeChanged"
+      Loaded="Page_Loaded">
     <Page.Resources>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"></converters:InverseBooleanConverter>
     </Page.Resources>
@@ -27,7 +28,8 @@
                             Height="45"
                             Width="100"
                             Style="{StaticResource BlueButton}"
-                            Name="BackButton"/>
+                            Name="BackButton"
+                            Command="{Binding BackCommand}"/>
                     <Button Content="Edit"
                             Visibility="{Binding EditButtonVisibility}"
                         DockPanel.Dock="Right"
@@ -142,8 +144,7 @@
                         HorizontalAlignment="Right"
                     Padding="10"
                             Margin="20"
-                        Style="{StaticResource BlueButton}"
-                Click="PatientInfoButton_Click"/>
+                        Style="{StaticResource BlueButton}"/>
 
                     <TextBlock Text="Date:"
                            Grid.Row="4"
@@ -228,27 +229,28 @@
                     Margin="20, 20, 20, 0"
                         Style="{StaticResource BlueButton}"
                         Visibility="{Binding CancelButtonVisibility}"
+                                Command="{Binding CancelCommand}"
                 Click="CancelAppointmentButton_Click"/>
 
                         <Button Name="AnamnesisButton"
                     Content="Write anamnesis"
                     Margin="20, 20, 20, 0"
                         Style="{StaticResource BlueButton}"
-                        Visibility="{Binding PeriodEventButtonsVisibility}"
-                    Click="AnamnesisButton_Click"/>
+                                Command="{Binding WritePeriodDetailsCommand}"
+                        Visibility="{Binding PeriodEventButtonsVisibility}"/>
                         <Button Name="PrescriptionButton"
                     Content="Write prescription"
                     Margin="20, 20, 20, 0"
                         Style="{StaticResource BlueButton}"
-                        Visibility="{Binding PeriodEventButtonsVisibility}"
-                    Click="PrescriptionButton_Click"/>
+                                Command="{Binding WritePrescriptionCommand}"
+                        Visibility="{Binding PeriodEventButtonsVisibility}"/>
 
                         <Button Name="ReferralButton"
                     Content="Write referral"
                     Margin="20, 20, 20, 0"
                         Style="{StaticResource BlueButton}"
                         Visibility="{Binding PeriodEventButtonsVisibility}"
-                    Click="ReferralButton_Click"/>
+                                Command="{Binding WriteReferralCommand}"/>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

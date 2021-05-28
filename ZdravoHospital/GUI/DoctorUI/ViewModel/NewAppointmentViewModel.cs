@@ -7,13 +7,16 @@ using ZdravoHospital.GUI.DoctorUI.Validations;
 using ZdravoHospital.GUI.DoctorUI.Commands;
 using System.Windows;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
+using System.Windows.Navigation;
 
 namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 {
     public class NewAppointmentViewModel : ViewModel
     {
+        private NavigationService _navigationService;
         private Referral _referral;
         private PeriodController _periodController;
+        private bool _periodCreated;
 
         public bool DoctorPatientEditable { get; set; }
         public bool IsUrgent { get; set; }
@@ -56,6 +59,18 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         #region Commands
 
+        public MyICommand BackCommand { get; set; }
+
+        public void Executed_BackCommand()
+        {
+            _navigationService.GoBack();
+        }
+
+        public bool CanExecute_BackCommand()
+        {
+            return true;
+        }
+
         public MyICommand ConfirmCommand { get; set; }
 
         public void Executed_ConfirmCommand()
@@ -73,7 +88,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 _periodController.CreateNewPeriod(period, _referral);
                 MessageText = "Appointment created successfully.";
                 MessagePopUpVisibility = Visibility.Visible;
-                //TODO: navigate back
+                _periodCreated = true;
                 return;
             }
             catch (PeriodInPastException exception)
@@ -106,6 +121,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_CloseMessagePopUpCommand()
         {
             MessagePopUpVisibility = Visibility.Collapsed;
+
+            if (_periodCreated)
+                _navigationService.GoBack();
         }
 
         public bool CanExecute_CloseMessagePopUpCommand()
@@ -115,10 +133,11 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         #endregion
         
-        public NewAppointmentViewModel(Doctor doctor, DateTime startTime, int duration)
+        public NewAppointmentViewModel(NavigationService navigationService, Doctor doctor, DateTime startTime, int duration)
         {
             InitializeCommands();
 
+            _navigationService = navigationService;
             _periodController = new PeriodController();
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
@@ -135,7 +154,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             MessagePopUpVisibility = Visibility.Collapsed;
         }
         
-        public NewAppointmentViewModel(Referral referral, Patient patient)
+        public NewAppointmentViewModel(NavigationService navigationService, Referral referral, Patient patient)
         {
             InitializeCommands();
 
@@ -156,6 +175,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         private void InitializeCommands()
         {
+            BackCommand = new MyICommand(Executed_BackCommand, CanExecute_BackCommand);
             ConfirmCommand = new MyICommand(Executed_ConfirmCommand, CanExecute_ConfirmCommand);
             CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
         }

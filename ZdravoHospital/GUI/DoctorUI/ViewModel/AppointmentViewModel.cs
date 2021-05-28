@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
 using ZdravoHospital.GUI.DoctorUI.Controllers;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
@@ -14,6 +15,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 {
     public class AppointmentViewModel : ViewModel
     {
+        private NavigationService _navigationService;
         private Period _period;
         private PeriodController _periodController;
 
@@ -132,6 +134,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             }
         }
         private string _messageText;
+
         public string MessageText
         {
             get
@@ -222,12 +225,85 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand BackCommand { get; set; }
+
+        public void Executed_BackCommand()
+        {
+            _navigationService.GoBack();
+        }
+
+        public bool CanExecute_BackCommand()
+        {
+            return true;
+        }
+
+        public MyICommand ReadReferralCommand { get; set; }
+
+        public void Executed_ReadReferralCommand()
+        {
+            //TODO:
+        }
+
+        public bool CanExecute_ReadReferralCommand()
+        {
+            return true;
+        }
+
+        public MyICommand CancelCommand { get; set; }
+
+        public void Executed_CancelCommand()
+        {
+            //TODO:
+        }
+
+        public bool CanExecute_CancelCommand()
+        {
+            return true;
+        }
+
+        public MyICommand WritePeriodDetailsCommand { get; set; }
+
+        public void Executed_WritePeriodDetailsCommand()
+        {
+            _navigationService.Navigate(new PeriodDetailsPage(_period));
+        }
+
+        public bool CanExecute_WritePeriodDetailsCommand()
+        {
+            return true;
+        }
+
+        public MyICommand WritePrescriptionCommand { get; set; }
+
+        public void Executed_WritePrescriptionCommand()
+        {
+            _navigationService.Navigate(new PrescriptionPage(_period));
+        }
+
+        public bool CanExecute_WritePrescriptionCommand()
+        {
+            return true;
+        }
+
+        public MyICommand WriteReferralCommand { get; set; }
+
+        public void Executed_WriteReferralCommand()
+        {
+            _navigationService.Navigate(new ReferralPage(Doctor, Patient, _period));
+        }
+
+        public bool CanExecute_WriteReferralCommand()
+        {
+            return true;
+        }
+
         #endregion
 
-        public AppointmentViewModel(Period period)
+        public AppointmentViewModel(NavigationService navigationService, Period period)
         {
             InitializeCommands();
 
+            _navigationService = navigationService;
             _period = period;
             _periodController = new PeriodController();
 
@@ -262,6 +338,12 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             ConfirmCommand = new MyICommand(Executed_ConfirmCommand, CanExecute_ConfirmCommand);
             CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
             EditCommand = new MyICommand(Executed_EditCommand, CanExecute_EditCommand);
+            BackCommand = new MyICommand(Executed_BackCommand, CanExecute_BackCommand);
+            CancelCommand = new MyICommand(Executed_CancelCommand, CanExecute_CancelCommand);
+            ReadReferralCommand = new MyICommand(Executed_ReadReferralCommand, CanExecute_ReadReferralCommand);
+            WritePeriodDetailsCommand = new MyICommand(Executed_WritePeriodDetailsCommand, CanExecute_WritePeriodDetailsCommand);
+            WritePrescriptionCommand = new MyICommand(Executed_WritePrescriptionCommand, CanExecute_WritePrescriptionCommand);
+            WriteReferralCommand = new MyICommand(Executed_WriteReferralCommand, CanExecute_WriteReferralCommand);
         }
 
         private bool IsInputValid()

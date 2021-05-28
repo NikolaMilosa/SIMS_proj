@@ -8,7 +8,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NewAppointmentPage"
-      SizeChanged="PageSizeChanged">
+      SizeChanged="PageSizeChanged"
+      Loaded="Page_Loaded">
     <Grid>
         <Grid Background="{StaticResource DarkGray}">
             <Grid.RowDefinitions>
@@ -25,7 +26,7 @@
                             Width="100"
                             Style="{StaticResource BlueButton}"
                             Name="CancelButton"
-                            Click="CancelButton_Click"/>
+                            Command="{Binding BackCommand}"/>
                     <Button Content="Confirm"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"

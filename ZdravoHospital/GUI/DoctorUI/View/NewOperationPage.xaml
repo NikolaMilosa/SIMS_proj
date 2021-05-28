@@ -7,7 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="800"
       Title="NewOperationPage"
-      SizeChanged="PageSizeChanged">
+      SizeChanged="PageSizeChanged"
+      Loaded="Page_Loaded">
 
     <Grid>
         <Grid Background="{StaticResource DarkGray}">
