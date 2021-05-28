@@ -27,35 +27,6 @@ namespace ZdravoHospital.GUI.DoctorUI
             TopDockPanel.Margin = new Thickness(this.ActualWidth * 0.1, 0, this.ActualWidth * 0.1, 15);
         }
 
-        private void CancelAppointmentButton_Click(object sender, RoutedEventArgs e)
-        {
-            //MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel the appointment?\nThis action cannot be undone.",
-            //                                          "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            //if (result == MessageBoxResult.Yes)
-            //{
-            //    if (period.ReferringReferralId != -1)
-            //    {
-            //        referral.Period = null;
-            //        referral.IsUsed = false;
-            //        Model.Resources.SaveReferrals();
-            //    }
-
-            //    foreach (Period existingPeriod in Model.Resources.periods)
-            //    {
-            //        if (existingPeriod.RoomId == this.period.RoomId && existingPeriod.StartTime == this.period.StartTime)
-            //        {
-            //            Model.Resources.periods.Remove(existingPeriod);
-            //            break;
-            //        }
-            //    }
-
-            //    Model.Resources.SavePeriods();
-
-            //    MessageBox.Show("Appointment canceled successfully.", "Success");
-            //    NavigationService.GoBack();
-            //}
-        }
-
         private void SeeReferralButton_Click(object sender, RoutedEventArgs e)
         {
             //Model.Resources.OpenReferrals();

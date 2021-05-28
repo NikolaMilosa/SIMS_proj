@@ -24,5 +24,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
         {
             _periodService.UpdatePeriod(period);
         }
+
+        public void CancelPeriod(int periodId)
+        {
+            _periodService.CancelPeriod(periodId);
+        }
     }
 }

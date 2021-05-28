@@ -18,6 +18,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private NavigationService _navigationService;
         private Period _period;
         private PeriodController _periodController;
+        private bool _periodCanceled;
 
         private bool _doctorPatientEditable;
         public bool DoctorPatientEditable 
@@ -75,6 +76,20 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             {
                 _messagePopUpVisibility = value;
                 OnPropertyChanged("MessagePopUpVisibility");
+            }
+        }
+
+        private Visibility _cancelDialogVisibility;
+        public Visibility CancelDialogVisibility
+        {
+            get
+            {
+                return _cancelDialogVisibility;
+            }
+            set
+            {
+                _cancelDialogVisibility = value;
+                OnPropertyChanged("CancelDialogVisibility");
             }
         }
 
@@ -169,7 +184,6 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 IsEditModeOn = false;
                 ConfirmButtonVisibility = Visibility.Collapsed;
                 EditButtonVisibility = Visibility.Visible;
-                //TODO: navigate back
                 return;
             }
             catch (PeriodInPastException exception)
@@ -204,6 +218,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_CloseMessagePopUpCommand()
         {
             MessagePopUpVisibility = Visibility.Collapsed;
+
+            if (_periodCanceled)
+                _navigationService.GoBack();
         }
 
         public bool CanExecute_CloseMessagePopUpCommand()
@@ -237,6 +254,53 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand CancelCommand { get; set; }
+
+        public void Executed_CancelCommand()
+        {
+            if (DateTime.Now > _period.StartTime)
+            {
+                MessageText = "Can't cancel an appointment which has already started.";
+                MessagePopUpVisibility = Visibility.Visible;
+                return;
+            }
+
+            CancelDialogVisibility = Visibility.Visible;
+        }
+
+        public bool CanExecute_CancelCommand()
+        {
+            return true;
+        }
+
+        public MyICommand YesCancelCommand { get; set; }
+
+        public void Executed_YesCancelCommand()
+        {
+            CancelDialogVisibility = Visibility.Collapsed;
+            _periodController.CancelPeriod(_period.PeriodId);
+            _periodCanceled = true;
+            MessageText = "Appointment canceled successfully.";
+            MessagePopUpVisibility = Visibility.Visible;
+        }
+
+        public bool CanExecute_YesCancelCommand()
+        {
+            return true;
+        }
+
+        public MyICommand NoCancelCommand { get; set; }
+
+        public void Executed_NoCancelCommand()
+        {
+            CancelDialogVisibility = Visibility.Collapsed;
+        }
+
+        public bool CanExecute_NoCancelCommand()
+        {
+            return true;
+        }
+
         public MyICommand ReadReferralCommand { get; set; }
 
         public void Executed_ReadReferralCommand()
@@ -245,18 +309,6 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         }
 
         public bool CanExecute_ReadReferralCommand()
-        {
-            return true;
-        }
-
-        public MyICommand CancelCommand { get; set; }
-
-        public void Executed_CancelCommand()
-        {
-            //TODO:
-        }
-
-        public bool CanExecute_CancelCommand()
         {
             return true;
         }
@@ -321,6 +373,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             MessagePopUpVisibility = Visibility.Collapsed;
             ConfirmButtonVisibility = Visibility.Collapsed;
+            CancelDialogVisibility = Visibility.Collapsed;
 
             if (DateTime.Now > period.StartTime)
             {
@@ -340,6 +393,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             EditCommand = new MyICommand(Executed_EditCommand, CanExecute_EditCommand);
             BackCommand = new MyICommand(Executed_BackCommand, CanExecute_BackCommand);
             CancelCommand = new MyICommand(Executed_CancelCommand, CanExecute_CancelCommand);
+            YesCancelCommand = new MyICommand(Executed_YesCancelCommand, CanExecute_YesCancelCommand);
+            NoCancelCommand = new MyICommand(Executed_NoCancelCommand, CanExecute_NoCancelCommand);
             ReadReferralCommand = new MyICommand(Executed_ReadReferralCommand, CanExecute_ReadReferralCommand);
             WritePeriodDetailsCommand = new MyICommand(Executed_WritePeriodDetailsCommand, CanExecute_WritePeriodDetailsCommand);
             WritePrescriptionCommand = new MyICommand(Executed_WritePrescriptionCommand, CanExecute_WritePrescriptionCommand);

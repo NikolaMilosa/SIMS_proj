@@ -1,6 +1,7 @@
 ﻿using Model;
 using Repository.PeriodPersistance;
 using Repository.ReferralPersistance;
+using System;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 
 namespace ZdravoHospital.GUI.DoctorUI.Services
@@ -30,6 +31,11 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
                 referral.IsUsed = true;
                 _referralRepository.Update(referral);
             }
+        }
+
+        public void CancelPeriod(int periodId)
+        {
+            _periodRepository.DeleteById(periodId);
         }
 
         public void UpdatePeriod(Period period)
