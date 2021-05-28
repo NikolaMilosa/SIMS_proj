@@ -30,19 +30,19 @@
                 <StackPanel>
                     <TextBlock FontFamily="Yu Gothic" FontSize="20" Margin="0,0,0,10"> Recipients</TextBlock>
                     <WrapPanel>
-                        <CheckBox x:Name="ManagerCheckBox" IsChecked="{Binding ManagerChecked}"></CheckBox>
+                        <CheckBox x:Name="ManagerCheckBox" IsChecked="{Binding NotificationDTO.ManagerChecked}"></CheckBox>
                         <TextBlock Margin="10,0,0,0" > MANAGER</TextBlock>
                     </WrapPanel>
                     <WrapPanel>
-                        <CheckBox x:Name="SecretaryCheckBox" IsChecked="{Binding SecretaryChecked}"></CheckBox>
+                        <CheckBox x:Name="SecretaryCheckBox" IsChecked="{Binding NotificationDTO.SecretaryChecked}"></CheckBox>
                         <TextBlock Margin="10,0,0,0"> SECRETARY</TextBlock>
                     </WrapPanel>
                     <WrapPanel>
-                        <CheckBox x:Name="DoctorCheckBox" IsChecked="{Binding DoctorChecked}"></CheckBox>
+                        <CheckBox x:Name="DoctorCheckBox" IsChecked="{Binding NotificationDTO.DoctorChecked}"></CheckBox>
                         <TextBlock Margin="10,0,0,0"> DOCTOR</TextBlock>
                     </WrapPanel>
                     <WrapPanel>
-                        <CheckBox x:Name="PatientCheckBox" IsChecked="{Binding PatientChecked}"></CheckBox>
+                        <CheckBox x:Name="PatientCheckBox" IsChecked="{Binding NotificationDTO.PatientChecked}"></CheckBox>
                         <TextBlock Margin="10,0,0,0"> PATIENT</TextBlock>
                     </WrapPanel>
                 </StackPanel>
@@ -59,7 +59,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <ListBox Height="40" Background="White" Margin="0,0,0,0" ItemsSource="{Binding CustomRecipients, Mode=TwoWay}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+            <ListBox Height="40" Background="White" Margin="0,0,0,0" ItemsSource="{Binding NotificationDTO.CustomRecipients, Mode=TwoWay}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
@@ -80,11 +80,11 @@
             </ListBox>
             <TextBlock x:Name="HintLabel" FontFamily="Yu Gothic" FontSize="10" Margin="0,0,0,10">Press enter to add new recipient.</TextBlock>
             <TextBlock FontFamily="Yu Gothic" FontSize="20"> Title </TextBlock>
-            <TextBox x:Name="TitleTextBox" Height="40" Text="{Binding Path=NotificationTitle, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="TitleTextBox" Height="40" Text="{Binding Path=NotificationDTO.NotificationTitle, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="4" Margin="10,0,10,0">
             <TextBlock FontFamily="Yu Gothic" FontSize="20" Margin="0,10,0,0"> Content </TextBlock>
-            <TextBox x:Name="ContentTextBox" Height="140" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding Path=NotificationText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="ContentTextBox" Height="140" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding Path=NotificationDTO.NotificationText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
         <Button x:Name="SendNotificationButton" Grid.Row="5" Foreground="Black" Background="Transparent" Width="100" Height="30" Margin="0,0,10,0" HorizontalAlignment="Right" Click="SendNotificationButton_Click" ToolTip="Send notification">
             <StackPanel Orientation="Horizontal">
