@@ -8,6 +8,9 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
     public class ThreadFunctions
     {
         private string username;
+        public Thread NotificationThread { get; private set; }
+        public Thread NoteThread { get; private set; }
+        public Thread TrollThread { get; private set; }
 
         public ThreadFunctions(string username)
         {
@@ -20,30 +23,44 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             StartNoteThread();
         }
 
+        public void KillThreads()
+        {
+            
+            //NoteThread.Interrupt();
+            //NotificationThread.Interrupt();
+            //TrollThread.Interrupt();
+        }
         public static void SleepForGivenMinutes(int minutes)
         {
-            Thread.Sleep(TimeSpan.FromMinutes(minutes));
+            try
+            {
+                Thread.Sleep(TimeSpan.FromMinutes(minutes));
+            }
+            catch
+            {
+
+            }
         }
 
         private void StartNotificationThread()
         {
-            Thread notificationThread = new Thread(new ParameterizedThreadStart(ThreadTherapyFunctions.TherapyNotification));
-            notificationThread.SetApartmentState(ApartmentState.STA);
-            notificationThread.Start(username);
+            NotificationThread = new Thread(new ParameterizedThreadStart(ThreadTherapyFunctions.TherapyNotification));
+            NotificationThread.SetApartmentState(ApartmentState.STA);
+            NotificationThread.Start(username);
         }
 
         private void StartNoteThread()
         {
-            Thread notificationNoteThread = new Thread(new ParameterizedThreadStart(ThreadNoteFunctions.NoteNotification));
-            notificationNoteThread.SetApartmentState(ApartmentState.STA);
-            notificationNoteThread.Start(username);
+            NoteThread = new Thread(new ParameterizedThreadStart(ThreadNoteFunctions.NoteNotification));
+            NoteThread.SetApartmentState(ApartmentState.STA);
+            NoteThread.Start(username);
         }
 
         private void StartTrollThread()
         {
-            Thread trollThread = new Thread(new ParameterizedThreadStart(ThreadTrollFunctions.ResetActionsNum));
-            trollThread.SetApartmentState(ApartmentState.STA);
-            trollThread.Start(username);
+            TrollThread = new Thread(new ParameterizedThreadStart(ThreadTrollFunctions.ResetActionsNum));
+            TrollThread.SetApartmentState(ApartmentState.STA);
+            TrollThread.Start(username);
         }
     }
 }

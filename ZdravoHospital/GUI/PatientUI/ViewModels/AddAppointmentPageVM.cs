@@ -57,8 +57,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         }
         public Period Period { get; set; }
-
-        public AddAppointmentValidations Validations { get; private set; }
         public bool Mode { get; private set; }//true=add,false=edit
 
         public PeriodFunctions PeriodFunctions { get; private set; }
@@ -101,8 +99,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void ConfirmExecute(object parameter)
         {
+            if (!PatientFunctions.ActionTaken())
+                return;
             SerializePeriod();
-            PatientFunctions.ActionTaken();
             PatientWindowVM.NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
         }
 

@@ -25,26 +25,29 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         public  bool IsTrollDetected()
         {
-            bool detected = false;
             Patient patient = LoadPatient();
-            if (patient.RecentActions >= 5)
-                detected = true;
-            
-            return detected;
+            return patient.RecentActions >= 5;
         }
 
         public bool ActionTaken()
         {
             Patient patient = LoadPatient();
-            if (patient.RecentActions == 5)
+            if (patient.RecentActions == 4)
             {
-                viewFunctions.ShowOkDialog("Troll detected!", "Your account has been blocked due to too much recent actions! Please, contact our support!");
-                return false;
+               BlockAccount(patient);
+               return false;
             }
 
             ++patient.RecentActions;
             patientRepository.Update(patient);
             return true;
+        }
+
+        private void BlockAccount(Patient patient)
+        {
+            viewFunctions.ShowOkDialog("Troll detected!", "Your account has been blocked due to too much recent actions! Please, contact our support!");
+            patient.RecentActions = 5;
+            patientRepository.Update(patient);
         }
     }
 }

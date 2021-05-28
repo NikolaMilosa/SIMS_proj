@@ -24,10 +24,6 @@ namespace ZdravoHospital.GUI.PatientUI
     /// </summary>
     public partial class PatientWindow : Window
     {
-        public static int RecentActionsNum {
-            get;
-            set;
-        }
         public PatientWindow(string username)
         {
             InitializeComponent();

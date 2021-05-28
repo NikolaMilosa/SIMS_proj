@@ -97,7 +97,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void RemovePeriod()
         {
-            patientFunctions.ActionTaken();
+            if (!patientFunctions.ActionTaken())
+                return;
             PeriodRepository.DeleteById(SelectedPeriodDTO.PeriodId);
             PeriodDTOs.Remove(SelectedPeriodDTO);
         }

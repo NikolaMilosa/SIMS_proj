@@ -17,6 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public string WelcomeMessage { get; private set; }
         public PatientWindow PatientWindow { get; private set; }
+        public ThreadFunctions ThreadFunctions { get; private set; }
         public static string PatientUsername { get; private set; }
         private  bool _SurveyAvailable { get; set; }
         public  bool SurveyAvailable
@@ -66,9 +67,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (!viewFunctions.YesPressed)
                 return;
             SerializePatient();
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            PatientWindow.Close();
+            ThreadFunctions.KillThreads();
+           CloseWindows();
         }
 
         private void AddAppointmentExecute(object sender)
@@ -105,6 +105,12 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
+        private void CloseWindows()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            PatientWindow.Close();
+        }
         private void SetCommands()
         {
             LogOutCommand = new RelayCommand(LogOutExecute);
@@ -118,8 +124,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void StartThreads()
         {
-            ThreadFunctions threadFunctions = new ThreadFunctions(PatientUsername);
-            threadFunctions.StartThreads();
+            ThreadFunctions = new ThreadFunctions(PatientUsername);
+            ThreadFunctions.StartThreads();
         }
         private void SetProperties(string username, PatientWindow patientWindow)
         {

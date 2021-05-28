@@ -29,12 +29,14 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         public string PatientUsername { get; set; }
         public string ErrorMessage { get; private set; }
+        public ViewFunctions ViewFunctions { get; private set; }
         #endregion
 
         public PeriodFunctions()
         {
             PeriodRepository = new PeriodRepository();
             PatientUsername = PatientWindowVM.PatientUsername;
+            ViewFunctions = new ViewFunctions();
         }
 
         #region Methods
@@ -44,14 +46,14 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         {
             PeriodRepository periodRepository = new PeriodRepository();
             periodRepository.Update(period);
-            Validate.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
+            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
         }
 
         public  void SerializeNewPeriod(Period period)
         {
             PeriodRepository periodRepository = new PeriodRepository();
             periodRepository.Create(period);
-            Validate.ShowOkDialog("Appointment", "Appointment is succesfully added!");
+            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
         }
         //
         public  bool IsPeriodWithinGivenMinutes(DateTime dateTime, int minutes)
@@ -98,7 +100,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             if (DoPeriodsOverlap(period, checkedPeriod))
             {
                 if (writeWarnings)
-                    Validate.ShowOkDialog("Warning", "Doctor has an existing appointment at selected time!");
+                    ViewFunctions.ShowOkDialog("Warning", "Doctor has an existing appointment at selected time!");
                 ErrorMessage = "Doctor has an existing appointment at selected time!";
 
                 available = false;
@@ -113,7 +115,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             if (DoPeriodsOverlap(period, checkedPeriod))
             {
                 if (writeWarnings)
-                    Validate.ShowOkDialog("Warning", "Patient has an existing appointment at selected time!");
+                    ViewFunctions.ShowOkDialog("Warning", "Patient has an existing appointment at selected time!");
                 ErrorMessage = "Patient has an existing appointment at selected time!";
                 available = false;
             }

@@ -23,74 +23,11 @@ namespace ZdravoHospital.GUI.PatientUI
 {
     public partial class AddAppointmentPage : Page
     {
-
-        public ObservableCollection<DoctorDTO> DoctorList { get; set; }
-        public ObservableCollection<TimeSpan> PeriodList { get; set; }
-        public Period Period { get; set; }
-        AddAppointmentValidations Validations { get; set; }
-        public bool Mode { get; set; }//true=add,false=edit
-
-        private PatientFunctions patientFunctions;
-
         public AddAppointmentPage(Period period)
         {
             InitializeComponent();
-            if(period==null)
-                 DataContext = new AddAppointmentPageVM();
-            else
-                DataContext = new AddAppointmentPageVM(period);
-            //patientFunctions = new PatientFunctions(username);
-            //SetProperties(mode,username);
-            //GenerateComboBoxes(period,username);
+            DataContext = period==null ? new AddAppointmentPageVM() : new AddAppointmentPageVM(period);
         }
 
-        private void GenerateComboBoxes(Period period, string username)
-        {
-            Validate.GenerateObesrvableTimes(PeriodList);
-            Validations.FillDoctorList();
-            Validations.GeneratePeriod(period, username);
-        }
-
-        private void SetProperties(bool mode, string username)
-        {
-            Validations = new AddAppointmentValidations(this, username);
-            Mode = mode;
-            PeriodList = new ObservableCollection<TimeSpan>();
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!Validations.CheckPeriodAvailibility())
-                return;
-
-            Validations.SerializePeriod();
-
-            ++PatientWindow.RecentActionsNum;
-            NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
-        }
-
-
-
-        private void SuggestButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            SuggestAppointmentValidations suggestValidations = new SuggestAppointmentValidations(this);
-
-            if (suggestValidations.IsOnlyDoctorSelected()) //suggest time based on doctor
-                suggestValidations.SuggestTime();
-            else if (suggestValidations.IsOnlyTimeSelected())//suggest doctor based on time
-            {
-                Validations.FillDoctorList();
-                suggestValidations.SuggestDoctors();
-            }
-            else
-                Validate.ShowOkDialog("Warning", "Please choose doctor or time so the system could suggest you  periods!");
-
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new PeriodPage(Period.PatientUsername));
-        }
     }
 }
