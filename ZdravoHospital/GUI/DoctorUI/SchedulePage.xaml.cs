@@ -323,7 +323,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             EmptyPeriodButton emptyPeriodButton = sender as EmptyPeriodButton;
             Doctor selectedDoctor = DoctorsComboBox.SelectedItem as Doctor;
 
-            if (selectedDoctor.Username == App.currentUser && !selectedDoctor.SpecialistType.Equals("Doctor"))
+            if (selectedDoctor.Username.Equals(App.currentUser) && !selectedDoctor.SpecialistType.SpecializationName.Equals("Doctor"))
             {
                 selectedEmptyPeriodButton = emptyPeriodButton;
                 NewPeriodPopUp.Visibility = Visibility.Visible;
