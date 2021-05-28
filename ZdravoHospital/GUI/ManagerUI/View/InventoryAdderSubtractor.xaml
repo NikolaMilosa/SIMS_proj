@@ -44,8 +44,11 @@
         <!-- Controls -->
         <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedInventory}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
 
-        <ComboBox x:Name="RoomComboBox" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Rooms, Mode=TwoWay}" SelectedItem="{Binding SelectedRoom, Mode=TwoWay}" FontSize="16" 
-                  HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Margin="10,0,0,0" PreviewKeyDown="RoomComboBox_PreviewKeyDown">
+        <ComboBox x:Name="RoomComboBox" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Rooms, Mode=TwoWay}" 
+                  SelectedItem="{Binding SelectedRoom, Mode=TwoWay}" FontSize="16" 
+                  HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Margin="10,0,0,0"
+                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                  IsDropDownOpen="{Binding IsDropDownOpen, Mode=TwoWay}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -58,6 +61,11 @@
                     </TextBlock>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
+            <ComboBox.InputBindings>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Enter" CommandParameter="Enter"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Down" CommandParameter="Down"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Up" CommandParameter="Up"/>
+            </ComboBox.InputBindings>
         </ComboBox>
 
         <Label Grid.Row="3" Grid.Column="1" Content="{Binding RoomInventoryQuantity}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
@@ -96,7 +104,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="16" Content="Confirm" Height="52" Width="105" Margin="0,0,20,0" HorizontalAlignment="Right" Command="{Binding ConfirmCommand}">
+            <Button x:Name="ConfirmButton" Template="{StaticResource ManagerButtonTemplate}" Grid.Column="0" Background="#bec4c2" FontSize="16" Content="Confirm" Height="52" Width="105" Margin="0,0,20,0" HorizontalAlignment="Right" Command="{Binding ConfirmCommand}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="IsEnabled" Value="True"/>

@@ -28,39 +28,5 @@ namespace ZdravoHospital.GUI.ManagerUI.View
             currentViewModel = new InventoryAdderSubtractorViewModel(inventory, injector);
             this.DataContext = currentViewModel;
         }
-
-        private void RoomComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Right || e.Key == Key.Left)
-            {
-                e.Handled = true;
-            }
-            if (e.Key == Key.Enter)
-            {
-                if (RoomComboBox.IsDropDownOpen == false)
-                    RoomComboBox.IsDropDownOpen = true;
-                else
-                    RoomComboBox.IsDropDownOpen = false;
-                e.Handled = true;
-            }
-            if (e.Key == Key.Down)
-            {
-                if (RoomComboBox.IsDropDownOpen == true)
-                {
-                    if (RoomComboBox.SelectedIndex + 1 < RoomComboBox.Items.Count)
-                        RoomComboBox.SelectedIndex += 1;
-                }
-                e.Handled = true;
-            }
-            if (e.Key == Key.Up)
-            {
-                if (RoomComboBox.IsDropDownOpen == true)
-                {
-                    if (RoomComboBox.SelectedIndex - 1 >= 0)
-                        RoomComboBox.SelectedIndex -= 1;
-                }
-                e.Handled = true;
-            }
-        }
     }
 }

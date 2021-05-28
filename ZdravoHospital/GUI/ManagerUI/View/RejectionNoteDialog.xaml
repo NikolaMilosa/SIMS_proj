@@ -46,7 +46,7 @@
 
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
 
-            <Button Height="52" Width="105" Content="Finish" FontSize="18">
+            <Button Height="52" Width="105" Content="Finish" FontSize="18" Template="{StaticResource ManagerButtonTemplate}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:CallMethodAction MethodName="Close"

@@ -95,12 +95,21 @@
             </TextBox.Style>
         </TextBox>
 
-        <ComboBox x:Name="TypeComboBox" Grid.Row="3" Grid.Column="1" Text="{Binding Path=Room.RoomType, Converter={converters:RoomTypeConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center">
+        <ComboBox x:Name="TypeComboBox" Grid.Row="3" Grid.Column="1" 
+                  Text="{Binding Path=Room.RoomType, Converter={converters:RoomTypeConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  FontSize="18" Width="230" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center"
+                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                  IsDropDownOpen="{Binding IsDropDownOpen, Mode=TwoWay}">
             <ComboBoxItem>APPOINTMENT</ComboBoxItem>
             <ComboBoxItem>BEDROOM</ComboBoxItem>
             <ComboBoxItem>OPERATING</ComboBoxItem>
             <ComboBoxItem>STORAGE</ComboBoxItem>
             <ComboBoxItem>EMERGENCY</ComboBoxItem>
+            <ComboBox.InputBindings>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Enter" CommandParameter="Enter"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Down" CommandParameter="Down"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Up" CommandParameter="Up"/>
+            </ComboBox.InputBindings>
         </ComboBox>
 
         <Label Grid.Row="4" Grid.Column="1" FontSize="18" Content="{Binding Path=Available}"/>
@@ -112,7 +121,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ConfirmButton" Grid.Column="0" Background="#bec4c2" FontSize="18" Content="Confirm" Margin="10" Command="{Binding Path=ConfirmCommand}">
+            <Button x:Name="ConfirmButton" Grid.Column="0" Template="{StaticResource ManagerButtonTemplate}" Background="#bec4c2" FontSize="18" Content="Confirm" Margin="10" Command="{Binding Path=ConfirmCommand}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="IsEnabled" Value="False" />

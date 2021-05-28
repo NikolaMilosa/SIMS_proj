@@ -25,7 +25,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 if (!Regex.IsMatch(id, regex))
                     return new ValidationResult(false, "In id you have entered an unsupported character...");
 
-                if (inventoryRepository.GetById(id) != null)
+                if (inventoryRepository.GetById(id.ToUpper()) != null)
                     return new ValidationResult(false, "Inventory with that Id already exists...");
 
                 return new ValidationResult(true, null);

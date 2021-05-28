@@ -7,6 +7,7 @@
         xmlns:validation="clr-namespace:ZdravoHospital.GUI.ManagerUI.ValidationRules"
         xmlns:converters="clr-namespace:ZdravoHospital.GUI.ManagerUI.Converters"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:beh="clr-namespace:ZdravoHospital.GUI.ManagerUI.Commands"
         mc:Ignorable="d"
         Title="Inventory management"
         SizeToContent="WidthAndHeight"
@@ -74,7 +75,9 @@
                 <ComboBox x:Name="FirstRoomComboBox" ItemsSource="{Binding SenderRooms, Mode=TwoWay}" 
                           SelectedItem="{Binding SenderRoom, Mode=TwoWay}" Grid.Row="1" FontSize="18" HorizontalAlignment="Left"
                           SelectedIndex="{Binding SenderIndex, Mode=TwoWay}"
-                          VerticalAlignment="Center" Width="300" Margin="50,0,0,0" PreviewKeyDown="FirstRoomComboBox_PreviewKeyDown">
+                          VerticalAlignment="Center" Width="300" Margin="50,0,0,0"
+                          IsDropDownOpen="{Binding SenderIsDropDownOpen, Mode=TwoWay}"
+                          >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
@@ -87,13 +90,32 @@
                             </TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
+                    <ComboBox.InputBindings>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Enter" CommandParameter="Enter"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Up" CommandParameter="Up"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Down" CommandParameter="Down"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Tab" CommandParameter="Tab"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Right" CommandParameter="Right"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Escape" CommandParameter="Esc"/>
+                    </ComboBox.InputBindings>
+                    <ComboBox.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FocusLeftCombo, Mode=TwoWay}" Value="True">
+                                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=FirstRoomComboBox}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.Style>
                 </ComboBox>
 
                 <DataGrid x:Name="FirstRoomDataGrid" Grid.Row="3" AutoGenerateColumns="false" IsReadOnly="True" 
                           ItemsSource="{Binding SenderRoomInventory, Mode=TwoWay}" HeadersVisibility="Column" 
                           SelectedItem="{Binding SelectedInventory, Mode=TwoWay}"
-                          FontSize="18" Margin="20,10,10,10" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" 
-                          PreviewKeyDown="FirstRoomDataGrid_PreviewKeyDown" GotFocus="FirstRoomDataGrid_GotFocus">
+                          SelectedIndex="{Binding SenderDataIndex, Mode=TwoWay}"
+                          FontSize="18" Margin="20,10,10,10" RowBackground="LightYellow" 
+                          AlternatingRowBackground="LightBlue" 
+                          >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
@@ -112,9 +134,23 @@
                                 <DataTrigger Binding="{Binding ElementName=SecondRoomComboBox, Path=SelectedIndex}" Value="-1">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding FocusDataGrid, Mode=TwoWay}" Value="True">
+                                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=FirstRoomDataGrid}"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </DataGrid.Style>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewKeyDown">
+                            <i:InvokeCommandAction Command="{Binding DataGridCommand}" PassEventArgsToCommand="True"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="GotFocus">
+                            <i:InvokeCommandAction Command="{Binding DataGridFocused}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <beh:MyBehavior/>
+                    </i:Interaction.Behaviors>
                 </DataGrid>
             </Grid>
 
@@ -132,13 +168,16 @@
                           SelectedItem="{Binding ReceiverRoom, Mode=TwoWay}" IsReadOnly="True" Grid.Row="1" 
                           SelectedIndex="{Binding ReceiverIndex, Mode=TwoWay}"
                           FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="50,0,0,0" 
-                          PreviewKeyDown="SecondRoomComboBox_PreviewKeyDown">
+                          IsDropDownOpen="{Binding ReceiverIsDropDownOpen, Mode=TwoWay}">
                     <ComboBox.Style>
                         <Style TargetType="{x:Type ComboBox}">
                             <Setter Property="IsEnabled" Value="True"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=FirstRoomComboBox, Path=SelectedIndex}" Value="-1">
                                     <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding FocusRightCombo, Mode=TwoWay}" Value="True">
+                                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=SecondRoomComboBox}"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -155,6 +194,14 @@
                             </TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
+                    <ComboBox.InputBindings>
+                        <KeyBinding Command="{Binding ReceiverCombo}" Key="Enter" CommandParameter="Enter"/>
+                        <KeyBinding Command="{Binding ReceiverCombo}" Key="Up" CommandParameter="Up"/>
+                        <KeyBinding Command="{Binding ReceiverCombo}" Key="Down" CommandParameter="Down"/>
+                        <KeyBinding Command="{Binding ReceiverCombo}" Key="Tab" CommandParameter="Tab"/>
+                        <KeyBinding Command="{Binding ReceiverCombo}" Key="Left" CommandParameter="Left"/>
+                        <KeyBinding Command="{Binding SenderCombo}" Key="Escape" CommandParameter="Esc"/>
+                    </ComboBox.InputBindings>
                 </ComboBox>
 
                 <DataGrid x:Name="SecondRoomDataGrid" Grid.Row="3" ItemsSource="{Binding ReceiverRoomInventory, Mode=TwoWay}" 
@@ -174,7 +221,16 @@
 
         </Grid>
 
-        <Button x:Name="FinishButton" Grid.Row="2" FontSize="18" Content="Finish" Background="#bec4c2" Height="52" Width="100">
+        <Button x:Name="FinishButton" Grid.Row="2" FontSize="18" Template="{StaticResource ManagerButtonTemplate}" Content="Finish" Background="#bec4c2" Height="52" Width="100">
+            <Button.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding FocusFinishButton, Mode=TwoWay}" Value="True">
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=FinishButton}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:CallMethodAction MethodName="Close"

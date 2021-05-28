@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Printing;
 using System.Text;
+using System.Windows.Input;
 using Model;
 using Repository.DoctorPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
@@ -21,6 +23,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private MedicineService _medicineService;
 
         private IDoctorRepository _doctorRepository;
+
+        private bool _isDropDownOpen;
+        private int _selectedIndex;
 
         #endregion
 
@@ -56,11 +61,32 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public bool IsDropDownOpen
+        {
+            get => _isDropDownOpen;
+            set
+            {
+                _isDropDownOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
 
         public MyICommand ConfirmCommand { get; set; }
+        public MyICommand<KeyEventArgs> ComboBoxCommand { get; set; }
 
         #endregion
 
@@ -72,7 +98,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _medicineService = new MedicineService(null, injector);
 
+            SelectedIndex = -1;
+
             ConfirmCommand = new MyICommand(OnConfirm);
+            ComboBoxCommand = new MyICommand<KeyEventArgs>(OnComboBox);
         }
 
         #region Button functions
@@ -82,6 +111,36 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _medicineService.SendMedicineOnRecension(ObservedMedicine, SelectedDoctor);
         }
 
+        private void OnComboBox(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                IsDropDownOpen = (IsDropDownOpen == false) ? true : false;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (IsDropDownOpen && SelectedIndex < ListOfDoctors.Count - 1)
+                {
+                    SelectedIndex += 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (IsDropDownOpen && SelectedIndex > 0)
+                {
+                    SelectedIndex -= 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                IsDropDownOpen = false;
+            }
+        }
         #endregion
     }
 }

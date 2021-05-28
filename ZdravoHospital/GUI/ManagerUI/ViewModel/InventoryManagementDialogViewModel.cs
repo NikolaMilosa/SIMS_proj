@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using Model;
 using Model.Repository;
 using Repository.InventoryPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
+using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.View;
 using InventoryRepository = Repository.InventoryPersistance.InventoryRepository;
@@ -24,6 +27,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private int _senderIndex;
         private int _receiverIndex;
+        private int _senderDataIndex;
 
         private ObservableCollection<Room> _senderRooms;
         private ObservableCollection<Room> _receiverRooms;
@@ -41,6 +45,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private IInventoryRepository _inventoryRepository;
 
         private InjectorDTO _injector;
+
+        private bool _receiverIsDropDownOpen;
+        private bool _senderIsDropDownOpen;
+
+        private bool _focusLeftCombo;
+        private bool _focusRightCombo;
+        private bool _focusDataGrid;
+        private bool _focusFinishButton;
 
         #endregion
 
@@ -138,6 +150,105 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public bool SenderIsDropDownOpen
+        {
+            get => _senderIsDropDownOpen;
+            set
+            {
+                _senderIsDropDownOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SenderIndex
+        {
+            get => _senderIndex;
+            set
+            {
+                _senderIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int ReceiverIndex
+        {
+            get => _receiverIndex;
+            set
+            {
+                _receiverIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ReceiverIsDropDownOpen
+        {
+            get => _receiverIsDropDownOpen;
+            set
+            {
+                _receiverIsDropDownOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SenderDataIndex
+        {
+            get => _senderDataIndex;
+            set
+            {
+                _senderDataIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool FocusLeftCombo
+        {
+            get => _focusLeftCombo;
+            set
+            {
+                _focusLeftCombo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool FocusRightCombo
+        {
+            get => _focusRightCombo;
+            set
+            {
+                _focusRightCombo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool FocusDataGrid
+        {
+            get => _focusDataGrid;
+            set
+            {
+                _focusDataGrid = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool FocusFinishButton
+        {
+            get => _focusFinishButton;
+            set
+            {
+                _focusFinishButton = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        public MyICommand<string> SenderCombo { get; set; }
+        public MyICommand<string> ReceiverCombo { get; set; }
+        public MyICommand<KeyEventArgs> DataGridCommand { get; set; }
+
         #endregion
 
         public InventoryManagementDialogViewModel(InjectorDTO injector)
@@ -145,9 +256,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomRepository = injector.RoomRepository;
             _roomInventoryRepository = injector.RoomInventoryRepository;
             _inventoryRepository = injector.InventoryRepository;
-            SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
 
             _injector = injector;
+
+            SenderCombo = new MyICommand<string>(OnComboBoxSender);
+            ReceiverCombo = new MyICommand<string>(OnComboBoxReceiver);
+            DataGridCommand = new MyICommand<KeyEventArgs>(OnDataGridCommand);
         }
 
         #region Private functions
@@ -167,6 +281,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
 
             return result;
+        }
+
+        private void TurnOffFocus()
+        {
+            FocusDataGrid = false;
+            FocusLeftCombo = false;
+            FocusRightCombo = false;
+            FocusFinishButton = false;
         }
 
         #endregion
@@ -200,6 +322,131 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 ReceiverRoom = rooms.Find(r => r.Id == tempRoomReceiver.Id);
         }
 
+        #endregion
+
+        #region Button functions
+
+        private void OnComboBoxSender(string key)
+        {
+            if (key.Equals("Enter"))
+            {
+                SenderIsDropDownOpen = (SenderIsDropDownOpen == false) ? true : false;
+            }
+            else if (key.Equals("Up"))
+            {
+                if (SenderIsDropDownOpen && SenderIndex > 0)
+                {
+                    SenderIndex -= 1;
+                }
+            }
+            else if (key.Equals("Down"))
+            {
+                if (SenderIsDropDownOpen && SenderIndex < SenderRooms.Count - 1)
+                {
+                    SenderIndex += 1;
+                }
+            }
+            else if (key.Equals("Right"))
+            {
+                TurnOffFocus();
+                FocusRightCombo = true;
+            }
+            else if (key.Equals("Tab"))
+            {
+                TurnOffFocus();
+                FocusDataGrid = true;
+            }
+            else if (key.Equals("Esc"))
+            {
+                TurnOffFocus();
+                FocusFinishButton = true;
+            }
+        }
+
+        private void OnComboBoxReceiver(string key)
+        {
+            if (key.Equals("Enter"))
+            {
+                ReceiverIsDropDownOpen = (ReceiverIsDropDownOpen == false) ? true : false;
+            }
+            else if (key.Equals("Up"))
+            {
+                if (ReceiverIsDropDownOpen && ReceiverIndex> 0)
+                {
+                    ReceiverIndex -= 1;
+                }
+            }
+            else if (key.Equals("Down"))
+            {
+                if (ReceiverIsDropDownOpen && ReceiverIndex < ReceiverRooms.Count - 1)
+                {
+                    ReceiverIndex += 1;
+                }
+            }
+            else if (key.Equals("Left"))
+            {
+                TurnOffFocus();
+                FocusLeftCombo = true;
+            }
+            else if (key.Equals("Tab"))
+            {
+                TurnOffFocus();
+                FocusDataGrid = true;
+            }
+            else if (key.Equals("Esc"))
+            {
+                TurnOffFocus();
+                FocusFinishButton = true;
+            }
+        }
+
+        private void OnDataGridCommand(KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (SenderDataIndex < SenderRoomInventory.Count - 1)
+                {
+                    SenderDataIndex += 1;
+                }   
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (SenderDataIndex > 0)
+                {
+                    SenderDataIndex -= 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Right)
+            {
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                TurnOffFocus();
+                FocusFinishButton = true;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Escape)
+            {
+                TurnOffFocus();
+                FocusLeftCombo = true;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Enter)
+            {
+                HandleEnter();
+                e.Handled = true;
+            }
+        }
+        
         #endregion
     }
 }

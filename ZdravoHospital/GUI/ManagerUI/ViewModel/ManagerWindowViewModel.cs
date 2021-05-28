@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using Model;
 using Newtonsoft.Json;
 using Repository.CredentialsPersistance;
@@ -79,6 +80,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private IEmployeeRepository _employeeRepository;
 
         private InjectorDTO _injector;
+
+        private string _tableName;
+
+        private int _selectedRoomIndex;
+        private int _selectedInventoryIndex;
+        private int _selectedMedicineIndex;
+
+        private bool _shouldFocusTable;
 
         #endregion
 
@@ -172,6 +181,56 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public string TableName
+        {
+            get => _tableName;
+            set
+            {
+                _tableName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SelectedRoomIndex
+        {
+            get => _selectedRoomIndex;
+            set
+            {
+                _selectedRoomIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SelectedInventoryIndex
+        {
+            get => _selectedInventoryIndex;
+            set
+            {
+                _selectedInventoryIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SelectedMedicineIndex
+        {
+            get => _selectedMedicineIndex;
+            set
+            {
+                _selectedMedicineIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShouldFocusTable
+        {
+            get => _shouldFocusTable;
+            set
+            {
+                _shouldFocusTable = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -184,6 +243,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand AddMedicineCommand { get; set; }
         public MyICommand ManageInventoryCommand { get; set; }
         public MyICommand PlanRenovationCommand { get; set; }
+        public MyICommand<KeyEventArgs> TableCommand { get; set; }
+        public MyICommand<KeyEventArgs> SubMenuCommand { get; set; }
 
         #endregion
 
@@ -208,6 +269,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             AddMedicineCommand = new MyICommand(OnAddMedicine);
             ManageInventoryCommand = new MyICommand(OnManageInventory);
             PlanRenovationCommand = new MyICommand(OnPlanRenovation);
+            TableCommand = new MyICommand<KeyEventArgs>(OnTableKey);
+            SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
@@ -320,6 +383,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             RoomTableVisibility = Visibility.Visible;
+            SelectedRoomIndex = -1;
+            TableName = "Room table >";
         }
 
         //Show inventory button
@@ -327,6 +392,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             InventoryTableVisibility = Visibility.Visible;
+            SelectedInventoryIndex = -1;
+            TableName = "Inventory table >";
         }
 
         //Show medicine button
@@ -334,12 +401,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             TurnOffTables();
             MedicineTableVisibility = Visibility.Visible;
+            SelectedMedicineIndex = -1;
+            TableName = "Medicine table >";
         }
 
         //Add room button
         private void OnAddRoom()
         {
-            dialog = new AddOrEditRoomDialog(null, _injector);
+            dialog = new AddOrEditRoomDialog(null, _injector, false);
             dialog.ShowDialog();
         }
 
@@ -361,8 +430,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private void OnManageInventory()
         {
             _inventoryManagementDialogViewModel.SenderRooms = new ObservableCollection<Room>(_roomRepository.GetValues());
-            _inventoryManagementDialogViewModel.SenderRoom = null;
-            _inventoryManagementDialogViewModel.ReceiverRoom = null;
+            _inventoryManagementDialogViewModel.SenderIndex = -1;
+            _inventoryManagementDialogViewModel.ReceiverIndex = -1;
             dialog = new InventoryManagementDialog(_inventoryManagementDialogViewModel);
             dialog.ShowDialog();
         }
@@ -372,6 +441,107 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             dialog = new RenovationPlaningDialog(_injector);
             dialog.ShowDialog();
+        }
+
+        public void OnTableKey(KeyEventArgs e)
+        {
+            if (e.Key == Key.Down)
+            {
+                if (RoomTableVisibility == Visibility.Visible)
+                {
+                    if (SelectedRoomIndex < Rooms.Count - 1)
+                    {
+                        SelectedRoomIndex += 1;
+                    }
+                }
+                else if (InventoryTableVisibility == Visibility.Visible)
+                {
+                    if (SelectedInventoryIndex < Inventory.Count - 1)
+                    {
+                        SelectedInventoryIndex += 1;
+                    }
+                }
+                else if (MedicineTableVisibility == Visibility.Visible)
+                {
+                    if (SelectedMedicineIndex < Medicines.Count - 1)
+                    {
+                        SelectedMedicineIndex += 1;
+                    }
+                }
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (RoomTableVisibility == Visibility.Visible)
+                {
+                    if (SelectedRoomIndex > 0)
+                    {
+                        SelectedRoomIndex -= 1;
+                    }
+                }
+                else if (InventoryTableVisibility == Visibility.Visible)
+                {
+                    if (SelectedInventoryIndex > 0)
+                    {
+                        SelectedInventoryIndex -= 1;
+                    }
+                }
+                else if (MedicineTableVisibility == Visibility.Visible)
+                {
+                    if (SelectedMedicineIndex > 0)
+                    {
+                        SelectedMedicineIndex -= 1;
+                    }
+                }
+            }
+            else if (e.Key == Key.Tab)
+            {
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Right)
+            {
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Enter)
+            {
+                HandleEnterClick();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Delete)
+            {
+                HandleDeleteClick();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.F)
+            {
+                HandleFClick();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Add)
+            {
+                HandleAddClick();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.S)
+            {
+                HandleSClick();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.R)
+            {
+                HandleRClick();
+                e.Handled = true;
+            }
+        }
+
+        public void OnSubMenuKey(KeyEventArgs e)
+        {
+            if (e.Key == Key.Right)
+            {
+                ShouldFocusTable = true;
+                e.Handled = true;
+            }
+
+            ShouldFocusTable = false;
         }
 
         #endregion
@@ -385,7 +555,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 if (SelectedRoom != null)
                 {
                     var room = _roomRepository.GetById(SelectedRoom.Id);
-                    dialog = new AddOrEditRoomDialog(room, _injector);
+                    dialog = new AddOrEditRoomDialog(room, _injector,false);
                     dialog.ShowDialog();
                 }
             }
