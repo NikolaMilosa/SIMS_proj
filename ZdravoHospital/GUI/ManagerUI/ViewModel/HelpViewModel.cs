@@ -168,6 +168,55 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 Header = "Medicine controls"
             });
+
+            //Controls -> room controls
+            var roomControls = (TreeViewItem) Tree[4].Items[0];
+            roomControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Edit"
+            });
+            roomControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Delete"
+            });
+
+            //Controls -> inventory controls
+            var inventoryControls = (TreeViewItem) Tree[4].Items[1];
+            inventoryControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Edit"
+            });
+            inventoryControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Delete"
+            });
+            inventoryControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Filter"
+            });
+            inventoryControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Change quantity"
+            });
+
+            //Controls -> medicine controls
+            var medicineControls = (TreeViewItem) Tree[4].Items[2];
+            medicineControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Edit"
+            });
+            medicineControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Delete"
+            });
+            medicineControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Send on validation"
+            });
+            medicineControls.Items.Add(new TreeViewItem()
+            {
+                Header = "Rejection note"
+            });
         }
 
         private void ResolveCurrentControl()
@@ -183,6 +232,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             else if (SelectedItem.Header.Equals("Manage inventory"))
             {
                 CurrentControl = new ManageInventoryHelp();
+            }
+            else if (SelectedItem.Header.Equals("Plan renovation"))
+            {
+                CurrentControl = new PlanRenovationHelp();
             }
 
             if (SelectedItem.Items.Count == 0)
