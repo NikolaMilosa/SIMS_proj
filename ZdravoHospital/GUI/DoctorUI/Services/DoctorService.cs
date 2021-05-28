@@ -21,7 +21,7 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
 
         public List<Doctor> GetSpecialists()
         {
-            return _doctorRepository.GetValues().Where(d => !d.SpecialistType.Equals("Doctor")).ToList();
+            return _doctorRepository.GetValues().Where(d => !d.SpecialistType.SpecializationName.Equals("Doctor")).ToList();
         }
     }
 }
