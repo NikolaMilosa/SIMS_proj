@@ -13,7 +13,7 @@ namespace ZdravoHospital.GUI.PatientUI.DTOs
         private DateTime dateTime;
         public DateTime Date
         {
-            get { return dateTime; }
+            get => dateTime;
             set { dateTime = value; OnPropertyChanged(); }
         }
         public int RoomNumber { get; set; }

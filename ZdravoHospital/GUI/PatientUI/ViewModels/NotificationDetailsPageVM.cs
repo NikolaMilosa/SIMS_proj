@@ -24,7 +24,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public NotificationDetailsPageVM(NotificationDTO notificationDto)
         {
             NotificationDTO = notificationDto;
-            NotificationDTO.Seen = true;
             SerializeReadNotification();
             BackCommand = new RelayCommand(BackExecute);
         }
@@ -56,7 +55,14 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
             List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
-            return personNotifications.FirstOrDefault(personNotification => personNotification.NotificationId.Equals(NotificationDTO.Id));
+            foreach (var personNotification in personNotifications.Where(personNotification => personNotification.NotificationId.Equals(NotificationDTO.Id) &&
+                personNotification.Username.Equals(NotificationDTO.Username)))
+            {
+                personNotification.IsRead = true;
+                return personNotification;
+            }
+
+            return null;
         }
 
         #endregion

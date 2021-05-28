@@ -27,6 +27,32 @@
   },
   {
     "SpecialistType": {
+      "SpecializationName": "Doctor"
+    },
+    "Name": "Neven",
+    "Surname": "Subotic",
+    "Email": null,
+    "DateOfBirth": "0001-01-01T00:00:00",
+    "PhoneNumber": null,
+    "Username": "subota",
+    "ParentsName": null,
+    "MaritalStatus": 0,
+    "Gender": 0,
+    "CitizenId": null,
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
+  },
+  {
+    "SpecialistType": {
       "SpecializationName": "Cardio surgent"
     },
     "Name": "Nikola",

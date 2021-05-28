@@ -5,7 +5,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Navigation;
 using Model;
+using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
+using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
 
@@ -14,7 +16,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
     public class SuggestAppointPageVM : ViewModel
     {
         #region Properties
- 
+
         private Visibility doctorVisibility;
 
         public Visibility DoctorPanelVisibility
@@ -38,6 +40,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 OnPropertyChanged("DatePanelVisibility");
             }
         }
+
         public DateTime DisplayDateStart
         {
             get => DateTime.Now.AddDays(3);
@@ -61,6 +64,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
 
         private TimeSpan selectedTimeSpan;
+
         public TimeSpan SelectedTimeSpan
         {
             get => selectedTimeSpan;
@@ -86,6 +90,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public ObservableCollection<PeriodDTO> PeriodDTOs { get; private set; }
         public PeriodDTO SelectedPeriodDTO { get; set; }
+
         #endregion
 
         #region Constructors
@@ -100,6 +105,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #endregion
 
         #region Commands
+
         public RelayCommand RadioButtonCommand { get; private set; }
         public RelayCommand SuggestCommand { get; private set; }
 
@@ -112,11 +118,18 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void ConfirmExecute(object parameter)
         {
-
+            PatientFunctions patientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            if (!patientFunctions.ActionTaken())
+                return;
+            SerializePeriod();
+            ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowOkDialog("Appointment added", "Suggested appointment is succesfully added!");
+            PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }
+
         private void RadioExecute(object parameter)
         {
-            int radioNum = Int32.Parse((string)parameter);
+            int radioNum = Int32.Parse((string) parameter);
             if (radioNum == 1)
             {
                 DoctorPanelVisibility = Visibility.Visible;
@@ -127,6 +140,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 DoctorPanelVisibility = Visibility.Collapsed;
                 DatePanelVisibility = Visibility.Visible;
             }
+
             PeriodDTOs.Clear();
         }
 
@@ -153,13 +167,20 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public void CancelExecute(object parameter)
         {
-
+            PatientWindowVM.NavigationService.Navigate(new AddAppointmentPage(null));
         }
 
         #endregion
 
         #region Methods
 
+
+    private void SerializePeriod()
+        {
+            PeriodConverter periodConverter = new PeriodConverter();
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Create(periodConverter.GeneratePeriod(SelectedPeriodDTO));
+        }
         private bool IsDoctorFormFilled()
         {
             return DoctorPanelVisibility == Visibility.Visible && SelectedDoctorDTO != null;
