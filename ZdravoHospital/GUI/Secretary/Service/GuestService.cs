@@ -42,6 +42,12 @@ namespace ZdravoHospital.GUI.Secretary.Service
                 return false;
             }
         }
+
+        public void ProcessGuestUpdate(GuestDTO guestDTO)
+        {
+            Patient patient = ConvertDtoToPatient(guestDTO);
+            _patientRepository.Update(patient);
+        }
         
         public Patient ConvertDtoToPatient(GuestDTO guestDTO)
         {

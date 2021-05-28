@@ -67,36 +67,5 @@
         }
       }
     }
-  },
-  {
-    "IsGuest": true,
-    "HealthCardNumber": "7777",
-    "BloodType": null,
-    "MedicineAllergens": null,
-    "IngredientAllergens": null,
-    "RecentActions": 0,
-    "LastLogoutTime": "0001-01-01T00:00:00",
-    "PatientNotes": [],
-    "Name": "Sabina",
-    "Surname": "Sabinic",
-    "Email": null,
-    "DateOfBirth": "0001-01-01T00:00:00",
-    "PhoneNumber": null,
-    "Username": "guest_7777",
-    "ParentsName": null,
-    "MaritalStatus": null,
-    "Gender": null,
-    "CitizenId": "7856",
-    "Address": {
-      "StreetName": null,
-      "Number": null,
-      "City": {
-        "PostalCode": 0,
-        "Name": null,
-        "Country": {
-          "Name": null
-        }
-      }
-    }
   }
 ]
