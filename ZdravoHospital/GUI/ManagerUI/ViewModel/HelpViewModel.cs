@@ -245,6 +245,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 CurrentControl = new AddInventoryHelp();
             }
+            else if (SelectedItem.Header.Equals("Show medicine"))
+            {
+                CurrentControl = new ShowMedicineHelp();
+            }
+            else if (SelectedItem.Header.Equals("Add medicine"))
+            {
+                CurrentControl = new AddMedicineHelp();
+            }
 
             if (SelectedItem.Items.Count == 0)
             {

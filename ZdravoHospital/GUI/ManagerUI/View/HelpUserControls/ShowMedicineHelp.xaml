@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.HelpUserControls.ShowMedicineHelp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI.View.HelpUserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="10,10,10,0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Height" Value="Auto"/>
+        </Style>
+        <Style TargetType="{x:Type Label}" x:Key="ColumnLabel">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="Auto"></Setter>
+            <Setter Property="Margin" Value="10,10,0,0"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="Beige" Margin="10,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Style="{StaticResource HelpHeading}" Content="Show medicine"/>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+            <TextBlock>
+                Displays medicine that exist in the data base. The items will be displayed
+                in a data grid. The button is located in the submenu "Inventory". To navigate
+                to the data grid after pressing the button press the "right arrow" key.
+            </TextBlock>
+
+            <TextBlock Width="700">
+                The data grid is consisted of :
+            </TextBlock>
+
+            <Grid Width="640" Margin="10,10,10,10" Height="300">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Name"/>
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Status"/>
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Number of ingredients"/>
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Supplier"/>
+
+                <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
+                <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
+                <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
+                <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
+
+                <TextBlock Grid.Row="0" Grid.Column="1">
+                    Name of the medicine, should be unique.
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1">
+                    "APPROVED", "STAGED", "PENDING", or "REJECTED".
+                </TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1">
+                    The quantity of present ingredients for the medicine.
+                </TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1">
+                    Supplier for the observed instance of medicine.
+                </TextBlock>
+            </Grid>
+            
+            <TextBlock>
+                Medicine status is used to determine its status. If it has the status of "PENDING" it states that the medicine is waiting 
+                for recension from doctor. If it has the status of "STAGED" it means that it is waiting to be sent to a doctor for recension.
+                If it has the status of "APPROVED" it means that a certain doctor has reviewed and approved it. If the status is "REJECTED" it
+                means that a certain doctor has reviewed it and sent it back for correction.
+            </TextBlock>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
