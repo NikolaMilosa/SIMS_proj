@@ -11,20 +11,18 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 {
     public class InjectFunctions
     {
-        public void FillObservableDoctorCollection(ObservableCollection<DoctorDTO> Doctors)
+        public void FillObservableDoctorDTOCollection(ObservableCollection<DoctorDTO> Doctors)
         {
-            DoctorRepository doctorRepository = new DoctorRepository();
-            List<Doctor> doctors = doctorRepository.GetValues();
-            foreach (var doctor in doctors.Where(doctor => doctor.SpecialistType.SpecializationName.Equals("Doctor")))
+            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            foreach (var doctor in doctorFunctions.GetGeneralDoctors())
                 Doctors.Add(new DoctorDTO(doctor));
             
         }
 
-        public void FillDoctorCollection(List<DoctorDTO> Doctors)
+        public void FillDoctorDTOCollection(List<DoctorDTO> Doctors)
         {
-            DoctorRepository doctorRepository = new DoctorRepository();
-            List<Doctor> doctors = doctorRepository.GetValues();
-            Doctors.AddRange(from doctor in doctors where doctor.SpecialistType.SpecializationName.Equals("Doctor") select new DoctorDTO(doctor));
+            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            Doctors.AddRange(doctorFunctions.GetGeneralDoctors().Select(doctor => new DoctorDTO(doctor)));
         }
 
         public  void GenerateTimeSpan(List<TimeSpan> timeList)

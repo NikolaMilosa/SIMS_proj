@@ -1,10 +1,10 @@
 ﻿using Model;
-using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Repository.PeriodPersistance;
 using ZdravoHospital.GUI.PatientUI.Validations;
 using ZdravoHospital.GUI.PatientUI.ViewModels;
 
@@ -41,28 +41,30 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         #region Methods
 
-        public void RemovePeriod(Period period)
+        public List<Period> GetAllPeriods()
         {
-            PeriodRepository.DeleteById(period.PeriodId);
+            return PeriodRepository.GetValues();
         }
         public void RemovePeriodById(int id)
         {
             PeriodRepository.DeleteById(id);
         }
 
+        public Period GetPeriod(int id)
+        {
+            return PeriodRepository.GetById(id);
+        }
 
         public  void UpdatePeriod(Period period)
         {
             PeriodRepository periodRepository = new PeriodRepository();
             periodRepository.Update(period);
-            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
         }
 
         public  void SerializeNewPeriod(Period period)
         {
             PeriodRepository periodRepository = new PeriodRepository();
             periodRepository.Create(period);
-            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
         }
        
         public  bool IsPeriodWithinGivenMinutes(DateTime dateTime, int minutes)

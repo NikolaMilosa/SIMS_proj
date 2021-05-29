@@ -5,6 +5,7 @@ using System.Text;
 using Model;
 using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.ViewModels;
 using PeriodDTO = ZdravoHospital.GUI.PatientUI.DTOs.PeriodDTO;
 
@@ -12,14 +13,21 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
 {
     public class PeriodConverter
     {
-        public Model.Period GetPeriod(PeriodDTO period)
+        private DoctorFunctions doctorFunctions;
+        private PeriodFunctions periodFunctions;
+
+        public PeriodConverter()
         {
-            PeriodRepository periodRepository = new PeriodRepository();
-            return periodRepository.GetById(period.PeriodId);
+            doctorFunctions = new DoctorFunctions();
+            periodFunctions = new PeriodFunctions();
+        }
+        public Period GetPeriod(PeriodDTO period)
+        {
+            return periodFunctions.GetPeriod(period.PeriodId);
         }
         public PeriodDTO GetPeriodDTO(Period period)
         {
-            Doctor doctor = GetDoctor(period.DoctorUsername);
+            Doctor doctor = doctorFunctions.GetDoctor(period.DoctorUsername);//GetDoctor(period.DoctorUsername);
             return new PeriodDTO(doctor.Name, doctor.Surname, period.StartTime, period.RoomId, period.PeriodType,
                 period.PeriodId);
         }
@@ -33,24 +41,14 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
                 PeriodId = periodDTO.PeriodId,
                 StartTime = periodDTO.Date,
                 PeriodType = periodDTO.PeriodType,
-                DoctorUsername = GetDoctorUsername(periodDTO.DoctorName,periodDTO.DoctorSurname),
+                DoctorUsername = doctorFunctions.GetDoctorUsername(periodDTO.DoctorName,periodDTO.DoctorSurname),
                 RoomId = periodDTO.RoomNumber
 
             };
             return period;
         }
 
-        private Doctor GetDoctor(string username)
-        {
-            DoctorRepository doctorRepository = new DoctorRepository();
-            return doctorRepository.GetById(username);
-        }
-
-        private string GetDoctorUsername(string name,string surname)
-        {
-            DoctorRepository doctorRepository = new DoctorRepository();
-            return (from doctor in doctorRepository.GetValues() where doctor.Name.Equals(name) && doctor.Surname.Equals(surname) select doctor.Username).FirstOrDefault();
-        }
+   
 
     }
 }

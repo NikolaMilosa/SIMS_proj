@@ -162,8 +162,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public void ConfirmExecute(object parameter)
         {
-            PeriodRepository periodRepository = new PeriodRepository();
-            periodRepository.Update(Period);
+            PeriodFunctions periodFunctions = new PeriodFunctions();
+            periodFunctions.UpdatePeriod(Period);
             ViewFunctions viewFunctions = new ViewFunctions();
             viewFunctions.ShowOkDialog("Rated", "Period successfully rated!");
             PatientWindowVM.NavigationService.Navigate(new AppointmentHistoryPage(Period.PatientUsername));

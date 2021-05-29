@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public ObservableCollection<PeriodDTO> PeriodDTOs { get; private set; }
         public PeriodDTO SelectedPeriodDTO { get; set; }
-        public PeriodRepository PeriodRepository { get; private set; }
+        public PeriodFunctions PeriodFunctions { get; private set; }
         public PeriodConverter PeriodConventer { get; private set; }
         
 
@@ -122,7 +122,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SetProperties(string username)
         {
-            PeriodRepository = new PeriodRepository();
+            PeriodFunctions = new PeriodFunctions();
             PeriodConventer = new PeriodConverter();
             PeriodDTOs = new ObservableCollection<PeriodDTO>();
             FillList(username);
@@ -130,7 +130,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void FillList(string username)
         {
-            foreach (var period in PeriodRepository.GetValues().Where(period => period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration) > DateTime.Now))
+            foreach (var period in PeriodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(username) && period.StartTime.AddMinutes(period.Duration) > DateTime.Now))
                 PeriodDTOs.Add(PeriodConventer.GetPeriodDTO(period));
         }
 

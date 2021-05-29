@@ -52,9 +52,9 @@ namespace Repository.PersonNotificationPersistance
 
         public void Update(PersonNotification newValue)
         {
-            List<PersonNotification> notifications = GetValues();
-            notifications[notifications.FindIndex(notification => notification.NotificationId.Equals(newValue.NotificationId))] = newValue;
-            Save(notifications);
+            var values = GetValues();
+            values[values.FindIndex(val => val.Username.Equals(newValue.Username) && val.NotificationId.Equals(newValue.NotificationId))] = newValue;
+            Save(values);
         }
     }
 }

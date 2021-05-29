@@ -143,10 +143,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SerializePatient()
         {
-            PatientRepository patientRepository = new PatientRepository();
-            Patient patient = patientRepository.GetById(PatientUsername);
+            PatientFunctions patientFunctions = new PatientFunctions(PatientUsername);
+            Patient patient = patientFunctions.LoadPatient();
             patient.LastLogoutTime = DateTime.Now;
-            patientRepository.Update(patient);
+            patientFunctions.SerializePatient(patient);
         }
 
 

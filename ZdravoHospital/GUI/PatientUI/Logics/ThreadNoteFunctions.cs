@@ -13,7 +13,8 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         {
             while (true)
             {
-                Patient patient = LoadPatient((string)username);
+                PatientFunctions patientFunctions = new PatientFunctions((string)username);
+                Patient patient = patientFunctions.LoadPatient();
                 GenerateNoteNotificationDialogs(patient.PatientNotes,(string)username);
                 ThreadFunctions.SleepForGivenMinutes(1);
             }
@@ -30,10 +31,6 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             }
         }
 
-        private static Patient LoadPatient(string username)
-        {
-            PatientRepository patientRepository = new PatientRepository();
-            return patientRepository.GetById(username);
-        }
+       
     }
 }

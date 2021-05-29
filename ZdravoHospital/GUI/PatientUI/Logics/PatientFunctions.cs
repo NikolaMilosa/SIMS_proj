@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
-using Model.Repository;
+using Repository.PatientPersistance;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
@@ -18,9 +18,14 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             viewFunctions = new ViewFunctions();
             patientRepository = new PatientRepository();
         }
-        private  Patient LoadPatient()
+        public  Patient LoadPatient()
         {
             return patientRepository.GetById(username);
+        }
+
+        public void SerializePatient(Patient patient)
+        {
+            patientRepository.Update(patient);
         }
 
         public  bool IsTrollDetected()

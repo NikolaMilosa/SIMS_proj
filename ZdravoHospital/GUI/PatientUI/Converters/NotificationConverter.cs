@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Model;
 using Model.Repository;
+using Repository.CredentialsPersistance;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
 
 namespace ZdravoHospital.GUI.PatientUI.Converters
 {
@@ -46,26 +49,21 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
 
         private RoleType GetRoleType(string username)
         {
-            AccountRepository accountRepository = new AccountRepository();
-            return accountRepository.GetById(username).Role;
+            CredentialsRepository credentialsRepository = new CredentialsRepository();
+            return credentialsRepository.GetById(username).Role;
         }
 
         private Doctor GetDoctor(string username)
         {
-            DoctorRepository doctorRepository = new DoctorRepository();
-            return doctorRepository.GetById(username);
+            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            return doctorFunctions.GetDoctor(username);
         }
 
         private Notification GetNotification(PersonNotification personNotification)
         {
-            NotificationRepository notificationRepository = new NotificationRepository();
-            List<Notification> notifications = notificationRepository.GetValues();
-            foreach (var notification in notifications)
-                if (notification.NotificationId.Equals(personNotification.NotificationId))
-                    return notification;
-
-            return null;
-
+            NotificationFunctions notificationFunctions = new NotificationFunctions();
+            var notifications = notificationFunctions.GetNotifications();
+            return notifications.FirstOrDefault(notification => notification.NotificationId.Equals(personNotification.NotificationId));
         }
 
     }

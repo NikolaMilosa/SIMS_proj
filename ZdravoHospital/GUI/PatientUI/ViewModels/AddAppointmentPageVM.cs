@@ -165,10 +165,17 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SerializePeriod()
         {
-            if(Mode)
+            ViewFunctions viewFunctions = new ViewFunctions();
+            if (Mode)
+            {
                 PeriodFunctions.SerializeNewPeriod(Period);
+                viewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
+            }
             else
+            {
                 PeriodFunctions.UpdatePeriod(Period);
+                viewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
+            }
         }
         private void SetProperties(bool mode)
         {
@@ -184,7 +191,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void GenerateComboBoxes()
         {
             Injection.GenerateObesrvableTimes(PeriodList);
-            Injection.FillObservableDoctorCollection(DoctorList);
+            Injection.FillObservableDoctorDTOCollection(DoctorList);
         }
 
         private void GenerateNewPeriod()
