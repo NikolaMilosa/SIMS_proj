@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -22,8 +23,8 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class PeriodsToMovePage : Page
     {
-        public ObservableCollection<Model.Period> Periods { get; set; }
-
+        public ObservableCollection<Period> Periods { get; set; }
+        public PeriodsToMoveService PeriodsToMoveService { get; set; }
         private Period _selectedPeriod;
         public Period SelectedPeriod
         {
@@ -44,147 +45,25 @@ namespace ZdravoHospital.GUI.Secretary
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-        public PeriodsToMovePage(List<Model.Period> periods)
+        public PeriodsToMovePage(List<Period> periods)
         {
-            Periods = new ObservableCollection<Model.Period>(periods);
-            this.sortPeriods();
+            Periods = new ObservableCollection<Period>(periods);
+            PeriodsToMoveService = new PeriodsToMoveService();
+            Periods = PeriodsToMoveService.GetSortedPeriods(Periods);
             this.DataContext = this;
             InitializeComponent();
-        }
-
-        private void sortPeriods()
-        {
-            Periods = new ObservableCollection<Period>(Periods.OrderBy(x => x.MovePeriods.Count).ThenBy(x => x.findSumOfMovePeriods()).ToList<Period>());
         }
 
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            Model.Resources.OpenPeriods();
             if(SelectedPeriod != null && PeriodsListView.SelectedItem != null)
             {
-                foreach(var movePeriod in SelectedPeriod.MovePeriods)
-                {
-                    foreach(var period in Model.Resources.periods)
-                    {
-                        if(movePeriod.InitialStartTime == period.StartTime && movePeriod.RoomId == period.RoomId)
-                        {
-                            period.StartTime = movePeriod.MovedStartTime;
-                            sendPostponeNotification(movePeriod, movePeriod.PatientUsername);
-                            sendPostponeNotification(movePeriod, movePeriod.DoctorUsername);
-                        }
-                    }
-                }
-                List<Room> availableEmergencyRooms = findAvailableEmergencyRooms(SelectedPeriod);
-                if (availableEmergencyRooms.Count != 0)
-                    SelectedPeriod.RoomId = availableEmergencyRooms[0].Id;
-                Model.Resources.periods.Add(SelectedPeriod);
-                Model.Resources.SavePeriods();
-                
-
-                sendDoctorNotification(SelectedPeriod);
-
+                PeriodsToMoveService.ProcessMovePeriodSubmit(SelectedPeriod);
                 NavigationService.Navigate(new UrgentPeriodSummaryPage(SelectedPeriod));
             }
         }
 
-        private List<Model.Room> findAvailableEmergencyRooms(Period newPeriod)
-        {
-            Model.Resources.OpenRooms();
-            List<Model.Room> availableRooms = new List<Room>();
-            foreach(KeyValuePair<int, Model.Room> item in Model.Resources.rooms)
-            {
-                if(item.Value.RoomType == RoomType.EMERGENCY_ROOM)
-                {
-                    bool available = true;
-                    foreach (Period existingPeriod in Model.Resources.periods)
-                    {
-                        if (periodsOverlap(newPeriod, existingPeriod))
-                        {
-                            if (item.Key == existingPeriod.RoomId)
-                                available = false;
-                        }
-                    }
-                    if (available)
-                        availableRooms.Add(item.Value);
-                }
-                
-            }
-            return availableRooms;
-        }
-
-        private bool periodsOverlap(Period newPeriod, Period existingPeriod)
-        {
-            DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
-            DateTime newPeriodEndtime = newPeriod.StartTime.AddMinutes(newPeriod.Duration);
-            if (newPeriod.StartTime < existingPeriodEndTime && newPeriodEndtime > existingPeriod.StartTime)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private string createDoctorNotificationText(Period urgentPeriod)
-        {
-            StringBuilder urgentPeriodNotification = new StringBuilder();
-            urgentPeriodNotification.Append("URGENT PERIOD BOOKED AT ").Append(urgentPeriod.StartTime.ToString()).Append(" IN ROOM ")
-                .Append(urgentPeriod.RoomId);
-
-            return urgentPeriodNotification.ToString();
-        }
-        private string createPostponeNotificationText(MovePeriod movePeriod, string usernameReceiver)
-        {
-            StringBuilder notificationText = new StringBuilder();
-            notificationText.Append("Dear ").Append(usernameReceiver).Append(", your appointment has been postponed from ")
-                .Append(movePeriod.InitialStartTime.ToString()).Append(" to ").Append(movePeriod.MovedStartTime.ToString())
-                .Append(" due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.");
-
-            return notificationText.ToString();
-        }
-
-        private void sendDoctorNotification(Period urgentPeriod)
-        {
-            Model.Resources.OpenPersonNotifications();
-            Model.Resources.OpenNotifications();
-
-            int notificationId = this.calculateNotificationId(Model.Resources.notifications);
-            string notificationText = createDoctorNotificationText(urgentPeriod);
-            string notificationTitle = "URGENT";
-            Model.Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, notificationTitle, notificationId);
-            Model.Resources.notifications.Add(newNotification);
-            Model.Resources.SaveNotifications();
-
-            Model.PersonNotification personNotification = new Model.PersonNotification(urgentPeriod.DoctorUsername, notificationId, false);
-            Model.Resources.personNotifications.Add(personNotification);
-
-            Model.Resources.SavePersonNotifications();
-        }
-        private void sendPostponeNotification(MovePeriod movePeriod, string usernameReceiver)
-        {
-            Model.Resources.OpenPersonNotifications();
-            Model.Resources.OpenNotifications();
-
-            int notificationId = this.calculateNotificationId(Model.Resources.notifications);
-            string notificationText = createPostponeNotificationText(movePeriod, usernameReceiver);
-            string notificationTitle = "Rescheduling due to urgent appointment";
-            Model.Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, notificationTitle, notificationId);
-            Model.Resources.notifications.Add(newNotification);
-            Model.Resources.SaveNotifications();
-
-            Model.PersonNotification personNotification = new Model.PersonNotification(usernameReceiver, notificationId, false);
-            Model.Resources.personNotifications.Add(personNotification);
-
-            Model.Resources.SavePersonNotifications();
-        }
-
-        private int calculateNotificationId(List<Model.Notification> notifications)
-        {
-            if (notifications.Count == 0)
-                return 1;
-            else
-            {
-                return notifications[notifications.Count - 1].NotificationId + 1;
-            }
-        }
+        
     }
 }

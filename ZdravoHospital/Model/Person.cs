@@ -11,8 +11,8 @@ namespace Model
         public string PhoneNumber { get; set; }
         public string Username { get; set; }
         public string ParentsName { get; set; }
-        public MaritalStatus MaritalStatus { get; set; }
-        public Gender Gender { get; set; }
+        public MaritalStatus? MaritalStatus { get; set; }
+        public Gender? Gender { get; set; }
         public string CitizenId { get; set; }
         public Address Address { get; set; }
 

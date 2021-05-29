@@ -7,7 +7,7 @@ namespace Model
     {
         public bool IsGuest { get; set; }
         public string HealthCardNumber { get; set; }
-        public BloodType BloodType { get; set; }
+        public BloodType? BloodType { get; set; }
         public List<string> MedicineAllergens { get; set; }
         public List<string> IngredientAllergens { get; set; }
         public int RecentActions { get; set; }

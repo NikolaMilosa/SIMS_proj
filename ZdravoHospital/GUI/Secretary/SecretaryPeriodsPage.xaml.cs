@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Model;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -21,9 +22,11 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class SecretaryPeriodsPage : Page, INotifyPropertyChanged
     {
+        public PeriodsService PeriodsService { get; set; }
         public ObservableCollection<Period> Periods { get; set; }
         public ObservableCollection<Doctor> Doctors { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
+        public Period SelectedPeriod { get; set; }
         private DateTime _selectedDate { get; set; }
         public DateTime SelectedDate
         {
@@ -49,16 +52,12 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             this.DataContext = this;
+            PeriodsService = new PeriodsService();
             SelectedDate = DateTime.Today;
-            Model.Resources.OpenPeriods();
-            Periods = new ObservableCollection<Period>(Model.Resources.periods);
 
-            if (Model.Resources.doctors == null)
-                Model.Resources.OpenDoctors();
-            if (Model.Resources.patients == null)
-                Model.Resources.OpenPatients();
-            Doctors = new ObservableCollection<Doctor>(Model.Resources.doctors.Values);
-            Patients = new ObservableCollection<Patient>(Model.Resources.patients.Values);
+            Periods = new ObservableCollection<Period>(PeriodsService.GetPeriods());
+            Doctors = new ObservableCollection<Doctor>(PeriodsService.GetDoctors());
+            Patients = new ObservableCollection<Patient>(PeriodsService.GetPatients());
 
             ICollectionView viewDoctors = (ICollectionView)CollectionViewSource.GetDefaultView(Doctors);
             ICollectionView viewPatients = (ICollectionView)CollectionViewSource.GetDefaultView(Patients);
@@ -70,10 +69,7 @@ namespace ZdravoHospital.GUI.Secretary
             viewPeriods.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Ascending));
             viewPeriods.Filter = UserFilterPeriods;
         }
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
+
         private bool UserFilterDoctors(object item)
         {
             if (String.IsNullOrEmpty(DoctorTextBox.Text))
@@ -132,13 +128,12 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void DeletePeriodButton_Click(object sender, RoutedEventArgs e)
         {
-            if(PeriodsListView.SelectedItem != null)
+            if(SelectedPeriod != null)
             {
                 Period period = (Period)PeriodsListView.SelectedItem;
                 Periods.Remove(period);
-                Model.Resources.periods.Remove(period);
 
-                Model.Resources.SavePeriods();
+                PeriodsService.ProcessPeriodDeletion(period.PeriodId);
                 CollectionViewSource.GetDefaultView(PeriodsListView.ItemsSource).Refresh();
             }
             

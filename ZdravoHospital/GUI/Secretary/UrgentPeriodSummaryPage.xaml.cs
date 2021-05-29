@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -20,6 +21,7 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class UrgentPeriodSummaryPage : Page
     {
+        public PeriodsToMoveService PeriodsToMoveService { get; set; }
         private Model.Period _selectedPeriod;
         public Model.Period SelectedPeriod
         {
@@ -61,41 +63,17 @@ namespace ZdravoHospital.GUI.Secretary
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-        public UrgentPeriodSummaryPage(Model.Period selectedPeriod)
+        public UrgentPeriodSummaryPage(Period selectedPeriod)
         {
             SelectedPeriod = selectedPeriod;
-            Doctor = findDoctorByUsername(SelectedPeriod.DoctorUsername);
-            Patient = findPatientByUsername(SelectedPeriod.PatientUsername);
+            PeriodsToMoveService = new PeriodsToMoveService();
+            Doctor = PeriodsToMoveService.GetDoctorById(SelectedPeriod.DoctorUsername);
+            Patient = PeriodsToMoveService.GetPatientById(SelectedPeriod.PatientUsername);
 
             this.DataContext = this;
             InitializeComponent();
         }
 
-        private Doctor findDoctorByUsername(string username)
-        {
-            Model.Resources.OpenDoctors();
-            foreach (KeyValuePair<string, Doctor> item in Model.Resources.doctors)
-            {
-                if (item.Key.Equals(username))
-                {
-                    return item.Value;
-                }
-            }
-            return null;
-        }
-
-        private Patient findPatientByUsername(string username)
-        {
-            Model.Resources.OpenPatients();
-            foreach (KeyValuePair<string, Patient> item in Model.Resources.patients)
-            {
-                if (item.Key.Equals(username))
-                {
-                    return item.Value;
-                }
-            }
-            return null;
-        }
 
         private void SeeAllButton_Click(object sender, RoutedEventArgs e)
         {

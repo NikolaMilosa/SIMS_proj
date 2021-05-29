@@ -38,7 +38,7 @@
             <TextBlock x:Name="ime" Margin="8,0,0,0">First name</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
-                    <Binding Path="PName" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
+                    <Binding Path="Guest.Name" Mode="TwoWay" UpdateSourceTrigger = "PropertyChanged">
                         <Binding.ValidationRules>
                             <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
@@ -56,7 +56,7 @@
             <TextBlock x:Name="parentsName" Margin="8,0,0,0">Last name</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
-                    <Binding Path="Surname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Guest.Surname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
@@ -74,7 +74,7 @@
             <TextBlock Margin="8,0,0,0">Citizen ID</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
-                    <Binding Path="CitizenId" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Guest.CitizenId" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
@@ -92,7 +92,7 @@
             <TextBlock Margin="8,0,0,0">Health card number *</TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" IsReadOnly="True" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
-                    <Binding Path="HealthCardNumber" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Guest.HealthCardNumber" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <val:DigitsOnlyValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>

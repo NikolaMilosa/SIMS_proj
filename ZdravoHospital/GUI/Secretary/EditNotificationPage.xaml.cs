@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -19,30 +24,8 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class EditNotificationPage : Page, INotifyPropertyChanged
     {
-        private string _notificationTitle;
-        private string _notificationText;
         private string _customRecipient;
-        public List<string> Recipients;
-        public Model.Notification SelectedNotification { get; set; }
 
-        public string NotificationTitle
-        {
-            get => _notificationTitle;
-            set
-            {
-                _notificationTitle = value;
-                OnPropertyChanged("NotificationTitle");
-            }
-        }
-        public string NotificationText
-        {
-            get => _notificationText;
-            set
-            {
-                _notificationText = value;
-                OnPropertyChanged("NotificationText");
-            }
-        }
         public string CustomRecipient
         {
             get => _customRecipient;
@@ -52,6 +35,11 @@ namespace ZdravoHospital.GUI.Secretary
                 OnPropertyChanged("CustomRecipient");
             }
         }
+        public NotificationDTO NotificationDTO { get; set; }
+        public NotificationService NotificationService { get; set; }
+        public AccountsGeneralService AccountsService { get; set; }
+
+        public Model.Notification SelectedNotification { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,56 +53,35 @@ namespace ZdravoHospital.GUI.Secretary
 
         public void InitializeBindingFields()
         {
-            NotificationTitle = SelectedNotification.Title;
-            NotificationText = SelectedNotification.Text;
+            NotificationDTO.NotificationTitle = SelectedNotification.Title;
+            NotificationDTO.NotificationText = SelectedNotification.Text;
         }
-        public int GetRoleCount(Dictionary<string, Model.Credentials> accounts, Model.RoleType role)
-        {
-            int count = 0;
-            foreach (KeyValuePair<string, Model.Credentials> entry in accounts)
-            {
-                if (entry.Value.Role.Equals(role))
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-        public Model.RoleType findRoleByUsername(string username)
-        {
-            Model.Resources.OpenAccounts();
-            foreach (KeyValuePair<string, Model.Credentials> entry in Model.Resources.accounts)
-            {
-                if (entry.Key.Equals(username))
-                    return entry.Value.Role;
-            }
-            return Model.RoleType.PATIENT;
-        }
+        
+        
         public void FindNotificationRoles()
         {
             int managerNum = 0;
             int secretaryNum = 0;
             int doctorNum = 0;
             int patientNum = 0;
-            Model.Resources.OpenAccounts();
-            Model.Resources.OpenPersonNotifications();
-
-            foreach(var notification in Model.Resources.personNotifications)
+            List<Credentials> accounts = AccountsService.GetAccounts();
+            List<PersonNotification> personNotifications = NotificationService.GetPersonNotifications();
+            foreach(var notification in personNotifications)
             {
                 if(SelectedNotification.NotificationId == notification.NotificationId)
                 {
-                    switch (this.findRoleByUsername(notification.Username))
+                    switch (AccountsService.FindRoleByUsername(notification.Username))
                     {
-                        case Model.RoleType.SECERATRY:
+                        case RoleType.SECERATRY:
                             secretaryNum++;
                             break;
-                        case Model.RoleType.PATIENT:
+                        case RoleType.PATIENT:
                             patientNum++;
                             break;
-                        case Model.RoleType.MANAGER:
+                        case RoleType.MANAGER:
                             managerNum++;
                             break;
-                        case Model.RoleType.DOCTOR:
+                        case RoleType.DOCTOR:
                             doctorNum++;
                             break;
                         default:
@@ -123,77 +90,68 @@ namespace ZdravoHospital.GUI.Secretary
                 }
                 
             }
-            if (managerNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.MANAGER))
-                ManagerCheckBox.IsChecked = true;
-            if (secretaryNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.SECERATRY))
-                SecretaryCheckBox.IsChecked = true;
-            if (doctorNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.DOCTOR))
-                DoctorCheckBox.IsChecked = true;
-            if (patientNum == GetRoleCount(Model.Resources.accounts, Model.RoleType.PATIENT))
-                PatientCheckBox.IsChecked = true;
+            if (managerNum == AccountsService.GetRoleCount(RoleType.MANAGER))
+                NotificationDTO.ManagerChecked = true;
+            if (secretaryNum == AccountsService.GetRoleCount(RoleType.SECERATRY))
+                NotificationDTO.SecretaryChecked = true;
+            if (doctorNum == AccountsService.GetRoleCount(RoleType.DOCTOR))
+                NotificationDTO.DoctorChecked = true;
+            if (patientNum == AccountsService.GetRoleCount(RoleType.PATIENT))
+                NotificationDTO.PatientChecked = true;
         }
         public EditNotificationPage(Model.Notification selectedNotification)
         {
             InitializeComponent();
             this.DataContext = this;
-            Recipients = new List<string>();
+            AccountsService = new AccountsGeneralService();
+            NotificationService = new NotificationService();
             SelectedNotification = selectedNotification;
+            NotificationDTO = new NotificationDTO();
             InitializeBindingFields();
             FindNotificationRoles();
         }
-        private void FillRecipients()
-        {
-            if (Model.Resources.accounts != null)
-                Model.Resources.OpenAccounts();
-
-            bool customRecipientExists = false;
-
-            foreach (KeyValuePair<string, Model.Credentials> entry in Model.Resources.accounts)
-            {
-                if ((entry.Value.Role.Equals(Model.RoleType.MANAGER) && (bool)ManagerCheckBox.IsChecked)
-                    || (entry.Value.Role.Equals(Model.RoleType.SECERATRY) && (bool)SecretaryCheckBox.IsChecked)
-                    || (entry.Value.Role.Equals(Model.RoleType.DOCTOR) && (bool)DoctorCheckBox.IsChecked)
-                    || (entry.Value.Role.Equals(Model.RoleType.PATIENT) && (bool)PatientCheckBox.IsChecked))
-                {
-                    if (!entry.Key.Equals(CustomRecipient))
-                        Recipients.Add(entry.Key);
-                }
-                if (entry.Key.Equals(CustomRecipient))
-                    customRecipientExists = true;
-            }
-            if (CustomRecipient != null && customRecipientExists)
-            {
-                Recipients.Add(CustomRecipient);
-            }
-
-        }
+        
 
         private void SendNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            FillRecipients();
-
-            Model.Resources.OpenNotifications();
-            Model.Resources.OpenPersonNotifications();
-
-            Model.Notification newNotification = new Model.Notification(NotificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, NotificationTitle, SelectedNotification.NotificationId);
-            
-            Model.Resources.notifications.RemoveAll(elem => elem.NotificationId == SelectedNotification.NotificationId);
-            Model.Resources.notifications.Add(newNotification);
-            Model.Resources.SaveNotifications();
-
-            Model.Resources.personNotifications.RemoveAll(elem => elem.NotificationId == SelectedNotification.NotificationId);
-            foreach (var recipient in Recipients)
-            {
-                Model.PersonNotification personNotification = new Model.PersonNotification(recipient, SelectedNotification.NotificationId, false);
-                Model.Resources.personNotifications.Add(personNotification);
-            }
-            Model.Resources.SavePersonNotifications();
-
+            NotificationService.ProcessNotificationUpdate(NotificationDTO, SelectedNotification.NotificationId);
             NavigationService.Navigate(new SecretaryNotificationsPage());
         }
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
+
+        private void RemoveCustomRecipient_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            string selectedRecipient = (sender as Button).DataContext as string;
+            NotificationService.RemoveCustomRecipient(NotificationDTO, selectedRecipient);
+        }
+
+        private void changeLabel()
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                HintLabel.Text = "Patient not registered. ";
+                HintLabel.Foreground = Brushes.Red;
+
+            }));
+            Thread.Sleep(2000);
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                HintLabel.Text = "Press enter to add new recipient. ";
+                HintLabel.Foreground = Brushes.Black;
+
+            }));
+        }
+
+        private void CustomRecipientTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                bool success = NotificationService.ProcessCustomRecipients(NotificationDTO, CustomRecipient.Trim());
+                if (success)
+                    CustomRecipient = "";
+                else
+                    new Thread(changeLabel).Start();
+
+            }
         }
     }
 }

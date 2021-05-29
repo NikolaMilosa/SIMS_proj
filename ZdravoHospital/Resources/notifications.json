@@ -12,5 +12,131 @@
     "UsernameSender": "suki",
     "Title": "Notification for all",
     "NotificationId": 3
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 5/29/2021 7:30:00 PM to 5/29/2021 9:02:57 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:03:16.7561713+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 4
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 5/29/2021 7:30:00 PM to 5/29/2021 9:02:57 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:03:16.7692813+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 5
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 5/29/2021 7:55:00 PM to 5/29/2021 9:35:52 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:36:17.534215+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 6
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 5/29/2021 7:55:00 PM to 5/29/2021 9:35:52 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:36:17.5498702+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 7
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 5/29/2021 8:20:00 PM to 5/29/2021 8:53:33 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:53:52.184933+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 8
+  },
+  {
+    "Text": "Dear zigara, your appointment has been postponed from 5/29/2021 8:20:00 PM to 5/29/2021 8:53:33 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:53:52.1947677+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 9
+  },
+  {
+    "Text": "Dear saki, your appointment has been postponed from 5/29/2021 8:45:00 PM to 5/29/2021 9:08:33 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:53:52.2017092+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 10
+  },
+  {
+    "Text": "Dear zigara, your appointment has been postponed from 5/29/2021 8:45:00 PM to 5/29/2021 9:08:33 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:53:52.2096575+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 11
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 5/29/2021 8:20:00 PM to 5/29/2021 9:29:07 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:59:31.1524084+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 12
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 5/29/2021 8:20:00 PM to 5/29/2021 9:29:07 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T19:59:31.7272127+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 13
+  },
+  {
+    "Text": "Dear saki, your appointment has been postponed from 5/29/2021 8:30:00 PM to 5/29/2021 10:02:40 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:02:58.9498724+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 14
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 5/29/2021 8:30:00 PM to 5/29/2021 10:02:40 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:02:58.9598307+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 15
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 5/29/2021 9:00:00 PM to 5/29/2021 10:27:40 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:02:58.9687145+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 16
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 5/29/2021 9:00:00 PM to 5/29/2021 10:27:40 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:02:58.9765132+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 17
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 5/29/2021 8:25:00 PM to 5/29/2021 10:07:16 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:07:34.1313227+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 18
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 5/29/2021 8:25:00 PM to 5/29/2021 10:07:16 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:07:41.7451432+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 19
+  },
+  {
+    "Text": "Dear saki, your appointment has been postponed from 5/29/2021 8:55:00 PM to 5/29/2021 10:32:16 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:08:22.0466676+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 20
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 5/29/2021 8:55:00 PM to 5/29/2021 10:32:16 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-05-29T20:08:25.2157089+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 21
   }
 ]

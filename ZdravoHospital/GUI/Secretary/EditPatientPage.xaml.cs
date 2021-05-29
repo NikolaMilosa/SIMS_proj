@@ -281,8 +281,8 @@ namespace ZdravoHospital.GUI.Secretary
             CitizenId = SelectedPatient.CitizenId;
             HealthCardNumber = SelectedPatient.HealthCardNumber;
             ParentsName = SelectedPatient.ParentsName;
-            MaritalStatus = SelectedPatient.MaritalStatus;
-            Gender = SelectedPatient.Gender;
+            MaritalStatus = (MaritalStatus)SelectedPatient.MaritalStatus;
+            Gender = (Gender)SelectedPatient.Gender;
             GenderComboBox.SelectedIndex = (int)Gender;
             MaritalStatusComboBox.SelectedIndex = (int)MaritalStatus;
             BloodTypeComboBox.SelectedIndex = (int)BloodType;

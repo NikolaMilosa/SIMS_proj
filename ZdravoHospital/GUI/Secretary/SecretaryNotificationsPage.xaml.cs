@@ -33,11 +33,6 @@ namespace ZdravoHospital.GUI.Secretary
             Notifications = new ObservableCollection<Notification>(NotificationService.GetAllNotifications());
         }
 
-        private void NavigateBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
-
         private void NewNotificationButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new NewNotificationPage());
@@ -49,12 +44,6 @@ namespace ZdravoHospital.GUI.Secretary
             {
                 NavigationService.Navigate(new EditNotificationPage(SelectedNotification));
             }
-        }
-        private void removePersonNotifications(int id)
-        {
-            Model.Resources.OpenPersonNotifications();
-            Model.Resources.personNotifications.RemoveAll(elem => elem.NotificationId == id);
-            Model.Resources.SavePersonNotifications();
         }
 
         private void DeleteNotificationButton_Click(object sender, RoutedEventArgs e)
