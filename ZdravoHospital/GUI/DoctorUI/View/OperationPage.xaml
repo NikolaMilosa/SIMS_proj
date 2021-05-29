@@ -40,12 +40,12 @@
                                 Style="{StaticResource BlueButton}"
                                 Name="EditButton"
                             Command="{Binding EditCommand}"/>
-                    <Button Content="Confirm"
+                    <Button Content="Confirm changes"
                             Visibility="{Binding ConfirmButtonVisibility}"
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
                                 Padding="10" 
-                                Width="120"
+                                Width="220"
                                 Height="45"
                                 Style="{StaticResource BlueButton}"
                                 Name="ConfirmButton"
@@ -155,7 +155,7 @@
                            Grid.Row="4"
                            Grid.Column="1"
                          HorizontalAlignment="Left">
-                        <DatePicker Name="AppointmentDatePicker"
+                        <DatePicker Name="OperationDatePicker"
                                     IsEnabled="{Binding IsEditModeOn}"
                                 Style="{StaticResource DarkDatePicker}"
                                     SelectedDate="{Binding StartDate}"
@@ -200,7 +200,7 @@
                      TextAlignment="Center"
                              Text="{Binding DurationText}"/>
 
-                    <TextBlock Text="Appointment room:"
+                    <TextBlock Text="Operation room:"
                            Grid.Row="7"
                            Grid.Column="0"
                            Foreground="White"
@@ -222,8 +222,8 @@
                               IsTabStop="{Binding IsEditModeOn}"
                               IsHitTestVisible="{Binding IsEditModeOn}"
                               />
-                    <StackPanel Grid.Column="4" Grid.Row="1" Grid.RowSpan="8" Width="300">
-                        <Button Name="CancelAppointmentButton"
+                    <StackPanel Grid.Column="4" Grid.Row="1" Grid.RowSpan="8" Width="330">
+                        <Button Name="CancelOperationButton"
                     Content="Cancel appointment"
                     Margin="20, 20, 20, 0"
                         Style="{StaticResource BlueButton}"
@@ -231,7 +231,7 @@
                                 Command="{Binding CancelCommand}"/>
 
                         <Button Name="AnamnesisButton"
-                    Content="Write anamnesis"
+                    Content="Write operation details"
                     Margin="20, 20, 20, 0"
                         Style="{StaticResource BlueButton}"
                                 Command="{Binding WritePeriodDetailsCommand}"
