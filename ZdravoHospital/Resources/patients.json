@@ -6,9 +6,15 @@
     "MedicineAllergens": null,
     "IngredientAllergens": null,
     "RecentActions": 0,
-    "LastLogoutTime": "2021-05-29T21:16:28.4003118+02:00",
+    "LastLogoutTime": "2021-05-29T22:06:51.2573298+02:00",
     "NameSurname": "Stefan Ljubovic",
-    "PatientNotes": [],
+    "PatientNotes": [
+      {
+        "Content": "dasdad",
+        "NotifyTime": "2021-05-29T22:07:03.204",
+        "Title": "sada"
+      }
+    ],
     "Name": "Stefan",
     "Surname": "Ljubovic",
     "Email": "ljubac@gmail.com",

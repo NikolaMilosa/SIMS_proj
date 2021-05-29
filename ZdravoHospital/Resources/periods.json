@@ -101,7 +101,10 @@
     "RoomId": 201,
     "Details": null,
     "Prescription": null,
-    "PeriodMark": null,
+    "PeriodMark": {
+      "Comment": "sdada",
+      "Mark": 5
+    },
     "IsUrgent": false,
     "ReferringReferralId": 0,
     "ReferredReferralId": 0,
