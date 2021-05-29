@@ -5,6 +5,7 @@ using Model;
 using Model.Repository;
 using Repository.CredentialsPersistance;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
 
 namespace ZdravoHospital.GUI.PatientUI.Converters
 {
@@ -53,8 +54,8 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
 
         private Doctor GetDoctor(string username)
         {
-            DoctorRepository doctorRepository = new DoctorRepository();
-            return doctorRepository.GetById(username);
+            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            return doctorFunctions.GetDoctor(username);
         }
 
         private Notification GetNotification(PersonNotification personNotification)

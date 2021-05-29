@@ -184,7 +184,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void GenerateComboBoxes()
         {
             Injection.GenerateObesrvableTimes(PeriodList);
-            Injection.FillObservableDoctorCollection(DoctorList);
+            Injection.FillObservableDoctorDTOCollection(DoctorList);
         }
 
         private void GenerateNewPeriod()

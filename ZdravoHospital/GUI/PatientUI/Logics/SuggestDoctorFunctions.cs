@@ -44,7 +44,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             if (!PeriodFunctions.CheckPeriodAvailability(FundamentalPeriod))
                 return;
 
-            Injection.FillDoctorCollection(FreeDoctors);
+            Injection.FillDoctorDTOCollection(FreeDoctors);
             RemoveUnavailableDoctors();
             GenerateSuggestedPeriods();
         }
@@ -52,7 +52,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         private void RemoveUnavailableDoctors()
         {
             List<DoctorDTO> doctors = new List<DoctorDTO>();
-            Injection.FillDoctorCollection(doctors);
+            Injection.FillDoctorDTOCollection(doctors);
             foreach (var doctor in doctors) 
                 RemoveUnavailableDoctor(doctor);
 

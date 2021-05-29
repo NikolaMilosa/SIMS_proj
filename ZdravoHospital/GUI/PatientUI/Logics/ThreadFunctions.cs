@@ -32,14 +32,8 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         }
         public static void SleepForGivenMinutes(int minutes)
         {
-            try
-            {
+         
                 Thread.Sleep(TimeSpan.FromMinutes(minutes));
-            }
-            catch
-            {
-
-            }
         }
 
         private void StartNotificationThread()

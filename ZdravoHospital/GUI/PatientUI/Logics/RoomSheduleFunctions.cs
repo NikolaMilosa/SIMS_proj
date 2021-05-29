@@ -2,6 +2,7 @@
 using Model.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ZdravoHospital.GUI.PatientUI.Validations;
 
@@ -32,9 +33,8 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         {
             int roomId = -1;
 
-            foreach (Room room in Rooms)
-                if (GetFreeRoomId(room, checkedPeriod) != -1)
-                    return room.Id;
+            foreach (var room in Rooms.Where(room => GetFreeRoomId(room, checkedPeriod) != -1))
+                return room.Id;
 
             //Validate.ShowOkDialog("Warning", "There is no free rooms at selected time!");
             return roomId;
@@ -43,12 +43,9 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         private int GetFreeRoomId(Room room, Period checkedPeriod)
         {
             int roomId = -1;
-            
-            if (room.IsAppointmentRoom() && IsRoomAvailableForGivenPeriod(room, checkedPeriod))
-                if (!PeriodAlreadyExistsInRoom(room, checkedPeriod))
-                    return room.Id;
 
-            return roomId;
+            if (!room.IsAppointmentRoom() || !IsRoomAvailableForGivenPeriod(room, checkedPeriod)) return roomId;
+            return !PeriodAlreadyExistsInRoom(room, checkedPeriod) ? room.Id : roomId;
         }
         
         private bool IsRoomAvailableForGivenPeriod(Room room, Period checkedPeriod)
@@ -58,11 +55,11 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             List<RoomSchedule> roomSchedules = roomScheduleRepository.GetValues();
             foreach (RoomSchedule roomSchedule in roomSchedules)
             {
-                if (roomSchedule.RoomId.Equals(room.Id) && PeriodFunctions.DoPeriodsOverlap(GeneratePeriodFromSchedule(roomSchedule), checkedPeriod))
-                {
-                    available = false;
-                    break;
-                }
+                if (!roomSchedule.RoomId.Equals(room.Id) ||
+                    !PeriodFunctions.DoPeriodsOverlap(GeneratePeriodFromSchedule(roomSchedule), checkedPeriod))
+                    continue;
+                available = false;
+                break;
             }
             return available;
         }
@@ -82,14 +79,10 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private bool PeriodAlreadyExistsInRoom(Room room, Period checkedPeriod)
         {
-            bool exists = false;
+           
             PeriodRepository periodRepository = new PeriodRepository();
             List<Period> periods = periodRepository.GetValues();
-            foreach (Period period in periods)
-                if (period.RoomId == room.Id && PeriodFunctions.DoPeriodsOverlap(period, checkedPeriod))
-                    return true;
-
-            return exists;
+            return periods.Any(period => period.RoomId == room.Id && PeriodFunctions.DoPeriodsOverlap(period, checkedPeriod));
         }
     }
 }

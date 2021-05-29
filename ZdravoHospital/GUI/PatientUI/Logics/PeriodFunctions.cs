@@ -1,10 +1,10 @@
 ﻿using Model;
-using Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Repository.PeriodPersistance;
 using ZdravoHospital.GUI.PatientUI.Validations;
 using ZdravoHospital.GUI.PatientUI.ViewModels;
 
@@ -50,6 +50,10 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             PeriodRepository.DeleteById(id);
         }
 
+        public Period GetPeriod(int id)
+        {
+            return PeriodRepository.GetById(id);
+        }
 
         public  void UpdatePeriod(Period period)
         {

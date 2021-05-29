@@ -19,6 +19,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public PeriodFunctions PeriodFunctions { get; private set; }
         public PeriodConverter PeriodConverter { get; private set; }
         public RoomSheduleFunctions RoomFunctions { get; private set; }
+
         public SuggestTimeFunctions(ObservableCollection<PeriodDTO> suggestedPeriods, DoctorDTO doctor)
         {
             SuggestedPeriods = suggestedPeriods;
