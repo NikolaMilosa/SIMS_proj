@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -8,6 +9,7 @@ using Model;
 using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
@@ -16,8 +18,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
     {
         #region Properties
         public NotificationDTO NotificationDTO { get; set; }
-
-
+        public NotificationFunctions NotificationFunctions { get; private set; }
         #endregion
 
         #region Constructor
@@ -25,6 +26,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public NotificationDetailsPageVM(NotificationDTO notificationDto)
         {
             NotificationDTO = notificationDto;
+            NotificationFunctions = new NotificationFunctions();
             SerializeReadNotification();
             BackCommand = new RelayCommand(BackExecute);
         }
@@ -47,15 +49,12 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #region Methods
         private void SerializeReadNotification()
         {
-
-            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
-            personNotificationRepository.Update(GetPersonNotification());
+            NotificationFunctions.UpdatePersonNotification(GetPersonNotification());
         }
 
         private PersonNotification GetPersonNotification()
         {
-            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
-            List<PersonNotification> personNotifications = personNotificationRepository.GetValues();
+            List<PersonNotification> personNotifications = NotificationFunctions.GetPersonNotifications();
             foreach (var personNotification in personNotifications.Where(personNotification => personNotification.NotificationId.Equals(NotificationDTO.Id) &&
                 personNotification.Username.Equals(NotificationDTO.Username)))
             {

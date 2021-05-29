@@ -77,8 +77,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             Survey.CreationDate = DateTime.Now;
             Survey.PatientUsername = PatientWindowVM.PatientUsername;
-            SurveyRepository surveyRepository = new SurveyRepository();
-            surveyRepository.Create(Survey);
+            SurveyFunctions surveyFunctions = new SurveyFunctions();
+            surveyFunctions.SerializeSurvey(Survey);
         }
 
         private void SetProperties(PatientWindowVM patientWindowVm)

@@ -12,39 +12,30 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
     {
         public static void ResetActionsNum(object patientUsername)
         {
-            Patient user = LoadPatient((string)patientUsername);
-            SetNumberOfRecentActions(user);
+            PatientFunctions patientFunctions = new PatientFunctions((string)patientUsername);
+            Patient patient = patientFunctions.LoadPatient();
+            SetNumberOfRecentActions(patient);
             while (true)
             {
                 ThreadFunctions.SleepForGivenMinutes(5);
-                if (user.RecentActions >= 5) continue;
-                user.RecentActions = 0;
-                SerializePatient(user);
+                patient = patientFunctions.LoadPatient();
+                if (patient.RecentActions >= 5) continue;
+                patient.RecentActions = 0;
+                patientFunctions.SerializePatient(patient);
             }
         }
 
-        private static void SetNumberOfRecentActions(Patient user)
+        private static void SetNumberOfRecentActions(Patient patient)
         {
-            if (user.LastLogoutTime.AddMinutes(5) > DateTime.Now || IsUserBlocked(user)) return;
-            user.RecentActions = 0;
-            SerializePatient(user);
+            PatientFunctions patientFunctions = new PatientFunctions(patient.Username);
+            if (patient.LastLogoutTime.AddMinutes(5) > DateTime.Now || IsUserBlocked(patient)) return;
+            patient.RecentActions = 0;
+            patientFunctions.SerializePatient(patient);
         }
 
         private static bool IsUserBlocked(Patient user)
         {
             return !(user.RecentActions < 5); 
-        }
-
-        private static void SerializePatient(Patient user)
-        {
-            PatientRepository patientRepository = new PatientRepository();
-            patientRepository.Update(user);
-        }
-
-        private static Patient LoadPatient(string username)
-        {
-            PatientRepository patientRepository = new PatientRepository();
-            return patientRepository.GetById(username);
         }
 
     }

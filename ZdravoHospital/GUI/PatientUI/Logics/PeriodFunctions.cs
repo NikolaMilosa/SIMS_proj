@@ -41,9 +41,9 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         #region Methods
 
-        public void RemovePeriod(Period period)
+        public List<Period> GetAllPeriods()
         {
-            PeriodRepository.DeleteById(period.PeriodId);
+            return PeriodRepository.GetValues();
         }
         public void RemovePeriodById(int id)
         {
@@ -59,14 +59,12 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         {
             PeriodRepository periodRepository = new PeriodRepository();
             periodRepository.Update(period);
-            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
         }
 
         public  void SerializeNewPeriod(Period period)
         {
             PeriodRepository periodRepository = new PeriodRepository();
             periodRepository.Create(period);
-            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
         }
        
         public  bool IsPeriodWithinGivenMinutes(DateTime dateTime, int minutes)

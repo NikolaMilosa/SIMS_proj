@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Navigation;
 using Model;
@@ -68,15 +69,12 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void FillList()
         {
-            PeriodRepository periodRepository = new PeriodRepository();
+            PeriodFunctions periodFunctions = new PeriodFunctions();
             Periods = new ObservableCollection<PeriodDTO>();
             PeriodConverter periodConverter = new PeriodConverter();
-            foreach (Model.Period period in periodRepository.GetValues())
+            foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(PatientWindowVM.PatientUsername) && period.StartTime.AddMinutes(period.Duration) < DateTime.Now))
             {
-                if (period.PatientUsername.Equals(PatientWindowVM.PatientUsername) && period.StartTime.AddMinutes(period.Duration) < DateTime.Now)
-                {
-                    Periods.Add(periodConverter.GetPeriodDTO(period));
-                }
+                Periods.Add(periodConverter.GetPeriodDTO(period));
             }
         }
         private Period GetSelectedPeriod()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -9,6 +10,7 @@ using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
@@ -18,6 +20,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #region Properties
         public ObservableCollection<NotificationDTO> Notifications { get; set; }
         public NotificationDTO SelectedNotification { get; set; }
+        
         #endregion
         #region Constructors
 
@@ -45,11 +48,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void FillList()
         {
             Notifications = new ObservableCollection<NotificationDTO>();
-            PersonNotificationRepository personNotificationRepository = new PersonNotificationRepository();
+            NotificationFunctions notificationFunctions = new NotificationFunctions();
             NotificationConverter notificationConverter = new NotificationConverter();
-            foreach (PersonNotification personNotification in personNotificationRepository.GetValues())
-                if (personNotification.Username.Equals(PatientWindowVM.PatientUsername))
-                    Notifications.Add(notificationConverter.GetNotifcationDTO(personNotification));
+            foreach (var personNotification in notificationFunctions.GetPersonNotifications().Where(personNotification => personNotification.Username.Equals(PatientWindowVM.PatientUsername)))
+                Notifications.Add(notificationConverter.GetNotifcationDTO(personNotification));
                 
             
         }

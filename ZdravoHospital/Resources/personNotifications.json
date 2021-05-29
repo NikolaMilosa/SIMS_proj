@@ -5,9 +5,14 @@
     "IsRead": true
   },
   {
-    "Username": "mili",
+    "Username": "saki",
     "NotificationId": 3,
-    "IsRead": false
+    "IsRead": true
+  },
+  {
+    "Username": "ljuba",
+    "NotificationId": 3,
+    "IsRead": true
   },
   {
     "Username": "suki",
@@ -23,16 +28,6 @@
     "Username": "zigara",
     "NotificationId": 3,
     "IsRead": false
-  },
-  {
-    "Username": "ljuba",
-    "NotificationId": 3,
-    "IsRead": true
-  },
-  {
-    "Username": "saki",
-    "NotificationId": 3,
-    "IsRead": true
   },
   {
     "Username": "sima",

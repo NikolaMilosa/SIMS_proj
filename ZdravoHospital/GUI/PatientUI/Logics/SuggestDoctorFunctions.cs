@@ -16,7 +16,6 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 {
     public  class SuggestDoctorFunctions
     {
-        public PeriodRepository PeriodRepository { get; set; }
         public PeriodFunctions PeriodFunctions { get; set; }
         public Period FundamentalPeriod { get; private set; }
         public List<DoctorDTO> FreeDoctors { get; private set; }
@@ -25,7 +24,6 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public SuggestDoctorFunctions(DateTime date,TimeSpan time,ObservableCollection<PeriodDTO> suggestedPeriods)
         {
             Injection = new InjectFunctions();
-            PeriodRepository = new PeriodRepository();
             PeriodFunctions = new PeriodFunctions();
             FreeDoctors = new List<DoctorDTO>();
             SuggestedPeriods = suggestedPeriods;
@@ -71,7 +69,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private void RemoveUnavailableDoctor(DoctorDTO doctor)
         {
-            List<Period> periods = PeriodRepository.GetValues();
+            List<Period> periods = PeriodFunctions.GetAllPeriods();
             if (periods.Any(period => period.DoctorUsername.Equals(doctor.Username) && PeriodFunctions.DoPeriodsOverlap(period, FundamentalPeriod)))
                 FreeDoctors.RemoveAll(p => p.Username.Equals(doctor.Username));
 

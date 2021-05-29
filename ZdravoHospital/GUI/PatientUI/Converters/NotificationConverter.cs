@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Model;
 using Model.Repository;
@@ -60,14 +61,9 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
 
         private Notification GetNotification(PersonNotification personNotification)
         {
-            NotificationRepository notificationRepository = new NotificationRepository();
-            List<Notification> notifications = notificationRepository.GetValues();
-            foreach (var notification in notifications)
-                if (notification.NotificationId.Equals(personNotification.NotificationId))
-                    return notification;
-
-            return null;
-
+            NotificationFunctions notificationFunctions = new NotificationFunctions();
+            var notifications = notificationFunctions.GetNotifications();
+            return notifications.FirstOrDefault(notification => notification.NotificationId.Equals(personNotification.NotificationId));
         }
 
     }

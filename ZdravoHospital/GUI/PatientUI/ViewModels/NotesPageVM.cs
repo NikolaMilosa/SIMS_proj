@@ -19,7 +19,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public Patient Patient { get; set; }
         public PatientNote PatientNote { get; set; }
 
-        public PatientRepository PatientRepository { get; private set; }
+        public PatientFunctions PatientFunctions { get; private set; }
 
         public ViewFunctions ViewFunctions { get; private set; }
 
@@ -74,14 +74,12 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             ViewFunctions.ShowYesNoDialog("Remove note",
                 "Are you sure that you want to remove the selected note?");
-            if (ViewFunctions.YesPressed)
-                return true;
-            return false;
+            return ViewFunctions.YesPressed;
         }
         private void RemoveNote()
         {
             Patient.PatientNotes.Remove(PatientNote);
-            PatientRepository.Update(Patient);
+            PatientFunctions.SerializePatient(Patient);
             ObservableNotes.Remove(PatientNote);
         }
         private void SetCommands()
@@ -92,9 +90,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void SetProperties()
         {
-
-            PatientRepository = new PatientRepository();
-            Patient = PatientRepository.GetById(PatientWindowVM.PatientUsername);
+            PatientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            Patient = PatientFunctions.LoadPatient();
             ObservableNotes = new ObservableCollection<PatientNote>(Patient.PatientNotes);
             ViewFunctions = new ViewFunctions();
         }

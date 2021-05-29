@@ -5,6 +5,7 @@ using System.Windows.Navigation;
 using Model;
 using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
@@ -87,10 +88,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void AddNoteToPatient()
         {
-            PatientRepository patientRepository = new PatientRepository();
-            Patient patient = patientRepository.GetById(PatientWindowVM.PatientUsername);
+            PatientFunctions patientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            Patient patient = patientFunctions.LoadPatient();
             patient.PatientNotes.Add(PatientNote);
-            patientRepository.Update(patient);
+            patientFunctions.SerializePatient(patient);
         }
 
         #endregion

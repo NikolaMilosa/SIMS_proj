@@ -14,11 +14,11 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public static void TherapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
-            
-            PeriodRepository periodRepository = new PeriodRepository();
+
+            PeriodFunctions periodFunctions = new PeriodFunctions();
             while (true)
             {
-                foreach (var period in periodRepository.GetValues().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
+                foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
                 {
                     GeneratePrescriptionTimes(period.Prescription, username);
                 }
