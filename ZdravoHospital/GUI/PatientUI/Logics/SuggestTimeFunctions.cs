@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Controls;
 using Model;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Validations;

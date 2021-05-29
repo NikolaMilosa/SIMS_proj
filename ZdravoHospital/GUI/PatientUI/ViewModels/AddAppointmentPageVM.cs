@@ -6,7 +6,6 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Model;
-using ZdravoHospital.GUI.ManagerUI.Logics;
 using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
