@@ -245,6 +245,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand PlanRenovationCommand { get; set; }
         public MyICommand<KeyEventArgs> TableCommand { get; set; }
         public MyICommand<KeyEventArgs> SubMenuCommand { get; set; }
+        public MyICommand ShowHelpCommand { get; set; }
 
         #endregion
 
@@ -271,6 +272,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             PlanRenovationCommand = new MyICommand(OnPlanRenovation);
             TableCommand = new MyICommand<KeyEventArgs>(OnTableKey);
             SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
+            ShowHelpCommand = new MyICommand(OnShowHelp);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
@@ -443,7 +445,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             dialog.ShowDialog();
         }
 
-        public void OnTableKey(KeyEventArgs e)
+        private void OnTableKey(KeyEventArgs e)
         {
             if (e.Key == Key.Down)
             {
@@ -533,7 +535,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
-        public void OnSubMenuKey(KeyEventArgs e)
+        private void OnSubMenuKey(KeyEventArgs e)
         {
             if (e.Key == Key.Right)
             {
@@ -542,6 +544,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
 
             ShouldFocusTable = false;
+        }
+
+        private void OnShowHelp()
+        {
+            dialog = new Help();
+            dialog.ShowDialog();
         }
 
         #endregion
