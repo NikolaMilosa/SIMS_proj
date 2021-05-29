@@ -153,10 +153,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             int starNum= Int32.Parse((string)parameter);
             PeriodMark.Mark = starNum;
-            for (int i = 0; i < starNum; i++)
+            for (int i = 0; i < starNum; i++)//oboj zvezdice u zutu
                 Images[i].String = @"\Images\PatientUI\fullStar.png";
 
-            for (int i = 4; i >= starNum; i--)
+            for (int i = 4; i >= starNum; i--)//ostalima skini boju
                 Images[i].String = @"\Images\PatientUI\emptyStar.png";
         }
 

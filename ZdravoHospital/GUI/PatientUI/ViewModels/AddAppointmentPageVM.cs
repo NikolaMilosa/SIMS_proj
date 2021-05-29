@@ -112,22 +112,13 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
             FillOutPeriod();//pokupi podatke iz forme i kreiraj ostatak perioda na osnovu njih
 
-            if (Period.RoomId == -1)
-            {
-                ErrorMessage = "No free rooms at the selected time.";
-                return false;
-            }
-
-            if (!PeriodFunctions.CheckPeriodAvailability(Period))
-            {
-                ErrorMessage = PeriodFunctions.ErrorMessage;
-                return false;
-            }
+            if (!IsPeriodAvailable()) return false;
 
             ErrorMessage = "";
 
             return true;
         }
+
 
         public void SuggestExecute(object parameter)
         {
@@ -142,7 +133,19 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #endregion
 
         #region Methods
+        private bool IsPeriodAvailable()
+        {
+            if (Period.RoomId == -1)
+            {
+                ErrorMessage = "No free rooms at the selected time.";
+                return false;
+            }
 
+            if (PeriodFunctions.CheckPeriodAvailability(Period)) return true;
+            ErrorMessage = PeriodFunctions.ErrorMessage;
+            return false;
+
+        }
         private void SetCommands()
         {
             ConfirmCommand = new RelayCommand(ConfirmExecute, ConfirmCanExecute);

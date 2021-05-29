@@ -141,17 +141,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void RadioExecute(object parameter)
         {
             int radioNum = Int32.Parse((string) parameter);
-            if (radioNum == 1)
-            {
-                DoctorPanelVisibility = Visibility.Visible;
-                DatePanelVisibility = Visibility.Collapsed;
-            }
-            else
-            {
-                DoctorPanelVisibility = Visibility.Collapsed;
-                DatePanelVisibility = Visibility.Visible;
-            }
-
+            SetPanelVisibility(radioNum);
             PeriodDTOs.Clear();
         }
 
@@ -185,8 +175,20 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
-
-    private void SerializePeriod()
+        private void SetPanelVisibility(int radioNum)
+        {
+            if (radioNum == 1)
+            {
+                DoctorPanelVisibility = Visibility.Visible;
+                DatePanelVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                DoctorPanelVisibility = Visibility.Collapsed;
+                DatePanelVisibility = Visibility.Visible;
+            }
+        }
+        private void SerializePeriod()
         {
             PeriodConverter periodConverter = new PeriodConverter();
             PeriodFunctions periodFunctions = new PeriodFunctions();
@@ -208,11 +210,13 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             PeriodFunctions periodFunctions = new PeriodFunctions();
             Period period = GeneratePeriodFromInput(periodFunctions);
-            if (period.RoomId == -1)
-            {
-                ErrorMessage = "There is no free rooms at selected time!";
-                return false;
-            }
+            if (period.RoomId != -1) return CheckIsPeriodAvailable(periodFunctions, period);
+            ErrorMessage = "There is no free rooms at selected time!";
+            return false;
+        }
+
+        private bool CheckIsPeriodAvailable(PeriodFunctions periodFunctions, Period period)
+        {
             if (periodFunctions.CheckPeriodAvailability(period))
             {
                 ErrorMessage = "";

@@ -21,6 +21,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public PeriodDTO SelectedPeriodDTO { get; set; }
 
         #endregion
+
         #region Constructor
 
         public PeriodHistoryPageVM()
@@ -31,6 +32,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
 
         #endregion
+
         #region Commands
 
         public RelayCommand AnamnesisCommand { get; private set; }
@@ -38,6 +40,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
 
         #endregion
+
         #region CommandActions
 
         public void AnamnesisExecuted(object parameter)
@@ -52,6 +55,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             }
             PatientWindowVM.NavigationService.Navigate(new AnamnesisPage(selectedPeriod.Details));
         }
+
         public void RateExecuted(object parameter)
         {
             Period selectedPeriod = GetSelectedPeriod();
@@ -60,6 +64,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
 
         #endregion
+
         #region Methods
 
         private void SetCommands()
