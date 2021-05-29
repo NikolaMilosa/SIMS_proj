@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Model;
 using Model.Repository;
+using Repository.CredentialsPersistance;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 
 namespace ZdravoHospital.GUI.PatientUI.Converters
@@ -46,8 +47,8 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
 
         private RoleType GetRoleType(string username)
         {
-            AccountRepository accountRepository = new AccountRepository();
-            return accountRepository.GetById(username).Role;
+            CredentialsRepository credentialsRepository = new CredentialsRepository();
+            return credentialsRepository.GetById(username).Role;
         }
 
         private Doctor GetDoctor(string username)
