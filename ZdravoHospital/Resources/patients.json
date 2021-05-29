@@ -71,33 +71,33 @@
     }
   },
   {
-    "IsGuest": true,
-    "HealthCardNumber": "222",
-    "BloodType": null,
+    "IsGuest": false,
+    "HealthCardNumber": "77745665",
+    "BloodType": 2,
     "MedicineAllergens": null,
     "IngredientAllergens": null,
     "RecentActions": 0,
     "LastLogoutTime": "0001-01-01T00:00:00",
-    "NameSurname": "aca faca",
+    "NameSurname": "Aca Simic",
     "PatientNotes": [],
-    "Name": "aca",
-    "Surname": "faca",
-    "Email": null,
-    "DateOfBirth": "0001-01-01T00:00:00",
-    "PhoneNumber": null,
-    "Username": "guest_222",
-    "ParentsName": null,
-    "MaritalStatus": null,
-    "Gender": null,
-    "CitizenId": "222",
+    "Name": "Aca",
+    "Surname": "Simic",
+    "Email": "aca@gmail.com",
+    "DateOfBirth": "1999-02-11T00:00:00",
+    "PhoneNumber": "0649458562",
+    "Username": "aca1999",
+    "ParentsName": "Zoran",
+    "MaritalStatus": 0,
+    "Gender": 0,
+    "CitizenId": "1102965890007",
     "Address": {
-      "StreetName": null,
-      "Number": null,
+      "StreetName": "Djure Jaksica",
+      "Number": "27",
       "City": {
-        "PostalCode": 0,
-        "Name": null,
+        "PostalCode": 27000,
+        "Name": "Ljig",
         "Country": {
-          "Name": null
+          "Name": "Srbija"
         }
       }
     }
