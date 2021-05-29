@@ -61,7 +61,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             return recipients;
         }
 
-        private int calculateNotificationId()
+        public int CalculateNotificationId()
         {
             List<Notification> notifications = _notificationRepository.GetValues();
             if (notifications.Count == 0)
@@ -72,7 +72,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
 
         public void ProcessNotificationSend(NotificationDTO notificationDTO)
         {
-            int notificationId = calculateNotificationId();
+            int notificationId = CalculateNotificationId();
             createNotification(notificationDTO, notificationId);
             createPersonNotifications(notificationDTO, notificationId);
         }
@@ -114,6 +114,15 @@ namespace ZdravoHospital.GUI.Secretary.Service
         public void RemoveCustomRecipient(NotificationDTO notificationDTO, string selectedRecipient)
         {
             notificationDTO.CustomRecipients.Remove(selectedRecipient);
+        }
+
+        public void CreateNewNotification(Notification notification)
+        {
+            _notificationRepository.Create(notification);
+        }
+        public void CreateNewPersonNotification(PersonNotification personNotification)
+        {
+            _personNotificationRepository.Create(personNotification);
         }
     }
 }
