@@ -253,6 +253,26 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 CurrentControl = new AddMedicineHelp();
             }
+            else if (SelectedItem.Header.Equals("Edit room"))
+            {
+                CurrentControl = new EditRoomHelp();
+            }
+            else if (SelectedItem.Header.Equals("Delete room"))
+            {
+                CurrentControl = new DeleteRoomHelp();
+            }
+            else if (SelectedItem.Header.Equals("Edit inventory"))
+            {
+                CurrentControl = new EditInventoryHelp();
+            }
+            else if (SelectedItem.Header.Equals("Delete inventory"))
+            {
+                CurrentControl = new DeleteInventoryHelp();
+            }
+            else if (SelectedItem.Header.Equals("Filter"))
+            {
+                CurrentControl = new FilterHelp();
+            }
 
             if (SelectedItem.Items.Count == 0)
             {
