@@ -50,7 +50,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             foreach (TimeSpan timeSpan in timeList) if (SuggestedPeriods.Count < 4)
             {
                 Period period = GeneratePeriod(timeSpan, daysFromToday);
-                    if (PeriodFunctions.CheckPeriodAvailability(period, false))
+                    if (PeriodFunctions.CheckPeriodAvailability(period))
                         SuggestedPeriods.Add(PeriodConverter.GetPeriodDTO(period));
                 }
         }

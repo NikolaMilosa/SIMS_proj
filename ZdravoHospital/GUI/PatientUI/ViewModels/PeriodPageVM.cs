@@ -35,7 +35,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private PatientFunctions patientFunctions;
         #endregion
 
-
         #region Constructors
 
         public PeriodPageVM(string username)
@@ -46,7 +45,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
 
         #endregion
-
 
         #region Commands
 
@@ -100,7 +98,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             if (!patientFunctions.ActionTaken())
                 return;
-            PeriodRepository.DeleteById(SelectedPeriodDTO.PeriodId);
+            PeriodFunctions periodFunctions = new PeriodFunctions();
+            periodFunctions.RemovePeriodById(SelectedPeriodDTO.PeriodId);
             PeriodDTOs.Remove(SelectedPeriodDTO);
         }
 

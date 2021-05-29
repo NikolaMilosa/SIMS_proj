@@ -41,7 +41,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public void GetSuggestedPeriods()
         {
             
-            if (!PeriodFunctions.CheckPeriodAvailability(FundamentalPeriod, true))
+            if (!PeriodFunctions.CheckPeriodAvailability(FundamentalPeriod))
                 return;
 
             Injection.FillDoctorCollection(FreeDoctors);
@@ -64,11 +64,9 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             foreach (var doctor in FreeDoctors)
                 SuggestedPeriods.Add(GetPeriodDTO(doctor));
 
-            if (SuggestedPeriods.Count == 0)
-            {
-                ViewFunctions viewFunctions = new ViewFunctions();
-                viewFunctions.ShowOkDialog("Warning","No available doctors for the selected time!");
-            }
+            if (SuggestedPeriods.Count != 0) return;
+            ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowOkDialog("Warning","No available doctors for the selected time!");
         }
 
         private void RemoveUnavailableDoctor(DoctorDTO doctor)

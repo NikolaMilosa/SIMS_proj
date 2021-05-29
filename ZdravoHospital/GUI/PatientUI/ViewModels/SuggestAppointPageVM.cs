@@ -18,6 +18,17 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
     {
         #region Properties
 
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
+            }
+        }
+
         private Visibility doctorVisibility;
 
         public Visibility DoctorPanelVisibility
@@ -124,7 +135,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 return;
             SerializePeriod();
             ViewFunctions viewFunctions = new ViewFunctions();
-            viewFunctions.ShowOkDialog("Appointment added", "Suggested appointment is succesfully added!");
             PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }
 
@@ -163,7 +173,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private bool SuggestCanExecute(object parameter)
         {
-            return IsDateFormFilled() || IsDoctorFormFilled();
+            return IsDateFormFilledCorrect() || IsDoctorFormFilled();
         }
 
         public void CancelExecute(object parameter)
@@ -179,19 +189,54 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
     private void SerializePeriod()
         {
             PeriodConverter periodConverter = new PeriodConverter();
-            PeriodRepository periodRepository = new PeriodRepository();
-            periodRepository.Create(periodConverter.GeneratePeriod(SelectedPeriodDTO));
+            PeriodFunctions periodFunctions = new PeriodFunctions();
+            periodFunctions.SerializeNewPeriod(periodConverter.GeneratePeriod(SelectedPeriodDTO));
         }
         private bool IsDoctorFormFilled()
         {
             return DoctorPanelVisibility == Visibility.Visible && SelectedDoctorDTO != null;
         }
 
-        private bool IsDateFormFilled()
+        private bool IsDateFormFilledCorrect()
         {
-            return DatePanelVisibility == Visibility.Visible && SelectedTimeSpan != TimeSpan.Zero &&
-                   SelectedDate != DateTime.MinValue;
+            if (DatePanelVisibility != Visibility.Visible || SelectedTimeSpan == TimeSpan.Zero ||
+                SelectedDate == DateTime.MinValue) return false;
+            return CheckIsDateAvailable();
         }
+
+        private bool CheckIsDateAvailable()
+        {
+            PeriodFunctions periodFunctions = new PeriodFunctions();
+            Period period = GeneratePeriodFromInput(periodFunctions);
+            if (period.RoomId == -1)
+            {
+                ErrorMessage = "There is no free rooms at selected time!";
+                return false;
+            }
+            if (periodFunctions.CheckPeriodAvailability(period))
+            {
+                ErrorMessage = "";
+                return true;
+            }
+            ErrorMessage = periodFunctions.ErrorMessage;
+            return false;
+        }
+
+        private Period GeneratePeriodFromInput(PeriodFunctions periodFunctions)
+        {
+            RoomSheduleFunctions roomFunctions = new RoomSheduleFunctions();
+            Period period= new Period()
+            {
+                PatientUsername = PatientWindowVM.PatientUsername,
+                Duration = 30,
+                StartTime = SelectedDate + SelectedTimeSpan,
+                PeriodId = periodFunctions.GeneratePeriodId(),
+                PeriodType = PeriodType.APPOINTMENT
+            };
+            period.RoomId = roomFunctions.GetFreeRoom(period);
+            return period;
+        }
+
         private void SetProperties()
         {
             SetPanelVisibility();

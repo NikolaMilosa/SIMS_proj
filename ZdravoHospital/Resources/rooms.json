@@ -24,12 +24,6 @@
     "Available": true
   },
   {
-    "RoomType": 0,
-    "Id": 202,
-    "Name": "Appointment room 2",
-    "Available": true
-  },
-  {
     "RoomType": 3,
     "Id": 106,
     "Name": "BIG storage",

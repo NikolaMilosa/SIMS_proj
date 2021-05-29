@@ -58,9 +58,9 @@
                         </DatePicker.Resources>
                     </DatePicker>
                 </StackPanel>
-
+                <TextBlock  Text="{Binding Path=ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"  Foreground="Red" Margin="0,10,0,0"></TextBlock>
                 <StackPanel   Orientation="Horizontal" Grid.Column="1" Grid.Row="3" 
-                              HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0">
+                              HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
                     <TextBlock Text="Select time:  " Margin="0,0,180,0" FontSize="24"/>
                     <ComboBox Name="selectTime" ItemsSource="{Binding PeriodList}" SelectedItem="{Binding Path=SelectedTimeSpan}" VerticalAlignment="Center" Width="200">
                     </ComboBox>

@@ -9,8 +9,8 @@
     "IngredientAllergens": [
       "tester two"
     ],
-    "RecentActions": 0,
-    "LastLogoutTime": "2021-05-29T00:26:11.6415051+02:00",
+    "RecentActions": 2,
+    "LastLogoutTime": "2021-05-29T13:57:40.9117762+02:00",
     "PatientNotes": [
       {
         "Content": "sda",
@@ -46,7 +46,7 @@
     "BloodType": 5,
     "MedicineAllergens": [],
     "IngredientAllergens": [],
-    "RecentActions": 2,
+    "RecentActions": 0,
     "LastLogoutTime": "2021-05-28T18:20:30.7838905+02:00",
     "PatientNotes": [],
     "Name": "Nikolaj",

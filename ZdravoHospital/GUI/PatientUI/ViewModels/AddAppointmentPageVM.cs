@@ -119,7 +119,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 return false;
             }
 
-            if (!PeriodFunctions.CheckPeriodAvailability(Period, false))
+            if (!PeriodFunctions.CheckPeriodAvailability(Period))
             {
                 ErrorMessage = PeriodFunctions.ErrorMessage;
                 return false;

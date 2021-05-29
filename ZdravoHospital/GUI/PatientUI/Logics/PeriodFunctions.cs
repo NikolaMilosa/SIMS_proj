@@ -40,7 +40,16 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         }
 
         #region Methods
-   
+
+        public void RemovePeriod(Period period)
+        {
+            PeriodRepository.DeleteById(period.PeriodId);
+        }
+        public void RemovePeriodById(int id)
+        {
+            PeriodRepository.DeleteById(id);
+        }
+
 
         public  void UpdatePeriod(Period period)
         {
@@ -55,7 +64,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             periodRepository.Create(period);
             ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
         }
-        //
+       
         public  bool IsPeriodWithinGivenMinutes(DateTime dateTime, int minutes)
         {
             bool itIs = false || dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes);
@@ -70,71 +79,49 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
             return PeriodRepository.GetValues().Last().PeriodId + 1;//vrati vrednost za jedan vecu od poslednjeg id-a iz liste
         }
-        //
-        public bool CheckPeriodAvailability(Period checkedPeriod, bool writeWarnings)
+
+        public bool CheckPeriodAvailability(Period checkedPeriod)
         {
             List<Period> periods = PeriodRepository.GetValues();
-            foreach (Period period in periods)
-                if (!IsPeriodAvailable(period, checkedPeriod, writeWarnings))
-                    return false;
-
-            return true;
+            return periods.All(period => IsPeriodAvailable(period, checkedPeriod));
         }
 
-        private bool IsPeriodAvailable(Period period, Period checkedPeriod, bool writeWarnings)
+        private bool IsPeriodAvailable(Period period, Period checkedPeriod)
         {
             bool available = true;
-            if (period.StartTime.Date == checkedPeriod.StartTime.Date)
-            {
-                if (period.PatientUsername.Equals(checkedPeriod.PatientUsername) && !IsPatientAvailable(period, checkedPeriod, writeWarnings)) //proveri da li pacijent tad ima zakazano
-                    available = false;
-                else if (period.DoctorUsername.Equals(checkedPeriod.DoctorUsername) && !IsDoctorAvailable(period, checkedPeriod, writeWarnings))//proveri da li doktor tad ima zakazano
-                    available = false;
-            }
-            return available;
-        }
-
-        private bool IsDoctorAvailable(Period period, Period checkedPeriod, bool writeWarnings)
-        {
-            bool available = true;
-            if (DoPeriodsOverlap(period, checkedPeriod))
-            {
-                if (writeWarnings)
-                    ViewFunctions.ShowOkDialog("Warning", "Doctor has an existing appointment at selected time!");
-                ErrorMessage = "Doctor has an existing appointment at selected time!";
-
+            if (period.StartTime.Date != checkedPeriod.StartTime.Date) return available;
+            if (period.PatientUsername.Equals(checkedPeriod.PatientUsername) && !IsPatientAvailable(period, checkedPeriod)) //proveri da li pacijent tad ima zakazano
                 available = false;
-            }
-
+            else if (period.DoctorUsername.Equals(checkedPeriod.DoctorUsername) && !IsDoctorAvailable(period, checkedPeriod))//proveri da li doktor tad ima zakazano
+                available = false;
             return available;
         }
 
-        private bool IsPatientAvailable(Period period, Period checkedPeriod, bool writeWarnings)
+        private bool IsDoctorAvailable(Period period, Period checkedPeriod)
         {
-            bool available = true;
-            if (DoPeriodsOverlap(period, checkedPeriod))
-            {
-                if (writeWarnings)
-                    ViewFunctions.ShowOkDialog("Warning", "Patient has an existing appointment at selected time!");
-                ErrorMessage = "Patient has an existing appointment at selected time!";
-                available = false;
-            }
+            if (!DoPeriodsOverlap(period, checkedPeriod)) return true;
+            ErrorMessage = "Doctor has an existing appointment at selected time!";
+            return false;
 
-            return available;
+        }
+
+        private bool IsPatientAvailable(Period period, Period checkedPeriod)
+        {
+            if (!DoPeriodsOverlap(period, checkedPeriod)) return true;
+            ErrorMessage = "Patient has an existing appointment at selected time!";
+            return false;
+
         }
 
         public bool DoPeriodsOverlap(Period period, Period checkedPeriod)
         {
-            if (period.PeriodId.Equals(checkedPeriod.PeriodId))//u slucaju kad edituje period
+            if (period.PeriodId.Equals(checkedPeriod.PeriodId))//u slucaju kad se edituje period
                 return false;
 
             DateTime endingPeriodTime = period.StartTime.AddMinutes(period.Duration);
             DateTime endingCheckedPeriodTime = checkedPeriod.StartTime.AddMinutes(checkedPeriod.Duration);
 
-            if ((checkedPeriod.StartTime >= period.StartTime && checkedPeriod.StartTime < endingPeriodTime) || (endingCheckedPeriodTime > period.StartTime && endingCheckedPeriodTime <= endingPeriodTime))
-                return true;
-
-            return false;
+            return (checkedPeriod.StartTime >= period.StartTime && checkedPeriod.StartTime < endingPeriodTime) || (endingCheckedPeriodTime > period.StartTime && endingCheckedPeriodTime <= endingPeriodTime);
         }
 
         #endregion
