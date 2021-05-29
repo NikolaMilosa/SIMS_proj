@@ -15,7 +15,7 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="22"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="45"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="Padding" Value="10"/>
             <Setter Property="Template">
                 <Setter.Value>

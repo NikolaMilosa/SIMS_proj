@@ -30,9 +30,9 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
             _periodService.CancelPeriod(periodId);
         }
 
-        public void UpdatePeriodDetails(Period period)
+        public void UpdatePeriodWithoutValidation(Period period)
         {
-            _periodService.UpdatePeriodDetails(period);
+            _periodService.UpdatePeriodWithoutValidation(period);
         }
     }
 }

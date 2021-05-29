@@ -148,7 +148,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_YesChangeCommand()
         {
             _period.Details = PeriodDetailsText;
-            _periodController.UpdatePeriodDetails(_period);
+            _periodController.UpdatePeriodWithoutValidation(_period);
             ChangesDialogVisibility = Visibility.Collapsed;
             MessageText = "Anamnesis saved successfully.";
             MessagePopUpVisibility = Visibility.Visible;

@@ -94,7 +94,7 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
+    "ReferringReferralId": 0,
     "ReferredReferralId": -1,
     "Treatment": null
   },
