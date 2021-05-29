@@ -32,7 +32,6 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
                 _referralRepository.Update(referral);
             }
         }
-
         public void CancelPeriod(int periodId)
         {
             _periodRepository.DeleteById(periodId);
@@ -43,5 +42,11 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
             _periodValidation.ValidatePeriod(period, true);
             _periodRepository.Update(period);
         }
+
+        public void UpdatePeriodDetails(Period period)
+        {
+            _periodRepository.Update(period);
+        }
+
     }
 }
