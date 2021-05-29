@@ -12,5 +12,15 @@ namespace ZdravoHospital.GUI.PatientUI.DTOs
             Fullname = doctor.Name + " " + doctor.Surname;
             Username = doctor.Username;
         }
+
+        public string GetName()
+        {
+            return Fullname.Split(" ")[0];
+        }
+
+        public string GetSurname()
+        { 
+            return Fullname.Split(" ")[1];
+        }
     }
 }

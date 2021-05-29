@@ -1,0 +1,102 @@
+﻿<Page x:Class="ZdravoHospital.GUI.PatientUI.View.PeriodPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+      xmlns:model="clr-namespace:ZdravoHospital.GUI.PatientUI.DTOs"
+      mc:Ignorable="d" 
+      d:DesignHeight="708" d:DesignWidth="804"
+      Title="PeriodPage"
+      >
+    <Border CornerRadius="20" Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
+                <Image Source="/Images/PatientUI/appointmentIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
+                <TextBlock Text="My appointments" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
+            </StackPanel>
+
+            <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True"
+                      x:Name="AppointmentDataGrid" Grid.Row="1" Grid.Column="1" 
+                      ItemsSource="{Binding PeriodDTOs}"
+                      SelectedItem="{Binding SelectedPeriodDTO,Mode=OneWayToSource}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Time" Width="*" Binding="{Binding Path=Date, StringFormat=t}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Doctor's&#x0a; name" Width="120" Binding="{Binding Path=DoctorName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Doctor's&#x0a;surname" Width="120" Binding="{Binding Path=DoctorSurname}"></DataGridTextColumn>
+                    <DataGridTextColumn Header=" Room&#x0a;number" Width="*" Binding="{Binding Path=RoomNumber}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Type" Width="100" Binding="{Binding Path=PeriodType}"></DataGridTextColumn>
+                    
+                    <DataGridTemplateColumn Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <Button
+                                      
+                                    Command="{Binding DataContext.EditPeriodCommand, ElementName=AppointmentDataGrid}"
+                                        BorderBrush="Transparent" Background="Transparent"
+                                        Name="editButton" Content="Edit" FontWeight="Bold"
+                                         />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button 
+                                    Command="{Binding DataContext.RemovePeriodCommand, ElementName=AppointmentDataGrid}"  BorderBrush="Transparent" Background="Transparent"
+                                        Name="removeButton" Content="Remove" FontWeight="Bold"  />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+                
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="DimGray"></Setter>
+                        <Setter Property="FontSize" Value="20"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="Height" Value="75"></Setter>
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="MinHeight" Value="70"></Setter>
+                    </Style>
+                </DataGrid.RowStyle>
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.CellStyle>
+
+            </DataGrid>
+        </Grid>
+    </Border>
+   
+</Page>

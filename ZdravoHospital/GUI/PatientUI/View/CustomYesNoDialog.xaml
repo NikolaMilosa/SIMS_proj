@@ -1,0 +1,54 @@
+﻿<Window x:Class="ZdravoHospital.GUI.PatientUI.View.CustomYesNoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI"
+        mc:Ignorable="d"
+        Title="CustomYesNoDialog"  Height="180" Width="350"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Border Background="#2c876b" CornerRadius="40" BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
+                <TextBlock 
+                    Text="{Binding Path=DTitle}"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                     Margin="0,0,0,40"
+                    >
+                </TextBlock>
+                <TextBlock
+                        Foreground="White"
+                    Text="{Binding Path= DContent}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                        TextWrapping="Wrap"
+                        FontSize="16"
+                    >
+                </TextBlock>
+            </StackPanel>
+            <Button Name="yesButton" BorderBrush="Transparent" FontSize="15" Foreground="White" Content="Yes" Grid.Column="0" Grid.Row="1" Background="Transparent" Command="{Binding Path= YesCommand}" >
+            </Button>
+            <Button  Name="noButton" BorderBrush="Transparent" FontSize="15" Foreground="White" Content="No" Grid.Column="2" Grid.Row="1" Background="Transparent" Command="{Binding Path= NoCommand}"  >
+            </Button>
+        </Grid>
+    </Border>
+
+
+
+</Window>
+

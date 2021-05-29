@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
@@ -27,90 +28,100 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         }
 
         public string PatientUsername { get; set; }
+        public string ErrorMessage { get; private set; }
+        public ViewFunctions ViewFunctions { get; private set; }
         #endregion
 
-        public PeriodFunctions(string username)
+        public PeriodFunctions()
         {
             PeriodRepository = new PeriodRepository();
-            PatientUsername = username;
+            PatientUsername = PatientWindowVM.PatientUsername;
+            ViewFunctions = new ViewFunctions();
         }
 
         #region Methods
-        //
+
+        public void RemovePeriod(Period period)
+        {
+            PeriodRepository.DeleteById(period.PeriodId);
+        }
+        public void RemovePeriodById(int id)
+        {
+            PeriodRepository.DeleteById(id);
+        }
+
+
+        public  void UpdatePeriod(Period period)
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Update(period);
+            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully edited!");
+        }
+
+        public  void SerializeNewPeriod(Period period)
+        {
+            PeriodRepository periodRepository = new PeriodRepository();
+            periodRepository.Create(period);
+            ViewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
+        }
+       
         public  bool IsPeriodWithinGivenMinutes(DateTime dateTime, int minutes)
         {
-            bool itIs = false;
-            if (dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes))
-                itIs = true;
+            bool itIs = false || dateTime >= DateTime.Now && dateTime <= DateTime.Now.AddMinutes(minutes);
 
             return itIs;
         }
 
+        public int GeneratePeriodId()
+        {
+            if (PeriodRepository.GetValues().Count == 0)
+                return 0;
 
-        //
-        public bool CheckPeriodAvailability(Period checkedPeriod, bool writeWarnings)
+            return PeriodRepository.GetValues().Last().PeriodId + 1;//vrati vrednost za jedan vecu od poslednjeg id-a iz liste
+        }
+
+        public bool CheckPeriodAvailability(Period checkedPeriod)
         {
             List<Period> periods = PeriodRepository.GetValues();
-            foreach (Period period in periods)
-                if (!IsPeriodAvailable(period, checkedPeriod, writeWarnings))
-                    return false;
-
-            return true;
+            return periods.All(period => IsPeriodAvailable(period, checkedPeriod));
         }
 
-        private bool IsPeriodAvailable(Period period, Period checkedPeriod, bool writeWarnings)
+        private bool IsPeriodAvailable(Period period, Period checkedPeriod)
         {
             bool available = true;
-            if (period.StartTime.Date == checkedPeriod.StartTime.Date)
-            {
-                if (period.PatientUsername.Equals(checkedPeriod.PatientUsername) && !IsPatientAvailable(period, checkedPeriod, writeWarnings)) //proveri da li pacijent tad ima zakazano
-                    available = false;
-                else if (period.DoctorUsername.Equals(checkedPeriod.DoctorUsername) && !IsDoctorAvailable(period, checkedPeriod, writeWarnings))//proveri da li doktor tad ima zakazano
-                    available = false;
-            }
-            return available;
-        }
-
-        private bool IsDoctorAvailable(Period period, Period checkedPeriod, bool writeWarnings)
-        {
-            bool available = true;
-            if (DoPeriodsOverlap(period, checkedPeriod))
-            {
-                if (writeWarnings)
-                    Validate.ShowOkDialog("Warning", "Doctor has an existing appointment at selected time!");
-
+            if (period.StartTime.Date != checkedPeriod.StartTime.Date) return available;
+            if (period.PatientUsername.Equals(checkedPeriod.PatientUsername) && !IsPatientAvailable(period, checkedPeriod)) //proveri da li pacijent tad ima zakazano
                 available = false;
-            }
-
+            else if (period.DoctorUsername.Equals(checkedPeriod.DoctorUsername) && !IsDoctorAvailable(period, checkedPeriod))//proveri da li doktor tad ima zakazano
+                available = false;
             return available;
         }
 
-        private bool IsPatientAvailable(Period period, Period checkedPeriod, bool writeWarnings)
+        private bool IsDoctorAvailable(Period period, Period checkedPeriod)
         {
-            bool available = true;
-            if (DoPeriodsOverlap(period, checkedPeriod))
-            {
-                if (writeWarnings)
-                    Validate.ShowOkDialog("Warning", "Patient has an existing appointment at selected time!");
+            if (!DoPeriodsOverlap(period, checkedPeriod)) return true;
+            ErrorMessage = "Doctor has an existing appointment at selected time!";
+            return false;
 
-                available = false;
-            }
+        }
 
-            return available;
+        private bool IsPatientAvailable(Period period, Period checkedPeriod)
+        {
+            if (!DoPeriodsOverlap(period, checkedPeriod)) return true;
+            ErrorMessage = "Patient has an existing appointment at selected time!";
+            return false;
+
         }
 
         public bool DoPeriodsOverlap(Period period, Period checkedPeriod)
         {
-            if (period.PeriodId.Equals(checkedPeriod.PeriodId))//u slucaju kad edituje period
+            if (period.PeriodId.Equals(checkedPeriod.PeriodId))//u slucaju kad se edituje period
                 return false;
 
             DateTime endingPeriodTime = period.StartTime.AddMinutes(period.Duration);
             DateTime endingCheckedPeriodTime = checkedPeriod.StartTime.AddMinutes(checkedPeriod.Duration);
 
-            if ((checkedPeriod.StartTime >= period.StartTime && checkedPeriod.StartTime < endingPeriodTime) || (endingCheckedPeriodTime > period.StartTime && endingCheckedPeriodTime <= endingPeriodTime))
-                return true;
-
-            return false;
+            return (checkedPeriod.StartTime >= period.StartTime && checkedPeriod.StartTime < endingPeriodTime) || (endingCheckedPeriodTime > period.StartTime && endingCheckedPeriodTime <= endingPeriodTime);
         }
 
         #endregion

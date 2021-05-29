@@ -7,6 +7,7 @@ using Repository.CredentialsPersistance;
 using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.GUI.PatientUI;
+using ZdravoHospital.GUI.PatientUI.View;
 using ZdravoHospital.GUI.Secretary;
 using ZdravoHospital.GUI.Secretary.Service;
 

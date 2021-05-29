@@ -2,6 +2,7 @@
 using Model.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using ZdravoHospital.GUI.PatientUI.Validations;
@@ -17,14 +18,12 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             PeriodRepository periodRepository = new PeriodRepository();
             while (true)
             {
-                foreach (Period period in periodRepository.GetValues())
+                foreach (var period in periodRepository.GetValues().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
                 {
-                    if (period.PatientUsername.Equals(username) && period.Prescription != null)
-                    {
-                        GeneratePrescriptionTimes(period.Prescription, username);
-                    }
+                    GeneratePrescriptionTimes(period.Prescription, username);
                 }
-                Validate.SleepForGivenMinutes(5);
+
+                ThreadFunctions.SleepForGivenMinutes(5);
             }
         }
 
@@ -38,11 +37,13 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         private static List<DateTime> GenerateTimes(Therapy therapy,string username)
         {
             List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
-            PeriodFunctions periodFunctions = new PeriodFunctions(username);
+            PeriodFunctions periodFunctions = new PeriodFunctions();
             foreach (DateTime dateTime in notifications)
                 if (periodFunctions.IsPeriodWithinGivenMinutes(dateTime, 5))
-                    Validate.ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));
-
+                {
+                    ViewFunctions viewFunctions = new ViewFunctions();
+                    viewFunctions.ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));
+                }
             return notifications;
         }
 
