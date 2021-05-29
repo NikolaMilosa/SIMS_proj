@@ -339,11 +339,11 @@ namespace ZdravoHospital.GUI.Secretary.Service
         public PeriodsViewHolderDTO ProcessUrgentPeriodCreation(UrgentPeriodDTO urgentPeriodDTO)
         {
             PeriodsViewHolderDTO viewHolder = new PeriodsViewHolderDTO();
-            List<Period> freePeriods = this.findFreePeriods(urgentPeriodDTO);
+            List<Period> freePeriods = findFreePeriods(urgentPeriodDTO);
             if (freePeriods.Count == 0)
             {
                 //Logika za kad nema slobodnih termina
-                List<Doctor> doctors = this.findDoctorsBySpecialization(urgentPeriodDTO.SelectedSpecialization);
+                List<Doctor> doctors = findDoctorsBySpecialization(urgentPeriodDTO.SelectedSpecialization);
                 List<Period> periods = new List<Period>();
 
                 foreach (var doctor in doctors)

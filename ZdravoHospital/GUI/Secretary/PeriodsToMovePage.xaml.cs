@@ -49,14 +49,9 @@ namespace ZdravoHospital.GUI.Secretary
         {
             Periods = new ObservableCollection<Period>(periods);
             PeriodsToMoveService = new PeriodsToMoveService();
-            this.sortPeriods();
+            Periods = PeriodsToMoveService.GetSortedPeriods(Periods);
             this.DataContext = this;
             InitializeComponent();
-        }
-
-        private void sortPeriods()
-        {
-            Periods = new ObservableCollection<Period>(Periods.OrderBy(x => x.MovePeriods.Count).ThenBy(x => x.findSumOfMovePeriods()).ToList<Period>());
         }
 
 

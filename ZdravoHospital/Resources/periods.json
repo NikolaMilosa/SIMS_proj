@@ -46,5 +46,53 @@
     "ReferringReferralId": 0,
     "ReferredReferralId": 0,
     "Treatment": null
+  },
+  {
+    "PeriodId": 0,
+    "StartTime": "2021-05-29T22:32:16.2107735+02:00",
+    "Duration": 30,
+    "PeriodType": 1,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 0,
+    "StartTime": "2021-05-29T20:55:00",
+    "Duration": 30,
+    "PeriodType": 1,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 0,
+    "StartTime": "2021-05-29T20:07:16.2107735+02:00",
+    "Duration": 120,
+    "PeriodType": 0,
+    "PatientUsername": "guest_222",
+    "DoctorUsername": "pantela",
+    "RoomId": 601,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": true,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
   }
 ]

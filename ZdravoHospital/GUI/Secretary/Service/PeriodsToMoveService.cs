@@ -6,6 +6,8 @@ using Repository.RoomPersistance;
 using Repository.SpecializationPersistance;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace ZdravoHospital.GUI.Secretary.Service
@@ -36,10 +38,10 @@ namespace ZdravoHospital.GUI.Secretary.Service
             return _roomRepository.GetValues();
         }
 
-        private List<Model.Room> findAvailableEmergencyRooms(Period newPeriod)
+        private List<Room> findAvailableEmergencyRooms(Period newPeriod)
         {
             List<Room> allRooms = GetRooms();
-            List<Model.Room> availableRooms = new List<Room>();
+            List<Room> availableRooms = new List<Room>();
             foreach (Room room in allRooms)
             {
                 if (room.RoomType == RoomType.EMERGENCY_ROOM)
@@ -84,20 +86,50 @@ namespace ZdravoHospital.GUI.Secretary.Service
         }
         private void sendPostponeNotification(MovePeriod movePeriod, string usernameReceiver)
         {
-            Model.Resources.OpenPersonNotifications();
-            Model.Resources.OpenNotifications();
-
             int notificationId = NotificationService.CalculateNotificationId();
             string notificationText = createPostponeNotificationText(movePeriod, usernameReceiver);
             string notificationTitle = "Rescheduling due to urgent appointment";
-            Model.Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, notificationTitle, notificationId);
-            Model.Resources.notifications.Add(newNotification);
-            Model.Resources.SaveNotifications();
+            Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindow.SecretaryUsername, notificationTitle, notificationId);
+            NotificationService.CreateNewNotification(newNotification);
+            PersonNotification personNotification = new PersonNotification(usernameReceiver, notificationId, false);
+            NotificationService.CreateNewPersonNotification(personNotification);
+        }
 
-            Model.PersonNotification personNotification = new Model.PersonNotification(usernameReceiver, notificationId, false);
-            Model.Resources.personNotifications.Add(personNotification);
+        public void ProcessMovePeriodSubmit(Period selectedPeriod)
+        {
+            List<Period> allPeriods = GetPeriods();
+            foreach (var movePeriod in selectedPeriod.MovePeriods)
+            {
+                foreach (var period in allPeriods)
+                {
+                    if (movePeriod.InitialStartTime == period.StartTime && movePeriod.RoomId == period.RoomId)
+                    {
+                        period.StartTime = movePeriod.MovedStartTime;
+                        _periodRepository.Update(period);
+                        sendPostponeNotification(movePeriod, movePeriod.PatientUsername);
+                        sendPostponeNotification(movePeriod, movePeriod.DoctorUsername);
+                    }
+                }
+            }
+            List<Room> availableEmergencyRooms = findAvailableEmergencyRooms(selectedPeriod);
+            if (availableEmergencyRooms.Count != 0)
+                selectedPeriod.RoomId = availableEmergencyRooms[0].Id;
+            _periodRepository.Create(selectedPeriod);
+        }
 
-            Model.Resources.SavePersonNotifications();
+        public ObservableCollection<Period> GetSortedPeriods(ObservableCollection<Period> periods)
+        {
+            return new ObservableCollection<Period>(periods.OrderBy(x => x.MovePeriods.Count).ThenBy(x => x.findSumOfMovePeriods()).ToList<Period>());
+        }
+
+        public Patient GetPatientById(string id)
+        {
+            return _patientRepository.GetById(id);
+        }
+
+        public Doctor GetDoctorById(string id)
+        {
+            return _doctorRepository.GetById(id);
         }
 
     }

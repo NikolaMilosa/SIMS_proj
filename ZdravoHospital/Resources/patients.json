@@ -67,5 +67,36 @@
         }
       }
     }
+  },
+  {
+    "IsGuest": true,
+    "HealthCardNumber": "222",
+    "BloodType": null,
+    "MedicineAllergens": null,
+    "IngredientAllergens": null,
+    "RecentActions": 0,
+    "LastLogoutTime": "0001-01-01T00:00:00",
+    "PatientNotes": [],
+    "Name": "aca",
+    "Surname": "faca",
+    "Email": null,
+    "DateOfBirth": "0001-01-01T00:00:00",
+    "PhoneNumber": null,
+    "Username": "guest_222",
+    "ParentsName": null,
+    "MaritalStatus": null,
+    "Gender": null,
+    "CitizenId": "222",
+    "Address": {
+      "StreetName": null,
+      "Number": null,
+      "City": {
+        "PostalCode": 0,
+        "Name": null,
+        "Country": {
+          "Name": null
+        }
+      }
+    }
   }
 ]
