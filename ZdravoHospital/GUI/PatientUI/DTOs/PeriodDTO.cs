@@ -20,7 +20,6 @@ namespace ZdravoHospital.GUI.PatientUI.DTOs
         public PeriodType PeriodType { get; set; }
 
         public int PeriodId { get; set; }
-        //
         public PeriodDTO(string doctorName, string doctorSurname, DateTime date, int roomNumber, PeriodType periodType, int periodId)
         {
             DoctorName = doctorName;
@@ -29,14 +28,6 @@ namespace ZdravoHospital.GUI.PatientUI.DTOs
             RoomNumber = roomNumber;
             PeriodType = periodType;
             PeriodId = periodId;
-        }
-
-        public PeriodDTO(DateTime date, TimeSpan time, string doctorName, string doctorSurname)
-        {
-            Date = date;
-            Date += time;
-            DoctorName = doctorName;
-            DoctorSurname = doctorSurname;
         }
 
         public PeriodDTO()

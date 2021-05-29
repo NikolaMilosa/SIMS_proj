@@ -30,13 +30,10 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         public int GetFreeRoom(Period checkedPeriod)//vraca prvi slobodan Appointment room za zadati termin
         {
-            int roomId = -1;
-
             foreach (var room in Rooms.Where(room => GetFreeRoomId(room, checkedPeriod) != -1))
                 return room.Id;
 
-            //Validate.ShowOkDialog("Warning", "There is no free rooms at selected time!");
-            return roomId;
+            return -1;
         }
 
         private int GetFreeRoomId(Room room, Period checkedPeriod)

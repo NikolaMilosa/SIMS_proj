@@ -28,22 +28,17 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
         private string GetSender(string username)
         {
             RoleType role = GetRoleType(username);
-            string from;
             switch (role)
             {
                 case RoleType.DOCTOR:
                     Doctor doctor = GetDoctor(username);
-                    from = role.ToString() + " " + doctor.Name + " " + doctor.Surname;
-                    break;
+                    return role.ToString() + " " + doctor.Name + " " + doctor.Surname;
                 case RoleType.SECERATRY:
-                    from = "Secretary Srdjan Sukovic";
-                    break;
+                    return "Secretary Srdjan Sukovic";
                 default:
-                    from = "Manager Nikola Milosavljevic";
-                    break;
-            }
+                    return "Manager Nikola Milosavljevic";
 
-            return from;
+            }
         }
     
 

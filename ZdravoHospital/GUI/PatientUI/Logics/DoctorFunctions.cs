@@ -9,34 +9,33 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 {
     public class DoctorFunctions
     {
-        private DoctorRepository doctorRepository;
+        public DoctorRepository DoctorRepository { get; private set; }
 
         public DoctorFunctions()
         {
-            doctorRepository = new DoctorRepository();
+            DoctorRepository = new DoctorRepository();
         }
 
         public List<Doctor> GetGeneralDoctors()
         {
-            var doctors = doctorRepository.GetValues();
+            var doctors = DoctorRepository.GetValues();
             return doctors.Where(doctor => doctor.SpecialistType.SpecializationName.Equals("Doctor")).ToList();
         }
 
         public List<Doctor> GetAllDoctors()
         {
-            return doctorRepository.GetValues();
+            return DoctorRepository.GetValues();
         }
 
         public Doctor GetDoctor(string username)
         {
-            var doctors = doctorRepository.GetValues();
+            var doctors = DoctorRepository.GetValues();
             return doctors.FirstOrDefault(doctor => doctor.Username.Equals(username));
         }
 
         public string GetDoctorUsername(string name, string surname)
         {
-           DoctorRepository doctorRepository =new DoctorRepository();
-            return (from doctor in doctorRepository.GetValues() where doctor.Name.Equals(name) && doctor.Surname.Equals(surname) select doctor.Username).FirstOrDefault();
+            return (from doctor in DoctorRepository.GetValues() where doctor.Name.Equals(name) && doctor.Surname.Equals(surname) select doctor.Username).FirstOrDefault();
         }
 
     }

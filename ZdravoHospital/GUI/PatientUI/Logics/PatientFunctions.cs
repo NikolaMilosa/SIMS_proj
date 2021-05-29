@@ -42,7 +42,6 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                BlockAccount(patient);
                return false;
             }
-
             ++patient.RecentActions;
             patientRepository.Update(patient);
             return true;

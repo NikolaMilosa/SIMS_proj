@@ -18,11 +18,16 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             while (true)
             {
                 ThreadFunctions.SleepForGivenMinutes(5);
-                patient = patientFunctions.LoadPatient();
-                if (patient.RecentActions >= 5) continue;
-                patient.RecentActions = 0;
-                patientFunctions.SerializePatient(patient);
+                ResetActions(patientFunctions);
             }
+        }
+
+        private static void ResetActions(PatientFunctions patientFunctions)
+        { 
+            Patient patient = patientFunctions.LoadPatient();
+            if (patient.RecentActions >= 5) return;
+            patient.RecentActions = 0;
+            patientFunctions.SerializePatient(patient);
         }
 
         private static void SetNumberOfRecentActions(Patient patient)

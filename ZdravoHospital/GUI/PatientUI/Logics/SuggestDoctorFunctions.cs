@@ -21,11 +21,11 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public List<DoctorDTO> FreeDoctors { get; private set; }
         public InjectFunctions Injection { get;private set; }
         public ObservableCollection<PeriodDTO> SuggestedPeriods { get; private set; }
+
+
         public SuggestDoctorFunctions(DateTime date,TimeSpan time,ObservableCollection<PeriodDTO> suggestedPeriods)
         {
-            Injection = new InjectFunctions();
-            PeriodFunctions = new PeriodFunctions();
-            FreeDoctors = new List<DoctorDTO>();
+            SetProperties();
             SuggestedPeriods = suggestedPeriods;
             FundamentalPeriod = new Period
             {
@@ -36,6 +36,14 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                 PeriodType = PeriodType.APPOINTMENT
             };
         }
+
+        private void SetProperties()
+        {
+            Injection = new InjectFunctions();
+            PeriodFunctions = new PeriodFunctions();
+            FreeDoctors = new List<DoctorDTO>();
+        }
+
         public void GetSuggestedPeriods()
         {
             
@@ -54,7 +62,6 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             foreach (var doctor in doctors) 
                 RemoveUnavailableDoctor(doctor);
 
-            
         }
 
         private void GenerateSuggestedPeriods()
@@ -75,19 +82,19 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         }
 
-      
-
-
         private PeriodDTO GetPeriodDTO(DoctorDTO doctor)
         {
             PeriodConverter periodConverter = new PeriodConverter();
+            FillOutPeriod(doctor);
+            return periodConverter.GetPeriodDTO(FundamentalPeriod);
+        }
+
+        private void FillOutPeriod(DoctorDTO doctor)
+        {
             RoomSheduleFunctions roomFunctions = new RoomSheduleFunctions();
             FundamentalPeriod.DoctorUsername = doctor.Username;
             FundamentalPeriod.PeriodId = PeriodFunctions.GeneratePeriodId();
             FundamentalPeriod.RoomId = roomFunctions.GetFreeRoom(FundamentalPeriod);
-            return periodConverter.GetPeriodDTO(FundamentalPeriod);
         }
-
-    
     }
 }

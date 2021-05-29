@@ -46,11 +46,10 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         {
             List<TimeSpan> timeList = new List<TimeSpan>();
             Injection.GenerateTimeSpan(timeList);
-
             foreach (TimeSpan timeSpan in timeList) if (SuggestedPeriods.Count < 4)
             {
                 Period period = GeneratePeriod(timeSpan, daysFromToday);
-                    if (PeriodFunctions.CheckPeriodAvailability(period))
+                    if (PeriodFunctions.CheckPeriodAvailability(period) && period.RoomId!=-1)
                         SuggestedPeriods.Add(PeriodConverter.GetPeriodDTO(period));
                 }
         }
