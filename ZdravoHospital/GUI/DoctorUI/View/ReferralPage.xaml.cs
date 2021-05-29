@@ -28,17 +28,6 @@ namespace ZdravoHospital.GUI.DoctorUI
             DataContext = new ReferralViewModel(NavigationService, _referringDoctor, _patient, _period);
         }
 
-        private void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-            //UseStackPanel.Visibility = Visibility.Collapsed;
-            //ConfirmButton.Visibility = Visibility.Visible;
-            //EditButton.Visibility = Visibility.Collapsed;
-            //DoctorsComboBox.IsHitTestVisible = true;
-            //DoctorsComboBox.IsTabStop  = true;
-            //NoteTextBox.IsReadOnly = false;
-            //DaysToUseTextBox.IsReadOnly = false;
-        }
-
         private void UseReferralAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
             //NavigationService.Navigate(new NewAppointmentPage(Referral, Patient));

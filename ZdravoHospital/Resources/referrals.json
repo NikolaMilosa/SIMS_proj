@@ -2,9 +2,9 @@
   {
     "ReferralId": 0,
     "ReferringDoctorUsername": "pantela",
-    "ReferredDoctorUsername": "zigara",
-    "DaysToUse": 5,
-    "Note": "ref note",
+    "ReferredDoctorUsername": "krasic",
+    "DaysToUse": 4,
+    "Note": "referral note",
     "IsUsed": false,
     "Period": {
       "PeriodId": 5,
