@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.HelpUserControls.EditInventoryHelp"
+﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.HelpUserControls.ChangeQuantityHelp"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,25 +27,25 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Style="{StaticResource HelpHeading}" Content="Edit inventory"/>
+        <Label Grid.Row="0" Style="{StaticResource HelpHeading}" Content="Change quantity"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <TextBlock>
-                Displays a dialog that is used for editing an existing inventory instance. While the form is being filled, at the top
-                of the dialog red text will appear which indicates that an error has been made in 
-                a red bordered input area. When the error has been corrected, the text will disappear.
-                To edit a certain inventory instance position on it within the grid area using "Up" and "Down" arrow keys.
-                If the grid is not displaying inventory, first press the "Show inventory" button.
-                When the desired instance has been chosen, press "Enter" and a new dialog will appear. Note that
-                the ID of the instance cannot be changed.
+                Displays a dialog that is used for editing the amount of inventory present in the system
+                and in certain rooms. To start this activity first select the inventory instance within the table
+                which quantity needs editing. If the table is not visible, first click the "Show inventory" button.
+                After that with "Right arrow key" navigate to the grid and, using "Up" and "Down" keys, navigate
+                to the desired inventory instance and press the "+" key from the far right of the keyboard located
+                on the "NumPad".
             </TextBlock>
 
             <TextBlock Width="700">
-                The fields that have to be filled :
+                The form consists of :
             </TextBlock>
 
             <Grid Width="500" Margin="10,10,10,10" Height="225">
                 <Grid.RowDefinitions>
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -55,28 +55,33 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Name"/>
-                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Supplier"/>
-                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Type"/>
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Item"/>
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Room"/>
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="Currently"/>
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource ColumnLabel}" Content="New quantity"/>
 
                 <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
                 <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
                 <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
+                <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" FontSize="18" Margin="0,10,0,0">-</Label>
 
                 <TextBlock Grid.Row="0" Grid.Column="1">
-                    Represents the name of an inventory instance.
+                    ID and a name of the selected inventory instance.
                 </TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="1">
-                    The name of the supplier for this inventory instance.
+                    One room in which the changes will occur.
                 </TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="1">
-                    "STATIC" or "DYNAMIC".
+                    Displays how many units of inventory there is currently in the room.
+                </TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1">
+                    How many units there will be after confirmation.
                 </TextBlock>
             </Grid>
 
             <TextBlock>
-                After the form has been correctly filled, the "Confirm" button will become available. When clicked the edited
-                inventory will be refreshed and updated in the table on the main panel displaying inventory.
+                After selecting a room, and entering a new quantity and pressing "Confirm" the inventory quantity in the selected 
+                room will update. Also the main grid displaying the inventory will update presenting the new quantity in the system.
             </TextBlock>
         </StackPanel>
     </Grid>
