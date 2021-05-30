@@ -21,7 +21,6 @@ namespace ZdravoHospital
         public MainWindow()
         {
             InitializeComponent();
-            loadDoctorWorkSchedule();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -68,14 +67,6 @@ namespace ZdravoHospital
                 }
             }
         }
-        private void loadDoctorWorkSchedule()
-        {
-            WorkTimeService workService = new WorkTimeService();
-            List<Doctor> doctors = workService.GetAllDoctors();
-            foreach(Doctor doctor in doctors)
-            {
-                workService.ProcessDoctorsShiftRule(doctor);
-            }
-        }
+
     }
 }

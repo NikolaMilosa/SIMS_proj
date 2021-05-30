@@ -18,78 +18,63 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             return _doctorRepository.GetValues();
         }
-        public void SetDoctorWorkSchedule(DoctorWorkDTO doctorWorkDTO)
+        
+
+        public Shift GetDoctorShiftByDate(Doctor doctor, DateTime date)
         {
-            setShiftRule(doctorWorkDTO);
-            //_doctorRepository.Update(doctorWorkDTO.Doctor);
-            ProcessDoctorsShiftRule(doctorWorkDTO.Doctor);
+            if (isDateInVacationTime(doctor, date))
+                return Shift.FREE;
+
+            DoctorsShift singleDayShift = tryFindSingleDayShift(doctor, date);
+            if (singleDayShift != null)
+                return singleDayShift.ScheduledShift;
+
+            return tryFindRegularShift(doctor, date);
+
         }
 
-        public void SetDoctorHolidaySchedule(DoctorWorkDTO doctorWorkDTO)
+        private bool isDateInsideInterval(DateTime date, DateTime startTime, int duration)
         {
-            doctorWorkDTO.Doctor.ShiftRule.VacationStartTime = doctorWorkDTO.VacationStart;
-            doctorWorkDTO.Doctor.ShiftRule.NumberOfFreeDays = doctorWorkDTO.NumberOfVacationDays;
-            //_doctorRepository.Update(doctorWorkDTO.Doctor);
-            ProcessDoctorsShiftRule(doctorWorkDTO.Doctor);
-        }
-        private void setShiftRule(DoctorWorkDTO doctorWorkDTO)
-        {
-            doctorWorkDTO.Doctor.ShiftRule.ScheduledShift = doctorWorkDTO.SelectedShift;
-            doctorWorkDTO.Doctor.ShiftRule.ShiftStart = doctorWorkDTO.ShiftStart;
-            if(doctorWorkDTO.NumberOfVacationDays != 0)
-            {
-                doctorWorkDTO.Doctor.ShiftRule.VacationStartTime = doctorWorkDTO.VacationStart;
-                doctorWorkDTO.Doctor.ShiftRule.NumberOfFreeDays = doctorWorkDTO.NumberOfVacationDays;
-            }
-        }
-
-        public void ProcessDoctorsShiftRule(Doctor doctor)
-        {
-            /*if (isDateDayOff(doctor, DateTime.Now)) 
-            {
-                doctor.ShiftRule.CurrentShift = Shift.FREE;
-                _doctorRepository.Update(doctor);
-                return;
-            }*/
-
-            if(doctor.ShiftRule.ShiftStart.Date == DateTime.Now.Date)
-            {
-                doctor.ShiftRule.CurrentShift = doctor.ShiftRule.ScheduledShift;
-            }
-            else if (doctor.ShiftRule.ShiftStart.Date < DateTime.Now.Date)
-            {
-                int dateDifference = (int)(Math.Abs((doctor.ShiftRule.ShiftStart.Date - DateTime.Now.Date).TotalDays));
-                doctor.ShiftRule.CurrentShift = (Shift)((int)(doctor.ShiftRule.ScheduledShift + dateDifference) % 4);
-            }
-
-            _doctorRepository.Update(doctor);
-        }
-
-        private bool isDateDayOff(Doctor doctor, DateTime date)
-        {
-            DateTime vacationEndTime = doctor.ShiftRule.VacationStartTime.AddDays(doctor.ShiftRule.NumberOfFreeDays);
-            if (date.Date >= doctor.ShiftRule.VacationStartTime.Date && date.Date < vacationEndTime.Date)
-            {
+            if (date.Date >= startTime.Date && date.Date <= startTime.AddDays(duration).Date)
                 return true;
+            else
+                return false;
+        }
+
+        private bool isDateInVacationTime(Doctor doctor, DateTime date)
+        {
+            foreach (var vacation in doctor.ShiftRule.Vacations)
+            {
+                if (isDateInsideInterval(date, vacation.VacationStartTime, vacation.NumberOfFreeDays))
+                    return true;
             }
             return false;
         }
 
-        public Shift GetDoctorShiftByDate(Doctor doctor, DateTime date)
+        private DoctorsShift tryFindSingleDayShift(Doctor doctor, DateTime date)
         {
-            if (date.Date < doctor.ShiftRule.ShiftStart.Date)
-                return Shift.FREE;
-
-            if (doctor.ShiftRule.ShiftStart.Date == date)
+            foreach(var shift in doctor.ShiftRule.SingleDayShifts)
             {
-                return doctor.ShiftRule.ScheduledShift;
+                if (shift.ShiftStart.Date == date.Date)
+                    return shift;
             }
+            return null;
+        }
 
-            if (isDateDayOff(doctor, date))
+        private Shift tryFindRegularShift(Doctor doctor, DateTime date)
+        {
+            if(doctor.ShiftRule.RegularShift == null)
                 return Shift.FREE;
 
-            int dateDifference = (int)(Math.Abs((doctor.ShiftRule.ShiftStart.Date - date).TotalDays));
-            return (Shift)((int)(doctor.ShiftRule.ScheduledShift + dateDifference) % 4);
+            if (date.Date < doctor.ShiftRule.RegularShift.ShiftStart.Date)
+                return Shift.FREE;
+
+            if (doctor.ShiftRule.RegularShift.ShiftStart.Date == date)
+                return doctor.ShiftRule.RegularShift.ScheduledShift;
+
+            int dateDifference = (int)(Math.Abs((doctor.ShiftRule.RegularShift.ShiftStart.Date - date).TotalDays));
+            return (Shift)((int)(doctor.ShiftRule.RegularShift.ScheduledShift + dateDifference) % 4);
+
         }
     }
 }
