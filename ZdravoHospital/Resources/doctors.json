@@ -4,11 +4,12 @@
       "SpecializationName": "Doctor"
     },
     "ShiftRule": {
-      "VacationStartTime": "2021-05-24T00:00:00+02:00",
-      "NumberOfFreeDays": 3,
-      "ScheduledShift": 2,
-      "ShiftStart": "2021-05-24T00:00:00+02:00",
-      "CurrentShift": 0
+      "VacationStartTime": "2021-05-30T00:00:00+02:00",
+      "NumberOfFreeDays": 10,
+      "Vacations": null,
+      "ScheduledShift": 1,
+      "ShiftStart": "2021-05-30T00:00:00+02:00",
+      "CurrentShift": 1
     },
     "NameSurnameSpecialization": "Marko Pantelic (Doctor)",
     "Name": "Marko",
@@ -40,8 +41,9 @@
     "ShiftRule": {
       "VacationStartTime": "2021-05-25T00:00:00",
       "NumberOfFreeDays": 1,
+      "Vacations": null,
       "ScheduledShift": 3,
-      "ShiftStart": "2021-05-26T00:00:00",
+      "ShiftStart": "2021-05-30T00:00:00+02:00",
       "CurrentShift": 3
     },
     "NameSurnameSpecialization": "Nikola Zigic (Cardio surgent)",
@@ -74,6 +76,7 @@
     "ShiftRule": {
       "VacationStartTime": "2021-05-25T00:00:00",
       "NumberOfFreeDays": 0,
+      "Vacations": null,
       "ScheduledShift": 2,
       "ShiftStart": "2021-05-24T00:00:00+02:00",
       "CurrentShift": 0
@@ -108,6 +111,7 @@
     "ShiftRule": {
       "VacationStartTime": "2021-05-23T00:00:00+02:00",
       "NumberOfFreeDays": 0,
+      "Vacations": null,
       "ScheduledShift": 3,
       "ShiftStart": "2021-05-23T00:00:00+02:00",
       "CurrentShift": 2

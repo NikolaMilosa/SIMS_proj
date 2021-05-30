@@ -108,15 +108,6 @@ namespace ZdravoHospital.GUI.Secretary
 
         }
 
-        private void WorkTimeItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
-            {
-                SecretaryMainFrame.Content = new WorkTimePage();
-                CloseMenu_BeginStoryboard.Storyboard.Begin();
-            }
-        }
 
         private void DemoItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -128,5 +119,14 @@ namespace ZdravoHospital.GUI.Secretary
             }
         }
 
+        private void DoctorsViewItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                SecretaryMainFrame.Content = new DoctorsView();
+                CloseMenu_BeginStoryboard.Storyboard.Begin();
+            }
+        }
     }
 }

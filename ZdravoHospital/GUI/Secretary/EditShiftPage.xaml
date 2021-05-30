@@ -1,0 +1,52 @@
+﻿<Page x:Class="ZdravoHospital.GUI.Secretary.EditShiftPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="EditShiftPage"
+      Background="#FFF3F2FC">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontFamily="Yu Gothic" FontSize="32" FontWeight="SemiBold" Margin="10">
+            Shift
+        </TextBlock>
+        <StackPanel Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Yu Gothic" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" Margin="10,0,80,2" Width="120"> Shift</TextBlock>
+                <ComboBox Name="ShiftComboBox" Width="195" Margin="0,5,5,5" Height="30" SelectedIndex="{Binding SelectedShift}">
+                    <ComboBoxItem>FREE</ComboBoxItem>
+                    <ComboBoxItem>FIRST</ComboBoxItem>
+                    <ComboBoxItem>SECOND</ComboBoxItem>
+                    <ComboBoxItem>THIRD</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <TextBlock FontFamily="Yu Gothic" FontSize="10" Margin="10 0 0 10" Foreground="Green"> Shift will automatically change every day unless manually edited.</TextBlock>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Shift starts at</TextBlock>
+                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding ShiftStart}" ></DatePicker>
+            </StackPanel>
+            <CheckBox Margin="10" FontFamily="Yu Gothic" FontSize="12" VerticalAlignment="Bottom"> Single day shift only
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Button x:Name="FinishButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="180" Height="40" Click="FinishButton_Click" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ContentSaveAll" Width="25" Height="25" Margin="0,0,10,0" />
+                    <TextBlock FontFamily="Yu Gothic" FontSize="18">Save and exit</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        
+    </Grid>
+</Page>

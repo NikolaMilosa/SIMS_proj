@@ -9,6 +9,8 @@ namespace Model
     {
         public DateTime VacationStartTime { get; set; }
         public int NumberOfFreeDays { get; set; }
+        public List<Vacation> Vacations { get; set; }
+        public const int MaxFreeDays = 30;
         public Shift ScheduledShift { get; set; }
         public DateTime ShiftStart { get; set; }
         public Shift CurrentShift { get; set; }

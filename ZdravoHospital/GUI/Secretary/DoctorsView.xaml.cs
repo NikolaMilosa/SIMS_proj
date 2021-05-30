@@ -24,6 +24,7 @@ namespace ZdravoHospital.GUI.Secretary
     {
         public WorkTimeService WorkTimeService { get; set; }
         public ObservableCollection<DoctorShiftsViewDTO> Doctors { get; set; }
+        public DoctorShiftsViewDTO SelectedDoctorView { get; set; }
         public DoctorsView()
         {
             InitializeComponent();
@@ -39,6 +40,18 @@ namespace ZdravoHospital.GUI.Secretary
             {
                 Doctors.Add(new DoctorShiftsViewDTO(doctor));
             }
+        }
+
+        private void ShiftButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedDoctorView != null)
+                NavigationService.Navigate(new EditShiftPage(SelectedDoctorView.Doctor));
+        }
+
+        private void VacationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedDoctorView != null)
+                NavigationService.Navigate(new EditVacationPage(SelectedDoctorView.Doctor));
         }
     }
 }

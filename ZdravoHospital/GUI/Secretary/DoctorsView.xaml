@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="DoctorsView"
@@ -23,7 +24,7 @@
                 <TextBlock Margin="30 0 0 0"> Tomorrow </TextBlock>
                 <TextBlock Margin="30 0 0 0"> Day after tomorrow</TextBlock>
             </StackPanel>
-            <ListView x:Name="DoctorsListView" Height="400" ItemsSource="{Binding Doctors}">
+            <ListView x:Name="DoctorsListView" Height="400" ItemsSource="{Binding Doctors}" SelectedItem="{Binding SelectedDoctorView}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Height="50" Orientation="Horizontal">
@@ -40,6 +41,20 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="ShiftButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="170" Height="40" Click="ShiftButton_Click" VerticalAlignment="Top" Margin="30,30,20,0" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Work" Width="25" Height="25" Margin="0,0,10,0" />
+                        <TextBlock FontFamily="Yu Gothic" FontSize="18">Edit shift</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="VacationButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="170" Height="40" Click="VacationButton_Click" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="PalmTree" Width="25" Height="25" Margin="0,0,10,0" />
+                        <TextBlock FontFamily="Yu Gothic" FontSize="18">Edit vacation</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>            
         </StackPanel>
     </Grid>
 </Page>
