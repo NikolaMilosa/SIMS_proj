@@ -29,7 +29,7 @@
                 <TextBlock Text="My therapies" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
-            <syncfusion:SfSchedule Grid.Column="1" Grid.Row="1" x:Name="Schedule" ItemsSource="{Binding Therapies}"
+            <syncfusion:SfSchedule Grid.Column="1" Grid.Row="1" x:Name="Schedule"  ItemsSource="{Binding Therapies}"
                                    ScheduleType="Week">
                 <syncfusion:SfSchedule.AppointmentMapping>
                     <syncfusion:ScheduleAppointmentMapping
@@ -37,6 +37,7 @@
                         StartTimeMapping="StartTime"
                         EndTimeMapping="EndTime"
                         AppointmentBackgroundMapping="Color"
+                        NotesMapping="Notes"
                         />
                 </syncfusion:SfSchedule.AppointmentMapping>
             </syncfusion:SfSchedule>

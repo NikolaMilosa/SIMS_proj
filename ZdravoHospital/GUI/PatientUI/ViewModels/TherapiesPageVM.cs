@@ -57,11 +57,11 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 ScheduleAppointment appointment = new ScheduleAppointment();
                 appointment.Subject = therapy.Medicine.MedicineName;
                 appointment.StartTime = dateTime;
-                appointment.EndTime = dateTime.AddMinutes(15);
+                appointment.EndTime = dateTime.AddMinutes(30);
                 appointment.AppointmentBackground = new SolidColorBrush(Colors.Blue);
-                appointment.Notes = therapy.Instructions;
+                appointment.Notes = "Blablabla";
                 Therapies.Add(appointment);
-                MessageBox.Show(therapy.Medicine.MedicineName + " " + dateTime.ToString());
+                //essageBox.Show(therapy.Medicine.MedicineName + " " + dateTime.ToString());
             }
             return notifications;
         }
