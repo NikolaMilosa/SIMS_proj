@@ -8,7 +8,7 @@
       "NumberOfFreeDays": 3,
       "ScheduledShift": 2,
       "ShiftStart": "2021-05-24T00:00:00+02:00",
-      "CurrentShift": 3
+      "CurrentShift": 0
     },
     "NameSurnameSpecialization": "Marko Pantelic (Doctor)",
     "Name": "Marko",
@@ -42,7 +42,7 @@
       "NumberOfFreeDays": 1,
       "ScheduledShift": 3,
       "ShiftStart": "2021-05-26T00:00:00",
-      "CurrentShift": 2
+      "CurrentShift": 3
     },
     "NameSurnameSpecialization": "Nikola Zigic (Cardio surgent)",
     "Name": "Nikola",
@@ -76,7 +76,7 @@
       "NumberOfFreeDays": 0,
       "ScheduledShift": 2,
       "ShiftStart": "2021-05-24T00:00:00+02:00",
-      "CurrentShift": 3
+      "CurrentShift": 0
     },
     "NameSurnameSpecialization": "Milos Krasic (Neurology)",
     "Name": "Milos",
@@ -110,7 +110,7 @@
       "NumberOfFreeDays": 0,
       "ScheduledShift": 3,
       "ShiftStart": "2021-05-23T00:00:00+02:00",
-      "CurrentShift": 1
+      "CurrentShift": 2
     },
     "NameSurnameSpecialization": "Dejan Stankovic (Neurology)",
     "Name": "Dejan",

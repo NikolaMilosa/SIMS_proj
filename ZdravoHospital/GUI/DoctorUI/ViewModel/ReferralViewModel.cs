@@ -256,6 +256,57 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand UseForAppointmentCommand { get; set; }
+
+        public void Executed_UseForAppointmentCommand()
+        {
+            _navigationService.Navigate(new NewAppointmentPage(_referral, Patient));
+        }
+
+        public bool CanExecute_UseForAppointmentCommand()
+        {
+            return true;
+        }
+
+        public MyICommand UseForOperationCommand { get; set; }
+
+        public void Executed_UseForOperationCommand()
+        {
+            _navigationService.Navigate(new NewOperationPage(_referral, Patient));
+        }
+
+        public bool CanExecute_UseForOperationCommand()
+        {
+            return true;
+        }
+
+        public MyICommand ReferredAppointmentCommand { get; set; }
+
+        public void Executed_ReferredAppointmentCommand()
+        {
+            _navigationService.Navigate(new AppointmentPage(_referral.Period));
+        }
+
+        public bool CanExecute_ReferredAppointmentCommand()
+        {
+            return true;
+        }
+
+        public MyICommand ReferredOperationCommand { get; set; }
+
+        public void Executed_ReferredOperationCommand()
+        {
+            if (_referral.ReferredDoctorUsername.Equals(App.currentUser) || _referral.ReferringDoctorUsername.Equals(App.currentUser))
+                _navigationService.Navigate(new OperationPage(_referral.Period, false));
+            else
+                _navigationService.Navigate(new OperationPage(_referral.Period, true));
+        }
+
+        public bool CanExecute_ReferredOperationCommand()
+        {
+            return true;
+        }
+
         public ReferralViewModel(NavigationService navigationService, Doctor referringDoctor, Patient patient, Period period)
         {
             _navigationService = navigationService;
@@ -278,13 +329,20 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
                 if (_referral.IsUsed)
                 {
+                    EditButtonVisibility = Visibility.Collapsed;
                     ConfirmButtonVisibility = Visibility.Collapsed;
                     UseStackPanelVisibility = Visibility.Collapsed;
 
                     if (_referral.Period.PeriodType == PeriodType.APPOINTMENT)
+                    {
                         ReferredAppointmentButtonVisibility = Visibility.Visible;
+                        ReferredOperationButtonVisibility = Visibility.Collapsed;
+                    }
                     else
+                    {
                         ReferredOperationButtonVisibility = Visibility.Visible;
+                        ReferredAppointmentButtonVisibility = Visibility.Collapsed;
+                    }
                 }
                 else
                 {
@@ -332,13 +390,10 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
             EditCommand = new MyICommand(Executed_EditCommand, CanExecute_EditCommand);
             BackCommand = new MyICommand(Executed_BackCommand, CanExecute_BackCommand);
-            //CancelCommand = new MyICommand(Executed_CancelCommand, CanExecute_CancelCommand);
-            //YesCancelCommand = new MyICommand(Executed_YesCancelCommand, CanExecute_YesCancelCommand);
-            //NoCancelCommand = new MyICommand(Executed_NoCancelCommand, CanExecute_NoCancelCommand);
-            //ReadReferralCommand = new MyICommand(Executed_ReadReferralCommand, CanExecute_ReadReferralCommand);
-            //WritePeriodDetailsCommand = new MyICommand(Executed_WritePeriodDetailsCommand, CanExecute_WritePeriodDetailsCommand);
-            //WritePrescriptionCommand = new MyICommand(Executed_WritePrescriptionCommand, CanExecute_WritePrescriptionCommand);
-            //WriteReferralCommand = new MyICommand(Executed_WriteReferralCommand, CanExecute_WriteReferralCommand);
+            UseForAppointmentCommand = new MyICommand(Executed_UseForAppointmentCommand, CanExecute_UseForAppointmentCommand);
+            UseForOperationCommand = new MyICommand(Executed_UseForOperationCommand, CanExecute_UseForOperationCommand);
+            ReferredAppointmentCommand = new MyICommand(Executed_ReferredAppointmentCommand, CanExecute_ReferredAppointmentCommand);
+            ReferredOperationCommand = new MyICommand(Executed_ReferredOperationCommand, CanExecute_ReferredOperationCommand);
         }
 
         private bool IsInputValid()

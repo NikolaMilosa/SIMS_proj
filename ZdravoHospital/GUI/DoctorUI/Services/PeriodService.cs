@@ -22,7 +22,6 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         public void CreateNewPeriod(Period period, Referral referral)
         {
             _periodValidation.ValidatePeriod(period);
-            _periodRepository.Create(period);
 
             if (referral != null)
             {
@@ -31,11 +30,21 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
                 referral.IsUsed = true;
                 _referralRepository.Update(referral);
             }
+
+            _periodRepository.Create(period);
         }
 
         public void CancelPeriod(int periodId)
         {
+            int referralId = _periodRepository.GetById(periodId).ReferredReferralId;
             _periodRepository.DeleteById(periodId);
+
+            if (referralId != -1)
+            {
+                Referral referral =_referralRepository.GetById(referralId);
+                referral.IsUsed = false;
+                _referralRepository.Update(referral);
+            }
         }
 
         public void UpdatePeriod(Period period)

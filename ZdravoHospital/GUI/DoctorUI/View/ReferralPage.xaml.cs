@@ -28,16 +28,6 @@ namespace ZdravoHospital.GUI.DoctorUI
             DataContext = new ReferralViewModel(NavigationService, _referringDoctor, _patient, _period);
         }
 
-        private void UseReferralAppointmentButton_Click(object sender, RoutedEventArgs e)
-        {
-            //NavigationService.Navigate(new NewAppointmentPage(Referral, Patient));
-        }
-
-        private void UseReferralOperationButton_Click(object sender, RoutedEventArgs e)
-        {
-            //NavigationService.Navigate(new NewOperationPage(Referral, Patient));
-        }
-
         private void ReferredAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
             //NavigationService.Navigate(new AppointmentPage(Referral.Period));
