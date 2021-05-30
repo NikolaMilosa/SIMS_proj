@@ -1,6 +1,5 @@
 ﻿using System;
 using Model;
-using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.ViewModels;
 

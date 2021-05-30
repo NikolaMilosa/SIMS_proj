@@ -8,7 +8,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Model;
-using Model.Repository;
+using Repository.DoctorPersistance;
+using Repository.PatientPersistance;
+using Repository.PeriodPersistance;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {

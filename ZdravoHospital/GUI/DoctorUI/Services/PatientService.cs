@@ -1,5 +1,5 @@
 ﻿using Model;
-using Model.Repository;
+using Repository.PatientPersistance;
 using System.Collections.Generic;
 
 namespace ZdravoHospital.GUI.DoctorUI.Services

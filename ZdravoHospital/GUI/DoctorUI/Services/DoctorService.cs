@@ -1,5 +1,5 @@
 ﻿using Model;
-using Model.Repository;
+using Repository.DoctorPersistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Windows.Navigation;
 using Model;
-using Model.Repository;
 using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.View;

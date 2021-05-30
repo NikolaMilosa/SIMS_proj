@@ -1,6 +1,5 @@
 ﻿using System;
 using Model;
-using Model.Repository;
 
 namespace ZdravoHospital.GUI.PatientUI.DTOs
 {

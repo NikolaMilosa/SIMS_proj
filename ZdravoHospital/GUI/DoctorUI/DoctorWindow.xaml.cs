@@ -1,5 +1,5 @@
 ﻿using Model;
-using Model.Repository;
+using Repository.DoctorPersistance;
 using System;
 using System.Windows;
 using System.Windows.Input;
