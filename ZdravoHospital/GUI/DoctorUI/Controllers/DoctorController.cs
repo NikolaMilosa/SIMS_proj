@@ -1,4 +1,5 @@
 ﻿using Model;
+using System;
 using System.Collections.Generic;
 using ZdravoHospital.GUI.DoctorUI.Services;
 
@@ -21,6 +22,16 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
         public List<Doctor> GetSpecialists()
         {
             return _doctorService.GetSpecialists();
+        }
+
+        public List<Doctor> GetOtherDoctors(string doctorUsername)
+        {
+            return _doctorService.GetOtherDoctors(doctorUsername);
+        }
+
+        public Doctor GetDoctor(string doctorUsername)
+        {
+            return _doctorService.GetDoctor(doctorUsername);
         }
     }
 }

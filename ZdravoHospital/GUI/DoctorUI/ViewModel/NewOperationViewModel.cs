@@ -138,7 +138,6 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             DurationText = duration.ToString();
 
             DoctorPatientEditable = true; // enable combo boxes
-
             MessagePopUpVisibility = Visibility.Collapsed;
         }
 
@@ -148,6 +147,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             _navigationService = navigationService;
             _periodController = new PeriodController();
+            _referral = referral;
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetSpecialists());
             Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
@@ -160,6 +160,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             DurationText = "0";
 
             DoctorPatientEditable = false; // disable combo boxes
+            MessagePopUpVisibility = Visibility.Collapsed;
         }
 
         private void InitializeCommands()

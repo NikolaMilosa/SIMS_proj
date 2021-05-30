@@ -18,8 +18,8 @@ namespace Model
         public Prescription Prescription { get; set; }
         public PeriodMark PeriodMark { get; set; }
         public bool IsUrgent { get; set; }
-        public int ReferringReferralId { get; set; }
-        public int ReferredReferralId { get; set; }
+        public int ParentReferralId { get; set; }
+        public int ChildReferralId { get; set; }
         public Treatment Treatment { get; set; }
 
         [JsonIgnore]
@@ -39,8 +39,8 @@ namespace Model
             PatientUsername = patientUsername;
             DoctorUsername = doctorUsername;
             RoomId = roomId;
-            ReferredReferralId = -1;
-            ReferringReferralId = -1;
+            ChildReferralId = -1;
+            ParentReferralId = -1;
         }
 
         public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, bool isUrgent,int periodId)
@@ -73,8 +73,8 @@ namespace Model
             DoctorUsername = doctorUsername;
             IsUrgent = isUrgent;
             MovePeriods = new ObservableCollection<MovePeriod>();
-            ReferredReferralId = -1;
-            ReferringReferralId = -1;   
+            ChildReferralId = -1;
+            ParentReferralId = -1;   
         }
 
         public override string ToString()

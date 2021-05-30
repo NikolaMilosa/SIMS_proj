@@ -1,24 +1,5 @@
 [
   {
-    "PeriodId": 0,
-    "StartTime": "2021-04-22T09:30:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": {
-      "Comment": "sDASD",
-      "Mark": 3
-    },
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
     "PeriodId": 1,
     "StartTime": "2021-03-01T09:00:00",
     "Duration": 30,
@@ -33,8 +14,8 @@
       "Mark": 3
     },
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -49,8 +30,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -202,8 +183,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -218,8 +199,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -234,8 +215,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -250,8 +231,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -266,8 +247,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -282,8 +263,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": true,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -298,8 +279,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -314,8 +295,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -330,8 +311,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": true,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -346,8 +327,24 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 13,
+    "StartTime": "2021-06-01T00:00:00",
+    "Duration": 40,
+    "PeriodType": 1,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "zigara",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ParentReferralId": 0,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {

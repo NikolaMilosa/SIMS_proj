@@ -10,7 +10,6 @@ namespace Model
         public int DaysToUse { get; set; }
         public string Note { get; set; }
         public bool IsUsed { get; set; }
-        public Period Period { get; set; }
-        //todo: change to periodID
+        public int PeriodId { get; set; }
     }
 }

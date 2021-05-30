@@ -149,16 +149,17 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             StartTimeText = startTime.ToString("HH:mm");
             DurationText = duration.ToString();
 
-            DoctorPatientEditable = true; // enable combo boxes
-
             MessagePopUpVisibility = Visibility.Collapsed;
+            DoctorPatientEditable = true; // enable combo boxes
         }
         
         public NewAppointmentViewModel(NavigationService navigationService, Referral referral, Patient patient)
         {
             InitializeCommands();
 
+            _navigationService = navigationService;
             _periodController = new PeriodController();
+            _referral = referral;
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
             Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
@@ -170,6 +171,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             StartTimeText = "00:00";
             DurationText = "0";
 
+            MessagePopUpVisibility = Visibility.Collapsed;
             DoctorPatientEditable = false; // disable combo boxes
         }
 
