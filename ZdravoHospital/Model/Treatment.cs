@@ -4,10 +4,9 @@ namespace Model
 {
     public class Treatment
     {
-        public int roomId;
-        public DateTime startTime;
-        public int duration;
-        public int bedNumber;
-
+        public DateTime StartTime { get; set; }
+        public int Duration { get; set; }
+        public int RoomId { get; set; }
+        public int BedNumber { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using ZdravoHospital.GUI.DoctorUI.Commands;
 using ZdravoHospital.GUI.DoctorUI.Controllers;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
 using ZdravoHospital.GUI.DoctorUI.Validations;
+using ZdravoHospital.GUI.DoctorUI.View;
 
 namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 {
@@ -387,6 +388,18 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand TreatmentCommand { get; set; }
+
+        public void Executed_TreatmentCommand()
+        {
+            _navigationService.Navigate(new TreatmentView(_period));
+        }
+
+        public bool CanExecute_TreatmentCommand()
+        {
+            return true;
+        }
+
         #endregion
 
         public OperationViewModel(NavigationService navigationService, Period period, bool isReadOnlyModeOn)
@@ -446,6 +459,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             WriteReferralCommand = new MyICommand(Executed_WriteReferralCommand, CanExecute_WriteReferralCommand);
             SeeReferralCommand = new MyICommand(Executed_SeeReferralCommand, CanExecute_SeeReferralCommand);
             PatientInfoCommand = new MyICommand(Executed_PatientInfoCommand, CanExecute_PatientInfoCommand);
+            TreatmentCommand = new MyICommand(Executed_TreatmentCommand, CanExecute_TreatmentCommand);
         }
 
         private bool IsInputValid()
