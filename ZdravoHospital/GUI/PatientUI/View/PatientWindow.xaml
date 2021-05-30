@@ -101,7 +101,7 @@
                         Width="200"
                         Height="50"
                         BorderBrush="Transparent"
-                        
+                        Command="{Binding Path=TherapyCommand}"
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
                             <Image Source="/Images/PatientUI/therapyIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>

@@ -57,10 +57,16 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public RelayCommand SurveyCommand { get; private set; }
         public RelayCommand NoteCommand { get; private set; }
 
+        public RelayCommand TherapyCommand { get; private set; }
+
         #endregion
 
         #region CommandActions
 
+        private void TherapiesExecute(object parameter)
+        {
+            NavigationService.Navigate(new TherapiesPage());
+        }
         private void LogOutExecute(object sendes)
         {
             ViewFunctions viewFunctions = new ViewFunctions();
@@ -121,6 +127,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             PeriodHistoryCommand = new RelayCommand(PeriodHistoryExecute);
             SurveyCommand = new RelayCommand(SurveyExecute);
             NoteCommand = new RelayCommand(NoteExecute);
+            TherapyCommand = new RelayCommand(TherapiesExecute);
         }
 
         private void StartThreads()

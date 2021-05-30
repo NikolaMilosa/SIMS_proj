@@ -60,6 +60,7 @@
     <None Remove="Images\PatientUI\notificationIconBlack.png" />
     <None Remove="Images\PatientUI\profileIcon.png" />
     <None Remove="Images\PatientUI\therapyIcon.png" />
+    <None Remove="Images\PatientUI\therapyIconBlack.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,6 +68,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Syncfusion.SfSchedule.WPF" Version="18.3.0.53" />
   </ItemGroup>
 
   <ItemGroup>
@@ -116,6 +118,7 @@
     <Resource Include="Images\PatientUI\notificationIconBlack.png" />
     <Resource Include="Images\PatientUI\profileIcon.png" />
     <Resource Include="Images\PatientUI\therapyIcon.png" />
+    <Resource Include="Images\PatientUI\therapyIconBlack.png" />
   </ItemGroup>
 
   <ItemGroup>
