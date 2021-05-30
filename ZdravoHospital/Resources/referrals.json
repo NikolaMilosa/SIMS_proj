@@ -5,6 +5,15 @@
     "ReferredDoctorUsername": "krasic",
     "DaysToUse": 5,
     "Note": "note",
+    "IsUsed": true,
+    "PeriodId": 13
+  },
+  {
+    "ReferralId": 1,
+    "ReferringDoctorUsername": "pantela",
+    "ReferredDoctorUsername": "krasic",
+    "DaysToUse": 5,
+    "Note": "note",
     "IsUsed": false,
     "PeriodId": -1
   }

@@ -31,5 +31,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
             doctors.RemoveAll(d => d.Username.Equals(doctorUsername));
             return doctors;
         }
+
+        public Doctor GetDoctor(string doctorUsername)
+        {
+            return _doctorRepository.GetById(doctorUsername);
+        }
     }
 }

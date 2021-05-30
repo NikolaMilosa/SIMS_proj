@@ -30,14 +30,14 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
                 referral.IsUsed = true;
                 _referralRepository.Update(referral);
 
-                period.ReferringReferralId = referral.ReferralId;
+                period.ParentReferralId = referral.ReferralId;
                 _periodRepository.Update(period);
             }
         }
 
         public void CancelPeriod(int periodId)
         {
-            int referralId = _periodRepository.GetById(periodId).ReferringReferralId;
+            int referralId = _periodRepository.GetById(periodId).ParentReferralId;
             _periodRepository.DeleteById(periodId);
 
             if (referralId != -1)

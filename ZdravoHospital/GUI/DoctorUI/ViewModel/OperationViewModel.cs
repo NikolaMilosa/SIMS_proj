@@ -45,7 +45,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
                 if (value == true)
                 {
-                    if (_period.ReferredReferralId == -1)
+                    if (_period.ChildReferralId == -1)
                         DoctorPatientEditable = true;
                     else
                         DoctorPatientEditable = false;

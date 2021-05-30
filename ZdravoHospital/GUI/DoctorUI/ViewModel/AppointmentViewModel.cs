@@ -45,7 +45,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
                 if (value == true)
                 {
-                    if (_period.ReferredReferralId == -1)
+                    if (_period.ChildReferralId == -1)
                         DoctorPatientEditable = true;
                     else
                         DoctorPatientEditable = false;
@@ -146,8 +146,22 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 OnPropertyChanged("PeriodEventButtonsVisibility");
             }
         }
-        private string _messageText;
 
+        private Visibility _seeReferralButtonVisibility;
+        public Visibility SeeReferralButtonVisibility
+        {
+            get
+            {
+                return _seeReferralButtonVisibility;
+            }
+            set
+            {
+                _seeReferralButtonVisibility = value;
+                OnPropertyChanged("SeeReferralButtonVisibility");
+            }
+        }
+
+        private string _messageText;
         public string MessageText
         {
             get
@@ -382,6 +396,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             {
                 PeriodEventButtonsVisibility = Visibility.Collapsed;
             }
+
+            if (period.ParentReferralId == -1)
+                SeeReferralButtonVisibility = Visibility.Collapsed;
         }
 
         private void InitializeCommands()

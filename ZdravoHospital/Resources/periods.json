@@ -11,8 +11,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -27,8 +27,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -43,8 +43,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -59,8 +59,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -75,8 +75,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": 1,
     "Treatment": null
   },
   {
@@ -91,8 +91,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -107,8 +107,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -123,8 +123,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": true,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -139,8 +139,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -155,8 +155,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -171,8 +171,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": true,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
     "Treatment": null
   },
   {
@@ -187,8 +187,24 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": -1,
-    "ReferredReferralId": -1,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 13,
+    "StartTime": "2021-05-31T00:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "krasic",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ParentReferralId": 0,
+    "ChildReferralId": -1,
     "Treatment": null
   }
 ]
