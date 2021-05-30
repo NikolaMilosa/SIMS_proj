@@ -30,7 +30,7 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void NewPeriodWidget_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new SecretaryNewPeriodPage(true));
         }
     }
 }
