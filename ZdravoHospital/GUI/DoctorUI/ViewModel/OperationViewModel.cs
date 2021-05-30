@@ -375,6 +375,18 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand PatientInfoCommand { get; set; }
+
+        public void Executed_PatientInfoCommand()
+        {
+            _navigationService.Navigate(new PatientInfoPage(Patient));
+        }
+
+        public bool CanExecute_PatientInfoCommand()
+        {
+            return true;
+        }
+
         #endregion
 
         public OperationViewModel(NavigationService navigationService, Period period, bool isReadOnlyModeOn)
@@ -433,6 +445,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             WritePrescriptionCommand = new MyICommand(Executed_WritePrescriptionCommand, CanExecute_WritePrescriptionCommand);
             WriteReferralCommand = new MyICommand(Executed_WriteReferralCommand, CanExecute_WriteReferralCommand);
             SeeReferralCommand = new MyICommand(Executed_SeeReferralCommand, CanExecute_SeeReferralCommand);
+            PatientInfoCommand = new MyICommand(Executed_PatientInfoCommand, CanExecute_PatientInfoCommand);
         }
 
         private bool IsInputValid()
