@@ -41,12 +41,12 @@ namespace ZdravoHospital.GUI.DoctorUI
             else if (medicine.Status == MedicineStatus.APPROVED)
                 ApproveButton.IsEnabled = false;
 
-            Model.Resources.OpenIngredients();
-            AvailableIngredients = new ObservableCollection<Ingredient>();
+            //Model.Resources.OpenIngredients();
+            //AvailableIngredients = new ObservableCollection<Ingredient>();
 
-            foreach (Ingredient i in Model.Resources.ingredients)
-                if (Medicine.Ingredients.Find(ing => ing.IngredientName.Equals(i.IngredientName)) == null)
-                    AvailableIngredients.Add(i);
+            //foreach (Ingredient i in Model.Resources.ingredients)
+            //    if (Medicine.Ingredients.Find(ing => ing.IngredientName.Equals(i.IngredientName)) == null)
+            //        AvailableIngredients.Add(i);
 
             AvailableIngredientsListBox.ItemsSource = AvailableIngredients;
 
@@ -57,9 +57,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             AvailableReplacements = new ObservableCollection<string>();
 
-            foreach (Medicine m in Model.Resources.medicines)
-                if (!m.MedicineName.Equals(medicine.MedicineName) && Medicine.Replacements.Find(medicineName => medicineName.Equals(m.MedicineName)) == null)
-                    AvailableReplacements.Add(m.MedicineName);
+            //foreach (Medicine m in Model.Resources.medicines)
+            //    if (!m.MedicineName.Equals(medicine.MedicineName) && Medicine.Replacements.Find(medicineName => medicineName.Equals(m.MedicineName)) == null)
+            //        AvailableReplacements.Add(m.MedicineName);
 
             AvailableReplacementsListBox.ItemsSource = AvailableReplacements;
 
@@ -113,10 +113,10 @@ namespace ZdravoHospital.GUI.DoctorUI
             OnPropertyChanged("Medicine");
             ApproveButton.IsEnabled = false;
             RejectButton.IsEnabled = true;
-            Model.Resources.SaveMedicines();
+            //Model.Resources.SaveMedicines();
 
-            Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = "";
-            Model.Resources.SaveMedicineRecensions();
+            //Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = "";
+            //Model.Resources.SaveMedicineRecensions();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -151,18 +151,18 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (string r in ReplacementsListBox.Items)
                 Medicine.Replacements.Add(r);
 
-            foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
-                if (mr.MedicineName.Equals(Medicine.MedicineName))
-                    mr.MedicineName = MedicineNameTextBox.Text;
+            //foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
+            //    if (mr.MedicineName.Equals(Medicine.MedicineName))
+            //        mr.MedicineName = MedicineNameTextBox.Text;
 
-            foreach (Medicine m in Model.Resources.medicines)
-                foreach (string r in m.Replacements)
-                    if (r.Equals(Medicine.MedicineName))
-                    {
-                        m.Replacements.Remove(r);
-                        m.Replacements.Add(MedicineNameTextBox.Text);
-                        break;
-                    }
+            //foreach (Medicine m in Model.Resources.medicines)
+            //    foreach (string r in m.Replacements)
+            //        if (r.Equals(Medicine.MedicineName))
+            //        {
+            //            m.Replacements.Remove(r);
+            //            m.Replacements.Add(MedicineNameTextBox.Text);
+            //            break;
+            //        }
 
             Medicine.MedicineName = MedicineNameTextBox.Text;
             Medicine.Supplier = SupplierTextBox.Text;
@@ -170,8 +170,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             OnPropertyChanged("Medicine");
 
-            Model.Resources.SaveMedicines();
-            Model.Resources.SaveMedicineRecensions();
+            //Model.Resources.SaveMedicines();
+            //Model.Resources.SaveMedicineRecensions();
         }
 
         private void RemoveIngredientsButton_Click(object sender, RoutedEventArgs e)
@@ -233,11 +233,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             if (availableIngredient != null)
                 AvailableIngredients.Remove(availableIngredient);
 
-            if (Model.Resources.ingredients.Find(ing => ing.IngredientName.Equals(ingredientName)) != null)
-                return;
+            //if (Model.Resources.ingredients.Find(ing => ing.IngredientName.Equals(ingredientName)) != null)
+            //    return;
 
-            Model.Resources.ingredients.Add(new Ingredient(ingredientName));
-            Model.Resources.SaveIngredients();
+            //Model.Resources.ingredients.Add(new Ingredient(ingredientName));
+            //Model.Resources.SaveIngredients();
         }
 
         private void CancelIngredientsPopUpButton_Click(object sender, RoutedEventArgs e)
@@ -300,10 +300,10 @@ namespace ZdravoHospital.GUI.DoctorUI
             OnPropertyChanged("Medicine");
             RejectButton.IsEnabled = false;
             ApproveButton.IsEnabled = true;
-            Model.Resources.SaveMedicines();
+            //Model.Resources.SaveMedicines();
 
-            Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = RecensionNoteTextBox.Text;
-            Model.Resources.SaveMedicineRecensions();
+            //Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = RecensionNoteTextBox.Text;
+            //Model.Resources.SaveMedicineRecensions();
         }
     }
 }

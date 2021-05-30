@@ -25,19 +25,19 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             this.DataContext = this;
 
-            Model.Resources.OpenMedicineRecensions();
-            Model.Resources.OpenMedicines();
+            //Model.Resources.OpenMedicineRecensions();
+            //Model.Resources.OpenMedicines();
 
             medicines = new List<Medicine>();
 
-            foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
-                if (mr.DoctorUsername.Equals(App.currentUser))
-                    foreach (Medicine m in Model.Resources.medicines)
-                        if (mr.MedicineName.Equals(m.MedicineName))
-                        {
-                            medicines.Add(m);
-                            break;
-                        }
+            //foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
+            //    if (mr.DoctorUsername.Equals(App.currentUser))
+            //        foreach (Medicine m in Model.Resources.medicines)
+            //            if (mr.MedicineName.Equals(m.MedicineName))
+            //            {
+            //                medicines.Add(m);
+            //                break;
+            //            }
 
             MedicinesListView.ItemsSource = medicines;
             MedicinesListView.Items.Filter = Filter;

@@ -32,8 +32,6 @@
                     <ComboBox Name="DoctorsComboBox"
                               Grid.Column="1"
                               Style="{StaticResource DarkComboBox}"
-                              KeyUp="DoctorsComboBox_KeyUp"
-                              GotFocus="DoctorsComboBox_GotFocus"
                               IsTextSearchEnabled="False"
                               StaysOpenOnEdit="True"
                               IsEditable="True"
