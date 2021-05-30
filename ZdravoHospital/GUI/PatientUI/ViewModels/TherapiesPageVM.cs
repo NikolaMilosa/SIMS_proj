@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 using Model;
 using Syncfusion.UI.Xaml.Schedule;
+using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Logics;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
@@ -15,40 +16,67 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
     public class TherapiesPageVM
     {
         public ScheduleAppointmentCollection Therapies { get;  set; } 
-        public TherapiesPageVM()
+        public ScheduleAppointment SelectedAppointment { get; set; }
+        public SfSchedule Sheduler { get; set; }
+        public TherapiesPageVM(SfSchedule selectedAppointment)
         {
             SetTherapies();
-            TherapyNotification(PatientWindowVM.PatientUsername);
+            SetCommands();
+            Sheduler = selectedAppointment;
         }
 
         private void SetTherapies()
         {
             Therapies = new ScheduleAppointmentCollection();
-
+            TherapyNotification(PatientWindowVM.PatientUsername);
         }
 
-        public  void TherapyNotification(object patientUsername)
+        #region Commands
+
+        public RelayCommand TherapyCommand { get; private set; }
+
+        #endregion
+
+        #region CommandActions
+
+        private void TherapyExecution(object parameter)
+        {
+            SelectedAppointment = Sheduler.SelectedAppointment;
+            //ScheduleAppointment selectedAppointment = (ScheduleAppointment) parameter;//essageBox.Show(selectedAppointment.Notes);   
+            MessageBox.Show(SelectedAppointment.Notes);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void SetCommands()
+        {
+            TherapyCommand = new RelayCommand(TherapyExecution);
+        }
+
+        public void TherapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
 
             PeriodFunctions periodFunctions = new PeriodFunctions();
-            
-                foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
-                {
-                    GeneratePrescriptionTimes(period.Prescription, username);
-                }
 
-             
+            foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
+            {
+                GeneratePrescriptionTimes(period.Prescription, username);
+            }
+
+
         }
 
-        private  void GeneratePrescriptionTimes(Prescription prescription, string username)
+        private void GeneratePrescriptionTimes(Prescription prescription, string username)
         {
             foreach (Therapy therapy in prescription.TherapyList)
                 GenerateTimes(therapy, username);
 
         }
 
-        private  List<DateTime> GenerateTimes(Therapy therapy, string username)
+        private List<DateTime> GenerateTimes(Therapy therapy, string username)
         {
             List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
             PeriodFunctions periodFunctions = new PeriodFunctions();
@@ -66,7 +94,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             return notifications;
         }
 
-        private  List<DateTime> GenerateNotificationsForEachDay(Therapy therapy)
+        private List<DateTime> GenerateNotificationsForEachDay(Therapy therapy)
         {
             List<DateTime> notifications = new List<DateTime>();
             DateTime dateIterator = therapy.StartHours;
@@ -79,6 +107,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             }
             return notifications;
         }
+
+        #endregion
+
 
     }
 }

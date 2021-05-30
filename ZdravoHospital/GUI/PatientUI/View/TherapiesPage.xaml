@@ -29,8 +29,30 @@
                 <TextBlock Text="My therapies" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
-            <syncfusion:SfSchedule Grid.Column="1" Grid.Row="1" x:Name="Schedule"  ItemsSource="{Binding Therapies}"
-                                   ScheduleType="Week">
+            <syncfusion:SfSchedule Grid.Column="1" Grid.Row="1" x:Name="Scheduler"  ItemsSource="{Binding Therapies}"
+                                    ScheduleType="Week"  TimeInterval="ThirtyMin" >
+
+                <syncfusion:SfSchedule.AppointmentTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Orientation="Vertical">
+
+                                <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"
+                                           VerticalAlignment="Center" FontSize="14"         
+                                           Text="{Binding Subject}" 
+                                           Foreground="White"
+                                           FontStyle="Normal"></TextBlock>
+
+                                <Button Content="{Binding Path=StartTime}" Command="{Binding Path=DataContext.TherapyCommand,       
+                                RelativeSource= {RelativeSource FindAncestor,
+                                AncestorType={x:Type syncfusion:SfSchedule}}}" CommandParameter="{Binding ElementName=Scheduler,Path=SelectedAppointment}" >
+
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </syncfusion:SfSchedule.AppointmentTemplate>
+
                 <syncfusion:SfSchedule.AppointmentMapping>
                     <syncfusion:ScheduleAppointmentMapping
                         SubjectMapping="Subject"

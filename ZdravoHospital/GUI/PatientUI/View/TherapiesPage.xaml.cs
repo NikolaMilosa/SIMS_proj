@@ -23,7 +23,7 @@ namespace ZdravoHospital.GUI.PatientUI.View
         public TherapiesPage()
         {
             InitializeComponent();
-            DataContext = new TherapiesPageVM();
+            DataContext = new TherapiesPageVM(Scheduler);
         }
     }
 }
