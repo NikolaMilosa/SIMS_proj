@@ -17,5 +17,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         {
             return _patientRepository.GetValues();
         }
+
+        public Patient GetPatient(string patientUsername)
+        {
+            return _patientRepository.GetById(patientUsername);
+        }
     }
 }

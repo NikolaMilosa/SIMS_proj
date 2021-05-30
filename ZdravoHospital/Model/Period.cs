@@ -52,8 +52,8 @@ namespace Model
             DoctorUsername = doctorUsername;
             IsUrgent = isUrgent;
             PeriodId = periodId;
-            ReferredReferralId = -1;
-            ReferringReferralId = -1;
+            ParentReferralId = -1;
+            ChildReferralId = -1;
         }
 
         public bool HasPassed()

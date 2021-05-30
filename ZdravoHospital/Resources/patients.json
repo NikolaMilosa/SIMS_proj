@@ -3,8 +3,13 @@
     "IsGuest": false,
     "HealthCardNumber": "123",
     "BloodType": 0,
-    "MedicineAllergens": null,
-    "IngredientAllergens": null,
+    "MedicineAllergens": [
+      "Brufen"
+    ],
+    "IngredientAllergens": [
+      "zink",
+      "tester one"
+    ],
     "RecentActions": 1,
     "LastLogoutTime": "2021-05-30T00:47:19.7833388+02:00",
     "NameSurname": "Stefan Ljubovic",

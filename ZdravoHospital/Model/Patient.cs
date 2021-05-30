@@ -42,6 +42,8 @@ namespace Model
             HealthCardNumber = healthCardNum;
             CitizenId = personID;
             BloodType = bloodType;
+            MedicineAllergens = new List<string>();
+            IngredientAllergens = new List<string>();
         }
 
         // Guest patient constructor
@@ -53,6 +55,8 @@ namespace Model
             this.HealthCardNumber = healthCardNum;
             this.IsGuest = true;
             this.Username = "guest_" + healthCardNum;
+            this.MedicineAllergens = new List<string>();
+            this.IngredientAllergens = new List<string>();
         }
 
         // default constructor for json serialization

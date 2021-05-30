@@ -6,7 +6,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using ZdravoHospital.GUI.DoctorUI.Logics;
+using ZdravoHospital.GUI.DoctorUI.Commands;
+using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Exceptions;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 
 namespace ZdravoHospital.GUI.DoctorUI
@@ -16,53 +18,88 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class PrescriptionPage : Page, INotifyPropertyChanged
     {
-        private readonly PrescriptionLogic _prescriptionLogic;
-        private readonly Period _period;
-        private readonly Patient _patient;
+        public Thickness TopPanelMargin { get; set; }
+        public Thickness ListViewMargin { get; set; }
+        public double ListItemWidth { get; set; }
+
+        private PrescriptionController _prescriptionController;
+        private Period _period;
+        private Patient _patient;
         private Therapy _therapy;
         private bool _editingTherapy;
 
         public ObservableCollection<Therapy> Therapies { get; set; }
-        public Thickness TopPanelMargin { get; set; }
-        public Thickness ListViewMargin { get; set; }
-        public double ListItemWidth { get; set; }
+
+        private Visibility _messagePopUpVisibility;
+        public Visibility MessagePopUpVisibility
+        {
+            get
+            {
+                return _messagePopUpVisibility;
+            }
+            set
+            {
+                _messagePopUpVisibility = value;
+                OnPropertyChanged("MessagePopUpVisibility");
+            }
+        }
+
+        private string _messageText;
+        public string MessageText
+        {
+            get
+            {
+                return _messageText;
+            }
+            set
+            {
+                _messageText = value;
+                OnPropertyChanged("MessageText");
+            }
+        }
+
+        public MyICommand CloseMessagePopUpCommand { get; set; }
+
+        public void Executed_CloseMessagePopUpCommand()
+        {
+            MessagePopUpVisibility = Visibility.Collapsed;
+        }
+
+        public bool CanExecute_CloseMessagePopUpCommand()
+        {
+            return true;
+        }
 
         public PrescriptionPage(Period period)
         {
             InitializeComponent();
 
             DataContext = this;
-            
+
             // fields initialization
-            _prescriptionLogic = new PrescriptionLogic();
+            _prescriptionController = new PrescriptionController();
             _period = period;
 
             if (_period.Prescription == null)
                 _period.Prescription = new Prescription();
 
-            _patient = Model.Resources.patients[_period.PatientUsername];
+            _patient = new PatientController().GetPatient(_period.PatientUsername);
             _editingTherapy = false;
 
             // TherapiesListView setup
-            Therapies = new ObservableCollection<Therapy>();
-            foreach (Therapy therapy in _period.Prescription.TherapyList)
-            {
-                Therapy t = new Therapy()
-                {
-                   Medicine = therapy.Medicine,
-                    StartHours = therapy.StartHours,
-                    TimesPerDay = therapy.TimesPerDay,
-                    PauseInDays = therapy.PauseInDays,
-                    EndDate = therapy.EndDate,
-                    Instructions = therapy.Instructions
-                };
-                Therapies.Add(t);
-            }
+            Therapies = _prescriptionController.CollectTherapies(_period.Prescription);
             TherapiesListView.ItemsSource = Therapies;
             
             // MedicinesComboBox setup
-            Model.Resources.OpenMedicines();
-            MedicinesComboBox.ItemsSource = Model.Resources.medicines;
+            MedicinesComboBox.ItemsSource = new MedicineController().GetApprovedMedicines();
+
+            InitializeCommands();
+            MessagePopUpVisibility = Visibility.Collapsed;
+        }
+
+        private void InitializeCommands()
+        {
+            CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -103,10 +140,10 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            _prescriptionLogic.GenerateTherapies(_period.Prescription, Therapies);
-            _prescriptionLogic.SaveChanges();
-            MessageBox.Show("Prescription successfully saved.", "Success");
-            NavigationService.GoBack();
+            _prescriptionController.GenerateTherapies(_period.Prescription, Therapies);
+            _prescriptionController.SavePrescription(_period);
+            MessageText = "Prescription saved successfully.";
+            MessagePopUpVisibility = Visibility.Visible;
         }
 
         private void CancelTherapyButton_Click(object sender, RoutedEventArgs e)
@@ -203,22 +240,22 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             Medicine medicine = MedicinesComboBox.SelectedItem as Medicine;
 
-            // checking medicine allergens
-            if (_prescriptionLogic.IsPatientAllergicToMedicine(_patient, medicine))
+            try
             {
-                MessageBox.Show("Patient is allergic to selected medicine (" + medicine.MedicineName + ")", "Allergen detected");
-                MedicinesComboBox.SelectedIndex = -1;
+                _prescriptionController.CheckAllergens(medicine, _patient);
                 return;
+            }
+            catch (MedicineAllergenException exception)
+            {
+                MessageText = exception.Message;
+            }
+            catch (IngredientAllergenException exception)
+            {
+                MessageText = exception.Message;
             }
 
-            // checking ingredient allergens
-            Ingredient ingredientAllergen = _prescriptionLogic.DetectIngredientAllegren(_patient, medicine);
-            if (ingredientAllergen != null)
-            {
-                MessageBox.Show("Patient is allergic to an ingredient in selected medicine (" + ingredientAllergen.IngredientName + ")", "Allergen detected");
-                MedicinesComboBox.SelectedIndex = -1;
-                return;
-            }
+            MessagePopUpVisibility = Visibility.Visible;
+            MedicinesComboBox.SelectedIndex = -1;
         }
 
         private void EditTherapyButton_Click(object sender, RoutedEventArgs e)

@@ -1,177 +1,5 @@
 [
   {
-    "PeriodId": 1,
-    "StartTime": "2021-03-01T09:00:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": "Neka random anamneza",
-    "Prescription": null,
-    "PeriodMark": {
-      "Comment": "da",
-      "Mark": 3
-    },
-    "IsUrgent": false,
-    "ParentReferralId": 0,
-    "ChildReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 2,
-    "StartTime": "2021-03-31T08:30:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ParentReferralId": 0,
-    "ChildReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 3,
-    "StartTime": "2021-05-24T08:30:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": {
-      "Comment": "sadasd",
-      "Mark": 3
-    },
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 4,
-    "StartTime": "2021-05-24T09:30:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": {
-      "Comment": "Poslednji",
-      "Mark": 5
-    },
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 5,
-    "StartTime": "0001-01-01T00:00:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": {
-      "Comment": "sdada",
-      "Mark": 5
-    },
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 6,
-    "StartTime": "2021-05-26T08:00:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 7,
-    "StartTime": "2021-05-30T09:30:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 8,
-    "StartTime": "2021-05-29T08:00:00+02:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 9,
-    "StartTime": "2021-06-02T10:30:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 11,
-    "StartTime": "2021-05-31T08:30:00+02:00",
-    "Duration": 30,
-    "PeriodType": 0,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
-  {
     "PeriodId": 12,
     "StartTime": "2021-05-31T09:00:00+02:00",
     "Duration": 30,
@@ -212,7 +40,32 @@
     "DoctorUsername": "pantela",
     "RoomId": 201,
     "Details": "asdsadsadzxczcq",
-    "Prescription": null,
+    "Prescription": {
+      "TherapyList": [
+        {
+          "Medicine": {
+            "MedicineName": "new medicine",
+            "Supplier": "New supplier",
+            "Status": 0,
+            "Note": null,
+            "Replacements": [],
+            "Ingredients": [
+              {
+                "IngredientName": "new ing"
+              },
+              {
+                "IngredientName": "other ing"
+              }
+            ]
+          },
+          "StartHours": "2021-05-30T00:00:00",
+          "TimesPerDay": 0,
+          "PauseInDays": 0,
+          "EndDate": "2021-05-30T00:00:00",
+          "Instructions": ""
+        }
+      ]
+    },
     "PeriodMark": null,
     "IsUrgent": false,
     "ParentReferralId": -1,
@@ -359,8 +212,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -375,8 +228,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   }
 ]
