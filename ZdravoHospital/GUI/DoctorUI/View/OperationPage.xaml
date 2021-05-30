@@ -223,6 +223,12 @@
                               IsHitTestVisible="{Binding IsEditModeOn}"
                               />
                     <StackPanel Grid.Column="4" Grid.Row="1" Grid.RowSpan="8" Width="330">
+                        <Button Name="SeeReferralButton"
+                    Content="See referral"
+                    Margin="20, 20, 20, 0"
+                        Style="{StaticResource BlueButton}"
+                        Visibility="{Binding SeeReferralButtonVisibility}"
+                                Command="{Binding SeeReferralCommand}"/>
                         <Button Name="CancelOperationButton"
                     Content="Cancel operation"
                     Margin="20, 20, 20, 0"

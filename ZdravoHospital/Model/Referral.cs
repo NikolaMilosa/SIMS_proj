@@ -11,10 +11,5 @@ namespace Model
         public string Note { get; set; }
         public bool IsUsed { get; set; }
         public int PeriodId { get; set; }
-
-        public Referral()
-        {
-            ReferralId = -1;
-        }
     }
 }

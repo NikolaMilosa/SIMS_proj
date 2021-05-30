@@ -10,6 +10,7 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class ReferralPage : Page
     {
+        private Referral _referral;
         private Doctor _referringDoctor;
         private Patient _patient;
         private Period _period;
@@ -23,9 +24,20 @@ namespace ZdravoHospital.GUI.DoctorUI
             _period = period;
         }
 
+        public ReferralPage(Referral referral, Patient patient)
+        {
+            InitializeComponent();
+
+            _referral = referral;
+            _patient = patient;
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            DataContext = new ReferralViewModel(NavigationService, _referringDoctor, _patient, _period);
+            if (_referral == null)
+                DataContext = new ReferralViewModel(NavigationService, _referringDoctor, _patient, _period);
+            else
+                DataContext = new ReferralViewModel(NavigationService, _referral, _patient);
         }
 
         private void ReferredAppointmentButton_Click(object sender, RoutedEventArgs e)

@@ -188,12 +188,17 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 return;
             }
 
+            bool updating = false;
+
+            if (_referral != null)
+                updating = true;
+
             FormReferral();
 
-            if (_childPeriod == null)
+            if (!updating)
             {
                 _referralController.CreateNewReferral(_referral);
-                MessageText = "Referral created successfully.";
+                MessageText = "Referral saved successfully.";
             }
             else
             {
@@ -367,9 +372,10 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public ReferralViewModel(NavigationService navigationService, Referral referral, Patient patient)
         {
             _navigationService = navigationService;
+            _referral = referral;
             Patient = patient;
             DoctorController doctorController = new DoctorController();
-            ReferringDoctor = doctorController.GetDoctor(referral.ReferringDoctorUsername);
+            ReferringDoctor = doctorController.GetDoctor(_referral.ReferringDoctorUsername);
             Doctors = new ObservableCollection<Doctor>(doctorController.GetOtherDoctors(_referral.ReferringDoctorUsername));
 
             InitializeCommands();
@@ -381,7 +387,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             ConfirmButtonVisibility = Visibility.Collapsed;
             EditButtonVisibility = Visibility.Collapsed;
             UseStackPanelVisibility = Visibility.Collapsed;
-            ReferredAppointmentButtonVisibility = Visibility.Visible;
+            ReferredAppointmentButtonVisibility = Visibility.Collapsed;
             ReferredOperationButtonVisibility = Visibility.Collapsed;
             MessagePopUpVisibility = Visibility.Collapsed;
         }
@@ -412,8 +418,14 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         private void FormReferral()
         {
+            int referralId = -1;
+
+            if (_referral != null)
+                referralId = _referral.ReferralId;
+
             _referral = new Referral()
             {
+                ReferralId = referralId,
                 ReferringDoctorUsername = ReferringDoctor.Username,
                 ReferredDoctorUsername = ReferredDoctor.Username,
                 DaysToUse = Int32.Parse(DaysToUseText),

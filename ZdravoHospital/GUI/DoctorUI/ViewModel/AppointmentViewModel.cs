@@ -17,6 +17,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private Period _period;
         private PeriodController _periodController;
         private bool _periodCanceled;
+        private ReferralController _referralController;
 
         private bool _doctorPatientEditable;
         public bool DoctorPatientEditable 
@@ -361,6 +362,19 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand SeeReferralCommand { get; set; }
+
+        public void Executed_SeeReferralCommand()
+        {
+            Referral referral = _referralController.GetReferral(_period.ParentReferralId);
+            _navigationService.Navigate(new ReferralPage(referral, Patient));
+        }
+
+        public bool CanExecute_SeeReferralCommand()
+        {
+            return true;
+        }
+
         #endregion
 
         public AppointmentViewModel(NavigationService navigationService, Period period)
@@ -370,6 +384,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             _navigationService = navigationService;
             _period = period;
             _periodController = new PeriodController();
+            _referralController = new ReferralController();
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
             Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
@@ -414,6 +429,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             WritePeriodDetailsCommand = new MyICommand(Executed_WritePeriodDetailsCommand, CanExecute_WritePeriodDetailsCommand);
             WritePrescriptionCommand = new MyICommand(Executed_WritePrescriptionCommand, CanExecute_WritePrescriptionCommand);
             WriteReferralCommand = new MyICommand(Executed_WriteReferralCommand, CanExecute_WriteReferralCommand);
+            SeeReferralCommand = new MyICommand(Executed_SeeReferralCommand, CanExecute_SeeReferralCommand);
         }
 
         private bool IsInputValid()

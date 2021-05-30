@@ -76,7 +76,7 @@
     "PeriodMark": null,
     "IsUrgent": false,
     "ParentReferralId": -1,
-    "ChildReferralId": 1,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -193,12 +193,12 @@
   },
   {
     "PeriodId": 13,
-    "StartTime": "2021-05-31T00:00:00",
-    "Duration": 30,
-    "PeriodType": 0,
+    "StartTime": "2021-06-01T00:00:00",
+    "Duration": 40,
+    "PeriodType": 1,
     "PatientUsername": "ljuba",
-    "DoctorUsername": "krasic",
-    "RoomId": 201,
+    "DoctorUsername": "zigara",
+    "RoomId": 101,
     "Details": null,
     "Prescription": null,
     "PeriodMark": null,
