@@ -144,7 +144,8 @@
                         HorizontalAlignment="Right"
                     Padding="10"
                             Margin="20"
-                        Style="{StaticResource BlueButton}"/>
+                        Style="{StaticResource BlueButton}"
+                            Command="{Binding PatientInfoCommand}"/>
 
                     <TextBlock Text="Date:"
                            Grid.Row="4"

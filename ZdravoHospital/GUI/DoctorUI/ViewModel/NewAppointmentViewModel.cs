@@ -21,7 +21,20 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public bool DoctorPatientEditable { get; set; }
         public bool IsUrgent { get; set; }
         public Doctor Doctor { get; set; }
-        public Patient Patient { get; set; }
+        private Patient _patient;
+        public Patient Patient 
+        { 
+            get
+            {
+                return _patient;
+            }
+            set
+            {
+                _patient = value;
+                OnPropertyChanged("Patient");
+                OnPropertyChanged("IsPatientInfoButtonEnabled");
+            }
+        }
         public DateTime StartDate { get; set; }
         public string StartTimeText { get; set; }
         public string DurationText { get; set; }
@@ -29,6 +42,13 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public ObservableCollection<Doctor> Doctors { get; set; }
         public ObservableCollection<Patient> Patients { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
+        public bool IsPatientInfoButtonEnabled
+        {
+            get
+            {
+                return Patient != null;
+            }
+        }
 
         private Visibility messagePopUpVisibility;
         public Visibility MessagePopUpVisibility 
@@ -131,8 +151,20 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand PatientInfoCommand { get; set; }
+
+        public void Executed_PatientInfoCommand()
+        {
+            _navigationService.Navigate(new PatientInfoPage(Patient));
+        }
+
+        public bool CanExecute_PatientInfoCommand()
+        {
+            return true;
+        }
+
         #endregion
-        
+
         public NewAppointmentViewModel(NavigationService navigationService, Doctor doctor, DateTime startTime, int duration)
         {
             InitializeCommands();
@@ -180,6 +212,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             BackCommand = new MyICommand(Executed_BackCommand, CanExecute_BackCommand);
             ConfirmCommand = new MyICommand(Executed_ConfirmCommand, CanExecute_ConfirmCommand);
             CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
+            PatientInfoCommand = new MyICommand(Executed_PatientInfoCommand, CanExecute_PatientInfoCommand);
         }
 
         private bool IsInputValid()
