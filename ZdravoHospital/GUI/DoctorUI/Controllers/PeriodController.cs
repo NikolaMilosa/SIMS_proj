@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ZdravoHospital.GUI.DoctorUI.DTOs;
 using ZdravoHospital.GUI.DoctorUI.Services;
 
 namespace ZdravoHospital.GUI.DoctorUI.Controllers
@@ -38,6 +39,11 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
         public Period GetPeriod(int periodId)
         {
             return _periodService.GetPeriod(periodId);
+        }
+
+        public List<PatientInfoPeriodDisplayDTO> GetPatientInfoPeriodDisplayDTOs(string patientUsername)
+        {
+            return _periodService.GetPatientInfoPeriodDisplayDTOs(patientUsername);
         }
     }
 }

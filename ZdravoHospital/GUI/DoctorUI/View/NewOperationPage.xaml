@@ -128,7 +128,8 @@
                     Padding="10"
                             Margin="20"
                         Style="{StaticResource BlueButton}"
-                Click="PatientInfoButton_Click"/>
+                            Command="{Binding PatientInfoCommand}"
+                            IsEnabled="{Binding IsPatientInfoButtonEnabled}"/>
 
                     <TextBlock Text="Date:"
                            Grid.Row="4"

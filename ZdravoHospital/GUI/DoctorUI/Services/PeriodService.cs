@@ -1,7 +1,9 @@
 ﻿using Model;
+using Repository.DoctorPersistance;
 using Repository.PeriodPersistance;
 using Repository.ReferralPersistance;
-using System;
+using System.Collections.Generic;
+using ZdravoHospital.GUI.DoctorUI.DTOs;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 
 namespace ZdravoHospital.GUI.DoctorUI.Services
@@ -11,12 +13,14 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         private PeriodRepository _periodRepository;
         private ReferralRepository _referralRepository;
         private PeriodValidation _periodValidation;
+        private DoctorRepository _doctorRepository;
 
         public PeriodService()
         {
             _periodRepository = new PeriodRepository();
             _referralRepository = new ReferralRepository();
             _periodValidation = new PeriodValidation();
+            _doctorRepository = new DoctorRepository();
         }
 
         public void CreateNewPeriod(Period period, Referral referral)
@@ -63,6 +67,18 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         public Period GetPeriod(int periodId)
         {
             return _periodRepository.GetById(periodId);
+        }
+
+        public List<PatientInfoPeriodDisplayDTO> GetPatientInfoPeriodDisplayDTOs(string patientUsername)
+        {
+            var dtos = new List<PatientInfoPeriodDisplayDTO>();
+
+            foreach (Period period in _periodRepository.GetValues())
+                if (period.PatientUsername.Equals(patientUsername))
+                    dtos.Add(new PatientInfoPeriodDisplayDTO(period,
+                        _doctorRepository.GetById(period.DoctorUsername)));
+
+            return dtos;
         }
     }
 }
