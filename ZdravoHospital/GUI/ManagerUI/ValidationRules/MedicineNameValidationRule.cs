@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 using Model;
-using Model.Repository;
+using Repository.MedicinePersistance;
 
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {

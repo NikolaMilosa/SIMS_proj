@@ -6,7 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 
 using Model;
-using Model.Repository;
+using Repository.PeriodPersistance;
+using Repository.RoomSchedulePersistance;
 
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {
@@ -86,9 +87,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public string CheckIntersectRoomSchedule(DateTime start, DateTime end, Room room)
         {
-            var RoomScheduleRepository = new RoomScheduleRepository();
+            var roomScheduleRepository = new RoomScheduleRepository();
 
-            foreach (var rs in RoomScheduleRepository.GetValues())
+            foreach (var rs in roomScheduleRepository.GetValues())
             {
                 if (rs.ScheduleType == ReservationType.TRANSFER)
                     continue;

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using Model.Repository;
+using Repository.InventoryPersistance;
 
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {

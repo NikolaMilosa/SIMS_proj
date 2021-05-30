@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Windows.Controls;
-using Model.Repository;
+using Repository.RoomPersistance;
 
 namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 {

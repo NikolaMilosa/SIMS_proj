@@ -110,6 +110,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             set
             {
                 _startTime = value;
+                EndTime = "";
                 OnPropertyChanged();
             }
         }
