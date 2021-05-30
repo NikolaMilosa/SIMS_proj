@@ -4,12 +4,19 @@
       "SpecializationName": "Doctor"
     },
     "ShiftRule": {
-      "VacationStartTime": "2021-05-30T00:00:00+02:00",
-      "NumberOfFreeDays": 10,
-      "Vacations": null,
-      "ScheduledShift": 1,
-      "ShiftStart": "2021-05-30T00:00:00+02:00",
-      "CurrentShift": 1
+      "Vacations": [],
+      "RegularShift": {
+        "ScheduledShift": 0,
+        "ShiftStart": "2021-05-30T00:00:00+02:00",
+        "IsSingleDayShift": false
+      },
+      "SingleDayShifts": [
+        {
+          "ScheduledShift": 1,
+          "ShiftStart": "2021-05-31T00:00:00",
+          "IsSingleDayShift": true
+        }
+      ]
     },
     "NameSurnameSpecialization": "Marko Pantelic (Doctor)",
     "Name": "Marko",
@@ -39,12 +46,29 @@
       "SpecializationName": "Cardio surgent"
     },
     "ShiftRule": {
-      "VacationStartTime": "2021-05-25T00:00:00",
-      "NumberOfFreeDays": 1,
-      "Vacations": null,
-      "ScheduledShift": 3,
-      "ShiftStart": "2021-05-30T00:00:00+02:00",
-      "CurrentShift": 3
+      "Vacations": [
+        {
+          "VacationStartTime": "2021-07-08T00:00:00",
+          "NumberOfFreeDays": 10
+        }
+      ],
+      "RegularShift": {
+        "ScheduledShift": 3,
+        "ShiftStart": "2021-05-30T00:00:00",
+        "IsSingleDayShift": false
+      },
+      "SingleDayShifts": [
+        {
+          "ScheduledShift": 2,
+          "ShiftStart": "2021-05-31T00:00:00",
+          "IsSingleDayShift": true
+        },
+        {
+          "ScheduledShift": 2,
+          "ShiftStart": "2021-06-03T00:00:00",
+          "IsSingleDayShift": true
+        }
+      ]
     },
     "NameSurnameSpecialization": "Nikola Zigic (Cardio surgent)",
     "Name": "Nikola",
@@ -74,12 +98,18 @@
       "SpecializationName": "Neurology"
     },
     "ShiftRule": {
-      "VacationStartTime": "2021-05-25T00:00:00",
-      "NumberOfFreeDays": 0,
-      "Vacations": null,
-      "ScheduledShift": 2,
-      "ShiftStart": "2021-05-24T00:00:00+02:00",
-      "CurrentShift": 0
+      "Vacations": [
+        {
+          "VacationStartTime": "2021-06-06T00:00:00",
+          "NumberOfFreeDays": 10
+        }
+      ],
+      "RegularShift": {
+        "ScheduledShift": 2,
+        "ShiftStart": "2021-05-30T00:00:00",
+        "IsSingleDayShift": false
+      },
+      "SingleDayShifts": []
     },
     "NameSurnameSpecialization": "Milos Krasic (Neurology)",
     "Name": "Milos",
@@ -109,12 +139,13 @@
       "SpecializationName": "Neurology"
     },
     "ShiftRule": {
-      "VacationStartTime": "2021-05-23T00:00:00+02:00",
-      "NumberOfFreeDays": 0,
-      "Vacations": null,
-      "ScheduledShift": 3,
-      "ShiftStart": "2021-05-23T00:00:00+02:00",
-      "CurrentShift": 2
+      "Vacations": [],
+      "RegularShift": {
+        "ScheduledShift": 0,
+        "ShiftStart": "2021-05-30T00:00:00",
+        "IsSingleDayShift": false
+      },
+      "SingleDayShifts": []
     },
     "NameSurnameSpecialization": "Dejan Stankovic (Neurology)",
     "Name": "Dejan",

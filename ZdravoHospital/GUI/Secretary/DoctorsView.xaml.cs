@@ -46,6 +46,7 @@ namespace ZdravoHospital.GUI.Secretary
         {
             if(SelectedDoctorView != null)
                 NavigationService.Navigate(new EditShiftPage(SelectedDoctorView.Doctor));
+
         }
 
         private void VacationButton_Click(object sender, RoutedEventArgs e)

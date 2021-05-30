@@ -21,7 +21,7 @@
         <StackPanel Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" Margin="10,0,80,2" Width="120"> Shift</TextBlock>
-                <ComboBox Name="ShiftComboBox" Width="195" Margin="0,5,5,5" Height="30" SelectedIndex="{Binding SelectedShift}">
+                <ComboBox Name="ShiftComboBox" Width="195" Margin="0,5,5,5" Height="30" SelectedIndex="{Binding ShiftDTO.ScheduledShift}">
                     <ComboBoxItem>FREE</ComboBoxItem>
                     <ComboBoxItem>FIRST</ComboBoxItem>
                     <ComboBoxItem>SECOND</ComboBoxItem>
@@ -32,9 +32,9 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Shift starts at</TextBlock>
-                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding ShiftStart}" ></DatePicker>
+                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding ShiftDTO.ShiftStart}" ></DatePicker>
             </StackPanel>
-            <CheckBox Margin="10" FontFamily="Yu Gothic" FontSize="12" VerticalAlignment="Bottom"> Single day shift only
+            <CheckBox Margin="10" FontFamily="Yu Gothic" FontSize="12" VerticalAlignment="Bottom" IsChecked="{Binding ShiftDTO.IsSingleDayShift}"> Single day shift only
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                 </CheckBox.LayoutTransform>

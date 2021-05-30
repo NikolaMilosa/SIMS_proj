@@ -15,17 +15,23 @@
             <RowDefinition Height="120"> </RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" FontFamily="Yu Gothic" FontSize="32" FontWeight="SemiBold" Margin="10">
-            Vacation
-        </TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Grid.Row="0" FontFamily="Yu Gothic" FontSize="32" FontWeight="SemiBold" Margin="10"> Vacation </TextBlock>
+            <Button x:Name="ClearVacationsButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="130" Height="40" Click="ClearVacationsButton_Click" VerticalAlignment="Top" Margin="120,15,20,0" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Delete" Width="25" Height="25" Margin="0,0,10,0" />
+                    <TextBlock FontFamily="Yu Gothic" FontSize="18">Clear all</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
         <StackPanel Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Day off starts at</TextBlock>
-                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding VacationStart}"></DatePicker>
+                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding VacationDTO.VacationStartTime}"></DatePicker>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Number of days</TextBlock>
-                <TextBox Width="195" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" Text="{Binding NumberOfDays}"></TextBox>
+                <TextBox Width="195" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" Text="{Binding VacationDTO.NumberOfFreeDays}"></TextBox>
             </StackPanel>
             <Button x:Name="FinishButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="180" Height="40" Click="FinishButton_Click" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">

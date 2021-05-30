@@ -8,5 +8,11 @@ namespace Model
     {
         public DateTime VacationStartTime { get; set; }
         public int NumberOfFreeDays { get; set; }
+
+        public Vacation(DateTime vacationStartTime, int numberOfFreeDays)
+        {
+            VacationStartTime = vacationStartTime;
+            NumberOfFreeDays = numberOfFreeDays;
+        }
     }
 }
