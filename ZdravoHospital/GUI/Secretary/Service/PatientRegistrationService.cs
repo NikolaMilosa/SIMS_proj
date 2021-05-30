@@ -59,5 +59,9 @@ namespace ZdravoHospital.GUI.Secretary.Service
                 new Model.City(addressDTO.CityDTO.PostalCode, addressDTO.CityDTO.Name, new Model.Country(addressDTO.CityDTO.CountryDTO.Name)));
             return patient;
         }
+        public Patient GetById(string id)
+        {
+            return _patientsRepository.GetById(id);
+        }
     }
 }

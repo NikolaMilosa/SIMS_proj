@@ -15,7 +15,7 @@
         <SolidColorBrush x:Key="defaultColor" Color="Black"></SolidColorBrush>
     </Page.Resources>
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="Scroller" VerticalScrollBarVisibility="Hidden">
             <Grid Background="#FFF3F2FC">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -132,7 +132,7 @@
 
                 <StackPanel Grid.Row="5" Grid.Column="1">
                     <TextBlock Margin="8,0,0,0">Date of birth</TextBlock>
-                    <DatePicker Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" VerticalAlignment="Top" Background="White"
+                    <DatePicker Name="DateOfBirthPicker" Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" VerticalAlignment="Top" Background="White"
                                 SelectedDate="{Binding Path=PatientDTO.DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Border}">
@@ -400,7 +400,7 @@
                     </StackPanel>
                 </Grid>
 
-                <Button Name="FinishButton" Grid.Row="22" Grid.Column="1" Height="30" Width="90" BorderThickness="3" Background="{DynamicResource defaultColor}" Foreground="Black" FontSize="14" FontFamily="Yu Gothic" HorizontalAlignment="Right" 
+                <Button Name="FinishButton" Grid.Row="22" Grid.Column="1" Height="30" Width="90" BorderThickness="3" Background="#4267B2" Foreground="Black" FontSize="14" FontFamily="Yu Gothic" HorizontalAlignment="Right" 
                 Click="FinishButton_Click" Margin="0,0,10,0">FINISH
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">

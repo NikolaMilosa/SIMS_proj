@@ -117,5 +117,16 @@ namespace ZdravoHospital.GUI.Secretary
                 CloseMenu_BeginStoryboard.Storyboard.Begin();
             }
         }
+
+        private void DemoItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                SecretaryMainFrame.Content = new DemoPage();
+                CloseMenu_BeginStoryboard.Storyboard.Begin();
+            }
+        }
+
     }
 }
