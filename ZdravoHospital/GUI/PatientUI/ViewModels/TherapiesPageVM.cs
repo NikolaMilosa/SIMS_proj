@@ -1,120 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Media;
+using Model;
 using Syncfusion.UI.Xaml.Schedule;
-using ZdravoHospital.GUI.PatientUI.DTOs;
-using Color = System.Windows.Media.Color;
-using ColorConverter = System.Windows.Media.ColorConverter;
-
+using ZdravoHospital.GUI.PatientUI.Logics;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
 {
     public class TherapiesPageVM
     {
-        private List<string> currentDayMeetings;
-        private List<string> minTimeMeetings;
-        private List<Brush> colorCollection;
-
+        public ScheduleAppointmentCollection Therapies { get;  set; } 
         public TherapiesPageVM()
         {
-            this.Events = new ObservableCollection<Meeting>();
-            this.InitializeDataForBookings();
-            this.IntializeAppoitments();
+            SetTherapies();
+            TherapyNotification(PatientWindowVM.PatientUsername);
         }
 
-        public ObservableCollection<Meeting> Events { get; set; }
-
-        private List<Point> GettingTimeRanges()
+        private void SetTherapies()
         {
-            List<Point> randomTimeCollection = new List<Point>();
-            randomTimeCollection.Add(new Point(9, 11));
-            randomTimeCollection.Add(new Point(12, 14));
-            randomTimeCollection.Add(new Point(15, 17));
+            Therapies = new ScheduleAppointmentCollection();
 
-            return randomTimeCollection;
         }
 
-        private void InitializeDataForBookings()
+        public  void TherapyNotification(object patientUsername)
         {
-            this.currentDayMeetings = new List<string>();
-            this.currentDayMeetings.Add("General Meeting");
-            this.currentDayMeetings.Add("Plan Execution");
+            string username = (string)patientUsername;
 
-            this.minTimeMeetings = new List<string>();
-            this.minTimeMeetings.Add("Client Metting");
-            this.minTimeMeetings.Add("Birthday wish alert");
-
-            this.colorCollection = new List<Brush>();
-            this.colorCollection.Add(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF339933")));
-            this.colorCollection.Add(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00ABA9")));
-            this.colorCollection.Add(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE671B8")));
-            this.colorCollection.Add(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1BA1E2")));
-            this.colorCollection.Add(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD80073")));
-        }
-        private void IntializeAppoitments()
-        {
-            Random randomTime = new Random();
-            List<Point> randomTimeCollection = this.GettingTimeRanges();
-
-            DateTime date;
-            DateTime dateFrom = DateTime.Now.AddDays(-100);
-            DateTime dateTo = DateTime.Now.AddDays(100);
-            var random = new Random();
-            var dateCount = random.Next(4);
-            DateTime dateRangeStart = DateTime.Now.AddDays(0);
-            DateTime dateRangeEnd = DateTime.Now.AddDays(1);
-
-            for (date = dateFrom; date < dateTo; date = date.AddDays(1))
-            {
-                if (date.Day % 7 != 0)
+            PeriodFunctions periodFunctions = new PeriodFunctions();
+            
+                foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
                 {
-                    for (int additionalAppointmentIndex = 0; additionalAppointmentIndex < 1; additionalAppointmentIndex++)
-                    {
-                        Meeting meeting = new Meeting();
-                        int hour = randomTime.Next((int)randomTimeCollection[additionalAppointmentIndex].X, (int)randomTimeCollection[additionalAppointmentIndex].Y);
-                        meeting.From = new DateTime(date.Year, date.Month, date.Day, hour, 0, 0);
-                        meeting.To = meeting.From.AddHours(1);
-                        meeting.EventName = this.currentDayMeetings[randomTime.Next(2)];
-                        meeting.Color = this.colorCollection[randomTime.Next(2)];
-                        meeting.IsAllDay = false;
-                        meeting.StartTimeZone = string.Empty;
-                        meeting.EndTimeZone = string.Empty;
-                        this.Events.Add(meeting);
-                    }
+                    GeneratePrescriptionTimes(period.Prescription, username);
                 }
-                else
-                {
-                    Meeting meeting = new Meeting();
-                    meeting.From = new DateTime(date.Year, date.Month, date.Day, randomTime.Next(9, 11), 0, 0);
-                    meeting.To = meeting.From.AddDays(2).AddHours(1);
-                    meeting.EventName = this.currentDayMeetings[randomTime.Next(2)];
-                    meeting.Color = this.colorCollection[randomTime.Next(2)];
-                    meeting.IsAllDay = true;
-                    meeting.StartTimeZone = string.Empty;
-                    meeting.EndTimeZone = string.Empty;
-                    this.Events.Add(meeting);
-                }
-            }
-            DateTime minDate;
-            DateTime minDateFrom = DateTime.Now.AddDays(-2);
-            DateTime minDateTo = DateTime.Now.AddDays(2);
 
-            for (minDate = minDateFrom; minDate < minDateTo; minDate = minDate.AddDays(1))
-            {
-                Meeting meeting = new Meeting();
-                meeting.From = new DateTime(minDate.Year, minDate.Month, minDate.Day, randomTime.Next(9, 18), 30, 0);
-                meeting.To = meeting.From;
-                meeting.EventName = this.minTimeMeetings[randomTime.Next(0, 1)];
-                meeting.Color = this.colorCollection[randomTime.Next(0, 2)];
-                meeting.StartTimeZone = string.Empty;
-                meeting.EndTimeZone = string.Empty;
-
-                this.Events.Add(meeting);
-            }
+             
         }
+
+        private  void GeneratePrescriptionTimes(Prescription prescription, string username)
+        {
+            foreach (Therapy therapy in prescription.TherapyList)
+                GenerateTimes(therapy, username);
+
+        }
+
+        private  List<DateTime> GenerateTimes(Therapy therapy, string username)
+        {
+            List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
+            PeriodFunctions periodFunctions = new PeriodFunctions();
+            foreach (DateTime dateTime in notifications)
+            {
+                ScheduleAppointment appointment = new ScheduleAppointment();
+                appointment.Subject = therapy.Medicine.MedicineName;
+                appointment.StartTime = dateTime;
+                appointment.EndTime = dateTime.AddMinutes(15);
+                appointment.AppointmentBackground = new SolidColorBrush(Colors.Blue);
+                appointment.Notes = therapy.Instructions;
+                Therapies.Add(appointment);
+                MessageBox.Show(therapy.Medicine.MedicineName + " " + dateTime.ToString());
+            }
+            return notifications;
+        }
+
+        private  List<DateTime> GenerateNotificationsForEachDay(Therapy therapy)
+        {
+            List<DateTime> notifications = new List<DateTime>();
+            DateTime dateIterator = therapy.StartHours;
+            while (dateIterator.Date < therapy.EndDate.Date)
+            {
+                for (int i = 0; i < therapy.TimesPerDay; ++i)
+                    notifications.Add(dateIterator.AddHours(i * 24 / therapy.TimesPerDay));
+
+                dateIterator = dateIterator.AddDays(therapy.PauseInDays + 1);
+            }
+            return notifications;
+        }
+
     }
 }
