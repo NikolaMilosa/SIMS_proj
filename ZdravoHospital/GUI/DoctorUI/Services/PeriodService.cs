@@ -22,26 +22,28 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         public void CreateNewPeriod(Period period, Referral referral)
         {
             _periodValidation.ValidatePeriod(period);
+            _periodRepository.Create(period);
 
             if (referral != null)
             {
-                period.ReferringReferralId = referral.ReferralId;
-                referral.Period = period;
+                referral.PeriodId = period.PeriodId;
                 referral.IsUsed = true;
                 _referralRepository.Update(referral);
-            }
 
-            _periodRepository.Create(period);
+                period.ReferringReferralId = referral.ReferralId;
+                _periodRepository.Update(period);
+            }
         }
 
         public void CancelPeriod(int periodId)
         {
-            int referralId = _periodRepository.GetById(periodId).ReferredReferralId;
+            int referralId = _periodRepository.GetById(periodId).ReferringReferralId;
             _periodRepository.DeleteById(periodId);
 
             if (referralId != -1)
             {
                 Referral referral =_referralRepository.GetById(referralId);
+                referral.PeriodId = -1;
                 referral.IsUsed = false;
                 _referralRepository.Update(referral);
             }
@@ -58,5 +60,9 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
             _periodRepository.Update(period);
         }
 
+        public Period GetPeriod(int periodId)
+        {
+            return _periodRepository.GetById(periodId);
+        }
     }
 }

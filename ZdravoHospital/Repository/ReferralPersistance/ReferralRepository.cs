@@ -12,7 +12,10 @@ namespace Repository.ReferralPersistance
         public void Create(Referral newValue)
         {
             var values = GetValues();
-            newValue.ReferralId = values[values.Count - 1].ReferralId + 1;
+            if (values.Count - 1 >= 0)
+                newValue.ReferralId = values[values.Count - 1].ReferralId + 1;
+            else
+                newValue.ReferralId = 0;
             values.Add(newValue);
             Save(values);
         }

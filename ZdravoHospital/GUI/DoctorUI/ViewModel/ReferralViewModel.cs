@@ -14,7 +14,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
     {
         private NavigationService _navigationService;
         private Referral _referral;
-        private Period _period;
+        private Period _referringPeriod;
+        private Period _referredPeriod;
         private ReferralController _referralController;
         private PeriodController _periodController;
 
@@ -189,7 +190,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             FormReferral();
 
-            if (_referral.Period.ReferringReferralId == -1)
+            if (_referredPeriod == null)
             {
                 _referralController.CreateNewReferral(_referral);
                 MessageText = "Referral created successfully.";
@@ -200,8 +201,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 MessageText = "Referral updated successfully.";
             }
 
-            _period.ReferringReferralId = _referral.ReferralId;
-            _periodController.UpdatePeriodWithoutValidation(_period);
+            _referringPeriod.ReferringReferralId = _referral.ReferralId;
+            _periodController.UpdatePeriodWithoutValidation(_referringPeriod);
 
             MessagePopUpVisibility = Visibility.Visible;
             UseStackPanelVisibility = Visibility.Visible;
@@ -284,7 +285,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         public void Executed_ReferredAppointmentCommand()
         {
-            _navigationService.Navigate(new AppointmentPage(_referral.Period));
+            _navigationService.Navigate(new AppointmentPage(_referredPeriod));
         }
 
         public bool CanExecute_ReferredAppointmentCommand()
@@ -297,9 +298,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_ReferredOperationCommand()
         {
             if (_referral.ReferredDoctorUsername.Equals(App.currentUser) || _referral.ReferringDoctorUsername.Equals(App.currentUser))
-                _navigationService.Navigate(new OperationPage(_referral.Period, false));
+                _navigationService.Navigate(new OperationPage(_referredPeriod, false));
             else
-                _navigationService.Navigate(new OperationPage(_referral.Period, true));
+                _navigationService.Navigate(new OperationPage(_referredPeriod, true));
         }
 
         public bool CanExecute_ReferredOperationCommand()
@@ -315,13 +316,14 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             _referral = _referralController.GetReferral(period.ReferringReferralId);
             ReferringDoctor = referringDoctor;
             Patient = patient;
-            _period = period;
+            _referringPeriod = period;
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetOtherDoctors(period.DoctorUsername));
 
             InitializeCommands();
 
             if (_referral != null)
             {
+                _referredPeriod = _periodController.GetPeriod(_referral.PeriodId);
                 ReferredDoctor = Doctors.ToList().Find(d => d.Username.Equals(_referral.ReferredDoctorUsername));
                 NoteText = _referral.Note;
                 DaysToUseText = _referral.DaysToUse.ToString();
@@ -333,7 +335,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                     ConfirmButtonVisibility = Visibility.Collapsed;
                     UseStackPanelVisibility = Visibility.Collapsed;
 
-                    if (_referral.Period.PeriodType == PeriodType.APPOINTMENT)
+                    if (_referredPeriod.PeriodType == PeriodType.APPOINTMENT)
                     {
                         ReferredAppointmentButtonVisibility = Visibility.Visible;
                         ReferredOperationButtonVisibility = Visibility.Collapsed;
@@ -348,11 +350,6 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 {
                     ReferredAppointmentButtonVisibility = Visibility.Collapsed;
                     ReferredOperationButtonVisibility = Visibility.Collapsed;
-
-                    if (_referral.Period.PeriodType == PeriodType.APPOINTMENT)
-                        ReferredOperationButtonVisibility = Visibility.Collapsed;
-                    else
-                        ReferredAppointmentButtonVisibility = Visibility.Collapsed;
                 }
             }
             else
@@ -412,7 +409,6 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         {
             _referral = new Referral()
             {
-                Period = _period,
                 ReferringDoctorUsername = ReferringDoctor.Username,
                 ReferredDoctorUsername = ReferredDoctor.Username,
                 DaysToUse = Int32.Parse(DaysToUseText),

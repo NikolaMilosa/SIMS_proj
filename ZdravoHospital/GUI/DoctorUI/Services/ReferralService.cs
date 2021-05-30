@@ -1,6 +1,5 @@
 ﻿using Model;
 using Repository.ReferralPersistance;
-using System;
 
 namespace ZdravoHospital.GUI.DoctorUI.Services
 {
@@ -18,12 +17,12 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
             return _referralRepository.GetById(referralId);
         }
 
-        internal void CreateNewReferral(Referral referral)
+        public void CreateNewReferral(Referral referral)
         {
             _referralRepository.Create(referral);
         }
 
-        internal void UpdateReferral(Referral referral)
+        public void UpdateReferral(Referral referral)
         {
             _referralRepository.Update(referral);
         }
