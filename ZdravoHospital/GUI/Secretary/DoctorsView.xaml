@@ -42,13 +42,13 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="ShiftButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="170" Height="40" Click="ShiftButton_Click" VerticalAlignment="Top" Margin="30,30,20,0" HorizontalAlignment="Right">
+                <Button x:Name="ShiftButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="170" Height="40" Command="{Binding ShiftCommand}" VerticalAlignment="Top" Margin="30,30,20,0" HorizontalAlignment="Right">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Work" Width="25" Height="25" Margin="0,0,10,0" />
                         <TextBlock FontFamily="Yu Gothic" FontSize="18">Edit shift</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="VacationButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="170" Height="40" Click="VacationButton_Click" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
+                <Button x:Name="VacationButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="170" Height="40" Command="{Binding VacationCommand}" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="PalmTree" Width="25" Height="25" Margin="0,0,10,0" />
                         <TextBlock FontFamily="Yu Gothic" FontSize="18">Edit vacation</TextBlock>

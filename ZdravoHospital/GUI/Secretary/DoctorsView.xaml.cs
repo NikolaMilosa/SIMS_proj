@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -22,37 +23,11 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class DoctorsView : Page
     {
-        public WorkTimeService WorkTimeService { get; set; }
-        public ObservableCollection<DoctorShiftsViewDTO> Doctors { get; set; }
-        public DoctorShiftsViewDTO SelectedDoctorView { get; set; }
         public DoctorsView()
         {
             InitializeComponent();
-            this.DataContext = this;
-            WorkTimeService = new WorkTimeService();
-            initDoctorsView();
-        }
-        private void initDoctorsView()
-        {
-            Doctors = new ObservableCollection<DoctorShiftsViewDTO>();
-            List<Doctor> doctors = WorkTimeService.GetAllDoctors();
-            foreach(var doctor in doctors)
-            {
-                Doctors.Add(new DoctorShiftsViewDTO(doctor));
-            }
+            this.DataContext = new DoctorsViewVM();
         }
 
-        private void ShiftButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedDoctorView != null)
-                NavigationService.Navigate(new EditShiftPage(SelectedDoctorView.Doctor));
-
-        }
-
-        private void VacationButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedDoctorView != null)
-                NavigationService.Navigate(new EditVacationPage(SelectedDoctorView.Doctor));
-        }
     }
 }

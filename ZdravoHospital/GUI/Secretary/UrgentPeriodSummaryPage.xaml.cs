@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -21,63 +22,11 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class UrgentPeriodSummaryPage : Page
     {
-        public PeriodsToMoveService PeriodsToMoveService { get; set; }
-        private Model.Period _selectedPeriod;
-        public Model.Period SelectedPeriod
-        {
-            get { return _selectedPeriod; }
-            set
-            {
-                _selectedPeriod = value;
-                OnPropertyChanged("SelectedPeriod");
-            }
-        }
-        private Model.Doctor _doctor;
-        public Model.Doctor Doctor
-        {
-            get { return _doctor; }
-            set
-            {
-                _doctor = value;
-                OnPropertyChanged("Doctor");
-            }
-        }
-
-        private Model.Patient _patient;
-        public Model.Patient Patient
-        {
-            get { return _patient; }
-            set
-            {
-                _patient = value;
-                OnPropertyChanged("Patient");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
         public UrgentPeriodSummaryPage(Period selectedPeriod)
         {
-            SelectedPeriod = selectedPeriod;
-            PeriodsToMoveService = new PeriodsToMoveService();
-            Doctor = PeriodsToMoveService.GetDoctorById(SelectedPeriod.DoctorUsername);
-            Patient = PeriodsToMoveService.GetPatientById(SelectedPeriod.PatientUsername);
-
-            this.DataContext = this;
+            this.DataContext = new PeriodSummaryVM(selectedPeriod);
             InitializeComponent();
         }
 
-
-        private void SeeAllButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new SecretaryPeriodsPage());
-        }
     }
 }
