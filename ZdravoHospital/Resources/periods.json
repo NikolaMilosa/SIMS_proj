@@ -70,7 +70,11 @@
     "IsUrgent": false,
     "ParentReferralId": -1,
     "ChildReferralId": 0,
-    "Treatment": null
+    "Treatment": {
+      "StartDate": "2021-06-02T00:00:00",
+      "Duration": 10,
+      "RoomId": 100
+    }
   },
   {
     "PeriodId": 6,

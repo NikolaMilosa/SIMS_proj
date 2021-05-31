@@ -3,7 +3,6 @@ using Repository.PeriodPersistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
 
 namespace ZdravoHospital.GUI.DoctorUI.Validations

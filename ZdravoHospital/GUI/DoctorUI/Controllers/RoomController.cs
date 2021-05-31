@@ -1,5 +1,7 @@
 ﻿using Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using ZdravoHospital.GUI.DoctorUI.Services;
 
 namespace ZdravoHospital.GUI.DoctorUI.Controllers
@@ -21,6 +23,11 @@ namespace ZdravoHospital.GUI.DoctorUI.Controllers
         public List<Room> GetOperationRooms()
         {
             return _rooomService.GetOperationRooms();
+        }
+
+        public List<Room> GetBedrooms()
+        {
+            return _rooomService.GetBedrooms();
         }
     }
 }

@@ -23,6 +23,11 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
             _doctorRepository = new DoctorRepository();
         }
 
+        public List<Period> GetPeriods()
+        {
+            return _periodRepository.GetValues();
+        }
+
         public void CreateNewPeriod(Period period, Referral referral)
         {
             _periodValidation.ValidatePeriod(period);
