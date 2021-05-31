@@ -46,11 +46,11 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             Patient = patient;
             this.DataContext = this;
-            if (!Patient.IsGuest)
+            /*if (!Patient.IsGuest)
             {
                 this.initPassword();
                 this.hidePassword();
-            }
+            }*/
             
         }
         private void initPassword()
