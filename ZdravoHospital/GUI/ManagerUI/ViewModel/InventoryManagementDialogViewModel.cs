@@ -6,7 +6,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Model;
-using Model.Repository;
 using Repository.InventoryPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;

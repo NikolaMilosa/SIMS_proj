@@ -146,8 +146,6 @@
                                   FontSize="20"
                   HorizontalAlignment="Left"
                                   SelectionChanged="MedicinesComboBox_SelectionChanged"
-                              KeyUp="MedicinesComboBox_KeyUp"
-                              GotFocus="MedicinesComboBox_GotFocus"
                               IsTextSearchEnabled="False"
                       Width="450"
                       Height="40"

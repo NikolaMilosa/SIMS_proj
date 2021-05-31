@@ -8,7 +8,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Model;
-using Model.Repository;
+using Repository.DoctorPersistance;
+using Repository.PatientPersistance;
+using Repository.PeriodPersistance;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -345,33 +347,6 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NewPeriodPopUp.Visibility = Visibility.Hidden;
-        }
-
-        private void DoctorsComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == Key.Down || e.Key == Key.Up)
-                return;
-
-            string text = DoctorsComboBox.Text;
-            DoctorsComboBox.SelectedIndex = -1;
-            DoctorsComboBox.Text = text;
-            TextBox textBox = DoctorsComboBox.Template.FindName("PART_EditableTextBox", DoctorsComboBox) as TextBox;
-            textBox.CaretIndex = text.Length;
-            DoctorsComboBox.ItemsSource =
-                Model.Resources.doctors.Values.Where(d => d.Name.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase)
-                                                    || d.Surname.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase)
-                                                    || d.SpecialistType.SpecializationName.Contains(DoctorsComboBox.Text, StringComparison.OrdinalIgnoreCase))
-                                                    .ToList();
-
-            if (DoctorsComboBox.Items.Count > 0)
-                DoctorsComboBox.IsDropDownOpen = true;
-            else
-                DoctorsComboBox.IsDropDownOpen = false;
-        }
-
-        private void DoctorsComboBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            DoctorsComboBox.IsDropDownOpen = true;
         }
     }
 }

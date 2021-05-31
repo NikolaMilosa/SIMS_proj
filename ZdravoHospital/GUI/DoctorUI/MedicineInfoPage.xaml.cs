@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using ZdravoHospital.GUI.DoctorUI.Controllers;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -14,8 +15,10 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class MedicineInfoPage : Page, INotifyPropertyChanged
     {
+        private MedicineController _medicineController;
+        private MedicineRecensionController _medicineRecensionController;
+        private IngredientController _ingredientController;
         private TextBlock relevantTextBlock;
-
         public Medicine Medicine { get; set; }
         public double NameSupplierWidth { get; set; }
         public Thickness TopSectionsMargin { get; set; }
@@ -30,6 +33,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             DataContext = this;
             Medicine = medicine;
+            _medicineController = new MedicineController();
+            _medicineRecensionController = new MedicineRecensionController();
+            _ingredientController = new IngredientController();
 
             if (NameTextBlock.Width > StatusTextBlock.Width)
                 relevantTextBlock = NameTextBlock;
@@ -41,13 +47,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             else if (medicine.Status == MedicineStatus.APPROVED)
                 ApproveButton.IsEnabled = false;
 
-            Model.Resources.OpenIngredients();
-            AvailableIngredients = new ObservableCollection<Ingredient>();
-
-            foreach (Ingredient i in Model.Resources.ingredients)
-                if (Medicine.Ingredients.Find(ing => ing.IngredientName.Equals(i.IngredientName)) == null)
-                    AvailableIngredients.Add(i);
-
+            AvailableIngredients = _medicineController.GetAvailableIngredients(medicine);
             AvailableIngredientsListBox.ItemsSource = AvailableIngredients;
 
             Ingredients = new ObservableCollection<Ingredient>();
@@ -55,12 +55,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (Ingredient ingredient in medicine.Ingredients)
                 Ingredients.Add(ingredient);
 
-            AvailableReplacements = new ObservableCollection<string>();
-
-            foreach (Medicine m in Model.Resources.medicines)
-                if (!m.MedicineName.Equals(medicine.MedicineName) && Medicine.Replacements.Find(medicineName => medicineName.Equals(m.MedicineName)) == null)
-                    AvailableReplacements.Add(m.MedicineName);
-
+            AvailableReplacements = _medicineController.GetAvailableReplacements(medicine);
             AvailableReplacementsListBox.ItemsSource = AvailableReplacements;
 
             Replacements = new ObservableCollection<string>();
@@ -113,10 +108,9 @@ namespace ZdravoHospital.GUI.DoctorUI
             OnPropertyChanged("Medicine");
             ApproveButton.IsEnabled = false;
             RejectButton.IsEnabled = true;
-            Model.Resources.SaveMedicines();
 
-            Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = "";
-            Model.Resources.SaveMedicineRecensions();
+            _medicineController.UpdateMedicine(Medicine);
+            _medicineRecensionController.ApproveMedicine(Medicine.MedicineName);
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -151,18 +145,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (string r in ReplacementsListBox.Items)
                 Medicine.Replacements.Add(r);
 
-            foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
-                if (mr.MedicineName.Equals(Medicine.MedicineName))
-                    mr.MedicineName = MedicineNameTextBox.Text;
-
-            foreach (Medicine m in Model.Resources.medicines)
-                foreach (string r in m.Replacements)
-                    if (r.Equals(Medicine.MedicineName))
-                    {
-                        m.Replacements.Remove(r);
-                        m.Replacements.Add(MedicineNameTextBox.Text);
-                        break;
-                    }
+            if (!Medicine.MedicineName.Equals(MedicineNameTextBox.Text))
+            {
+                _medicineController.RenameMedicine(Medicine.MedicineName, MedicineNameTextBox.Text);
+                _medicineRecensionController.RenameMedicine(Medicine.MedicineName, MedicineNameTextBox.Text);
+            }
 
             Medicine.MedicineName = MedicineNameTextBox.Text;
             Medicine.Supplier = SupplierTextBox.Text;
@@ -170,8 +157,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             OnPropertyChanged("Medicine");
 
-            Model.Resources.SaveMedicines();
-            Model.Resources.SaveMedicineRecensions();
+            _medicineController.UpdateMedicine(Medicine);
         }
 
         private void RemoveIngredientsButton_Click(object sender, RoutedEventArgs e)
@@ -233,11 +219,10 @@ namespace ZdravoHospital.GUI.DoctorUI
             if (availableIngredient != null)
                 AvailableIngredients.Remove(availableIngredient);
 
-            if (Model.Resources.ingredients.Find(ing => ing.IngredientName.Equals(ingredientName)) != null)
+            if (_ingredientController.GetIngredient(ingredientName) != null)
                 return;
 
-            Model.Resources.ingredients.Add(new Ingredient(ingredientName));
-            Model.Resources.SaveIngredients();
+            _ingredientController.CreateNewIngredient(new Ingredient(ingredientName));
         }
 
         private void CancelIngredientsPopUpButton_Click(object sender, RoutedEventArgs e)
@@ -298,12 +283,11 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             Medicine.Status = MedicineStatus.REJECTED;
             OnPropertyChanged("Medicine");
-            RejectButton.IsEnabled = false;
             ApproveButton.IsEnabled = true;
-            Model.Resources.SaveMedicines();
+            RejectButton.IsEnabled = false;
 
-            Model.Resources.medicineRecensions.Find(mr => mr.MedicineName.Equals(Medicine.MedicineName)).RecensionNote = RecensionNoteTextBox.Text;
-            Model.Resources.SaveMedicineRecensions();
+            _medicineController.UpdateMedicine(Medicine);
+            _medicineRecensionController.RejectMedicine(Medicine.MedicineName, RecensionNoteTextBox.Text);
         }
     }
 }

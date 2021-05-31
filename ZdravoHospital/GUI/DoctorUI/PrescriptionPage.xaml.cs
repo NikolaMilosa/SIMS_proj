@@ -128,7 +128,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             // Setup TherapyPopup for new therapy and visualize it
             MedicinesComboBox.Text = "";
-            MedicinesComboBox.ItemsSource = Model.Resources.medicines;
+            //MedicinesComboBox.ItemsSource = Model.Resources.medicines;
             MedicinesComboBox.SelectedIndex = -1;
             StartHoursTextBox.Text = "00:00";
             TimesPerDayTextBox.Text = "0";
@@ -281,23 +281,6 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void RemoveTherapyButton_Click(object sender, RoutedEventArgs e)
         {
             Therapies.Remove((sender as Button).DataContext as Therapy);
-        }
-
-        private void MedicinesComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            string text = MedicinesComboBox.Text;
-            MedicinesComboBox.SelectedIndex = -1;
-            MedicinesComboBox.Text = text;
-            TextBox textBox = MedicinesComboBox.Template.FindName("PART_EditableTextBox", MedicinesComboBox) as TextBox;
-            textBox.CaretIndex = text.Length;
-            MedicinesComboBox.IsDropDownOpen = true;
-            MedicinesComboBox.ItemsSource = 
-                Model.Resources.medicines.Where(m => m.MedicineName.Contains(MedicinesComboBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
-        }
-
-        private void MedicinesComboBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            MedicinesComboBox.IsDropDownOpen = true;
         }
     }
 }
