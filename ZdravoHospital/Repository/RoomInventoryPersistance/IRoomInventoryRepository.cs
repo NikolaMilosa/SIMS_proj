@@ -15,5 +15,7 @@ namespace Repository.RoomInventoryPersistance
        List<RoomInventory> FindAllInventoryInRoom(int roomId);
 
        void SetNewQuantity(RoomInventory roomInventory, int newQuantity);
+
+       void DeleteByRoomId(int id);
    }
 }

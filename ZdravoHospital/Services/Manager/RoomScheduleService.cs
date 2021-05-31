@@ -131,6 +131,15 @@ namespace ZdravoHospital.Services.Manager
             {
                 ChangeRoomAvailability(roomSchedule.RoomId, true);
             }
+
+            if (roomSchedule.WillBeMerged)
+            {
+                var mergeService = new MergeRoomService(_injector);
+                mergeService.MergeRooms(_roomRepository.GetById(roomSchedule.MergingRoomId),
+                    _roomRepository.GetById(roomSchedule.RoomId));
+                OnRoomChanged();
+            }
+
             GetMutex().ReleaseMutex();
             _roomScheduleRepository.DeleteByEquality(roomSchedule);
         }

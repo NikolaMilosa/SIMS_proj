@@ -26,8 +26,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private DateTime _startDate;
         private DateTime _endDate;
 
-        private RoomScheduleService _roomScheduleService;
+        private InjectorDTO _injector;
 
+        private RoomScheduleService _roomScheduleService;
         private IRoomRepository _roomRepository;
 
         private bool _isDropDownOpenCombo;
@@ -39,12 +40,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _splitCreatedRoom;
         private string _roomButtonContent;
 
-        private InjectorDTO _injector;
-
         private string _labelText;
-
         private MyICommand _splitCommand;
 
+        private ObservableCollection<Room> _mergeRooms;
+        private Room _mergeSelectedRoom;
+        private int _mergeSelectedRoomIndex;
+        private bool _mergeIsDropDownOpenCombo;
         #endregion
 
         #region Properties
@@ -66,6 +68,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 _selectedRoom = value;
                 RoomSchedule = _roomScheduleService.GetRoomSchedule(_selectedRoom);
+
+                MergeRooms = new ObservableCollection<Room>(Rooms);
+                MergeRooms.Remove(_selectedRoom);
+                Room dummy = new Room()
+                {
+                    Name = "No room",
+                    Id = 0
+                };
+                MergeRooms.Insert(0, dummy);
+
                 OnPropertyChanged();
             }
         }
@@ -195,6 +207,46 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public ObservableCollection<Room> MergeRooms
+        {
+            get => _mergeRooms;
+            set
+            {
+                _mergeRooms = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Room MergeSelectedRoom
+        {
+            get => _mergeSelectedRoom;
+            set
+            {
+                _mergeSelectedRoom = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int MergeSelectedRoomIndex
+        {
+            get => _mergeSelectedRoomIndex;
+            set
+            {
+                _mergeSelectedRoomIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool MergeIsDropDownOpenCombo
+        {
+            get => _mergeIsDropDownOpenCombo;
+            set
+            {
+                _mergeIsDropDownOpenCombo = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -203,6 +255,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand<KeyEventArgs> ComboBoxCommand { get; set; }
         public MyICommand<KeyEventArgs> StartDateCommand { get; set; }
         public MyICommand<KeyEventArgs> EndDateCommand { get; set; }
+        public MyICommand<KeyEventArgs> MergeComboBoxCommand { get; set; }
 
         public MyICommand SplitRoomCommand
         {
@@ -233,6 +286,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             StartDateCommand = new MyICommand<KeyEventArgs>(OnStartCommand);
             EndDateCommand = new MyICommand<KeyEventArgs>(OnEndCommand);
             SplitRoomCommand = new MyICommand(OnSplitButtonCreate);
+            MergeComboBoxCommand = new MyICommand<KeyEventArgs>(OnMergeCombo);
         }
 
         #region Button functions
@@ -282,6 +336,20 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 _roomScheduleService.CreateAndScheduleRenovationStart(roomScheduleForSplitRoom);
 
                 ManagerWindowViewModel.GetDashboard().OnRoomsChanged(this, EventArgs.Empty);
+            }
+            else if (MergeSelectedRoomIndex != 0)
+            {
+                var roomMergingSchedule = new RoomSchedule()
+                {
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    RoomId = MergeSelectedRoom.Id,
+                    MergingRoomId = SelectedRoom.Id,
+                    ScheduleType = ReservationType.RENOVATION,
+                    WillBeMerged = true
+                };
+
+                _roomScheduleService.CreateAndScheduleRenovationStart(roomMergingSchedule);
             }
         }
 
@@ -348,6 +416,41 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        private void OnMergeCombo(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                MergeIsDropDownOpenCombo = (MergeIsDropDownOpenCombo == false) ? true : false;
+                e.Handled = true;
+                if (!MergeIsDropDownOpenCombo && !MergeSelectedRoom.Name.Equals("No room"))
+                {
+                    OnSplitButtonDestroy();
+                }
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (MergeSelectedRoomIndex < MergeRooms.Count - 1 && MergeIsDropDownOpenCombo)
+                {
+                    MergeSelectedRoomIndex += 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (MergeSelectedRoomIndex > 0 && MergeIsDropDownOpenCombo)
+                {
+                    MergeSelectedRoomIndex -= 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                MergeIsDropDownOpenCombo = false;
+            }
+        }
+
         #endregion
 
         #region Event handler
@@ -358,6 +461,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             LabelText = "Added! (" + SplitCreatedRoom.Id + ")";
             RoomButtonContent = "Clear room";
             SplitRoomCommand = new MyICommand(OnSplitButtonDestroy);
+            MergeSelectedRoomIndex = 0;
         }
 
         #endregion

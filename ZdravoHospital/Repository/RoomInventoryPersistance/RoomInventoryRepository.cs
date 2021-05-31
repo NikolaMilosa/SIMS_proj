@@ -125,5 +125,14 @@ namespace Repository.RoomInventoryPersistance
             roomInventory.Quantity = newQuantity;
             Update(roomInventory);
         }
+
+        public void DeleteByRoomId(int id)
+        {
+            var values = GetValues();
+            GetMutex().WaitOne();
+            values.RemoveAll(val => val.RoomId == id);
+            Save(values);
+            GetMutex().ReleaseMutex();
+        }
     }
 }
