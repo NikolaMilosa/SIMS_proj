@@ -46,11 +46,5 @@
     "Id": 602,
     "Name": "Emergency room 2",
     "Available": true
-  },
-  {
-    "RoomType": 0,
-    "Id": 111,
-    "Name": "teste",
-    "Available": true
   }
 ]
