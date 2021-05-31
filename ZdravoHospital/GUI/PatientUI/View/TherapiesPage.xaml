@@ -35,20 +35,23 @@
                 <syncfusion:SfSchedule.AppointmentTemplate>
                     <DataTemplate>
                         <Grid>
-                            <StackPanel Orientation="Vertical">
-
-                                <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"
-                                           VerticalAlignment="Center" FontSize="14"         
-                                           Text="{Binding Subject}" 
-                                           Foreground="White"
-                                           FontStyle="Normal"></TextBlock>
-
-                                <Button Content="{Binding Path=StartTime}" Command="{Binding Path=DataContext.TherapyCommand,       
+                            <Button  Command="{Binding Path=DataContext.TherapyCommand,       
                                 RelativeSource= {RelativeSource FindAncestor,
-                                AncestorType={x:Type syncfusion:SfSchedule}}}" CommandParameter="{Binding ElementName=Scheduler}" >
+                                AncestorType={x:Type syncfusion:SfSchedule}}}" 
+                                     CommandParameter="{Binding ElementName=Scheduler}"
+                                     Background="#2c876b"
+                                     BorderBrush="Transparent"
+                            >
 
+                                <StackPanel Orientation="Vertical">
+                                        <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"
+                                                   VerticalAlignment="Center" FontSize="14"         
+                                                   Text="{Binding Subject}" 
+                                                   Foreground="White"
+                                                   FontStyle="Normal">
+                                        </TextBlock>
+                                    </StackPanel>
                                 </Button>
-                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </syncfusion:SfSchedule.AppointmentTemplate>

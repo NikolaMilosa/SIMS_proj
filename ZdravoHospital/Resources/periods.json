@@ -31,10 +31,10 @@
       "TherapyList": [
         {
           "Medicine": {
-            "MedicineName": "new medicine",
+            "MedicineName": "Brufen",
             "Supplier": "New supplier",
             "Status": 0,
-            "Note": "Tralala",
+            "Note": "Preporucuje se jelo pre konzumacije leka.",
             "Replacements": [],
             "Ingredients": [
               {
@@ -49,7 +49,7 @@
           "TimesPerDay": 3,
           "PauseInDays": 2,
           "EndDate": "2021-07-30T00:00:00",
-          "Instructions": ""
+          "Instructions": "Piti 2 tablete od 2 miligrama uz mlaku vodu!"
         }
       ]
     },
@@ -394,6 +394,22 @@
   {
     "PeriodId": 14,
     "StartTime": "2021-06-02T08:00:00+02:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 15,
+    "StartTime": "2021-06-03T08:00:00+02:00",
     "Duration": 30,
     "PeriodType": 0,
     "PatientUsername": "ljuba",

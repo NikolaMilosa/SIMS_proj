@@ -15,17 +15,42 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 {
     public class TherapiesPageVM
     {
-        public ScheduleAppointmentCollection Therapies { get;  set; }
+        public ScheduleAppointmentCollection Therapies { get; set; }
+        public TherapyFunctions TherapyFunctions { get; set; }
+
         public TherapiesPageVM(SfSchedule selectedAppointment)
         {
-            SetTherapies();
+            SetProperties();
             SetCommands();
         }
 
+        private void SetProperties()
+        {
+            TherapyFunctions = new TherapyFunctions();
+            SetTherapies();
+        }
         private void SetTherapies()
         {
             Therapies = new ScheduleAppointmentCollection();
-            TherapyNotification(PatientWindowVM.PatientUsername);
+            foreach (var therapy in TherapyFunctions.GetPatientTherapies(PatientWindowVM.PatientUsername))
+                SetDates(therapy);
+        }
+
+        private void SetDates(Therapy therapy)
+        {
+            foreach (var date in TherapyFunctions.GenerateDates(therapy))
+                GenerateTherapyAppointment(therapy,date);
+        }
+
+        private void GenerateTherapyAppointment(Therapy therapy,DateTime date)
+        {
+            ScheduleAppointment appointment = new ScheduleAppointment();
+            appointment.Subject = therapy.Medicine.MedicineName;
+            appointment.StartTime = date;
+            appointment.EndTime = date.AddMinutes(30);
+            appointment.AppointmentBackground = new SolidColorBrush(Colors.Blue);
+            appointment.Notes = therapy.Instructions;
+            Therapies.Add(appointment);
         }
 
         #region Commands
@@ -39,8 +64,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void TherapyExecution(object parameter)
         {
             SfSchedule scheduler = (SfSchedule) parameter;
-             
-            MessageBox.Show(scheduler.SelectedAppointment.StartTime.ToString());
+            ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowLargeOkDialog("Instruction",scheduler.SelectedAppointment.Notes);
         }
 
         #endregion
@@ -52,58 +77,27 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             TherapyCommand = new RelayCommand(TherapyExecution);
         }
 
-        public void TherapyNotification(object patientUsername)
-        {
-            string username = (string)patientUsername;
+     
 
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+        //private List<DateTime> GenerateTimes(Therapy therapy, string username)
+        //{
+        //    List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
+        //    PeriodFunctions periodFunctions = new PeriodFunctions();
+        //    foreach (DateTime dateTime in notifications)
+        //    {
+        //        ScheduleAppointment appointment = new ScheduleAppointment();
+        //        appointment.Subject = therapy.Medicine.MedicineName;
+        //        appointment.StartTime = dateTime;
+        //        appointment.EndTime = dateTime.AddMinutes(30);
+        //        appointment.AppointmentBackground = new SolidColorBrush(Colors.Blue);
+        //        appointment.Notes = "In friendship diminution instrument so. Son sure";
+        //        Therapies.Add(appointment);
+        //        //essageBox.Show(therapy.Medicine.MedicineName + " " + dateTime.ToString());
+        //    }
+        //    return notifications;
+        //}
 
-            foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
-            {
-                GeneratePrescriptionTimes(period.Prescription, username);
-            }
-
-
-        }
-
-        private void GeneratePrescriptionTimes(Prescription prescription, string username)
-        {
-            foreach (Therapy therapy in prescription.TherapyList)
-                GenerateTimes(therapy, username);
-
-        }
-
-        private List<DateTime> GenerateTimes(Therapy therapy, string username)
-        {
-            List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
-            PeriodFunctions periodFunctions = new PeriodFunctions();
-            foreach (DateTime dateTime in notifications)
-            {
-                ScheduleAppointment appointment = new ScheduleAppointment();
-                appointment.Subject = therapy.Medicine.MedicineName;
-                appointment.StartTime = dateTime;
-                appointment.EndTime = dateTime.AddMinutes(30);
-                appointment.AppointmentBackground = new SolidColorBrush(Colors.Blue);
-                appointment.Notes = "Blablabla";
-                Therapies.Add(appointment);
-                //essageBox.Show(therapy.Medicine.MedicineName + " " + dateTime.ToString());
-            }
-            return notifications;
-        }
-
-        private List<DateTime> GenerateNotificationsForEachDay(Therapy therapy)
-        {
-            List<DateTime> notifications = new List<DateTime>();
-            DateTime dateIterator = therapy.StartHours;
-            while (dateIterator.Date < therapy.EndDate.Date)
-            {
-                for (int i = 0; i < therapy.TimesPerDay; ++i)
-                    notifications.Add(dateIterator.AddHours(i * 24 / therapy.TimesPerDay));
-
-                dateIterator = dateIterator.AddDays(therapy.PauseInDays + 1);
-            }
-            return notifications;
-        }
+     
 
         #endregion
 
