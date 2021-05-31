@@ -10,14 +10,14 @@
     "Details": null,
     "Prescription": null,
     "PeriodMark": {
-      "Comment": "sDASD",
-      "Mark": 3
+        "Comment": "sDASD",
+        "Mark": 3
+      },
+      "IsUrgent": false,
+      "ReferringReferralId": 0,
+      "ReferredReferralId": 0,
+      "Treatment": null
     },
-    "IsUrgent": false,
-    "ReferringReferralId": 0,
-    "ReferredReferralId": 0,
-    "Treatment": null
-  },
   {
     "PeriodId": 1,
     "StartTime": "2021-03-01T09:00:00",
@@ -410,6 +410,22 @@
   {
     "PeriodId": 15,
     "StartTime": "2021-06-03T08:00:00+02:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 16,
+    "StartTime": "2021-06-03T09:00:00+02:00",
     "Duration": 30,
     "PeriodType": 0,
     "PatientUsername": "ljuba",
