@@ -23,7 +23,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
                 if (quantity < Wrapper.Min)
                 {
-                    return new ValidationResult(false, "Cannot be less than '" + Wrapper.Min + "' since it's reserved for transferring...");
+                    return new ValidationResult(false, "Cannot be less than '" + Wrapper.Min + "' since it's reserved...");
                 }
 
                 return new ValidationResult(true, null);

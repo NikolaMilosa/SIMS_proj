@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Model;
 using Repository.RoomPersistance;
+using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.View;
@@ -30,6 +32,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private RoomScheduleService _roomScheduleService;
         private IRoomRepository _roomRepository;
+        private IRoomScheduleRepository _roomScheduleRepository;
 
         private bool _isDropDownOpenCombo;
         private int _selectedRoomIndex;
@@ -69,14 +72,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 _selectedRoom = value;
                 RoomSchedule = _roomScheduleService.GetRoomSchedule(_selectedRoom);
 
-                MergeRooms = new ObservableCollection<Room>(Rooms);
-                MergeRooms.Remove(_selectedRoom);
-                Room dummy = new Room()
-                {
-                    Name = "No room",
-                    Id = 0
-                };
-                MergeRooms.Insert(0, dummy);
+                FillMerged();
 
                 OnPropertyChanged();
             }
@@ -278,6 +274,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _roomScheduleService = new RoomScheduleService(injector);
             _roomRepository = injector.RoomRepository;
+            _roomScheduleRepository = injector.RoomScheduleRepository;
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             StartDate = DateTime.Today;
 
@@ -461,6 +458,35 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             LabelText = "Added! (" + SplitCreatedRoom.Id + ")";
             RoomButtonContent = "Clear room";
             SplitRoomCommand = new MyICommand(OnSplitButtonDestroy);
+            MergeSelectedRoomIndex = 0;
+        }
+
+        #endregion
+
+        #region Private functions
+
+        private void FillMerged()
+        {
+            MergeRooms = new ObservableCollection<Room>(Rooms);
+            MergeRooms.Remove(_selectedRoom);
+            Room dummy = new Room()
+            {
+                Name = "No room",
+                Id = 0
+            };
+            MergeRooms.Insert(0, dummy);
+
+            var roomSchedule = _roomScheduleRepository.GetValues();
+            foreach (var instance in roomSchedule)
+            {
+                if (instance.WillBeMerged)
+                {
+                    var temp = MergeRooms.ToList();
+                    temp.RemoveAll(val => val.Id == instance.RoomId);
+                    MergeRooms = new ObservableCollection<Room>(temp);
+                }
+            }
+
             MergeSelectedRoomIndex = 0;
         }
 

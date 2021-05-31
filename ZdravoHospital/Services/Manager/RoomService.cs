@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Model;
+using Newtonsoft.Json.Linq;
+using Repository.PeriodPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
@@ -16,6 +18,7 @@ namespace ZdravoHospital.Services.Manager
 
         private IRoomRepository _roomRepository;
         private IRoomInventoryRepository _roomInventoryRepository;
+        private IPeriodRepository _periodRepository;
 
         #endregion
 
@@ -38,13 +41,15 @@ namespace ZdravoHospital.Services.Manager
         public RoomService(InjectorDTO injector)
         {
             RoomChanged += ManagerWindowViewModel.GetDashboard().OnRoomsChanged;
-            //TODO: dodati injector.
+            
             _roomRepository = injector.RoomRepository;
             _roomInventoryRepository = injector.RoomInventoryRepository;
+            _periodRepository = injector.PeriodRepository;
         }
 
         public bool DeleteRoom(Room room)
         {
+
             var roomsInventory = _roomInventoryRepository.FindAllInventoryInRoom(room.Id);
 
             if (roomsInventory.Count != 0)
@@ -107,6 +112,28 @@ namespace ZdravoHospital.Services.Manager
                 /* delete the reference */
                 _roomInventoryRepository.DeleteByEquality(roomInventory);
             }
+        }
+
+        private bool CheckIfPossible(Room room)
+        {
+            if (room.RoomType == RoomType.BED_ROOM)
+            {
+                var periods = _periodRepository.GetValues();
+                foreach (var period in periods)
+                {
+                    if (period.Treatment == null)
+                    {
+                        continue;
+                    }
+
+                    if (period.Treatment.StartDate > DateTime.Now && period.Treatment.RoomId == room.Id)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

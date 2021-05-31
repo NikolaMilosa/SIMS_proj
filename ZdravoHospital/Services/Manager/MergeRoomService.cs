@@ -41,8 +41,6 @@ namespace ZdravoHospital.Services.Manager
 
             _roomInventoryRepository.DeleteByRoomId(mergedRoom.Id);
             _roomRepository.DeleteById(mergedRoom.Id);
-
-            ManagerWindowViewModel.GetDashboard().OnRefreshTransferDialog(this, EventArgs.Empty);
         }
 
     }

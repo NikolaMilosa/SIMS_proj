@@ -40,6 +40,5 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
         public ISpecializationRepository SpecializationRepository { get; set; }
         public ISurveyRepository SurveyRepository { get; set; }
         public ITransferRequestRepository TransferRepository { get; set; }
-
     }
 }
