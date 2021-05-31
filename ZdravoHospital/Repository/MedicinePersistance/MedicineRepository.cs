@@ -81,5 +81,30 @@ namespace Repository.MedicinePersistance
             Save(values);
             GetMutex().ReleaseMutex();
         }
+
+        public void RenameMedicine(string oldName, string newName)
+        {
+            var values = GetValues();
+            foreach (var val in values)
+            {
+                if (val.MedicineName.Equals(oldName))
+                {
+                    val.MedicineName = newName;
+                    break;
+                }
+            }
+            foreach (var val in values)
+            {
+                for (int i = 0; i < val.Replacements.Count; i++)
+                {
+                    if (val.Replacements[i].Equals(oldName))
+                    {
+                        val.Replacements[i] = newName;
+                        break;
+                    }
+                }
+            }
+            Save(values);
+        }
     }
 }

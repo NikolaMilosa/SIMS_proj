@@ -5,7 +5,8 @@
     "Status": 1,
     "Note": "Some notes",
     "Replacements": [
-      "test medication"
+      "test medication",
+      "tester"
     ],
     "Ingredients": [
       {

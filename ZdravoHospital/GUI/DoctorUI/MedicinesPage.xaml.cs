@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using ZdravoHospital.GUI.DoctorUI.Controllers;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -14,6 +15,7 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class MedicinesPage : Page, INotifyPropertyChanged
     {
+        private MedicineController _medicineController;
         private List<Medicine> medicines;
 
         public Thickness ListViewPadding { get; set; }
@@ -25,20 +27,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             this.DataContext = this;
 
-            //Model.Resources.OpenMedicineRecensions();
-            //Model.Resources.OpenMedicines();
-
-            medicines = new List<Medicine>();
-
-            //foreach (MedicineRecension mr in Model.Resources.medicineRecensions)
-            //    if (mr.DoctorUsername.Equals(App.currentUser))
-            //        foreach (Medicine m in Model.Resources.medicines)
-            //            if (mr.MedicineName.Equals(m.MedicineName))
-            //            {
-            //                medicines.Add(m);
-            //                break;
-            //            }
-
+            _medicineController = new MedicineController();
+            medicines = _medicineController.GetMedicines();
             MedicinesListView.ItemsSource = medicines;
             MedicinesListView.Items.Filter = Filter;
 
