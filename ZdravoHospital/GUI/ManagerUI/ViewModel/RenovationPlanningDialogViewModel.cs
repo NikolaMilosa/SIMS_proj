@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Model;
+using Repository.PeriodPersistance;
 using Repository.RoomPersistance;
 using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
@@ -33,6 +34,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private RoomScheduleService _roomScheduleService;
         private IRoomRepository _roomRepository;
         private IRoomScheduleRepository _roomScheduleRepository;
+        private IPeriodRepository _periodRepository;
 
         private bool _isDropDownOpenCombo;
         private int _selectedRoomIndex;
@@ -275,6 +277,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomScheduleService = new RoomScheduleService(injector);
             _roomRepository = injector.RoomRepository;
             _roomScheduleRepository = injector.RoomScheduleRepository;
+            _periodRepository = injector.PeriodRepository;
+
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             StartDate = DateTime.Today;
 
@@ -483,6 +487,20 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 {
                     var temp = MergeRooms.ToList();
                     temp.RemoveAll(val => val.Id == instance.RoomId);
+                    MergeRooms = new ObservableCollection<Room>(temp);
+                }
+            }
+
+            var periods = _periodRepository.GetValues();
+            foreach (var instance in periods)
+            {
+                if (instance.Treatment == null)
+                    continue;
+
+                if (instance.Treatment.StartDate > DateTime.Now)
+                {
+                    var temp = MergeRooms.ToList();
+                    temp.RemoveAll(val => val.Id == instance.Treatment.RoomId);
                     MergeRooms = new ObservableCollection<Room>(temp);
                 }
             }
