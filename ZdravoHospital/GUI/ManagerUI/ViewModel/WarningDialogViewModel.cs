@@ -134,7 +134,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     if (!_roomService.DeleteRoom((Room) _someObject))
                     {
                         MessageBox.Show(
-                            "Cannot delete the room since there aren't any available rooms to store the inventory\n" +
+                            "Cannot delete the room since there aren't any available rooms to store the inventory " +
                             "or because it has treatments");
                     }
                     break;
