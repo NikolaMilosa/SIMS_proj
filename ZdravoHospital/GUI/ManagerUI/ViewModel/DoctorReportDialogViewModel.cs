@@ -175,6 +175,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             StartDateCommand = new MyICommand<KeyEventArgs>(OnStartDate);
             EndDateCommand = new MyICommand<KeyEventArgs>(OnEndDate);
             TableCommand = new MyICommand<KeyEventArgs>(OnTableCommand);
+            ConfirmCommand = new MyICommand(OnConfirm);
         }
 
         #region Button functions
@@ -259,6 +260,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
 
             FocusExport = false;
+        }
+
+        private void OnConfirm()
+        {
+            _doctorReportService.GeneratePDF(SelectedDoctor, StartDate, EndDate, new List<DoctorReportDTO>(DoctorReport));
         }
 
         #endregion
