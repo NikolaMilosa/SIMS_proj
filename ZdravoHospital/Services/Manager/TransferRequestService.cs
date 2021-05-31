@@ -115,8 +115,8 @@ namespace ZdravoHospital.Services.Manager
 
             RoomSchedule roomScheduleReceiver = new RoomSchedule()
             {
-                StartTime = transferRequest.TimeOfExecution.AddMinutes(2),
-                EndTime = transferRequest.TimeOfExecution.AddMinutes(4),
+                StartTime = transferRequest.TimeOfExecution,
+                EndTime = transferRequest.TimeOfExecution.AddMinutes(2),
                 RoomId = transferRequest.RecipientRoom,
                 ScheduleType = ReservationType.TRANSFER
             };

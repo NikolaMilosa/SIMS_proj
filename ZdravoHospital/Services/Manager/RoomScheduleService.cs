@@ -141,8 +141,8 @@ namespace ZdravoHospital.Services.Manager
                 OnRoomChanged();
             }
 
-            GetMutex().ReleaseMutex();
             _roomScheduleRepository.DeleteByEquality(roomSchedule);
+            GetMutex().ReleaseMutex();
         }
 
         private void ChangeRoomAvailability(int roomId, bool newValue)
@@ -173,7 +173,7 @@ namespace ZdravoHospital.Services.Manager
             {
                 if (_roomRepository.GetById(roomSchedule.MergingRoomId) == null)
                 {
-                    _roomScheduleRepository.DeleteByRoomId(roomSchedule.MergingRoomId);
+                    _roomScheduleRepository.DeleteByEquality(roomSchedule);
                     return false;
                 }
             }
