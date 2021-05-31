@@ -5,8 +5,134 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI.View"
         mc:Ignorable="d"
-        Title="PeriodDetailsWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="PeriodDetailsWindow" Height="550" Width="400"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        x:Name="PeriodDetailsWindows"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border CornerRadius="20" Background="#2c876b" BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Period details" Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="19"
+                       ></TextBlock>
+
+            <Border Grid.Column="1" Grid.Row="1" BorderBrush="White" BorderThickness="1" CornerRadius="10" Margin="5">
+              
+                <Grid Margin="7">
+                  <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <Grid.RowDefinitions>
+                      <RowDefinition Height="*"/>
+                      <RowDefinition Height="*"/>
+                      <RowDefinition Height="*"/>
+                      <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                      <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Width="135" Foreground="White" Text="Doctors name:" FontSize="16" Margin="0,0,0,0"></TextBlock>
+                            <TextBlock Width="120" Foreground="White" Text="{Binding Path=PeriodDTO.DoctorName}" FontSize="16"></TextBlock>
+                        </StackPanel>
+
+                        <Line X1="0" X2="255" Y1="0" Y2="0" Stroke="White" StrokeThickness="1" Margin="5,5,10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    >
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Width="135" Foreground="White" Text="Doctors surname:" FontSize="16" Margin="0,0,0,0"></TextBlock>
+                            <TextBlock Width="120" Foreground="White" Text="{Binding Path=PeriodDTO.DoctorSurname}" FontSize="16"></TextBlock>
+                        </StackPanel>
+
+                        <Line X1="0" X2="255" Y1="0" Y2="0" Stroke="White" StrokeThickness="1" Margin="5,5,10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    >
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Width="135" Foreground="White" Text="Date:" FontSize="16" Margin="0,0,0,0"></TextBlock>
+                            <TextBlock Width="120" Foreground="White" Text="{Binding Path=PeriodDTO.Date,StringFormat=d}" FontSize="16"></TextBlock>
+                        </StackPanel>
+
+                        <Line X1="0" X2="255" Y1="0" Y2="0" Stroke="White" StrokeThickness="1" Margin="5,5,10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    >
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Width="135" Foreground="White" Text="Time:" FontSize="16" Margin="0,0,0,0"></TextBlock>
+                            <TextBlock Width="120" Foreground="White" Text="{Binding Path=PeriodDTO.Date,StringFormat=t}" FontSize="16"></TextBlock>
+                        </StackPanel>
+
+                        <Line X1="0" X2="255" Y1="0" Y2="0" Stroke="White" StrokeThickness="1" Margin="5,5,10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="4" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    >
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Width="135" Foreground="White" Text="Type:" FontSize="16" Margin="0,0,0,0"></TextBlock>
+                            <TextBlock Width="120" Foreground="White" Text="{Binding Path=PeriodDTO.PeriodType}" FontSize="16"></TextBlock>
+                        </StackPanel>
+
+                        <Line X1="0" X2="255" Y1="0" Y2="0" Stroke="White" StrokeThickness="1" Margin="5,5,10,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="5" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    >
+
+                        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Width="135" Foreground="White" Text="Room:" FontSize="16" Margin="0,0,0,0"></TextBlock>
+                            <TextBlock Width="120" Foreground="White" Text="{Binding Path=PeriodDTO.RoomNumber}" FontSize="16"></TextBlock>
+                        </StackPanel>
+
+                        <Line X1="0" X2="255" Y1="0" Y2="0" Stroke="White" StrokeThickness="1" Margin="5,5,10,0"/>
+                    </StackPanel>
+
+
+                </Grid>
+            </Border>
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Button Content="Remove" Command="{Binding Path=RemoveCommand}"
+                            CommandParameter="{Binding ElementName=PeriodDetailsWindows}" FontWeight="Bold"
+                            Width="70" FontSize="16" Margin="0,0,150,0" 
+                            Foreground="White" Grid.Row="2" Grid.Column="1" Background="Transparent"
+                            BorderBrush="Transparent"></Button>
+                    <Button Content="Edit" Command="{Binding Path=EditCommand}" 
+                            CommandParameter="{Binding ElementName=PeriodDetailsWindows}"
+                            FontWeight="Bold" 
+                            Width="70" FontSize="16" Foreground="White" Grid.Row="2" Grid.Column="1" 
+                            Background="Transparent" BorderBrush="Transparent"></Button>
+                </StackPanel>
+
+                <Button Content="Cancel" Command="{Binding Path=CancelCommand}" 
+                        CommandParameter="{Binding ElementName=PeriodDetailsWindows}" FontWeight="Bold" 
+                        Width="70" FontSize="16" Foreground="White" Grid.Row="2" Grid.Column="1"
+                        Background="Transparent" BorderBrush="Transparent"></Button>
+
+            </StackPanel>
+           
+     
+        </Grid>
+    </Border>
 </Window>

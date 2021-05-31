@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.View
 {
@@ -17,9 +18,11 @@ namespace ZdravoHospital.GUI.PatientUI.View
     /// </summary>
     public partial class PeriodDetailsWindow : Window
     {
-        public PeriodDetailsWindow()
+        public PeriodDetailsWindow(int id)
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            DataContext = new PeriodDetailsWindowVM(id);
         }
     }
 }

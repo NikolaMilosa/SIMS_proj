@@ -5,14 +5,14 @@
     "BloodType": 0,
     "MedicineAllergens": null,
     "IngredientAllergens": null,
-    "RecentActions": 0,
-    "LastLogoutTime": "2021-05-31T19:58:11.0170146+02:00",
+    "RecentActions": 3,
+    "LastLogoutTime": "2021-05-31T21:45:16.9509031+02:00",
     "NameSurname": "Stefan Ljubovic",
     "PatientNotes": [
       {
-        "Content": "dasdad",
-        "NotifyTime": "2021-05-29T22:07:03.204",
-        "Title": "sada"
+        "Content": "Pokazujem mami kako rade beleske",
+        "NotifyTime": "2021-05-31T21:02:34.59",
+        "Title": "Beleska primer"
       }
     ],
     "Name": "Stefan",

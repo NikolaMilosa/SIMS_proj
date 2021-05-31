@@ -37,7 +37,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             SfSchedule scheduler = (SfSchedule) parameter;
             ViewFunctions viewFunctions = new ViewFunctions();
-            viewFunctions.ShowLargeOkDialog("Instruction",scheduler.SelectedAppointment.Notes);
+            viewFunctions.ShowTherapyDialog("Instruction",scheduler.SelectedAppointment.Notes);
         }
 
         #endregion

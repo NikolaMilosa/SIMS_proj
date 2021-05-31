@@ -22,10 +22,16 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             YesPressed = CustomYesNoDialogVM.YesPressed;
         }
 
-        public void ShowLargeOkDialog(string note, string instructions)
+        public void ShowTherapyDialog(string note, string instructions)
         {
             TherapyDialog customOkDialog = new TherapyDialog(note, instructions);
             customOkDialog.ShowDialog();
+        }
+
+        public void ShowPeriodDialog(int id)
+        {
+            PeriodDetailsWindow periodDetailsWindow = new PeriodDetailsWindow(id);
+            periodDetailsWindow.ShowDialog();
         }
 
     }

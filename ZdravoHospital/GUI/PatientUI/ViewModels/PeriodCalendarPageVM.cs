@@ -43,7 +43,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void PeriodExecute(object parameter)
         {
             SfSchedule scheduler = (SfSchedule)parameter;
-            MessageBox.Show(scheduler.SelectedAppointment.Notes);
+            int periodID = Int32.Parse(scheduler.SelectedAppointment.Notes);
+            ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowPeriodDialog(periodID);
         }
 
         private void SwitchViewExecute(object parameter)

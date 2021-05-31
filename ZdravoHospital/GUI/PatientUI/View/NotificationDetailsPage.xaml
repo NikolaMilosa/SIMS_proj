@@ -38,8 +38,8 @@
                         <TextBlock Text="{Binding NotificationDTO.From}" FontSize="14" Width="190"></TextBlock>
 
                         <TextBlock Text="Title:" FontWeight="Bold"  FontSize="14" Margin="30,0,5,0"></TextBlock>
-                        <TextBlock Text="{Binding NotificationDTO.Title}" Width="190" FontSize="14" ></TextBlock>
-                        <TextBlock Text="Date of sending: " FontWeight="Bold"  Margin="50,0,5,0" FontSize="14"></TextBlock>
+                        <TextBlock Text="{Binding NotificationDTO.Title}" Width="240" FontSize="14" ></TextBlock>
+                        <TextBlock Text="Date of sending: " FontWeight="Bold"  Margin="0,0,5,0" FontSize="14"></TextBlock>
                         <TextBlock Text="{Binding NotificationDTO.Date,StringFormat=d}" Width="100" FontSize="14"></TextBlock>
                     </StackPanel>
                 </Border>

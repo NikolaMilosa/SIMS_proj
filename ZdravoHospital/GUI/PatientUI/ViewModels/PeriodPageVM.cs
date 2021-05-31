@@ -68,14 +68,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public bool EditCanExecute(object parameter)
         {
-
-            if (patientFunctions.IsTrollDetected())
-            {
-                return false;
-            }
-
-
-            return true;
+            return !patientFunctions.IsTrollDetected();
         }
 
         public void RemoveExecute(object parameter)
@@ -83,11 +76,11 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
 
-            //patientFunctions.ActionTaken();
             ViewFunctions viewFunctions = new ViewFunctions();
             viewFunctions.ShowYesNoDialog("Remove appointment", "Are you sure you want to remove appointment?");
             if (viewFunctions.YesPressed)
                 RemovePeriod();
+            viewFunctions.ShowOkDialog("Remove appointment","Appointment succesfully removed!");
         }
 
         #endregion
@@ -112,13 +105,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private bool IsPeriodWithin2Days()
         {
-            if (SelectedPeriodDTO.Date < DateTime.Now.AddDays(2))
-            {
-                viewFunctions.ShowOkDialog("Warning", "You can't manipulate period 2 days from its start!");
-                return true;
-            }
+            if (SelectedPeriodDTO.Date >= DateTime.Now.AddDays(2)) return false;
+            viewFunctions.ShowOkDialog("Warning", "You can't manipulate period 2 days from its start!");
+            return true;
 
-            return false;
         }
 
         private void SetCommands()
