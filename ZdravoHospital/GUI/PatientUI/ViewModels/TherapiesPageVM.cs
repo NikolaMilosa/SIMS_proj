@@ -15,14 +15,11 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 {
     public class TherapiesPageVM
     {
-        public ScheduleAppointmentCollection Therapies { get;  set; } 
-        public ScheduleAppointment SelectedAppointment { get; set; }
-        public SfSchedule Sheduler { get; set; }
+        public ScheduleAppointmentCollection Therapies { get;  set; }
         public TherapiesPageVM(SfSchedule selectedAppointment)
         {
             SetTherapies();
             SetCommands();
-            Sheduler = selectedAppointment;
         }
 
         private void SetTherapies()
@@ -41,9 +38,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void TherapyExecution(object parameter)
         {
-            SelectedAppointment = Sheduler.SelectedAppointment;
-            //ScheduleAppointment selectedAppointment = (ScheduleAppointment) parameter;//essageBox.Show(selectedAppointment.Notes);   
-            MessageBox.Show(SelectedAppointment.Notes);
+            SfSchedule scheduler = (SfSchedule) parameter;
+             
+            MessageBox.Show(scheduler.SelectedAppointment.StartTime.ToString());
         }
 
         #endregion

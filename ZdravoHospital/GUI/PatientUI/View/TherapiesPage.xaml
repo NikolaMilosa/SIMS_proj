@@ -45,7 +45,7 @@
 
                                 <Button Content="{Binding Path=StartTime}" Command="{Binding Path=DataContext.TherapyCommand,       
                                 RelativeSource= {RelativeSource FindAncestor,
-                                AncestorType={x:Type syncfusion:SfSchedule}}}" CommandParameter="{Binding ElementName=Scheduler,Path=SelectedAppointment}" >
+                                AncestorType={x:Type syncfusion:SfSchedule}}}" CommandParameter="{Binding ElementName=Scheduler}" >
 
                                 </Button>
                             </StackPanel>
