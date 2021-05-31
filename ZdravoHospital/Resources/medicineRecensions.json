@@ -1,8 +1,13 @@
 [
   {
-    "MedicineName": "test medication",
+    "MedicineName": "Brufen",
     "DoctorUsername": "pantela",
     "RecensionNote": ""
+  },
+  {
+    "MedicineName": "test medication",
+    "DoctorUsername": "pantela",
+    "RecensionNote": "test med"
   },
   {
     "MedicineName": "tester",
