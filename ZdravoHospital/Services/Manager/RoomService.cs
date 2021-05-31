@@ -49,6 +49,10 @@ namespace ZdravoHospital.Services.Manager
 
         public bool DeleteRoom(Room room)
         {
+            if (!CheckIfPossible(room))
+            {
+                return false;
+            }
 
             var roomsInventory = _roomInventoryRepository.FindAllInventoryInRoom(room.Id);
 
