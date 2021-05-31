@@ -10,14 +10,14 @@
     "Details": null,
     "Prescription": null,
     "PeriodMark": {
-        "Comment": "sDASD",
-        "Mark": 3
-      },
-      "IsUrgent": false,
-      "ReferringReferralId": 0,
-      "ReferredReferralId": 0,
-      "Treatment": null
+      "Comment": "sDASD",
+      "Mark": 3
     },
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
+  },
   {
     "PeriodId": 1,
     "StartTime": "2021-03-01T09:00:00",
@@ -437,6 +437,54 @@
     "IsUrgent": false,
     "ReferringReferralId": 0,
     "ReferredReferralId": 0,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 17,
+    "StartTime": "2021-06-03T10:30:00+02:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": 0,
+    "ReferredReferralId": 0,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 18,
+    "StartTime": "2021-06-02T09:00:00",
+    "Duration": 45,
+    "PeriodType": 1,
+    "PatientUsername": "saki",
+    "DoctorUsername": "zigara",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 19,
+    "StartTime": "2021-06-01T10:30:00",
+    "Duration": 45,
+    "PeriodType": 1,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "zigara",
+    "RoomId": 101,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ReferringReferralId": -1,
+    "ReferredReferralId": -1,
     "Treatment": null
   }
 ]

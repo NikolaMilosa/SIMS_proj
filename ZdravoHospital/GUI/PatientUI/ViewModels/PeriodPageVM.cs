@@ -51,6 +51,13 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public RelayCommand EditPeriodCommand { get; private set; }
         public RelayCommand RemovePeriodCommand { get; private set; }
 
+        public RelayCommand SwitchViewCommand { get; private set; }
+
+        private void SwitchViewExecute(object parameter)
+        {
+            PatientWindowVM.NavigationService.Navigate(new PeriodCalendarPage());
+        }
+
         public void EditExecute(object parameter)
         {
             if (IsPeriodWithin2Days())
@@ -118,6 +125,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             EditPeriodCommand = new RelayCommand(EditExecute, EditCanExecute);
             RemovePeriodCommand = new RelayCommand(RemoveExecute, EditCanExecute);
+            SwitchViewCommand = new RelayCommand(SwitchViewExecute);
         }
 
         private void SetProperties(string username)

@@ -47,6 +47,7 @@
     <None Remove="Images\PatientUI\appointmentIconBlack.png" />
     <None Remove="Images\PatientUI\backIcon.png" />
     <None Remove="Images\PatientUI\backIconBlack.png" />
+    <None Remove="Images\PatientUI\calendarViewIcon.png" />
     <None Remove="Images\PatientUI\emptyStar.png" />
     <None Remove="Images\PatientUI\evaluateIcon.png" />
     <None Remove="Images\PatientUI\fullStar.png" />
@@ -59,6 +60,7 @@
     <None Remove="Images\PatientUI\notificationIcon.png" />
     <None Remove="Images\PatientUI\notificationIconBlack.png" />
     <None Remove="Images\PatientUI\profileIcon.png" />
+    <None Remove="Images\PatientUI\tableIcon.png" />
     <None Remove="Images\PatientUI\therapyIcon.png" />
     <None Remove="Images\PatientUI\therapyIconBlack.png" />
   </ItemGroup>
@@ -101,6 +103,7 @@
     <Resource Include="Images\PatientUI\appointmentIconBlack.png" />
     <Resource Include="Images\PatientUI\backIcon.png" />
     <Resource Include="Images\PatientUI\backIconBlack.png" />
+    <Resource Include="Images\PatientUI\calendarViewIcon.png" />
     <Resource Include="Images\PatientUI\emptyStar.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -117,6 +120,7 @@
     <Resource Include="Images\PatientUI\notificationIcon.png" />
     <Resource Include="Images\PatientUI\notificationIconBlack.png" />
     <Resource Include="Images\PatientUI\profileIcon.png" />
+    <Resource Include="Images\PatientUI\tableIcon.png" />
     <Resource Include="Images\PatientUI\therapyIcon.png" />
     <Resource Include="Images\PatientUI\therapyIconBlack.png" />
   </ItemGroup>

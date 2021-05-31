@@ -80,8 +80,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             Therapies.Add(appointment);
         }
 
-
-
         #endregion
 
 
