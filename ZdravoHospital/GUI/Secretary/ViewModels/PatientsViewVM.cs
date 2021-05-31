@@ -46,13 +46,14 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
 
         private void detailsPatientExecute(object sender)
         {
-            MessageBox.Show("aaaaaaaaaa");
-            SecretaryWindowVM.NavigationService.Navigate(new PatientDetailsPage(SelectedPatient));
+            var selected = sender as Patient;
+            SecretaryWindowVM.NavigationService.Navigate(new PatientDetailsPage(selected));
         }
         private void unblockPatientExecute(object sender)
         {
-            MessageBox.Show("bbbbbbb");
-            PatientService.ProcessPatientUnblock(SelectedPatient);
+            var selected = sender as Patient;
+            MessageBox.Show(selected.Name);
+            PatientService.ProcessPatientUnblock(selected);
             CollectionViewSource.GetDefaultView(PatientsForTable).Refresh();
         }
     }
