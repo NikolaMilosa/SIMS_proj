@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -21,16 +22,8 @@ namespace ZdravoHospital.GUI.Secretary
         public DemoPage()
         {
             InitializeComponent();
+            DataContext = new DemoPageVM();
         }
 
-        private void RegistrationWidget_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new PatientRegistrationPage(true));
-        }
-
-        private void NewPeriodWidget_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new SecretaryNewPeriodPage(true));
-        }
     }
 }
