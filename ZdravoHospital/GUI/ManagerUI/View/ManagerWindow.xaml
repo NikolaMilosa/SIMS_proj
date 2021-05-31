@@ -205,6 +205,9 @@
                             <DataTrigger Binding="{Binding ElementName=SubMenuInventory, Path=Visibility}" Value="Visible">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuStaff, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
@@ -249,6 +252,9 @@
                             <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuStaff, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
@@ -270,6 +276,51 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Grid>
+
+            <!-- Submenu for staff-->
+            <Grid x:Name="SubMenuStaff" Grid.Row="1" Height="480" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="1" x:Name="ExportPdfButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Doctor report" BorderThickness="1,1,0,1" Command="{Binding Path=DoctorReportCommand}"/>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuInventory, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=NotificationsButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=InventoryButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewKeyDown">
+                        <i:InvokeCommandAction Command="{Binding SubMenuCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Grid>
+
         </Grid>
 
         <!-- DataGrids -->

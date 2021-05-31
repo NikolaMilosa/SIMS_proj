@@ -246,6 +246,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand<KeyEventArgs> TableCommand { get; set; }
         public MyICommand<KeyEventArgs> SubMenuCommand { get; set; }
         public MyICommand ShowHelpCommand { get; set; }
+        public MyICommand DoctorReportCommand { get; set; }
 
         #endregion
 
@@ -273,6 +274,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             TableCommand = new MyICommand<KeyEventArgs>(OnTableKey);
             SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
             ShowHelpCommand = new MyICommand(OnShowHelp);
+            DoctorReportCommand = new MyICommand(OnDoctorReport);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
@@ -549,6 +551,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private void OnShowHelp()
         {
             dialog = new Help();
+            dialog.ShowDialog();
+        }
+
+        private void OnDoctorReport()
+        {
+            dialog = new DoctorReportDialog(_injector);
             dialog.ShowDialog();
         }
 
