@@ -138,5 +138,12 @@
     "UsernameSender": "suki",
     "Title": "Rescheduling due to urgent appointment",
     "NotificationId": 21
+  },
+  {
+    "Text": "sender",
+    "CreateDate": "2021-05-31T15:44:33.5574964+02:00",
+    "UsernameSender": "suki",
+    "Title": "sender",
+    "NotificationId": 22
   }
 ]

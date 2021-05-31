@@ -7,32 +7,31 @@ namespace ZdravoHospital.GUI.Secretary.Commands
 {
     public class RelayCommand : ICommand
     {
-        readonly Action<object> _execute;
-        readonly Predicate<object> _canExecute;
+        private Action<object> executeAction;
+        private Predicate<object> canExecute;
 
-        public RelayCommand(Action<object> execute) : this(execute, null) { }
-        public RelayCommand(Action<Object> execute, Predicate<object> canExecute)
+        public RelayCommand(Action<object> execute)
         {
-            if (execute == null)
-                throw new Exception("execute");
-            _execute = execute;
-            _canExecute = canExecute;
+            executeAction = execute;
+        }
+        public RelayCommand(Action<object> execute, Predicate<object> canExec)
+        {
+            executeAction = execute;
+            canExecute = canExec;
         }
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute(parameter);
+            if (canExecute == null)
+                return true;
+            return canExecute(parameter);
         }
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
+        public event EventHandler CanExecuteChanged;
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
+            executeAction(parameter);
         }
     }
 }
