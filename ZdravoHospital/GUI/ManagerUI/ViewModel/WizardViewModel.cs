@@ -117,6 +117,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             UserControls.Add(new WizardDashboard2());
             UserControls.Add(new WizardDashboard3());
             UserControls.Add(new WizardDashboard4());
+            UserControls.Add(new WizardAddEditRoom1());
+            UserControls.Add(new WizardAddEditRoom2());
+            UserControls.Add(new WizardAddEditRoom3());
+            UserControls.Add(new WizardAddEditRoom4());
+            UserControls.Add(new WizardAddEditRoom5());
 
             CurrentControl = UserControls[CurrentIndex];
             ResolveVisibility();

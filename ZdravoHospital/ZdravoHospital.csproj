@@ -44,6 +44,11 @@
     <None Remove="Images\ManagerUI\logo.jpg" />
     <None Remove="Images\ManagerUI\notifications.png" />
     <None Remove="Images\ManagerUI\plus.png" />
+    <None Remove="Images\ManagerUI\RoomAdding1.png" />
+    <None Remove="Images\ManagerUI\RoomAdding2.png" />
+    <None Remove="Images\ManagerUI\RoomAdding3.png" />
+    <None Remove="Images\ManagerUI\RoomAdding4.png" />
+    <None Remove="Images\ManagerUI\RoomDeleting.png" />
     <None Remove="Images\ManagerUI\Rooms.png" />
     <None Remove="Images\ManagerUI\staff.png" />
     <None Remove="Images\ManagerUI\testingAccount.png" />
@@ -105,6 +110,11 @@
     <Resource Include="Images\ManagerUI\logo.jpg" />
     <Resource Include="Images\ManagerUI\notifications.png" />
     <Resource Include="Images\ManagerUI\plus.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding1.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding2.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding3.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding4.png" />
+    <Resource Include="Images\ManagerUI\RoomDeleting.png" />
     <Resource Include="Images\ManagerUI\Rooms.png" />
     <Resource Include="Images\ManagerUI\staff.png" />
     <Resource Include="Images\ManagerUI\testingAccount.png" />
