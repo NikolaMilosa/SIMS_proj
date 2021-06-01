@@ -40,7 +40,7 @@
                 </CheckBox.LayoutTransform>
             </CheckBox>
 
-            <Button x:Name="FinishButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="180" Height="40" Click="FinishButton_Click" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
+            <Button x:Name="FinishButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="180" Height="40" Command="{Binding EditShiftCommand}" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="ContentSaveAll" Width="25" Height="25" Margin="0,0,10,0" />
                     <TextBlock FontFamily="Yu Gothic" FontSize="18">Save and exit</TextBlock>
