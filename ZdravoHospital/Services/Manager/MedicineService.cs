@@ -54,7 +54,6 @@ namespace ZdravoHospital.Services.Manager
             {
                 IngredientChanged += activeDialog.OnIngredientChanged;
             }
-            //TODO: add injector
             _medicineRecensionRepository = injector.MedicineRecensionRepository;
             _medicineRepository = injector.MedicineRepository;
         }
@@ -73,7 +72,7 @@ namespace ZdravoHospital.Services.Manager
             OnMedicineChanged();
         }
 
-        public void EditMedicine(Medicine oldMedicine, Medicine newMedicine)
+        public void EditMedicine(Medicine newMedicine)
         {
             newMedicine.MedicineName = Regex.Replace(newMedicine.MedicineName, @"\s+", " ");
             newMedicine.MedicineName = newMedicine.MedicineName.Trim().ToLower();
@@ -81,6 +80,8 @@ namespace ZdravoHospital.Services.Manager
             newMedicine.Supplier = Regex.Replace(newMedicine.Supplier, @"\s+", " ");
             newMedicine.Supplier = newMedicine.Supplier.Trim();
             newMedicine.Supplier = newMedicine.Supplier.Substring(0, 1).ToUpper() + newMedicine.Supplier.Substring(1).ToLower();
+
+            newMedicine.Status = MedicineStatus.STAGED;
 
             _medicineRepository.Update(newMedicine);
 
