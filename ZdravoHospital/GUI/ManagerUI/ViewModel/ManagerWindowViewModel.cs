@@ -46,6 +46,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public static ManagerWindowViewModel GetDashboard()
         {
+            if (dashboard == null)
+                dashboard = new ManagerWindowViewModel();
             return dashboard;
         }
 
@@ -251,38 +253,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         #endregion
 
 
-        public ManagerWindowViewModel(string activeUser)
+        private ManagerWindowViewModel()
         {
-            dashboard = this;
-            _employeeRepository = new EmployeeRepository();
-            var currManager = _employeeRepository.GetById(activeUser);
-            ActiveManager = "Welcome, " + currManager.Name;
-
-            InstantiateInjector();
-            OpenDataBase();
-            SetObservables();
-            TurnOffTables();
-
-            ShowRoomCommand = new MyICommand(OnShowRooms);
-            ShowInventoryCommand = new MyICommand(OnShowInventory);
-            ShowMedicineCommand = new MyICommand(OnShowMedicine);
-            AddRoomCommand = new MyICommand(OnAddRoom);
-            AddInventoryCommand = new MyICommand(OnAddInventory);
-            AddMedicineCommand = new MyICommand(OnAddMedicine);
-            ManageInventoryCommand = new MyICommand(OnManageInventory);
-            PlanRenovationCommand = new MyICommand(OnPlanRenovation);
-            TableCommand = new MyICommand<KeyEventArgs>(OnTableKey);
-            SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
-            ShowHelpCommand = new MyICommand(OnShowHelp);
-            DoctorReportCommand = new MyICommand(OnDoctorReport);
-
-            _roomMutex = new Mutex();
-            _inventoryMutex = new Mutex();
-            _transferMutex = new Mutex();
-
-            _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel(_injector);
-
-            RunAllTasks();
+            
         }
 
         #region Private functions
@@ -366,16 +339,37 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #region Public functions
 
-        public string FindVisibleDataGrid()
+        public void Initialize(string activeUser)
         {
-            if (RoomTableVisibility == Visibility.Visible)
-                return "roomTable";
-            else if (InventoryTableVisibility == Visibility.Visible)
-                return "inventoryTable";
-            else if (MedicineTableVisibility == Visibility.Visible)
-                return "medicineTable";
-            else
-                return "initialTable";
+            _employeeRepository = new EmployeeRepository();
+            var currManager = _employeeRepository.GetById(activeUser);
+            ActiveManager = "Welcome, " + currManager.Name;
+
+            InstantiateInjector();
+            OpenDataBase();
+            SetObservables();
+            TurnOffTables();
+
+            ShowRoomCommand = new MyICommand(OnShowRooms);
+            ShowInventoryCommand = new MyICommand(OnShowInventory);
+            ShowMedicineCommand = new MyICommand(OnShowMedicine);
+            AddRoomCommand = new MyICommand(OnAddRoom);
+            AddInventoryCommand = new MyICommand(OnAddInventory);
+            AddMedicineCommand = new MyICommand(OnAddMedicine);
+            ManageInventoryCommand = new MyICommand(OnManageInventory);
+            PlanRenovationCommand = new MyICommand(OnPlanRenovation);
+            TableCommand = new MyICommand<KeyEventArgs>(OnTableKey);
+            SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
+            ShowHelpCommand = new MyICommand(OnShowHelp);
+            DoctorReportCommand = new MyICommand(OnDoctorReport);
+
+            _roomMutex = new Mutex();
+            _inventoryMutex = new Mutex();
+            _transferMutex = new Mutex();
+
+            _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel(_injector);
+
+            RunAllTasks();
         }
 
         #endregion

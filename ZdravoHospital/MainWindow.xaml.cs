@@ -45,7 +45,7 @@ namespace ZdravoHospital
                     switch (credentials.Role)
                     {
                         case RoleType.MANAGER:
-                            window = new ManagerWindow(username);
+                            window = new Wizard(username);
                             break;
                         case RoleType.DOCTOR:
                             window = new DoctorWindow();

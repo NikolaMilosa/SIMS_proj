@@ -9,25 +9,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Model;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.GUI.ManagerUI.View
 {
     /// <summary>
-    /// Interaction logic for ManagerWindow.xaml
+    /// Interaction logic for Wizard.xaml
     /// </summary>
-    public partial class ManagerWindow : Window
+    public partial class Wizard : Window
     {
-        private ManagerWindowViewModel currentViewModel;
-
-        public ManagerWindow(string au)
+        private WizardViewModel currentViewModel;
+        public Wizard(string activeUser)
         {
             InitializeComponent();
-            currentViewModel = ManagerWindowViewModel.GetDashboard();
-            currentViewModel.Initialize(au);
+            currentViewModel = new WizardViewModel(activeUser);
             this.DataContext = currentViewModel;
-            RoomsButton.Focus();
         }
     }
 }
