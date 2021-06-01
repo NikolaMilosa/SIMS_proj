@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.WizardUserControls.WizardDashboard1"
+﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.WizardUserControls.WizardDashboard4"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -26,26 +26,24 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontSize="48" Content="Main panel (1)" 
+        <Label Grid.Row="0" FontSize="48" Content="Show rooms (2)" 
                HorizontalAlignment="Left" VerticalAlignment="Center" Margin="75,0,0,0"/>
 
-        <Grid Grid.Row="1" Margin="20">
+        <Grid Grid.Row="1" Margin="20,20,20,0">
             <StackPanel Orientation="Vertical">
                 <TextBlock>
-                    After completing this wizard and clicking the "Skip" button
-                    a main panel should be seen. It is the main part of the program.
-                    All other activities are run from there.
+                    Additionally, if it is not sure what table is currently open
+                    the system keeps track of it and displays it in a form of text
+                    next to the table.
                 </TextBlock>
-
-                <Image Source="../../../../Images/ManagerUI/Dashboard1.png" Margin="0,20,0,0" Width="560"/>
-
-                <TextBlock Margin="0,20,0,0">
-                    When opened the main panel looks like this. It consists of "Main menu" (a place where 
-                    a category of commands is chosen), a "Submenu" (each category has its submenu with 
-                    commands for the category), a "Grid" (used for displaying data from the system),
-                    some "Quick help controls" (shortcut reminders in case those are forgotten) and
-                    a "Logout" button. Additionally, in "Main menu" at the bottom there is "Help"
-                    which can always be used.
+                <Image Source="../../../../Images/ManagerUI/Dashboard5.png" Margin="20" Width="400"></Image>
+                <TextBlock>
+                    To go through the grid, firstly the grid has to be entered. To enter the grid from "Submenu"
+                    press "Right arrow key" on the keyboard. Once done, the first item in the Grid will be selected.
+                </TextBlock>
+                <Image Source="../../../../Images/ManagerUI/Dashboard6.png" Margin="20" Width="400"></Image>
+                <TextBlock>
+                    Once there, using "Up" and "Down" arrow keys other rooms from the system can be selected.
                 </TextBlock>
             </StackPanel>
         </Grid>

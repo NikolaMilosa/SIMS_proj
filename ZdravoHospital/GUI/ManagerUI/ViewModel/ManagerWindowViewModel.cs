@@ -91,6 +91,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private bool _shouldFocusTable;
 
+        private bool _focusLogout;
+
         #endregion
 
         #region Observable collections
@@ -233,6 +235,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public bool FocusLogout
+        {
+            get => _focusLogout;
+            set
+            {
+                _focusLogout = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -249,6 +261,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand<KeyEventArgs> SubMenuCommand { get; set; }
         public MyICommand ShowHelpCommand { get; set; }
         public MyICommand DoctorReportCommand { get; set; }
+        public MyICommand<object> LogoutCommand { get; set; }
 
         #endregion
 
@@ -362,6 +375,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
             ShowHelpCommand = new MyICommand(OnShowHelp);
             DoctorReportCommand = new MyICommand(OnDoctorReport);
+            LogoutCommand = new MyICommand<object>(OnLogout);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
@@ -495,10 +509,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 e.Handled = true;
             }
-            else if (e.Key == Key.Right)
-            {
-                e.Handled = true;
-            }
             else if (e.Key == Key.Enter)
             {
                 HandleEnterClick();
@@ -552,6 +562,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             dialog = new DoctorReportDialog(_injector);
             dialog.ShowDialog();
+        }
+
+        private void OnLogout(object window)
+        {
+            Window newWindow = new MainWindow();
+            newWindow.Show();
+            (window as Window).Close();
         }
 
         #endregion

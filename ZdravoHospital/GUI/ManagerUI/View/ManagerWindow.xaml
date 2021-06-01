@@ -13,9 +13,6 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
-    <Window.Resources>
-        
-    </Window.Resources>
     <Grid Background="Beige" Height="720" Width="1600">
 
         <Grid.ColumnDefinitions>
@@ -449,6 +446,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
                 <RowDefinition/>
+                <RowDefinition Height="150"/>
             </Grid.RowDefinitions>
 
             <Label Content="Controls :" FontSize="20" FontWeight="SemiBold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -539,6 +537,23 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Vertical">
+                    <Button Height="70" Width="200" x:Name="LogoutButton"  Template="{StaticResource ManagerButtonTemplate}" Content="Logout" FontSize="18" Margin="20"
+                            Command="{Binding LogoutCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                        <Button.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding FocusLogout}" Value="True">
+                                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=LogoutButton}"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
             </Grid>
         </Grid>
 

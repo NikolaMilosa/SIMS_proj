@@ -22,6 +22,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private bool _shouldDisplayNext;
         private bool _shouldDisplayPrevious;
 
+        private UserControl _currentControl;
+
         #endregion
 
         #region Properties
@@ -30,7 +32,15 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private int CurrentIndex { get; set; }
 
-        public UserControl CurrentControl { get; set; }
+        public UserControl CurrentControl
+        {
+            get => _currentControl;
+            set
+            {
+                _currentControl = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool ShouldDisplayNext
         {
@@ -103,6 +113,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             UserControls = new List<UserControl>();
 
             UserControls.Add(new WizardIntro());
+            UserControls.Add(new WizardDashboard1());
+            UserControls.Add(new WizardDashboard2());
+            UserControls.Add(new WizardDashboard3());
+            UserControls.Add(new WizardDashboard4());
 
             CurrentControl = UserControls[CurrentIndex];
             ResolveVisibility();
