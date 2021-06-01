@@ -1,0 +1,83 @@
+﻿<Window x:Class="ZdravoHospital.GUI.PatientUI.View.WizardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI.View"
+        mc:Ignorable="d"
+        Title="WizardWindow" Height="768" Width="1024"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="White"
+        AllowsTransparency="True"
+        UseLayoutRounding="True"
+        x:Name="Wizard">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Background="Gray" Grid.Row="0" Orientation="Horizontal">
+            <Image Source="/Images/PatientUI/wizardIcon.png" Margin="20,0,0,0" Width="70" Height="70"></Image>
+            <TextBlock Text="Wizard" VerticalAlignment="Center" Margin="20,0,0,0" Width="250" FontSize="30" FontWeight="Bold"></TextBlock>
+
+            <TextBlock Text="{Binding Path=WizardTitle}" Width="450" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"></TextBlock>
+        </StackPanel>
+        
+        <Border Background="Black" Grid.Row="1" BorderBrush="Black" BorderThickness="2">
+            <Image Source="{Binding Path=CurrentImageSource}"  Margin="0"></Image>
+
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Background="Gray" Orientation="Horizontal" >
+                <Button Width="120" VerticalAlignment="Center"  Height="50" Content="Previous" FontSize="21" Margin="20,0,0,0" FontWeight="Bold"
+                        Background="Transparent" BorderBrush="Transparent"
+                        Command="{Binding Path=PreviousCommand}"
+                >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PreviousButtonVisibilty}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Background="Gray" Grid.Column="1" Orientation="Horizontal">
+                <Button Width="120" Height="50" Content="Skip all" FontSize="21" Margin="200,0,0,0" FontWeight="Bold"
+                        Background="Transparent" BorderBrush="Transparent"
+                        Command="{Binding Path=SkipCommand}" 
+                        CommandParameter="{Binding ElementName=Wizard}"
+                >
+
+                </Button>
+
+                <Button Width="120" Height="50" Content="{Binding Path=NextButtonContent}" FontSize="21" Margin="20,0,0,0" FontWeight="Bold"
+                        Background="Transparent" BorderBrush="Transparent"
+                        Command="{Binding Path=NextCommand}"
+                        CommandParameter="{Binding ElementName=Wizard}"
+                >
+
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        
+
+    </Grid>
+</Window>

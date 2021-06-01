@@ -56,7 +56,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public RelayCommand PeriodHistoryCommand { get; private set; }
         public RelayCommand SurveyCommand { get; private set; }
         public RelayCommand NoteCommand { get; private set; }
-
+        public RelayCommand HelpCommand { get; private set; }
         public RelayCommand TherapyCommand { get; private set; }
 
         #endregion
@@ -112,6 +112,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
+    
+
         private void CloseWindows()
         {
             MainWindow mainWindow = new MainWindow();
@@ -139,6 +141,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             PatientWindow = patientWindow;
             NavigationService = patientWindow.myFrame.NavigationService;
+            NavigationService.Navigate(new PeriodPage(username));
             PatientUsername = username;
             WelcomeMessage = "Welcome " + username;
         }

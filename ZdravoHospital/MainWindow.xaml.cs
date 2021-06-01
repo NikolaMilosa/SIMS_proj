@@ -55,7 +55,7 @@ namespace ZdravoHospital
                             window = new SecretaryWindow(username);
                             break;
                         case RoleType.PATIENT:
-                            window = new PatientWindow(username);
+                            window = new WizardWindow(username);
                             break;
                     }
 
