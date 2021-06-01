@@ -638,6 +638,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (InventoryTableVisibility == Visibility.Visible)
             {
+                var itemsVisual = CollectionViewSource.GetDefaultView(Inventory);
+                itemsVisual.Filter = o => true;
                 dialog = new InventoryFilteringDialog();
                 dialog.ShowDialog();
             }

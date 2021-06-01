@@ -40,7 +40,14 @@
     <None Remove="Images\ManagerUI\Dashboard4.png" />
     <None Remove="Images\ManagerUI\Dashboard5.png" />
     <None Remove="Images\ManagerUI\Dashboard6.png" />
+    <None Remove="Images\ManagerUI\DoctorReport1.png" />
+    <None Remove="Images\ManagerUI\DoctorReport2.png" />
     <None Remove="Images\ManagerUI\inventory.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit1.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit2.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit3.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit4.png" />
+    <None Remove="Images\ManagerUI\InventoryDelete.png" />
     <None Remove="Images\ManagerUI\logo.jpg" />
     <None Remove="Images\ManagerUI\ManageInventory1.png" />
     <None Remove="Images\ManagerUI\ManageInventory2.png" />
@@ -59,6 +66,7 @@
     <None Remove="Images\ManagerUI\RoomDeleting.png" />
     <None Remove="Images\ManagerUI\Rooms.png" />
     <None Remove="Images\ManagerUI\staff.png" />
+    <None Remove="Images\ManagerUI\StaffReport3.png" />
     <None Remove="Images\ManagerUI\testingAccount.png" />
     <None Remove="Images\PatientUI\addIcon.png" />
     <None Remove="Images\PatientUI\addIconBlack.png" />
@@ -114,7 +122,14 @@
     <Resource Include="Images\ManagerUI\Dashboard4.png" />
     <Resource Include="Images\ManagerUI\Dashboard5.png" />
     <Resource Include="Images\ManagerUI\Dashboard6.png" />
+    <Resource Include="Images\ManagerUI\DoctorReport1.png" />
+    <Resource Include="Images\ManagerUI\DoctorReport2.png" />
     <Resource Include="Images\ManagerUI\inventory.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit1.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit2.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit3.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit4.png" />
+    <Resource Include="Images\ManagerUI\InventoryDelete.png" />
     <Resource Include="Images\ManagerUI\logo.jpg" />
     <Resource Include="Images\ManagerUI\ManageInventory1.png" />
     <Resource Include="Images\ManagerUI\ManageInventory2.png" />
@@ -133,6 +148,7 @@
     <Resource Include="Images\ManagerUI\RoomDeleting.png" />
     <Resource Include="Images\ManagerUI\Rooms.png" />
     <Resource Include="Images\ManagerUI\staff.png" />
+    <Resource Include="Images\ManagerUI\StaffReport3.png" />
     <Resource Include="Images\ManagerUI\testingAccount.png" />
     <Resource Include="Images\PatientUI\addIcon.png" />
     <Resource Include="Images\PatientUI\addIconBlack.png" />
