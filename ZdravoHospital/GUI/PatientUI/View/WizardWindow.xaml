@@ -22,14 +22,14 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Background="Gray" Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Background="	#DCDCDC" Grid.Row="0" Orientation="Horizontal">
             <Image Source="/Images/PatientUI/wizardIcon.png" Margin="20,0,0,0" Width="70" Height="70"></Image>
             <TextBlock Text="Wizard" VerticalAlignment="Center" Margin="20,0,0,0" Width="250" FontSize="30" FontWeight="Bold"></TextBlock>
 
             <TextBlock Text="{Binding Path=WizardTitle}" Width="450" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"></TextBlock>
         </StackPanel>
-        
-        <Border Background="Black" Grid.Row="1" BorderBrush="Black" BorderThickness="2">
+
+        <Border Background="#c4ebe0" Grid.Row="1" BorderBrush="Black"  BorderThickness="0,2,0,2">
             <Image Source="{Binding Path=CurrentImageSource}"  Margin="0"></Image>
 
         </Border>
@@ -40,7 +40,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Background="Gray" Orientation="Horizontal" >
+            <StackPanel Grid.Column="0" Background="	#DCDCDC" Orientation="Horizontal" >
                 <Button Width="120" VerticalAlignment="Center"  Height="50" Content="Previous" FontSize="21" Margin="20,0,0,0" FontWeight="Bold"
                         Background="Transparent" BorderBrush="Transparent"
                         Command="{Binding Path=PreviousCommand}"
@@ -58,7 +58,7 @@
                 </Button>
             </StackPanel>
 
-            <StackPanel Background="Gray" Grid.Column="1" Orientation="Horizontal">
+            <StackPanel Background="	#DCDCDC" Grid.Column="1" Orientation="Horizontal">
                 <Button Width="120" Height="50" Content="Skip all" FontSize="21" Margin="200,0,0,0" FontWeight="Bold"
                         Background="Transparent" BorderBrush="Transparent"
                         Command="{Binding Path=SkipCommand}" 

@@ -13,7 +13,6 @@ namespace ZdravoHospital.GUI.PatientUI.View
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             DataContext = new PatientWindowVM(username,this);
-          
         }
 
     }

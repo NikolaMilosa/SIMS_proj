@@ -52,6 +52,7 @@
     <None Remove="Images\PatientUI\evaluateIcon.png" />
     <None Remove="Images\PatientUI\fullStar.png" />
     <None Remove="Images\PatientUI\helpIcon.png" />
+    <None Remove="Images\PatientUI\helpIconBlack.png" />
     <None Remove="Images\PatientUI\historyIcon.png" />
     <None Remove="Images\PatientUI\historyIconBlack.png" />
     <None Remove="Images\PatientUI\hospitalIcon.png" />
@@ -74,6 +75,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\PatientUI\helpIconBlack.png" />
     <Resource Include="Images\PatientUI\wizardIcon.png" />
   </ItemGroup>
 

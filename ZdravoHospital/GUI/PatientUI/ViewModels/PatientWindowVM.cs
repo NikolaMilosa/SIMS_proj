@@ -63,11 +63,16 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region CommandActions
 
+        private void HelpExecute(object parameter)
+        {
+            NavigationService.Navigate(new HelpPage());
+        }
+
         private void TherapiesExecute(object parameter)
         {
             NavigationService.Navigate(new TherapiesPage());
         }
-        private void LogOutExecute(object sendes)
+        private void LogOutExecute(object parameter)
         {
             ViewFunctions viewFunctions = new ViewFunctions();
             viewFunctions.ShowYesNoDialog("Logging out","Are you sure that you want to log out?");
@@ -112,7 +117,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
-    
 
         private void CloseWindows()
         {
@@ -130,6 +134,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             SurveyCommand = new RelayCommand(SurveyExecute);
             NoteCommand = new RelayCommand(NoteExecute);
             TherapyCommand = new RelayCommand(TherapiesExecute);
+            HelpCommand = new RelayCommand(HelpExecute);
         }
 
         private void StartThreads()
