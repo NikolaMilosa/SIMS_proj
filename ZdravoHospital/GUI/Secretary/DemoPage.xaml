@@ -19,14 +19,14 @@
         </StackPanel>
         <StackPanel Grid.Row="1">
             <Border Height="140" Width="180" BorderThickness="3" BorderBrush="White" HorizontalAlignment="Left" Margin="20">
-                <Button Background="#FF8EA3DD" Name="RegistrationWidget" Click="RegistrationWidget_Click" BorderBrush="Transparent">
+                <Button Background="#FF8EA3DD" Name="RegistrationWidget" Command="{Binding RegistrationDemoCommand}" BorderBrush="Transparent">
                     <StackPanel>
                         <TextBlock FontFamily="Yu Gothic" FontSize="26"> New account</TextBlock>
                     </StackPanel>
                 </Button>
             </Border>
             <Border Height="140" Width="180" BorderThickness="3" BorderBrush="White" HorizontalAlignment="Left" Margin="20">
-                <Button Background="#FF8EA3DD" Name="NewPeriodWidget" Click="NewPeriodWidget_Click" BorderBrush="Transparent">
+                <Button Background="#FF8EA3DD" Name="NewPeriodWidget" Command="{Binding PeriodDemoCommand}" BorderBrush="Transparent">
                     <StackPanel>
                         <TextBlock FontFamily="Yu Gothic" FontSize="26"> New period</TextBlock>
                     </StackPanel>

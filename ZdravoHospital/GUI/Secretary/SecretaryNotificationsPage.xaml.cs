@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Model;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -22,37 +23,11 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class SecretaryNotificationsPage : Page
     {
-        public NotificationService NotificationService { get; set; }
-        public ObservableCollection<Model.Notification> Notifications { get; set; }
-        public Notification SelectedNotification { get; set; }
         public SecretaryNotificationsPage()
         {
             InitializeComponent();
-            this.DataContext = this;
-            NotificationService = new NotificationService();
-            Notifications = new ObservableCollection<Notification>(NotificationService.GetAllNotifications());
+            this.DataContext = new SecretaryNotificationsVM();
         }
 
-        private void NewNotificationButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new NewNotificationPage());
-        }
-
-        private void EditNotificationButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedNotification != null)
-            {
-                NavigationService.Navigate(new EditNotificationPage(SelectedNotification));
-            }
-        }
-
-        private void DeleteNotificationButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedNotification != null)
-            {
-                NotificationService.RemoveNotification(SelectedNotification.NotificationId);
-                Notifications.Remove(SelectedNotification);
-            }
-        }
     }
 }

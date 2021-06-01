@@ -40,7 +40,7 @@
             </StackPanel>
         </Border>
         <StackPanel Grid.Row="2">
-            <Button x:Name="SeeAllButton" Click="SeeAllButton_Click" Background="Transparent" FontWeight="Bold" FontFamily="Yu Gothic" FontSize="20" Width="90" HorizontalAlignment="Right" Margin="10"> See all</Button>
+            <Button x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Background="Transparent" FontWeight="Bold" FontFamily="Yu Gothic" FontSize="20" Width="90" HorizontalAlignment="Right" Margin="10"> See all</Button>
         </StackPanel>
     </Grid>
 </Page>

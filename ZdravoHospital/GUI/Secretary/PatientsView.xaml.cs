@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -22,32 +23,14 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class PatientsView : Page
     {
-        private ObservableCollection<Patient> _patientsForTable;
-        public ObservableCollection<Patient> PatientsForTable { get => _patientsForTable; set => _patientsForTable = value; }
-        public PatientGeneralService PatientService { get; set; }
-        public Patient SelectedPatient { get; set; }
 
         public PatientsView()
         {
             InitializeComponent();
-            this.DataContext = this;
-            PatientService = new PatientGeneralService();
-            PatientsForTable = new ObservableCollection<Patient>(PatientService.GetAll());
+            DataContext = new PatientsViewVM();
         }
 
-        private void DeletePatientButton_Click(object sender, RoutedEventArgs e)
-        {
-            PatientService.ProcessPatientDeletion(SelectedPatient);
-            //delete from view
-            if (SelectedPatient != null)
-                PatientsForTable.Remove(SelectedPatient);
-        }
 
-        private void DetailsButton_Click(object sender, RoutedEventArgs e)
-        {
-            var chosenPatient = (sender as Button).DataContext as Patient;
-            NavigationService.Navigate(new PatientDetailsPage(chosenPatient));
-        }
 
         private void PatientsSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -57,8 +40,9 @@ namespace ZdravoHospital.GUI.Secretary
         private void UnblockButton_Click(object sender, RoutedEventArgs e)
         {
             var patientToUnblock = (sender as Button).DataContext as Patient;
-            PatientService.ProcessPatientUnblock(patientToUnblock);
+            new PatientGeneralService().ProcessPatientUnblock(patientToUnblock);
             CollectionViewSource.GetDefaultView(PatientsListView.ItemsSource).Refresh();
         }
+
     }
 }

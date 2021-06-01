@@ -408,7 +408,7 @@
                 </Grid>
 
                 <Button Name="FinishButton" Grid.Row="22" Grid.Column="1" Height="30" Width="90" BorderThickness="3" Background="#4267B2" Foreground="Black" FontSize="14" FontFamily="Yu Gothic" HorizontalAlignment="Right" 
-                Click="FinishButton_Click" Margin="0,0,10,0">FINISH
+                Command="{Binding FinishCommand}" Margin="0,0,10,0">FINISH
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5"/>

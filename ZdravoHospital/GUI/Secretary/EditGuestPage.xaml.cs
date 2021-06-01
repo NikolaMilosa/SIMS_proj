@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -23,24 +24,10 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class EditGuestPage : Page
     {
-        public Patient SelectedPatient { get; set; }
-        public GuestDTO Guest { get; set; }
-        public GuestService GuestService { get; set; }
-
         public EditGuestPage(Patient selectedPatient)
         {
             InitializeComponent();
-            SelectedPatient = selectedPatient;
-            GuestService = new GuestService();
-            Guest = new GuestDTO(SelectedPatient.Name, SelectedPatient.Surname, SelectedPatient.CitizenId, SelectedPatient.HealthCardNumber);
-            this.DataContext = this;
+            DataContext = new EditGuestVM(selectedPatient);
         }
-
-        private void FinishButton_Click(object sender, RoutedEventArgs e)
-        {
-            GuestService.ProcessGuestUpdate(Guest);
-            NavigationService.Navigate(new PatientsView());
-        }
-
     }
 }
