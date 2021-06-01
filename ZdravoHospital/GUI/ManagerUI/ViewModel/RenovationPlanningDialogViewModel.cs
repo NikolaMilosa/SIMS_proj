@@ -231,6 +231,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             set
             {
                 _mergeSelectedRoomIndex = value;
+                if (_mergeSelectedRoomIndex != 0)
+                {
+                    OnSplitButtonDestroy();
+                }
                 OnPropertyChanged();
             }
         }
