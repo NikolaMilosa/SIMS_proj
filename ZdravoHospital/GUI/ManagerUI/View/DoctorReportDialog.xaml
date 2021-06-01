@@ -143,6 +143,9 @@
                             <DataTrigger Binding="{Binding ElementName=DoctorComboBox, Path=SelectedIndex}" Value="-1">
                                 <Setter Property="IsEnabled" Value="False"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding DoctorReport.Count}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding FocusExport}" Value="True">
                                 <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=ConfirmButton}"/>
                             </DataTrigger>
