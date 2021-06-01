@@ -41,7 +41,7 @@
                    TextAlignment="Center"
                    FontSize="16"
                    Margin="10,5,10,5"
-                   Text="{Binding RejectionNote}">
+                   Text="{Binding RejectionReason}">
         </TextBlock>
 
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">

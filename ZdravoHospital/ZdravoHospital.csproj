@@ -52,6 +52,11 @@
     <None Remove="Images\ManagerUI\ManageInventory1.png" />
     <None Remove="Images\ManagerUI\ManageInventory2.png" />
     <None Remove="Images\ManagerUI\ManageInventory3.png" />
+    <None Remove="Images\ManagerUI\MedicineAddEdit1.png" />
+    <None Remove="Images\ManagerUI\MedicineAddEdit2.png" />
+    <None Remove="Images\ManagerUI\MedicineDelete.png" />
+    <None Remove="Images\ManagerUI\MedicineRejection.png" />
+    <None Remove="Images\ManagerUI\MedicineSendValidation.png" />
     <None Remove="Images\ManagerUI\notifications.png" />
     <None Remove="Images\ManagerUI\PlanningRenovation1.png" />
     <None Remove="Images\ManagerUI\PlanningRenovation2.png" />
@@ -134,6 +139,11 @@
     <Resource Include="Images\ManagerUI\ManageInventory1.png" />
     <Resource Include="Images\ManagerUI\ManageInventory2.png" />
     <Resource Include="Images\ManagerUI\ManageInventory3.png" />
+    <Resource Include="Images\ManagerUI\MedicineAddEdit1.png" />
+    <Resource Include="Images\ManagerUI\MedicineAddEdit2.png" />
+    <Resource Include="Images\ManagerUI\MedicineDelete.png" />
+    <Resource Include="Images\ManagerUI\MedicineRejection.png" />
+    <Resource Include="Images\ManagerUI\MedicineSendValidation.png" />
     <Resource Include="Images\ManagerUI\notifications.png" />
     <Resource Include="Images\ManagerUI\PlanningRenovation1.png" />
     <Resource Include="Images\ManagerUI\PlanningRenovation2.png" />
