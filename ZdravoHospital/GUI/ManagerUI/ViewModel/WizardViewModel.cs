@@ -134,6 +134,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             UserControls.Add(new WizardStaffReport1());
             UserControls.Add(new WizardStaffReport2());
             UserControls.Add(new WizardStaffReport3());
+            UserControls.Add(new WizardAddEditInventory1());
+            UserControls.Add(new WizardAddEditInventory2());
+            UserControls.Add(new WizardAddEditInventory3());
+            UserControls.Add(new WizardAddEditInventory4());
+            UserControls.Add(new WizardDeleteInventory());
 
 
             CurrentControl = UserControls[CurrentIndex];
