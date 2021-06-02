@@ -293,7 +293,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="1" x:Name="ExportPdfButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Doctor report" BorderThickness="1,1,0,1" Command="{Binding Path=DoctorReportCommand}"/>
+                <Button Grid.Row="1" x:Name="ExportPdfButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Doctor report" BorderThickness="1,1,0,0" Command="{Binding Path=DoctorReportCommand}"/>
+                <Button Grid.Row="2" x:Name="Feedback" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Send feedback" BorderThickness="1,1,0,1" Command="{Binding Path=FeedbackCommand}"/>
+
+
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Visible"/>

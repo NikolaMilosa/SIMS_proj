@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Repository.CredentialsPersistance;
 using Repository.DoctorPersistance;
 using Repository.EmployeePersistance;
+using Repository.FeedbackPersistance;
 using Repository.InventoryPersistance;
 using Repository.MedicinePersistance;
 using Repository.MedicineRecensionPersistance;
@@ -62,6 +63,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         #region Fields
 
         private string activeManager;
+        private Employee currentEmployee;
         private Visibility _roomTableVisibility;
         private Visibility _inventoryTableVisibility;
         private Visibility _medicineTableVisibility;
@@ -252,6 +254,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand ShowHelpCommand { get; set; }
         public MyICommand DoctorReportCommand { get; set; }
         public MyICommand<object> LogoutCommand { get; set; }
+        public MyICommand FeedbackCommand { get; set; }
 
         #endregion
 
@@ -334,7 +337,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 RoomScheduleRepository = new RoomScheduleRepository(),
                 SpecializationRepository = new SpecializationRepository(),
                 SurveyRepository = new SurveyRepository(),
-                TransferRepository = new TransferRequestRepository()
+                TransferRepository = new TransferRequestRepository(),
+                FeedbackRepository = new FeedbackRepository()
             };
         }
 
@@ -345,8 +349,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public void Initialize(string activeUser)
         {
             _employeeRepository = new EmployeeRepository();
-            var currManager = _employeeRepository.GetById(activeUser);
-            ActiveManager = "Welcome, " + currManager.Name;
+            currentEmployee = _employeeRepository.GetById(activeUser);
+            ActiveManager = "Welcome, " + currentEmployee.Name;
 
             InstantiateInjector();
             OpenDataBase();
@@ -366,6 +370,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             ShowHelpCommand = new MyICommand(OnShowHelp);
             DoctorReportCommand = new MyICommand(OnDoctorReport);
             LogoutCommand = new MyICommand<object>(OnLogout);
+            FeedbackCommand = new MyICommand(OnFeedback);
 
             _roomMutex = new Mutex();
             _inventoryMutex = new Mutex();
@@ -564,6 +569,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             Window newWindow = new MainWindow();
             newWindow.Show();
             (window as Window).Close();
+        }
+
+        private void OnFeedback()
+        {
+            dialog = new FeedbackDialog(_injector, currentEmployee.Username);
+            dialog.ShowDialog();
         }
 
         #endregion

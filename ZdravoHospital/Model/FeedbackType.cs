@@ -4,8 +4,8 @@ namespace Model
 {
    public enum FeedbackType
    {
-      fault,
-      improvement,
-      question
+      FAULT,
+      IMPROVEMENT,
+      QUESTION
    }
 }

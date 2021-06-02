@@ -15,7 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -36,18 +36,27 @@
                FontSize="18"
                Content="The report:"/>
 
-        <ComboBox Grid.Column="1" Grid.Row="0" x:Name="FeedBackTypeComboBox"
-                  FontSize="18"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top"
-                  Margin="20,40,0,0"
-                  Width="300"/>
+        <ComboBox x:Name="FeedBackTypeComboBox" Grid.Row="0" Grid.Column="1" Margin="20,40,0,0"
+                  Text="{Binding Path=NewFeedback.Type, Converter={converters:FeedbackTypeConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  FontSize="18" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" VerticalContentAlignment="Center"
+                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                  IsDropDownOpen="{Binding IsDropDownOpen, Mode=TwoWay}">
+            <ComboBoxItem>Unexpected behaviour</ComboBoxItem>
+            <ComboBoxItem>Question</ComboBoxItem>
+            <ComboBoxItem>Improvement</ComboBoxItem>
+            <ComboBox.InputBindings>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Enter" CommandParameter="Enter"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Down" CommandParameter="Down"/>
+                <KeyBinding Command="{Binding ComboBoxCommand}" Key="Up" CommandParameter="Up"/>
+            </ComboBox.InputBindings>
+        </ComboBox>
 
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ReportTextBox"
                  Margin="20" FontSize="18"
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"/>
+                 VerticalScrollBarVisibility="Auto"
+                 Text="{Binding NewFeedback.Text}"/>
 
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
