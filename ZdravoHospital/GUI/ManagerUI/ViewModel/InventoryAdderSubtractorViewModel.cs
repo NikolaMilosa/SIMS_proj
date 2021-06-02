@@ -172,7 +172,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _roomInventoryRepository = injector.RoomInventoryRepository;
             _periodRepository = injector.PeriodRepository;
 
-            Rooms = new List<Room>(_roomRepository.GetValues());
+            Rooms = _roomRepository.GetByType(RoomType.STORAGE_ROOM);
+            if (Rooms.Count == 0)
+            {
+                Rooms = _roomRepository.GetValues();
+            }
             SelectedInventory = ((new StringBuilder()).Append(PassedInventory.Id).Append(" - ").Append(PassedInventory.Name)).ToString();
 
             ConfirmCommand = new MyICommand(OnConfirm);
