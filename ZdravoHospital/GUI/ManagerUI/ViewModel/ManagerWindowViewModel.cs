@@ -91,6 +91,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private bool _shouldFocusTable;
 
+        private static Help _help;
+
         #endregion
 
         #region Observable collections
@@ -372,6 +374,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel(_injector);
 
             RunAllTasks();
+
+            _help = new Help();
         }
 
         #endregion
@@ -542,8 +546,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void OnShowHelp()
         {
-            dialog = new Help();
-            dialog.ShowDialog();
+            if (!_help.IsVisible)
+            {
+                _help = new Help();
+                _help.Show();
+            }
         }
 
         private void OnDoctorReport()
