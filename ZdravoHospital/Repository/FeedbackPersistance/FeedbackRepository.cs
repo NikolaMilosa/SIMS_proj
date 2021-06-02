@@ -18,20 +18,20 @@ namespace Repository.FeedbackPersistance
         public Feedback GetById(Guid id)
         {
             var values = GetValues();
-            return values.Find(val => val.id.Equals(id));
+            return values.Find(val => val.Id.Equals(id));
         }
 
         public void DeleteById(Guid id)
         {
             var values = GetValues();
-            values.RemoveAll(val => val.id.Equals(id));
+            values.RemoveAll(val => val.Id.Equals(id));
             Save(values);
         }
 
         public void Update(Feedback newValue)
         {
             var values = GetValues();
-            values[values.FindIndex(val => val.id.Equals(newValue.id))] = newValue;
+            values[values.FindIndex(val => val.Id.Equals(newValue.Id))] = newValue;
             Save(values);
         }
 
