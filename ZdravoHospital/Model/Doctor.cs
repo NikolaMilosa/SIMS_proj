@@ -29,16 +29,16 @@ namespace Model
         {
             string ret = "";
 
-            ret += "--------- BASIC INFO ---------";
-            ret += "\nName : " + Name;
-            ret += "\nSurname : " + Surname;
-            ret += "\nEmail : " + Email;
-            ret += "\nDate of birth : " + DateOfBirth.Date;
-            ret += "\nPhone number : " + PhoneNumber;
-            ret += "\nUsername : " + Username;
-            ret += "\nParents name : " + ParentsName;
+            ret += "BASIC INFO -";
+            ret += "\n     Name : " + Name;
+            ret += "\n     Surname : " + Surname;
+            ret += "\n     Email : " + Email;
+            ret += "\n     Date of birth : " + DateOfBirth.Date;
+            ret += "\n     Phone number : " + PhoneNumber;
+            ret += "\n     Username : " + Username;
+            ret += "\n     Parents name : " + ParentsName;
            
-            ret += "\nMarital status : ";
+            ret += "\n     Marital status : ";
             if (MaritalStatus == Model.MaritalStatus.DIVORCED)
                 ret += "Divorced";
             else if (MaritalStatus == Model.MaritalStatus.MARRIED)
@@ -54,19 +54,22 @@ namespace Model
                 ret += "Single";
             }
 
-            ret += "\nGender : ";
+            ret += "\n     Gender : ";
             if (Gender == Model.Gender.FEMALE)
                 ret += "Female";
             else
                 ret += "Male";
 
-            ret += "\nCitizen ID : " + CitizenId;
-            ret += "\nAddress : " + Address.StreetName + " " + Address.Number + ", " + Address.City.PostalCode + " " +
+            ret += "\n     Citizen ID : " + CitizenId;
+            ret += "\n     Address : " + Address.StreetName + " " + Address.Number + ", " + Address.City.PostalCode + " " +
                    Address.City.Name + ", "
                    + Address.City.Country.Name;
 
-            ret += "\n--------- DOCTOR INFO ---------";
-            ret += "\nSpecialization type : " + SpecialistType.SpecializationName;
+            ret += "\n\nDOCTOR INFO -";
+            ret += "\n     Specialization type : " + SpecialistType.SpecializationName;
+
+            ret += "\n\nWORKING SHIFT -";
+            ret += "\n     Current shift : " + ShiftRule.RegularShift;
 
             return ret;
         }

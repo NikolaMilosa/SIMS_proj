@@ -17,11 +17,11 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
         {
             string ret = "";
 
-            ret += "    Type : " + Type;
-            ret += "\n    Patient name : " + PatientName;
-            ret += "\n    Patient username : " + PatientUsername;
-            ret += "\n    Room number : " + RoomNumber;
-            ret += "\n    Date : " + Date.Date;
+            ret += "   Type : " + Type;
+            ret += "\n     Patient name : " + PatientName;
+            ret += "\n     Patient username : " + PatientUsername;
+            ret += "\n     Room number : " + RoomNumber;
+            ret += "\n     Date : " + Date.Date;
 
             return ret;
         }
