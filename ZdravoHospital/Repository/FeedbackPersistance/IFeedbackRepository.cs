@@ -1,8 +1,9 @@
 using System;
+using Model;
 
 namespace Repository.FeedbackPersistance
 {
-   public interface IFeedbackRepository : Repository.IRepository<TKey,TValue>
+   public interface IFeedbackRepository : IRepository<Guid, Feedback>
    {
    }
 }
