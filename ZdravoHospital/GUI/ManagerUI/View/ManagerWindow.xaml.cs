@@ -27,7 +27,6 @@ namespace ZdravoHospital.GUI.ManagerUI.View
             currentViewModel = ManagerWindowViewModel.GetDashboard();
             currentViewModel.Initialize(au);
             this.DataContext = currentViewModel;
-            RoomsButton.Focus();
         }
     }
 }

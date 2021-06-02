@@ -83,6 +83,14 @@
                             </Image>
                         </StackPanel>
                     </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=RoomsButton}"/>
+                        </Style>
+                    </Button.Style>
+                    <i:Interaction.Behaviors>
+                        <wi:MyFocusBehaviour/>  
+                    </i:Interaction.Behaviors>
                 </Button>
 
                 <Button x:Name="StaffButton" Grid.Row="1" Background="#bec4c2" BorderThickness="0,1,0,0" Template="{StaticResource ManagerButtonTemplate}">

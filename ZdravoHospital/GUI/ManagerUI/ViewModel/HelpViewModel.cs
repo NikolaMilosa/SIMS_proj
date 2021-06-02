@@ -132,7 +132,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             //Staff
             Tree[1].Items.Add(new TreeViewItem()
             {
-                Header = "Generate report"
+                Header = "Doctor report"
+            });
+            Tree[1].Items.Add(new TreeViewItem()
+            {
+                Header = "Feedback"
             });
 
 
@@ -292,6 +296,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             else if (SelectedItem.Header.Equals("Rejection note"))
             {
                 CurrentControl = new RejectionNoteHelp();
+            }
+            else if (SelectedItem.Header.Equals("Doctor report"))
+            {
+                CurrentControl = new DoctorReportHelp();
             }
 
             if (SelectedItem.Items.Count == 0)

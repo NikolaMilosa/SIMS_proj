@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI.View"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:wi="clr-namespace:ZdravoHospital.GUI.ManagerUI.Commands"
         mc:Ignorable="d"
         Title="Wizard" 
         WindowStartupLocation="CenterScreen"
@@ -32,7 +33,7 @@
                     KeyboardNavigation.TabNavigation="Local">
 
             <Button x:Name="SkipButton" Background="beige" FontSize="18" Content="Skip" Height="52" Width="100" Margin="40,10,10,10" TabIndex="2"
-                    Command="{Binding SkipCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                        Command="{Binding SkipCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
             </Button>
 
             <Button x:Name="NextButton" FontSize="18" Content="Next" Width="100" Height="52" Margin="10" Template="{StaticResource ManagerButtonTemplate}" TabIndex="1"
@@ -47,6 +48,9 @@
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
+                <i:Interaction.Behaviors>
+                    <wi:MyFocusBehaviour/>
+                </i:Interaction.Behaviors>
             </Button>
 
             <Button x:Name="PreviousButton" FontSize="18" Content="Previous" Width="100" Height="52" Margin="10" Template="{StaticResource ManagerButtonTemplate}" TabIndex="0"

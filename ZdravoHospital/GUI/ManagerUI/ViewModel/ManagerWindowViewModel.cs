@@ -91,8 +91,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private bool _shouldFocusTable;
 
-        private bool _focusLogout;
-
         #endregion
 
         #region Observable collections
@@ -231,16 +229,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             set
             {
                 _shouldFocusTable = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool FocusLogout
-        {
-            get => _focusLogout;
-            set
-            {
-                _focusLogout = value;
                 OnPropertyChanged();
             }
         }
