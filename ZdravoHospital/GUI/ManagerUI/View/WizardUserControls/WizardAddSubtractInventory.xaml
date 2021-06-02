@@ -34,7 +34,7 @@
                 <TextBlock>
                     The presented dialog will look like following.
                 </TextBlock>
-                <Image Source="../../../../Images/ManagerUI/InventoryAddSubtract.png" Margin="20" Width="200" ></Image>
+                <Image Source="../../../../Images/ManagerUI/InventoryQuantitySelector.png" Margin="20" Width="200" ></Image>
                 <TextBlock>
                     The chosen new quantity will be applied to the current room meaning that the "Currently" field will 
                     be overriden by the system with the new quantity. Also the view presenting inventory on the main

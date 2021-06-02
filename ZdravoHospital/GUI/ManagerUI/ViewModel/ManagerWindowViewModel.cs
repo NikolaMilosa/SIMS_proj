@@ -379,8 +379,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel(_injector);
 
             RunAllTasks();
-
-            _help = new Help();
         }
 
         #endregion
@@ -551,7 +549,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void OnShowHelp()
         {
-            if (!_help.IsVisible)
+            if (_help == null || !_help.IsVisible)
             {
                 _help = new Help();
                 _help.Show();

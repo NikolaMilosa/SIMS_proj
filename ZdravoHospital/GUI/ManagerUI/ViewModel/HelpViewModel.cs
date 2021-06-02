@@ -301,6 +301,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 CurrentControl = new DoctorReportHelp();
             }
+            else if (SelectedItem.Header.Equals("Feedback"))
+            {
+                CurrentControl = new FeedbackHelp();
+            }
 
             if (SelectedItem.Items.Count == 0)
             {
