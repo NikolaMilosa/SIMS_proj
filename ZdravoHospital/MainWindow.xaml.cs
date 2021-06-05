@@ -4,6 +4,7 @@ using System.Windows;
 
 using Model;
 using Repository.CredentialsPersistance;
+using Repository.EmployeePersistance;
 using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.GUI.PatientUI;
@@ -45,7 +46,18 @@ namespace ZdravoHospital
                     switch (credentials.Role)
                     {
                         case RoleType.MANAGER:
-                            window = new Wizard(username);
+                            var employeeRepository = new EmployeeRepository();
+                            var manager = employeeRepository.GetById(username);
+                            if (manager.ShouldDisplayManagerWizard)
+                            {
+                                window = new Wizard(username);
+                                manager.ShouldDisplayManagerWizard = false;
+                                employeeRepository.Update(manager);
+                            }
+                            else
+                            {
+                                window = new ManagerWindow(username);
+                            }
                             break;
                         case RoleType.DOCTOR:
                             window = new DoctorWindow();
