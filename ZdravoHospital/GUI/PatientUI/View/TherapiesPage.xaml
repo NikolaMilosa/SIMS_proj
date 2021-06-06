@@ -19,7 +19,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
@@ -29,13 +29,15 @@
                 <TextBlock Text="My therapies" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
-            <syncfusion:SfSchedule Grid.Column="1" Grid.Row="1" x:Name="Scheduler"  ItemsSource="{Binding Therapies}"
+            <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="0" VerticalScrollBarVisibility="Hidden">
+                <Grid Grid.Column="1" Grid.Row="1" Margin="0"  x:Name="CalendarGrid" >
+                    <syncfusion:SfSchedule  Grid.Column="1" Grid.Row="1" x:Name="Scheduler"  ItemsSource="{Binding Therapies}"
                                     ScheduleType="Week" AllowEditing="False" TimeInterval="ThirtyMin" IntervalHeight="50" >
 
-                <syncfusion:SfSchedule.AppointmentTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Button  Command="{Binding Path=DataContext.TherapyCommand,       
+                    <syncfusion:SfSchedule.AppointmentTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Button  Command="{Binding Path=DataContext.TherapyCommand,       
                                 RelativeSource= {RelativeSource FindAncestor,
                                 AncestorType={x:Type syncfusion:SfSchedule}}}" 
                                      CommandParameter="{Binding ElementName=Scheduler}"
@@ -43,7 +45,7 @@
                                      BorderBrush="Transparent"
                             >
 
-                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Vertical">
                                         <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap"
                                                    VerticalAlignment="Center" FontSize="14"         
                                                    Text="{Binding Subject}" 
@@ -52,21 +54,34 @@
                                         </TextBlock>
                                     </StackPanel>
                                 </Button>
-                        </Grid>
-                    </DataTemplate>
-                </syncfusion:SfSchedule.AppointmentTemplate>
+                            </Grid>
+                        </DataTemplate>
+                    </syncfusion:SfSchedule.AppointmentTemplate>
 
-                <syncfusion:SfSchedule.AppointmentMapping>
-                    <syncfusion:ScheduleAppointmentMapping
+                    <syncfusion:SfSchedule.AppointmentMapping>
+                        <syncfusion:ScheduleAppointmentMapping
                         SubjectMapping="Subject"
                         StartTimeMapping="StartTime"
                         EndTimeMapping="EndTime"
                         AppointmentBackgroundMapping="Color"
                         NotesMapping="Notes"
                         />
-                </syncfusion:SfSchedule.AppointmentMapping>
-            </syncfusion:SfSchedule>
+                    </syncfusion:SfSchedule.AppointmentMapping>
+                </syncfusion:SfSchedule>
+            </Grid>
+            </ScrollViewer>
 
+
+            <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button BorderBrush="Transparent" Background="Transparent" Command="{Binding Path=GeneratePdfCommnand}"
+                        CommandParameter="{Binding ElementName=CalendarGrid}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/PatientUI/pdfIcon.png" Width="34" Height="34"></Image>
+                        <TextBlock Text="Generate pdf" VerticalAlignment="Center" FontWeight="Bold" FontSize="17"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+                
         </Grid>
     </Border>
 </Page>

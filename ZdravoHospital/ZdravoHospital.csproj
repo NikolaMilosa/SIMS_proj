@@ -61,6 +61,7 @@
     <None Remove="Images\PatientUI\notebookIconBlack.png" />
     <None Remove="Images\PatientUI\notificationIcon.png" />
     <None Remove="Images\PatientUI\notificationIconBlack.png" />
+    <None Remove="Images\PatientUI\pdfIcon.png" />
     <None Remove="Images\PatientUI\profileIcon.png" />
     <None Remove="Images\PatientUI\tableIcon.png" />
     <None Remove="Images\PatientUI\therapyIcon.png" />
@@ -76,6 +77,7 @@
 
   <ItemGroup>
     <Resource Include="Images\PatientUI\helpIconBlack.png" />
+    <Resource Include="Images\PatientUI\pdfIcon.png" />
     <Resource Include="Images\PatientUI\wizardIcon.png" />
   </ItemGroup>
 

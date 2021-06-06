@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Model;
 using Syncfusion.UI.Xaml.Schedule;
@@ -28,6 +29,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #region Commands
 
         public RelayCommand TherapyCommand { get; private set; }
+        public RelayCommand GeneratePdfCommnand { get; private set; }
 
         #endregion
 
@@ -40,6 +42,18 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             viewFunctions.ShowTherapyDialog("Instruction",scheduler.SelectedAppointment.Notes);
         }
 
+        private void GeneratePdfExecution(object parameter)
+        {
+            PrintDialog printDialog = new PrintDialog();
+            Grid grid = (Grid) parameter;
+            grid.Height = 2550;
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual((Grid)parameter, "Invoice");
+            }
+            grid.Height = 528;
+        }
+
         #endregion
 
         #region Methods
@@ -47,6 +61,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void SetCommands()
         {
             TherapyCommand = new RelayCommand(TherapyExecution);
+            GeneratePdfCommnand = new RelayCommand(GeneratePdfExecution);
         }
 
         private void SetProperties()
