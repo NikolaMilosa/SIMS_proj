@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Data;
@@ -11,17 +12,36 @@ using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
 {
-    public class PatientsViewVM
+    public class PatientsViewVM : BindableBase
     {
         private ObservableCollection<Patient> _patientsForTable;
         public ObservableCollection<Patient> PatientsForTable { get => _patientsForTable; set => _patientsForTable = value; }
         public PatientGeneralService PatientService { get; set; }
         public Patient SelectedPatient { get; set; }
+        private string _patientsSearchText;
+
+        public string PatientsSearchText
+        {
+            get { return _patientsSearchText; }
+            set 
+            {
+                _patientsSearchText = value;
+                OnPropertyChanged("PatientsSearchText");
+                if (CollectionViewSource.GetDefaultView(PatientsForTable) != null)
+                {
+                    CollectionViewSource.GetDefaultView(PatientsForTable).Refresh();
+                }
+            }
+        }
+
+
         public PatientsViewVM()
         {
             PatientService = new PatientGeneralService();
             PatientsForTable = new ObservableCollection<Patient>(PatientService.GetAll());
             SelectedPatient = new Patient();
+            ICollectionView viewPatients = (ICollectionView)CollectionViewSource.GetDefaultView(PatientsForTable);
+            viewPatients.Filter = PatientsFilter;
             initializeCommands();
         }
 
@@ -61,6 +81,16 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
             var selected = sender as Patient;
             PatientService.ProcessPatientUnblock(selected);
             CollectionViewSource.GetDefaultView(PatientsForTable).Refresh();
+        }
+        private bool PatientsFilter(object item)
+        {
+            if (String.IsNullOrEmpty(PatientsSearchText))
+                return true;
+            else
+                return (((item as Patient).Name).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (((item as Patient).Surname).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (((item as Patient).CitizenId).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (((item as Patient).HealthCardNumber).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }
