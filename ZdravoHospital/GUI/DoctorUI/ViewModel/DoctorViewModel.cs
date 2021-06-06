@@ -1,5 +1,6 @@
 ﻿using Model;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,6 +12,12 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 {
     public class DoctorViewModel : ViewModel
     {
+        private Dictionary<string, Uri> _videos = new Dictionary<string, Uri>()
+        {
+            { "Appointment/operation preview", new Uri("Resources/appointment_operation_preview.mp4", UriKind.Relative) },
+            { "Creating new appointment", new Uri("Resources/create_new_appointment.mkv", UriKind.Relative) }
+        };
+
         private MediaElement _mediaElement;
         private bool _isMediaPlaying;
 
@@ -207,6 +214,17 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             }
         }
 
+        private string _mediaTitle;
+        public string MediaTitle
+        {
+            get => _mediaTitle;
+            set
+            {
+                _mediaTitle = value;
+                OnPropertyChanged("MediaTitle");
+            }
+        }
+
         public MyICommand ScheduleTabCommand { get; set; }
 
         public void Executed_ScheduleTabCommand()
@@ -368,6 +386,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         public void Executed_HideTutorialPopUpCommand()
         {
+            PauseMedia();
             TutorialPopUpVisibility = Visibility.Collapsed;
         }
 
@@ -380,7 +399,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         public void Executed_ChooseTutorialCommand(string videoName)
         {
-            MediaElementSource = new Uri("Resources/" + videoName, UriKind.Relative);
+            MediaElementSource = _videos[videoName];
         }
 
         public bool CanExecute_ChooseTutorialCommand(string videoName)

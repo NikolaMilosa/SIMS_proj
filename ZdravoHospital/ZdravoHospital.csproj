@@ -122,10 +122,10 @@
     <None Update="Resources\doctors.json">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Update="Resources\test_video.mp4">
+    <None Update="Resources\appointment_operation_preview.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\test_video_fullsc.mkv">
+    <None Update="Resources\create_new_appointment.mkv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
