@@ -122,6 +122,12 @@
     <None Update="Resources\doctors.json">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <None Update="Resources\test_video.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\test_video_fullsc.mkv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
