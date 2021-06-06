@@ -84,45 +84,6 @@
   },
   {
     "IsGuest": false,
-    "HealthCardNumber": "456",
-    "BloodType": 5,
-    "MedicineAllergens": [
-      "test medication",
-      "bromazepam",
-      "Goat milk"
-    ],
-    "IngredientAllergens": [
-      "natrium",
-      "Kiflice"
-    ],
-    "RecentActions": 0,
-    "LastLogoutTime": "2021-05-28T20:39:26.6623127+02:00",
-    "NameSurname": "Nikasdolaj Sasadsatara",
-    "PatientNotes": [],
-    "Name": "Nikasdolaj",
-    "Surname": "Sasadsatara",
-    "Email": "saki@gmail.com",
-    "DateOfBirth": "1963-05-17T00:00:00",
-    "PhoneNumber": "066987654",
-    "Username": "sasadki",
-    "ParentsName": "Milojko",
-    "MaritalStatus": 1,
-    "Gender": 0,
-    "CitizenId": "624",
-    "Address": {
-      "StreetName": null,
-      "Number": null,
-      "City": {
-        "PostalCode": 0,
-        "Name": null,
-        "Country": {
-          "Name": null
-        }
-      }
-    }
-  },
-  {
-    "IsGuest": false,
     "HealthCardNumber": "77745665",
     "BloodType": 2,
     "MedicineAllergens": null,

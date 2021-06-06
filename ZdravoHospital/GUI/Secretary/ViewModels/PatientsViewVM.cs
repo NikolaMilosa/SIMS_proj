@@ -38,10 +38,17 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
 
         private void deletePatientExecute(object sender)
         {
-            PatientService.ProcessPatientDeletion(SelectedPatient);
-            //delete from view
-            if (SelectedPatient != null)
-                PatientsForTable.Remove(SelectedPatient);
+            SecretaryWindowVM.CustomYesNoDialog = new CustomYesNoDialog("Are you sure?", "Action cannot be undone.");
+            SecretaryWindowVM.CustomYesNoDialog.Owner = SecretaryWindowVM.SecretaryWindow;
+
+            if ((bool)SecretaryWindowVM.CustomYesNoDialog.ShowDialog())
+            {
+                PatientService.ProcessPatientDeletion(SelectedPatient);
+                //delete from view
+                if (SelectedPatient != null)
+                    PatientsForTable.Remove(SelectedPatient);
+            }
+            
         }
 
         private void detailsPatientExecute(object sender)

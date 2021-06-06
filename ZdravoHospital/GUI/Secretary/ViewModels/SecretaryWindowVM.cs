@@ -12,12 +12,14 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         public static string SecretaryUsername;
         public static SecretaryWindow SecretaryWindow;
         public static CustomMessageBox CustomMessageBox;
+        public static CustomYesNoDialog CustomYesNoDialog;
         public static NavigationService NavigationService { get; set; }
         public SecretaryWindowVM(string username, SecretaryWindow secretaryWindow)
         {
             SecretaryUsername = username;
             SecretaryWindow = secretaryWindow;
             CustomMessageBox = new CustomMessageBox("", "");
+            CustomYesNoDialog = new CustomYesNoDialog("", "");
             //CustomMessageBox.Owner = SecretaryWindow;
             SecretaryWindow.SecretaryMainFrame.Content = new SecretaryHomePage();
             NavigationService = SecretaryWindow.SecretaryMainFrame.NavigationService;
