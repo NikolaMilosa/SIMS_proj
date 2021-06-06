@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -129,6 +130,12 @@ namespace ZdravoHospital.GUI.Secretary
                 bool success = AllergiesService.AddMedicalAllergen(SelectedPatient, SelectedMedicalAllergen);
                 if(success)
                     AddedMedicalAllergens.Add(SelectedMedicalAllergen);
+                else
+                {
+                    SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Sorry", "Medicine already exists.");
+                    SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                    SecretaryWindowVM.CustomMessageBox.Show();
+                }
             }
         }
 
@@ -139,6 +146,12 @@ namespace ZdravoHospital.GUI.Secretary
                 bool success = AllergiesService.AddIngredientAllergen(SelectedPatient, SelectedIngredientAllergen);
                 if (success)
                     AddedIngredientAllergens.Add(SelectedIngredientAllergen);
+                else
+                {
+                    SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Sorry", "Ingredient already exists.");
+                    SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                    SecretaryWindowVM.CustomMessageBox.Show();
+                }
             }
         }
 

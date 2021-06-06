@@ -52,7 +52,6 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         private void unblockPatientExecute(object sender)
         {
             var selected = sender as Patient;
-            MessageBox.Show(selected.Name);
             PatientService.ProcessPatientUnblock(selected);
             CollectionViewSource.GetDefaultView(PatientsForTable).Refresh();
         }

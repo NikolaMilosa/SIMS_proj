@@ -4,7 +4,8 @@
     "HealthCardNumber": "123",
     "BloodType": 0,
     "MedicineAllergens": [
-      "Brufen"
+      "Brufen",
+      "test medication"
     ],
     "IngredientAllergens": [
       "zink",

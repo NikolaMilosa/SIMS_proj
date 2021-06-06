@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -107,7 +108,12 @@ namespace ZdravoHospital.GUI.Secretary
                 return;
             }
             else
-                MessageBox.Show("Sorry. No suggestions available.");
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Sorry", "No suggestions available.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+                
         }
 
         private bool isPeriodSuggestion()

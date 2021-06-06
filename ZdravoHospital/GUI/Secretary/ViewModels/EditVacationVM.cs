@@ -37,7 +37,10 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         private void clearVacationsExecute(object parameter)
         {
             VacationService.ProcessVacationDeletion(SelectedDoctor);
-            MessageBox.Show("Deleted successfully!");
+            //MessageBox.Show("Deleted successfully!");
+            SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Success", "Deleted successfully.");
+            SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+            SecretaryWindowVM.CustomMessageBox.Show();
         }
     }
 }

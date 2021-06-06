@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -69,13 +70,29 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private void giveAvailabilityFeedbackMessage(PeriodAvailabilityDTO periodAvailableDTO)
         {
             if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.DOCTOR_UNAVAILABLE)
-                MessageBox.Show("Selected doctor is unavailable in selected period.", "Doctor unavailable");
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Doctor unavailable", "Selected doctor is unavailable in selected period.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
             else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.PATIENT_UNAVAILABLE)
-                MessageBox.Show("Selected patient is unavailable in selected period.", "Patient unavailable");
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Patient unavailable", "Selected patient is unavailable in selected period.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
             else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.ROOM_UNAVAILABLE)
-                MessageBox.Show("Selected room is unavailable in selected period.", "Room unavailable");
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Room unavailable", "Selected room is unavailable in selected period.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
             else
-                MessageBox.Show("Selected time is not acceptable.", "Time unacceptable");
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Time unacceptable", "Selected time is not acceptable.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
         }
 
 
