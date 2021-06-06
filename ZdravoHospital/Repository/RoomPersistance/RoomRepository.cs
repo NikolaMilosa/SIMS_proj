@@ -53,6 +53,15 @@ namespace Repository.RoomPersistance
             return someRoom;
         }
 
+        public List<Room> GetByType(RoomType roomType)
+        {
+            var ret = GetValues();
+
+            ret.RemoveAll(val => val.RoomType != roomType);
+
+            return ret;
+        }
+
         private Room FindRoomByType(RoomType rt, Room room)
         {
             if (room != null)

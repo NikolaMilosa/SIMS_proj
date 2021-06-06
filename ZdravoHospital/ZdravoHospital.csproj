@@ -34,11 +34,48 @@
     <None Remove="Images\Doctor\user_light_gray.png" />
     <None Remove="Images\Doctor\user_white.png" />
     <None Remove="Images\ManagerUI\arrow.png" />
+    <None Remove="Images\ManagerUI\Dashboard1.png" />
+    <None Remove="Images\ManagerUI\Dashboard2.png" />
+    <None Remove="Images\ManagerUI\Dashboard3.png" />
+    <None Remove="Images\ManagerUI\Dashboard4.png" />
+    <None Remove="Images\ManagerUI\Dashboard5.png" />
+    <None Remove="Images\ManagerUI\Dashboard6.png" />
+    <None Remove="Images\ManagerUI\DoctorReport1.png" />
+    <None Remove="Images\ManagerUI\DoctorReport2.png" />
+    <None Remove="Images\ManagerUI\Feedback1.png" />
     <None Remove="Images\ManagerUI\inventory.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit1.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit2.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit3.png" />
+    <None Remove="Images\ManagerUI\InventoryAddEdit4.png" />
+    <None Remove="Images\ManagerUI\InventoryAddSubtract.png" />
+    <None Remove="Images\ManagerUI\InventoryDelete.png" />
+    <None Remove="Images\ManagerUI\InventoryFiltering1.png" />
+    <None Remove="Images\ManagerUI\InventoryQuantitySelector.png" />
+    <None Remove="Images\ManagerUI\logo.jpg" />
+    <None Remove="Images\ManagerUI\ManageInventory1.png" />
+    <None Remove="Images\ManagerUI\ManageInventory2.png" />
+    <None Remove="Images\ManagerUI\ManageInventory3.png" />
+    <None Remove="Images\ManagerUI\MedicineAddEdit1.png" />
+    <None Remove="Images\ManagerUI\MedicineAddEdit2.png" />
+    <None Remove="Images\ManagerUI\MedicineDelete.png" />
+    <None Remove="Images\ManagerUI\MedicineRejection.png" />
+    <None Remove="Images\ManagerUI\MedicineSendValidation.png" />
     <None Remove="Images\ManagerUI\notifications.png" />
+    <None Remove="Images\ManagerUI\PlanningRenovation1.png" />
+    <None Remove="Images\ManagerUI\PlanningRenovation2.png" />
     <None Remove="Images\ManagerUI\plus.png" />
+    <None Remove="Images\ManagerUI\QuantitySelect1.png" />
+    <None Remove="Images\ManagerUI\QuantitySelect2.png" />
+    <None Remove="Images\ManagerUI\RenovationPlanning1.png" />
+    <None Remove="Images\ManagerUI\RoomAdding1.png" />
+    <None Remove="Images\ManagerUI\RoomAdding2.png" />
+    <None Remove="Images\ManagerUI\RoomAdding3.png" />
+    <None Remove="Images\ManagerUI\RoomAdding4.png" />
+    <None Remove="Images\ManagerUI\RoomDeleting.png" />
     <None Remove="Images\ManagerUI\Rooms.png" />
     <None Remove="Images\ManagerUI\staff.png" />
+    <None Remove="Images\ManagerUI\StaffReport3.png" />
     <None Remove="Images\ManagerUI\testingAccount.png" />
     <None Remove="Images\PatientUI\addIcon.png" />
     <None Remove="Images\PatientUI\addIconBlack.png" />
@@ -64,9 +101,12 @@
 
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.2" />
+    <PackageReference Include="itext7" Version="7.1.15" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
     <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,11 +126,47 @@
     <Resource Include="Images\Doctor\user_light_gray.png" />
     <Resource Include="Images\Doctor\user_white.png" />
     <Resource Include="Images\ManagerUI\arrow.png" />
+    <Resource Include="Images\ManagerUI\Dashboard1.png" />
+    <Resource Include="Images\ManagerUI\Dashboard2.png" />
+    <Resource Include="Images\ManagerUI\Dashboard3.png" />
+    <Resource Include="Images\ManagerUI\Dashboard4.png" />
+    <Resource Include="Images\ManagerUI\Dashboard5.png" />
+    <Resource Include="Images\ManagerUI\Dashboard6.png" />
+    <Resource Include="Images\ManagerUI\DoctorReport1.png" />
+    <Resource Include="Images\ManagerUI\DoctorReport2.png" />
+    <Resource Include="Images\ManagerUI\Feedback1.png" />
     <Resource Include="Images\ManagerUI\inventory.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit1.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit2.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit3.png" />
+    <Resource Include="Images\ManagerUI\InventoryAddEdit4.png" />
+    <Resource Include="Images\ManagerUI\InventoryDelete.png" />
+    <Resource Include="Images\ManagerUI\InventoryFiltering1.png" />
+    <Resource Include="Images\ManagerUI\InventoryQuantitySelector.png" />
+    <Resource Include="Images\ManagerUI\logo.jpg" />
+    <Resource Include="Images\ManagerUI\ManageInventory1.png" />
+    <Resource Include="Images\ManagerUI\ManageInventory2.png" />
+    <Resource Include="Images\ManagerUI\ManageInventory3.png" />
+    <Resource Include="Images\ManagerUI\MedicineAddEdit1.png" />
+    <Resource Include="Images\ManagerUI\MedicineAddEdit2.png" />
+    <Resource Include="Images\ManagerUI\MedicineDelete.png" />
+    <Resource Include="Images\ManagerUI\MedicineRejection.png" />
+    <Resource Include="Images\ManagerUI\MedicineSendValidation.png" />
     <Resource Include="Images\ManagerUI\notifications.png" />
+    <Resource Include="Images\ManagerUI\PlanningRenovation1.png" />
+    <Resource Include="Images\ManagerUI\PlanningRenovation2.png" />
     <Resource Include="Images\ManagerUI\plus.png" />
+    <Resource Include="Images\ManagerUI\QuantitySelect1.png" />
+    <Resource Include="Images\ManagerUI\QuantitySelect2.png" />
+    <Resource Include="Images\ManagerUI\RenovationPlanning1.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding1.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding2.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding3.png" />
+    <Resource Include="Images\ManagerUI\RoomAdding4.png" />
+    <Resource Include="Images\ManagerUI\RoomDeleting.png" />
     <Resource Include="Images\ManagerUI\Rooms.png" />
     <Resource Include="Images\ManagerUI\staff.png" />
+    <Resource Include="Images\ManagerUI\StaffReport3.png" />
     <Resource Include="Images\ManagerUI\testingAccount.png" />
     <Resource Include="Images\PatientUI\addIcon.png" />
     <Resource Include="Images\PatientUI\addIconBlack.png" />

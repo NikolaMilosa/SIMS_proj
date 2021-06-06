@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Model;
 using Repository.InventoryPersistance;
+using Repository.PeriodPersistance;
 using Repository.TransferRequestPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
@@ -31,6 +32,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private IInventoryRepository _inventoryRepository;
         private ITransferRequestRepository _transferRequestRepository;
+        private IPeriodRepository _periodRepository;
 
         #endregion
 
@@ -129,6 +131,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _inventoryRepository = injector.InventoryRepository;
             _transferRequestRepository = injector.TransferRepository;
+            _periodRepository = injector.PeriodRepository;
 
             SenderRoom = sender;
             ReceiverRoom = receiver;
@@ -155,6 +158,26 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     transferRequest.InventoryId.Equals(_processedItem.Id))
                     MaxInventory -= transferRequest.Quantity;
             }
+
+            if (_processedItem.Name.ToLower().Equals("bed") && SenderRoom.RoomType == RoomType.BED_ROOM)
+            {
+                var periods = _periodRepository.GetValues();
+                var treatmentsInRoom = 0;
+                foreach (var period in periods)
+                {
+                    if (period.Treatment == null)
+                    {
+                        continue;
+                    }
+
+                    if (period.Treatment.StartDate > DateTime.Now && period.Treatment.RoomId == SenderRoom.Id)
+                    {
+                        treatmentsInRoom++;
+                    }
+                }
+
+                MaxInventory -= treatmentsInRoom;
+            }
         }
 
         private void SetDefinitionText()
@@ -166,7 +189,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             if (MaxInventory != _processedItem.Quantity)
             {
-                DefinitionText += "\nThis room has '" + (_processedItem.Quantity - MaxInventory) + "' units scheduled for transfer.";
+                DefinitionText += "\nThis room has '" + (_processedItem.Quantity - MaxInventory) + "' units occupied.";
             }
 
         }

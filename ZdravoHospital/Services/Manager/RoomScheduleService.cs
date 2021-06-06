@@ -10,6 +10,7 @@ using Repository.RoomPersistance;
 using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
+using ZdravoHospital.GUI.PatientUI.Logics;
 
 namespace ZdravoHospital.Services.Manager
 {
@@ -131,8 +132,17 @@ namespace ZdravoHospital.Services.Manager
             {
                 ChangeRoomAvailability(roomSchedule.RoomId, true);
             }
-            GetMutex().ReleaseMutex();
+
+            if (roomSchedule.WillBeMerged)
+            {
+                var mergeService = new MergeRoomService(_injector);
+                mergeService.MergeRooms(_roomRepository.GetById(roomSchedule.MergingRoomId),
+                    _roomRepository.GetById(roomSchedule.RoomId));
+                OnRoomChanged();
+            }
+
             _roomScheduleRepository.DeleteByEquality(roomSchedule);
+            GetMutex().ReleaseMutex();
         }
 
         private void ChangeRoomAvailability(int roomId, bool newValue)
@@ -153,13 +163,20 @@ namespace ZdravoHospital.Services.Manager
                 return false;
             }
 
-
             if (_roomRepository.GetById(roomSchedule.RoomId) == null)
             {
                 _roomScheduleRepository.DeleteByRoomId(roomSchedule.RoomId);
                 return false;
             }
 
+            if (roomSchedule.WillBeMerged)
+            {
+                if (_roomRepository.GetById(roomSchedule.MergingRoomId) == null)
+                {
+                    _roomScheduleRepository.DeleteByEquality(roomSchedule);
+                    return false;
+                }
+            }
             return true;
         }
 

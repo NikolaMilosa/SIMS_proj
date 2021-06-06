@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -21,22 +22,11 @@ namespace ZdravoHospital.GUI.Secretary
     /// </summary>
     public partial class EditShiftPage : Page
     {
-        public Doctor SelectedDoctor { get; set; }
-        public ShiftDTO ShiftDTO { get; set; }
-        public ShiftService ShiftService { get; set; } 
         public EditShiftPage(Doctor selectedDoctor)
         {
             InitializeComponent();
-            this.DataContext = this;
-            SelectedDoctor = selectedDoctor;
-            ShiftDTO = new ShiftDTO();
-            ShiftService = new ShiftService();
+            this.DataContext = new EditShiftVM(selectedDoctor);
         }
 
-        private void FinishButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShiftService.ProcessShiftCreation(SelectedDoctor, ShiftDTO);
-            NavigationService.Navigate(new DoctorsView());
-        }
     }
 }

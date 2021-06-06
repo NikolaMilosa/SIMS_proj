@@ -24,9 +24,9 @@ namespace ZdravoHospital.GUI.ManagerUI.View
         public ManagerWindow(string au)
         {
             InitializeComponent();
-            currentViewModel = new ManagerWindowViewModel(au);
+            currentViewModel = ManagerWindowViewModel.GetDashboard();
+            currentViewModel.Initialize(au);
             this.DataContext = currentViewModel;
-            RoomsButton.Focus();
         }
     }
 }

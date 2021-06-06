@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Repository.CredentialsPersistance;
 using Repository.DoctorPersistance;
 using Repository.EmployeePersistance;
+using Repository.FeedbackPersistance;
 using Repository.InventoryPersistance;
 using Repository.MedicinePersistance;
 using Repository.MedicineRecensionPersistance;
@@ -46,6 +47,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         public static ManagerWindowViewModel GetDashboard()
         {
+            if (dashboard == null)
+                dashboard = new ManagerWindowViewModel();
             return dashboard;
         }
 
@@ -60,6 +63,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         #region Fields
 
         private string activeManager;
+        private Employee currentEmployee;
         private Visibility _roomTableVisibility;
         private Visibility _inventoryTableVisibility;
         private Visibility _medicineTableVisibility;
@@ -88,6 +92,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private int _selectedMedicineIndex;
 
         private bool _shouldFocusTable;
+
+        private static Help _help;
 
         #endregion
 
@@ -246,41 +252,16 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand<KeyEventArgs> TableCommand { get; set; }
         public MyICommand<KeyEventArgs> SubMenuCommand { get; set; }
         public MyICommand ShowHelpCommand { get; set; }
+        public MyICommand DoctorReportCommand { get; set; }
+        public MyICommand<object> LogoutCommand { get; set; }
+        public MyICommand FeedbackCommand { get; set; }
 
         #endregion
 
 
-        public ManagerWindowViewModel(string activeUser)
+        private ManagerWindowViewModel()
         {
-            dashboard = this;
-            _employeeRepository = new EmployeeRepository();
-            var currManager = _employeeRepository.GetById(activeUser);
-            ActiveManager = "Welcome, " + currManager.Name;
-
-            InstantiateInjector();
-            OpenDataBase();
-            SetObservables();
-            TurnOffTables();
-
-            ShowRoomCommand = new MyICommand(OnShowRooms);
-            ShowInventoryCommand = new MyICommand(OnShowInventory);
-            ShowMedicineCommand = new MyICommand(OnShowMedicine);
-            AddRoomCommand = new MyICommand(OnAddRoom);
-            AddInventoryCommand = new MyICommand(OnAddInventory);
-            AddMedicineCommand = new MyICommand(OnAddMedicine);
-            ManageInventoryCommand = new MyICommand(OnManageInventory);
-            PlanRenovationCommand = new MyICommand(OnPlanRenovation);
-            TableCommand = new MyICommand<KeyEventArgs>(OnTableKey);
-            SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
-            ShowHelpCommand = new MyICommand(OnShowHelp);
-
-            _roomMutex = new Mutex();
-            _inventoryMutex = new Mutex();
-            _transferMutex = new Mutex();
-
-            _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel(_injector);
-
-            RunAllTasks();
+            
         }
 
         #region Private functions
@@ -356,7 +337,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 RoomScheduleRepository = new RoomScheduleRepository(),
                 SpecializationRepository = new SpecializationRepository(),
                 SurveyRepository = new SurveyRepository(),
-                TransferRepository = new TransferRequestRepository()
+                TransferRepository = new TransferRequestRepository(),
+                FeedbackRepository = new FeedbackRepository()
             };
         }
 
@@ -364,16 +346,39 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         #region Public functions
 
-        public string FindVisibleDataGrid()
+        public void Initialize(string activeUser)
         {
-            if (RoomTableVisibility == Visibility.Visible)
-                return "roomTable";
-            else if (InventoryTableVisibility == Visibility.Visible)
-                return "inventoryTable";
-            else if (MedicineTableVisibility == Visibility.Visible)
-                return "medicineTable";
-            else
-                return "initialTable";
+            _employeeRepository = new EmployeeRepository();
+            currentEmployee = _employeeRepository.GetById(activeUser);
+            ActiveManager = "Welcome, " + currentEmployee.Name;
+
+            InstantiateInjector();
+            OpenDataBase();
+            SetObservables();
+            TurnOffTables();
+
+            ShowRoomCommand = new MyICommand(OnShowRooms);
+            ShowInventoryCommand = new MyICommand(OnShowInventory);
+            ShowMedicineCommand = new MyICommand(OnShowMedicine);
+            AddRoomCommand = new MyICommand(OnAddRoom);
+            AddInventoryCommand = new MyICommand(OnAddInventory);
+            AddMedicineCommand = new MyICommand(OnAddMedicine);
+            ManageInventoryCommand = new MyICommand(OnManageInventory);
+            PlanRenovationCommand = new MyICommand(OnPlanRenovation);
+            TableCommand = new MyICommand<KeyEventArgs>(OnTableKey);
+            SubMenuCommand = new MyICommand<KeyEventArgs>(OnSubMenuKey);
+            ShowHelpCommand = new MyICommand(OnShowHelp);
+            DoctorReportCommand = new MyICommand(OnDoctorReport);
+            LogoutCommand = new MyICommand<object>(OnLogout);
+            FeedbackCommand = new MyICommand(OnFeedback);
+
+            _roomMutex = new Mutex();
+            _inventoryMutex = new Mutex();
+            _transferMutex = new Mutex();
+
+            _inventoryManagementDialogViewModel = new InventoryManagementDialogViewModel(_injector);
+
+            RunAllTasks();
         }
 
         #endregion
@@ -499,10 +504,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 e.Handled = true;
             }
-            else if (e.Key == Key.Right)
-            {
-                e.Handled = true;
-            }
             else if (e.Key == Key.Enter)
             {
                 HandleEnterClick();
@@ -548,7 +549,29 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private void OnShowHelp()
         {
-            dialog = new Help();
+            if (_help == null || !_help.IsVisible)
+            {
+                _help = new Help();
+                _help.Show();
+            }
+        }
+
+        private void OnDoctorReport()
+        {
+            dialog = new DoctorReportDialog(_injector);
+            dialog.ShowDialog();
+        }
+
+        private void OnLogout(object window)
+        {
+            Window newWindow = new MainWindow();
+            newWindow.Show();
+            (window as Window).Close();
+        }
+
+        private void OnFeedback()
+        {
+            dialog = new FeedbackDialog(_injector, currentEmployee.Username);
             dialog.ShowDialog();
         }
 
@@ -619,6 +642,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         {
             if (InventoryTableVisibility == Visibility.Visible)
             {
+                var itemsVisual = CollectionViewSource.GetDefaultView(Inventory);
+                itemsVisual.Filter = o => true;
                 dialog = new InventoryFilteringDialog();
                 dialog.ShowDialog();
             }

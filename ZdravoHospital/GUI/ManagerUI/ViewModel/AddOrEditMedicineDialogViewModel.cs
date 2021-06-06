@@ -140,7 +140,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
             else
             {
-                _medicineService.EditMedicine(_passedMedicine,Medicine);
+                _medicineService.EditMedicine(Medicine);
             }
         }
 

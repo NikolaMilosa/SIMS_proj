@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Model;
+using Repository.PeriodPersistance;
 using Repository.RoomPersistance;
+using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
 using ZdravoHospital.GUI.ManagerUI.View;
@@ -26,9 +29,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private DateTime _startDate;
         private DateTime _endDate;
 
-        private RoomScheduleService _roomScheduleService;
+        private InjectorDTO _injector;
 
+        private RoomScheduleService _roomScheduleService;
         private IRoomRepository _roomRepository;
+        private IRoomScheduleRepository _roomScheduleRepository;
+        private IPeriodRepository _periodRepository;
 
         private bool _isDropDownOpenCombo;
         private int _selectedRoomIndex;
@@ -39,12 +45,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         private Room _splitCreatedRoom;
         private string _roomButtonContent;
 
-        private InjectorDTO _injector;
-
         private string _labelText;
-
         private MyICommand _splitCommand;
 
+        private ObservableCollection<Room> _mergeRooms;
+        private Room _mergeSelectedRoom;
+        private int _mergeSelectedRoomIndex;
+        private bool _mergeIsDropDownOpenCombo;
         #endregion
 
         #region Properties
@@ -66,6 +73,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 _selectedRoom = value;
                 RoomSchedule = _roomScheduleService.GetRoomSchedule(_selectedRoom);
+
+                FillMerged();
+
                 OnPropertyChanged();
             }
         }
@@ -195,6 +205,50 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        public ObservableCollection<Room> MergeRooms
+        {
+            get => _mergeRooms;
+            set
+            {
+                _mergeRooms = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Room MergeSelectedRoom
+        {
+            get => _mergeSelectedRoom;
+            set
+            {
+                _mergeSelectedRoom = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int MergeSelectedRoomIndex
+        {
+            get => _mergeSelectedRoomIndex;
+            set
+            {
+                _mergeSelectedRoomIndex = value;
+                if (_mergeSelectedRoomIndex != 0)
+                {
+                    OnSplitButtonDestroy();
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public bool MergeIsDropDownOpenCombo
+        {
+            get => _mergeIsDropDownOpenCombo;
+            set
+            {
+                _mergeIsDropDownOpenCombo = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -203,6 +257,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
         public MyICommand<KeyEventArgs> ComboBoxCommand { get; set; }
         public MyICommand<KeyEventArgs> StartDateCommand { get; set; }
         public MyICommand<KeyEventArgs> EndDateCommand { get; set; }
+        public MyICommand<KeyEventArgs> MergeComboBoxCommand { get; set; }
 
         public MyICommand SplitRoomCommand
         {
@@ -225,6 +280,9 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _roomScheduleService = new RoomScheduleService(injector);
             _roomRepository = injector.RoomRepository;
+            _roomScheduleRepository = injector.RoomScheduleRepository;
+            _periodRepository = injector.PeriodRepository;
+
             Rooms = new ObservableCollection<Room>(_roomRepository.GetValues());
             StartDate = DateTime.Today;
 
@@ -233,6 +291,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             StartDateCommand = new MyICommand<KeyEventArgs>(OnStartCommand);
             EndDateCommand = new MyICommand<KeyEventArgs>(OnEndCommand);
             SplitRoomCommand = new MyICommand(OnSplitButtonCreate);
+            MergeComboBoxCommand = new MyICommand<KeyEventArgs>(OnMergeCombo);
         }
 
         #region Button functions
@@ -282,6 +341,20 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 _roomScheduleService.CreateAndScheduleRenovationStart(roomScheduleForSplitRoom);
 
                 ManagerWindowViewModel.GetDashboard().OnRoomsChanged(this, EventArgs.Empty);
+            }
+            else if (MergeSelectedRoomIndex != 0)
+            {
+                var roomMergingSchedule = new RoomSchedule()
+                {
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    RoomId = MergeSelectedRoom.Id,
+                    MergingRoomId = SelectedRoom.Id,
+                    ScheduleType = ReservationType.RENOVATION,
+                    WillBeMerged = true
+                };
+
+                _roomScheduleService.CreateAndScheduleRenovationStart(roomMergingSchedule);
             }
         }
 
@@ -348,6 +421,41 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             }
         }
 
+        private void OnMergeCombo(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                MergeIsDropDownOpenCombo = (MergeIsDropDownOpenCombo == false) ? true : false;
+                e.Handled = true;
+                if (!MergeIsDropDownOpenCombo && !MergeSelectedRoom.Name.Equals("No room"))
+                {
+                    OnSplitButtonDestroy();
+                }
+            }
+            else if (e.Key == Key.Down)
+            {
+                if (MergeSelectedRoomIndex < MergeRooms.Count - 1 && MergeIsDropDownOpenCombo)
+                {
+                    MergeSelectedRoomIndex += 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                if (MergeSelectedRoomIndex > 0 && MergeIsDropDownOpenCombo)
+                {
+                    MergeSelectedRoomIndex -= 1;
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Tab)
+            {
+                MergeIsDropDownOpenCombo = false;
+            }
+        }
+
         #endregion
 
         #region Event handler
@@ -358,6 +466,52 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             LabelText = "Added! (" + SplitCreatedRoom.Id + ")";
             RoomButtonContent = "Clear room";
             SplitRoomCommand = new MyICommand(OnSplitButtonDestroy);
+            MergeSelectedRoomIndex = 0;
+        }
+
+        #endregion
+
+        #region Private functions
+
+        private void FillMerged()
+        {
+            MergeRooms = new ObservableCollection<Room>(Rooms);
+            MergeRooms.Remove(_selectedRoom);
+            Room dummy = new Room()
+            {
+                Name = "No room",
+                Id = 0
+            };
+            MergeRooms.Insert(0, dummy);
+
+            var roomSchedule = _roomScheduleRepository.GetValues();
+            foreach (var instance in roomSchedule)
+            {
+                if (instance.WillBeMerged)
+                {
+                    var temp = MergeRooms.ToList();
+                    temp.RemoveAll(val => val.Id == instance.RoomId);
+                    MergeRooms = new ObservableCollection<Room>(temp);
+                }
+            }
+
+            var periods = _periodRepository.GetValues();
+            foreach (var instance in periods)
+            {
+                if (instance.Treatment == null)
+                    continue;
+
+                if (instance.Treatment.StartDate > DateTime.Now || 
+                    (instance.Treatment.StartDate < DateTime.Now && 
+                     DateTime.Now < instance.Treatment.StartDate.AddMinutes(instance.Treatment.Duration)))
+                {
+                    var temp = MergeRooms.ToList();
+                    temp.RemoveAll(val => val.Id == instance.Treatment.RoomId);
+                    MergeRooms = new ObservableCollection<Room>(temp);
+                }
+            }
+
+            MergeSelectedRoomIndex = 0;
         }
 
         #endregion

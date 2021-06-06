@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Printing;
 using System.Text;
 using System.Text.RegularExpressions;
 using Model;
 using Repository.InventoryPersistance;
+using Repository.PeriodPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
@@ -18,6 +20,7 @@ namespace ZdravoHospital.Services.Manager
         private IRoomRepository _roomRepository;
         private IRoomInventoryRepository _roomInventoryRepository;
         private IInventoryRepository _inventoryRepository;
+        private IPeriodRepository _periodRepository;
 
         #endregion
 
@@ -40,15 +43,20 @@ namespace ZdravoHospital.Services.Manager
         public InventoryService(InjectorDTO injector)
         {
             InventoryChanged += ManagerWindowViewModel.GetDashboard().OnInventoryChanged;
-
-            //TODO: add injector
+            
             _roomInventoryRepository = injector.RoomInventoryRepository;
             _roomRepository = injector.RoomRepository;
             _inventoryRepository = injector.InventoryRepository;
+            _periodRepository = injector.PeriodRepository;
         }
 
         public bool DeleteInventory(Inventory inventory)
         {
+            if (!CheckIfPossible(inventory))
+            {
+                return false;
+            }
+
             _roomInventoryRepository.DeleteByInventoryId(inventory.Id);
             _inventoryRepository.DeleteById(inventory.Id);
 
@@ -149,6 +157,28 @@ namespace ZdravoHospital.Services.Manager
             }
 
             OnInventoryChanged();
+        }
+
+        private bool CheckIfPossible(Inventory inv)
+        {
+            if (inv.Name.ToLower().Equals("bed"))
+            {
+                var periods = _periodRepository.GetValues();
+                foreach (var period in periods)
+                {
+                    if (period.Treatment == null)
+                    {
+                        continue;
+                    }
+
+                    if (period.Treatment.StartDate > DateTime.Now)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

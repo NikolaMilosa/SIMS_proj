@@ -13,6 +13,8 @@ namespace Model
         public DateTime EndTime { get; set; }
         public int RoomId { get; set; }
         public ReservationType ScheduleType { get; set; }
+        public bool WillBeMerged { get; set; }
+        public int MergingRoomId { get; set; }
 
 
         public void WaitStartRenovation(InjectorDTO injector)

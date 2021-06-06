@@ -1,5 +1,6 @@
 [
   {
+    "ShouldDisplayManagerWizard": false,
     "Name": "Nikola",
     "Surname": "Milosavljevic",
     "Email": "milosavljevic.ra5.2018@uns.ac.rs",

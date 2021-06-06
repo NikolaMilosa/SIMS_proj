@@ -18,51 +18,28 @@ using Model;
 using Newtonsoft.Json;
 using ZdravoHospital.GUI.Secretary.DTO;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
     /// <summary>
     /// Interaction logic for PatientRegistrationPage.xaml
     /// </summary>
-    public partial class PatientRegistrationPage : Page, INotifyPropertyChanged
+    public partial class PatientRegistrationPage : Page
     {
-        private PatientDTO _patientDTO;
-        public PatientDTO PatientDTO
-        {
-            get => _patientDTO;
-            set
-            {
-                _patientDTO = value;
-                OnPropertyChanged("PatientDTO");
-            }
-        }
-        public Patient PatientDEMO { get; set; }
-
-        public PatientRegistrationService PatientService { get; set; }
-        public Thread DemoThread { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-
+        
         public PatientRegistrationPage(bool isDemoMode = false)
         {
             InitializeComponent();
-            this.DataContext = this;
-            PatientDTO = new PatientDTO();
-            PatientService = new PatientRegistrationService();
-            PatientDEMO = PatientService.GetById("aca1999");
+            this.DataContext = new PatientRegistrationVM();
+            PatientDEMO = new PatientRegistrationService().GetById("aca1999");
             if (isDemoMode)
-                ExecuteDemo();
-            
+                ExecuteDemo(); 
         }
 
+        #region DEMO
+        public Patient PatientDEMO { get; set; }
+        public Thread DemoThread { get; set; }
         public void ExecuteDemo()
         {
             DemoThread = new Thread(CallDemoMethods);
@@ -97,6 +74,7 @@ namespace ZdravoHospital.GUI.Secretary
                 textBoxDemo(StreetNumberTextBox, PatientDEMO.Address.Number);
                 buttonDemo();
                 scrollToTop();
+                clearComponents();
                 executeCountdown();
             }
         }
@@ -151,7 +129,7 @@ namespace ZdravoHospital.GUI.Secretary
                     UsernameTextBox.IsReadOnly = true;
                     PasswordTextBox.IsReadOnly = true;
                     CountryTextBox.IsReadOnly = true;
-                    CitizenIdTextBox.IsReadOnly = true;
+                    CityTextBox.IsReadOnly = true;
                     PostalCodeTextBox.IsReadOnly = true;
                     StreetNameTextBox.IsReadOnly = true;
                     StreetNumberTextBox.IsReadOnly = true;
@@ -159,6 +137,36 @@ namespace ZdravoHospital.GUI.Secretary
                 }));
             }catch(Exception ex) { }
             
+        }
+
+        private void clearComponents()
+        {
+            try
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    FirstNameTextBox.Text = "";
+                    ParentsNameTextBox.Text = "";
+                    LastNameTextBox.Text = "";
+                    CitizenIdTextBox.Text = "";
+                    DateOfBirthPicker.SelectedDate = null;
+                    HealthCardNumberTextBox.Text = "";
+                    BloodTypeComboBox.SelectedIndex = -1;
+                    GenderComboBox.SelectedIndex = -1;
+                    MaritalStatusComboBox.SelectedIndex = -1;
+                    EmailTextBox.Text = "";
+                    PhoneNumberTextBox.Text = "";
+                    UsernameTextBox.Text = "";
+                    PasswordTextBox.Text = "";
+                    CountryTextBox.Text = "";
+                    CityTextBox.Text = "";
+                    PostalCodeTextBox.Text = "";
+                    StreetNameTextBox.Text = "";
+                    StreetNumberTextBox.Text = "";
+                }));
+            }
+            catch (Exception ex) { }
+
         }
 
         private void textBoxDemo(TextBox textBox, string value)
@@ -271,13 +279,6 @@ namespace ZdravoHospital.GUI.Secretary
             
         }
 
-
-        private void FinishButton_Click(object sender, RoutedEventArgs e)
-        {
-            PatientService.processPatientRegistration(PatientDTO);
-            NavigationService.Navigate(new PatientsView());
-        }
-
         private void StopDemoButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -287,5 +288,7 @@ namespace ZdravoHospital.GUI.Secretary
            
             NavigationService.Navigate(new DemoPage());
         }
+
+        #endregion
     }
 }

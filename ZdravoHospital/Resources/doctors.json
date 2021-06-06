@@ -15,28 +15,43 @@
           "ScheduledShift": 1,
           "ShiftStart": "2021-05-31T00:00:00",
           "IsSingleDayShift": true
+        },
+        {
+          "ScheduledShift": 1,
+          "ShiftStart": "2021-06-02T00:00:00",
+          "IsSingleDayShift": true
+        },
+        {
+          "ScheduledShift": 3,
+          "ShiftStart": "2021-06-03T00:00:00",
+          "IsSingleDayShift": true
+        },
+        {
+          "ScheduledShift": 0,
+          "ShiftStart": "2021-06-01T00:00:00+02:00",
+          "IsSingleDayShift": true
         }
       ]
     },
     "NameSurnameSpecialization": "Marko Pantelic (Doctor)",
     "Name": "Marko",
     "Surname": "Pantelic",
-    "Email": null,
+    "Email": "markopantelic@gmail.com",
     "DateOfBirth": "0001-01-01T00:00:00",
-    "PhoneNumber": null,
+    "PhoneNumber": "+38155466533",
     "Username": "pantela",
-    "ParentsName": null,
+    "ParentsName": "Panta",
     "MaritalStatus": 0,
     "Gender": 0,
-    "CitizenId": null,
+    "CitizenId": "123123123123",
     "Address": {
-      "StreetName": null,
-      "Number": null,
+      "StreetName": "Neka ulica",
+      "Number": 12,
       "City": {
         "PostalCode": 0,
-        "Name": null,
+        "Name": "Neki grad",
         "Country": {
-          "Name": null
+          "Name": "Neka drzava"
         }
       }
     }
@@ -73,22 +88,22 @@
     "NameSurnameSpecialization": "Nikola Zigic (Cardio surgent)",
     "Name": "Nikola",
     "Surname": "Zigic",
-    "Email": null,
+    "Email": "nikolazigic@gmail.com",
     "DateOfBirth": "0001-01-01T00:00:00",
-    "PhoneNumber": null,
+    "PhoneNumber": "+38144451233",
     "Username": "zigara",
-    "ParentsName": null,
+    "ParentsName": "ziga",
     "MaritalStatus": 0,
     "Gender": 0,
-    "CitizenId": null,
+    "CitizenId": "141252363145",
     "Address": {
-      "StreetName": null,
-      "Number": null,
+      "StreetName": "Neka ulica",
+      "Number": 5,
       "City": {
         "PostalCode": 0,
-        "Name": null,
+        "Name": "Neki grad",
         "Country": {
-          "Name": null
+          "Name": "Neka drzava"
         }
       }
     }
@@ -114,22 +129,22 @@
     "NameSurnameSpecialization": "Milos Krasic (Neurology)",
     "Name": "Milos",
     "Surname": "Krasic",
-    "Email": null,
+    "Email": "miloskrasic@gmail.com",
     "DateOfBirth": "0001-01-01T00:00:00",
-    "PhoneNumber": null,
+    "PhoneNumber": "+381456785",
     "Username": "krasic",
-    "ParentsName": null,
+    "ParentsName": "miki",
     "MaritalStatus": 0,
     "Gender": 0,
-    "CitizenId": null,
+    "CitizenId": "336334552114",
     "Address": {
-      "StreetName": null,
-      "Number": null,
+      "StreetName": "Neka ulica",
+      "Number": 8,
       "City": {
         "PostalCode": 0,
-        "Name": null,
+        "Name": "Neki grad",
         "Country": {
-          "Name": null
+          "Name": "Neka drzava"
         }
       }
     }
@@ -150,22 +165,22 @@
     "NameSurnameSpecialization": "Dejan Stankovic (Neurology)",
     "Name": "Dejan",
     "Surname": "Stankovic",
-    "Email": null,
+    "Email": "dejanstankovic@gmail.com",
     "DateOfBirth": "0001-01-01T00:00:00",
-    "PhoneNumber": null,
+    "PhoneNumber": "+38166512345",
     "Username": "stankovic",
-    "ParentsName": null,
+    "ParentsName": "deki",
     "MaritalStatus": 0,
     "Gender": 0,
-    "CitizenId": null,
+    "CitizenId": "554744165997",
     "Address": {
-      "StreetName": null,
-      "Number": null,
+      "StreetName": "Neka ulica",
+      "Number": "Neki grad",
       "City": {
         "PostalCode": 0,
-        "Name": null,
+        "Name": 6,
         "Country": {
-          "Name": null
+          "Name": "Neka drzava"
         }
       }
     }

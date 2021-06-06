@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
+using Repository.PeriodPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
@@ -27,6 +28,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
         private IRoomRepository _roomRepository;
         private IRoomInventoryRepository _roomInventoryRepository;
+        private IPeriodRepository _periodRepository;
 
         private int _selectedIndex;
         private bool _isDropDownOpen;
@@ -68,6 +70,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     MinInventory = _transferRequestsService.GetScheduledInventoryForRoom(PassedInventory, _selectedRoom);
 
                     var roomInventory = _roomInventoryRepository.FindByBothIds(_selectedRoom.Id, PassedInventory.Id);
+
+                    var parts = SelectedInventory.Split("-");
+                    if (parts[1].Trim().ToLower().Equals("bed"))
+                    {
+                        MinInventory += GetTakenBeds();
+                    }
 
                     if (PassedInventory.InventoryType == InventoryType.DYNAMIC_INVENTORY && roomInventory != null)
                     {
@@ -162,8 +170,13 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
             _roomRepository = injector.RoomRepository;
             _roomInventoryRepository = injector.RoomInventoryRepository;
+            _periodRepository = injector.PeriodRepository;
 
-            Rooms = new List<Room>(_roomRepository.GetValues());
+            Rooms = _roomRepository.GetByType(RoomType.STORAGE_ROOM);
+            if (Rooms.Count == 0)
+            {
+                Rooms = _roomRepository.GetValues();
+            }
             SelectedInventory = ((new StringBuilder()).Append(PassedInventory.Id).Append(" - ").Append(PassedInventory.Name)).ToString();
 
             ConfirmCommand = new MyICommand(OnConfirm);
@@ -197,6 +210,33 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     SelectedIndex += 1;
                 }
             }
+        }
+
+        #endregion
+
+        #region Private functions
+
+        private int GetTakenBeds()
+        {
+            int ret = 0;
+
+            var periods = _periodRepository.GetValues();
+
+            foreach (var period in periods)
+            {
+                if (period.Treatment == null)
+                {
+                    continue;
+                }
+
+                if (period.Treatment.RoomId == SelectedRoom.Id &&
+                    period.Treatment.StartDate > DateTime.Now)
+                {
+                    ret++;
+                }
+            }
+
+            return ret;
         }
 
         #endregion

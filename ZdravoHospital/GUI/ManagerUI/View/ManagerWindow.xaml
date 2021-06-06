@@ -13,9 +13,6 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
-    <Window.Resources>
-        
-    </Window.Resources>
     <Grid Background="Beige" Height="720" Width="1600">
 
         <Grid.ColumnDefinitions>
@@ -86,6 +83,14 @@
                             </Image>
                         </StackPanel>
                     </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=RoomsButton}"/>
+                        </Style>
+                    </Button.Style>
+                    <i:Interaction.Behaviors>
+                        <wi:MyFocusBehaviour/>  
+                    </i:Interaction.Behaviors>
                 </Button>
 
                 <Button x:Name="StaffButton" Grid.Row="1" Background="#bec4c2" BorderThickness="0,1,0,0" Template="{StaticResource ManagerButtonTemplate}">
@@ -205,6 +210,9 @@
                             <DataTrigger Binding="{Binding ElementName=SubMenuInventory, Path=Visibility}" Value="Visible">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuStaff, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
@@ -249,6 +257,9 @@
                             <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuStaff, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
@@ -270,6 +281,54 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Grid>
+
+            <!-- Submenu for staff-->
+            <Grid x:Name="SubMenuStaff" Grid.Row="1" Height="480" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="1" x:Name="ExportPdfButton" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Doctor report" BorderThickness="1,1,0,0" Command="{Binding Path=DoctorReportCommand}"/>
+                <Button Grid.Row="2" x:Name="Feedback" FontSize="18" Background="#bec4c2" Template="{StaticResource ManagerButtonTemplate}" Content="Send feedback" BorderThickness="1,1,0,1" Command="{Binding Path=FeedbackCommand}"/>
+
+
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuRooms, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=SubMenuInventory, Path=Visibility}" Value="Visible">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=StaffButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=NotificationsButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=InventoryButton, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=Help, Path=IsFocused}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewKeyDown">
+                        <i:InvokeCommandAction Command="{Binding SubMenuCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Grid>
+
         </Grid>
 
         <!-- DataGrids -->
@@ -398,6 +457,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
                 <RowDefinition/>
+                <RowDefinition Height="150"/>
             </Grid.RowDefinitions>
 
             <Label Content="Controls :" FontSize="20" FontWeight="SemiBold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -488,6 +548,23 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Vertical">
+                    <Button Height="70" Width="200" x:Name="LogoutButton"  Template="{StaticResource ManagerButtonTemplate}" Content="Logout" FontSize="18" Margin="20"
+                            Command="{Binding LogoutCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                        <Button.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding FocusLogout}" Value="True">
+                                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=LogoutButton}"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
             </Grid>
         </Grid>
 

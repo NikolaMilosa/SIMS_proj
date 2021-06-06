@@ -1,4 +1,5 @@
-﻿using Repository.CredentialsPersistance;
+﻿using Model;
+using Repository.CredentialsPersistance;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +31,7 @@ namespace ZdravoHospital.GUI.Secretary
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-        public Model.Patient Patient { get; set; }
+        public Patient Patient { get; set; }
         private string _password;
         public string Password
         {

@@ -49,13 +49,13 @@
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                             <TextBlock Text="{Binding Name}" Margin="0,0,5,0" FontSize="16" FontFamily="Yu Gothic" FontWeight="SemiBold"></TextBlock>
                             <TextBlock Text="{Binding Surname}" FontSize="16" FontFamily="Yu Gothic" FontWeight="SemiBold"></TextBlock>
-                            <Button x:Name="UnblockButton" Click="UnblockButton_Click" FontFamily="Yu Gothic" FontSize="14" Foreground="Green" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Center" Visibility="{Binding RecentActions, Converter={StaticResource UnblockVisibilityConverter}}"> (unblock) </Button>
+                            <Button x:Name="UnblockButton" Click="UnblockButton_Click" Command="{Binding UnblockPatientCommand}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}" FontFamily="Yu Gothic" FontSize="14" Foreground="Green" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Center" Visibility="{Binding RecentActions, Converter={StaticResource UnblockVisibilityConverter}}"> (unblock) </Button>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
                             <materialDesign:PackIcon Kind="PersonCardDetails" Width="15" Height="15" Margin="0 0 5 2" VerticalAlignment="Bottom"></materialDesign:PackIcon>
                             <TextBlock Text="{Binding CitizenId}" Width="120" Margin="0,0,5,0" FontSize="14" FontFamily="Yu Gothic"></TextBlock>
-                            <Button x:Name="DetailsButton" Click="DetailsButton_Click" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="140,0,0,0">
+                            <Button x:Name="DetailsButton" Command="{Binding PatientDetailsCommand}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="140,0,0,0" DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}}">
                                 <materialDesign:PackIcon Kind="ArrowRight" Width="15" Height="15"></materialDesign:PackIcon>
                             </Button>
                         </StackPanel>
@@ -80,9 +80,10 @@
                     </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
+            
         </ListView>
         <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0" >
-            <Button x:Name="DeletePatientButton" Height="30" Background="Transparent" Click="DeletePatientButton_Click">
+            <Button x:Name="DeletePatientButton" Height="30" Background="Transparent" Command="{Binding DeletePatientCommand}">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Delete" Height="25" Width="25" VerticalAlignment="Center"></materialDesign:PackIcon>
                     <TextBlock Margin="5,0,0,0" FontSize="16" Text="Remove  " VerticalAlignment="Center"></TextBlock>

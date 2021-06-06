@@ -33,10 +33,5 @@
     "Username": "sima",
     "NotificationId": 3,
     "IsRead": false
-  },
-  {
-    "Username": "ljuba",
-    "NotificationId": 4,
-    "IsRead": true
   }
 ]

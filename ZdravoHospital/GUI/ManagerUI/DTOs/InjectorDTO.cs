@@ -4,6 +4,7 @@ using System.Text;
 using Repository.CredentialsPersistance;
 using Repository.DoctorPersistance;
 using Repository.EmployeePersistance;
+using Repository.FeedbackPersistance;
 using Repository.InventoryPersistance;
 using Repository.MedicinePersistance;
 using Repository.MedicineRecensionPersistance;
@@ -40,6 +41,6 @@ namespace ZdravoHospital.GUI.ManagerUI.DTOs
         public ISpecializationRepository SpecializationRepository { get; set; }
         public ISurveyRepository SurveyRepository { get; set; }
         public ITransferRequestRepository TransferRepository { get; set; }
-
+        public IFeedbackRepository FeedbackRepository { get; set; }
     }
 }

@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="ZdravoHospital.GUI.ManagerUI.View.WizardUserControls.WizardAddEditMedicine2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI.View.WizardUserControls"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="10,10,10,0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Height" Value="Auto"/>
+        </Style>
+        <Style TargetType="{x:Type Label}" x:Key="ColumnLabel">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="Auto"></Setter>
+            <Setter Property="Margin" Value="10,10,0,0"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Width="600" Height="700" Background="Beige">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" FontSize="48" Content="Medicine actions (2)" 
+               HorizontalAlignment="Left" VerticalAlignment="Center" Margin="75,0,0,0"/>
+
+        <Grid Grid.Row="1" Margin="20,20,20,0">
+            <StackPanel Orientation="Vertical">
+                <TextBlock>
+                    Adding and editing medication is done through the same dialog but the difference
+                    is in how it is activated. When opened it will look like following.
+                </TextBlock>
+                <Image Source="../../../../Images/ManagerUI/MedicineAddEdit2.png" Margin="20"></Image>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

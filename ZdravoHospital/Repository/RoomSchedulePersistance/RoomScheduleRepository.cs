@@ -78,7 +78,9 @@ namespace Repository.RoomSchedulePersistance
             var foundValue = values.Find(val => val.RoomId == roomSchedule.RoomId &&
                                                 val.StartTime.Equals(roomSchedule.StartTime) &&
                                                 val.EndTime.Equals(roomSchedule.EndTime) &&
-                                                val.ScheduleType == roomSchedule.ScheduleType);
+                                                val.ScheduleType == roomSchedule.ScheduleType &&
+                                                val.WillBeMerged == roomSchedule.WillBeMerged &&
+                                                val.MergingRoomId == roomSchedule.MergingRoomId);
             if (foundValue == null)
             {
                 return false;
@@ -103,7 +105,9 @@ namespace Repository.RoomSchedulePersistance
             values.RemoveAll(val => val.RoomId == roomSchedule.RoomId &&
                                     val.StartTime.Equals(roomSchedule.StartTime) &&
                                     val.EndTime.Equals(roomSchedule.EndTime) &&
-                                    val.ScheduleType == roomSchedule.ScheduleType);
+                                    val.ScheduleType == roomSchedule.ScheduleType &&
+                                    val.WillBeMerged == roomSchedule.WillBeMerged &&
+                                    val.MergingRoomId == roomSchedule.MergingRoomId);
             Save(values);
             GetMutex().ReleaseMutex();
         }

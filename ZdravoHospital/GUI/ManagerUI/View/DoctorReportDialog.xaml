@@ -1,0 +1,178 @@
+﻿<Window x:Class="ZdravoHospital.GUI.ManagerUI.View.DoctorReportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.ManagerUI.View"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:wi="clr-namespace:ZdravoHospital.GUI.ManagerUI.Commands"
+        mc:Ignorable="d"
+        Title="Doctor report"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="Beige" Width="700" Height="800">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="0.7*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0"
+               Content="Doctor :"/>
+        <ComboBox Grid.Row="0" Grid.Column="1"
+                  FontSize="18"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Left"
+                  Margin="20,0,0,0"
+                  Width="300"
+                  SelectedIndex="{Binding SelectedIndex}"
+                  SelectedItem="{Binding SelectedDoctor}"
+                  ItemsSource="{Binding Doctors}"
+                  IsDropDownOpen="{Binding IsDropDownOpen}"
+                  x:Name="DoctorComboBox">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}, {1}">
+                                <Binding Path="Name"/>
+                                <Binding Path="SpecialistType.SpecializationName"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding ComboBoxCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+
+        <Label Grid.Row="1" Grid.Column="0"
+               Content="Start date:"/> 
+
+        <DatePicker Grid.Row="1" Grid.Column="1"
+                    FontSize="18"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Width="300"
+                    Margin="20,0,0,0"
+                    DisplayDateStart="{x:Static sys:DateTime.Today}"
+                    SelectedDate="{Binding StartDate}"
+                    IsDropDownOpen="{Binding IsDropDownOpenStartPicker}"
+                    x:Name="FirstPicker">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding StartDateCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DatePicker>
+
+        <Label Grid.Row="2" Grid.Column="0"
+               Content="End date:"/>
+
+        <DatePicker Grid.Row="2" Grid.Column="1"
+                    FontSize="18"
+                    HorizontalAlignment="Left"
+                    Margin="20,0,0,0"
+                    Width="300"
+                    VerticalAlignment="Center"
+                    x:Name="SecondPicker"
+                    DisplayDateStart="{Binding ElementName=FirstPicker, Path=SelectedDate}"
+                    SelectedDate="{Binding EndDate}"
+                    IsDropDownOpen="{Binding IsDropDownOpenEndPicker}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding EndDateCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DatePicker>
+
+
+        <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="20" FontSize="18" Background="Transparent" AutoGenerateColumns="False"
+                  ItemsSource="{Binding DoctorReport}"
+                  AlternatingRowBackground="LightBlue" 
+                  RowBackground="LightYellow"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Patient name" Binding="{Binding PatientName}"/>
+                <DataGridTextColumn Header="Room number" Binding="{Binding RoomNumber}"/>
+                <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Date}"/>
+            </DataGrid.Columns>
+            <i:Interaction.Behaviors>
+                <wi:MyBehavior/>
+            </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewKeyDown">
+                    <i:InvokeCommandAction Command="{Binding TableCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+
+
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="ConfirmButton" Grid.Column="0" Template="{StaticResource ManagerButtonTemplate}"
+                    Background="#bec4c2" FontSize="18" Content="Export" Height="52" Width="105" Margin="0,0,20,0" HorizontalAlignment="Right" Command="{Binding ConfirmCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=DoctorComboBox, Path=SelectedIndex}" Value="-1">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding DoctorReport.Count}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FocusExport}" Value="True">
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=ConfirmButton}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction MethodName="Close"
+                                            TargetObject="{Binding RelativeSource={RelativeSource
+                                                  Mode=FindAncestor,
+                                                  AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="CancelButton" Grid.Column="1" Background="beige" FontSize="18" Content="Cancel" Height="52" Width="105" HorizontalAlignment="Left" Margin="20,0,20,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:CallMethodAction MethodName="Close"
+                                            TargetObject="{Binding RelativeSource={RelativeSource
+                                                  Mode=FindAncestor,
+                                                  AncestorType=Window}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+        </Grid>
+
+    </Grid>
+</Window>
