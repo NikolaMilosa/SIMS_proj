@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Model;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -130,9 +131,19 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            bool success = PeriodsService.ProcessPeriodCreation(PeriodDTO);
-            if(success)
-                NavigationService.Navigate(new SecretaryPeriodsPage());
+            if(PeriodDTO.Doctor == null || PeriodDTO.Patient == null || PeriodDTO.Room == null)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Invalid request", "Please select preferred entities from lists above.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+            else
+            {
+                bool success = PeriodsService.ProcessPeriodCreation(PeriodDTO);
+                if (success)
+                    NavigationService.Navigate(new SecretaryPeriodsPage());
+            }
+            
         }
 
         public void ExecuteDemo()
