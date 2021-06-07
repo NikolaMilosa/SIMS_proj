@@ -299,5 +299,37 @@
     "ParentReferralId": -1,
     "ChildReferralId": -1,
     "Treatment": null
+  },
+  {
+    "PeriodId": 24,
+    "StartTime": "2021-06-08T00:37:40.3776371+02:00",
+    "Duration": 60,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 100,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 25,
+    "StartTime": "2021-06-07T19:37:40.3776371+02:00",
+    "Duration": 300,
+    "PeriodType": 0,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 601,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": true,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
+    "Treatment": null
   }
 ]
