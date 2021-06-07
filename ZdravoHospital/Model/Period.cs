@@ -26,9 +26,10 @@ namespace Model
         public ObservableCollection<Model.MovePeriod> MovePeriods { get; set; }
         
 
-        public Period() 
+        public Period()
         {
-
+            ChildReferralId = -1;
+            ParentReferralId = -1;
         }
 
         public Period(DateTime startTime, int duration, PeriodType periodType, string patientUsername, string doctorUsername, int roomId)
