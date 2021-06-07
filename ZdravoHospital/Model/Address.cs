@@ -19,5 +19,10 @@ namespace Model
         {
             this.City = new City();
         }
+
+        public override string ToString()
+        {
+            return StreetName + " " + Number + ", " + City.PostalCode + " " + City.Name + ", " + City.Country.Name;
+        }
     }
 }

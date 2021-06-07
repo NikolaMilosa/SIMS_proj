@@ -7,209 +7,236 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PatientInfoPage">
-    <Grid>
+    <Grid Background="{StaticResource DarkGray}">
         <DockPanel>
             <StackPanel DockPanel.Dock="Top"
                     Orientation="Horizontal"
-                    Height="80"
                         Background="Black">
-                <Button DockPanel.Dock="Bottom"
-                    Content="Back"
-                    Padding="10" 
-                    Width="100"
-                    FontSize="20"
-                    Name="BackButton"
-                    Margin="80, 15"
-                    Click="BackButton_Click"/>
+                <Button Grid.Row="1" Grid.Column="1"
+                        Margin="100, 0, 0, 15"
+                            Content="Back"
+                            Width="100"
+                            Style="{StaticResource BlueButton}"
+                            HorizontalAlignment="Right"/>
             </StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0"
+                <Grid Grid.Column="0"
                         Margin="70, 20">
-                    <TextBlock FontSize="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" FontSize="20" Foreground="White" Text="First name:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.Name}"/>
+                    <TextBlock Grid.Row="1" FontSize="20" Foreground="White" Text="Parents name:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.ParentsName}"/>
+                    <TextBlock Grid.Row="2" FontSize="20" Foreground="White" Text="Last name:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.Surname}"/>
+                    <TextBlock Grid.Row="3" FontSize="20" Foreground="White" Text="Gender:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.Gender}"/>
+                    <TextBlock Grid.Row="4" FontSize="20" Foreground="White" Text="Health card ID:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.HealthCardNumber}"/>
+                    <TextBlock Grid.Row="5" FontSize="20" Foreground="White" Text="Citizen ID:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.CitizenId}"/>
+                    <TextBlock Grid.Row="6" FontSize="20" Foreground="White" Text="Date of birth:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="20" Foreground="White">
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="First name: {0}">
-                                <Binding Path="Patient.Name"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Parents name: {0}">
-                                <Binding Path="Patient.ParentsName"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Last name: {0}">
-                                <Binding Path="Patient.Surname"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Gender: {0}">
-                                <Binding Path="Patient.Gender"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Health card ID: {0}">
-                                <Binding Path="Patient.HealthCardNumber"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Citizen ID: {0}">
-                                <Binding Path="Patient.CitizenId"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Date of birth: {0}">
+                            <MultiBinding StringFormat="{}{0:dd.MM.yyyy.}">
                                 <Binding Path="Patient.DateOfBirth"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Blood type: {0}">
-                                <Binding Path="Patient.BloodType"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Marital status: {0}">
-                                <Binding Path="Patient.MaritalStatus"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Phone: {0}">
-                                <Binding Path="Patient.PhoneNumber"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Email: {0}">
-                                <Binding Path="Patient.Email"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <TextBlock FontSize="20">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Address: {0}">
-                                <Binding Path="Patient.Address"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Column="1"
-                            Margin="0, 0, 80, 0">
+                    <TextBlock Grid.Row="7" FontSize="20" Foreground="White" Text="Blood type:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.BloodType}"/>
+                    <TextBlock Grid.Row="8" FontSize="20" Foreground="White" Text="Married:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="8" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.MaritalStatus}"/>
+                    <TextBlock Grid.Row="9" FontSize="20" Foreground="White" Text="Phone:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="9" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.PhoneNumber}"/>
+                    <TextBlock Grid.Row="10" FontSize="20" Foreground="White" Text="Email:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="10" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.Email}"/>
+                    <TextBlock Grid.Row="11" FontSize="20" Foreground="White" Text="Address:" Margin="0, 0, 20, 10"/>
+                    <TextBlock Grid.Row="11" Grid.Column="1" FontSize="20" Foreground="White" Text="{Binding Patient.Address}"/>
+                </Grid>
+                <Grid Grid.Column="1"
+                            Margin="0, 0, 80, 80">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
                     <Button x:Name="AlergiesButton"
-                        Content="See alergies list"
-                        FontSize="20"
-                        Width="150"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Right"
+                        Content="See allergies list"
+                        Width="200"
+                            Style="{StaticResource BlueButton}"
                         Margin="30"
                             Click="AlergiesButton_Click"/>
+                    <Grid Grid.Row="1" Height="80" Background="Black">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Show:" Foreground="White" FontSize="23" VerticalAlignment="Center" Margin="20"/>
+                        <ComboBox Name="PeriodTypeComboBox"
+                                  Grid.Row="0"
+                              Grid.Column="1"
+                              Style="{StaticResource DarkComboBox}"
+                                  SelectionChanged="PeriodTypeComboBox_SelectionChanged"
+                              FontSize="20"
+                              Width="300"
+                                  HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"/>
+                    </Grid>
                     <ListView x:Name="PeriodsListView"
-                          Height="500"
+                              Background="black"
+                              Grid.Row="2"
+                              BorderBrush="Black"
+                               BorderThickness="1"
                               HorizontalContentAlignment="Stretch">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0"
-                                           FontSize="18"
-                                           TextAlignment="Center">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0:dd.MM.yyyy.} | {1} [Room: {2}] | Doctor: {3} {4}">
-                                                <Binding Path="Period.StartTime"/>
-                                                <Binding Path="Period.PeriodType"/>
-                                                <Binding Path="Period.RoomId"/>
-                                                <Binding Path="Doctor.Name"/>
-                                                <Binding Path="Doctor.Surname"/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Grid>
+                                <Border BorderBrush="#333333" BorderThickness="1" Margin="7">
+                                    <Grid Background="#050505">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0"
+                                               Grid.Row="0"
+                                               Foreground="White"
+                                           FontSize="20"
+                                               Margin="30, 7, 0, 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="Doctor: {0} {1}">
+                                                    <Binding Path="Doctor.Name"/>
+                                                    <Binding Path="Doctor.Surname"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="0"
+                                               Grid.Row="1"
+                                               Foreground="White"
+                                           FontSize="20"
+                                               Margin="30, 7, 0, 7">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:dd.MM.yyyy.} at {0:hh:mm} | {1} | Room: {2}">
+                                                    <Binding Path="Period.StartTime"/>
+                                                    <Binding Path="Period.PeriodType"/>
+                                                    <Binding Path="Period.RoomId"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                        <Button Grid.Row="0"
+                                            Grid.Column="1"
+                                            Grid.RowSpan="2"
+                                            Content="Read report"
+                                        Width="130"
+                                            Height="40"
+                                            Margin="0, 0, 20, 0"
+                                            Style="{StaticResource BlueButton}"
+                                            Click="PeriodDetailsButton_Click"
+                                            FontSize="20"/>
+                                    </Grid>
+                                </Border>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Button x:Name="PeriodDetailsButton"
-                                        Grid.Column="1"
-                                        Content="More info"
-                                        FontSize="18"
-                                        Width="100"
-                                            Click="PeriodDetailsButton_Click"/>
-                </StackPanel>
+                </Grid>
             </Grid>
         </DockPanel>
         <Grid Name="AlergiesPopUp"
                    Background="Transparent"
               Visibility="Hidden">
             <Grid Background="Black"
-                           Opacity="0.96">
+                           Opacity="0.95">
             </Grid>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0"
                        Background="Black">
-                    <Button DockPanel.Dock="Bottom"
-                    Content="Close"
-                    Padding="10" 
-                    Width="100"
-                    FontSize="20"
-                    Name="CloseAllergiesPopUpButton"
-                    Margin="80, 15"
-                    Click="CloseAllergiesPopUpButton_Click"/>
+                    <Button Grid.Row="0"
+                        Margin="100, 0, 0, 15"
+                            Content="Close"
+                            Click="CloseAllergiesPopUpButton_Click"
+                            Width="100"
+                            Style="{StaticResource BlueButton}"
+                            HorizontalAlignment="Left"/>
                 </StackPanel>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Background="{StaticResource DarkGray}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <StackPanel HorizontalAlignment="Center">
+                        <StackPanel HorizontalAlignment="Center" Margin="350, 0, 0, 0">
                             <TextBlock Text="Medicine allergies:"
-                                       FontSize="20"
+                                       FontSize="22"
                                        Margin="20"
                                         Foreground="White"
                                        TextAlignment="Center"/>
                             <ListBox x:Name="MedicineAllergiesList"
-                             Width="400"
-                                     FontSize="20"
+                             Width="500"
+                                 Background="Black"
+                                 Foreground="White"
+                                     FontSize="22"
                                      Height="700"
                              ItemsSource="{Binding Patient.MedicineAllergens}"
                                      Margin="100, 0"/>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Grid.Column="1">
+                    <StackPanel Grid.Column="1"  Margin="0, 0, 350, 0">
 
                         <TextBlock Text="Ingredient allergies:"
-                                       FontSize="20"
+                                       FontSize="22"
                                        Margin="20"
                                         Foreground="White"
                                        TextAlignment="Center"/>
                         <ListBox x:Name="IngredientAllergiesList"
-                             Width="400"
-                                     FontSize="20"
+                             Width="500"
+                                 Background="Black"
+                                 Foreground="White"
+                                     FontSize="22"
                                      Height="700"
                              ItemsSource="{Binding Patient.IngredientAllergens}"
                                      Margin="100, 0"/>

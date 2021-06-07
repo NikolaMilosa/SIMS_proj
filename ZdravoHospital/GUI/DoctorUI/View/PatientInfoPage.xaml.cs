@@ -3,6 +3,7 @@ using Repository.DoctorPersistance;
 using Repository.PeriodPersistance;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -32,6 +33,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             Patient = patient;
             PeriodDisplays = _periodController.GetPatientInfoPeriodDisplayDTOs(Patient.Username);
             PeriodsListView.ItemsSource = PeriodDisplays;
+
+            PeriodTypeComboBox.Items.Add("All");
+            PeriodTypeComboBox.Items.Add("Appointments");
+            PeriodTypeComboBox.Items.Add("Operations");
+            PeriodTypeComboBox.SelectedIndex = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,7 +64,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void PeriodDetailsButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedPeriod = PeriodsListView.SelectedItem as PatientInfoPeriodDisplayDTO;
+            SelectedPeriod = (sender as Button).DataContext as PatientInfoPeriodDisplayDTO;
             OnPropertyChanged("SelectedPeriod");
             PeriodDetailsPopUp.Visibility = Visibility.Visible;
         }
@@ -66,6 +72,18 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void ClosePeriodDetailsPopUpButton_Click(object sender, RoutedEventArgs e)
         {
             PeriodDetailsPopUp.Visibility = Visibility.Hidden;
+        }
+
+        private void PeriodTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selection = PeriodTypeComboBox.SelectedValue.ToString();
+
+            if (selection.Equals("All"))
+                PeriodsListView.ItemsSource = PeriodDisplays;
+            else if (selection.Equals("Appointments"))
+                PeriodsListView.ItemsSource = PeriodDisplays.Where(p => p.Period.PeriodType == PeriodType.APPOINTMENT);
+            else if (selection.Equals("Operations"))
+                PeriodsListView.ItemsSource = PeriodDisplays.Where(p => p.Period.PeriodType == PeriodType.OPERATION);
         }
     }
 }
