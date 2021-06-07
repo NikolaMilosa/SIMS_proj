@@ -59,7 +59,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <ListBox Height="60" Background="White" Margin="0,0,0,0" ItemsSource="{Binding NotificationDTO.CustomRecipients, Mode=TwoWay}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+            <ListBox Height="60" Background="White" Margin="0,0,0,0" ItemsSource="{Binding NotificationDTO.CustomRecipients, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>

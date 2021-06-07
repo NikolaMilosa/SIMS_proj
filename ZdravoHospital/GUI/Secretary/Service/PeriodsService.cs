@@ -71,25 +71,25 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.DOCTOR_UNAVAILABLE)
             {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Doctor unavailable", "Selected doctor is unavailable in selected period.");
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Doctor unavailable", "Selected doctor is unavailable.");
                 SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
                 SecretaryWindowVM.CustomMessageBox.Show();
             }
             else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.PATIENT_UNAVAILABLE)
             {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Patient unavailable", "Selected patient is unavailable in selected period.");
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Patient unavailable", "Selected patient is unavailable.");
                 SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
                 SecretaryWindowVM.CustomMessageBox.Show();
             }
             else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.ROOM_UNAVAILABLE)
             {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Room unavailable", "Selected room is unavailable in selected period.");
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Room unavailable", "Selected room is unavailable.");
                 SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
                 SecretaryWindowVM.CustomMessageBox.Show();
             }
             else
             {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Time unacceptable", "Selected time is not acceptable.");
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Bad time ", "Selected time is not acceptable.");
                 SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
                 SecretaryWindowVM.CustomMessageBox.Show();
             }

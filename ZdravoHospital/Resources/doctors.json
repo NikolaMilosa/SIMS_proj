@@ -4,19 +4,10 @@
       "SpecializationName": "Doctor"
     },
     "ShiftRule": {
-      "Vacations": [
-        {
-          "VacationStartTime": "2021-06-07T00:00:00+02:00",
-          "NumberOfFreeDays": 0
-        },
-        {
-          "VacationStartTime": "2021-06-07T00:00:00+02:00",
-          "NumberOfFreeDays": 0
-        }
-      ],
+      "Vacations": [],
       "RegularShift": {
-        "ScheduledShift": 0,
-        "ShiftStart": "2021-05-30T00:00:00+02:00",
+        "ScheduledShift": 1,
+        "ShiftStart": "2021-06-07T00:00:00+02:00",
         "IsSingleDayShift": false
       },
       "SingleDayShifts": [

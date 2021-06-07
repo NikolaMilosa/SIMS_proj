@@ -38,7 +38,7 @@
             <TextBlock x:Name="ime" Margin="8,0,0,0" >First name</TextBlock>
             <TextBox x:Name="FirstNameTextBox" Grid.Row="1" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8" Height="42" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
                 <TextBox.Text>
-                    <Binding Path="Guest.Name" Mode="OneWayToSource">
+                    <Binding Path="Guest.Name" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
                         <Binding.ValidationRules>
                             <val:LettersAndSpacesValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
