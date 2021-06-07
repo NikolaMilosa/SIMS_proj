@@ -135,6 +135,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                 return;
             SerializePeriod();
             ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
             PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }
 
