@@ -3,9 +3,9 @@
     "ReferralId": 0,
     "ReferringDoctorUsername": "pantela",
     "ReferredDoctorUsername": "zigara",
-    "DaysToUse": 6,
-    "Note": "qeqwe",
+    "DaysToUse": 5,
+    "Note": "Referral notes",
     "IsUsed": true,
-    "PeriodId": 13
+    "PeriodId": 23
   }
 ]

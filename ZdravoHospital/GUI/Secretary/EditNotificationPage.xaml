@@ -59,19 +59,14 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <ListBox Height="40" Background="White" Margin="0,0,0,0" ItemsSource="{Binding NotificationDTO.CustomRecipients, Mode=TwoWay}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+            <ListBox Height="40" Background="White" Margin="0,0,0,0" ItemsSource="{Binding NotificationDTO.CustomRecipients, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Horizontal" Background="#FFF3F2FC" Height="30">
-                                <TextBlock Text="{Binding}" Margin="10,0,10,0" FontFamily="Yu Gothic" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Background="#FFF3F2FC" Height="20">
+                                <TextBlock Text="{Binding}" FontWeight="Black" Margin="0,0,0,0" FontFamily="Yu Gothic" FontSize="14" VerticalAlignment="Center" Width="360"></TextBlock>
                                 <Button x:Name="RemoveCustomRecipient" Click="RemoveCustomRecipient_Click" BorderBrush="Transparent" Background="Transparent">
-                                    <materialDesign:PackIcon Kind="Close" Background="Transparent" Foreground="Red" Width="15" Height="15"></materialDesign:PackIcon>
+                                    <materialDesign:PackIcon Kind="Close" Background="Transparent" Foreground="Black" Width="15" Height="15"></materialDesign:PackIcon>
                                 </Button>
                             </StackPanel>
                         </StackPanel>

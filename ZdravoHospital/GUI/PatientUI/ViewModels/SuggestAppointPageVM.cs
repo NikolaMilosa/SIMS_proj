@@ -138,6 +138,12 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }
 
+        private bool ConfirmCanExecute(object parameter) 
+        {
+            PatientFunctions patientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            return !patientFunctions.IsTrollDetected();
+        }
+
         private void RadioExecute(object parameter)
         {
             int radioNum = Int32.Parse((string) parameter);
@@ -262,7 +268,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             RadioButtonCommand = new RelayCommand(RadioExecute);
             CancelCommand = new RelayCommand(CancelExecute);
             SuggestCommand = new RelayCommand(SuggestExecute, SuggestCanExecute);
-            ConfirmCommand = new RelayCommand(ConfirmExecute);
+            ConfirmCommand = new RelayCommand(ConfirmExecute,ConfirmCanExecute);
         }
         private void GenerateComboBoxes()
         {

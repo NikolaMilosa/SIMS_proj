@@ -203,6 +203,12 @@
                         Style="{StaticResource BlueButton}"
                         Width="350"
                         Margin="50, 10, 50, 0"/>
+                <Button x:Name="FeedbackButton"
+                        Content="Send application feedback"
+                        Command="{Binding ShowFeedbackPopUpCommand}"
+                        Style="{StaticResource BlueButton}"
+                        Width="350"
+                        Margin="50, 25, 50, 0"/>
                 <Button x:Name="LogoutButton"
                         Content="Log out"
                         Style="{StaticResource BlueButton}"
@@ -266,7 +272,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    
+
                     <!-- Make sure source video properties are -->
                     <!-- Build action: Content -->
                     <!-- Copy to output folder: Always -->
@@ -293,6 +299,117 @@
                         FontSize="23"/>
                 </Grid>
             </Grid>
+        </Grid>
+        <Grid Name="FeedbackPopUp"
+                   Background="Transparent"
+              Visibility="{Binding FeedbackPopUpVisibility}">
+            <DockPanel Background="Black"
+                       Opacity="0.95">
+            </DockPanel>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Button Content="X"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Style="{StaticResource BlackButton}"
+                        Command="{Binding HideFeedbackPopUpCommand}"
+                        Width="40"
+                        FontSize="25"
+                        Background="Transparent"
+                        HorizontalAlignment="Right"
+                        Height="40"
+                        Margin="0, 0, 0, 20"/>
+                <Grid Grid.Row="1" HorizontalAlignment="Center" Background="{StaticResource DarkGray}" Margin="0, 100, 0, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Select feedback type:"
+                               FontSize="25"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="30, 30, 0, 30"/>
+                    <ComboBox Grid.Column="1"
+                              Style="{StaticResource DarkComboBox}"
+                              FontSize="23"
+                              SelectedIndex="{Binding SelectedFeedbackIndex}"
+                              Width="300"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              Margin="30, 0, 30, 0" Grid.ColumnSpan="2">
+                        <ComboBoxItem Content="Unexpected behaviour"/>
+                        <ComboBoxItem Content="Improvement"/>
+                        <ComboBoxItem Content="Question"/>
+                    </ComboBox>
+                    <TextBlock Text="Feedback text:"
+                               Grid.Row="1"
+                               FontSize="25"
+                               Foreground="White"
+                               HorizontalAlignment="Left"
+                               Margin="30,30,0,15"/>
+                    <TextBox Grid.Row="2" Grid.ColumnSpan="2"
+                             Background="Black"
+                             Padding="8"
+                             Text="{Binding FeedbackText}"
+                             Width="600"
+                             TextWrapping="Wrap"
+                               FontSize="25"
+                               Foreground="White"
+                                Margin="30, 0, 30, 30"/>
+                    <Button HorizontalAlignment="Right"
+                            Content="Send feedback"
+                            Grid.Row="3"
+                            Grid.ColumnSpan="2"
+                            Padding="10"
+                            Width="200"
+                            Margin="30"
+                            Style="{StaticResource BlueButton}"
+                            Command="{Binding SendFeedbackCommand}"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid x:Name="MessagePopUp"
+              Background="Transparent"
+              Visibility="{Binding MessagePopUpVisibility}">
+            <Grid Background="Black"
+                  Opacity="0.85">
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+                <Grid Background="{StaticResource DarkGray}"
+                            Width="800"
+                            Height="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                           Text="{Binding MessageText}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           FontSize="25"
+                           Margin="10"/>
+                    <Button Grid.Row="1"
+                        Content="OK"
+                        Padding="10"
+                        Height="45"
+                        Width="100"
+                        Margin="0, 0, 0, 20"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding CloseMessagePopUpCommand}"/>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>

@@ -4,15 +4,25 @@
     "HealthCardNumber": "123",
     "BloodType": 0,
     "MedicineAllergens": [
-      "bromazepam"
+      "Prozac",
+      "Hemomycin",
+      "Streptomycin",
+      "Dovycin",
+      "Brufen",
+      "Pankvlan",
+      "Strepsils"
     ],
-    "IngredientAllergens": [
-      "wqeqwe"
-    ],
+    "IngredientAllergens": [],
     "RecentActions": 0,
-    "LastLogoutTime": "2021-06-07T15:10:21.8847665+02:00",
+    "LastLogoutTime": "0001-01-01T00:00:00",
     "NameSurname": "Stefan Ljubovic",
-    "PatientNotes": [],
+    "PatientNotes": [
+      {
+        "Content": "This is one random note!",
+        "NotifyTime": "2021-06-09T00:00:00",
+        "Title": "Random Note"
+      }
+    ],
     "Name": "Stefan",
     "Surname": "Ljubovic",
     "Email": "ljubac@gmail.com",
@@ -41,8 +51,8 @@
     "BloodType": 0,
     "MedicineAllergens": [],
     "IngredientAllergens": [],
-    "RecentActions": 0,
-    "LastLogoutTime": "0001-01-01T00:00:00",
+    "RecentActions": 2,
+    "LastLogoutTime": "2021-06-07T23:53:39.7738731+02:00",
     "NameSurname": "Nikolaj Satara",
     "PatientNotes": [],
     "Name": "Nikolaj",

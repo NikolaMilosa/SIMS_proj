@@ -40,7 +40,7 @@
 
 
                 <StackPanel Orientation="Vertical" Grid.Row="0" Background="White">
-                    <Button Background="Transparent" Height="140">
+                    <Button Background="Transparent" Height="140" Command="{Binding Path=ProfileCommand}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="/Images/PatientUI/profileIcon.png" Width="70" Height="70"></Image>
                             <TextBlock Text="{Binding WelcomeMessage}" FontSize="24"></TextBlock>

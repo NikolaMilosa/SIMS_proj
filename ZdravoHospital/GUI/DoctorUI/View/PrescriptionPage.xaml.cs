@@ -119,7 +119,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             OnPropertyChanged("ListItemWidth");
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }

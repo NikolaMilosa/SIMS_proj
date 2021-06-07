@@ -89,7 +89,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             int notificationId = NotificationService.CalculateNotificationId();
             string notificationText = createPostponeNotificationText(movePeriod, usernameReceiver);
-            string notificationTitle = "Rescheduling due to urgent appointment";
+            string notificationTitle = "Reschedule";
             Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindowVM.SecretaryUsername, notificationTitle, notificationId);
             NotificationService.CreateNewNotification(newNotification);
             PersonNotification personNotification = new PersonNotification(usernameReceiver, notificationId, false);

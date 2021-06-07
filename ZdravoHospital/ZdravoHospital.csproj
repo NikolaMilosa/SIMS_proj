@@ -98,6 +98,7 @@
     <None Remove="Images\PatientUI\notebookIconBlack.png" />
     <None Remove="Images\PatientUI\notificationIcon.png" />
     <None Remove="Images\PatientUI\notificationIconBlack.png" />
+    <None Remove="Images\PatientUI\patientIconBlack.png" />
     <None Remove="Images\PatientUI\pdfIcon.png" />
     <None Remove="Images\PatientUI\profileIcon.png" />
     <None Remove="Images\PatientUI\tableIcon.png" />
@@ -105,6 +106,8 @@
     <None Remove="Images\PatientUI\therapyIconBlack.png" />
     <None Remove="Images\PatientUI\wizard1.png" />
     <None Remove="Images\PatientUI\wizard2.png" />
+    <None Remove="Images\PatientUI\wizard21.png" />
+    <None Remove="Images\PatientUI\Wizard22.png" />
     <None Remove="Images\PatientUI\wizard3.png" />
     <None Remove="Images\PatientUI\wizard30.png" />
     <None Remove="Images\PatientUI\wizard4.png" />
@@ -207,6 +210,7 @@
     <Resource Include="Images\PatientUI\notebookIconBlack.png" />
     <Resource Include="Images\PatientUI\notificationIcon.png" />
     <Resource Include="Images\PatientUI\notificationIconBlack.png" />
+    <Resource Include="Images\PatientUI\patientIconBlack.png" />
     <Resource Include="Images\PatientUI\pdfIcon.png" />
     <Resource Include="Images\PatientUI\profileIcon.png" />
     <Resource Include="Images\PatientUI\tableIcon.png" />
@@ -214,6 +218,8 @@
     <Resource Include="Images\PatientUI\therapyIconBlack.png" />
     <Resource Include="Images\PatientUI\wizard1.png" />
     <Resource Include="Images\PatientUI\wizard2.png" />
+    <Resource Include="Images\PatientUI\wizard21.png" />
+    <Resource Include="Images\PatientUI\Wizard22.png" />
     <Resource Include="Images\PatientUI\wizard3.png" />
     <Resource Include="Images\PatientUI\wizard30.png" />
     <Resource Include="Images\PatientUI\wizard4.png" />
@@ -231,6 +237,10 @@
     <None Update="Resources\create_new_appointment.mkv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EXPORTPDF\Secretary\" />
   </ItemGroup>
 
 </Project>

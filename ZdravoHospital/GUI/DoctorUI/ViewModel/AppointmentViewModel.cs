@@ -1,12 +1,14 @@
 ﻿using Model;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
 using ZdravoHospital.GUI.DoctorUI.Controllers;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
+using ZdravoHospital.GUI.DoctorUI.Services;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 using ZdravoHospital.GUI.DoctorUI.View;
 
@@ -16,7 +18,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
     {
         private NavigationService _navigationService;
         private Period _period;
-        private PeriodController _periodController;
+        private PeriodService _periodService;
         private bool _periodCanceled;
         private ReferralController _referralController;
 
@@ -193,7 +195,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             try
             {
-                _periodController.UpdatePeriod(period);
+                _periodService.UpdatePeriod(period);
                 MessageText = "Appointment updated successfully.";
                 IsEditModeOn = false;
                 ConfirmButtonVisibility = Visibility.Collapsed;
@@ -292,7 +294,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_YesCancelCommand()
         {
             CancelDialogVisibility = Visibility.Collapsed;
-            _periodController.CancelPeriod(_period.PeriodId);
+            _periodService.CancelPeriod(_period.PeriodId);
             _periodCanceled = true;
             MessageText = "Appointment canceled successfully.";
             MessagePopUpVisibility = Visibility.Visible;
@@ -400,6 +402,38 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand GenerateReportCommand { get; set; }
+
+        public void Executed_GenerateReportCommand()
+        {
+            _periodService.GeneratePeriodReport(_period);
+            MessageText = "Report generated successfully.";
+            MessagePopUpVisibility = Visibility.Visible;
+        }
+
+        public bool CanExecute_GenerateReportCommand()
+        {
+            return true;
+        }
+
+        public MyICommand ReadReportCommand { get; set; }
+
+        public void Executed_ReadReportCommand()
+        {
+            string filename = _periodService.GeneratePeriodReportFilename(_period);
+            var p = new System.Diagnostics.Process();
+            p.StartInfo = new System.Diagnostics.ProcessStartInfo(Path.GetFullPath(filename))
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+
+        public bool CanExecute_ReadReportCommand()
+        {
+            return true;
+        }
+
         #endregion
 
         public AppointmentViewModel(NavigationService navigationService, Period period)
@@ -408,7 +442,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             _navigationService = navigationService;
             _period = period;
-            _periodController = new PeriodController();
+            _periodService = new PeriodService();
             _referralController = new ReferralController();
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
@@ -457,6 +491,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             SeeReferralCommand = new MyICommand(Executed_SeeReferralCommand, CanExecute_SeeReferralCommand);
             PatientInfoCommand = new MyICommand(Executed_PatientInfoCommand, CanExecute_PatientInfoCommand);
             TreatmentCommand = new MyICommand(Executed_TreatmentCommand, CanExecute_TreatmentCommand);
+            GenerateReportCommand = new MyICommand(Executed_GenerateReportCommand, CanExecute_GenerateReportCommand);
+            ReadReportCommand = new MyICommand(Executed_ReadReportCommand, CanExecute_ReadReportCommand);
         }
 
         private bool IsInputValid()
