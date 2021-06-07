@@ -5,10 +5,16 @@
     "BloodType": 0,
     "MedicineAllergens": [],
     "IngredientAllergens": [],
-    "RecentActions": 0,
-    "LastLogoutTime": "2021-06-07T17:58:28.8395174+02:00",
+    "RecentActions": 5,
+    "LastLogoutTime": "2021-06-07T18:50:17.408356+02:00",
     "NameSurname": "Stefan Ljubovic",
-    "PatientNotes": [],
+    "PatientNotes": [
+      {
+        "Content": "asdad",
+        "NotifyTime": "2021-06-11T18:26:47.585+02:00",
+        "Title": "sdsad"
+      }
+    ],
     "Name": "Stefan",
     "Surname": "Ljubovic",
     "Email": "ljubac@gmail.com",
