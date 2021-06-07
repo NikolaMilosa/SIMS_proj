@@ -233,4 +233,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EXPORTPDF\Secretary\" />
+  </ItemGroup>
+
 </Project>
