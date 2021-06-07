@@ -1,14 +1,12 @@
 ﻿using Model;
-using Repository.DoctorPersistance;
-using Repository.PeriodPersistance;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
 using ZdravoHospital.GUI.DoctorUI.DTOs;
+using ZdravoHospital.GUI.DoctorUI.Services;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -17,11 +15,10 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class PatientInfoPage : Page, INotifyPropertyChanged
     {
-        private PeriodController _periodController;
+        private PeriodService _periodService;
 
         public Patient Patient { get; set; }
         public List<PatientInfoPeriodDisplayDTO> PeriodDisplays { get; set; }
-        public PatientInfoPeriodDisplayDTO SelectedPeriod { get; set; }
 
         public PatientInfoPage(Patient patient)
         {
@@ -29,9 +26,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             this.DataContext = this;
 
-            _periodController = new PeriodController();
+            _periodService = new PeriodService();
             Patient = patient;
-            PeriodDisplays = _periodController.GetPatientInfoPeriodDisplayDTOs(Patient.Username);
+            PeriodDisplays = _periodService.GetPatientInfoPeriodDisplayDTOs(Patient.Username);
             PeriodsListView.ItemsSource = PeriodDisplays;
 
             PeriodTypeComboBox.Items.Add("All");
@@ -64,14 +61,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void PeriodDetailsButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedPeriod = (sender as Button).DataContext as PatientInfoPeriodDisplayDTO;
-            OnPropertyChanged("SelectedPeriod");
-            PeriodDetailsPopUp.Visibility = Visibility.Visible;
-        }
-
-        private void ClosePeriodDetailsPopUpButton_Click(object sender, RoutedEventArgs e)
-        {
-            PeriodDetailsPopUp.Visibility = Visibility.Hidden;
+            Period period = ((sender as Button).DataContext as PatientInfoPeriodDisplayDTO).Period;
         }
 
         private void PeriodTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

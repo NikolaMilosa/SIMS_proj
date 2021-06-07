@@ -3,8 +3,12 @@
     "IsGuest": false,
     "HealthCardNumber": "123",
     "BloodType": 0,
-    "MedicineAllergens": [],
-    "IngredientAllergens": [],
+    "MedicineAllergens": [
+      "bromazepam"
+    ],
+    "IngredientAllergens": [
+      "wqeqwe"
+    ],
     "RecentActions": 0,
     "LastLogoutTime": "2021-06-07T15:10:21.8847665+02:00",
     "NameSurname": "Stefan Ljubovic",
