@@ -3,7 +3,9 @@
     "IsGuest": false,
     "HealthCardNumber": "123",
     "BloodType": 0,
-    "MedicineAllergens": [],
+    "MedicineAllergens": [
+      "Brufen"
+    ],
     "IngredientAllergens": [],
     "RecentActions": 0,
     "LastLogoutTime": "0001-01-01T00:00:00",

@@ -1,11 +1,6 @@
 [
   {
     "Username": "saki",
-    "NotificationId": 2,
-    "IsRead": true
-  },
-  {
-    "Username": "saki",
     "NotificationId": 3,
     "IsRead": true
   },
@@ -32,6 +27,21 @@
   {
     "Username": "sima",
     "NotificationId": 3,
+    "IsRead": false
+  },
+  {
+    "Username": "saki",
+    "NotificationId": 4,
+    "IsRead": false
+  },
+  {
+    "Username": "ljuba",
+    "NotificationId": 5,
+    "IsRead": false
+  },
+  {
+    "Username": "pantela",
+    "NotificationId": 6,
     "IsRead": false
   }
 ]

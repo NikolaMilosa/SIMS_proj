@@ -63,17 +63,28 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void CreatePeriod_Click(object sender, RoutedEventArgs e)
         {
-            PeriodsViewHolderDTO viewHolder = UrgentService.ProcessUrgentPeriodCreation(UrgentPeriodDTO);
-            if (viewHolder.Status == UrgentPeriodStatus.NO_DOCTORS_AVAILABLE) {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Sorry", "No doctors available.");
+            if(UrgentPeriodDTO.Patient == null || UrgentPeriodDTO.SelectedSpecialization == null)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Invalid request", "Please select entities from the lists.");
                 SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
                 SecretaryWindowVM.CustomMessageBox.Show();
             }
-                
-            else if (viewHolder.Status == UrgentPeriodStatus.PERIODS_TO_MOVE)
-                NavigationService.Navigate(new PeriodsToMovePage(viewHolder.Periods));
             else
-                NavigationService.Navigate(new UrgentPeriodSummaryPage(viewHolder.BestPeriod));
+            {
+                PeriodsViewHolderDTO viewHolder = UrgentService.ProcessUrgentPeriodCreation(UrgentPeriodDTO);
+                if (viewHolder.Status == UrgentPeriodStatus.NO_DOCTORS_AVAILABLE)
+                {
+                    SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Sorry", "No doctors available.");
+                    SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                    SecretaryWindowVM.CustomMessageBox.Show();
+                }
+
+                else if (viewHolder.Status == UrgentPeriodStatus.PERIODS_TO_MOVE)
+                    NavigationService.Navigate(new PeriodsToMovePage(viewHolder.Periods));
+                else
+                    NavigationService.Navigate(new UrgentPeriodSummaryPage(viewHolder.BestPeriod));
+            }
+            
         }
 
         

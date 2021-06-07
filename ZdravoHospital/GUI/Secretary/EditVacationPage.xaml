@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:val="clr-namespace:ZdravoHospital.GUI.Secretary.Validation"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
@@ -31,13 +32,34 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Number of days</TextBlock>
-                <TextBox Width="195" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" Text="{Binding VacationDTO.NumberOfFreeDays}"></TextBox>
+                <TextBox x:Name="NumberOfDaysTextBox" Width="195" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                    <TextBox.Text>
+                        <Binding Path="VacationDTO.NumberOfFreeDays" Mode="OneWayToSource" UpdateSourceTrigger = "PropertyChanged">
+                            <Binding.ValidationRules>
+                                <val:MinMaxNumberValidation Min="0" Max="30" ValidationStep="RawProposedValue"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </StackPanel>
             <Button x:Name="FinishButton" Background="Transparent" Foreground="Black" FontFamily="Yu Gothic" Width="180" Height="40" Command="{Binding CreateVacationCommand}" VerticalAlignment="Top" Margin="0,30,20,0" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="ContentSaveAll" Width="25" Height="25" Margin="0,0,10,0" />
                     <TextBlock FontFamily="Yu Gothic" FontSize="18">Save and exit</TextBlock>
                 </StackPanel>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=NumberOfDaysTextBox}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
             </Button>
         </StackPanel>
     </Grid>

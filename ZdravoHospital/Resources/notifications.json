@@ -1,16 +1,30 @@
 [
   {
-    "Text": "Hello saki welcome to the house.",
-    "CreateDate": "2021-04-21T18:52:50.5228455+02:00",
-    "UsernameSender": "suki",
-    "Title": "Saki's notification",
-    "NotificationId": 2
-  },
-  {
     "Text": "Please drink 8 cups of water a day.",
     "CreateDate": "2021-05-04T20:22:40.7598254+02:00",
     "UsernameSender": "suki",
     "Title": "Notification for all",
     "NotificationId": 3
+  },
+  {
+    "Text": "Hello saki welcome to the house.",
+    "CreateDate": "2021-06-07T13:37:31.4694365+02:00",
+    "UsernameSender": "suki",
+    "Title": "Saki's notification",
+    "NotificationId": 4
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 6/7/2021 2:20:00 PM to 6/7/2021 3:45:53 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-06-07T13:45:57.258163+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 5
+  },
+  {
+    "Text": "Dear pantela, your appointment has been postponed from 6/7/2021 2:20:00 PM to 6/7/2021 3:45:53 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-06-07T13:45:57.2708233+02:00",
+    "UsernameSender": "suki",
+    "Title": "Rescheduling due to urgent appointment",
+    "NotificationId": 6
   }
 ]
