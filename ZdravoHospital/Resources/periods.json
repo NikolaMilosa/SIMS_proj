@@ -44,7 +44,7 @@
       "TherapyList": [
         {
           "Medicine": {
-            "MedicineName": "new medicine",
+            "MedicineName": "Lek",
             "Supplier": "New supplier",
             "Status": 0,
             "Note": null,
@@ -58,11 +58,11 @@
               }
             ]
           },
-          "StartHours": "2021-05-30T00:00:00",
-          "TimesPerDay": 0,
-          "PauseInDays": 0,
-          "EndDate": "2021-05-30T00:00:00",
-          "Instructions": ""
+          "StartHours": "2021-06-01T00:00:00",
+          "TimesPerDay": 2,
+          "PauseInDays": 3,
+          "EndDate": "2021-06-30T00:00:00",
+          "Instructions": "3 miligrama umutiti u vodi i popiti!"
         }
       ]
     },
@@ -205,7 +205,23 @@
     "Treatment": null
   },
   {
-    "PeriodId": 15,
+    "PeriodId": 17,
+    "StartTime": "2021-06-10T09:30:00+02:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "saki",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
+    "Treatment": null
+  },
+  {
+    "PeriodId": 18,
     "StartTime": "2021-06-10T08:00:00+02:00",
     "Duration": 30,
     "PeriodType": 0,

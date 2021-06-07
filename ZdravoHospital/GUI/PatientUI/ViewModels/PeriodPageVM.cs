@@ -75,11 +75,11 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
 
-            ViewFunctions viewFunctions = new ViewFunctions();
+
             viewFunctions.ShowYesNoDialog("Remove appointment", "Are you sure you want to remove appointment?");
             if (viewFunctions.YesPressed)
                 RemovePeriod();
-            viewFunctions.ShowOkDialog("Remove appointment","Appointment succesfully removed!");
+            
         }
 
         #endregion
@@ -97,6 +97,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             if (!patientFunctions.ActionTaken())
                 return;
+            ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowOkDialog("Remove appointment", "Appointment succesfully removed!");
             PeriodFunctions periodFunctions = new PeriodFunctions();
             periodFunctions.RemovePeriodById(SelectedPeriodDTO.PeriodId);
             PeriodDTOs.Remove(SelectedPeriodDTO);

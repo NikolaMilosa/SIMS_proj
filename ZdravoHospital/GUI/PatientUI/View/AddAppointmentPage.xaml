@@ -10,7 +10,65 @@
       Title="AddAppointmentPage"
      
       >
+    <Page.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Border CornerRadius="20" Background="White">
+        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -29,13 +87,15 @@
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
                 <Image Source="/Images/PatientUI/addIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
                 <TextBlock Text="Add appointment" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
+                
             </StackPanel>
             
             <StackPanel  Orientation="Horizontal"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+ 
                 <TextBlock Text="Select Doctor:" Margin="0,0,80,0" FontSize="24"/>
                 <ComboBox Name="selectDoctor" ItemsSource="{Binding DoctorList}" SelectedItem="{Binding Path=SelectedDoctorDTO}" DisplayMemberPath="Fullname"  VerticalAlignment="Center" Width="200">
-                  
                 </ComboBox>
+
             </StackPanel>
 
             <StackPanel  Orientation="Horizontal"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -59,15 +119,52 @@
 
             <Grid Grid.Column="1" Grid.Row="4">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
                 <TextBlock Grid.Row="0" Text="{Binding Path=ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Red" ></TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0">
-                    <Button Name="confirmButton" Content="Confirm" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=ConfirmCommand}"></Button>
-                    <Button Name="cancelButton" Content="Cancel" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=CancelCommand}"></Button>
-                    <Button Name="suggestButton" Content="Suggest" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Margin="120,0,0,0" Command="{Binding Path=SuggestCommand}" ></Button>
-                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Name="confirmButton" VerticalAlignment="Top" Content="Confirm" Width="150" FontSize="20"
+                                FontWeight="Bold" Height="55" Background="Transparent" 
+                                BorderBrush="Transparent" Command="{Binding Path=ConfirmCommand}"
+                            Style="{StaticResource ButtonStyle1}"
+                                HorizontalAlignment="Right"
+                        ></Button>
+
+
+
+                    <Button Grid.Column="2" Name="cancelButton" Content="Cancel" Width="150" 
+                            FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" 
+                            BorderBrush="Transparent" Command="{Binding Path=CancelCommand}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                    ></Button>
+
+                    <Button Grid.Column="1" Name="suggestButton" Content="Suggest" Width="150"
+                        FontSize="20" FontWeight="Bold" Height="45" Background="Transparent"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" 
+                        Command="{Binding Path=SuggestCommand}" >
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Mode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </Grid>
             </Grid>
 
         </Grid>

@@ -72,7 +72,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             viewFunctions.ShowYesNoDialog("Remove appointment", "Are you sure you want to remove appointment?");
             if (viewFunctions.YesPressed)
                 RemovePeriod();
-            viewFunctions.ShowOkDialog("Remove appointment", "Appointment succesfully removed!");
             CancelExecute(parameter);
             PatientWindowVM.NavigationService.Navigate(new PeriodCalendarPage());
         }
@@ -101,6 +100,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             if (!PatientFunctions.ActionTaken())
                 return;
+            ViewFunctions viewFunctions = new ViewFunctions();
+            viewFunctions.ShowOkDialog("Remove appointment", "Appointment succesfully removed!");
             PeriodFunctions periodFunctions = new PeriodFunctions();
             periodFunctions.RemovePeriodById(PeriodDTO.PeriodId);
             

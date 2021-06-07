@@ -190,7 +190,7 @@
                             >
                                 <StackPanel Orientation="Horizontal" Height="50">
                                     <Image Source="/Images/PatientUI/notificationIconBlack.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
-                                    <TextBlock Text="Notification        " FontWeight="SemiBold"  Foreground="Black" FontSize="15" Margin="0,10,0,0"></TextBlock>
+                                    <TextBlock Text="Notification      " FontWeight="SemiBold"  Foreground="Black" FontSize="15" Margin="0,10,0,0"></TextBlock>
                                 </StackPanel>
                             </Button>
 
