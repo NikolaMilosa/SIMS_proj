@@ -1,0 +1,127 @@
+﻿<Page x:Class="ZdravoHospital.GUI.PatientUI.View.ProfilePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI.View"
+      mc:Ignorable="d" 
+     d:DesignHeight="708" d:DesignWidth="804"
+      Title="ProfilePage">
+
+    <Border Background="White" CornerRadius="20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
+                <Image Source="/Images/PatientUI/profileIcon.png" Margin="220,0,0,0" Height="70"></Image>
+                <TextBlock Text="My Profile" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
+            </StackPanel>
+
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="2" CornerRadius="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="350"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,2,0">
+                                <Image Source="/Images/PatientUI/patientIconBlack.png"></Image>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <TextBlock FontWeight="Bold" FontSize="22" Margin="10">User bio</TextBlock>
+                                <StackPanel Margin="0,25,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Name:</TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.Name}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Surname:</TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.Surname}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Username:</TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.Username}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Email:</TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.Email}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Phone number:</TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.PhoneNumber}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Birth date:</TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.DateOfBirth}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Gender:</TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.Gender}"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock FontWeight="Bold" FontSize="22" Margin="10">Medical bio</TextBlock>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Vertical" Grid.Column="0">
+                                <StackPanel Margin="0,15,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="150">Health card number:</TextBlock>
+                                    <TextBlock FontSize="15" Width="150" Text="{Binding Path=Patient.HealthCardNumber}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Margin="0,45,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock FontSize="15" FontWeight="SemiBold" Width="150">Blood type:</TextBlock>
+                                    <TextBlock FontSize="15" Width="150" Text="{Binding Path=Patient.BloodType}"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Vertical" Grid.Column="1">
+                                <TextBlock FontSize="15" Margin="13" HorizontalAlignment="Left" FontWeight="SemiBold" Width="150">Allergens:</TextBlock>
+                                <ListView ItemsSource="{Binding Path=Patient.MedicineAllergens}" Margin="10,0,10,0"
+                                         Height="80"  
+                                          >
+                                    
+                                </ListView>
+                            </StackPanel>
+                            
+                        </Grid>
+         
+                    </Grid>
+
+                </Grid>
+            </Border>
+
+            
+            
+        </Grid>
+    </Border>
+</Page>
