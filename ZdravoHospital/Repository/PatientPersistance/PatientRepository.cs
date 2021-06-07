@@ -29,7 +29,6 @@ namespace Repository.PatientPersistance
             }
             else
             {
-                MessageBox.Show("Ingredient already exists.");
                 return false;
             } 
         }
@@ -47,7 +46,6 @@ namespace Repository.PatientPersistance
             }
             else
             {
-                MessageBox.Show("Medicine already exists.");
                 return false;
             }
         }

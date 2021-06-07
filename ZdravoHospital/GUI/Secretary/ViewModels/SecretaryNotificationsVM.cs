@@ -42,8 +42,15 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         {
             if (SelectedNotification != null)
             {
-                NotificationService.RemoveNotification(SelectedNotification.NotificationId);
-                Notifications.Remove(SelectedNotification);
+                SecretaryWindowVM.CustomYesNoDialog = new CustomYesNoDialog("Are you sure?", "Action cannot be undone.");
+                SecretaryWindowVM.CustomYesNoDialog.Owner = SecretaryWindowVM.SecretaryWindow;
+
+                if ((bool)SecretaryWindowVM.CustomYesNoDialog.ShowDialog())
+                {
+                    NotificationService.RemoveNotification(SelectedNotification.NotificationId);
+                    Notifications.Remove(SelectedNotification);
+                }
+                
             }
         }
 

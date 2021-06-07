@@ -84,9 +84,12 @@
     <None Remove="Images\PatientUI\appointmentIconBlack.png" />
     <None Remove="Images\PatientUI\backIcon.png" />
     <None Remove="Images\PatientUI\backIconBlack.png" />
+    <None Remove="Images\PatientUI\calendarViewIcon.png" />
     <None Remove="Images\PatientUI\emptyStar.png" />
     <None Remove="Images\PatientUI\evaluateIcon.png" />
     <None Remove="Images\PatientUI\fullStar.png" />
+    <None Remove="Images\PatientUI\helpIcon.png" />
+    <None Remove="Images\PatientUI\helpIconBlack.png" />
     <None Remove="Images\PatientUI\historyIcon.png" />
     <None Remove="Images\PatientUI\historyIconBlack.png" />
     <None Remove="Images\PatientUI\hospitalIcon.png" />
@@ -95,8 +98,18 @@
     <None Remove="Images\PatientUI\notebookIconBlack.png" />
     <None Remove="Images\PatientUI\notificationIcon.png" />
     <None Remove="Images\PatientUI\notificationIconBlack.png" />
+    <None Remove="Images\PatientUI\pdfIcon.png" />
     <None Remove="Images\PatientUI\profileIcon.png" />
+    <None Remove="Images\PatientUI\tableIcon.png" />
     <None Remove="Images\PatientUI\therapyIcon.png" />
+    <None Remove="Images\PatientUI\therapyIconBlack.png" />
+    <None Remove="Images\PatientUI\wizard1.png" />
+    <None Remove="Images\PatientUI\wizard2.png" />
+    <None Remove="Images\PatientUI\wizard3.png" />
+    <None Remove="Images\PatientUI\wizard30.png" />
+    <None Remove="Images\PatientUI\wizard4.png" />
+    <None Remove="Images\PatientUI\wizard5.png" />
+    <None Remove="Images\PatientUI\wizardIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -107,6 +120,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="Syncfusion.SfSchedule.WPF" Version="18.3.0.53" />
   </ItemGroup>
 
   <ItemGroup>
@@ -175,6 +189,7 @@
     <Resource Include="Images\PatientUI\appointmentIconBlack.png" />
     <Resource Include="Images\PatientUI\backIcon.png" />
     <Resource Include="Images\PatientUI\backIconBlack.png" />
+    <Resource Include="Images\PatientUI\calendarViewIcon.png" />
     <Resource Include="Images\PatientUI\emptyStar.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -182,6 +197,8 @@
     <Resource Include="Images\PatientUI\fullStar.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\PatientUI\helpIcon.png" />
+    <Resource Include="Images\PatientUI\helpIconBlack.png" />
     <Resource Include="Images\PatientUI\historyIcon.png" />
     <Resource Include="Images\PatientUI\historyIconBlack.png" />
     <Resource Include="Images\PatientUI\hospitalIcon.png" />
@@ -190,8 +207,18 @@
     <Resource Include="Images\PatientUI\notebookIconBlack.png" />
     <Resource Include="Images\PatientUI\notificationIcon.png" />
     <Resource Include="Images\PatientUI\notificationIconBlack.png" />
+    <Resource Include="Images\PatientUI\pdfIcon.png" />
     <Resource Include="Images\PatientUI\profileIcon.png" />
+    <Resource Include="Images\PatientUI\tableIcon.png" />
     <Resource Include="Images\PatientUI\therapyIcon.png" />
+    <Resource Include="Images\PatientUI\therapyIconBlack.png" />
+    <Resource Include="Images\PatientUI\wizard1.png" />
+    <Resource Include="Images\PatientUI\wizard2.png" />
+    <Resource Include="Images\PatientUI\wizard3.png" />
+    <Resource Include="Images\PatientUI\wizard30.png" />
+    <Resource Include="Images\PatientUI\wizard4.png" />
+    <Resource Include="Images\PatientUI\wizard5.png" />
+    <Resource Include="Images\PatientUI\wizardIcon.png" />
   </ItemGroup>
 
   <ItemGroup>

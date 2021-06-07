@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using ZdravoHospital.GUI.Secretary.DTO;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -27,6 +28,12 @@ namespace ZdravoHospital.GUI.Secretary.Service
             {
                 registerPatient(patientDTO);
             }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Fail", "Username already exists.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
 
         }
 
@@ -41,7 +48,9 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             Patient patient = createPatientFromDTO(patientDTO);
             _patientsRepository.Create(patient);
-            MessageBox.Show("Added successfully");
+            SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Success", "Added successfully");
+            SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+            SecretaryWindowVM.CustomMessageBox.Show();
         }
 
         private AddressDTO createPatientsAddress(PatientDTO patientDTO)

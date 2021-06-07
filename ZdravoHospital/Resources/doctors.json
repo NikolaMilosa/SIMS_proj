@@ -4,7 +4,16 @@
       "SpecializationName": "Doctor"
     },
     "ShiftRule": {
-      "Vacations": [],
+      "Vacations": [
+        {
+          "VacationStartTime": "2021-06-07T00:00:00+02:00",
+          "NumberOfFreeDays": 0
+        },
+        {
+          "VacationStartTime": "2021-06-07T00:00:00+02:00",
+          "NumberOfFreeDays": 0
+        }
+      ],
       "RegularShift": {
         "ScheduledShift": 0,
         "ShiftStart": "2021-05-30T00:00:00+02:00",
@@ -46,7 +55,7 @@
     "CitizenId": "123123123123",
     "Address": {
       "StreetName": "Neka ulica",
-      "Number": 12,
+      "Number": "12",
       "City": {
         "PostalCode": 0,
         "Name": "Neki grad",
@@ -98,7 +107,7 @@
     "CitizenId": "141252363145",
     "Address": {
       "StreetName": "Neka ulica",
-      "Number": 5,
+      "Number": "5",
       "City": {
         "PostalCode": 0,
         "Name": "Neki grad",
@@ -139,7 +148,7 @@
     "CitizenId": "336334552114",
     "Address": {
       "StreetName": "Neka ulica",
-      "Number": 8,
+      "Number": "8",
       "City": {
         "PostalCode": 0,
         "Name": "Neki grad",
@@ -178,7 +187,7 @@
       "Number": "Neki grad",
       "City": {
         "PostalCode": 0,
-        "Name": 6,
+        "Name": "6",
         "Country": {
           "Name": "Neka drzava"
         }

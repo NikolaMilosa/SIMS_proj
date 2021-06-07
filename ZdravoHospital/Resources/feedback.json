@@ -4,5 +4,11 @@
     "Type": 2,
     "Text": "This should be a question.",
     "Id": "7a7a23c2-12ff-435d-b1f5-d684291b2d99"
+  },
+  {
+    "SenderUsername": "mili",
+    "Type": 1,
+    "Text": "Maybe add some new features",
+    "Id": "ae21f77a-cc75-4a6b-9aa1-a2edb6a8420c"
   }
 ]

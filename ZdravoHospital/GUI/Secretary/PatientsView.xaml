@@ -29,7 +29,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Margin="0,0,10,0">
             <materialDesign:PackIcon Kind="Search" Height="27" Width="27" VerticalAlignment="Bottom" Margin="0,0,0,5"></materialDesign:PackIcon>
-            <TextBox x:Name="PatientsSearchBox" Width="160" Margin="0,5,0,5" TextChanged="PatientsSearchBox_TextChanged" HorizontalAlignment="Stretch" Height="27"></TextBox>
+            <TextBox x:Name="PatientsSearchBox" Width="160" Margin="0,5,0,5" Text="{Binding PatientsSearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Height="27"></TextBox>
         </StackPanel>
 
         <ListView Grid.Row="2" Margin="10,0,10,10" Name="PatientsListView" ItemsSource="{Binding Path=PatientsForTable}" AlternationCount="2" SelectedItem="{Binding SelectedPatient, Mode=OneWayToSource}">
@@ -49,7 +49,12 @@
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                             <TextBlock Text="{Binding Name}" Margin="0,0,5,0" FontSize="16" FontFamily="Yu Gothic" FontWeight="SemiBold"></TextBlock>
                             <TextBlock Text="{Binding Surname}" FontSize="16" FontFamily="Yu Gothic" FontWeight="SemiBold"></TextBlock>
-                            <Button x:Name="UnblockButton" Click="UnblockButton_Click" Command="{Binding UnblockPatientCommand}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}" FontFamily="Yu Gothic" FontSize="14" Foreground="Green" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Center" Visibility="{Binding RecentActions, Converter={StaticResource UnblockVisibilityConverter}}"> (unblock) </Button>
+                            <Button x:Name="UnblockButton" Click="UnblockButton_Click" Command="{Binding UnblockPatientCommand}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}" FontFamily="Yu Gothic" FontSize="12" Foreground="Green" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="30,0,0,0" VerticalAlignment="Center" Visibility="{Binding RecentActions, Converter={StaticResource UnblockVisibilityConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Circle" Foreground="Green"></materialDesign:PackIcon>
+                                    <TextBlock FontFamily="Yu Gothic" FontSize="12"> Unblock</TextBlock>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">

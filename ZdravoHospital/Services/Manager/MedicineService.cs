@@ -69,6 +69,10 @@ namespace ZdravoHospital.Services.Manager
 
             _medicineRepository.Create(newMedicine);
 
+            var notification = new MyMessageBoxViewModel(
+                $"Medicine with name {newMedicine.MedicineName} has successfully been added! Main data" +
+                $" grid will update after this dialog is closed.");
+
             OnMedicineChanged();
         }
 
@@ -85,6 +89,10 @@ namespace ZdravoHospital.Services.Manager
 
             _medicineRepository.Update(newMedicine);
 
+            var notification = new MyMessageBoxViewModel(
+                $"Medicine with name {newMedicine.MedicineName} has successfully been updated! Main data" +
+                $" grid will update after this dialog is closed.");
+
             OnMedicineChanged();
         }
 
@@ -100,6 +108,10 @@ namespace ZdravoHospital.Services.Manager
             _medicineRepository.DeleteById(medicine.MedicineName);
 
             _medicineRecensionRepository.DeleteById(medicine.MedicineName);
+
+            var notification = new MyMessageBoxViewModel(
+                $"Medicine with name {medicine.MedicineName} has successfully been deleted! Main data" +
+                $" grid will update after this dialog is closed.");
 
             OnMedicineChanged();
 
@@ -140,6 +152,10 @@ namespace ZdravoHospital.Services.Manager
             medicine.Status = MedicineStatus.PENDING;
 
             _medicineRepository.Update(medicine);
+
+            var notification = new MyMessageBoxViewModel(
+                $"Medicine with name {medicine.MedicineName} has successfully been sent on recension! Main data" +
+                $" grid will update after this dialog is closed.");
 
             OnMedicineChanged();
         }

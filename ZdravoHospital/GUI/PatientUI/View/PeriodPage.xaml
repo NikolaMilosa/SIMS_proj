@@ -25,10 +25,18 @@
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
                 <Image Source="/Images/PatientUI/appointmentIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
                 <TextBlock Text="My appointments" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
+                <Button Background="Transparent" BorderBrush="Transparent"
+                        Command="{Binding Path=SwitchViewCommand}"
+                        Margin="40,0,0,50">
+                    <StackPanel Orientation="Horizontal" Height="50" >
+                        <Image Source="/Images/PatientUI/calendarViewIcon.png" Margin="0,0,0,0" Width="32" Height="32"></Image>
+                        <TextBlock Text="Calendar view" Foreground="Black" FontWeight="Bold" FontSize="14" Margin="0,15,0,0"></TextBlock>
+                    </StackPanel>
+                </Button>
             </StackPanel>
 
             <DataGrid GridLinesVisibility="Horizontal" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True"
-                      x:Name="AppointmentDataGrid" Grid.Row="1" Grid.Column="1" 
+                      x:Name="AppointmentDataGrid" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" 
                       ItemsSource="{Binding PeriodDTOs}"
                       SelectedItem="{Binding SelectedPeriodDTO,Mode=OneWayToSource}">
                 <DataGrid.Columns>
