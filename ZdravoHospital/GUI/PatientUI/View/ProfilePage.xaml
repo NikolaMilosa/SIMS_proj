@@ -68,7 +68,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
                                     <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Birth date:</TextBlock>
-                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.DateOfBirth}"></TextBlock>
+                                    <TextBlock FontSize="15" Width="130" Text="{Binding Path=Patient.DateOfBirth,StringFormat=d}"></TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
                                     <TextBlock FontSize="15" FontWeight="SemiBold" Width="130">Gender:</TextBlock>
