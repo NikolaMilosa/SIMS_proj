@@ -113,12 +113,7 @@
       "SpecializationName": "Neurology"
     },
     "ShiftRule": {
-      "Vacations": [
-        {
-          "VacationStartTime": "2021-06-06T00:00:00",
-          "NumberOfFreeDays": 10
-        }
-      ],
+      "Vacations": [],
       "RegularShift": {
         "ScheduledShift": 2,
         "ShiftStart": "2021-05-30T00:00:00",

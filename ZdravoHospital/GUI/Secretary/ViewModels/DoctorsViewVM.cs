@@ -41,11 +41,23 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         {
             if (SelectedDoctorView != null)
                 SecretaryWindowVM.NavigationService.Navigate(new EditShiftPage(SelectedDoctorView.Doctor));
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select a doctor first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
         }
         private void vacationExecute(object parameter)
         {
             if (SelectedDoctorView != null)
                 SecretaryWindowVM.NavigationService.Navigate(new EditVacationPage(SelectedDoctorView.Doctor));
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select a doctor first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
         }
     }
 }

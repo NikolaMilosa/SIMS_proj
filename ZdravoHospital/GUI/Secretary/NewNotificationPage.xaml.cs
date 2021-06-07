@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -60,8 +61,28 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void SendNotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            NotificationService.ProcessNotificationSend(NotificationDTO);
-            NavigationService.Navigate(new SecretaryNotificationsPage());
+            if (NotificationDTO.ManagerChecked == false && NotificationDTO.DoctorChecked == false && NotificationDTO.SecretaryChecked == false && NotificationDTO.PatientChecked == false && NotificationDTO.CustomRecipients.Count == 0)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Warning", "There must be some recipients.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+            else
+            {
+                if(NotificationDTO.NotificationTitle == null || NotificationDTO.NotificationTitle == "" || NotificationDTO.NotificationText == null || NotificationDTO.NotificationText == "")
+                {
+                    SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Warning", "Title and text are required fields.");
+                    SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                    SecretaryWindowVM.CustomMessageBox.Show();
+                }
+                else
+                {
+                    NotificationService.ProcessNotificationSend(NotificationDTO);
+                    NavigationService.Navigate(new SecretaryNotificationsPage());
+                }
+                
+            }
+            
         }
 
         private void CustomRecipientTextBox_KeyUp(object sender, KeyEventArgs e)

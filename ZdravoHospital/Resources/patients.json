@@ -6,15 +6,9 @@
     "MedicineAllergens": [],
     "IngredientAllergens": [],
     "RecentActions": 0,
-    "LastLogoutTime": "2021-06-07T20:19:16.0775225+02:00",
+    "LastLogoutTime": "0001-01-01T00:00:00",
     "NameSurname": "Stefan Ljubovic",
-    "PatientNotes": [
-      {
-        "Content": "asdad",
-        "NotifyTime": "2021-06-11T18:26:47.585+02:00",
-        "Title": "sdsad"
-      }
-    ],
+    "PatientNotes": [],
     "Name": "Stefan",
     "Surname": "Ljubovic",
     "Email": "ljubac@gmail.com",
@@ -42,7 +36,9 @@
     "HealthCardNumber": "456",
     "BloodType": 0,
     "MedicineAllergens": [],
-    "IngredientAllergens": [],
+    "IngredientAllergens": [
+      "natrium"
+    ],
     "RecentActions": 0,
     "LastLogoutTime": "2021-06-07T19:11:49.8449247+02:00",
     "NameSurname": "Nikolaj Satara",
