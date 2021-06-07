@@ -18,14 +18,14 @@
                         Background="Black">
                 <DockPanel Margin="{Binding TopPanelMargin}">
                     <Button DockPanel.Dock="Left"
-                            Content="Cancel"
+                            Content="Back"
                             Padding="10"
                             Margin="20, 10, 20, 20"
                             Height="50"
                             Width="110"
                             Style="{StaticResource BlueButton}"
-                            Name="CancelButton"
-                            Click="CancelButton_Click"/>
+                            Name="Back"
+                            Click="BackButton_Click"/>
                     <WrapPanel DockPanel.Dock="Right"
                                FlowDirection="RightToLeft">
                         <Button Content="Confirm prescription"
@@ -146,11 +146,8 @@
                                   FontSize="20"
                   HorizontalAlignment="Left"
                                   SelectionChanged="MedicinesComboBox_SelectionChanged"
-                              IsTextSearchEnabled="False"
                       Width="450"
-                      Height="40"
-                              StaysOpenOnEdit="True"
-                              IsEditable="True"/>
+                      Height="40"/>
 
                         <TextBlock Grid.Row="2"
                                Grid.Column="1"

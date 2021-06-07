@@ -196,13 +196,76 @@
     "PatientUsername": "ljuba",
     "DoctorUsername": "pantela",
     "RoomId": 201,
-    "Details": null,
-    "Prescription": null,
+    "Details": "anamnesis anamnesis anamnesis anamnesis\r\nanamnesis anamnesis\r\nanamnesis anamnesis",
+    "Prescription": {
+      "TherapyList": [
+        {
+          "Medicine": {
+            "MedicineName": "Brufen",
+            "Supplier": "Hemofarm",
+            "Status": 1,
+            "Note": "Some notes",
+            "Replacements": [
+              "test medication",
+              "tester"
+            ],
+            "Ingredients": [
+              {
+                "IngredientName": "zink"
+              },
+              {
+                "IngredientName": "tester two"
+              }
+            ]
+          },
+          "StartHours": "2021-06-07T09:00:00",
+          "TimesPerDay": 1,
+          "PauseInDays": 2,
+          "EndDate": "2021-06-10T00:00:00",
+          "Instructions": "brufen instructions"
+        },
+        {
+          "Medicine": {
+            "MedicineName": "test medication",
+            "Supplier": "Jankovic",
+            "Status": 1,
+            "Note": "",
+            "Replacements": [],
+            "Ingredients": [
+              {
+                "IngredientName": "tester one"
+              },
+              {
+                "IngredientName": "tester two"
+              },
+              {
+                "IngredientName": "tester three"
+              },
+              {
+                "IngredientName": "magnesium"
+              },
+              {
+                "IngredientName": "some new ingr"
+              }
+            ]
+          },
+          "StartHours": "2021-06-07T10:00:00",
+          "TimesPerDay": 1,
+          "PauseInDays": 5,
+          "EndDate": "2021-05-28T00:00:00",
+          "Instructions": "test medication instructions are really really long long long looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
+        }
+      ]
+    },
     "PeriodMark": null,
     "IsUrgent": false,
     "ParentReferralId": 0,
     "ChildReferralId": 0,
-    "Treatment": null
+    "Treatment": {
+      "StartDate": "2021-06-15T00:00:00",
+      "Duration": 5,
+      "RoomId": 104
+    }
   },
   {
     "PeriodId": 15,
