@@ -4,6 +4,7 @@ using System.Text;
 using Model;
 using Repository.FeedbackPersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.Services.Manager
 {
@@ -24,6 +25,8 @@ namespace ZdravoHospital.Services.Manager
         {
             newFeedback.Id = Guid.NewGuid();
             _feedbackRepository.Create(newFeedback);
+
+            var notification = new MyMessageBoxViewModel($"Your feedback has been submitted! Thank you.");
         }
     }
 }
