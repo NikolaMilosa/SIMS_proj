@@ -96,7 +96,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public void NextExecute(object parameter)
         {
-            if (PageCounter == 5)
+            if (PageCounter == 7)
                 SkipExecute(parameter);
             else
             {
@@ -154,7 +154,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
                     PreviousButtonVisibilty = false;
                     NextButtonContent = "Next";
                     break;
-                case 5:
+                case 7:
                     PreviousButtonVisibilty = true;
                     NextButtonContent = "End";
                     break;
@@ -178,15 +178,19 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             TitleSources.Add("Working with appointments");
             TitleSources.Add("Working with appointments");
             TitleSources.Add("Working with appointments");
+            TitleSources.Add("Working with appointments");
+            TitleSources.Add("Working with appointments");
             TitleSources.Add("Working with therapies");
             TitleSources.Add("Other functionallities");
-            TitleSources.Add("The End");
+            TitleSources.Add("           The End");
         }
 
         private void SetImages()
         {
             ImageSources.Add(@"/Images/PatientUI/wizard1.png");
             ImageSources.Add(@"/Images/PatientUI/wizard2.png");
+            ImageSources.Add(@"/Images/PatientUI/wizard21.png");
+            ImageSources.Add(@"/Images/PatientUI/wizard22.png");
             ImageSources.Add(@"/Images/PatientUI/wizard30.png");
             ImageSources.Add(@"/Images/PatientUI/wizard3.png");
             ImageSources.Add(@"/Images/PatientUI/wizard4.png");

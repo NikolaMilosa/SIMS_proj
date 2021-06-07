@@ -9,7 +9,10 @@
     "RoomId": 201,
     "Details": "some anamnesis",
     "Prescription": null,
-    "PeriodMark": null,
+    "PeriodMark": {
+      "Comment": null,
+      "Mark": 2
+    },
     "IsUrgent": false,
     "ParentReferralId": 0,
     "ChildReferralId": 0,
@@ -25,7 +28,10 @@
     "RoomId": 201,
     "Details": "some anamnesis",
     "Prescription": null,
-    "PeriodMark": null,
+    "PeriodMark": {
+      "Comment": "Rejtovan period",
+      "Mark": 3
+    },
     "IsUrgent": false,
     "ParentReferralId": -1,
     "ChildReferralId": -1,
