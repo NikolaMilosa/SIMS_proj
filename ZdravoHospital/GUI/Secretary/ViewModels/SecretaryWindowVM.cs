@@ -39,7 +39,7 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         public ICommand HelpCommand { get; set; }
         public ICommand AboutCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
-
+        public ICommand ReportPageCommand { get; set; }
 
 
         private void initializeCommands()
@@ -56,6 +56,12 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
             HelpCommand = new RelayCommand(helpExecute);
             AboutCommand = new RelayCommand(aboutExecute);
             LogoutCommand = new RelayCommand(logoutExecute);
+            ReportPageCommand = new RelayCommand(reportExecute);
+        }
+
+        private void reportExecute(object sender)
+        {
+            NavigationService.Navigate(new WeeklyReport());
         }
         private void helpExecute(object sender)
         {
