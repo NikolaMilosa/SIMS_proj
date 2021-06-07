@@ -205,11 +205,11 @@
     "Treatment": null
   },
   {
-    "PeriodId": 15,
-    "StartTime": "2021-06-10T08:00:00+02:00",
+    "PeriodId": 17,
+    "StartTime": "2021-06-10T09:30:00+02:00",
     "Duration": 30,
     "PeriodType": 0,
-    "PatientUsername": "ljuba",
+    "PatientUsername": "saki",
     "DoctorUsername": "pantela",
     "RoomId": 201,
     "Details": null,
@@ -221,8 +221,8 @@
     "Treatment": null
   },
   {
-    "PeriodId": 16,
-    "StartTime": "2021-06-10T09:00:00+02:00",
+    "PeriodId": 18,
+    "StartTime": "2021-06-10T08:00:00+02:00",
     "Duration": 30,
     "PeriodType": 0,
     "PatientUsername": "ljuba",

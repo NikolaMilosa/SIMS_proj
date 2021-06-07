@@ -5,8 +5,8 @@
     "BloodType": 0,
     "MedicineAllergens": [],
     "IngredientAllergens": [],
-    "RecentActions": 5,
-    "LastLogoutTime": "2021-06-07T18:50:17.408356+02:00",
+    "RecentActions": 3,
+    "LastLogoutTime": "2021-06-07T19:17:08.1282088+02:00",
     "NameSurname": "Stefan Ljubovic",
     "PatientNotes": [
       {
@@ -44,7 +44,7 @@
     "MedicineAllergens": [],
     "IngredientAllergens": [],
     "RecentActions": 0,
-    "LastLogoutTime": "0001-01-01T00:00:00",
+    "LastLogoutTime": "2021-06-07T19:11:49.8449247+02:00",
     "NameSurname": "Nikolaj Satara",
     "PatientNotes": [],
     "Name": "Nikolaj",
