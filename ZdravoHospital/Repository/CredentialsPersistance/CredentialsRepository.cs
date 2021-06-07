@@ -41,7 +41,6 @@ namespace Repository.CredentialsPersistance
                 return true;
             }  
 
-            MessageBox.Show("Username already exists.");
             return false;
         }
 

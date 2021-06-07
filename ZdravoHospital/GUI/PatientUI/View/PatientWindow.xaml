@@ -101,7 +101,7 @@
                         Width="200"
                         Height="50"
                         BorderBrush="Transparent"
-                        
+                        Command="{Binding Path=TherapyCommand}"
                         >
                         <StackPanel Orientation="Horizontal" Height="50">
                             <Image Source="/Images/PatientUI/therapyIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
@@ -111,7 +111,7 @@
 
                     <Button Background="Transparent" 
                         Name="NoteButton"
-                        Margin="0,230,0,0" 
+                        Margin="0,180,0,0" 
                         HorizontalAlignment="Left"
                         Width="200"
                         Height="50"
@@ -138,6 +138,22 @@
                         <StackPanel Orientation="Horizontal" Height="50">
                             <Image Source="/Images/PatientUI/notificationIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
                             <TextBlock Text="Notifications            " Foreground="White" FontSize="15" Margin="0,15,0,0"></TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Background="Transparent" 
+                            Name="helpButton"
+                            Margin="0,5,0,0" 
+                            HorizontalAlignment="Left"
+                            Width="200"
+                            Height="50"
+                            BorderBrush="Transparent"
+                            Command="{Binding Path=HelpCommand}"
+                        
+                    >
+                        <StackPanel Orientation="Horizontal" Height="50">
+                            <Image Source="/Images/PatientUI/helpIcon.png" Margin="0,0,20,0" Width="32" Height="32"></Image>
+                            <TextBlock Text="Help                        " Foreground="White" FontSize="15" Margin="0,10,0,0"></TextBlock>
                         </StackPanel>
                     </Button>
 

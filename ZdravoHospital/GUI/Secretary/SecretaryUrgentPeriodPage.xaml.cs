@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -63,9 +64,13 @@ namespace ZdravoHospital.GUI.Secretary
         private void CreatePeriod_Click(object sender, RoutedEventArgs e)
         {
             PeriodsViewHolderDTO viewHolder = UrgentService.ProcessUrgentPeriodCreation(UrgentPeriodDTO);
-            if(viewHolder.Status == UrgentPeriodStatus.NO_DOCTORS_AVAILABLE)
-                MessageBox.Show("Sorry, no doctors available.");
-            else if(viewHolder.Status == UrgentPeriodStatus.PERIODS_TO_MOVE)
+            if (viewHolder.Status == UrgentPeriodStatus.NO_DOCTORS_AVAILABLE) {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Sorry", "No doctors available.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+                
+            else if (viewHolder.Status == UrgentPeriodStatus.PERIODS_TO_MOVE)
                 NavigationService.Navigate(new PeriodsToMovePage(viewHolder.Periods));
             else
                 NavigationService.Navigate(new UrgentPeriodSummaryPage(viewHolder.BestPeriod));

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -30,12 +31,6 @@ namespace ZdravoHospital.GUI.Secretary
             DataContext = new PatientsViewVM();
         }
 
-
-
-        private void PatientsSearchBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         private void UnblockButton_Click(object sender, RoutedEventArgs e)
         {

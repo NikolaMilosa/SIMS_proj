@@ -33,7 +33,9 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
             }
             else
             {
-                MessageBox.Show("Health card number already exists.");
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Sorry", "Health card number already exists.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
             }
         }
     }

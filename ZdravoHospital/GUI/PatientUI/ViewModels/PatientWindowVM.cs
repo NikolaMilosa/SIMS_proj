@@ -55,12 +55,23 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public RelayCommand PeriodHistoryCommand { get; private set; }
         public RelayCommand SurveyCommand { get; private set; }
         public RelayCommand NoteCommand { get; private set; }
+        public RelayCommand HelpCommand { get; private set; }
+        public RelayCommand TherapyCommand { get; private set; }
 
         #endregion
 
         #region CommandActions
 
-        private void LogOutExecute(object sendes)
+        private void HelpExecute(object parameter)
+        {
+            NavigationService.Navigate(new HelpPage());
+        }
+
+        private void TherapiesExecute(object parameter)
+        {
+            NavigationService.Navigate(new TherapiesPage());
+        }
+        private void LogOutExecute(object parameter)
         {
             ViewFunctions viewFunctions = new ViewFunctions();
             viewFunctions.ShowYesNoDialog("Logging out","Are you sure that you want to log out?");
@@ -105,6 +116,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
+
         private void CloseWindows()
         {
             MainWindow mainWindow = new MainWindow();
@@ -120,6 +132,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             PeriodHistoryCommand = new RelayCommand(PeriodHistoryExecute);
             SurveyCommand = new RelayCommand(SurveyExecute);
             NoteCommand = new RelayCommand(NoteExecute);
+            TherapyCommand = new RelayCommand(TherapiesExecute);
+            HelpCommand = new RelayCommand(HelpExecute);
         }
 
         private void StartThreads()
@@ -131,6 +145,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             PatientWindow = patientWindow;
             NavigationService = patientWindow.myFrame.NavigationService;
+            NavigationService.Navigate(new PeriodPage(username));
             PatientUsername = username;
             WelcomeMessage = "Welcome " + username;
         }

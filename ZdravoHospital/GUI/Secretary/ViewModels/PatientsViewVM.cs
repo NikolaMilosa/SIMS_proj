@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Data;
@@ -11,17 +12,36 @@ using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
 {
-    public class PatientsViewVM
+    public class PatientsViewVM : BindableBase
     {
         private ObservableCollection<Patient> _patientsForTable;
         public ObservableCollection<Patient> PatientsForTable { get => _patientsForTable; set => _patientsForTable = value; }
         public PatientGeneralService PatientService { get; set; }
         public Patient SelectedPatient { get; set; }
+        private string _patientsSearchText;
+
+        public string PatientsSearchText
+        {
+            get { return _patientsSearchText; }
+            set 
+            {
+                _patientsSearchText = value;
+                OnPropertyChanged("PatientsSearchText");
+                if (CollectionViewSource.GetDefaultView(PatientsForTable) != null)
+                {
+                    CollectionViewSource.GetDefaultView(PatientsForTable).Refresh();
+                }
+            }
+        }
+
+
         public PatientsViewVM()
         {
             PatientService = new PatientGeneralService();
             PatientsForTable = new ObservableCollection<Patient>(PatientService.GetAll());
             SelectedPatient = new Patient();
+            ICollectionView viewPatients = (ICollectionView)CollectionViewSource.GetDefaultView(PatientsForTable);
+            viewPatients.Filter = PatientsFilter;
             initializeCommands();
         }
 
@@ -38,10 +58,17 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
 
         private void deletePatientExecute(object sender)
         {
-            PatientService.ProcessPatientDeletion(SelectedPatient);
-            //delete from view
-            if (SelectedPatient != null)
-                PatientsForTable.Remove(SelectedPatient);
+            SecretaryWindowVM.CustomYesNoDialog = new CustomYesNoDialog("Are you sure?", "Action cannot be undone.");
+            SecretaryWindowVM.CustomYesNoDialog.Owner = SecretaryWindowVM.SecretaryWindow;
+
+            if ((bool)SecretaryWindowVM.CustomYesNoDialog.ShowDialog())
+            {
+                PatientService.ProcessPatientDeletion(SelectedPatient);
+                //delete from view
+                if (SelectedPatient != null)
+                    PatientsForTable.Remove(SelectedPatient);
+            }
+            
         }
 
         private void detailsPatientExecute(object sender)
@@ -52,9 +79,18 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         private void unblockPatientExecute(object sender)
         {
             var selected = sender as Patient;
-            MessageBox.Show(selected.Name);
             PatientService.ProcessPatientUnblock(selected);
             CollectionViewSource.GetDefaultView(PatientsForTable).Refresh();
+        }
+        private bool PatientsFilter(object item)
+        {
+            if (String.IsNullOrEmpty(PatientsSearchText))
+                return true;
+            else
+                return (((item as Patient).Name).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (((item as Patient).Surname).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (((item as Patient).CitizenId).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (((item as Patient).HealthCardNumber).IndexOf(PatientsSearchText, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

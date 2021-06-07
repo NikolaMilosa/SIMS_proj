@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Model;
 using ZdravoHospital.GUI.Secretary.Service;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -131,10 +132,17 @@ namespace ZdravoHospital.GUI.Secretary
             if(SelectedPeriod != null)
             {
                 Period period = (Period)PeriodsListView.SelectedItem;
-                Periods.Remove(period);
+                
 
-                PeriodsService.ProcessPeriodDeletion(period.PeriodId);
-                CollectionViewSource.GetDefaultView(PeriodsListView.ItemsSource).Refresh();
+                SecretaryWindowVM.CustomYesNoDialog = new CustomYesNoDialog("Are you sure?", "Action cannot be undone.");
+                SecretaryWindowVM.CustomYesNoDialog.Owner = SecretaryWindowVM.SecretaryWindow;
+
+                if((bool)SecretaryWindowVM.CustomYesNoDialog.ShowDialog())
+                {
+                    Periods.Remove(period);
+                    PeriodsService.ProcessPeriodDeletion(period.PeriodId);
+                    CollectionViewSource.GetDefaultView(PeriodsListView.ItemsSource).Refresh();
+                }
             }
             
         }

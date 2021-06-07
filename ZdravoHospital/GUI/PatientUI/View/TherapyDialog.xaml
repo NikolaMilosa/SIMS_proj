@@ -1,0 +1,50 @@
+﻿<Window x:Class="ZdravoHospital.GUI.PatientUI.View.TherapyDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZdravoHospital.GUI.PatientUI.View"
+        mc:Ignorable="d"
+        Title="TherapyDialog" Height="350" Width="600"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="Transparent"
+        x:Name="OkDialog"
+        AllowsTransparency="True">
+    <Border Background="#2c876b" CornerRadius="40" BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+          
+            <TextBlock Grid.Row="0" Grid.Column="1" Foreground="White" Text="Therapy details" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"></TextBlock>
+            
+            <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+                <TextBlock Text="Instructions:" FontSize="16" Foreground="White"></TextBlock>
+                <Border BorderBrush="White" BorderThickness="1" CornerRadius="10">
+                    <TextBlock Margin="8" Text="{Binding Path=Instructions}" FontSize="14" Foreground="White" Height="200"></TextBlock>
+                </Border>
+            </StackPanel>
+
+            <Button BorderBrush="Transparent" FontSize="15" 
+                    Foreground="White" Content="Ok"  Grid.Row="3"
+                    FontWeight="Bold"
+                    Name="okButton" Width="100"
+                    Grid.ColumnSpan="2" 
+                    HorizontalAlignment="Center"
+                    Background="Transparent" 
+                    Command="{Binding Path=OkCommand}" CommandParameter="{Binding ElementName=OkDialog}"
+            >
+            </Button>
+
+        </Grid>
+    </Border>
+</Window>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -25,7 +26,9 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             if (SelectedPatient == null)
             {
-                MessageBox.Show("Select a patient.");
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Please", "Select a patient.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
             }
             else
             {

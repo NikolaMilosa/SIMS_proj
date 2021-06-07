@@ -12,6 +12,7 @@ using Model;
 using Repository.PatientPersistance;
 using Repository.PeriodPersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.ViewModel;
 using Paragraph = iTextSharp.text.Paragraph;
 
 namespace ZdravoHospital.Services.Manager
@@ -111,6 +112,9 @@ namespace ZdravoHospital.Services.Manager
 
                 document.Close();
             }
+
+            var notification = new MyMessageBoxViewModel($"Doctor report has successfully been generated! It is located in " +
+                                                         $"EXPORTPDF/Manager.");
         }
     }
 }
