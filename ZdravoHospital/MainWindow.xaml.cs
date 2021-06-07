@@ -8,6 +8,7 @@ using Repository.EmployeePersistance;
 using ZdravoHospital.GUI.DoctorUI;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.GUI.PatientUI;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.View;
 using ZdravoHospital.GUI.Secretary;
 using ZdravoHospital.GUI.Secretary.Service;
@@ -66,7 +67,10 @@ namespace ZdravoHospital
                             window = new SecretaryWindow(username);
                             break;
                         case RoleType.PATIENT:
-                            window = new PatientWindow(username);
+                            if (IsFirstLoggIn(username))
+                                window = new WizardWindow(username);
+                            else
+                                window = new PatientWindow(username);
                             break;
                     }
 
@@ -78,6 +82,12 @@ namespace ZdravoHospital
                     MessageBox.Show("Wrong password...");
                 }
             }
+        }
+
+        private bool IsFirstLoggIn(string username)
+        {
+            PatientFunctions patientFunctions = new PatientFunctions(username);
+            return patientFunctions.LoadPatient().LastLogoutTime == DateTime.MinValue;
         }
 
     }

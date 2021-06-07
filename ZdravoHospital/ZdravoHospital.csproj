@@ -87,6 +87,8 @@
     <None Remove="Images\PatientUI\emptyStar.png" />
     <None Remove="Images\PatientUI\evaluateIcon.png" />
     <None Remove="Images\PatientUI\fullStar.png" />
+    <None Remove="Images\PatientUI\helpIcon.png" />
+    <None Remove="Images\PatientUI\helpIconBlack.png" />
     <None Remove="Images\PatientUI\historyIcon.png" />
     <None Remove="Images\PatientUI\historyIconBlack.png" />
     <None Remove="Images\PatientUI\hospitalIcon.png" />
@@ -107,6 +109,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="Syncfusion.SfSchedule.WPF" Version="18.3.0.53" />
   </ItemGroup>
 
   <ItemGroup>
@@ -182,6 +185,8 @@
     <Resource Include="Images\PatientUI\fullStar.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\PatientUI\helpIcon.png" />
+    <Resource Include="Images\PatientUI\helpIconBlack.png" />
     <Resource Include="Images\PatientUI\historyIcon.png" />
     <Resource Include="Images\PatientUI\historyIconBlack.png" />
     <Resource Include="Images\PatientUI\hospitalIcon.png" />
