@@ -1,6 +1,6 @@
 [
   {
-    "PeriodId": 3,
+    "PeriodId": 12,
     "StartTime": "2021-05-31T09:00:00+02:00",
     "Duration": 30,
     "PeriodType": 0,
@@ -8,39 +8,14 @@
     "DoctorUsername": "pantela",
     "RoomId": 201,
     "Details": "some anamnesis",
-    "Prescription": {
-      "TherapyList": [
-        {
-          "Medicine": {
-            "MedicineName": "Brufen",
-            "Supplier": "Hemofarm",
-            "Status": 1,
-            "Note": "Some notes",
-            "Replacements": [
-              "test medication",
-              "tester"
-            ],
-            "Ingredients": [
-              {
-                "IngredientName": "zink"
-              },
-              {
-                "IngredientName": "tester two"
-              }
-            ]
-          },
-          "StartHours": "2021-06-07T12:00:00",
-          "TimesPerDay": 3,
-          "PauseInDays": 1,
-          "EndDate": "2021-06-30T00:00:00",
-          "Instructions": "Take medicine after a meal."
-        }
-      ]
+    "Prescription": null,
+    "PeriodMark": {
+      "Comment": null,
+      "Mark": 2
     },
-    "PeriodMark": null,
     "IsUrgent": false,
-    "ParentReferralId": -1,
-    "ChildReferralId": -1,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -53,7 +28,10 @@
     "RoomId": 201,
     "Details": "some anamnesis",
     "Prescription": null,
-    "PeriodMark": null,
+    "PeriodMark": {
+      "Comment": "Rejtovan period",
+      "Mark": 3
+    },
     "IsUrgent": false,
     "ParentReferralId": -1,
     "ChildReferralId": -1,
@@ -97,7 +75,7 @@
     "PeriodMark": null,
     "IsUrgent": false,
     "ParentReferralId": -1,
-    "ChildReferralId": -1,
+    "ChildReferralId": 0,
     "Treatment": {
       "StartDate": "2021-06-02T00:00:00",
       "Duration": 10,
@@ -224,76 +202,13 @@
     "PatientUsername": "ljuba",
     "DoctorUsername": "pantela",
     "RoomId": 201,
-    "Details": "anamnesis anamnesis anamnesis anamnesis\r\nanamnesis anamnesis\r\nanamnesis anamnesis",
-    "Prescription": {
-      "TherapyList": [
-        {
-          "Medicine": {
-            "MedicineName": "Brufen",
-            "Supplier": "Hemofarm",
-            "Status": 1,
-            "Note": "Some notes",
-            "Replacements": [
-              "test medication",
-              "tester"
-            ],
-            "Ingredients": [
-              {
-                "IngredientName": "zink"
-              },
-              {
-                "IngredientName": "tester two"
-              }
-            ]
-          },
-          "StartHours": "2021-06-07T09:00:00",
-          "TimesPerDay": 1,
-          "PauseInDays": 2,
-          "EndDate": "2021-06-10T00:00:00",
-          "Instructions": "brufen instructions"
-        },
-        {
-          "Medicine": {
-            "MedicineName": "test medication",
-            "Supplier": "Jankovic",
-            "Status": 1,
-            "Note": "",
-            "Replacements": [],
-            "Ingredients": [
-              {
-                "IngredientName": "tester one"
-              },
-              {
-                "IngredientName": "tester two"
-              },
-              {
-                "IngredientName": "tester three"
-              },
-              {
-                "IngredientName": "magnesium"
-              },
-              {
-                "IngredientName": "some new ingr"
-              }
-            ]
-          },
-          "StartHours": "2021-06-07T10:00:00",
-          "TimesPerDay": 1,
-          "PauseInDays": 5,
-          "EndDate": "2021-05-28T00:00:00",
-          "Instructions": "test medication instructions are really really long long long looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
-        }
-      ]
-    },
+    "Details": null,
+    "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ParentReferralId": -1,
+    "ParentReferralId": 0,
     "ChildReferralId": 0,
-    "Treatment": {
-      "StartDate": "2021-06-15T00:00:00",
-      "Duration": 5,
-      "RoomId": 104
-    }
+    "Treatment": null
   },
   {
     "PeriodId": 17,
@@ -307,8 +222,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ParentReferralId": -1,
-    "ChildReferralId": -1,
+    "ParentReferralId": 0,
+    "ChildReferralId": 0,
     "Treatment": null
   },
   {
@@ -323,88 +238,8 @@
     "Prescription": null,
     "PeriodMark": null,
     "IsUrgent": false,
-    "ParentReferralId": -1,
-    "ChildReferralId": -1,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 19,
-    "StartTime": "2021-06-08T12:30:00",
-    "Duration": 30,
-    "PeriodType": 1,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "pantela",
-    "RoomId": 100,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ParentReferralId": -1,
-    "ChildReferralId": -1,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 20,
-    "StartTime": "2021-06-11T12:30:00",
-    "Duration": 30,
-    "PeriodType": 1,
-    "PatientUsername": "saki",
-    "DoctorUsername": "zigara",
-    "RoomId": 101,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ParentReferralId": -1,
-    "ChildReferralId": -1,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 21,
-    "StartTime": "2021-06-11T18:00:00",
-    "Duration": 30,
-    "PeriodType": 1,
-    "PatientUsername": "aca1999",
-    "DoctorUsername": "stankovic",
-    "RoomId": 101,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ParentReferralId": -1,
-    "ChildReferralId": -1,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 22,
-    "StartTime": "2021-06-09T13:00:00",
-    "Duration": 60,
-    "PeriodType": 1,
-    "PatientUsername": "saki",
-    "DoctorUsername": "krasic",
-    "RoomId": 101,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
-    "ParentReferralId": -1,
-    "ChildReferralId": -1,
-    "Treatment": null
-  },
-  {
-    "PeriodId": 23,
-    "StartTime": "2021-06-23T08:00:00",
-    "Duration": 45,
-    "PeriodType": 1,
-    "PatientUsername": "ljuba",
-    "DoctorUsername": "zigara",
-    "RoomId": 101,
-    "Details": null,
-    "Prescription": null,
-    "PeriodMark": null,
-    "IsUrgent": false,
     "ParentReferralId": 0,
-    "ChildReferralId": -1,
+    "ChildReferralId": 0,
     "Treatment": null
   }
 ]

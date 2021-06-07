@@ -47,7 +47,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #endregion
 
         #region Commands
-
+        public RelayCommand ProfileCommand { get; private set; }
         public RelayCommand LogOutCommand { get; private set; }
         public RelayCommand AddAppointmentCommand { get; private set; }
         public RelayCommand NotificationCommand { get; private set; }
@@ -62,6 +62,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region CommandActions
 
+        private void ProfileExecute(object parameter)
+        {
+            NavigationService.Navigate(new ProfilePage());
+        }
         private void HelpExecute(object parameter)
         {
             NavigationService.Navigate(new HelpPage());
@@ -116,7 +120,6 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Methods
 
-
         private void CloseWindows()
         {
             MainWindow mainWindow = new MainWindow();
@@ -126,6 +129,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void SetCommands()
         {
             LogOutCommand = new RelayCommand(LogOutExecute);
+            ProfileCommand = new RelayCommand(ProfileExecute);
             AddAppointmentCommand = new RelayCommand(AddAppointmentExecute);
             PeriodsCommand = new RelayCommand(PeriodsExecute);
             NotificationCommand = new RelayCommand(NotificationsExecute);
