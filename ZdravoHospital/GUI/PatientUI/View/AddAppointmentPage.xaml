@@ -29,13 +29,15 @@
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal"  >
                 <Image Source="/Images/PatientUI/addIconBlack.png" Margin="180,0,0,0" Height="70"></Image>
                 <TextBlock Text="Add appointment" FontSize="36" Margin="20,20,0,0" FontWeight="Bold"></TextBlock>
+                
             </StackPanel>
             
             <StackPanel  Orientation="Horizontal"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+ 
                 <TextBlock Text="Select Doctor:" Margin="0,0,80,0" FontSize="24"/>
                 <ComboBox Name="selectDoctor" ItemsSource="{Binding DoctorList}" SelectedItem="{Binding Path=SelectedDoctorDTO}" DisplayMemberPath="Fullname"  VerticalAlignment="Center" Width="200">
-                  
                 </ComboBox>
+
             </StackPanel>
 
             <StackPanel  Orientation="Horizontal"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -59,15 +61,51 @@
 
             <Grid Grid.Column="1" Grid.Row="4">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
                 <TextBlock Grid.Row="0" Text="{Binding Path=ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Red" ></TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0">
-                    <Button Name="confirmButton" Content="Confirm" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=ConfirmCommand}"></Button>
-                    <Button Name="cancelButton" Content="Cancel" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=CancelCommand}"></Button>
-                    <Button Name="suggestButton" Content="Suggest" Width="150" FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" BorderBrush="Transparent" Margin="120,0,0,0" Command="{Binding Path=SuggestCommand}" ></Button>
-                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Name="confirmButton" VerticalAlignment="Top" Content="Confirm" Width="150" FontSize="20"
+                                FontWeight="Bold" Height="55" Background="Transparent" 
+                                BorderBrush="Transparent" Command="{Binding Path=ConfirmCommand}"
+                                HorizontalAlignment="Right"
+                        ></Button>
+
+
+
+                    <Button Grid.Column="2" Name="cancelButton" Content="Cancel" Width="150" 
+                            FontSize="20" FontWeight="Bold" Height="55" Background="Transparent" 
+                            BorderBrush="Transparent" Command="{Binding Path=CancelCommand}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                    ></Button>
+
+                    <Button Grid.Column="1" Name="suggestButton" Content="Suggest" Width="150"
+                        FontSize="20" FontWeight="Bold" Height="45" Background="Transparent"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" 
+                        Command="{Binding Path=SuggestCommand}" >
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Mode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </Grid>
             </Grid>
 
         </Grid>
