@@ -20,7 +20,39 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         private MediaElement _mediaElement;
         private bool _isMediaPlaying;
+        private FeedbackService _feedbackService;
 
+
+        public int SelectedFeedbackIndex { get; set; }
+        public string FeedbackText { get; set; }
+
+        private string _messageText;
+        public string MessageText
+        {
+            get
+            {
+                return _messageText;
+            }
+            set
+            {
+                _messageText = value;
+                OnPropertyChanged("MessageText");
+            }
+        }
+
+        private Visibility _messagePopUpVisibility;
+        public Visibility MessagePopUpVisibility
+        {
+            get
+            {
+                return _messagePopUpVisibility;
+            }
+            set
+            {
+                _messagePopUpVisibility = value;
+                OnPropertyChanged("MessagePopUpVisibility");
+            }
+        }
         private string _userText;
         public string UserText 
         {
@@ -189,6 +221,20 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             {
                 _tutorialPopUpVisibility = value;
                 OnPropertyChanged("TutorialPopUpVisibility");
+            }
+        }
+
+        private Visibility _feedbackPopUpVisibility;
+        public Visibility FeedbackPopUpVisibility
+        {
+            get
+            {
+                return _feedbackPopUpVisibility;
+            }
+            set
+            {
+                _feedbackPopUpVisibility = value;
+                OnPropertyChanged("FeedbackPopUpVisibility");
             }
         }
 
@@ -422,6 +468,73 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand ShowFeedbackPopUpCommand { get; set; }
+
+        public void Executed_ShowFeedbackPopUpCommand()
+        {
+            UserPopUpVisibility = Visibility.Collapsed;
+            FeedbackPopUpVisibility = Visibility.Visible;
+        }
+
+        public bool CanExecute_ShowFeedbackPopUpCommand()
+        {
+            return true;
+        }
+
+        public MyICommand HideFeedbackPopUpCommand { get; set; }
+
+        public void Executed_HideFeedbackPopUpCommand()
+        {
+            FeedbackPopUpVisibility = Visibility.Collapsed;
+        }
+
+        public bool CanExecute_HideFeedbackPopUpCommand()
+        {
+            return true;
+        }
+
+        public MyICommand SendFeedbackCommand { get; set; }
+
+        public void Executed_SendFeedbackCommand()
+        {
+            Feedback feedback = new Feedback();
+
+            if (SelectedFeedbackIndex == 0)
+                feedback.Type = FeedbackType.FAULT;
+            else if (SelectedFeedbackIndex == 1)
+                feedback.Type = FeedbackType.IMPROVEMENT;
+            else
+                feedback.Type = FeedbackType.QUESTION;
+
+            feedback.Text = FeedbackText;
+            feedback.SenderUsername = App.currentUser;
+
+            _feedbackService.SendFeedback(feedback);
+
+            MessageText = "Feedback sent successfully.";
+            MessagePopUpVisibility = Visibility.Visible;
+        }
+
+        public bool CanExecute_SendFeedbackCommand()
+        {
+            return true;
+        }
+
+        public MyICommand CloseMessagePopUpCommand { get; set; }
+
+        public void Executed_CloseMessagePopUpCommand()
+        {
+            MessagePopUpVisibility = Visibility.Collapsed;
+
+            if (FeedbackPopUpVisibility == Visibility.Visible)
+                FeedbackPopUpVisibility = Visibility.Collapsed;
+        }
+
+        public bool CanExecute_CloseMessagePopUpCommand()
+        {
+            return true;
+        }
+
         public DoctorViewModel(MediaElement mediaElement)
         {
             Doctor doctor = (new DoctorService()).GetDoctor(App.currentUser);
@@ -429,6 +542,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             _mediaElement = mediaElement;
             _mediaElement.Loaded += _mediaElement_Loaded;
+            _feedbackService = new FeedbackService();
 
             InitializeCommands();
 
@@ -445,6 +559,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             UserPopUpVisibility = Visibility.Collapsed;
             TutorialPopUpVisibility = Visibility.Collapsed;
+            FeedbackPopUpVisibility = Visibility.Collapsed;
+            MessagePopUpVisibility = Visibility.Collapsed;
 
             PlayPauseButtonText = "Play";
         }
@@ -461,6 +577,10 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             HideTutorialPopUpCommand = new MyICommand(Executed_HideTutorialPopUpCommand, CanExecute_HideTutorialPopUpCommand);
             ChooseTutorialCommand = new MyICommand<string>(Executed_ChooseTutorialCommand, CanExecute_ChooseTutorialCommand);
             PlayPauseCommand = new MyICommand(Executed_PlayPauseCommand, CanExecute_PlayPauseCommand);
+            ShowFeedbackPopUpCommand = new MyICommand(Executed_ShowFeedbackPopUpCommand, CanExecute_ShowFeedbackPopUpCommand);
+            HideFeedbackPopUpCommand = new MyICommand(Executed_HideFeedbackPopUpCommand, CanExecute_HideFeedbackPopUpCommand);
+            SendFeedbackCommand = new MyICommand(Executed_SendFeedbackCommand, CanExecute_SendFeedbackCommand);
+            CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
         }
 
         private void _mediaElement_Loaded(object sender, RoutedEventArgs e)
