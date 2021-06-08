@@ -113,6 +113,18 @@
     <None Remove="Images\PatientUI\wizard4.png" />
     <None Remove="Images\PatientUI\wizard5.png" />
     <None Remove="Images\PatientUI\wizardIcon.png" />
+    <None Remove="Resources\create_new_appointment.mkv" />
+    <None Remove="Resources\editing_and_approving_medicine.mkv" />
+    <None Remove="Resources\writing_prescription.mkv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\create_new_appointment.mkv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\writing_prescription.mkv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -231,16 +243,16 @@
     <None Update="Resources\doctors.json">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Update="Resources\appointment_operation_preview.mp4">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\create_new_appointment.mkv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="EXPORTPDF\Secretary\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\editing_and_approving_medicine.mkv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

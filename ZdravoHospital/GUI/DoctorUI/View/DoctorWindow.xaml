@@ -211,6 +211,7 @@
                         Margin="50, 25, 50, 0"/>
                 <Button x:Name="LogoutButton"
                         Content="Log out"
+                        Command="{Binding LogoutCommand}"
                         Style="{StaticResource BlueButton}"
                         Width="350"
                         Margin="50, 25, 50, 50"/>
@@ -250,13 +251,19 @@
                     <StackPanel Width="400"
                                 Margin="0, 0, 30, 0">
                         <Button
-                        Content="Appointment/operation preview"
+                        Content="Creating new appointment"
                         Style="{StaticResource BlueButton}"
                         Command="{Binding ChooseTutorialCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}"
                         Margin="0, 5"/>
                         <Button
-                        Content="Creating new appointment"
+                        Content="Writing prescription"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding ChooseTutorialCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}"
+                        Margin="0, 5"/>
+                        <Button
+                        Content="Editing and approving medicine"
                         Style="{StaticResource BlueButton}"
                         Command="{Binding ChooseTutorialCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}"
@@ -289,14 +296,30 @@
                                   Grid.ColumnSpan="3"
                               LoadedBehavior="Manual"
                               Volume="1"/>
-                    <Button
-                        Grid.Row="3"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                        Grid.Row="3">
+                        <Button
+                        Content="Rewind (5 sec)"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding RewindCommand}"
+                        Width="200"
+                        Margin="20"
+                        FontSize="23"/>
+                        <Button
                         Content="{Binding PlayPauseButtonText}"
                         Style="{StaticResource BlueButton}"
                         Command="{Binding PlayPauseCommand}"
-                        Width="100"
-                        Margin="0, 20, 0, 20"
+                        Width="150"
+                        Margin="20"
                         FontSize="23"/>
+                        <Button
+                        Content="Forward (5 sec)"
+                        Style="{StaticResource BlueButton}"
+                        Command="{Binding ForwardCommand}"
+                        Width="200"
+                        Margin="20"
+                        FontSize="23"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Grid>

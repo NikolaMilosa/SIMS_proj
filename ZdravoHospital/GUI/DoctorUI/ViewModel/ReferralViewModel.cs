@@ -367,6 +367,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             }
 
             MessagePopUpVisibility = Visibility.Collapsed;
+
+            DaysToUseText = "0";
+            NoteText = "";
         }
 
         public ReferralViewModel(NavigationService navigationService, Referral referral, Patient patient)
@@ -406,6 +409,14 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         private bool IsInputValid()
         {
+            if (ReferredDoctor == null)
+            {
+                MessageText = "Please select referred doctor.";
+                MessagePopUpVisibility = Visibility.Visible;
+                return false;
+            }
+
+
             if (!BasicValidation.IsIntegerFromTextValid(DaysToUseText))
             {
                 MessageText = "Please enter days to use in correct format (numbers only).";

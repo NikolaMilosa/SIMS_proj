@@ -63,6 +63,9 @@ namespace ZdravoHospital.GUI.DoctorUI
         public void Executed_CloseMessagePopUpCommand()
         {
             MessagePopUpVisibility = Visibility.Collapsed;
+
+            if (MessageText.Equals("Prescription saved successfully."))
+                NavigationService.GoBack();
         }
 
         public bool CanExecute_CloseMessagePopUpCommand()

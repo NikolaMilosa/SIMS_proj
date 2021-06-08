@@ -14,8 +14,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
     {
         private Dictionary<string, Uri> _videos = new Dictionary<string, Uri>()
         {
-            { "Appointment/operation preview", new Uri("Resources/appointment_operation_preview.mp4", UriKind.Relative) },
-            { "Creating new appointment", new Uri("Resources/create_new_appointment.mkv", UriKind.Relative) }
+            { "Creating new appointment", new Uri("Resources/create_new_appointment.mkv", UriKind.Relative) },
+            { "Writing prescription", new Uri("Resources/writing_prescription.mkv", UriKind.Relative) },
+            { "Editing and approving medicine", new Uri("Resources/editing_and_approving_medicine.mkv", UriKind.Relative) }
         };
 
         private MediaElement _mediaElement;
@@ -446,6 +447,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_ChooseTutorialCommand(string videoName)
         {
             MediaElementSource = _videos[videoName];
+            PauseMedia();
+            _mediaElement.Position = new TimeSpan(0, 0, 0);
+            PlayMedia();
         }
 
         public bool CanExecute_ChooseTutorialCommand(string videoName)
@@ -520,6 +524,30 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             return true;
         }
 
+        public MyICommand RewindCommand { get; set; }
+
+        public void Executed_RewindCommand()
+        {
+            _mediaElement.Position = _mediaElement.Position.Add(new TimeSpan(0, 0, -5));
+        }
+
+        public bool CanExecute_RewindCommand()
+        {
+            return true;
+        }
+
+        public MyICommand ForwardCommand { get; set; }
+
+        public void Executed_ForwardCommand()
+        {
+            _mediaElement.Position = _mediaElement.Position.Add(new TimeSpan(0, 0, 5));
+        }
+
+        public bool CanExecute_ForwardCommand()
+        {
+            return true;
+        }
+
         public MyICommand CloseMessagePopUpCommand { get; set; }
 
         public void Executed_CloseMessagePopUpCommand()
@@ -531,6 +559,20 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         }
 
         public bool CanExecute_CloseMessagePopUpCommand()
+        {
+            return true;
+        }
+
+        public MyICommand LogoutCommand { get; set; }
+
+        public void Executed_LogoutCommand()
+        {
+            MainWindow mainWindow = new MainWindow();
+            Application.Current.Windows[0].Close();
+            mainWindow.Show();
+        }
+
+        public bool CanExecute_LogoutCommand()
         {
             return true;
         }
@@ -581,6 +623,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             HideFeedbackPopUpCommand = new MyICommand(Executed_HideFeedbackPopUpCommand, CanExecute_HideFeedbackPopUpCommand);
             SendFeedbackCommand = new MyICommand(Executed_SendFeedbackCommand, CanExecute_SendFeedbackCommand);
             CloseMessagePopUpCommand = new MyICommand(Executed_CloseMessagePopUpCommand, CanExecute_CloseMessagePopUpCommand);
+            RewindCommand = new MyICommand(Executed_RewindCommand, CanExecute_RewindCommand);
+            ForwardCommand = new MyICommand(Executed_ForwardCommand, CanExecute_ForwardCommand);
+            LogoutCommand = new MyICommand(Executed_LogoutCommand, CanExecute_LogoutCommand);
         }
 
         private void _mediaElement_Loaded(object sender, RoutedEventArgs e)
