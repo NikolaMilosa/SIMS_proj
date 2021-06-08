@@ -198,7 +198,7 @@
                        Background="Black">
                     <Button Grid.Row="0"
                         Margin="100, 0, 0, 15"
-                            Content="Close"
+                            Content="Back"
                             Click="CloseAllergiesPopUpButton_Click"
                             Width="100"
                             Style="{StaticResource BlueButton}"

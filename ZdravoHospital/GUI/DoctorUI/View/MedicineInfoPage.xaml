@@ -148,7 +148,7 @@
                         <ListBox x:Name="IngredientsListBox"
                                  Grid.Row="1"
                                  SelectionMode="Multiple"
-                                 FontSize="21"
+                                 FontSize="23"
                                  ItemsSource="{Binding Ingredients}"
                                  Width="400"
                          MinHeight="600"
@@ -160,7 +160,6 @@
                             DockPanel.Dock="Left"
                             Content="Remove selection"
                             Padding="10"
-                            Height="45"
                             Width="200"
                             Style="{StaticResource BlueButton}"
                             Name="RemoveIngredientsButton"
@@ -170,7 +169,6 @@
                             HorizontalAlignment="Right"
                             Content="Add"
                             Padding="10"
-                            Height="45"
                             Width="60"
                             Style="{StaticResource BlueButton}"
                             Name="AddIngredientsButton"
@@ -195,7 +193,7 @@
                                  ItemsSource="{Binding Replacements}" 
                                  Width="400"
                                  MinHeight="600"
-                                 FontSize="20"
+                                 FontSize="23"
                                  Background="Black"
                                  Foreground="White"/>
                         <DockPanel Margin="15"
@@ -309,7 +307,7 @@
                          Margin="30"
                          SelectionMode="Multiple"
                                  Width="400"
-                                 FontSize="20"
+                                 FontSize="23"
                                  Background="Black"
                                  Foreground="White"/>
                     <DockPanel Margin="30, 0, 30, 30">
@@ -353,7 +351,7 @@
                          Margin="30"
                          SelectionMode="Multiple"
                                  Width="400"
-                                 FontSize="20"
+                                 FontSize="23"
                                  Background="Black"
                                  Foreground="White"/>
                     <DockPanel Margin="30, 0, 30, 30">
