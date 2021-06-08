@@ -202,31 +202,36 @@ namespace ZdravoHospital.GUI.DoctorUI
         {
             if (MedicinesComboBox.SelectedIndex == -1)
             {
-                MessageBox.Show("Please select medicine.", "Invalid input");
+                MessageText = "Please select medicine.";
+                MessagePopUpVisibility = Visibility.Visible;
                 return false;
             }
 
             if (!BasicValidation.IsTimeFromTextFormatValid(StartHoursTextBox.Text))
             {
-                MessageBox.Show("Please enter start hours parameter in correct format (HH:mm).", "Invalid input");
+                MessageText = "Please enter start hours parameter in correct format (HH:mm).";
+                MessagePopUpVisibility = Visibility.Visible;
                 return false;
             }
 
             if (!BasicValidation.IsTimeFromTextValueValid(StartHoursTextBox.Text))
             {
-                MessageBox.Show("Please enter valid start hours.", "Invalid input");
+                MessageText = "Please enter valid start hours.";
+                MessagePopUpVisibility = Visibility.Visible;
                 return false;
             }
 
             if (!BasicValidation.IsIntegerFromTextValid(TimesPerDayTextBox.Text))
             {
-                MessageBox.Show("Please enter times per day parameter in correct format (numbers only).", "Invalid input");
+                MessageText = "Please enter times per day parameter in correct format (positive numbers only).";
+                MessagePopUpVisibility = Visibility.Visible;
                 return false;
             }
 
             if (!BasicValidation.IsIntegerFromTextValid(PauseInDaysTextBox.Text))
             {
-                MessageBox.Show("Please enter pause in days parameter in correct format (numbers only).", "Invalid input");
+                MessageText = "Please enter pause in days parameter in correct format (positive numbers only).";
+                MessagePopUpVisibility = Visibility.Visible;
                 return false;
             }
 

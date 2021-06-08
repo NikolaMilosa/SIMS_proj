@@ -83,14 +83,14 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Background="Black" 
-                              Margin="8"
+                    <Border BorderBrush="#333333" BorderThickness="1" Margin="7">
+                        <Grid Background="Black"
                               Focusable="False">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
                                        DockPanel.Dock="Left"
                                        Text="{Binding Path=MedicineName}"
                                        Margin="30, 10"
@@ -98,11 +98,11 @@
                                        FontSize="21" 
                                        VerticalAlignment="Center"
                                        TextAlignment="Center"/>
-                        <StackPanel Grid.Column="2"
+                            <StackPanel Grid.Column="2"
                                        DockPanel.Dock="Right" 
                                     Orientation="Horizontal"
                                    HorizontalAlignment="Right">
-                            <TextBlock x:Name="StatusTextBlock" 
+                                <TextBlock x:Name="StatusTextBlock" 
                                             Text="{Binding Path=Status}" 
                                             Height="40"
                                             Padding="10"
@@ -111,7 +111,7 @@
                                             Margin="30, 10, 15, 17"
                                             Width="130"
                                        TextAlignment="Center"/>
-                            <Button x:Name="DetailsButton" 
+                                <Button x:Name="DetailsButton" 
                                             Content="Details" 
                                             Height="40"
                                             Padding="10"
@@ -120,8 +120,9 @@
                                             Width="100"
                                             Style="{StaticResource BlueButton}"
                                             Click="DetailsButton_Click"/>
-                        </StackPanel>
-                    </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

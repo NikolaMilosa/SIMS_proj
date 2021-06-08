@@ -68,14 +68,14 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="Black" 
-                              Margin="8"
+                        <Border  BorderBrush="#333333" BorderThickness="1" Margin="7">
+                            <Grid Background="Black"
                               Focusable="False">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
                                        DockPanel.Dock="Left"
                                        Text="{Binding Path=Medicine.MedicineName}"
                                        Margin="30, 10"
@@ -83,7 +83,7 @@
                                        FontSize="21" 
                                        VerticalAlignment="Center"
                                        TextAlignment="Center"/>
-                            <WrapPanel Grid.Column="2"
+                                <WrapPanel Grid.Column="2"
                                        DockPanel.Dock="Right" 
                                        FlowDirection="RightToLeft">
                                     <Button x:Name="RemoveTheapyButton" 
@@ -103,7 +103,8 @@
                                             Style="{StaticResource BlueButton}"
                                             Click="EditTherapyButton_Click"/>
                                 </WrapPanel>
-                        </Grid>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
