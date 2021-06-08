@@ -64,9 +64,11 @@
                  Name="DetailsTextBox"
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
-                 Margin="50"
-                 Height="400"
-                 FontSize="17"/>
+                 Margin="200, 0, 200, 0"
+                 Height="600"
+                         Width="1500"
+                         Padding="8"
+                 FontSize="23"/>
             </ScrollViewer>
         </Grid>
         <Grid x:Name="CancelDialog"
