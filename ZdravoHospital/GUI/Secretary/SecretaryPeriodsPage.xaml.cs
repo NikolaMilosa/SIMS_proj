@@ -144,6 +144,12 @@ namespace ZdravoHospital.GUI.Secretary
                     CollectionViewSource.GetDefaultView(PeriodsListView.ItemsSource).Refresh();
                 }
             }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select a period first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
             
         }
 

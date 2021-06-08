@@ -36,6 +36,12 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
             {
                 SecretaryWindowVM.NavigationService.Navigate(new EditNotificationPage(SelectedNotification));
             }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select a notification first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
         }
 
         private void deleteNotificationExecute(object parameter) 
@@ -51,6 +57,12 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
                     Notifications.Remove(SelectedNotification);
                 }
                 
+            }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select a notification first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
             }
         }
 

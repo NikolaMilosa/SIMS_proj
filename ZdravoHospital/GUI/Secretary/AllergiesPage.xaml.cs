@@ -137,6 +137,12 @@ namespace ZdravoHospital.GUI.Secretary
                     SecretaryWindowVM.CustomMessageBox.Show();
                 }
             }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select allergen first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
         }
 
         private void AddIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
@@ -153,6 +159,12 @@ namespace ZdravoHospital.GUI.Secretary
                     SecretaryWindowVM.CustomMessageBox.Show();
                 }
             }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select allergen first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
         }
 
         private void AddCustomAllergenButton_Click(object sender, RoutedEventArgs e)
@@ -168,6 +180,12 @@ namespace ZdravoHospital.GUI.Secretary
                 bool success = AllergiesService.AddIngredientAllergen(SelectedPatient, CustomAllergen);
                 if (success)
                     AddedCustomAllergens.Add(CustomAllergen);
+            }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Write allergen first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
             }
         }
 
@@ -186,6 +204,12 @@ namespace ZdravoHospital.GUI.Secretary
                     AddedMedicalAllergens.Remove(selectedAllergen);
                 
             }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select allergen first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
         }
 
         private void RemoveIngredientAllergenButton_Click(object sender, RoutedEventArgs e)
@@ -196,6 +220,12 @@ namespace ZdravoHospital.GUI.Secretary
                 bool success = AllergiesService.RemoveIngredientAllergen(SelectedPatient, selectedAllergen);
                 if (success)
                     AddedIngredientAllergens.Remove(selectedAllergen);
+            }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select allergen first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
             }
         }
 
@@ -211,6 +241,12 @@ namespace ZdravoHospital.GUI.Secretary
                     AllergiesService.RemoveIngredientAllergen(SelectedPatient, selectedAllergen);
 
                 AddedCustomAllergens.Remove(selectedAllergen);
+            }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Hint", "Select allergen first.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
             }
         }
     }

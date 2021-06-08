@@ -6,6 +6,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
       xmlns:val="clr-namespace:ZdravoHospital.GUI.Secretary.Validation"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="PatientRegistrationPage" Background="#FFF3F2FC"
@@ -140,7 +141,7 @@
                 <StackPanel Grid.Row="5" Grid.Column="1">
                     <TextBlock Margin="8,0,0,0">Date of birth</TextBlock>
                     <DatePicker Name="DateOfBirthPicker" Grid.Row="4" Grid.Column="1" BorderThickness="2,2,2,2" Margin="8,0,8,8" Height="42" VerticalAlignment="Top" Background="White"
-                                SelectedDate="{Binding Path=PatientDTO.DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+                                SelectedDate="{Binding Path=PatientDTO.DateOfBirth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" DisplayDateEnd="{x:Static sys:DateTime.Today}" Focusable="False">
                         <DatePicker.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -407,13 +408,8 @@
                     </StackPanel>
                 </Grid>
 
-                <Button Name="FinishButton" Grid.Row="22" Grid.Column="1" Height="30" Width="90" BorderThickness="3" Background="#4267B2" Foreground="Black" FontSize="14" FontFamily="Yu Gothic" HorizontalAlignment="Right" 
-                Command="{Binding FinishCommand}" Margin="0,0,10,0">FINISH
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
+                <Button Name="FinishButton" Grid.Row="22" Grid.Column="1" Height="30" Width="90" Background="Transparent" Foreground="Black" FontSize="14" FontFamily="Yu Gothic" HorizontalAlignment="Right" 
+                Command="{Binding FinishCommand}" Margin="0,0,10,0">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="IsEnabled" Value="False"/>
@@ -439,6 +435,10 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="AccountAddOutline" VerticalAlignment="Center"></materialDesign:PackIcon>
+                        <TextBlock FontFamily="Yu Gothic" Margin="10 0 0 0" VerticalAlignment="Center">Finish</TextBlock>
+                    </StackPanel>
                 </Button>
             </Grid>
         </ScrollViewer>

@@ -35,8 +35,18 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
 
         private void finishExecute(object parameter)
         {
-            PatientService.processPatientRegistration(PatientDTO);
-            SecretaryWindowVM.NavigationService.Navigate(new PatientsView());
+            if((int)PatientDTO.Gender == -1 || (int)PatientDTO.MaritalStatus == -1 || (int)PatientDTO.BloodType == -1 || PatientDTO.DateOfBirth == null)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Bad request", "All fields required.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+            else
+            {
+                PatientService.processPatientRegistration(PatientDTO);
+                SecretaryWindowVM.NavigationService.Navigate(new PatientsView());
+            }
+            
         }
     }
 }

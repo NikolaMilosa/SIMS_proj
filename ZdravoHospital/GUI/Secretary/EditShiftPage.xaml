@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ZdravoHospital.GUI.Secretary"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
@@ -32,7 +33,7 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontFamily="Yu Gothic" FontSize="20" Width="160" Margin="10"> Shift starts at</TextBlock>
-                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding ShiftDTO.ShiftStart}" ></DatePicker>
+                <DatePicker Width="195" Background="White" VerticalAlignment="Center" Height="30" Margin="30 0 0 0" SelectedDate="{Binding ShiftDTO.ShiftStart}" DisplayDateStart="{x:Static sys:DateTime.Today}" Focusable="False"></DatePicker>
             </StackPanel>
             <CheckBox Margin="10" FontFamily="Yu Gothic" FontSize="12" VerticalAlignment="Bottom" IsChecked="{Binding ShiftDTO.IsSingleDayShift}"> Single day shift only
                 <CheckBox.LayoutTransform>
