@@ -9,6 +9,89 @@
       Title="NotificationsPage">
 
     <Grid>
-        
+        <Grid Background="{StaticResource DarkGray}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Background="Black">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}You have {0} unread notifications">
+                                <Binding Path="UnreadCount"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Button Content="Mark all as read" Style="{StaticResource BlueButton}" Margin="15" Width="200"/>
+                </StackPanel>
+            </Grid>
+            <ListView Grid.Row="1"
+                      x:Name="NotificationsListView"
+                      HorizontalContentAlignment="Stretch"
+                      Background="{StaticResource DarkGray}"
+                      BorderThickness="0"
+                      Width="1500"
+                      Padding="{Binding ListViewPadding}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#333333" BorderThickness="1" Margin="7">
+                            <Grid Background="Black"
+                              Focusable="False">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" FontSize="23" Foreground="White" Margin="30, 20, 30, 0">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:dd.MM.yyyy.}">
+                                            <Binding Path="Notification.CreateDate"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="1" FontSize="23" Foreground="White" Margin="30, 20, 30, 0">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}From: {0}">
+                                            <Binding Path="Notification.UsernameSender"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="2" FontSize="23" Foreground="White" Margin="30, 20, 30, 0">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Title: {0}">
+                                            <Binding Path="Notification.Title"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Button x:Name="MarkAsReadButton" 
+                                    Grid.Row="0" Grid.Column="3" Content="Mark as read" Style="{StaticResource BlueButton}"
+                                        Margin="10, 20, 30, 0" Width="{Binding ButtonWidth}" HorizontalAlignment="Right" Click="MarkAsReadButton_Click"/>
+                                <TextBlock Grid.Row="1" Grid.ColumnSpan="4" FontSize="23"
+                                           Foreground="White" Text="{Binding Notification.Text}"
+                                           TextWrapping="Wrap" Width="1300" Margin="20, 20, 20, 25" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>
