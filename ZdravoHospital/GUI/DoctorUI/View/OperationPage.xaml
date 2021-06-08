@@ -262,6 +262,18 @@
                         Style="{StaticResource BlueButton}"
                         Visibility="{Binding PeriodEventButtonsVisibility}"
                                 Command="{Binding TreatmentCommand}"/>
+                        <Button Name="GenerateReportButton"
+                    Content="Generate report"
+                    Margin="20, 20, 20, 0"
+                        Style="{StaticResource BlueButton}"
+                        Visibility="{Binding PeriodEventButtonsVisibility}"
+                                Command="{Binding GenerateReportCommand}"/>
+                        <Button Name="ReadReportButton"
+                    Content="Read report"
+                    Margin="20, 20, 20, 0"
+                        Style="{StaticResource BlueButton}"
+                        Visibility="{Binding PeriodEventButtonsVisibility}"
+                                Command="{Binding ReadReportCommand}"/>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
