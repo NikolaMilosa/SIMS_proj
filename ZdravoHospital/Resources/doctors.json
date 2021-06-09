@@ -6,8 +6,8 @@
     "ShiftRule": {
       "Vacations": [],
       "RegularShift": {
-        "ScheduledShift": 2,
-        "ShiftStart": "2021-06-12T00:00:00",
+        "ScheduledShift": 1,
+        "ShiftStart": "2021-06-13T00:00:00",
         "IsSingleDayShift": false
       },
       "SingleDayShifts": [

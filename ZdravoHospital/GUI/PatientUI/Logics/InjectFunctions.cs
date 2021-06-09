@@ -42,6 +42,14 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             timeList.Add(new TimeSpan(14, 30, 0));
             timeList.Add(new TimeSpan(15, 0, 0));
             timeList.Add(new TimeSpan(15, 30, 0));
+            timeList.Add(new TimeSpan(16, 0, 0));
+            timeList.Add(new TimeSpan(16, 30, 0));
+            timeList.Add(new TimeSpan(17, 0, 0));
+            timeList.Add(new TimeSpan(17, 30, 0));
+            timeList.Add(new TimeSpan(18, 0, 0));
+            timeList.Add(new TimeSpan(18, 30, 0));
+            timeList.Add(new TimeSpan(19, 0, 0));
+            timeList.Add(new TimeSpan(19, 30, 0));
         }
 
         public  void GenerateObesrvableTimes(ObservableCollection<TimeSpan> timeList)
@@ -62,6 +70,14 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             timeList.Add(new TimeSpan(14, 30, 0));
             timeList.Add(new TimeSpan(15, 0, 0));
             timeList.Add(new TimeSpan(15, 30, 0));
+            timeList.Add(new TimeSpan(16, 0, 0));
+            timeList.Add(new TimeSpan(16, 30, 0));
+            timeList.Add(new TimeSpan(17, 0, 0));
+            timeList.Add(new TimeSpan(17, 30, 0));
+            timeList.Add(new TimeSpan(18, 0, 0));
+            timeList.Add(new TimeSpan(18, 30, 0));
+            timeList.Add(new TimeSpan(19, 0, 0));
+            timeList.Add(new TimeSpan(19, 30, 0));
         }
     }
 }

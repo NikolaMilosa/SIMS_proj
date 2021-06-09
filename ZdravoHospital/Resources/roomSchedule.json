@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "StartTime": "2021-06-24T00:00:00",
+    "EndTime": "2021-06-26T00:00:00",
+    "RoomId": 201,
+    "ScheduleType": 2,
+    "WillBeMerged": false,
+    "MergingRoomId": 0
+  },
+  {
+    "StartTime": "2021-06-24T00:00:00",
+    "EndTime": "2021-06-26T00:00:00",
+    "RoomId": 202,
+    "ScheduleType": 2,
+    "WillBeMerged": false,
+    "MergingRoomId": 0
+  },
+  {
+    "StartTime": "2021-06-13T08:00:00",
+    "EndTime": "2021-06-13T18:00:00",
+    "RoomId": 201,
+    "ScheduleType": 2,
+    "WillBeMerged": false,
+    "MergingRoomId": 0
+  },
+  {
+    "StartTime": "2021-06-13T00:00:00",
+    "EndTime": "2021-06-13T18:00:00",
+    "RoomId": 202,
+    "ScheduleType": 2,
+    "WillBeMerged": false,
+    "MergingRoomId": 0
+  }
+]
