@@ -101,10 +101,17 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private bool IsDoctorAvailable(Period period, Period checkedPeriod)
         {
+            if (!IsDoctorInShift(checkedPeriod)) {ErrorMessage = "Doctor is not working in that shift!"; return false; }
             if (!DoPeriodsOverlap(period, checkedPeriod)) return true;
             ErrorMessage = "Doctor has an existing appointment at selected time!";
             return false;
 
+        }
+
+        private bool IsDoctorInShift(Period checkedPeriod)
+        {
+            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            return doctorFunctions.IsTimeInDoctorsShift(checkedPeriod.StartTime, checkedPeriod.DoctorUsername);
         }
 
         private bool IsPatientAvailable(Period period, Period checkedPeriod)
