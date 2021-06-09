@@ -10,6 +10,7 @@ namespace Model
         APPOINTMENT,
         OPERATION,
         RENOVATION,
-        TRANSFER
+        TRANSFER,
+        TREATMENT
     }
 }

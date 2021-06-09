@@ -48,6 +48,12 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                     return new ValidationResult(false, answer);
                 }
 
+                answer = CheckIntersectPeriods(startDate, endDate, Wrapper.PassedMergeRoom);
+                if (!answer.Equals(string.Empty))
+                {
+                    return new ValidationResult(false, answer);
+                }
+
             }
             catch
             {
@@ -59,6 +65,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
         public string CheckIntersectPeriods(DateTime start, DateTime end, Room room)
         {
+            if (room.Id == 0) return string.Empty;
+
             var periodRepository = new PeriodRepository();
             foreach (var p in periodRepository.GetValues())
             {
@@ -78,6 +86,22 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                         sb.Append(endTime.Hour).Append(":").Append(endTime.Minute);
 
                         return sb.ToString();
+                    }
+                }
+
+                if (p.Treatment != null && p.Treatment.RoomId == room.Id)
+                {
+                    var endTime = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
+                    var startTime = p.Treatment.StartDate;
+                    if (startTime < start && start < endTime ||
+                        start < startTime && endTime < end ||
+                        startTime < end && end < endTime)
+                    {
+                        var sb = new StringBuilder();
+                        sb.Append("The time span you entered intersects with a treatment that is scheduled for ");
+                        sb.Append(startTime.Day).Append("/").Append(startTime.Month).Append("/").Append(startTime.Year);
+                        sb.Append(", lasting from ").Append(startTime.Hour).Append(":").Append(startTime.Minute).Append(" until ");
+                        sb.Append(endTime.Hour).Append(":").Append(endTime.Minute);
                     }
                 }
             }
@@ -151,6 +175,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             get => (Room)GetValue(PassedRoomProperty);
             set => SetValue(PassedRoomProperty, value);
+        }
+
+        public static readonly DependencyProperty PassedMergeRoomProperty = DependencyProperty.Register("PassedMergeRoom", typeof(Room), typeof(OtherPassedTimeWrapper), null);
+
+        public Room PassedMergeRoom
+        {
+            get => (Room)GetValue(PassedMergeRoomProperty);
+            set => SetValue(PassedMergeRoomProperty, value);
         }
     }
 

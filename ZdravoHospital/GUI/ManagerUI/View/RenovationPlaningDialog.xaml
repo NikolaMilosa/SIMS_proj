@@ -234,7 +234,8 @@
                             <validation:TimeInputValidationRule.Wrapper>
                                 <validation:PassedTimeWrapper PassedTime="{Binding Data.StartDate, Source={StaticResource proxy}}" 
                                                               PassedFirstRoom="{Binding Data.SelectedRoom, Source={StaticResource proxy}}"
-                                                              PassedSecondRoom="{Binding Data.SelectedRoom, Source={StaticResource proxy}}"/>
+                                                              PassedSecondRoom="{Binding Data.SelectedRoom, Source={StaticResource proxy}}"
+                                                              PassedMergingRoom="{Binding Data.MergeSelectedRoom, Source={StaticResource proxy}}"/>
                             </validation:TimeInputValidationRule.Wrapper>
                         </validation:TimeInputValidationRule>
                     </Binding.ValidationRules>
@@ -287,7 +288,8 @@
                                 <validation:OtherPassedTimeWrapper OtherPassedDate="{Binding Data.StartDate, Source={StaticResource otherProxy}}" 
                                                                    ThisDate="{Binding Data.EndDate, Source={StaticResource otherProxy}}"
                                                                    OtherPassedTime="{Binding Data.StartTime, Source={StaticResource otherProxy}}"
-                                                                   PassedRoom="{Binding Data.SelectedRoom, Source={StaticResource otherProxy}}"/>
+                                                                   PassedRoom="{Binding Data.SelectedRoom, Source={StaticResource otherProxy}}"
+                                                                   PassedMergeRoom="{Binding Data.MergeSelectedRoom, Source={StaticResource proxy}}"/>
                             </validation:TimeAfterAnotherValidationRule.Wrapper>
                         </validation:TimeAfterAnotherValidationRule>
                     </Binding.ValidationRules>

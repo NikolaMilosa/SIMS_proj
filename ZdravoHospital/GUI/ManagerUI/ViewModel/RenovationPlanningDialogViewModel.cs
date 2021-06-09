@@ -495,22 +495,6 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 }
             }
 
-            var periods = _periodRepository.GetValues();
-            foreach (var instance in periods)
-            {
-                if (instance.Treatment == null)
-                    continue;
-
-                if (instance.Treatment.StartDate > DateTime.Now || 
-                    (instance.Treatment.StartDate < DateTime.Now && 
-                     DateTime.Now < instance.Treatment.StartDate.AddMinutes(instance.Treatment.Duration)))
-                {
-                    var temp = MergeRooms.ToList();
-                    temp.RemoveAll(val => val.Id == instance.Treatment.RoomId);
-                    MergeRooms = new ObservableCollection<Room>(temp);
-                }
-            }
-
             MergeSelectedRoomIndex = 0;
         }
 

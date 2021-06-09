@@ -62,7 +62,7 @@ namespace ZdravoHospital.Services.Manager
             _roomScheduleRepository = injector.RoomScheduleRepository;
             _periodRepository = injector.PeriodRepository;
         }
-
+        
         public void RunOrExecute()
         {
             var values = _roomScheduleRepository.GetValues();
@@ -90,7 +90,7 @@ namespace ZdravoHospital.Services.Manager
             }
         }
 
-        public void ScheduleRenovationStart(RoomSchedule roomSchedule)
+        private void ScheduleRenovationStart(RoomSchedule roomSchedule)
         {
             var t = new Task(() => roomSchedule.WaitStartRenovation(_injector));
             t.Start();
@@ -261,13 +261,29 @@ namespace ZdravoHospital.Services.Manager
                     var reservation = new ReservationDTO(rt, p.StartTime, reservationEnd);
                     reservations.Add(reservation);
                 }
+
+                if (p.Treatment != null && p.Treatment.RoomId == room.Id)
+                {
+                    var startT = p.Treatment.StartDate;
+                    var endT = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
+                    if ((startT >= day && startT < end) ||
+                        (day >= startT && end <= endT) ||
+                        (endT >= day && endT < end))
+                    {
+                        var reservation = new ReservationDTO(ReservationType.TREATMENT, p.Treatment.StartDate,
+                            p.Treatment.StartDate.AddDays(p.Treatment.Duration));
+                        reservations.Add(reservation);
+                    }
+                }
             });
 
             _roomScheduleRepository.GetValues().ForEach(r =>
             {
                 if (r.RoomId == room.Id)
                 {
-                    if ((r.StartTime >= day && r.StartTime < end) || (day >= r.StartTime && end <= r.EndTime) || (r.EndTime >= day && r.EndTime < end))
+                    if ((r.StartTime >= day && r.StartTime < end) || 
+                        (day >= r.StartTime && end <= r.EndTime) || 
+                        (r.EndTime >= day && r.EndTime < end))
                     {
                         /* Starts today */
                         var reservation = new ReservationDTO(r.ScheduleType, r.StartTime, r.EndTime);
