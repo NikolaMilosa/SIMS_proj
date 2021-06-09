@@ -9,5 +9,7 @@ namespace Model
         public string Text { get; set; }
         public Guid Id { get; set; }
 
+        
+
     }
 }

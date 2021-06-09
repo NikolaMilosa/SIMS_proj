@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Channels;
+using System.Windows;
 using System.Windows.Navigation;
 using Model;
 using ZdravoHospital.GUI.PatientUI.Commands;
@@ -47,6 +48,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #endregion
 
         #region Commands
+        public RelayCommand FeedbackCommand { get; private set; }
         public RelayCommand ProfileCommand { get; private set; }
         public RelayCommand LogOutCommand { get; private set; }
         public RelayCommand AddAppointmentCommand { get; private set; }
@@ -62,6 +64,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region CommandActions
 
+        private void FeedbackExecute(object parameter)
+        {
+            NavigationService.Navigate(new FeedbackPage());
+        }
         private void ProfileExecute(object parameter)
         {
             NavigationService.Navigate(new ProfilePage());
@@ -128,6 +134,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void SetCommands()
         {
+            FeedbackCommand = new RelayCommand(FeedbackExecute);
             LogOutCommand = new RelayCommand(LogOutExecute);
             ProfileCommand = new RelayCommand(ProfileExecute);
             AddAppointmentCommand = new RelayCommand(AddAppointmentExecute);

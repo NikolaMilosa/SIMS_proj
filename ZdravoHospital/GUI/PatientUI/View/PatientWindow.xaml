@@ -193,7 +193,8 @@
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Background="#2c876b" Grid.ColumnSpan="2">
                     <Image Source="/Images/PatientUI/hospitalIcon.png" Margin="240,5,10,5"></Image>
                     <TextBlock Text="Zdravo Hospital" FontSize="20" FontWeight="Bold" Foreground="White" Margin="0,4,0,0"></TextBlock>
-                    <Button  x:Name="surveyButton" Content="Take a survey" FontSize="15" Background="Transparent" BorderBrush="Transparent" Margin="270,0,0,0" Foreground="White" 
+                    
+                    <Button  x:Name="surveyButton" Content="Take a survey" FontSize="15" Background="Transparent" BorderBrush="Transparent" Margin="220,0,0,0" Foreground="White" 
                              Command="{Binding Path=SurveyCommand}">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -205,6 +206,9 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+                    </Button>
+                    <Button Background="Transparent" Command="{Binding Path=FeedbackCommand}" BorderBrush="Transparent" Margin="10,0,0,0">
+                        <Image Source="/Images/PatientUI/feedbackIcon.png" />
                     </Button>
                 </StackPanel>
 

@@ -87,6 +87,8 @@
     <None Remove="Images\PatientUI\calendarViewIcon.png" />
     <None Remove="Images\PatientUI\emptyStar.png" />
     <None Remove="Images\PatientUI\evaluateIcon.png" />
+    <None Remove="Images\PatientUI\feedbackIcon.png" />
+    <None Remove="Images\PatientUI\feedbackIconBlack.png" />
     <None Remove="Images\PatientUI\fullStar.png" />
     <None Remove="Images\PatientUI\helpIcon.png" />
     <None Remove="Images\PatientUI\helpIconBlack.png" />
@@ -209,6 +211,8 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\PatientUI\evaluateIcon.png" />
+    <Resource Include="Images\PatientUI\feedbackIcon.png" />
+    <Resource Include="Images\PatientUI\feedbackIconBlack.png" />
     <Resource Include="Images\PatientUI\fullStar.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

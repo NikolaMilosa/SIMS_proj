@@ -16,5 +16,23 @@
     "Type": 1,
     "Text": "some impr feedback",
     "Id": "9085c1c4-ba54-4d28-a05b-1e12dc869287"
+  },
+  {
+    "SenderUsername": "ljuba",
+    "Type": 0,
+    "Text": "Neka random greska!",
+    "Id": "8c143bef-18cd-445e-a4ab-1aef8c972d03"
+  },
+  {
+    "SenderUsername": "ljuba",
+    "Type": 2,
+    "Text": "??",
+    "Id": "ade776f8-890a-47d1-98a5-ca5f5a14ce30"
+  },
+  {
+    "SenderUsername": "ljuba",
+    "Type": 1,
+    "Text": "Poboljsanje!",
+    "Id": "d3f08321-9898-43e8-af6c-2265a267771f"
   }
 ]
