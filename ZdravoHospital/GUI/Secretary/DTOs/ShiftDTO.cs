@@ -19,7 +19,7 @@ namespace ZdravoHospital.GUI.Secretary.DTOs
         }
         public ShiftDTO()
         {
-            ShiftStart = DateTime.Today.Date;
+            ShiftStart = DateTime.Today.AddDays(1).Date;
         }
     }
 }
