@@ -19,6 +19,7 @@ namespace ZdravoHospital.GUI.DoctorUI
     public partial class PatientInfoPage : Page, INotifyPropertyChanged
     {
         private PeriodService _periodService;
+        private PeriodReportService _periodReportService;
 
         public Patient Patient { get; set; }
         public List<PatientInfoPeriodDisplayDTO> PeriodDisplays { get; set; }
@@ -114,7 +115,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         private void PeriodDetailsButton_Click(object sender, RoutedEventArgs e)
         {
             Period period = ((sender as Button).DataContext as PatientInfoPeriodDisplayDTO).Period;
-            string filename = _periodService.GeneratePeriodReportFilename(period);
+            string filename = _periodReportService.GenerateReportFilename(period);
             var p = new System.Diagnostics.Process();
 
             try

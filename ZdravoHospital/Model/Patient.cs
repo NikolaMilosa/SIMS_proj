@@ -12,10 +12,6 @@ namespace Model
         public List<string> IngredientAllergens { get; set; }
         public int RecentActions { get; set; }
         public DateTime LastLogoutTime { get; set; }
-        public string NameSurname
-        {
-            get { return Name + " " + Surname; }
-        }
 
         private List<PatientNote> _patientNotes;
         public List<PatientNote> PatientNotes 

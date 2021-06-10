@@ -107,10 +107,23 @@
                               FontSize="23"
                               VerticalAlignment="Center"
                               VerticalContentAlignment="Center"
-                              DisplayMemberPath="NameSurnameSpecialization"
                               SelectedItem="{Binding Doctor}"
                               IsHitTestVisible="{Binding DoctorPatientEditable}"
-                              IsTabStop="{Binding DoctorPatientEditable}"/>
+                              IsTabStop="{Binding DoctorPatientEditable}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} ({2})">
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Surname"/>
+                                            <Binding Path="SpecialistType.SpecializationName"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
                     <TextBlock Text="Patient:"
                            Foreground="White"
@@ -129,10 +142,22 @@
                               FontSize="23"
                               VerticalAlignment="Center"
                               VerticalContentAlignment="Center"
-                              DisplayMemberPath="NameSurname"
                               SelectedItem="{Binding Patient}"
                               IsHitTestVisible="{Binding DoctorPatientEditable}"
-                              IsTabStop="{Binding DoctorPatientEditable}"/>
+                              IsTabStop="{Binding DoctorPatientEditable}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Surname"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
 
                     <Button Name="PatientInfoButton"

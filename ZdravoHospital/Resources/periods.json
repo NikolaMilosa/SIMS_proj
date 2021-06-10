@@ -202,13 +202,51 @@
     "PatientUsername": "ljuba",
     "DoctorUsername": "pantela",
     "RoomId": 201,
-    "Details": "asdqweqxc\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
-    "Prescription": null,
+    "Details": "asdqweqxc",
+    "Prescription": {
+      "TherapyList": [
+        {
+          "Medicine": {
+            "MedicineName": "test medication",
+            "Supplier": "Jankovic",
+            "Status": 1,
+            "Note": "",
+            "Replacements": [],
+            "Ingredients": [
+              {
+                "IngredientName": "tester one"
+              },
+              {
+                "IngredientName": "tester two"
+              },
+              {
+                "IngredientName": "tester three"
+              },
+              {
+                "IngredientName": "magnesium"
+              },
+              {
+                "IngredientName": "some new ingr"
+              }
+            ]
+          },
+          "StartHours": "2021-06-10T09:00:00",
+          "TimesPerDay": 1,
+          "PauseInDays": 0,
+          "EndDate": "2021-06-30T00:00:00",
+          "Instructions": "instrrrrr"
+        }
+      ]
+    },
     "PeriodMark": null,
     "IsUrgent": false,
     "ParentReferralId": -1,
     "ChildReferralId": -1,
-    "Treatment": null
+    "Treatment": {
+      "StartDate": "2021-06-14T00:00:00",
+      "Duration": 10,
+      "RoomId": 104
+    }
   },
   {
     "PeriodId": 21,
