@@ -36,8 +36,21 @@
                               Width="450"
                               VerticalAlignment="Center"
                               VerticalContentAlignment="Center"
-                              SelectionChanged="DoctorsComboBox_SelectionChanged"
-                              DisplayMemberPath="NameSurnameSpecialization"/>
+                              SelectionChanged="DoctorsComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} ({2})">
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Surname"/>
+                                            <Binding Path="SpecialistType.SpecializationName"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </WrapPanel>
                 <StackPanel  Margin="{Binding WeekWrapPanelMargin}"
                            Width="{Binding WeekWrapPanelWidth}">

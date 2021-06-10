@@ -19,6 +19,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private NavigationService _navigationService;
         private Period _period;
         private PeriodService _periodService;
+        private PeriodReportService _periodReportService;
         private bool _periodCanceled;
         private ReferralController _referralController;
 
@@ -406,7 +407,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         public void Executed_GenerateReportCommand()
         {
-            _periodService.GeneratePeriodReport(_period);
+            _periodReportService.GeneratePeriodReport(_period);
             MessageText = "Report generated successfully.";
             MessagePopUpVisibility = Visibility.Visible;
         }
@@ -420,7 +421,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         public void Executed_ReadReportCommand()
         {
-            string filename = _periodService.GeneratePeriodReportFilename(_period);
+            string filename = _periodReportService.GenerateReportFilename(_period);
             var p = new System.Diagnostics.Process();
             p.StartInfo = new System.Diagnostics.ProcessStartInfo(Path.GetFullPath(filename))
             {
@@ -443,6 +444,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             _navigationService = navigationService;
             _period = period;
             _periodService = new PeriodService();
+            _periodReportService = new PeriodReportService();
             _referralController = new ReferralController();
 
             Doctors = new ObservableCollection<Doctor>(new DoctorController().GetSpecialists());

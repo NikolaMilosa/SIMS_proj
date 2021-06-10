@@ -38,12 +38,18 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
                                        DockPanel.Dock="Left"
-                                       Text="{Binding Path=NameSurname}"
                                        Margin="30, 10"
                                        Foreground="White" 
                                        FontSize="23" 
                                        VerticalAlignment="Center"
-                                       TextAlignment="Center"/>
+                                       TextAlignment="Center">
+                                <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="Name"/>
+                                        <Binding Path="Surname"/>
+                                    </MultiBinding>
+                                            </TextBlock.Text>
+                            </TextBlock>
                             <StackPanel Grid.Column="2"
                                        DockPanel.Dock="Right" 
                                     Orientation="Horizontal"
