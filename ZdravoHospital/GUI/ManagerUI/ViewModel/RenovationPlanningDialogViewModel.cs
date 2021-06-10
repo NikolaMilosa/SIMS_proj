@@ -76,6 +76,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 
                 FillMerged();
 
+                StartTime = "";
+
                 OnPropertyChanged();
             }
         }
@@ -222,6 +224,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             {
                 _mergeSelectedRoom = value;
                 OnPropertyChanged();
+
+                StartTime = "";
             }
         }
 

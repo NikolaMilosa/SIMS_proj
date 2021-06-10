@@ -230,7 +230,7 @@
             <TextBox.Text>
                 <Binding Path="StartTime" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validation:TimeInputValidationRule ValidationStep="RawProposedValue">
+                        <validation:TimeInputValidationRule ValidationStep="RawProposedValue" ValidatesOnTargetUpdated="True">
                             <validation:TimeInputValidationRule.Wrapper>
                                 <validation:PassedTimeWrapper PassedTime="{Binding Data.StartDate, Source={StaticResource proxy}}" 
                                                               PassedFirstRoom="{Binding Data.SelectedRoom, Source={StaticResource proxy}}"
