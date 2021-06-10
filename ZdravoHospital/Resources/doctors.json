@@ -6,32 +6,11 @@
     "ShiftRule": {
       "Vacations": [],
       "RegularShift": {
-        "ScheduledShift": 1,
-        "ShiftStart": "2021-06-07T00:00:00+02:00",
+        "ScheduledShift": 3,
+        "ShiftStart": "2021-06-10T00:00:00+02:00",
         "IsSingleDayShift": false
       },
-      "SingleDayShifts": [
-        {
-          "ScheduledShift": 1,
-          "ShiftStart": "2021-05-31T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 1,
-          "ShiftStart": "2021-06-02T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 3,
-          "ShiftStart": "2021-06-03T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 0,
-          "ShiftStart": "2021-06-01T00:00:00+02:00",
-          "IsSingleDayShift": true
-        }
-      ]
+      "SingleDayShifts": []
     },
     "NameSurnameSpecialization": "Marko Pantelic (Doctor)",
     "Name": "Marko",
@@ -61,33 +40,13 @@
       "SpecializationName": "Cardio surgent"
     },
     "ShiftRule": {
-      "Vacations": [
-        {
-          "VacationStartTime": "2021-07-08T00:00:00",
-          "NumberOfFreeDays": 10
-        },
-        {
-          "VacationStartTime": "2021-06-09T00:00:00+02:00",
-          "NumberOfFreeDays": 3
-        }
-      ],
+      "Vacations": [],
       "RegularShift": {
-        "ScheduledShift": 3,
-        "ShiftStart": "2021-05-30T00:00:00",
+        "ScheduledShift": 2,
+        "ShiftStart": "2021-06-10T00:00:00+02:00",
         "IsSingleDayShift": false
       },
-      "SingleDayShifts": [
-        {
-          "ScheduledShift": 2,
-          "ShiftStart": "2021-05-31T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 2,
-          "ShiftStart": "2021-06-03T00:00:00",
-          "IsSingleDayShift": true
-        }
-      ]
+      "SingleDayShifts": []
     },
     "NameSurnameSpecialization": "Nikola Zigic (Cardio surgent)",
     "Name": "Nikola",
@@ -155,8 +114,8 @@
     "ShiftRule": {
       "Vacations": [],
       "RegularShift": {
-        "ScheduledShift": 0,
-        "ShiftStart": "2021-05-30T00:00:00",
+        "ScheduledShift": 1,
+        "ShiftStart": "2021-06-10T00:00:00+02:00",
         "IsSingleDayShift": false
       },
       "SingleDayShifts": []

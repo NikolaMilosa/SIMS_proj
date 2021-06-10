@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -13,18 +14,21 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private IDoctorRepository _doctorRepository;
         private IPeriodRepository _periodRepository;
         public WorkTimeService WorkService;
+        public NotificationService NotificationService { get; set; }
         public VacationService()
         {
             _doctorRepository = new DoctorRepository();
             _periodRepository = new PeriodRepository();
             WorkService = new WorkTimeService();
+            NotificationService = new NotificationService();
         }
 
         public void ProcessVacationCreation(VacationDTO vacationDTO, Doctor selectedDoctor)
         {
             selectedDoctor.ShiftRule.Vacations.Add(new Vacation(vacationDTO.VacationStartTime, vacationDTO.NumberOfFreeDays));
             _doctorRepository.Update(selectedDoctor);
-            moveAffectedPeriods(vacationDTO, selectedDoctor);
+            DeleteScheduledPeriods(vacationDTO, selectedDoctor);
+            
         }
 
         public void ProcessVacationDeletion(Doctor selectedDoctor)
@@ -33,7 +37,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             _doctorRepository.Update(selectedDoctor);
         }
 
-        private List<Period> getScheduledPeriodsToMove(VacationDTO vacationDTO, Doctor selectedDoctor)
+        private List<Period> getScheduledPeriodsToCancel(VacationDTO vacationDTO, Doctor selectedDoctor)
         {
             List<Period> allPeriods = _periodRepository.GetValues();
             DateTime vacationEnd = vacationDTO.VacationStartTime.AddDays(vacationDTO.NumberOfFreeDays);
@@ -51,79 +55,35 @@ namespace ZdravoHospital.GUI.Secretary.Service
             return scheduledPeriods;
         }
 
-        private void moveAffectedPeriods(VacationDTO vacationDTO, Doctor selectedDoctor)
+        public void DeleteScheduledPeriods(VacationDTO vacationDTO, Doctor selectedDoctor)
         {
-            List<Period> affectedPeriods = getScheduledPeriodsToMove(vacationDTO, selectedDoctor);
-            foreach(var period in affectedPeriods)
+            List<Period> periods = getScheduledPeriodsToCancel(vacationDTO, selectedDoctor);
+            foreach(var period in periods)
             {
-                period.StartTime = findFreeSpot(period, vacationDTO, selectedDoctor);
-                _periodRepository.Update(period);
+                _periodRepository.DeleteById(period.PeriodId);
+                sendCancelledNotification(period, period.PatientUsername);
+                sendCancelledNotification(period, SecretaryWindowVM.SecretaryUsername);
             }
         }
 
-        private DateTime findFreeSpot(Period period, VacationDTO vacationDTO, Doctor selectedDoctor)
+        private string createCancelledNotificationText(Period period, string usernameReceiver)
         {
-            DateTime doctorBackToWorkTime = vacationDTO.VacationStartTime.AddDays(vacationDTO.NumberOfFreeDays + 1);
-            DateTime startTimeSearch = WorkService.getDoctorsShiftStartTime(selectedDoctor, doctorBackToWorkTime);
-            period.StartTime = startTimeSearch;
-            while(!isDoctorFreeAtCertainTime(period) || !isPatientFreeAtCertainTime(period) || !isRoomFreeAtCertainTime(period))
-            {
-                period.StartTime = period.StartTime.AddMinutes(1);
-            }
-            return period.StartTime;
-        }
-        private bool periodsOverlap(Period newPeriod, Period existingPeriod)
-        {
-            DateTime existingPeriodEndTime = existingPeriod.StartTime.AddMinutes(existingPeriod.Duration);
-            DateTime newPeriodEndtime = newPeriod.StartTime.AddMinutes(newPeriod.Duration);
-            if (newPeriod.StartTime < existingPeriodEndTime && newPeriodEndtime > existingPeriod.StartTime)
-            {
-                return true;
-            }
-            return false;
-        }
+            StringBuilder notificationText = new StringBuilder();
+            notificationText.Append("Dear ").Append(usernameReceiver).Append(", your appointment from ")
+                .Append(period.StartTime.ToString())
+                .Append(" has been cancelled due to doctor's vacation. Please contact us for rescheduling.");
 
-        private bool isDoctorFreeAtCertainTime(Period selectedPeriod)
-        {
-            List<Period> allPeriods = _periodRepository.GetValues();
-            foreach(var period in allPeriods)
-            {
-                if(period.DoctorUsername == selectedPeriod.DoctorUsername)
-                {
-                    if (periodsOverlap(selectedPeriod, period))
-                        return false;
-                }
-            }
-            return true;
+            return notificationText.ToString();
         }
-        private bool isPatientFreeAtCertainTime(Period selectedPeriod)
+        private void sendCancelledNotification(Period period, string usernameReceiver)
         {
-            List<Period> allPeriods = _periodRepository.GetValues();
-            foreach (var period in allPeriods)
-            {
-                if (period.PatientUsername == selectedPeriod.PatientUsername)
-                {
-                    if (periodsOverlap(selectedPeriod, period))
-                        return false;
-                }
-            }
-            return true;
+            int notificationId = NotificationService.CalculateNotificationId();
+            string notificationText = createCancelledNotificationText(period, usernameReceiver);
+            string notificationTitle = "Cancellation";
+            Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindowVM.SecretaryUsername, notificationTitle, notificationId);
+            NotificationService.CreateNewNotification(newNotification);
+            PersonNotification personNotification = new PersonNotification(usernameReceiver, notificationId, false);
+            NotificationService.CreateNewPersonNotification(personNotification);
         }
-
-        private bool isRoomFreeAtCertainTime(Period selectedPeriod)
-        {
-            List<Period> allPeriods = _periodRepository.GetValues();
-            foreach (var period in allPeriods)
-            {
-                if (period.RoomId == selectedPeriod.RoomId)
-                {
-                    if (periodsOverlap(selectedPeriod, period))
-                        return false;
-                }
-            }
-            return true;
-        }
-
-
     }
 }
