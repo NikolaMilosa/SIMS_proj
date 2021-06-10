@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace Model
 {
-    public class Room : INotifyPropertyChanged
+    public class Room
     {
         public RoomType RoomType { get; set; }
         public int Id { get; set; }
@@ -24,17 +24,6 @@ namespace Model
         {
 
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnNotifyPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
-
         public override string ToString()
         {
             return Id + " | " + Name;
