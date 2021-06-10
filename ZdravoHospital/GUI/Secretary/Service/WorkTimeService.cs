@@ -76,5 +76,18 @@ namespace ZdravoHospital.GUI.Secretary.Service
             return (Shift)((int)(doctor.ShiftRule.RegularShift.ScheduledShift + dateDifference) % 4);
 
         }
+
+        public DateTime getDoctorsShiftStartTime(Doctor doctor, DateTime date)
+        {
+            Shift shift = GetDoctorShiftByDate(doctor, date);
+            if (shift == Shift.FIRST)
+                return new DateTime(date.Year, date.Month, date.Day, 6, 0, 0);
+            else if (shift == Shift.SECOND)
+                return new DateTime(date.Year, date.Month, date.Day, 14, 0, 0);
+            else if (shift == Shift.THIRD)
+                return new DateTime(date.Year, date.Month, date.Day, 22, 0, 0);
+            else
+                return DateTime.MinValue;
+        }
     }
 }

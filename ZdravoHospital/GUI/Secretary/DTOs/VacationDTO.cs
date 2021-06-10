@@ -10,7 +10,7 @@ namespace ZdravoHospital.GUI.Secretary.DTOs
         public int NumberOfFreeDays { get; set; }
         public VacationDTO()
         {
-            VacationStartTime = DateTime.Today.Date;
+            VacationStartTime = DateTime.Today.AddDays(1).Date;
         }
     }
 }
