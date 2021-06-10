@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
@@ -49,7 +50,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             _periodRepository.DeleteById(periodId);
         }
 
-        public bool ProcessPeriodCreation(PeriodDTO periodDTO)
+        public PeriodAvailabilityDTO ProcessPeriodCreation(PeriodDTO periodDTO)
         {
             Period period = createPeriodFromDto(periodDTO);
             PeriodAvailabilityDTO periodAvailableDTO = new PeriodAvailabilityDTO(period.PeriodId, periodDTO.PeriodAvailable);
@@ -58,41 +59,8 @@ namespace ZdravoHospital.GUI.Secretary.Service
             if (isPeriodAvailable(periodAvailableDTO))
             {
                 _periodRepository.Create(period);
-                return true;
             }
-            else
-            {
-                giveAvailabilityFeedbackMessage(periodAvailableDTO);
-                return false;
-            }
-        }
-
-        private void giveAvailabilityFeedbackMessage(PeriodAvailabilityDTO periodAvailableDTO)
-        {
-            if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.DOCTOR_UNAVAILABLE)
-            {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Doctor unavailable", "Selected doctor is unavailable.");
-                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-                SecretaryWindowVM.CustomMessageBox.Show();
-            }
-            else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.PATIENT_UNAVAILABLE)
-            {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Patient unavailable", "Selected patient is unavailable.");
-                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-                SecretaryWindowVM.CustomMessageBox.Show();
-            }
-            else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.ROOM_UNAVAILABLE)
-            {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Room unavailable", "Selected room is unavailable.");
-                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-                SecretaryWindowVM.CustomMessageBox.Show();
-            }
-            else
-            {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Bad time ", "Selected time is not acceptable.");
-                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-                SecretaryWindowVM.CustomMessageBox.Show();
-            }
+            return periodAvailableDTO;
         }
 
 
@@ -135,6 +103,11 @@ namespace ZdravoHospital.GUI.Secretary.Service
                 {
                     periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
                 }
+            }
+            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            if(!doctorFunctions.IsTimeInDoctorsShift(period.StartTime, period.DoctorUsername))
+            {
+                periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
             }
         }
         private void checkPatientAvailabilityForPeriod(Period period, PeriodAvailabilityDTO periodAvailableDTO)

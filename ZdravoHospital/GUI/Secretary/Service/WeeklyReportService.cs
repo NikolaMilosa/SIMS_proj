@@ -85,9 +85,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
                 document.Add(reportContent);
 
                 document.Close();
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Success", "Exported successfully!");
-                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-                SecretaryWindowVM.CustomMessageBox.Show();
+
             }
         }
     }

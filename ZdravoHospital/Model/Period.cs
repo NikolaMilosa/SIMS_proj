@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
@@ -23,7 +24,7 @@ namespace Model
         public Treatment Treatment { get; set; }
 
         [JsonIgnore]
-        public ObservableCollection<Model.MovePeriod> MovePeriods { get; set; }
+        public List<MovePeriod> MovePeriods { get; set; }
         
 
         public Period()
@@ -73,7 +74,7 @@ namespace Model
             PatientUsername = patientUsername;
             DoctorUsername = doctorUsername;
             IsUrgent = isUrgent;
-            MovePeriods = new ObservableCollection<MovePeriod>();
+            MovePeriods = new List<MovePeriod>();
             ChildReferralId = -1;
             ParentReferralId = -1;   
         }

@@ -6,32 +6,11 @@
     "ShiftRule": {
       "Vacations": [],
       "RegularShift": {
-        "ScheduledShift": 2,
-        "ShiftStart": "2021-06-12T00:00:00",
+        "ScheduledShift": 1,
+        "ShiftStart": "2021-06-11T00:00:00+02:00",
         "IsSingleDayShift": false
       },
-      "SingleDayShifts": [
-        {
-          "ScheduledShift": 1,
-          "ShiftStart": "2021-05-31T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 1,
-          "ShiftStart": "2021-06-02T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 3,
-          "ShiftStart": "2021-06-03T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 0,
-          "ShiftStart": "2021-06-01T00:00:00+02:00",
-          "IsSingleDayShift": true
-        }
-      ]
+      "SingleDayShifts": []
     },
     "NameSurnameSpecialization": "Marko Pantelic (Doctor)",
     "Name": "Marko",
@@ -72,18 +51,7 @@
         "ShiftStart": "2021-05-30T00:00:00",
         "IsSingleDayShift": false
       },
-      "SingleDayShifts": [
-        {
-          "ScheduledShift": 2,
-          "ShiftStart": "2021-05-31T00:00:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 2,
-          "ShiftStart": "2021-06-03T00:00:00",
-          "IsSingleDayShift": true
-        }
-      ]
+      "SingleDayShifts": []
     },
     "NameSurnameSpecialization": "Nikola Zigic (Cardio surgent)",
     "Name": "Nikola",

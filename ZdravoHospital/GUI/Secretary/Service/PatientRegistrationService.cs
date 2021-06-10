@@ -30,9 +30,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             }
             else
             {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Fail", "Username already exists.");
-                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-                SecretaryWindowVM.CustomMessageBox.Show();
+
             }
 
         }

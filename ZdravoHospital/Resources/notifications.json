@@ -12,5 +12,19 @@
     "UsernameSender": "suki",
     "Title": "Saki's notification",
     "NotificationId": 4
+  },
+  {
+    "Text": "Dear ljuba, your appointment has been postponed from 6/10/2021 6:30:00 PM to 6/10/2021 7:27:20 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-06-10T17:57:26.426019+02:00",
+    "UsernameSender": "suki",
+    "Title": "Reschedule",
+    "NotificationId": 5
+  },
+  {
+    "Text": "Dear zigara, your appointment has been postponed from 6/10/2021 6:30:00 PM to 6/10/2021 7:27:20 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
+    "CreateDate": "2021-06-10T17:57:26.4545923+02:00",
+    "UsernameSender": "suki",
+    "Title": "Reschedule",
+    "NotificationId": 6
   }
 ]

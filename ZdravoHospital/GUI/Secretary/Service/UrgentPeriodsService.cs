@@ -224,7 +224,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             }
         }
 
-        private DateTime findFreeStartTime(Period period, ObservableCollection<MovePeriod> movePeriods, DateTime urgentEndTime, List<Period> overlappingPeriods)
+        private DateTime findFreeStartTime(Period period, List<MovePeriod> movePeriods, DateTime urgentEndTime, List<Period> overlappingPeriods)
         {
             List<Period> overlappingPeriodsFinal = this.cloneListOfPeriods(overlappingPeriods);
             DateTime initialStartTime = period.StartTime;
@@ -240,7 +240,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             return newStartTime;
         }
 
-        private bool IsPeriodAvailableIncludingMovePeriods(Period period, ObservableCollection<MovePeriod> movePeriods, List<Period> overlappingPeriods)
+        private bool IsPeriodAvailableIncludingMovePeriods(Period period, List<MovePeriod> movePeriods, List<Period> overlappingPeriods)
         {
 
             DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);

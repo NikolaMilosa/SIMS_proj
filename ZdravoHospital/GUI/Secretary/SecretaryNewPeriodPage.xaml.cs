@@ -23,7 +23,7 @@ namespace ZdravoHospital.GUI.Secretary
     /// <summary>
     /// Interaction logic for SecretaryNewPeriodPage.xaml
     /// </summary>
-    public partial class SecretaryNewPeriodPage : Page
+    public partial class SecretaryNewPeriodPage : Page, INotifyPropertyChanged
     {
         public PeriodsService PeriodsService { get; set; }
         public PeriodDTO PeriodDTO { get; set; }
@@ -32,7 +32,29 @@ namespace ZdravoHospital.GUI.Secretary
         public ObservableCollection<Room> Rooms { get; set; }
         public Period PeriodDEMO { get; set; }
 
-        
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        private string _shiftText;
+
+        public string ShiftText
+        {
+            get { return _shiftText; }
+            set 
+            { 
+                _shiftText = value;
+                OnPropertyChanged("ShiftText");
+            }
+        }
+
+
 
 
         public SecretaryNewPeriodPage(bool isDemoMode = false)
@@ -128,6 +150,22 @@ namespace ZdravoHospital.GUI.Secretary
             }
         }
 
+        private void DateDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(PeriodDTO.Doctor != null && PeriodDTO.Date != null)
+            {
+                Shift shift = new WorkTimeService().GetDoctorShiftByDate(PeriodDTO.Doctor, PeriodDTO.Date);
+                if (shift == Shift.FIRST)
+                    ShiftText = "06:00-14:00";
+                else if (shift == Shift.SECOND)
+                    ShiftText = "14:00-22:00";
+                else if (shift == Shift.THIRD)
+                    ShiftText = "22:00-06:00";
+                else
+                    ShiftText = "Doctor is free.";
+            }
+        }
+
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -139,12 +177,46 @@ namespace ZdravoHospital.GUI.Secretary
             }
             else
             {
-                bool success = PeriodsService.ProcessPeriodCreation(PeriodDTO);
-                if (success)
+                PeriodAvailabilityDTO periodAvailableDTO = PeriodsService.ProcessPeriodCreation(PeriodDTO);
+                if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.AVAILABLE)
                     NavigationService.Navigate(new SecretaryPeriodsPage());
+                else
+                {
+                    giveAvailabilityFeedbackMessage(periodAvailableDTO);
+                }
             }
             
         }
+
+        private void giveAvailabilityFeedbackMessage(PeriodAvailabilityDTO periodAvailableDTO)
+        {
+            if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.DOCTOR_UNAVAILABLE)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Doctor unavailable", "Selected doctor is unavailable.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+            else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.PATIENT_UNAVAILABLE)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Patient unavailable", "Selected patient is unavailable.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+            else if (periodAvailableDTO.PeriodAvailable == PeriodAvailability.ROOM_UNAVAILABLE)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Room unavailable", "Selected room is unavailable.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+            else
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Bad time ", "Selected time is not acceptable.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+        }
+
+
 
         public void ExecuteDemo()
         {
@@ -329,5 +401,7 @@ namespace ZdravoHospital.GUI.Secretary
         {
             NavigationService.Navigate(new DemoPage());
         }
+
+
     }
 }

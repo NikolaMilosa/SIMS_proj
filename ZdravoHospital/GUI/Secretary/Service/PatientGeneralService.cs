@@ -26,9 +26,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             if (SelectedPatient == null)
             {
-                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Please", "Select a patient.");
-                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-                SecretaryWindowVM.CustomMessageBox.Show();
+                
             }
             else
             {

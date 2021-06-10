@@ -33,5 +33,15 @@
     "Username": "saki",
     "NotificationId": 4,
     "IsRead": false
+  },
+  {
+    "Username": "ljuba",
+    "NotificationId": 5,
+    "IsRead": false
+  },
+  {
+    "Username": "zigara",
+    "NotificationId": 6,
+    "IsRead": false
   }
 ]
