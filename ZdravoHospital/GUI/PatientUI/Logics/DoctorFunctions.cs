@@ -58,7 +58,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                         return true;
                     break;
                 case Shift.THIRD:
-                    if (time.Hour >= 22 && time.Hour <= 6)
+                    if ((time.Hour >= 22 && time.Hour<=24) || (time.Hour >= 0 && time.Hour <= 6))
                         return true;
                     break;
             }

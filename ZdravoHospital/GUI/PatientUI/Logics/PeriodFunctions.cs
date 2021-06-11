@@ -84,6 +84,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         public bool CheckPeriodAvailability(Period checkedPeriod)
         {
+            if (!IsDoctorInShift(checkedPeriod)) { ErrorMessage = "Doctor is not working in that shift!"; return false; }
             List<Period> periods = PeriodRepository.GetValues();
             return periods.All(period => IsPeriodAvailable(period, checkedPeriod));
         }
@@ -101,7 +102,6 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private bool IsDoctorAvailable(Period period, Period checkedPeriod)
         {
-            if (!IsDoctorInShift(checkedPeriod)) {ErrorMessage = "Doctor is not working in that shift!"; return false; }
             if (!DoPeriodsOverlap(period, checkedPeriod)) return true;
             ErrorMessage = "Doctor has an existing appointment at selected time!";
             return false;
@@ -110,6 +110,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private bool IsDoctorInShift(Period checkedPeriod)
         {
+            if (checkedPeriod.DoctorUsername == null) return true;//dodato zbog suggestion-a
             DoctorFunctions doctorFunctions = new DoctorFunctions();
             return doctorFunctions.IsTimeInDoctorsShift(checkedPeriod.StartTime, checkedPeriod.DoctorUsername);
         }

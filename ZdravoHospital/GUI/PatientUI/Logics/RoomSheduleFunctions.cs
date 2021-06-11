@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Repository.RoomSchedulePersistance;
 using ZdravoHospital.GUI.PatientUI.Validations;
+using System.Windows;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
@@ -56,7 +57,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             Period period = new Period
             {
                 StartTime = roomSchedule.StartTime,
-                Duration = roomSchedule.EndTime.Subtract(roomSchedule.StartTime).Minutes,
+                Duration = (int)roomSchedule.EndTime.Subtract(roomSchedule.StartTime).TotalMinutes,
                 RoomId = -1
             };
             return period;

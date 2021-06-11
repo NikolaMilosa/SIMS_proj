@@ -75,8 +75,13 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private void RemoveUnavailableDoctor(DoctorDTO doctor)
         {
+            DoctorFunctions doctorFunctions = new DoctorFunctions();
             List<Period> periods = PeriodFunctions.GetAllPeriods();
-            if (periods.Any(period => period.DoctorUsername.Equals(doctor.Username) && PeriodFunctions.DoPeriodsOverlap(period, FundamentalPeriod)))
+
+                if (!doctorFunctions.IsTimeInDoctorsShift(FundamentalPeriod.StartTime, doctor.Username))//ukloni ukoliko doktor nije u smeni u datom vremenu
+                    FreeDoctors.RemoveAll(p => p.Username.Equals(doctor.Username));
+
+            if (periods.Any(period => period.DoctorUsername.Equals(doctor.Username) && PeriodFunctions.DoPeriodsOverlap(period, FundamentalPeriod)))//ukloni preglede tokom kojih vec ima zakazano
                 FreeDoctors.RemoveAll(p => p.Username.Equals(doctor.Username));
 
         }
