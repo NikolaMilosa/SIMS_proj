@@ -16,7 +16,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Model;
 using Newtonsoft.Json;
+using Repository.CredentialsPersistance;
+using Repository.PatientPersistance;
 using ZdravoHospital.GUI.Secretary.DTO;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
@@ -32,7 +35,9 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             this.DataContext = new PatientRegistrationVM();
-            PatientDEMO = new PatientRegistrationService().GetById("aca1999");
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            PatientDEMO = new PatientRegistrationService(credentialsRepository, patientRepository).GetById("aca1999");
             if (isDemoMode)
                 ExecuteDemo(); 
         }

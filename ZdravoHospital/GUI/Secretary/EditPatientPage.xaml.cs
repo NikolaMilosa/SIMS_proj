@@ -1,5 +1,6 @@
 ﻿using Model;
 using Repository.CredentialsPersistance;
+using Repository.PatientPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.DTO;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
@@ -296,7 +298,11 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             SelectedPatient = selectedPatient;
             initializeBindingFields();
-            PatientService = new EditPatientService();
+
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+
+            PatientService = new EditPatientService(patientRepository, credentialsRepository);
             this.DataContext = this;
         }
 

@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Repository.CredentialsPersistance;
+using Repository.PatientPersistance;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using ZdravoHospital.GUI.Secretary.Commands;
 using ZdravoHospital.GUI.Secretary.DTO;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
@@ -27,7 +30,10 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         public PatientRegistrationVM()
         {
             PatientDTO = new PatientDTO();
-            PatientService = new PatientRegistrationService();
+
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            PatientService = new PatientRegistrationService(credentialsRepository, patientRepository);
             FinishCommand = new RelayCommand(finishExecute);
         }
 

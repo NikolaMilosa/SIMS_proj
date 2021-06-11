@@ -1,4 +1,6 @@
 ﻿using Model;
+using Repository.CredentialsPersistance;
+using Repository.PatientPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
@@ -35,7 +38,12 @@ namespace ZdravoHospital.GUI.Secretary
         private void UnblockButton_Click(object sender, RoutedEventArgs e)
         {
             var patientToUnblock = (sender as Button).DataContext as Patient;
-            new PatientGeneralService().ProcessPatientUnblock(patientToUnblock);
+
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            PatientGeneralService patientService = new PatientGeneralService(patientRepository, credentialsRepository);
+
+            patientService.ProcessPatientUnblock(patientToUnblock);
             CollectionViewSource.GetDefaultView(PatientsListView.ItemsSource).Refresh();
         }
 

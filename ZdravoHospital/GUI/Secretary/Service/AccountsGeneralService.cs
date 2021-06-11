@@ -9,9 +9,10 @@ namespace ZdravoHospital.GUI.Secretary.Service
     public class AccountsGeneralService
     {
         private ICredentialsRepository _credentialsRepository;
-        public AccountsGeneralService()
+
+        public AccountsGeneralService(ICredentialsRepository credentialsRepository)
         {
-            _credentialsRepository = new CredentialsRepository();
+            _credentialsRepository = credentialsRepository;
         }
         public List<Credentials> GetAccounts()
         {

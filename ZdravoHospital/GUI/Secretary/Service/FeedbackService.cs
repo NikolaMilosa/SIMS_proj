@@ -9,9 +9,9 @@ namespace ZdravoHospital.GUI.Secretary.Service
     public class FeedbackService
     {
         private IFeedbackRepository _feedbackRepository;
-        public FeedbackService()
+        public FeedbackService(IFeedbackRepository feedbackRepository)
         {
-            _feedbackRepository = new FeedbackRepository();
+            _feedbackRepository = feedbackRepository;
 
         }
 

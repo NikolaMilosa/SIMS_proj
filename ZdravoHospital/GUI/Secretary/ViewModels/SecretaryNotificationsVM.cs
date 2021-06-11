@@ -1,10 +1,14 @@
 ﻿using Model;
+using Repository.CredentialsPersistance;
+using Repository.NotificationsPersistance;
+using Repository.PersonNotificationPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using ZdravoHospital.GUI.Secretary.Commands;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
@@ -16,7 +20,11 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         public Notification SelectedNotification { get; set; }
         public SecretaryNotificationsVM()
         {
-            NotificationService = new NotificationService();
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            INotificationsRepository notificationsRepository = RepositoryFactory.CreateNotificationRepository();
+            IPersonNotificationRepository personNotificationRepository = RepositoryFactory.CreatePersonNotificationRepository();
+            NotificationService = new NotificationService(notificationsRepository, personNotificationRepository, credentialsRepository);
+
             Notifications = new ObservableCollection<Notification>(NotificationService.GetAllNotifications());
             initializeCommands();
         }

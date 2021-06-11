@@ -1,4 +1,5 @@
 ﻿using Model;
+using Repository.FeedbackPersistance;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
@@ -29,7 +31,9 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             this.DataContext = this;
-            FeedbackService = new FeedbackService();
+
+            IFeedbackRepository feedbackRepository = RepositoryFactory.CreateFeedbackRepository();
+            FeedbackService = new FeedbackService(feedbackRepository);
         }
 
         private void SendFeedbackButton_Click(object sender, RoutedEventArgs e)

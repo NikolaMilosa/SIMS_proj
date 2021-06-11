@@ -1,37 +1,22 @@
 [
   {
     "Username": "saki",
-    "NotificationId": 3,
-    "IsRead": true
-  },
-  {
-    "Username": "ljuba",
-    "NotificationId": 3,
-    "IsRead": true
+    "NotificationId": 4,
+    "IsRead": false
   },
   {
     "Username": "suki",
-    "NotificationId": 3,
+    "NotificationId": 5,
     "IsRead": false
   },
   {
     "Username": "pantela",
-    "NotificationId": 3,
+    "NotificationId": 5,
     "IsRead": false
   },
   {
     "Username": "zigara",
-    "NotificationId": 3,
-    "IsRead": false
-  },
-  {
-    "Username": "sima",
-    "NotificationId": 3,
-    "IsRead": false
-  },
-  {
-    "Username": "saki",
-    "NotificationId": 4,
+    "NotificationId": 5,
     "IsRead": false
   },
   {
@@ -40,8 +25,13 @@
     "IsRead": false
   },
   {
-    "Username": "zigara",
-    "NotificationId": 6,
+    "Username": "saki",
+    "NotificationId": 5,
+    "IsRead": false
+  },
+  {
+    "Username": "aca1999",
+    "NotificationId": 5,
     "IsRead": false
   }
 ]

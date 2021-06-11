@@ -1,4 +1,6 @@
 ﻿using Model;
+using Repository.CredentialsPersistance;
+using Repository.PatientPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +10,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using ZdravoHospital.GUI.Secretary.Commands;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
@@ -37,7 +40,10 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
 
         public PatientsViewVM()
         {
-            PatientService = new PatientGeneralService();
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            PatientService = new PatientGeneralService(patientRepository, credentialsRepository);
+
             PatientsForTable = new ObservableCollection<Patient>(PatientService.GetAll());
             SelectedPatient = new Patient();
             ICollectionView viewPatients = (ICollectionView)CollectionViewSource.GetDefaultView(PatientsForTable);

@@ -1,10 +1,14 @@
 ﻿using Model;
+using Repository.CredentialsPersistance;
 using Repository.DoctorPersistance;
+using Repository.NotificationsPersistance;
 using Repository.PeriodPersistance;
+using Repository.PersonNotificationPersistance;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
@@ -18,7 +22,11 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             _doctorRepository = new DoctorRepository();
             _periodRepository = new PeriodRepository();
-            NotificationService = new NotificationService();
+
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            INotificationsRepository notificationsRepository = RepositoryFactory.CreateNotificationRepository();
+            IPersonNotificationRepository personNotificationRepository = RepositoryFactory.CreatePersonNotificationRepository();
+            NotificationService = new NotificationService(notificationsRepository, personNotificationRepository, credentialsRepository);
         }
 
         public void ProcessShiftCreation(Doctor selectedDoctor, ShiftDTO shiftDTO)

@@ -1,12 +1,14 @@
 ﻿using Model;
 using Repository.CredentialsPersistance;
 using Repository.NotificationsPersistance;
+using Repository.PatientPersistance;
 using Repository.PersonNotificationPersistance;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
@@ -16,13 +18,16 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private INotificationsRepository _notificationRepository;
         private IPersonNotificationRepository _personNotificationRepository;
         private ICredentialsRepository _credentialsRepository;
+
         public PatientGeneralService _patientGeneralService;
-        public NotificationService()
+        public NotificationService(INotificationsRepository notificationsRepository, IPersonNotificationRepository personNotificationRepository, ICredentialsRepository credentialsRepository)
         {
-            _notificationRepository = new NotificationRepository();
-            _personNotificationRepository = new PersonNotificationRepository();
-            _credentialsRepository = new CredentialsRepository();
-            _patientGeneralService = new PatientGeneralService();
+            _notificationRepository = notificationsRepository;
+            _personNotificationRepository = personNotificationRepository;
+            _credentialsRepository = credentialsRepository;
+
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            _patientGeneralService = new PatientGeneralService(patientRepository, credentialsRepository);
         }
         public List<Notification> GetAllNotifications()
         {

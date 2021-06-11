@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Repository.PatientPersistance;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using ZdravoHospital.GUI.Secretary.Commands;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
@@ -16,7 +18,10 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         public GuestAccountVM(bool urgentlyCreated)
         {
             Guest = new GuestDTO(urgentlyCreated);
-            GuestService = new GuestService();
+            
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            GuestService = new GuestService(patientRepository);
+            
             CreateGuestCommand = new RelayCommand(createGuestExecute);
         }
 

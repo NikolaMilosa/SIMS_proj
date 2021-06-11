@@ -20,12 +20,12 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private IPeriodRepository _periodRepository;
         private IRoomRepository _roomRepository;
 
-        public PeriodsService()
+        public PeriodsService(IDoctorRepository doctorRepository, IPatientRepository patientRepository, IPeriodRepository periodRepository, IRoomRepository roomRepository)
         {
-            _doctorRepository = new DoctorRepository();
-            _patientRepository = new PatientRepository();
-            _periodRepository = new PeriodRepository();
-            _roomRepository = new RoomRepository();
+            _doctorRepository = doctorRepository;
+            _patientRepository = patientRepository;
+            _periodRepository = periodRepository;
+            _roomRepository = roomRepository;
         }
 
         public List<Patient> GetPatients()

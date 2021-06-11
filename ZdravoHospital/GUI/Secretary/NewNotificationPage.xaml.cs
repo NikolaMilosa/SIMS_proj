@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Repository.CredentialsPersistance;
+using Repository.NotificationsPersistance;
+using Repository.PersonNotificationPersistance;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
@@ -54,7 +58,12 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             NotificationDTO = new NotificationDTO();
-            NotificationService = new NotificationService();
+
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            INotificationsRepository notificationsRepository = RepositoryFactory.CreateNotificationRepository();
+            IPersonNotificationRepository personNotificationRepository = RepositoryFactory.CreatePersonNotificationRepository();
+            NotificationService = new NotificationService(notificationsRepository, personNotificationRepository, credentialsRepository);
+            
             this.DataContext = this;
         }
 

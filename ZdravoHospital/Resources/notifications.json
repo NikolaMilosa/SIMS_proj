@@ -1,30 +1,16 @@
 [
   {
-    "Text": "Please drink 8 cups of water a day.",
-    "CreateDate": "2021-05-04T20:22:40.7598254+02:00",
-    "UsernameSender": "suki",
-    "Title": "Notification for all",
-    "NotificationId": 3
-  },
-  {
     "Text": "Hello saki welcome to the house.",
-    "CreateDate": "2021-06-07T13:37:31.4694365+02:00",
+    "CreateDate": "2021-06-11T16:15:50.1054969+02:00",
     "UsernameSender": "suki",
     "Title": "Saki's notification",
     "NotificationId": 4
   },
   {
-    "Text": "Dear ljuba, your appointment has been postponed from 6/10/2021 6:30:00 PM to 6/10/2021 7:27:20 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
-    "CreateDate": "2021-06-10T17:57:26.426019+02:00",
+    "Text": "Please drink 8 cups of water a day.",
+    "CreateDate": "2021-06-11T17:07:25.0520112+02:00",
     "UsernameSender": "suki",
-    "Title": "Reschedule",
+    "Title": "Notification for all",
     "NotificationId": 5
-  },
-  {
-    "Text": "Dear zigara, your appointment has been postponed from 6/10/2021 6:30:00 PM to 6/10/2021 7:27:20 PM due to urgent appointment. If you are dissatisfied with new appointment, please contact us for rescheduling.",
-    "CreateDate": "2021-06-10T17:57:26.4545923+02:00",
-    "UsernameSender": "suki",
-    "Title": "Reschedule",
-    "NotificationId": 6
   }
 ]

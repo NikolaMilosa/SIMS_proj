@@ -13,11 +13,11 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private IIngredientRepository _ingredientRepository;
         private IMedicineRepository _medicineRepository;
         private IPatientRepository _patientRepository;
-        public AllergiesService()
+        public AllergiesService(IIngredientRepository ingredientRepo, IMedicineRepository medicineRepo, IPatientRepository patientRepo)
         {
-            _ingredientRepository = new IngredientRepository();
-            _medicineRepository = new MedicineRepository();
-            _patientRepository = new PatientRepository();
+            _ingredientRepository = ingredientRepo;
+            _medicineRepository = medicineRepo;
+            _patientRepository = patientRepo;
         }
         public List<Medicine> GetAllMedicines()
         {

@@ -1,7 +1,10 @@
 ﻿using Model;
+using Repository.CredentialsPersistance;
 using Repository.DoctorPersistance;
+using Repository.NotificationsPersistance;
 using Repository.PatientPersistance;
 using Repository.PeriodPersistance;
+using Repository.PersonNotificationPersistance;
 using Repository.RoomPersistance;
 using Repository.SpecializationPersistance;
 using System;
@@ -9,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
@@ -16,7 +20,6 @@ namespace ZdravoHospital.GUI.Secretary.Service
     public class PeriodsToMoveService
     {
         private IPeriodRepository _periodRepository;
-        private ISpecializationRepository _specializationRepository;
         private IPatientRepository _patientRepository;
         private IDoctorRepository _doctorRepository;
         private IRoomRepository _roomRepository;
@@ -24,11 +27,14 @@ namespace ZdravoHospital.GUI.Secretary.Service
         public PeriodsToMoveService()
         {
             _periodRepository = new PeriodRepository();
-            _specializationRepository = new SpecializationRepository();
             _patientRepository = new PatientRepository();
             _doctorRepository = new DoctorRepository();
             _roomRepository = new RoomRepository();
-            NotificationService = new NotificationService();
+
+            ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
+            INotificationsRepository notificationsRepository = RepositoryFactory.CreateNotificationRepository();
+            IPersonNotificationRepository personNotificationRepository = RepositoryFactory.CreatePersonNotificationRepository();
+            NotificationService = new NotificationService(notificationsRepository, personNotificationRepository, credentialsRepository);
         }
         public List<Period> GetPeriods()
         {
@@ -120,7 +126,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
 
         public ObservableCollection<Period> GetSortedPeriods(ObservableCollection<Period> periods)
         {
-            return new ObservableCollection<Period>(periods.OrderBy(x => x.MovePeriods.Count).ThenBy(x => x.findSumOfMovePeriods()).ToList<Period>());
+            return new ObservableCollection<Period>(periods.OrderBy(x => x.MovePeriods.Count).ThenBy(x => findSumOfMovePeriods(x)).ToList<Period>());
         }
 
         public Patient GetPatientById(string id)
@@ -133,5 +139,14 @@ namespace ZdravoHospital.GUI.Secretary.Service
             return _doctorRepository.GetById(id);
         }
 
+        public int findSumOfMovePeriods(Period p)
+        {
+            int ret = 0;
+            foreach (var movePeriod in p.MovePeriods)
+            {
+                ret += (int)movePeriod.MovedStartTime.Subtract(movePeriod.InitialStartTime).TotalMinutes;
+            }
+            return ret;
+        }
     }
 }

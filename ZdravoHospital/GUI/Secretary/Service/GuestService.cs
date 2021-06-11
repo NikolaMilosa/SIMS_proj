@@ -11,9 +11,9 @@ namespace ZdravoHospital.GUI.Secretary.Service
     public class GuestService
     {
         private IPatientRepository _patientRepository;
-        public GuestService()
+        public GuestService(IPatientRepository patientRepository)
         {
-            _patientRepository = new PatientRepository();
+            _patientRepository = patientRepository;
         }
 
         public bool isHealthCardUnique(string healthCardNum)

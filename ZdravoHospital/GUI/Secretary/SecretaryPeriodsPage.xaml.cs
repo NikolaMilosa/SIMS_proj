@@ -13,6 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Model;
+using Repository.DoctorPersistance;
+using Repository.PatientPersistance;
+using Repository.PeriodPersistance;
+using Repository.RoomPersistance;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
@@ -53,7 +58,13 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             this.DataContext = this;
-            PeriodsService = new PeriodsService();
+
+            IPeriodRepository periodRepository = RepositoryFactory.CreatePeriodRepository();
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            IRoomRepository roomRepository = RepositoryFactory.CreateRoomRepository();
+            PeriodsService = new PeriodsService(doctorRepository, patientRepository, periodRepository, roomRepository);
+            
             SelectedDate = DateTime.Today;
 
             Periods = new ObservableCollection<Period>(PeriodsService.GetPeriods());

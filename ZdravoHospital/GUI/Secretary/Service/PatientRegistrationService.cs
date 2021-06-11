@@ -14,10 +14,10 @@ namespace ZdravoHospital.GUI.Secretary.Service
     {
         private ICredentialsRepository _credentialsRepository;
         private IPatientRepository _patientsRepository;
-        public PatientRegistrationService()
+        public PatientRegistrationService(ICredentialsRepository credentialsRepository, IPatientRepository patientRepository)
         {
-            _credentialsRepository = new CredentialsRepository();
-            _patientsRepository = new PatientRepository();
+            _credentialsRepository = credentialsRepository;
+            _patientsRepository = patientRepository;
         }
 
         public void processPatientRegistration(PatientDTO patientDTO)

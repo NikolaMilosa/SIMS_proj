@@ -1,4 +1,6 @@
 ﻿using Model;
+using Repository.MedicinePersistance;
+using Repository.PatientPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,8 +16,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 using ZdravoHospital.GUI.Secretary.ViewModels;
+using ZdravoHospital.Repository.IngredientPersistance;
 
 namespace ZdravoHospital.GUI.Secretary
 {
@@ -43,7 +47,12 @@ namespace ZdravoHospital.GUI.Secretary
             this.DataContext = this;
             SelectedPatient = selectedPatient;
 
-            AllergiesService = new AllergiesService();
+
+            IIngredientRepository ingredientRepository = RepositoryFactory.CreateIngredientRepository();
+            IMedicineRepository medicineRepository = RepositoryFactory.CreateMedicineRepository();
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+
+            AllergiesService = new AllergiesService(ingredientRepository, medicineRepository, patientRepository);
             AddedCustomAllergens = new ObservableCollection<string>();
 
             initAddedIngredientAllergens();

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ZdravoHospital.Repository.IngredientPersistance
 {
-    interface IIngredientRepository : IRepository<string, Ingredient>
+    public interface IIngredientRepository : IRepository<string, Ingredient>
     {
     }
 }
