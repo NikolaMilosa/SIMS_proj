@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Model;
 using Repository.DoctorPersistance;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
@@ -37,7 +38,9 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public bool IsTimeInDoctorsShift(DateTime time,string username)
         {
             Doctor doctor = GetDoctor(username);
-            WorkTimeService timeService = new WorkTimeService();
+
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            WorkTimeService timeService = new WorkTimeService(doctorRepository);
             Shift shift = timeService.GetDoctorShiftByDate(doctor, time);
             return IsTimeInShift(shift, time);
         }

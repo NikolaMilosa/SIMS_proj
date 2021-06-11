@@ -1,4 +1,6 @@
 ﻿using Model;
+using Repository.DoctorPersistance;
+using Repository.PeriodPersistance;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using ZdravoHospital.GUI.Secretary.Commands;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
@@ -18,7 +21,11 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         public EditVacationVM(Doctor selectedDoctor)
         {
             SelectedDoctor = selectedDoctor;
-            VacationService = new VacationService();
+
+            IPeriodRepository periodRepository = RepositoryFactory.CreatePeriodRepository();
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            VacationService = new VacationService(doctorRepository, periodRepository);
+            
             VacationDTO = new VacationDTO();
 
             CreateVacationCommand = new RelayCommand(createVacationExecute);

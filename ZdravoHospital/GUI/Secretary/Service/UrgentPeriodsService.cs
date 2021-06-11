@@ -21,13 +21,14 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private IDoctorRepository _doctorRepository;
         private IRoomRepository _roomRepository;
 
-        public UrgentPeriodsService()
+        public UrgentPeriodsService(IPeriodRepository periodRepository, ISpecializationRepository specializationRepository, IPatientRepository patientRepository,
+                                    IDoctorRepository doctorRepository, IRoomRepository roomRepository)
         {
-            _periodRepository = new PeriodRepository();
-            _specializationRepository = new SpecializationRepository();
-            _patientRepository = new PatientRepository();
-            _doctorRepository = new DoctorRepository();
-            _roomRepository = new RoomRepository();
+            _periodRepository = periodRepository;
+            _specializationRepository = specializationRepository;
+            _patientRepository = patientRepository;
+            _doctorRepository = doctorRepository;
+            _roomRepository = roomRepository;
         }
 
         public List<Period> GetPeriods()

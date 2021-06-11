@@ -24,12 +24,12 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private IDoctorRepository _doctorRepository;
         private IRoomRepository _roomRepository;
         public NotificationService NotificationService { get; set; }
-        public PeriodsToMoveService()
+        public PeriodsToMoveService(IDoctorRepository doctorRepository, IPatientRepository patientRepository, IPeriodRepository periodRepository, IRoomRepository roomRepository)
         {
-            _periodRepository = new PeriodRepository();
-            _patientRepository = new PatientRepository();
-            _doctorRepository = new DoctorRepository();
-            _roomRepository = new RoomRepository();
+            _periodRepository = periodRepository;
+            _patientRepository = patientRepository;
+            _doctorRepository = doctorRepository;
+            _roomRepository = roomRepository;
 
             ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
             INotificationsRepository notificationsRepository = RepositoryFactory.CreateNotificationRepository();

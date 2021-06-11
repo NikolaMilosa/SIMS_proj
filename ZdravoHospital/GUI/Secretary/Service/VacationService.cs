@@ -19,11 +19,12 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private IPeriodRepository _periodRepository;
         public WorkTimeService WorkService;
         public NotificationService NotificationService { get; set; }
-        public VacationService()
+        public VacationService(IDoctorRepository doctorRepository, IPeriodRepository periodRepository)
         {
-            _doctorRepository = new DoctorRepository();
-            _periodRepository = new PeriodRepository();
-            WorkService = new WorkTimeService();
+            _doctorRepository = doctorRepository;
+            _periodRepository = periodRepository;
+
+            WorkService = new WorkTimeService(doctorRepository);
 
             ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
             INotificationsRepository notificationsRepository = RepositoryFactory.CreateNotificationRepository();

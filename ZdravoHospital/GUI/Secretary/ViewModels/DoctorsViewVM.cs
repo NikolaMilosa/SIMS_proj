@@ -1,4 +1,5 @@
 ﻿using Model;
+using Repository.DoctorPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Windows.Input;
 using ZdravoHospital.GUI.Secretary.Commands;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary.ViewModels
@@ -17,7 +19,8 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
         public DoctorShiftsViewDTO SelectedDoctorView { get; set; }
         public DoctorsViewVM()
         {
-            WorkTimeService = new WorkTimeService();
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            WorkTimeService = new WorkTimeService(doctorRepository);
             initDoctorsView();
 
             ShiftCommand = new RelayCommand(shiftExecute);

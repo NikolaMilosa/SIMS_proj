@@ -1,4 +1,9 @@
 ﻿using Model;
+using Repository.DoctorPersistance;
+using Repository.PatientPersistance;
+using Repository.PeriodPersistance;
+using Repository.RoomPersistance;
+using Repository.SpecializationPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 using ZdravoHospital.GUI.Secretary.ViewModels;
 
@@ -34,7 +40,14 @@ namespace ZdravoHospital.GUI.Secretary
         {
             InitializeComponent();
             this.DataContext = this;
-            UrgentService = new UrgentPeriodsService();
+
+            IPeriodRepository periodRepository = RepositoryFactory.CreatePeriodRepository();
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            IRoomRepository roomRepository = RepositoryFactory.CreateRoomRepository();
+            ISpecializationRepository specializationRepository = RepositoryFactory.CreateSpecializationRepository();
+            UrgentService = new UrgentPeriodsService(periodRepository, specializationRepository, patientRepository, doctorRepository, roomRepository);
+            
             UrgentPeriodDTO = new UrgentPeriodDTO();
 
             Patients = new ObservableCollection<Patient>(UrgentService.GetPatients());

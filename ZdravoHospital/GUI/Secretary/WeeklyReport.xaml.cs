@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.PeriodPersistance;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
@@ -52,8 +54,10 @@ namespace ZdravoHospital.GUI.Secretary
             InitializeComponent();
             this.DataContext = this;
             SelectedDate = DateTime.Now;
+
+            IPeriodRepository periodRepository = RepositoryFactory.CreatePeriodRepository();
+            WeeklyReportService = new WeeklyReportService(periodRepository);
             
-            WeeklyReportService = new WeeklyReportService();
             List<WeeklyReportDTO> periods = WeeklyReportService.GetDesiredPeriods(SelectedDate);
             periods = periods.OrderByDescending(p => p.StartTime).ToList();
             Periods = new ObservableCollection<WeeklyReportDTO>(periods);

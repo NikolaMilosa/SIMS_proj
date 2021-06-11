@@ -7,6 +7,7 @@ using Repository.PatientPersistance;
 using Repository.PeriodPersistance;
 using Repository.PersonNotificationPersistance;
 using Repository.RoomPersistance;
+using Repository.SpecializationPersistance;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,6 +64,11 @@ namespace ZdravoHospital.GUI.Secretary.Factory
         public static IPeriodRepository CreatePeriodRepository()
         {
             return new PeriodRepository();
+        }
+
+        public static ISpecializationRepository CreateSpecializationRepository()
+        {
+            return new SpecializationRepository();
         }
 
     }

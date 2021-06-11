@@ -10,9 +10,9 @@ namespace ZdravoHospital.GUI.Secretary.Service
     public class WorkTimeService
     {
         private IDoctorRepository _doctorRepository;
-        public WorkTimeService()
+        public WorkTimeService(IDoctorRepository doctorRepository)
         {
-            _doctorRepository = new DoctorRepository();
+            _doctorRepository = doctorRepository;
         }
         public List<Doctor> GetAllDoctors()
         {

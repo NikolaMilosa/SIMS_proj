@@ -18,10 +18,10 @@ namespace ZdravoHospital.GUI.Secretary.Service
         private IDoctorRepository _doctorRepository;
         private IPeriodRepository _periodRepository;
         public NotificationService NotificationService { get; set; }
-        public ShiftService()
+        public ShiftService(IDoctorRepository doctorRepository, IPeriodRepository periodRepository)
         {
-            _doctorRepository = new DoctorRepository();
-            _periodRepository = new PeriodRepository();
+            _doctorRepository = doctorRepository;
+            _periodRepository = periodRepository;
 
             ICredentialsRepository credentialsRepository = RepositoryFactory.CreateCredentialsRepository();
             INotificationsRepository notificationsRepository = RepositoryFactory.CreateNotificationRepository();

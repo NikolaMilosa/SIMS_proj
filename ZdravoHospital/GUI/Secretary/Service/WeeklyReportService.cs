@@ -16,9 +16,9 @@ namespace ZdravoHospital.GUI.Secretary.Service
     {
         private IPeriodRepository _periodRepository;
         private static string path = @"..\..\..\EXPORTPDF\Secretary\";
-        public WeeklyReportService()
+        public WeeklyReportService(IPeriodRepository periodRepository)
         {
-            _periodRepository = new PeriodRepository();
+            _periodRepository = periodRepository;
         }
 
         public List<WeeklyReportDTO> GetDesiredPeriods(DateTime selectedDate)

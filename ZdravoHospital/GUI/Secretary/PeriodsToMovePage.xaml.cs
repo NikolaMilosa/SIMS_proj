@@ -1,4 +1,8 @@
 ﻿using Model;
+using Repository.DoctorPersistance;
+using Repository.PatientPersistance;
+using Repository.PeriodPersistance;
+using Repository.RoomPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.Secretary
@@ -48,7 +53,13 @@ namespace ZdravoHospital.GUI.Secretary
         public PeriodsToMovePage(List<Period> periods)
         {
             Periods = new ObservableCollection<Period>(periods);
-            PeriodsToMoveService = new PeriodsToMoveService();
+
+            IPeriodRepository periodRepository = RepositoryFactory.CreatePeriodRepository();
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            IPatientRepository patientRepository = RepositoryFactory.CreatePatientRepository();
+            IRoomRepository roomRepository = RepositoryFactory.CreateRoomRepository();
+            PeriodsToMoveService = new PeriodsToMoveService(doctorRepository, patientRepository, periodRepository, roomRepository);
+
             Periods = PeriodsToMoveService.GetSortedPeriods(Periods);
             this.DataContext = this;
             InitializeComponent();

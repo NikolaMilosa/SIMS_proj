@@ -160,9 +160,10 @@ namespace ZdravoHospital.GUI.Secretary
 
         private void DateDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(PeriodDTO.Doctor != null && PeriodDTO.Date != null)
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            if (PeriodDTO.Doctor != null && PeriodDTO.Date != null)
             {
-                Shift shift = new WorkTimeService().GetDoctorShiftByDate(PeriodDTO.Doctor, PeriodDTO.Date);
+                Shift shift = new WorkTimeService(doctorRepository).GetDoctorShiftByDate(PeriodDTO.Doctor, PeriodDTO.Date);
                 if (shift == Shift.FIRST)
                     ShiftText = "06:00-14:00";
                 else if (shift == Shift.SECOND)
