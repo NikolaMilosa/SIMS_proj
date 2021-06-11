@@ -86,7 +86,7 @@ namespace ZdravoHospital
 
         private bool IsFirstLoggIn(string username)
         {
-            PatientFunctions patientFunctions = new PatientFunctions(username);
+            PatientService patientFunctions = new PatientService(username);
             return patientFunctions.LoadPatient().LastLogoutTime == DateTime.MinValue;
         }
 

@@ -13,8 +13,8 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
     {
         #region Properties
         List<Room> Rooms { get; set; }
-        public RoomFunctions RoomFunctions { get; private set; }
-       public PeriodFunctions PeriodFunctions { get; private set; }
+        public RoomService RoomFunctions { get; private set; }
+       public PeriodService PeriodFunctions { get; private set; }
         #endregion
 
         public RoomSheduleFunctions()
@@ -24,8 +24,8 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private void SetProperties()
         {
-            PeriodFunctions = new PeriodFunctions();
-            RoomFunctions = new RoomFunctions();
+            PeriodFunctions = new PeriodService();
+            RoomFunctions = new RoomService();
             Rooms = RoomFunctions.GetAll();
         }
 
@@ -66,7 +66,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         private bool PeriodAlreadyExistsInRoom(Room room, Period checkedPeriod)
         {
 
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             List<Period> periods = periodFunctions.GetAllPeriods();
             return periods.Any(period => period.RoomId == room.Id && PeriodFunctions.DoPeriodsOverlap(period, checkedPeriod));
         }

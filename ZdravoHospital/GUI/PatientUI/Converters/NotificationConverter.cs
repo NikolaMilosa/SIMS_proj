@@ -49,13 +49,13 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
 
         private Doctor GetDoctor(string username)
         {
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            DoctorService doctorFunctions = new DoctorService();
             return doctorFunctions.GetDoctor(username);
         }
 
         private Notification GetNotification(PersonNotification personNotification)
         {
-            NotificationFunctions notificationFunctions = new NotificationFunctions();
+            NotificationService notificationFunctions = new NotificationService();
             var notifications = notificationFunctions.GetNotifications();
             return notifications.FirstOrDefault(notification => notification.NotificationId.Equals(personNotification.NotificationId));
         }

@@ -47,7 +47,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void FillList()
         {
             Notifications = new ObservableCollection<NotificationDTO>();
-            NotificationFunctions notificationFunctions = new NotificationFunctions();
+            NotificationService notificationFunctions = new NotificationService();
             NotificationConverter notificationConverter = new NotificationConverter();
             foreach (var personNotification in notificationFunctions.GetPersonNotifications().Where(personNotification => personNotification.Username.Equals(PatientWindowVM.PatientUsername)))
                 Notifications.Add(notificationConverter.GetNotifcationDTO(personNotification));

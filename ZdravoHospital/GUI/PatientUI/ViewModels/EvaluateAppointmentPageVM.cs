@@ -38,7 +38,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public Period Period { get; private set; }
         public PeriodMark PeriodMark { get; set; }
-        public ViewFunctions ViewFunctions { get; private set; }
+        public ViewService ViewFunctions { get; private set; }
 
         private StringHolder imageSource1;
 
@@ -161,9 +161,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public void ConfirmExecute(object parameter)
         {
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             periodFunctions.UpdatePeriod(Period);
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Rated", "Period successfully rated!");
             PatientWindowVM.NavigationService.Navigate(new AppointmentHistoryPage(Period.PatientUsername));
         }
@@ -191,7 +191,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void SetProperties(Period period)
         {
             Period = period;
-            ViewFunctions = new ViewFunctions();
+            ViewFunctions = new ViewService();
             GeneratePeriodMark(period);
             SetImagesList();
         }

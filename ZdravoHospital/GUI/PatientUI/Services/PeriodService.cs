@@ -10,7 +10,7 @@ using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class PeriodFunctions
+    public class PeriodService
     {
         #region Properties
 
@@ -29,14 +29,14 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         public string PatientUsername { get; set; }
         public string ErrorMessage { get; private set; }
-        public ViewFunctions ViewFunctions { get; private set; }
+        public ViewService ViewFunctions { get; private set; }
         #endregion
 
-        public PeriodFunctions()
+        public PeriodService()
         {
             PeriodRepository = new PeriodRepository();
             PatientUsername = PatientWindowVM.PatientUsername;
-            ViewFunctions = new ViewFunctions();
+            ViewFunctions = new ViewService();
         }
 
         #region Methods
@@ -111,7 +111,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         private bool IsDoctorInShift(Period checkedPeriod)
         {
             if (checkedPeriod.DoctorUsername == null) return true;//dodato zbog suggestion-a
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            DoctorService doctorFunctions = new DoctorService();
             return doctorFunctions.IsTimeInDoctorsShift(checkedPeriod.StartTime, checkedPeriod.DoctorUsername);
         }
 

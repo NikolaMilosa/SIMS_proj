@@ -18,7 +18,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public string WelcomeMessage { get; private set; }
         public PatientWindow PatientWindow { get; private set; }
-        public ThreadFunctions ThreadFunctions { get; private set; }
+        public ThreadService ThreadFunctions { get; private set; }
         public static string PatientUsername { get; private set; }
         private  bool _SurveyAvailable { get; set; }
         public  bool SurveyAvailable
@@ -83,7 +83,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void LogOutExecute(object parameter)
         {
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowYesNoDialog("Logging out","Are you sure that you want to log out?");
             if (!viewFunctions.YesPressed)
                 return;
@@ -149,7 +149,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void StartThreads()
         {
-            ThreadFunctions = new ThreadFunctions(PatientUsername);
+            ThreadFunctions = new ThreadService(PatientUsername);
             ThreadFunctions.StartThreads();
         }
         private void SetProperties(string username, PatientWindow patientWindow)
@@ -162,13 +162,13 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void CheckSurveys()
         {
-            SurveyFunctions surveyFunctions = new SurveyFunctions();
+            SurveyService surveyFunctions = new SurveyService();
             SurveyAvailable = surveyFunctions.IsSurveyAvailable(PatientUsername);
         }
 
         private void SerializePatient()
         {
-            PatientFunctions patientFunctions = new PatientFunctions(PatientUsername);
+            PatientService patientFunctions = new PatientService(PatientUsername);
             Patient patient = patientFunctions.LoadPatient();
             patient.LastLogoutTime = DateTime.Now;
             patientFunctions.SerializePatient(patient);

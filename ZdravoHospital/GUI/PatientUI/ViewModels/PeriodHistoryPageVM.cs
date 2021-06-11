@@ -47,7 +47,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             Period selectedPeriod = GetSelectedPeriod();
             if (selectedPeriod.Details == null)
             {
-                ViewFunctions viewFunctions = new ViewFunctions();
+                ViewService viewFunctions = new ViewService();
                 viewFunctions.ShowOkDialog("Anamnesis","There is no available anamnesis for the selected appointment!");
                 return;
 
@@ -73,7 +73,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void FillList()
         {
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             Periods = new ObservableCollection<PeriodDTO>();
             PeriodConverter periodConverter = new PeriodConverter();
             foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(PatientWindowVM.PatientUsername) && period.StartTime.AddMinutes(period.Duration) < DateTime.Now))

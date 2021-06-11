@@ -104,7 +104,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
                     periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
                 }
             }
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            DoctorService doctorFunctions = new DoctorService();
             if(!doctorFunctions.IsTimeInDoctorsShift(period.StartTime, period.DoctorUsername))
             {
                 periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;

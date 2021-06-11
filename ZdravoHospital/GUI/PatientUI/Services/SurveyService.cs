@@ -32,7 +32,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private  int GetCompletedPeriodsNum(string username)
         {
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             return periodFunctions.GetAllPeriods().Count(period => period.PatientUsername.Equals(username) && period.HasPassed());
         }
 
