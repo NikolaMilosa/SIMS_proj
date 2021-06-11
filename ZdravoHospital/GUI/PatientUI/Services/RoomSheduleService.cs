@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class RoomSheduleFunctions
+    public class RoomSheduleService
     {
         #region Properties
         List<Room> Rooms { get; set; }
@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
        public PeriodService PeriodFunctions { get; private set; }
         #endregion
 
-        public RoomSheduleFunctions()
+        public RoomSheduleService()
         {
             SetProperties();
         }

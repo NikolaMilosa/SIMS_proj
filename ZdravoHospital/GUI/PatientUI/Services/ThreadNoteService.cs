@@ -6,7 +6,7 @@ using ZdravoHospital.GUI.PatientUI.Validations;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public static class ThreadNoteFunctions
+    public static class ThreadNoteService
     {
         public static void NoteNotification(object username)
         {
@@ -25,7 +25,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
             foreach (PatientNote note in patientNotes)
             {
                 if (!periodFunctions.IsPeriodWithinGivenMinutes(note.NotifyTime, 1)) continue;
-                ViewFunctions viewFunctions = new ViewFunctions();
+                ViewService viewFunctions = new ViewService();
                 viewFunctions.ShowOkDialog(note.Title, note.Content);
             }
         }

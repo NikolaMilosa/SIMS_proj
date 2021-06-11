@@ -13,7 +13,7 @@ using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public  class SuggestDoctorFunctions
+    public  class SuggestDoctorService
     {
         public PeriodService PeriodFunctions { get; set; }
         public Period FundamentalPeriod { get; private set; }
@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public ObservableCollection<PeriodDTO> SuggestedPeriods { get; private set; }
 
 
-        public SuggestDoctorFunctions(DateTime date,TimeSpan time,ObservableCollection<PeriodDTO> suggestedPeriods)
+        public SuggestDoctorService(DateTime date,TimeSpan time,ObservableCollection<PeriodDTO> suggestedPeriods)
         {
             SetProperties();
             SuggestedPeriods = suggestedPeriods;
@@ -69,7 +69,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                 SuggestedPeriods.Add(GetPeriodDTO(doctor));
 
             if (SuggestedPeriods.Count != 0) return;
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Warning","No available doctors for the selected time!");
         }
 

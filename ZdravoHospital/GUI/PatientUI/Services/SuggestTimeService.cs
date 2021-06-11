@@ -11,7 +11,7 @@ using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class SuggestTimeFunctions
+    public class SuggestTimeService
     {
         public ObservableCollection<PeriodDTO> SuggestedPeriods { get; private set; }
         public DoctorDTO Doctor { get; private set; }
@@ -20,7 +20,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         public PeriodConverter PeriodConverter { get; private set; }
         public RoomSheduleService RoomFunctions { get; private set; }
 
-        public SuggestTimeFunctions(ObservableCollection<PeriodDTO> suggestedPeriods, DoctorDTO doctor)
+        public SuggestTimeService(ObservableCollection<PeriodDTO> suggestedPeriods, DoctorDTO doctor)
         {
             SuggestedPeriods = suggestedPeriods;
             Doctor = doctor;

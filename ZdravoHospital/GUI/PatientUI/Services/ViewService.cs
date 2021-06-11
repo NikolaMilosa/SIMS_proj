@@ -6,7 +6,7 @@ using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class ViewFunctions
+    public class ViewService
     {
         public bool YesPressed { get; private set; }
         public  void ShowOkDialog(string title, string content)
