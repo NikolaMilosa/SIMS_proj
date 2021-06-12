@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
 using ZdravoHospital.GUI.DoctorUI.Services;
 using ZdravoHospital.GUI.DoctorUI.Validations;
@@ -21,7 +20,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private PeriodService _periodService;
         private PeriodReportService _periodReportService;
         private bool _periodCanceled;
-        private ReferralController _referralController;
+        private ReferralService _referralService;
 
         private bool _doctorPatientEditable;
         public bool DoctorPatientEditable 
@@ -370,7 +369,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         public void Executed_SeeReferralCommand()
         {
-            Referral referral = _referralController.GetReferral(_period.ParentReferralId);
+            Referral referral = _referralService.GetReferral(_period.ParentReferralId);
             _navigationService.Navigate(new ReferralPage(referral, Patient));
         }
 
@@ -445,11 +444,11 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             _period = period;
             _periodService = new PeriodService();
             _periodReportService = new PeriodReportService();
-            _referralController = new ReferralController();
+            _referralService = new ReferralService();
 
-            Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
-            Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
-            Rooms = new ObservableCollection<Room>(new RoomController().GetAppointmentRooms());
+            Doctors = new ObservableCollection<Doctor>(new DoctorService().GetDoctors());
+            Patients = new ObservableCollection<Patient>(new PatientService().GetPatients());
+            Rooms = new ObservableCollection<Room>(new RoomService().GetAppointmentRooms());
 
             Doctor = Doctors.ToList().Find(d => d.Username.Equals(period.DoctorUsername));
             Patient = Patients.ToList().Find(p => p.Username.Equals(period.PatientUsername));

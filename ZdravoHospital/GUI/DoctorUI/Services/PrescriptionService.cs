@@ -9,10 +9,12 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
     public class PrescriptionService
     {
         private PrescriptionValidation _prescriptionValidation;
+        private PeriodService _periodService;
 
         public PrescriptionService()
         {
             _prescriptionValidation = new PrescriptionValidation();
+            _periodService = new PeriodService();
         }
 
         public void CheckAllergens(Medicine medicine, Patient patient)
@@ -44,6 +46,11 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
                 });
 
             return therapies;
+        }
+
+        public void SavePrescription(Period period)
+        {
+            _periodService.UpdatePeriodWithoutValidation(period);
         }
     }
 }

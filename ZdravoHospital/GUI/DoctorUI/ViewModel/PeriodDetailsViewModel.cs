@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 
 namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 {
@@ -10,7 +10,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
     {
         private NavigationService _navigationService;
         private Period _period;
-        private PeriodController _periodController;
+        private PeriodService _periodService;
         private bool _isEditModeOn;
 
         private string _messageText;
@@ -148,7 +148,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_YesChangeCommand()
         {
             _period.Details = PeriodDetailsText;
-            _periodController.UpdatePeriodWithoutValidation(_period);
+            _periodService.UpdatePeriodWithoutValidation(_period);
             ChangesDialogVisibility = Visibility.Collapsed;
             MessageText = "Anamnesis saved successfully.";
             MessagePopUpVisibility = Visibility.Visible;
@@ -188,7 +188,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         {
             _navigationService = navigationService;
             _period = period;
-            _periodController = new PeriodController();
+            _periodService = new PeriodService();
 
             InitializeCommands();
 

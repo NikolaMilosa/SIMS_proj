@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 
 namespace ZdravoHospital.GUI.DoctorUI.ViewModel
@@ -16,8 +16,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private Referral _referral;
         private Period _parentPeriod;
         private Period _childPeriod;
-        private ReferralController _referralController;
-        private PeriodController _periodController;
+        private ReferralService _referralService;
+        private PeriodService _periodService;
 
         private string _messageText;
         public string MessageText
@@ -197,17 +197,17 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             if (!updating)
             {
-                _referralController.CreateNewReferral(_referral);
+                _referralService.CreateNewReferral(_referral);
                 MessageText = "Referral saved successfully.";
             }
             else
             {
-                _referralController.UpdateReferral(_referral);
+                _referralService.UpdateReferral(_referral);
                 MessageText = "Referral updated successfully.";
             }
 
             _parentPeriod.ChildReferralId = _referral.ReferralId;
-            _periodController.UpdatePeriodWithoutValidation(_parentPeriod);
+            _periodService.UpdatePeriodWithoutValidation(_parentPeriod);
 
             MessagePopUpVisibility = Visibility.Visible;
             UseStackPanelVisibility = Visibility.Visible;
@@ -316,19 +316,19 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public ReferralViewModel(NavigationService navigationService, Doctor referringDoctor, Patient patient, Period parentPeriod)
         {
             _navigationService = navigationService;
-            _referralController = new ReferralController();
-            _periodController = new PeriodController();
-            _referral = _referralController.GetReferral(parentPeriod.ChildReferralId);
+            _referralService = new ReferralService();
+            _periodService = new PeriodService();
+            _referral = _referralService.GetReferral(parentPeriod.ChildReferralId);
             ReferringDoctor = referringDoctor;
             Patient = patient;
             _parentPeriod = parentPeriod;
-            Doctors = new ObservableCollection<Doctor>(new DoctorController().GetOtherDoctors(parentPeriod.DoctorUsername));
+            Doctors = new ObservableCollection<Doctor>(new DoctorService().GetOtherDoctors(parentPeriod.DoctorUsername));
 
             InitializeCommands();
 
             if (_referral != null)
             {
-                _childPeriod = _periodController.GetPeriod(_referral.PeriodId);
+                _childPeriod = _periodService.GetPeriod(_referral.PeriodId);
                 ReferredDoctor = Doctors.ToList().Find(d => d.Username.Equals(_referral.ReferredDoctorUsername));
                 NoteText = _referral.Note;
                 DaysToUseText = _referral.DaysToUse.ToString();
@@ -377,9 +377,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             _navigationService = navigationService;
             _referral = referral;
             Patient = patient;
-            DoctorController doctorController = new DoctorController();
-            ReferringDoctor = doctorController.GetDoctor(_referral.ReferringDoctorUsername);
-            Doctors = new ObservableCollection<Doctor>(doctorController.GetOtherDoctors(_referral.ReferringDoctorUsername));
+            DoctorService doctorService = new DoctorService();
+            ReferringDoctor = doctorService.GetDoctor(_referral.ReferringDoctorUsername);
+            Doctors = new ObservableCollection<Doctor>(doctorService.GetOtherDoctors(_referral.ReferringDoctorUsername));
 
             InitializeCommands();
 

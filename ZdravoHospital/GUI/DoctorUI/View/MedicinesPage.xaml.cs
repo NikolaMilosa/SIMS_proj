@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -15,7 +15,7 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class MedicinesPage : Page, INotifyPropertyChanged
     {
-        private MedicineController _medicineController;
+        private MedicineService _medicineService;
         private List<Medicine> medicines;
 
         public Thickness ListViewPadding { get; set; }
@@ -27,8 +27,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             this.DataContext = this;
 
-            _medicineController = new MedicineController();
-            medicines = _medicineController.GetMedicines();
+            _medicineService = new MedicineService();
+            medicines = _medicineService.GetMedicines();
             MedicinesListView.ItemsSource = medicines;
             MedicinesListView.Items.Filter = Filter;
 

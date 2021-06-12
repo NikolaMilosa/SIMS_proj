@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 
@@ -15,7 +15,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
     {
         private NavigationService _navigationService;
         private Period _period;
-        private TreatmentController _treatmentController;
+        private TreatmentService _treatmentService;
 
         public DateTime StartDate { get; set; }
         public string DurationText { get; set; }
@@ -132,7 +132,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             try
             {
-                _treatmentController.SaveTreatment(_period);
+                _treatmentService.SaveTreatment(_period);
                 MessageText = "Treatment saved successfully.";
                 ConfirmButtonVisibility = Visibility.Collapsed;
                 EditButtonVisibility = Visibility.Visible;
@@ -166,8 +166,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         {
             _navigationService = navigationService;
             _period = period;
-            _treatmentController = new TreatmentController();
-            Rooms = new ObservableCollection<Room>(new RoomController().GetBedrooms());
+            _treatmentService = new TreatmentService();
+            Rooms = new ObservableCollection<Room>(new RoomService().GetBedrooms());
 
             InitializeCommands();
 
