@@ -37,18 +37,30 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                 if (Wrapper.PassedFirstRoom.Id == Wrapper.PassedSecondRoom.Id)
                 {
                     /* Checking for renovation */
-                    var answer = CheckIntersectPeriods(timeOfDay,Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
+                    var answer = CheckIntersectPeriods(timeOfDay,Wrapper.PassedFirstRoom);
+                    if (!answer.Equals(string.Empty))
+                        return new ValidationResult(false, "There is a medical intervention planned at that time... " + answer);
+                    
+                    answer = CheckIntersectRenovations(timeOfDay, Wrapper.PassedFirstRoom);
+                    if (!answer.Equals(string.Empty))
+                        return new ValidationResult(false, "There is a renovation already planned at that time... " + answer);
+
+                    answer = CheckIntersectPeriods(timeOfDay, Wrapper.PassedMergingRoom);
                     if (!answer.Equals(string.Empty))
                         return new ValidationResult(false, "There is a medical intervention planned at that time... " + answer);
 
-                    answer = CheckIntersectRenovations(timeOfDay, Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
+                    answer = CheckIntersectRenovations(timeOfDay, Wrapper.PassedMergingRoom);
                     if (!answer.Equals(string.Empty))
                         return new ValidationResult(false, "There is a renovation already planned at that time... " + answer);
                 }
                 else
                 {
                     /* Checking for inventory transport */
-                    var answer = CheckIntersectPeriods(timeOfDay, Wrapper.PassedFirstRoom, Wrapper.PassedSecondRoom);
+                    var answer = CheckIntersectPeriods(timeOfDay, Wrapper.PassedFirstRoom);
+                    if (!answer.Equals(string.Empty))
+                        return new ValidationResult(false, "There is a medical intervention planned at that time..." + answer);
+
+                    answer = CheckIntersectPeriods(timeOfDay, Wrapper.PassedSecondRoom);
                     if (!answer.Equals(string.Empty))
                         return new ValidationResult(false, "There is a medical intervention planned at that time..." + answer);
                 }
@@ -62,8 +74,10 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
             return new ValidationResult(true, null);
         }
 
-        public string CheckIntersectPeriods(DateTime passedTime, Room firstRoom, Room secondRoom)
+        public string CheckIntersectPeriods(DateTime passedTime, Room firstRoom)
         {
+            if (firstRoom.Id == 0) return string.Empty;
+
             var periodRepository = new PeriodRepository();
 
             foreach (var p in periodRepository.GetValues())
@@ -78,22 +92,29 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                     sb.Append(" at ").Append(endTime.Hour).Append(":").Append(endTime.Minute);
                     return sb.ToString();
                 }
-                else if (passedTime >= p.StartTime && passedTime <= endTime && secondRoom.Id == p.RoomId)
+
+                if (p.Treatment != null && p.Treatment.RoomId == firstRoom.Id)
                 {
-                    /* StartTime is in the middle of a period */
-                    var sb = new StringBuilder();
-                    sb.Append("Room with id '").Append(secondRoom.Id).Append("' is busy and will be available from ");
-                    sb.Append(endTime.Day).Append("/").Append(endTime.Month).Append("/").Append(endTime.Year);
-                    sb.Append(" at ").Append(endTime.Hour).Append(":").Append(endTime.Minute);
-                    return sb.ToString();
+                    endTime = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
+                    if (passedTime >= p.Treatment.StartDate && passedTime <= endTime && firstRoom.Id == p.Treatment.RoomId)
+                    {
+                        /* StartTime is in the middle of a period */
+                        var sb = new StringBuilder();
+                        sb.Append("Room with id '").Append(firstRoom.Id).Append("' is busy and will be available from ");
+                        sb.Append(endTime.Day).Append("/").Append(endTime.Month).Append("/").Append(endTime.Year);
+                        sb.Append(" at ").Append(endTime.Hour).Append(":").Append(endTime.Minute);
+                        return sb.ToString();
+                    }
                 }
             }
 
             return string.Empty;
         }
 
-        public string CheckIntersectRenovations(DateTime passedTime, Room firstRoom, Room secondRoom)
+        public string CheckIntersectRenovations(DateTime passedTime, Room firstRoom)
         {
+            if (firstRoom.Id == 0) return string.Empty;
+
             var roomScheduleRepository = new RoomScheduleRepository();
             foreach (var r in roomScheduleRepository.GetValues())
             {
@@ -109,14 +130,11 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
                     sb.Append(" at ").Append(endTime.Hour).Append(":").Append(endTime.Minute);
                     return sb.ToString();
                 }
-                else if (passedTime >= r.StartTime && passedTime <= r.EndTime && r.RoomId == secondRoom.Id)
+
+                if (r.RoomId == firstRoom.Id && r.WillBeMerged && passedTime > r.StartTime)
                 {
-                    /* Start time is in the middle of another renovation */
-                    var endTime = r.EndTime;
                     var sb = new StringBuilder();
-                    sb.Append("Room with id '").Append(secondRoom.Id).Append("' is busy and will be available from ");
-                    sb.Append(endTime.Day).Append("/").Append(endTime.Month).Append("/").Append(endTime.Year);
-                    sb.Append(" at ").Append(endTime.Hour).Append(":").Append(endTime.Minute);
+                    sb.Append("Room with id '").Append(firstRoom.Id).Append("' will be merged with another and won't exist then...");
                     return sb.ToString();
                 }
             }
@@ -149,6 +167,14 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
         {
             get => (Room)GetValue(PassedSecondRoomProperty);
             set => SetValue(PassedSecondRoomProperty, value);
+        }
+
+        public static readonly DependencyProperty PassedMergingRoomProperty = DependencyProperty.Register("PassedMergingRoom", typeof(Room), typeof(PassedTimeWrapper), null);
+
+        public Room PassedMergingRoom
+        {
+            get => (Room)GetValue(PassedMergingRoomProperty);
+            set => SetValue(PassedMergingRoomProperty, value);
         }
     }
 

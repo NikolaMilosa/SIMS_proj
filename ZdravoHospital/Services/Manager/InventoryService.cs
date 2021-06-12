@@ -59,11 +59,7 @@ namespace ZdravoHospital.Services.Manager
 
             _roomInventoryRepository.DeleteByInventoryId(inventory.Id);
             _inventoryRepository.DeleteById(inventory.Id);
-
-            var notification = new MyMessageBoxViewModel(
-                $"Inventory with id {inventory.Id} has successfully been deleted! Main grid will update after " +
-                $"this dialog is closed.");
-
+            
             OnInventoryChanged();
 
             return true;
@@ -92,11 +88,7 @@ namespace ZdravoHospital.Services.Manager
             /* Found a room to put some inventory in */
             _inventoryRepository.Create(newInventory);
             _roomInventoryRepository.Create(new RoomInventory(newInventory.Id, room.Id, newInventory.Quantity));
-
-            var notification = new MyMessageBoxViewModel(
-                $"Inventory with id {newInventory.Id} has successfully been added! Main data grid will" +
-                $" update after this dialog is closed.");
-
+            
             OnInventoryChanged();
 
             return true;
@@ -116,10 +108,6 @@ namespace ZdravoHospital.Services.Manager
             newInventory.Id = newInventory.Id.Trim().ToUpper();
 
             _inventoryRepository.Update(newInventory);
-
-            var notification = new MyMessageBoxViewModel(
-                $"Inventory with id {newInventory.Id} has successfully been updated! Main data grid " +
-                $"will update after this dialog is closed.");
 
             OnInventoryChanged();
         }
@@ -168,10 +156,6 @@ namespace ZdravoHospital.Services.Manager
             {
                 _inventoryRepository.Update(inventory);
             }
-
-            var notification = new MyMessageBoxViewModel(
-                $"Inventory with id {inventory.Id} has had its amount successfully changed! Main data" +
-                $" grid will update after this dialog is closed.");
 
             OnInventoryChanged();
         }

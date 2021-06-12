@@ -21,7 +21,8 @@ namespace ZdravoHospital.GUI.ManagerUI.Converters
                 return "Type: OPERATION   ";
             if ((ReservationType)value == ReservationType.TRANSFER)
                 return "Type: TRANSFER    ";
-
+            if ((ReservationType) value == ReservationType.TREATMENT)
+                return "Type: TREATMENT   ";
             return "";
         }
 

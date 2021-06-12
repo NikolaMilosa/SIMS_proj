@@ -70,9 +70,6 @@ namespace ZdravoHospital.Services.Manager
 
             _roomRepository.DeleteById(room.Id);
 
-            var notification = new MyMessageBoxViewModel($"Room with id {room.Id} has successfully been deleted! The main grid will update after " +
-                                                         $"closing this notification.");
-
             OnRoomChanged();
             return true;
         }
@@ -83,10 +80,6 @@ namespace ZdravoHospital.Services.Manager
             room.Name = room.Name.Trim();
 
             _roomRepository.Create(room);
-            
-            var notification = new MyMessageBoxViewModel(
-                $"Room with id {room.Id} has successfully been added to the system! After closing this dialog" +
-                $" the main grid will update!");
 
             OnRoomChanged();
         }
@@ -97,10 +90,7 @@ namespace ZdravoHospital.Services.Manager
             room.Name = room.Name.Trim();
 
             _roomRepository.Update(room);
-            
-            var notification = new MyMessageBoxViewModel(
-                $"Room with id {room.Id} has successfully been updated! After closing this dialog " +
-                $"the main grid will update!");
+
             OnRoomChanged();
         }
 
