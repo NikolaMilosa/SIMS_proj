@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 
@@ -15,7 +15,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
     {
         private NavigationService _navigationService;
         private Referral _referral;
-        private PeriodController _periodController;
+        private PeriodService _periodService;
         private bool _periodCreated;
 
         public bool DoctorPatientEditable { get; set; }
@@ -93,7 +93,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
             try
             {
-                _periodController.CreateNewPeriod(period, _referral);
+                _periodService.CreateNewPeriod(period, _referral);
                 MessageText = "Operation created successfully.";
                 MessagePopUpVisibility = Visibility.Visible;
                 _periodCreated = true;
@@ -158,11 +158,11 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             InitializeCommands();
 
             _navigationService = navigationService;
-            _periodController = new PeriodController();
+            _periodService = new PeriodService();
 
-            Doctors = new ObservableCollection<Doctor>(new DoctorController().GetSpecialists());
-            Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
-            Rooms = new ObservableCollection<Room>(new RoomController().GetOperationRooms());
+            Doctors = new ObservableCollection<Doctor>(new DoctorService().GetSpecialists());
+            Patients = new ObservableCollection<Patient>(new PatientService().GetPatients());
+            Rooms = new ObservableCollection<Room>(new RoomService().GetOperationRooms());
 
             Doctor = Doctors.ToList().Find(d => d.Username.Equals(doctor.Username));
             StartDate = startTime.Date;
@@ -178,12 +178,12 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             InitializeCommands();
 
             _navigationService = navigationService;
-            _periodController = new PeriodController();
+            _periodService = new PeriodService();
             _referral = referral;
 
-            Doctors = new ObservableCollection<Doctor>(new DoctorController().GetSpecialists());
-            Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
-            Rooms = new ObservableCollection<Room>(new RoomController().GetOperationRooms());
+            Doctors = new ObservableCollection<Doctor>(new DoctorService().GetSpecialists());
+            Patients = new ObservableCollection<Patient>(new PatientService().GetPatients());
+            Rooms = new ObservableCollection<Room>(new RoomService().GetOperationRooms());
 
             Doctor = Doctors.ToList().Find(d => d.Username.Equals(referral.ReferredDoctorUsername));
             Patient = Patients.ToList().Find(p => p.Username.Equals(patient.Username));

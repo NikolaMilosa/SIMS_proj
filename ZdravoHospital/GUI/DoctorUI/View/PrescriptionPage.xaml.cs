@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using ZdravoHospital.GUI.DoctorUI.Commands;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 
@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         public Thickness ListViewMargin { get; set; }
         public double ListItemWidth { get; set; }
 
-        private PrescriptionController _prescriptionController;
+        private PrescriptionService _prescriptionService;
         private Period _period;
         private Patient _patient;
         private Therapy _therapy;
@@ -80,21 +80,21 @@ namespace ZdravoHospital.GUI.DoctorUI
             DataContext = this;
 
             // fields initialization
-            _prescriptionController = new PrescriptionController();
+            _prescriptionService = new PrescriptionService();
             _period = period;
 
             if (_period.Prescription == null)
                 _period.Prescription = new Prescription();
 
-            _patient = new PatientController().GetPatient(_period.PatientUsername);
+            _patient = new PatientService().GetPatient(_period.PatientUsername);
             _editingTherapy = false;
 
             // TherapiesListView setup
-            Therapies = _prescriptionController.CollectTherapies(_period.Prescription);
+            Therapies = _prescriptionService.CollectTherapies(_period.Prescription);
             TherapiesListView.ItemsSource = Therapies;
             
             // MedicinesComboBox setup
-            MedicinesComboBox.ItemsSource = new MedicineController().GetApprovedMedicines();
+            MedicinesComboBox.ItemsSource = new MedicineService().GetApprovedMedicines();
 
             InitializeCommands();
             MessagePopUpVisibility = Visibility.Collapsed;
@@ -143,8 +143,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            _prescriptionController.GenerateTherapies(_period.Prescription, Therapies);
-            _prescriptionController.SavePrescription(_period);
+            _prescriptionService.GenerateTherapies(_period.Prescription, Therapies);
+            _prescriptionService.SavePrescription(_period);
             MessageText = "Prescription saved successfully.";
             MessagePopUpVisibility = Visibility.Visible;
         }
@@ -250,7 +250,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             try
             {
-                _prescriptionController.CheckAllergens(medicine, _patient);
+                _prescriptionService.CheckAllergens(medicine, _patient);
                 return;
             }
             catch (MedicineAllergenException exception)

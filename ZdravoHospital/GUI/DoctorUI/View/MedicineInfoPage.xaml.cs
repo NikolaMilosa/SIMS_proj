@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -15,9 +15,9 @@ namespace ZdravoHospital.GUI.DoctorUI
     /// </summary>
     public partial class MedicineInfoPage : Page, INotifyPropertyChanged
     {
-        private MedicineController _medicineController;
-        private MedicineRecensionController _medicineRecensionController;
-        private IngredientController _ingredientController;
+        private MedicineService _medicineService;
+        private MedicineRecensionService _medicineRecensionService;
+        private IngredientService _ingredientService;
         private TextBlock relevantTextBlock;
         public Medicine Medicine { get; set; }
         public double NameSupplierWidth { get; set; }
@@ -33,9 +33,9 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             DataContext = this;
             Medicine = medicine;
-            _medicineController = new MedicineController();
-            _medicineRecensionController = new MedicineRecensionController();
-            _ingredientController = new IngredientController();
+            _medicineService = new MedicineService();
+            _medicineRecensionService = new MedicineRecensionService();
+            _ingredientService = new IngredientService();
 
             if (NameTextBlock.Width > StatusTextBlock.Width)
                 relevantTextBlock = NameTextBlock;
@@ -47,7 +47,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             else if (medicine.Status == MedicineStatus.APPROVED)
                 ApproveButton.IsEnabled = false;
 
-            AvailableIngredients = _medicineController.GetAvailableIngredients(medicine);
+            AvailableIngredients = _medicineService.GetAvailableIngredients(medicine);
             AvailableIngredientsListBox.ItemsSource = AvailableIngredients;
 
             Ingredients = new ObservableCollection<Ingredient>();
@@ -55,7 +55,7 @@ namespace ZdravoHospital.GUI.DoctorUI
             foreach (Ingredient ingredient in medicine.Ingredients)
                 Ingredients.Add(ingredient);
 
-            AvailableReplacements = _medicineController.GetAvailableReplacements(medicine);
+            AvailableReplacements = _medicineService.GetAvailableReplacements(medicine);
             AvailableReplacementsListBox.ItemsSource = AvailableReplacements;
 
             Replacements = new ObservableCollection<string>();
@@ -109,8 +109,8 @@ namespace ZdravoHospital.GUI.DoctorUI
             ApproveButton.IsEnabled = false;
             RejectButton.IsEnabled = true;
 
-            _medicineController.UpdateMedicine(Medicine);
-            _medicineRecensionController.ApproveMedicine(Medicine.MedicineName);
+            _medicineService.UpdateMedicine(Medicine);
+            _medicineRecensionService.ApproveMedicine(Medicine.MedicineName);
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -147,8 +147,8 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             if (!Medicine.MedicineName.Equals(MedicineNameTextBox.Text))
             {
-                _medicineController.RenameMedicine(Medicine.MedicineName, MedicineNameTextBox.Text);
-                _medicineRecensionController.RenameMedicine(Medicine.MedicineName, MedicineNameTextBox.Text);
+                _medicineService.RenameMedicine(Medicine.MedicineName, MedicineNameTextBox.Text);
+                _medicineRecensionService.RenameMedicine(Medicine.MedicineName, MedicineNameTextBox.Text);
             }
 
             Medicine.MedicineName = MedicineNameTextBox.Text;
@@ -157,7 +157,7 @@ namespace ZdravoHospital.GUI.DoctorUI
 
             OnPropertyChanged("Medicine");
 
-            _medicineController.UpdateMedicine(Medicine);
+            _medicineService.UpdateMedicine(Medicine);
         }
 
         private void RemoveIngredientsButton_Click(object sender, RoutedEventArgs e)
@@ -219,10 +219,10 @@ namespace ZdravoHospital.GUI.DoctorUI
             if (availableIngredient != null)
                 AvailableIngredients.Remove(availableIngredient);
 
-            if (_ingredientController.GetIngredient(ingredientName) != null)
+            if (_ingredientService.GetIngredient(ingredientName) != null)
                 return;
 
-            _ingredientController.CreateNewIngredient(new Ingredient(ingredientName));
+            _ingredientService.CreateNewIngredient(new Ingredient(ingredientName));
         }
 
         private void CancelIngredientsPopUpButton_Click(object sender, RoutedEventArgs e)
@@ -286,8 +286,8 @@ namespace ZdravoHospital.GUI.DoctorUI
             ApproveButton.IsEnabled = true;
             RejectButton.IsEnabled = false;
 
-            _medicineController.UpdateMedicine(Medicine);
-            _medicineRecensionController.RejectMedicine(Medicine.MedicineName, RecensionNoteTextBox.Text);
+            _medicineService.UpdateMedicine(Medicine);
+            _medicineRecensionService.RejectMedicine(Medicine.MedicineName, RecensionNoteTextBox.Text);
         }
     }
 }

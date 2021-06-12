@@ -2,7 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ZdravoHospital.GUI.DoctorUI.Controllers;
+using ZdravoHospital.GUI.DoctorUI.Services;
 using ZdravoHospital.GUI.DoctorUI.Validations;
 using ZdravoHospital.GUI.DoctorUI.Commands;
 using System.Windows;
@@ -15,7 +15,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
     {
         private NavigationService _navigationService;
         private Referral _referral;
-        private PeriodController _periodController;
+        private PeriodService _periodService;
         private bool _periodCreated;
 
         public bool DoctorPatientEditable { get; set; }
@@ -105,7 +105,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             
             try
             {
-                _periodController.CreateNewPeriod(period, _referral);
+                _periodService.CreateNewPeriod(period, _referral);
                 MessageText = "Appointment created successfully.";
                 MessagePopUpVisibility = Visibility.Visible;
                 _periodCreated = true;
@@ -170,11 +170,11 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             InitializeCommands();
 
             _navigationService = navigationService;
-            _periodController = new PeriodController();
+            _periodService = new PeriodService();
 
-            Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
-            Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
-            Rooms = new ObservableCollection<Room>(new RoomController().GetAppointmentRooms());
+            Doctors = new ObservableCollection<Doctor>(new DoctorService().GetDoctors());
+            Patients = new ObservableCollection<Patient>(new PatientService().GetPatients());
+            Rooms = new ObservableCollection<Room>(new RoomService().GetAppointmentRooms());
 
             Doctor = Doctors.ToList().Find(d => d.Username.Equals(doctor.Username));
             StartDate = startTime.Date;
@@ -190,12 +190,12 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             InitializeCommands();
 
             _navigationService = navigationService;
-            _periodController = new PeriodController();
+            _periodService = new PeriodService();
             _referral = referral;
 
-            Doctors = new ObservableCollection<Doctor>(new DoctorController().GetDoctors());
-            Patients = new ObservableCollection<Patient>(new PatientController().GetPatients());
-            Rooms = new ObservableCollection<Room>(new RoomController().GetAppointmentRooms());
+            Doctors = new ObservableCollection<Doctor>(new DoctorService().GetDoctors());
+            Patients = new ObservableCollection<Patient>(new PatientService().GetPatients());
+            Rooms = new ObservableCollection<Room>(new RoomService().GetAppointmentRooms());
 
             Doctor = Doctors.ToList().Find(d => d.Username.Equals(referral.ReferredDoctorUsername));
             Patient = Patients.ToList().Find(p => p.Username.Equals(patient.Username));
