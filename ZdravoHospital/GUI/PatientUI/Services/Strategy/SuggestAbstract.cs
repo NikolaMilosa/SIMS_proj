@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
 
-namespace ZdravoHospital.GUI.PatientUI.Strategy
+namespace ZdravoHospital.GUI.PatientUI.Services.Strategy
 {
     public abstract class SuggestAbstract
     {

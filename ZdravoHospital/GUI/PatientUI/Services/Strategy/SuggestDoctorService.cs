@@ -1,14 +1,13 @@
-﻿using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+using Model;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.PatientUI.ViewModels;
 
-namespace ZdravoHospital.GUI.PatientUI.Strategy
+namespace ZdravoHospital.GUI.PatientUI.Services.Strategy
 {
     public class SuggestDoctorService : SuggestAbstract,ISuggestStrategy
     {

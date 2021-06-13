@@ -9,7 +9,7 @@ using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
-using ZdravoHospital.GUI.PatientUI.Strategy;
+using ZdravoHospital.GUI.PatientUI.Services.Strategy;
 using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
@@ -160,7 +160,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (DoctorPanelVisibility == Visibility.Visible)
                 suggestService.Inject(new SuggestDateService(PeriodDTOs, SelectedDoctorDTO.Username));
             else
-                suggestService.Inject(new Strategy.SuggestDoctorService(PeriodDTOs, SelectedDate, SelectedTimeSpan));
+                suggestService.Inject(new SuggestDoctorService(PeriodDTOs, SelectedDate, SelectedTimeSpan));
             
 
             suggestService.Suggest();

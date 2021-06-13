@@ -12,6 +12,7 @@ using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.ViewModels;
+using ZdravoHospital.GUI.PatientUI.Services;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -106,7 +107,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
                     periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
                 }
             }
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            DoctorService doctorFunctions = new DoctorService();
             if(!IsTimeInDoctorsShift(period))
             {
                 periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
@@ -115,7 +116,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
 
         public bool IsTimeInDoctorsShift(Period period)
         {
-            Doctor doctor = new DoctorFunctions().GetDoctor(period.DoctorUsername);
+            Doctor doctor = new DoctorService().GetDoctor(period.DoctorUsername);
 
             IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
             WorkTimeService timeService = new WorkTimeService(doctorRepository);
