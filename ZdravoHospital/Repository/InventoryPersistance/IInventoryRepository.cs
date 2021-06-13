@@ -5,5 +5,6 @@ namespace Repository.InventoryPersistance
 {
    public interface IInventoryRepository : IRepository<string,Inventory>
    {
+        public Inventory GetByName(string name);
    }
 }

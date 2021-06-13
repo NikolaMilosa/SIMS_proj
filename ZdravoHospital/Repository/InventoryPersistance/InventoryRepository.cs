@@ -81,5 +81,19 @@ namespace Repository.InventoryPersistance
             Save(values);
             GetMutex().ReleaseMutex();
         }
+
+        public Inventory GetByName(string name)
+        {
+            var values = GetValues();
+            foreach (var val in values)
+            {
+                if (val.Name.Equals(name))
+                {
+                    return val;
+                }
+            }
+
+            return null;
+        }
     }
 }
