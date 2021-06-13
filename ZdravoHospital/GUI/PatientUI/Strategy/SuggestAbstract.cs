@@ -8,7 +8,7 @@ using ZdravoHospital.GUI.PatientUI.Logics;
 
 namespace ZdravoHospital.GUI.PatientUI.Strategy
 {
-    public class Suggest
+    public abstract class SuggestAbstract
     {
         public ObservableCollection<PeriodDTO> SuggestedPeriods { get; private set; }
         public InjectService Injection { get; private set; }
@@ -16,7 +16,7 @@ namespace ZdravoHospital.GUI.PatientUI.Strategy
         public PeriodService PeriodService { get; set; }
         public RoomSheduleService RoomScheduleService { get; private set; }
 
-        public Suggest(ObservableCollection<PeriodDTO> suggestedPeriods)
+        public SuggestAbstract(ObservableCollection<PeriodDTO> suggestedPeriods)
         {
             SuggestedPeriods = suggestedPeriods;
             Injection = new InjectService();

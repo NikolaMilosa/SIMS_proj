@@ -251,6 +251,7 @@
 
   <ItemGroup>
     <Folder Include="EXPORTPDF\Secretary\" />
+    <Folder Include="GUI\PatientUI\Services\Strategy\" />
   </ItemGroup>
 
   <ItemGroup>
