@@ -11,23 +11,23 @@ using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class SuggestTimeFunctions
+    public class SuggestTimeService
     {
         public ObservableCollection<PeriodDTO> SuggestedPeriods { get; private set; }
         public DoctorDTO Doctor { get; private set; }
-        public InjectFunctions Injection { get; private set; }
-        public PeriodFunctions PeriodFunctions { get; private set; }
+        public InjectService Injection { get; private set; }
+        public PeriodService PeriodFunctions { get; private set; }
         public PeriodConverter PeriodConverter { get; private set; }
-        public RoomSheduleFunctions RoomFunctions { get; private set; }
+        public RoomSheduleService RoomFunctions { get; private set; }
 
-        public SuggestTimeFunctions(ObservableCollection<PeriodDTO> suggestedPeriods, DoctorDTO doctor)
+        public SuggestTimeService(ObservableCollection<PeriodDTO> suggestedPeriods, DoctorDTO doctor)
         {
             SuggestedPeriods = suggestedPeriods;
             Doctor = doctor;
-            Injection = new InjectFunctions();
-            PeriodFunctions = new PeriodFunctions();
+            Injection = new InjectService();
+            PeriodFunctions = new PeriodService();
             PeriodConverter = new PeriodConverter();
-            RoomFunctions = new RoomSheduleFunctions();
+            RoomFunctions = new RoomSheduleService();
         }
 
         public void GetSuggestedPeriods()

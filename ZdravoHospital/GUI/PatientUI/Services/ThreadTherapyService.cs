@@ -8,13 +8,13 @@ using ZdravoHospital.GUI.PatientUI.Validations;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public static class ThreadTherapyFunctions
+    public static class ThreadTherapyService
     {
         public static void TherapyNotification(object patientUsername)
         {
             string username = (string)patientUsername;
 
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             while (true)
             {
                 foreach (var period in periodFunctions.GetAllPeriods().Where(period => period.PatientUsername.Equals(username) && period.Prescription != null))
@@ -22,7 +22,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                     GeneratePrescriptionTimes(period.Prescription, username);
                 }
 
-                ThreadFunctions.SleepForGivenMinutes(5);
+                ThreadService.SleepForGivenMinutes(5);
             }
         }
 
@@ -36,11 +36,11 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
         private static List<DateTime> GenerateTimes(Therapy therapy,string username)
         {
             List<DateTime> notifications = GenerateNotificationsForEachDay(therapy);
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             foreach (DateTime dateTime in notifications)
                 if (periodFunctions.IsPeriodWithinGivenMinutes(dateTime, 5))
                 {
-                    ViewFunctions viewFunctions = new ViewFunctions();
+                    ViewService viewFunctions = new ViewService();
                     viewFunctions.ShowOkDialog("Therapy", "You have prescripted " + therapy.Medicine.MedicineName + " at " + dateTime.ToString("HH:mm"));
                 }
             return notifications;

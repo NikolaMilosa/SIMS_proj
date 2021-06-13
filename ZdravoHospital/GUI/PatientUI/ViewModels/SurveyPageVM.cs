@@ -24,7 +24,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             }
         }
         public PatientWindowVM PatientWindowVM { get; private set; }
-        public ViewFunctions ViewFunctions { get; private set; }
+        public ViewService ViewFunctions { get; private set; }
         
         #endregion
 
@@ -76,7 +76,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             Survey.CreationDate = DateTime.Now;
             Survey.PatientUsername = PatientWindowVM.PatientUsername;
-            SurveyFunctions surveyFunctions = new SurveyFunctions();
+            SurveyService surveyFunctions = new SurveyService();
             surveyFunctions.SerializeSurvey(Survey);
         }
 
@@ -84,7 +84,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             Survey = new Survey();
             PatientWindowVM = patientWindowVm;
-            ViewFunctions = new ViewFunctions();
+            ViewFunctions = new ViewService();
         }
 
 

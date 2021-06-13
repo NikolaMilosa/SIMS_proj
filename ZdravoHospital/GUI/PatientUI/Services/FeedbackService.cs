@@ -6,11 +6,11 @@ using System.Text;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class FeedbackLogics
+    public class FeedbackService
     {
         private IFeedbackRepository _feedbackRepo;
 
-        public FeedbackLogics(IFeedbackRepository repository)
+        public FeedbackService(IFeedbackRepository repository)
         {
             _feedbackRepo = repository;
         }

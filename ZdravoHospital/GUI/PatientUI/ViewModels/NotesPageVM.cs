@@ -18,9 +18,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public Patient Patient { get; set; }
         public PatientNote PatientNote { get; set; }
 
-        public PatientFunctions PatientFunctions { get; private set; }
+        public PatientService PatientFunctions { get; private set; }
 
-        public ViewFunctions ViewFunctions { get; private set; }
+        public ViewService ViewFunctions { get; private set; }
 
 
         #endregion
@@ -89,10 +89,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void SetProperties()
         {
-            PatientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            PatientFunctions = new PatientService(PatientWindowVM.PatientUsername);
             Patient = PatientFunctions.LoadPatient();
             ObservableNotes = new ObservableCollection<PatientNote>(Patient.PatientNotes);
-            ViewFunctions = new ViewFunctions();
+            ViewFunctions = new ViewService();
         }
 
 

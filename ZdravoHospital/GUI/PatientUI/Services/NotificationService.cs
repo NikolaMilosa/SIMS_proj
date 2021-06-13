@@ -7,12 +7,12 @@ using Repository.PersonNotificationPersistance;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class NotificationFunctions
+    public class NotificationService
     {
         public NotificationRepository NotificationRepository { get; private set; }
         public PersonNotificationRepository PersonNotificationRepository { get; private set; }
 
-        public NotificationFunctions()
+        public NotificationService()
         {
             NotificationRepository = new NotificationRepository();
             PersonNotificationRepository = new PersonNotificationRepository();

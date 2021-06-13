@@ -13,16 +13,16 @@ using Period = Model.Period;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public  class SuggestDoctorFunctions
+    public  class SuggestDoctorService
     {
-        public PeriodFunctions PeriodFunctions { get; set; }
+        public PeriodService PeriodFunctions { get; set; }
         public Period FundamentalPeriod { get; private set; }
         public List<DoctorDTO> FreeDoctors { get; private set; }
-        public InjectFunctions Injection { get;private set; }
+        public InjectService Injection { get;private set; }
         public ObservableCollection<PeriodDTO> SuggestedPeriods { get; private set; }
 
 
-        public SuggestDoctorFunctions(DateTime date,TimeSpan time,ObservableCollection<PeriodDTO> suggestedPeriods)
+        public SuggestDoctorService(DateTime date,TimeSpan time,ObservableCollection<PeriodDTO> suggestedPeriods)
         {
             SetProperties();
             SuggestedPeriods = suggestedPeriods;
@@ -38,8 +38,8 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private void SetProperties()
         {
-            Injection = new InjectFunctions();
-            PeriodFunctions = new PeriodFunctions();
+            Injection = new InjectService();
+            PeriodFunctions = new PeriodService();
             FreeDoctors = new List<DoctorDTO>();
         }
 
@@ -69,13 +69,13 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
                 SuggestedPeriods.Add(GetPeriodDTO(doctor));
 
             if (SuggestedPeriods.Count != 0) return;
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Warning","No available doctors for the selected time!");
         }
 
         private void RemoveUnavailableDoctor(DoctorDTO doctor)
         {
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            DoctorService doctorFunctions = new DoctorService();
             List<Period> periods = PeriodFunctions.GetAllPeriods();
 
                 if (!doctorFunctions.IsTimeInDoctorsShift(FundamentalPeriod.StartTime, doctor.Username))//ukloni ukoliko doktor nije u smeni u datom vremenu
@@ -95,7 +95,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private void FillOutPeriod(DoctorDTO doctor)
         {
-            RoomSheduleFunctions roomFunctions = new RoomSheduleFunctions();
+            RoomSheduleService roomFunctions = new RoomSheduleService();
             FundamentalPeriod.DoctorUsername = doctor.Username;
             FundamentalPeriod.PeriodId = PeriodFunctions.GeneratePeriodId();
             FundamentalPeriod.RoomId = roomFunctions.GetFreeRoom(FundamentalPeriod);

@@ -6,16 +6,16 @@ using Repository.PatientPersistance;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class PatientFunctions
+    public class PatientService
     {
         private string username;
-        private ViewFunctions viewFunctions;
+        private ViewService viewFunctions;
         private PatientRepository patientRepository;
 
-        public PatientFunctions(string username)
+        public PatientService(string username)
         {
             this.username = username;
-            viewFunctions = new ViewFunctions();
+            viewFunctions = new ViewService();
             patientRepository = new PatientRepository();
         }
         public  Patient LoadPatient()

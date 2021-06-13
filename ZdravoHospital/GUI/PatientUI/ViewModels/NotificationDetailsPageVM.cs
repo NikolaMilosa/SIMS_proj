@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
     {
         #region Properties
         public NotificationDTO NotificationDTO { get; set; }
-        public NotificationFunctions NotificationFunctions { get; private set; }
+        public NotificationService NotificationFunctions { get; private set; }
         #endregion
 
         #region Constructor
@@ -25,7 +25,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public NotificationDetailsPageVM(NotificationDTO notificationDto)
         {
             NotificationDTO = notificationDto;
-            NotificationFunctions = new NotificationFunctions();
+            NotificationFunctions = new NotificationService();
             SerializeReadNotification();
             BackCommand = new RelayCommand(BackExecute);
         }

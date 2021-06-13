@@ -87,7 +87,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void AddNoteToPatient()
         {
-            PatientFunctions patientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            PatientService patientFunctions = new PatientService(PatientWindowVM.PatientUsername);
             Patient patient = patientFunctions.LoadPatient();
             patient.PatientNotes.Add(PatientNote);
             patientFunctions.SerializePatient(patient);

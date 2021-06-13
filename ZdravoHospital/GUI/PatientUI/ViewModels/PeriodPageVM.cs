@@ -21,7 +21,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public ObservableCollection<PeriodDTO> PeriodDTOs { get; private set; }
         public PeriodDTO SelectedPeriodDTO { get; set; }
-        public PeriodFunctions PeriodFunctions { get; private set; }
+        public PeriodService PeriodFunctions { get; private set; }
         public PeriodConverter PeriodConventer { get; private set; }
         
 
@@ -29,9 +29,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         #region Fields
 
-        private ViewFunctions viewFunctions;
+        private ViewService viewFunctions;
 
-        private PatientFunctions patientFunctions;
+        private PatientService patientFunctions;
         #endregion
 
         #region Constructors
@@ -88,8 +88,8 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SetFields(string username)
         {
-            patientFunctions = new PatientFunctions(username);
-            viewFunctions = new ViewFunctions();
+            patientFunctions = new PatientService(username);
+            viewFunctions = new ViewService();
             
         }
 
@@ -97,9 +97,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             if (!patientFunctions.ActionTaken())
                 return;
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Remove appointment", "Appointment succesfully removed!");
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             periodFunctions.RemovePeriodById(SelectedPeriodDTO.PeriodId);
             PeriodDTOs.Remove(SelectedPeriodDTO);
         }
@@ -121,7 +121,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SetProperties(string username)
         {
-            PeriodFunctions = new PeriodFunctions();
+            PeriodFunctions = new PeriodService();
             PeriodConventer = new PeriodConverter();
             PeriodDTOs = new ObservableCollection<PeriodDTO>();
             FillList(username);

@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public ScheduleAppointmentCollection Periods { get; set; }
 
-        public PeriodFunctions PeriodFunctions { get; private set; }
+        public PeriodService PeriodFunctions { get; private set; }
         #endregion
 
         #region Constructors
@@ -44,7 +44,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             SfSchedule scheduler = (SfSchedule)parameter;
             int periodID = Int32.Parse(scheduler.SelectedAppointment.Notes);
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowPeriodDialog(periodID);
         }
 
@@ -60,7 +60,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void SetProperties()
         {
             Periods = new ScheduleAppointmentCollection();
-            PeriodFunctions = new PeriodFunctions();
+            PeriodFunctions = new PeriodService();
             FillCollection();
 
         }

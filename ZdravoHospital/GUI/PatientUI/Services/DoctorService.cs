@@ -9,11 +9,11 @@ using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class DoctorFunctions
+    public class DoctorService
     {
         public DoctorRepository DoctorRepository { get; private set; }
 
-        public DoctorFunctions()
+        public DoctorService()
         {
             DoctorRepository = new DoctorRepository();
         }

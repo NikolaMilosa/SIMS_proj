@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
     public class TherapiesPageVM
     {
         public ScheduleAppointmentCollection Therapies { get; set; }
-        public TherapyFunctions TherapyFunctions { get; set; }
+        public TherapyService TherapyFunctions { get; set; }
 
         public TherapiesPageVM(SfSchedule selectedAppointment)
         {
@@ -38,7 +38,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void TherapyExecution(object parameter)
         {
             SfSchedule scheduler = (SfSchedule) parameter;
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowTherapyDialog("Instruction",scheduler.SelectedAppointment.Notes);
         }
 
@@ -66,7 +66,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SetProperties()
         {
-            TherapyFunctions = new TherapyFunctions();
+            TherapyFunctions = new TherapyService();
             SetTherapies();
         }
         private void SetTherapies()
