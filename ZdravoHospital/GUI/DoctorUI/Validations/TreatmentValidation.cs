@@ -8,35 +8,50 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
     public class TreatmentValidation
     {
         private PeriodService _periodService;
+        private BedService _bedService;
 
         public TreatmentValidation()
         {
             _periodService = new PeriodService();
+            _bedService = new BedService();
         }
 
         public void ValidateTreatment(Period period)
         {
-            DateTime endDate = period.Treatment.StartDate.AddDays(period.Treatment.Duration); 
+            int availableBedsCount = _bedService.GetRoomBedCount(period.Treatment.RoomId);
+            DateTime treatmentEndTime = period.Treatment.StartDate.AddDays(period.Treatment.Duration); 
 
             foreach (Period p in _periodService.GetPeriods())
             {
                 if (p.Treatment == null || period.PeriodId == p.PeriodId)
                     continue;
 
-                DateTime existingTherapyEndDate = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
+                DateTime existingTreatmentEndTime = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
 
-                if (period.Treatment.RoomId == p.Treatment.RoomId)
+                if (period.Treatment.RoomId == p.Treatment.RoomId &&
+                    CheckTreatmentOverlap(period.Treatment.StartDate, treatmentEndTime, p.Treatment.StartDate, existingTreatmentEndTime))
                 {
-                    if (period.Treatment.StartDate >= p.Treatment.StartDate && period.Treatment.StartDate < existingTherapyEndDate)
-                        throw new RoomUnavailableException();
+                    availableBedsCount--;
 
-                    if (endDate > p.Treatment.StartDate && endDate < existingTherapyEndDate)
-                        throw new RoomUnavailableException();
-
-                    if (period.Treatment.StartDate < p.Treatment.StartDate && endDate > existingTherapyEndDate)
-                        throw new RoomUnavailableException();
+                    if (availableBedsCount == 0)
+                        throw new BedsUnavailableException();
                 }
             }
+        }
+
+        public bool CheckTreatmentOverlap(DateTime treatmentStartTime, DateTime treatmentEndTime,
+            DateTime existingTreatmentStartTime, DateTime existingTreatmentEndTime)
+        {
+            if (treatmentStartTime >= existingTreatmentStartTime && treatmentStartTime < existingTreatmentEndTime)
+                return true;
+
+            if (treatmentEndTime > existingTreatmentStartTime && treatmentEndTime < existingTreatmentEndTime)
+                return true;
+
+            if (treatmentStartTime < existingTreatmentStartTime && treatmentEndTime > existingTreatmentEndTime)
+                return true;
+
+            return false;
         }
     }
 }

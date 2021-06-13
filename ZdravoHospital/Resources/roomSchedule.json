@@ -30,5 +30,13 @@
     "ScheduleType": 2,
     "WillBeMerged": false,
     "MergingRoomId": 0
+  },
+  {
+    "StartTime": "2021-06-15T07:00:00",
+    "EndTime": "2021-06-18T07:00:00",
+    "RoomId": 104,
+    "ScheduleType": 2,
+    "WillBeMerged": false,
+    "MergingRoomId": 0
   }
 ]
