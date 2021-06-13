@@ -214,6 +214,10 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             {
                 MessageText = "Selected room is unavailable in selected period.";
             }
+            catch (DoctorShiftException exception)
+            {
+                MessageText = "Selected doctor is not working in selected period.";
+            }
             catch (DoctorUnavailableException exception)
             {
                 MessageText = "Selected doctor is unavailable in selected period.";

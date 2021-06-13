@@ -1,19 +1,26 @@
 ﻿using Model;
+using Repository.DoctorPersistance;
 using Repository.PeriodPersistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZdravoHospital.GUI.DoctorUI.Exceptions;
+using ZdravoHospital.GUI.DoctorUI.Services;
+using ZdravoHospital.GUI.Secretary.Service;
 
 namespace ZdravoHospital.GUI.DoctorUI.Validations
 {
     public class PeriodValidation
     {
-        private PeriodRepository periodRepository;
+        private PeriodRepository _periodRepository;
+        private WorkTimeService _workTimeService;
+        private DoctorService _doctorService;
 
         public PeriodValidation()
         {
-            periodRepository = new PeriodRepository();
+            _periodRepository = new PeriodRepository();
+            _workTimeService = new WorkTimeService(new DoctorRepository());
+            _doctorService = new DoctorService();
         }
 
         public void ValidatePeriod(Period period, bool updating = false)
@@ -21,17 +28,18 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
             if (period.StartTime < DateTime.Now)
                 throw new PeriodInPastException();
 
-            DateTime periodEndtime = period.StartTime.AddMinutes(period.Duration);
+            DateTime periodEndTime = period.StartTime.AddMinutes(period.Duration);
             List<Period> periods;
             
             if (!updating)
-                periods = periodRepository.GetValues();
+                periods = _periodRepository.GetValues();
             else
-                periods = periodRepository.GetValues().Where(p => !p.PeriodId.Equals(period.PeriodId)).ToList();
+                periods = _periodRepository.GetValues().Where(p => !p.PeriodId.Equals(period.PeriodId)).ToList();
             
-            ValidateRoomAvailability(period, periodEndtime, periods);
-            ValidateDoctorAvailability(period, periodEndtime, periods);
-            ValidatePatientAvailability(period, periodEndtime, periods);
+            ValidateRoomAvailability(period, periodEndTime, periods);
+            ValidateDoctorShift(period, periodEndTime);
+            ValidateDoctorAvailability(period, periodEndTime, periods);
+            ValidatePatientAvailability(period, periodEndTime, periods);
         }
 
         private void ValidateRoomAvailability(Period period, DateTime periodEndTime, List<Period> periods)
@@ -52,6 +60,29 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
                         throw new RoomUnavailableException();
                 }
             }
+        }
+
+        private void ValidateDoctorShift(Period period, DateTime periodEndTime)
+        {
+            Shift shift = _workTimeService.GetDoctorShiftByDate(_doctorService.GetDoctor(period.DoctorUsername), period.StartTime);
+
+            switch (shift)
+            {
+                case Shift.FIRST:
+                    if (period.StartTime.Hour >= 6 && periodEndTime.Hour < 14)
+                        return;
+                    break;
+                case Shift.SECOND:
+                    if (period.StartTime.Hour >= 14 && periodEndTime.Hour < 22)
+                        return;
+                    break;
+                case Shift.THIRD:
+                    if (period.StartTime.Hour >= 22 && periodEndTime.Hour < 6)
+                        return;
+                    break;
+            }
+
+            throw new DoctorShiftException();
         }
 
         private void ValidateDoctorAvailability(Period period, DateTime periodEndTime, List<Period> periods)

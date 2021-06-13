@@ -299,5 +299,21 @@
     "ParentReferralId": -1,
     "ChildReferralId": -1,
     "Treatment": null
+  },
+  {
+    "PeriodId": 24,
+    "StartTime": "2021-07-10T08:00:00",
+    "Duration": 30,
+    "PeriodType": 0,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "pantela",
+    "RoomId": 201,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
+    "Treatment": null
   }
 ]
