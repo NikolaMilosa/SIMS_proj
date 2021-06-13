@@ -91,8 +91,8 @@ namespace ZdravoHospital.GUI.ManagerUI.ValidationRules
 
                 if (p.Treatment != null && p.Treatment.RoomId == room.Id)
                 {
-                    var endTime = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
-                    var startTime = p.Treatment.StartDate;
+                    var endTime = p.Treatment.StartTime.AddDays(p.Treatment.Duration);
+                    var startTime = p.Treatment.StartTime;
                     if (startTime < start && start < endTime ||
                         start < startTime && endTime < end ||
                         startTime < end && end < endTime)

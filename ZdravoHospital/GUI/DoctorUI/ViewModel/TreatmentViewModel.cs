@@ -18,6 +18,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private TreatmentService _treatmentService;
 
         public DateTime StartDate { get; set; }
+        public string StartTimeText { get; set; }
         public string DurationText { get; set; }
         public Room Room { get; set; }
         public ObservableCollection<Room> Rooms { get; set; }
@@ -136,6 +137,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 MessageText = "Treatment saved successfully.";
                 ConfirmButtonVisibility = Visibility.Collapsed;
                 EditButtonVisibility = Visibility.Visible;
+                MessagePopUpVisibility = Visibility.Visible;
+                _navigationService.GoBack();
             }
             catch (RoomRenovatingException)
             {
@@ -185,7 +188,8 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             else
             {
                 ConfirmButtonVisibility = Visibility.Collapsed;
-                StartDate = _period.Treatment.StartDate;
+                StartDate = _period.Treatment.StartTime.Date;
+                StartTimeText = period.Treatment.StartTime.ToString("HH:mm");
                 DurationText = _period.Treatment.Duration.ToString();
                 Room = Rooms.ToList().Find(r => r.Id == period.Treatment.RoomId);
             }
@@ -203,6 +207,18 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         private bool IsInputValid()
         {
+            if (!BasicValidation.IsTimeFromTextFormatValid(StartTimeText))
+            {
+                MessageText = "Please enter start time in correct format (HH:mm).";
+                return false;
+            }
+
+            if (!BasicValidation.IsTimeFromTextValueValid(StartTimeText))
+            {
+                MessageText = "Please enter valid start time.";
+                return false;
+            }
+
             if (!BasicValidation.IsIntegerFromTextValid(DurationText))
             {
                 MessageText = "Please enter duration in correct format (numbers only).";
@@ -220,9 +236,14 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
 
         private void FormTreatment()
         {
+            string[] parts = StartTimeText.Split(':');
+            int hours = Int32.Parse(parts[0]);
+            int minutes = Int32.Parse(parts[1]);
+            DateTime dateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, hours, minutes, 0);
+
             _period.Treatment = new Treatment()
             {
-                StartDate = StartDate.Date,
+                StartTime = dateTime,
                 Duration = Int32.Parse(DurationText),
                 RoomId = Room.Id
             };

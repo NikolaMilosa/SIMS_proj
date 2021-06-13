@@ -27,10 +27,10 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
 
         public void ValidateRoomScheduleAvailability(Treatment treatment)
         {
-            DateTime treatmentEndTime = treatment.StartDate.AddMinutes(treatment.Duration);
+            DateTime treatmentEndTime = treatment.StartTime.AddMinutes(treatment.Duration);
 
             foreach (RoomSchedule roomSchedule in _roomScheduleRepository.GetValues())
-                if (CheckEventRenovationOverlap(treatment.StartDate, treatmentEndTime, roomSchedule.StartTime, roomSchedule.EndTime))
+                if (CheckEventRenovationOverlap(treatment.StartTime, treatmentEndTime, roomSchedule.StartTime, roomSchedule.EndTime))
                     throw new RoomRenovatingException();
         }
 

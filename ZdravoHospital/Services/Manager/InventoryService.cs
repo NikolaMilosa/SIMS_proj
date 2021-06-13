@@ -173,7 +173,7 @@ namespace ZdravoHospital.Services.Manager
                         continue;
                     }
 
-                    if (period.Treatment.StartDate > DateTime.Now)
+                    if (period.Treatment.StartTime > DateTime.Now)
                     {
                         return false;
                     }

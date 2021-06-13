@@ -61,6 +61,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -83,14 +84,32 @@
                                     SelectedDate="{Binding StartDate}"
                             FontSize="15"/>
                     </Viewbox>
-                    <TextBlock Text="Duration (in days):" 
+                    <TextBlock Text="Start time:" 
                    FontSize="25"
                    Margin="20"
                            Foreground="White"
                            Grid.Row="1"
                            Grid.Column="0"/>
+                    <TextBox x:Name="StartTimeTextBox"
+                           Grid.Row="1"
+                                    IsReadOnly="{Binding Path=IsEditModeOn, Converter={StaticResource InverseBooleanConverter}}"
+                           Grid.Column="1"
+                              Background="Black"
+                              Foreground="White"
+                         HorizontalAlignment="Left"
+                     Width="100"
+                     Height="40"
+                     FontSize="25"
+                     TextAlignment="Center"
+                             Text="{Binding StartTimeText}"/>
+                    <TextBlock Text="Duration (in days):" 
+                   FontSize="25"
+                   Margin="20"
+                           Foreground="White"
+                           Grid.Row="2"
+                           Grid.Column="0"/>
                     <TextBox x:Name="DurationTextBox"
-                         Grid.Row="1"
+                         Grid.Row="2"
                          Grid.Column="1"
                                     IsReadOnly="{Binding Path=IsEditModeOn, Converter={StaticResource InverseBooleanConverter}}"
                               Background="Black"
@@ -102,13 +121,13 @@
                      TextAlignment="Center"
                              Text="{Binding DurationText}"/>
                     <TextBlock Text="Room:"
-                           Grid.Row="2"
+                           Grid.Row="3"
                            Grid.Column="0"
                            Foreground="White"
                    FontSize="25"
                    Margin="20"/>
                     <ComboBox Name="RoomsComboBox"
-                           Grid.Row="2"
+                           Grid.Row="3"
                            Grid.Column="1"
                          HorizontalAlignment="Left"
                       ItemsSource="{Binding Path=Rooms}"

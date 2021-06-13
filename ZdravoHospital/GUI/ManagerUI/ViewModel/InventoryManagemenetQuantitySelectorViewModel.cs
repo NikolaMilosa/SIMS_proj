@@ -170,7 +170,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                         continue;
                     }
 
-                    if (period.Treatment.StartDate > DateTime.Now && period.Treatment.RoomId == SenderRoom.Id)
+                    if (period.Treatment.StartTime > DateTime.Now && period.Treatment.RoomId == SenderRoom.Id)
                     {
                         treatmentsInRoom++;
                     }
