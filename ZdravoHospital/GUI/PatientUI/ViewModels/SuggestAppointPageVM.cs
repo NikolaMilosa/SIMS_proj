@@ -158,9 +158,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             SuggestService suggestService = new SuggestService();
 
             if (DoctorPanelVisibility == Visibility.Visible)
-                suggestService.Inject(new SuggestDate(PeriodDTOs, SelectedDoctorDTO.Username));
+                suggestService.Inject(new SuggestDateService(PeriodDTOs, SelectedDoctorDTO.Username));
             else
-                suggestService.Inject(new SuggestDoctor(PeriodDTOs, SelectedDate, SelectedTimeSpan));
+                suggestService.Inject(new Strategy.SuggestDoctorService(PeriodDTOs, SelectedDate, SelectedTimeSpan));
             
 
             suggestService.Suggest();

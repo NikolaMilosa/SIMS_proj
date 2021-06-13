@@ -10,12 +10,12 @@ using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Strategy
 {
-    public class SuggestDoctor : SuggestAbstract,ISuggestStrategy
+    public class SuggestDoctorService : SuggestAbstract,ISuggestStrategy
     {
         public Period FundamentalPeriod { get; private set; }
         public List<DoctorDTO> FreeDoctors { get; private set; }
 
-        public SuggestDoctor(ObservableCollection<PeriodDTO> suggestedPeriods, DateTime date, TimeSpan time) :base(suggestedPeriods)
+        public SuggestDoctorService(ObservableCollection<PeriodDTO> suggestedPeriods, DateTime date, TimeSpan time) :base(suggestedPeriods)
         {
             SetPeriod(date,time);
             FreeDoctors = new List<DoctorDTO>();

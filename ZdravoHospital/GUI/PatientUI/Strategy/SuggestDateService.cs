@@ -8,10 +8,10 @@ using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Strategy
 {
-    public class SuggestDate : SuggestAbstract, ISuggestStrategy
+    public class SuggestDateService : SuggestAbstract, ISuggestStrategy
     {
         public string DoctorsUsername { get; private set; }
-        public SuggestDate(ObservableCollection<PeriodDTO> suggestedPeriods,string doctorUsername):base(suggestedPeriods)
+        public SuggestDateService(ObservableCollection<PeriodDTO> suggestedPeriods,string doctorUsername):base(suggestedPeriods)
         {
             DoctorsUsername = doctorUsername;
         }
