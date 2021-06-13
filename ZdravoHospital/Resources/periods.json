@@ -283,5 +283,21 @@
     "ParentReferralId": -1,
     "ChildReferralId": -1,
     "Treatment": null
+  },
+  {
+    "PeriodId": 24,
+    "StartTime": "2021-06-22T15:00:00",
+    "Duration": 30,
+    "PeriodType": 1,
+    "PatientUsername": "ljuba",
+    "DoctorUsername": "zigara",
+    "RoomId": 100,
+    "Details": null,
+    "Prescription": null,
+    "PeriodMark": null,
+    "IsUrgent": false,
+    "ParentReferralId": -1,
+    "ChildReferralId": -1,
+    "Treatment": null
   }
 ]
