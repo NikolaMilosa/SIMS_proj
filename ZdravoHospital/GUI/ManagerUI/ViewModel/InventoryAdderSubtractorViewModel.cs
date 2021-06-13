@@ -230,7 +230,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                 }
 
                 if (period.Treatment.RoomId == SelectedRoom.Id &&
-                    period.Treatment.StartDate > DateTime.Now)
+                    period.Treatment.StartTime > DateTime.Now)
                 {
                     ret++;
                 }

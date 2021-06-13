@@ -264,14 +264,14 @@ namespace ZdravoHospital.Services.Manager
 
                 if (p.Treatment != null && p.Treatment.RoomId == room.Id)
                 {
-                    var startT = p.Treatment.StartDate;
-                    var endT = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
+                    var startT = p.Treatment.StartTime;
+                    var endT = p.Treatment.StartTime.AddDays(p.Treatment.Duration);
                     if ((startT >= day && startT < end) ||
                         (day >= startT && end <= endT) ||
                         (endT >= day && endT < end))
                     {
-                        var reservation = new ReservationDTO(ReservationType.TREATMENT, p.Treatment.StartDate,
-                            p.Treatment.StartDate.AddDays(p.Treatment.Duration));
+                        var reservation = new ReservationDTO(ReservationType.TREATMENT, p.Treatment.StartTime,
+                            p.Treatment.StartTime.AddDays(p.Treatment.Duration));
                         reservations.Add(reservation);
                     }
                 }

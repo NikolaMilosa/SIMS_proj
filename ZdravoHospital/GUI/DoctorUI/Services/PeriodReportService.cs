@@ -193,7 +193,8 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
                 text = "Patient wasn't sent to hospital treatment.";
             else
             {
-                text = "- Start date: " + _period.Treatment.StartDate.ToString("dd.MM.yyyy.") + "\n" +
+                text = "- Start date: " + _period.Treatment.StartTime.ToString("dd.MM.yyyy.") + "\n" +
+                    "- Start time: " + _period.Treatment.StartTime.ToString("HH:mm") + "\n" +
                     "- Duration: " + _period.Treatment.Duration + " day(s)\n" +
                     "- Room: " + _period.RoomId;
             }

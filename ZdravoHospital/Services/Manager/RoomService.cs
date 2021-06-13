@@ -131,7 +131,7 @@ namespace ZdravoHospital.Services.Manager
                         continue;
                     }
 
-                    if (period.Treatment.StartDate > DateTime.Now && period.Treatment.RoomId == room.Id)
+                    if (period.Treatment.StartTime > DateTime.Now && period.Treatment.RoomId == room.Id)
                     {
                         return false;
                     }

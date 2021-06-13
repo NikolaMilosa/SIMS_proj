@@ -19,17 +19,17 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
         public void ValidateTreatment(Period period)
         {
             int availableBedsCount = _bedService.GetRoomBedCount(period.Treatment.RoomId);
-            DateTime treatmentEndTime = period.Treatment.StartDate.AddDays(period.Treatment.Duration); 
+            DateTime treatmentEndTime = period.Treatment.StartTime.AddDays(period.Treatment.Duration); 
 
             foreach (Period p in _periodService.GetPeriods())
             {
                 if (p.Treatment == null || period.PeriodId == p.PeriodId)
                     continue;
 
-                DateTime existingTreatmentEndTime = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
+                DateTime existingTreatmentEndTime = p.Treatment.StartTime.AddDays(p.Treatment.Duration);
 
                 if (period.Treatment.RoomId == p.Treatment.RoomId &&
-                    CheckTreatmentOverlap(period.Treatment.StartDate, treatmentEndTime, p.Treatment.StartDate, existingTreatmentEndTime))
+                    CheckTreatmentOverlap(period.Treatment.StartTime, treatmentEndTime, p.Treatment.StartTime, existingTreatmentEndTime))
                 {
                     availableBedsCount--;
 
