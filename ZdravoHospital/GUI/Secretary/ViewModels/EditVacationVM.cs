@@ -37,8 +37,15 @@ namespace ZdravoHospital.GUI.Secretary.ViewModels
 
         private void createVacationExecute(object parameter)
         {
-            VacationService.ProcessVacationCreation(VacationDTO, SelectedDoctor);
-            SecretaryWindowVM.NavigationService.Navigate(new DoctorsView());
+            bool success = VacationService.ProcessVacationCreation(VacationDTO, SelectedDoctor);
+            if (!success)
+            {
+                SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Error", "Too many free days.");
+                SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
+                SecretaryWindowVM.CustomMessageBox.Show();
+            }
+            else 
+                SecretaryWindowVM.NavigationService.Navigate(new DoctorsView());
         }
 
         private void clearVacationsExecute(object parameter)

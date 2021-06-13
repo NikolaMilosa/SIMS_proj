@@ -32,11 +32,25 @@ namespace ZdravoHospital.GUI.Secretary.Service
             NotificationService = new NotificationService(notificationsRepository, personNotificationRepository, credentialsRepository);
         }
 
-        public void ProcessVacationCreation(VacationDTO vacationDTO, Doctor selectedDoctor)
+        public bool ProcessVacationCreation(VacationDTO vacationDTO, Doctor selectedDoctor)
         {
+            int usedDays = 0;
+            foreach(var vacation in selectedDoctor.ShiftRule.Vacations)
+            {
+                if(vacation.VacationStartTime.Year == DateTime.Today.Year)
+                {
+                    usedDays += vacation.NumberOfFreeDays;
+                }
+            }
+            if(usedDays + vacationDTO.NumberOfFreeDays > 30)
+            {
+                return false;
+            }
+
             selectedDoctor.ShiftRule.Vacations.Add(new Vacation(vacationDTO.VacationStartTime, vacationDTO.NumberOfFreeDays));
             _doctorRepository.Update(selectedDoctor);
             DeleteScheduledPeriods(vacationDTO, selectedDoctor);
+            return true;
             
         }
 
