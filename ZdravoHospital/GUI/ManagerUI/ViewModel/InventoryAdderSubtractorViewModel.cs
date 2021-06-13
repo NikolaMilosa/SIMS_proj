@@ -166,7 +166,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             PassedInventory = inventory;
 
             _transferRequestsService = new TransferRequestService(injector);
-            _inventoryService = new InventoryService(injector);
+            _inventoryService = new InventoryService(injector, ManagerWindowViewModel.GetDashboard());
 
             _roomRepository = injector.RoomRepository;
             _roomInventoryRepository = injector.RoomInventoryRepository;

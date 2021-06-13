@@ -21,13 +21,13 @@
     "RoomType": 0,
     "Id": 201,
     "Name": "Appointment room 1",
-    "Available": true
+    "Available": false
   },
   {
     "RoomType": 0,
     "Id": 202,
     "Name": "Appointment room 2",
-    "Available": true
+    "Available": false
   },
   {
     "RoomType": 3,

@@ -30,6 +30,7 @@ using Repository.SurveyPersistance;
 using Repository.TransferRequestPersistance;
 using ZdravoHospital.GUI.ManagerUI.Commands;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.Interfaces;
 using ZdravoHospital.GUI.ManagerUI.ValidationRules;
 using ZdravoHospital.GUI.ManagerUI.View;
 using ZdravoHospital.Services.Manager;
@@ -40,7 +41,7 @@ using RoomRepository = Repository.RoomPersistance.RoomRepository;
 
 namespace ZdravoHospital.GUI.ManagerUI.ViewModel
 {
-    class ManagerWindowViewModel : ViewModel
+    class ManagerWindowViewModel : ViewModel, INotifiable
     {
         /*Singleton*/
         private static ManagerWindowViewModel dashboard;

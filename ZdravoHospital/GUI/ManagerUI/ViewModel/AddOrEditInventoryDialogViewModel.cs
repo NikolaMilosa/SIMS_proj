@@ -111,7 +111,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
             ConfirmCommand = new MyICommand(OnConfirm);
             ComboBoxCommand = new MyICommand<string>(OnComboBoxKeypress);
 
-            _inventoryService = new InventoryService(injector);
+            _inventoryService = new InventoryService(injector, ManagerWindowViewModel.GetDashboard());
         }
 
         #region Button functions

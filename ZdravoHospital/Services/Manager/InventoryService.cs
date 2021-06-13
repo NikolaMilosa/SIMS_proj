@@ -9,6 +9,7 @@ using Repository.PeriodPersistance;
 using Repository.RoomInventoryPersistance;
 using Repository.RoomPersistance;
 using ZdravoHospital.GUI.ManagerUI.DTOs;
+using ZdravoHospital.GUI.ManagerUI.Interfaces;
 using ZdravoHospital.GUI.ManagerUI.ViewModel;
 
 namespace ZdravoHospital.Services.Manager
@@ -40,9 +41,9 @@ namespace ZdravoHospital.Services.Manager
 
         #endregion
 
-        public InventoryService(InjectorDTO injector)
+        public InventoryService(InjectorDTO injector, INotifiable listener)
         {
-            InventoryChanged += ManagerWindowViewModel.GetDashboard().OnInventoryChanged;
+            InventoryChanged += listener.OnInventoryChanged;
             
             _roomInventoryRepository = injector.RoomInventoryRepository;
             _roomRepository = injector.RoomRepository;

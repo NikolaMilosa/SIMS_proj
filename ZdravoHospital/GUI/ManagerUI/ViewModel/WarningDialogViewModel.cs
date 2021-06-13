@@ -139,7 +139,7 @@ namespace ZdravoHospital.GUI.ManagerUI.ViewModel
                     }
                     break;
                 case nameof(Inventory):
-                    _inventoryService = new InventoryService(_injector);
+                    _inventoryService = new InventoryService(_injector, ManagerWindowViewModel.GetDashboard());
                     if (!_inventoryService.DeleteInventory((Inventory) _someObject))
                     {
                         MessageBox.Show(
