@@ -19,37 +19,36 @@ namespace ZdravoHospital.GUI.DoctorUI.Validations
         public void ValidateTreatment(Period period)
         {
             int availableBedsCount = _bedService.GetRoomBedCount(period.Treatment.RoomId);
-            DateTime endDate = period.Treatment.StartDate.AddDays(period.Treatment.Duration); 
+            DateTime treatmentEndTime = period.Treatment.StartDate.AddDays(period.Treatment.Duration); 
 
             foreach (Period p in _periodService.GetPeriods())
             {
                 if (p.Treatment == null || period.PeriodId == p.PeriodId)
                     continue;
 
-                DateTime existingTherapyEndDate = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
+                DateTime existingTreatmentEndTime = p.Treatment.StartDate.AddDays(p.Treatment.Duration);
 
                 if (period.Treatment.RoomId == p.Treatment.RoomId &&
-                    CheckTreatmentOverlap(period.Treatment.StartDate, endDate, p.Treatment.StartDate, existingTherapyEndDate))
+                    CheckTreatmentOverlap(period.Treatment.StartDate, treatmentEndTime, p.Treatment.StartDate, existingTreatmentEndTime))
                 {
                     availableBedsCount--;
 
                     if (availableBedsCount == 0)
-                        throw new RoomUnavailableException();
-
+                        throw new BedsUnavailableException();
                 }
             }
         }
 
-        public bool CheckTreatmentOverlap(DateTime treatmentStartDate, DateTime treatmentEndDate,
-            DateTime existingTreatmentStartDate, DateTime existingTreatmentEndDate)
+        public bool CheckTreatmentOverlap(DateTime treatmentStartTime, DateTime treatmentEndTime,
+            DateTime existingTreatmentStartTime, DateTime existingTreatmentEndTime)
         {
-            if (treatmentStartDate >= existingTreatmentStartDate && treatmentStartDate < existingTreatmentEndDate)
+            if (treatmentStartTime >= existingTreatmentStartTime && treatmentStartTime < existingTreatmentEndTime)
                 return true;
 
-            if (treatmentEndDate > existingTreatmentStartDate && treatmentEndDate < existingTreatmentEndDate)
+            if (treatmentEndTime > existingTreatmentStartTime && treatmentEndTime < existingTreatmentEndTime)
                 return true;
 
-            if (treatmentStartDate < existingTreatmentStartDate && treatmentEndDate > existingTreatmentEndDate)
+            if (treatmentStartTime < existingTreatmentStartTime && treatmentEndTime > existingTreatmentEndTime)
                 return true;
 
             return false;

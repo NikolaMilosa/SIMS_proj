@@ -137,9 +137,13 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
                 ConfirmButtonVisibility = Visibility.Collapsed;
                 EditButtonVisibility = Visibility.Visible;
             }
-            catch(RoomUnavailableException exception)
+            catch (RoomRenovatingException)
             {
-                MessageText = "Selected room is unavailable in selected period.";
+                MessageText = "Selected room is being renovated during selected period.";
+            }
+            catch (BedsUnavailableException)
+            {
+                MessageText = "There are no beds available in selected room during selected period.";
             }
 
             MessagePopUpVisibility = Visibility.Visible;
