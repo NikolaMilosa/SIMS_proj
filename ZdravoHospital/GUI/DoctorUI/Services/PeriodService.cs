@@ -13,6 +13,7 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
         private PeriodRepository _periodRepository;
         private ReferralRepository _referralRepository;
         private PeriodValidation _periodValidation;
+        private RoomScheduleValidation _roomScheduleValidation;
         private DoctorRepository _doctorRepository;
 
         public PeriodService()
@@ -20,6 +21,7 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
             _periodRepository = new PeriodRepository();
             _referralRepository = new ReferralRepository();
             _periodValidation = new PeriodValidation();
+            _roomScheduleValidation = new RoomScheduleValidation();
             _doctorRepository = new DoctorRepository();
         }
 
@@ -30,7 +32,7 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
 
         public void CreateNewPeriod(Period period, Referral referral)
         {
-            _periodValidation.ValidatePeriod(period);
+            Validate(period);
             _periodRepository.Create(period);
 
             if (referral != null)
@@ -42,6 +44,12 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
                 period.ParentReferralId = referral.ReferralId;
                 _periodRepository.Update(period);
             }
+        }
+
+        private void Validate(Period period)
+        {
+            _roomScheduleValidation.ValidateRoomScheduleAvailability(period);
+            _periodValidation.ValidatePeriod(period);
         }
 
         public void CancelPeriod(int periodId)
@@ -60,7 +68,7 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
 
         public void UpdatePeriod(Period period)
         {
-            _periodValidation.ValidatePeriod(period, true);
+            Validate(period);
             _periodRepository.Update(period);
         }
 

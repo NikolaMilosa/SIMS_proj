@@ -115,6 +115,10 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             {
                 MessageText = "Cannot create appointment in the past.";
             }
+            catch (RoomRenovatingException exception)
+            {
+                MessageText = "Selected room is being renovated during selected period.";
+            }
             catch (RoomUnavailableException exception)
             {
                 MessageText = "Selected room is unavailable in selected period.";

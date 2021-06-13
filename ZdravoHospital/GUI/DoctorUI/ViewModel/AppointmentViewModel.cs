@@ -206,6 +206,10 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             {
                 MessageText = "Cannot edit appointment which has already started or ended.";
             }
+            catch (RoomRenovatingException exception)
+            {
+                MessageText = "Selected room is being renovated during selected period.";
+            }
             catch (RoomUnavailableException exception)
             {
                 MessageText = "Selected room is unavailable in selected period.";
