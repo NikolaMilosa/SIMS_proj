@@ -50,18 +50,7 @@
         "ShiftStart": "2021-06-14T00:00:00+02:00",
         "IsSingleDayShift": false
       },
-      "SingleDayShifts": [
-        {
-          "ScheduledShift": 0,
-          "ShiftStart": "2021-06-12T00:00:00+02:00",
-          "IsSingleDayShift": true
-        },
-        {
-          "ScheduledShift": 1,
-          "ShiftStart": "2021-06-14T00:00:00+02:00",
-          "IsSingleDayShift": true
-        }
-      ]
+      "SingleDayShifts": []
     },
     "Name": "Nikola",
     "Surname": "Zigic",
