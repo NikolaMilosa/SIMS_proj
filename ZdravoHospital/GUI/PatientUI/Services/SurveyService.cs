@@ -7,10 +7,10 @@ using Repository.SurveyPersistance;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class SurveyFunctions
+    public class SurveyService
     {
         public SurveyRepository SurveyRepository { get; private set; }
-        public SurveyFunctions()
+        public SurveyService()
         {
             SurveyRepository = new SurveyRepository();
         }
@@ -32,7 +32,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         private  int GetCompletedPeriodsNum(string username)
         {
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             return periodFunctions.GetAllPeriods().Count(period => period.PatientUsername.Equals(username) && period.HasPassed());
         }
 

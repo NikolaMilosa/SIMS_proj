@@ -93,5 +93,17 @@ namespace ZdravoHospital.GUI.DoctorUI.Services
 
             return dtos;
         }
+
+        public void SortPeriods(List<Period> periods)
+        {
+            for (int i = 0; i < periods.Count - 1; i++)
+                for (int j = 0; j < periods.Count - i - 1; j++)
+                    if (periods[j].StartTime > periods[j + 1].StartTime)
+                    {
+                        Period temp = periods[j + 1];
+                        periods[j + 1] = periods[j];
+                        periods[j] = temp;
+                    }
+        }
     }
 }

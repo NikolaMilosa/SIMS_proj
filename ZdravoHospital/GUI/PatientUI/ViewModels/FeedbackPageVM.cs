@@ -36,7 +36,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SubmitExecute(object parameter)
         {
-            FeedbackLogics feedbackFunctions = new FeedbackLogics(new FeedbackRepository());
+            FeedbackService feedbackFunctions = new FeedbackService(new FeedbackRepository());
             Feedback.Type = (FeedbackType)SelectedType;
             feedbackFunctions.Save(Feedback);
             SuccesfullySubmited();
@@ -73,7 +73,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SuccesfullySubmited()
         {
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Feedback","Feedback successfully submited!");
             PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }

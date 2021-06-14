@@ -8,11 +8,11 @@ using ZdravoHospital.GUI.PatientUI.DTOs;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class InjectFunctions
+    public class InjectService
     {
         public void FillObservableDoctorDTOCollection(ObservableCollection<DoctorDTO> Doctors)
         {
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            DoctorService doctorFunctions = new DoctorService();
             foreach (var doctor in doctorFunctions.GetGeneralDoctors())
                 Doctors.Add(new DoctorDTO(doctor));
             
@@ -20,7 +20,7 @@ namespace ZdravoHospital.GUI.PatientUI.Logics
 
         public void FillDoctorDTOCollection(List<DoctorDTO> Doctors)
         {
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
+            DoctorService doctorFunctions = new DoctorService();
             Doctors.AddRange(doctorFunctions.GetGeneralDoctors().Select(doctor => new DoctorDTO(doctor)));
         }
 

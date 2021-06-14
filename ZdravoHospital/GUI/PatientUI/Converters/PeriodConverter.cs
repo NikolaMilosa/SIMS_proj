@@ -12,13 +12,13 @@ namespace ZdravoHospital.GUI.PatientUI.Converters
 {
     public class PeriodConverter
     {
-        private DoctorFunctions doctorFunctions;
-        private PeriodFunctions periodFunctions;
+        private DoctorService doctorFunctions;
+        private PeriodService periodFunctions;
 
         public PeriodConverter()
         {
-            doctorFunctions = new DoctorFunctions();
-            periodFunctions = new PeriodFunctions();
+            doctorFunctions = new DoctorService();
+            periodFunctions = new PeriodService();
         }
         public Period GetPeriod(PeriodDTO period)
         {

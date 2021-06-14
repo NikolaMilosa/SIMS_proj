@@ -9,6 +9,7 @@ using ZdravoHospital.GUI.PatientUI.Commands;
 using ZdravoHospital.GUI.PatientUI.Converters;
 using ZdravoHospital.GUI.PatientUI.DTOs;
 using ZdravoHospital.GUI.PatientUI.Logics;
+using ZdravoHospital.GUI.PatientUI.Services.Strategy;
 using ZdravoHospital.GUI.PatientUI.View;
 
 namespace ZdravoHospital.GUI.PatientUI.ViewModels
@@ -60,7 +61,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         public ObservableCollection<DoctorDTO> DoctorList { get; set; }
         public ObservableCollection<TimeSpan> PeriodList { get; set; }
-        public InjectFunctions Injection { get; private set; }
+        public InjectService Injection { get; private set; }
 
         private DoctorDTO selectedDoctorDto;
 
@@ -129,18 +130,18 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void ConfirmExecute(object parameter)
         {
-            PatientFunctions patientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            PatientService patientFunctions = new PatientService(PatientWindowVM.PatientUsername);
             if (!patientFunctions.ActionTaken())
                 return;
             SerializePeriod();
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Appointment", "Appointment is succesfully added!");
             PatientWindowVM.NavigationService.Navigate(new PeriodPage(PatientWindowVM.PatientUsername));
         }
 
         private bool ConfirmCanExecute(object parameter) 
         {
-            PatientFunctions patientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            PatientService patientFunctions = new PatientService(PatientWindowVM.PatientUsername);
             return !patientFunctions.IsTrollDetected();
         }
 
@@ -154,17 +155,15 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void SuggestExecute(object parameter)
         {
             PeriodDTOs.Clear();
+            SuggestService suggestService = new SuggestService();
+
             if (DoctorPanelVisibility == Visibility.Visible)
-            {
-                SuggestTimeFunctions timeFunctions = new SuggestTimeFunctions(PeriodDTOs, SelectedDoctorDTO);
-                timeFunctions.GetSuggestedPeriods();
-            }
+                suggestService.Inject(new SuggestDateService(PeriodDTOs, SelectedDoctorDTO.Username));
             else
-            {
-                SuggestDoctorFunctions doctorFunctions =
-                    new SuggestDoctorFunctions(SelectedDate, SelectedTimeSpan, PeriodDTOs);
-                doctorFunctions.GetSuggestedPeriods();
-            }
+                suggestService.Inject(new SuggestDoctorService(PeriodDTOs, SelectedDate, SelectedTimeSpan));
+            
+
+            suggestService.Suggest();
         }
 
         private bool SuggestCanExecute(object parameter)
@@ -197,7 +196,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private void SerializePeriod()
         {
             PeriodConverter periodConverter = new PeriodConverter();
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             periodFunctions.SerializeNewPeriod(periodConverter.GeneratePeriod(SelectedPeriodDTO));
         }
         private bool IsDoctorFormFilled()
@@ -214,14 +213,14 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private bool CheckIsDateAvailable()
         {
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            PeriodService periodFunctions = new PeriodService();
             Period period = GeneratePeriodFromInput(periodFunctions);
             if (period.RoomId != -1) return CheckIsPeriodAvailable(periodFunctions, period);
             ErrorMessage = "There is no free rooms at selected time!";
             return false;
         }
 
-        private bool CheckIsPeriodAvailable(PeriodFunctions periodFunctions, Period period)
+        private bool CheckIsPeriodAvailable(PeriodService periodFunctions, Period period)
         {
             if (periodFunctions.CheckPeriodAvailability(period))
             {
@@ -232,9 +231,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             return false;
         }
 
-        private Period GeneratePeriodFromInput(PeriodFunctions periodFunctions)
+        private Period GeneratePeriodFromInput(PeriodService periodFunctions)
         {
-            RoomSheduleFunctions roomFunctions = new RoomSheduleFunctions();
+            RoomSheduleService roomFunctions = new RoomSheduleService();
             Period period= new Period()
             {
                 PatientUsername = PatientWindowVM.PatientUsername,
@@ -252,7 +251,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             SetPanelVisibility();
             PeriodDTOs = new ObservableCollection<PeriodDTO>();
             SelectedDate = DateTime.Today.AddDays(3);
-            Injection = new InjectFunctions();
+            Injection = new InjectService();
             PeriodList = new ObservableCollection<TimeSpan>();
             DoctorList = new ObservableCollection<DoctorDTO>();
         }

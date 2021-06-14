@@ -59,10 +59,10 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         public Period Period { get; set; }
         public bool Mode { get; private set; }//true=add,false=edit
 
-        public PeriodFunctions PeriodFunctions { get; private set; }
-        public RoomSheduleFunctions RoomFunctions { get; private set; }
-        public PatientFunctions PatientFunctions { get; private set; }
-        public InjectFunctions Injection { get; private set; }
+        public PeriodService PeriodFunctions { get; private set; }
+        public RoomSheduleService RoomFunctions { get; private set; }
+        public PatientService PatientFunctions { get; private set; }
+        public InjectService Injection { get; private set; }
         #endregion
 
         #region Constructors
@@ -168,7 +168,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SerializePeriod()
         {
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             if (Mode)
             {
                 PeriodFunctions.SerializeNewPeriod(Period);
@@ -182,13 +182,13 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         }
         private void SetProperties(bool mode)
         {
-            RoomFunctions = new RoomSheduleFunctions();
-            PatientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
-            PeriodFunctions = new PeriodFunctions();
+            RoomFunctions = new RoomSheduleService();
+            PatientFunctions = new PatientService(PatientWindowVM.PatientUsername);
+            PeriodFunctions = new PeriodService();
             Mode = mode;
             PeriodList = new ObservableCollection<TimeSpan>();
             DoctorList = new ObservableCollection<DoctorDTO>();
-            Injection = new InjectFunctions();
+            Injection = new InjectService();
         }
 
         private void GenerateComboBoxes()

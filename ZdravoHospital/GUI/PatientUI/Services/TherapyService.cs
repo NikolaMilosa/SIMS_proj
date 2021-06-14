@@ -9,13 +9,13 @@ using ZdravoHospital.GUI.PatientUI.ViewModels;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class TherapyFunctions
+    public class TherapyService
     {
-        public PeriodFunctions PeriodFunctions { get; set; }
+        public PeriodService PeriodFunctions { get; set; }
 
-        public TherapyFunctions()
+        public TherapyService()
         {
-            PeriodFunctions = new PeriodFunctions();
+            PeriodFunctions = new PeriodService();
         }
 
         public List<Therapy> GetPatientTherapies(string username)

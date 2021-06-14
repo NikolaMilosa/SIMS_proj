@@ -3,13 +3,16 @@ using Repository.DoctorPersistance;
 using Repository.PatientPersistance;
 using Repository.PeriodPersistance;
 using Repository.RoomPersistance;
+using Repository.RoomSchedulePersistance;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.Secretary.DTOs;
+using ZdravoHospital.GUI.Secretary.Factory;
 using ZdravoHospital.GUI.Secretary.ViewModels;
+using ZdravoHospital.GUI.PatientUI.Services;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -104,12 +107,44 @@ namespace ZdravoHospital.GUI.Secretary.Service
                     periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
                 }
             }
-            DoctorFunctions doctorFunctions = new DoctorFunctions();
-            if(!doctorFunctions.IsTimeInDoctorsShift(period.StartTime, period.DoctorUsername))
+            DoctorService doctorFunctions = new DoctorService();
+            if(!IsTimeInDoctorsShift(period))
             {
                 periodAvailableDTO.PeriodAvailable = PeriodAvailability.DOCTOR_UNAVAILABLE;
             }
         }
+
+        public bool IsTimeInDoctorsShift(Period period)
+        {
+            Doctor doctor = new DoctorService().GetDoctor(period.DoctorUsername);
+
+            IDoctorRepository doctorRepository = RepositoryFactory.CreateDoctorRepository();
+            WorkTimeService timeService = new WorkTimeService(doctorRepository);
+            Shift shift = timeService.GetDoctorShiftByDate(doctor, period.StartTime);
+            return IsTimeInShift(shift, period);
+        }
+
+        private bool IsTimeInShift(Shift shift, Period period)
+        {
+            DateTime periodEndTime = period.StartTime.AddMinutes(period.Duration);
+            switch (shift)
+            {
+                case Shift.FIRST:
+                    if (period.StartTime.Hour >= 6 && periodEndTime.Hour < 14)
+                        return true;
+                    break;
+                case Shift.SECOND:
+                    if (period.StartTime.Hour >= 14 && periodEndTime.Hour < 22)
+                        return true;
+                    break;
+                case Shift.THIRD:
+                    if ((period.StartTime.Hour >= 22 || (period.StartTime.Hour >= 0 && period.StartTime.Hour < 6)) && (periodEndTime.Hour >= 22 || (periodEndTime.Hour >= 0 && periodEndTime.Hour < 6)))
+                        return true;
+                    break;
+            }
+            return false;
+        }
+
         private void checkPatientAvailabilityForPeriod(Period period, PeriodAvailabilityDTO periodAvailableDTO)
         {
             List<Period> periods = GetPeriods();
@@ -132,6 +167,25 @@ namespace ZdravoHospital.GUI.Secretary.Service
                     periodAvailableDTO.PeriodAvailable = PeriodAvailability.ROOM_UNAVAILABLE;
                 }
             }
+            if(roomScheduleBusy(period))
+                periodAvailableDTO.PeriodAvailable = PeriodAvailability.ROOM_UNAVAILABLE;
+        }
+
+        private bool roomScheduleBusy(Period period)
+        {
+            IRoomScheduleRepository roomScheduleRepository = new RoomScheduleRepository();
+            List<RoomSchedule> roomSchedule = roomScheduleRepository.GetValues();
+            foreach(var roomSch in roomSchedule)
+            {
+                if(roomSch.RoomId == period.RoomId)
+                {
+                    if (roomSch.StartTime < period.StartTime.AddMinutes(period.Duration) && roomSch.EndTime > period.StartTime)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private bool periodsOverlap(Period newPeriod, Period existingPeriod)

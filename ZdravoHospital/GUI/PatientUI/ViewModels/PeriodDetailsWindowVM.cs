@@ -17,9 +17,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         #region Properties
 
         public PeriodDTO PeriodDTO { get; set; }
-        public PeriodFunctions PeriodService { get; private set; }
+        public Logics.PeriodService PeriodService { get; private set; }
         public PeriodConverter PeriodConventer { get; private set; }
-        public PatientFunctions PatientFunctions { get; private set; }
+        public Logics.PatientService PatientFunctions { get; private set; }
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
             if (IsPeriodWithin2Days())
                 return;
 
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowYesNoDialog("Remove appointment", "Are you sure you want to remove appointment?");
             if (viewFunctions.YesPressed)
                 RemovePeriod();
@@ -90,9 +90,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SetProperties(int periodID)
         {
-            PeriodService = new PeriodFunctions();
+            PeriodService = new Logics.PeriodService();
             PeriodConventer = new PeriodConverter();
-            PatientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            PatientFunctions = new Logics.PatientService(PatientWindowVM.PatientUsername);
             SetPeriodDTO(periodID);
         }
 
@@ -100,9 +100,9 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         {
             if (!PatientFunctions.ActionTaken())
                 return;
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Remove appointment", "Appointment succesfully removed!");
-            PeriodFunctions periodFunctions = new PeriodFunctions();
+            Logics.PeriodService periodFunctions = new Logics.PeriodService();
             periodFunctions.RemovePeriodById(PeriodDTO.PeriodId);
             
         }
@@ -110,7 +110,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
         private bool IsPeriodWithin2Days()
         {
             if (PeriodDTO.Date >= DateTime.Now.AddDays(2)) return false;
-            ViewFunctions viewFunctions = new ViewFunctions();
+            ViewService viewFunctions = new ViewService();
             viewFunctions.ShowOkDialog("Warning", "You can't manipulate period 2 days from its start!");
             return true;
 

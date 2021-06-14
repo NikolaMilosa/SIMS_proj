@@ -17,7 +17,7 @@ namespace ZdravoHospital.GUI.PatientUI.ViewModels
 
         private void SetProperties()
         {
-            PatientFunctions patientFunctions = new PatientFunctions(PatientWindowVM.PatientUsername);
+            PatientService patientFunctions = new PatientService(PatientWindowVM.PatientUsername);
             Patient = patientFunctions.LoadPatient();
         }
     }

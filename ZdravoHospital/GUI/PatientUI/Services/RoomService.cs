@@ -6,11 +6,11 @@ using Repository.RoomPersistance;
 
 namespace ZdravoHospital.GUI.PatientUI.Logics
 {
-    public class RoomFunctions
+    public class RoomService
     {
         public RoomRepository RoomRepository { get; private set; }
 
-        public RoomFunctions()
+        public RoomService()
         {
             RoomRepository = new RoomRepository();
         }
