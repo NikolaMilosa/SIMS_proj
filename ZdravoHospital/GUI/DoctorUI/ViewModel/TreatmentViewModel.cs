@@ -16,6 +16,7 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         private NavigationService _navigationService;
         private Period _period;
         private TreatmentService _treatmentService;
+        private bool _treatmentCreated;
 
         public DateTime StartDate { get; set; }
         public string StartTimeText { get; set; }
@@ -134,11 +135,11 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
             try
             {
                 _treatmentService.SaveTreatment(_period);
+                _treatmentCreated = true;
                 MessageText = "Treatment saved successfully.";
                 ConfirmButtonVisibility = Visibility.Collapsed;
                 EditButtonVisibility = Visibility.Visible;
                 MessagePopUpVisibility = Visibility.Visible;
-                _navigationService.GoBack();
             }
             catch (RoomRenovatingException)
             {
@@ -162,6 +163,9 @@ namespace ZdravoHospital.GUI.DoctorUI.ViewModel
         public void Executed_CloseMessagePopUpCommand()
         {
             MessagePopUpVisibility = Visibility.Collapsed;
+
+            if (_treatmentCreated)
+                _navigationService.GoBack();
         }
 
         public bool CanExecute_CloseMessagePopUpCommand()
