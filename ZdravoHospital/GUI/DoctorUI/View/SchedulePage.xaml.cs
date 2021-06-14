@@ -11,6 +11,7 @@ using Model;
 using Repository.DoctorPersistance;
 using Repository.PatientPersistance;
 using Repository.PeriodPersistance;
+using ZdravoHospital.GUI.DoctorUI.Services;
 
 namespace ZdravoHospital.GUI.DoctorUI
 {
@@ -28,9 +29,9 @@ namespace ZdravoHospital.GUI.DoctorUI
         private EmptyPeriodButton[] lastEmptyPeriodButtons;
         private EmptyPeriodButton selectedEmptyPeriodButton;
 
-        private DoctorRepository doctorRepository;
-        private PatientRepository patientRepository;
-        private PeriodRepository periodRepository;
+        private DoctorService _doctorService;
+        private PatientService _patientService;
+        private PeriodService _periodService;
         
         public SchedulePage()
         {
@@ -70,11 +71,11 @@ namespace ZdravoHospital.GUI.DoctorUI
             lastEmptyPeriodButtons[5] = SaturdayLastEmptyPeriodButton;
             lastEmptyPeriodButtons[6] = SundayLastEmptyPeriodButton;
 
-            doctorRepository = new DoctorRepository();
-            patientRepository = new PatientRepository();
-            periodRepository = new PeriodRepository();
+            _doctorService = new DoctorService();
+            _patientService = new PatientService();
+            _periodService = new PeriodService();
 
-            List<Doctor> doctors = doctorRepository.GetValues();
+            List<Doctor> doctors = _doctorService.GetDoctors();
             DoctorsComboBox.ItemsSource = doctors;
             DoctorsComboBox.SelectedItem = doctors.Find(d => d.Username.Equals(App.currentUser)); // Triger poziva prvo popunjavanje kalendara
         }
@@ -164,7 +165,7 @@ namespace ZdravoHospital.GUI.DoctorUI
                     if (endTime.Date == DaysDates[i].Date)
                     {
                         durationAfterMidnight = endTime.Hour * 60 + endTime.Minute;
-                        Patient patient = patientRepository.GetById(previousDayLastPeriod.PatientUsername);
+                        Patient patient = _patientService.GetPatient(previousDayLastPeriod.PatientUsername);
 
                         PeriodButton periodButton = new PeriodButton
                         {
@@ -181,11 +182,11 @@ namespace ZdravoHospital.GUI.DoctorUI
 
                 periods = new List<Period>();
 
-                foreach (Period period in periodRepository.GetValues())
+                foreach (Period period in _periodService.GetPeriods())
                     if (period.StartTime.Date == DaysDates[i].Date && period.DoctorUsername.Equals(selectedDoctorsUsername))
                         periods.Add(period);
 
-                SortPeriods(periods);
+                _periodService.SortPeriods(periods);
 
                 for (int j = 0; j < periods.Count; j++)
                 {
@@ -223,7 +224,7 @@ namespace ZdravoHospital.GUI.DoctorUI
                     else
                         emptyPeriodButton.Height = ((periods[j].StartTime - periods[j - 1].StartTime).TotalMinutes - periods[j - 1].Duration) * 4;
 
-                    Patient patient = patientRepository.GetById(periods[j].PatientUsername);
+                    Patient patient = _patientService.GetPatient(periods[j].PatientUsername);
 
                     int height = 0;
 
@@ -275,7 +276,7 @@ namespace ZdravoHospital.GUI.DoctorUI
         private Period GetPreviousDaysLastPeriod(DateTime previousDay, string selectedDoctorsUsername)
         {
             List<Period> previousDaysPeriods = 
-                periodRepository.GetValues().Where(p => p.StartTime.Date == previousDay.Date && p.DoctorUsername.Equals(selectedDoctorsUsername)).ToList();
+                _periodService.GetPeriods().Where(p => p.StartTime.Date == previousDay.Date && p.DoctorUsername.Equals(selectedDoctorsUsername)).ToList();
 
             if (previousDaysPeriods.Count > 0)
             {
@@ -289,18 +290,6 @@ namespace ZdravoHospital.GUI.DoctorUI
             }
             else
                 return null;
-        }
-
-        private void SortPeriods(List<Period> periods)
-        {
-            for (int i = 0; i < periods.Count - 1; i++)
-                for (int j = 0; j < periods.Count - i - 1; j++)
-                    if (periods[j].StartTime > periods[j + 1].StartTime)
-                    {
-                        Period temp = periods[j + 1];
-                        periods[j + 1] = periods[j];
-                        periods[j] = temp;
-                    }
         }
 
         public void PeriodButton_Click(Object sender, RoutedEventArgs e)
