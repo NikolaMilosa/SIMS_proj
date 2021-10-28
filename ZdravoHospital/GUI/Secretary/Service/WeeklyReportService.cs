@@ -1,14 +1,11 @@
-﻿using Model;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Model;
 using Repository.PeriodPersistance;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using ZdravoHospital.GUI.Secretary.DTOs;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using System.IO;
-using ZdravoHospital.GUI.Secretary.ViewModels;
+using ZdravoHospital.GUI.Secretary.DTOs;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {

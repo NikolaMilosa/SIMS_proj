@@ -1,9 +1,7 @@
 ﻿using Model;
 using Repository.MedicinePersistance;
 using Repository.PatientPersistance;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using ZdravoHospital.Repository.IngredientPersistance;
 
 namespace ZdravoHospital.GUI.Secretary.Service

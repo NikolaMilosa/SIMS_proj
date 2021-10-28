@@ -1,8 +1,5 @@
 ﻿using Model;
 using Repository.FeedbackPersistance;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {

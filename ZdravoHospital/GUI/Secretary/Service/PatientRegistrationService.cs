@@ -1,12 +1,7 @@
 ﻿using Model;
 using Repository.CredentialsPersistance;
 using Repository.PatientPersistance;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using ZdravoHospital.GUI.Secretary.DTO;
-using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -46,9 +41,6 @@ namespace ZdravoHospital.GUI.Secretary.Service
         {
             Patient patient = createPatientFromDTO(patientDTO);
             _patientsRepository.Create(patient);
-            SecretaryWindowVM.CustomMessageBox = new CustomMessageBox("Success", "Added successfully");
-            SecretaryWindowVM.CustomMessageBox.Owner = SecretaryWindowVM.SecretaryWindow;
-            SecretaryWindowVM.CustomMessageBox.Show();
         }
 
         private AddressDTO createPatientsAddress(PatientDTO patientDTO)

@@ -8,9 +8,6 @@ using Repository.PeriodPersistance;
 using Repository.PersonNotificationPersistance;
 using Repository.RoomPersistance;
 using Repository.SpecializationPersistance;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ZdravoHospital.Repository.IngredientPersistance;
 
 namespace ZdravoHospital.GUI.Secretary.Factory

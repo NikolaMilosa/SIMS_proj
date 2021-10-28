@@ -6,13 +6,9 @@ using Repository.RoomPersistance;
 using Repository.RoomSchedulePersistance;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using ZdravoHospital.GUI.PatientUI.Logics;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Factory;
-using ZdravoHospital.GUI.Secretary.ViewModels;
-using ZdravoHospital.GUI.PatientUI.Services;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {

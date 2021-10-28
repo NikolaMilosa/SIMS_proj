@@ -1,9 +1,8 @@
-using System;
+using Model;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Model;
-using Newtonsoft.Json;
 
 namespace Repository.InventoryPersistance
 {

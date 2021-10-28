@@ -6,14 +6,12 @@ using Repository.PatientPersistance;
 using Repository.PeriodPersistance;
 using Repository.PersonNotificationPersistance;
 using Repository.RoomPersistance;
-using Repository.SpecializationPersistance;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ZdravoHospital.GUI.Secretary.Factory;
-using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -96,7 +94,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             int notificationId = NotificationService.CalculateNotificationId();
             string notificationText = createPostponeNotificationText(movePeriod, usernameReceiver);
             string notificationTitle = "Reschedule";
-            Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindowVM.SecretaryUsername, notificationTitle, notificationId);
+            Notification newNotification = new Model.Notification(notificationText, DateTime.Now, "suki", notificationTitle, notificationId); // currently hardcoded username
             NotificationService.CreateNewNotification(newNotification);
             PersonNotification personNotification = new PersonNotification(usernameReceiver, notificationId, false);
             NotificationService.CreateNewPersonNotification(personNotification);

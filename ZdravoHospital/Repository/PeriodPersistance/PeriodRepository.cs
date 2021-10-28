@@ -1,8 +1,7 @@
 using Model;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace Repository.PeriodPersistance
 {

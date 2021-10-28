@@ -1,9 +1,7 @@
 using Model;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using Accessibility;
-using Newtonsoft.Json;
 
 namespace Repository.DoctorPersistance
 {

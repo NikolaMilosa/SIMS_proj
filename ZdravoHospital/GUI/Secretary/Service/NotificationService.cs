@@ -5,11 +5,8 @@ using Repository.PatientPersistance;
 using Repository.PersonNotificationPersistance;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Factory;
-using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -92,7 +89,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
 
         private void createNotification(NotificationDTO notificationDTO, int notificationId)
         {
-            Notification newNotification = new Model.Notification(notificationDTO.NotificationText, DateTime.Now, SecretaryWindowVM.SecretaryUsername, notificationDTO.NotificationTitle, notificationId);
+            Notification newNotification = new Model.Notification(notificationDTO.NotificationText, DateTime.Now, "suki", notificationDTO.NotificationTitle, notificationId); // currently hardcoded, stored in static field viewmodel
             _notificationRepository.Create(newNotification);
         }
         private void createPersonNotifications(NotificationDTO notificationDTO, int notificationId)

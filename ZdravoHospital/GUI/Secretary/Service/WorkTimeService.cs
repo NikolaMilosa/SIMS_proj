@@ -2,8 +2,6 @@
 using Repository.DoctorPersistance;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using ZdravoHospital.GUI.Secretary.DTOs;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {

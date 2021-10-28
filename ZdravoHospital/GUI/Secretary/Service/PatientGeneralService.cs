@@ -1,11 +1,7 @@
 ﻿using Model;
 using Repository.CredentialsPersistance;
 using Repository.PatientPersistance;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {

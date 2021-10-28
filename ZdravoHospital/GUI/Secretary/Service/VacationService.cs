@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text;
 using ZdravoHospital.GUI.Secretary.DTOs;
 using ZdravoHospital.GUI.Secretary.Factory;
-using ZdravoHospital.GUI.Secretary.ViewModels;
 
 namespace ZdravoHospital.GUI.Secretary.Service
 {
@@ -85,7 +84,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             {
                 _periodRepository.DeleteById(period.PeriodId);
                 sendCancelledNotification(period, period.PatientUsername);
-                sendCancelledNotification(period, SecretaryWindowVM.SecretaryUsername);
+                sendCancelledNotification(period, "suki"); // currently hard coded
             }
         }
 
@@ -103,7 +102,7 @@ namespace ZdravoHospital.GUI.Secretary.Service
             int notificationId = NotificationService.CalculateNotificationId();
             string notificationText = createCancelledNotificationText(period, usernameReceiver);
             string notificationTitle = "Cancellation";
-            Notification newNotification = new Model.Notification(notificationText, DateTime.Now, SecretaryWindowVM.SecretaryUsername, notificationTitle, notificationId);
+            Notification newNotification = new Model.Notification(notificationText, DateTime.Now, "suki", notificationTitle, notificationId);
             NotificationService.CreateNewNotification(newNotification);
             PersonNotification personNotification = new PersonNotification(usernameReceiver, notificationId, false);
             NotificationService.CreateNewPersonNotification(personNotification);

@@ -1,9 +1,6 @@
 ﻿using Model;
 using Repository.PatientPersistance;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using ZdravoHospital.GUI.Secretary.DTOs;
 
 namespace ZdravoHospital.GUI.Secretary.Service

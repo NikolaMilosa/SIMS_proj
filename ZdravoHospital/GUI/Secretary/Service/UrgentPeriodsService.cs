@@ -6,9 +6,6 @@ using Repository.RoomPersistance;
 using Repository.SpecializationPersistance;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Windows;
 using ZdravoHospital.GUI.Secretary.DTOs;
 
 namespace ZdravoHospital.GUI.Secretary.Service
